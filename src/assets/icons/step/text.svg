@@ -1,0 +1,8 @@
+<svg  viewBox="0 0 29 20" fill="white" xmlns="http://www.w3.org/2000/svg">
+<rect width="29" height="2" />
+<rect y="9" width="5" height="2" />
+<rect x="7" y="9" width="14" height="2" />
+<rect width="6" height="2" transform="matrix(-1 0 0 1 29 9)" />
+<rect y="18" width="15" height="2" />
+<rect x="17" y="18" width="12" height="2"/>
+</svg>

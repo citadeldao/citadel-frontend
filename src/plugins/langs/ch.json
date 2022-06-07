@@ -1,0 +1,1169 @@
+{
+    "login": {
+        "login": "登录",
+        "signup": "注册",
+        "formInfo": "输入您的邮箱以接收验证码",
+        "withSocial": "或选择其他方式登录",
+        "questionText1": "为什么",
+        "questionText2": "必须使用邮箱吗？",
+        "signIn": "登录",
+        "verification": "验证",
+        "verificationInfo": "您将收到一封包含验证码的邮件。在此输入验证码确认操作",
+        "verificationNote": "提示：如果您未收到验证邮件，请查看垃圾邮件箱。",
+        "sendCode": "发送验证码",
+        "resend": "重新发送",
+        "resendCode": "重新发送验证码",
+        "inputPlaceholder": "输入邮箱",
+        "enterEmail": "输入邮箱",
+        "incorrectEmail": "邮箱地址有误",
+        "carousel": {
+            "stake": {
+                "title": "质押并最大化您的收益",
+                "text": "使用基于DAO的新一代资产管理平台加入加密世界"
+            },
+            "xtc": {
+                "title": "接收XCT以进行质押",
+                "text": "使用基于DAO的新一代资产管理平台加入加密世界"
+            },
+            "dao": {
+                "title": "参与DAO",
+                "text": "使用基于DAO的新一代资产管理平台加入加密世界"
+            },
+            "buy": {
+                "title": "购买 & 交易加密货币",
+                "text": "使用基于DAO的新一代资产管理平台加入加密世界"
+            },
+            "useCases": {
+                "title": "尝试加密货币用例",
+                "text": "使用基于DAO的新一代资产管理平台加入加密世界"
+            },
+            "keep": {
+                "title": "追踪你的投资组合",
+                "text": "使用基于DAO的新一代资产管理平台加入加密世界"
+            }
+        },
+        "whyEmailTitle": "为什么 Citadel.one 需要您的邮箱？",
+        "whyEmailDescription": "Citadel.one 是非托管钱包，所以通过您的电子邮件无法访问您的钱包地址。",
+        "whyEmailDescription1": "我们需要您的邮箱，有两个主要原因：",
+        "whyEmailMarker1": "它可以帮助您方便地在 Web 平台和移动 APP 之间切换。",
+        "whyEmailMarker2": "如果有必要，我们可以随时与您保持联系。加密领域 APP 普遍缺乏通信，因此用户无法获得解锁后冻结期结束、关闭验证节点或即将进行贷款清算等信息。我们还将通知您何时可以将您累积的奖励进行质押，以便将您的利益最大化。",
+        "whyEmailDescription3": "如果您希望匿名注册，请使用我们的",
+        "guide": "教程"
+    },
+    "logout": {
+        "modal": {
+            "title": "您确定退出吗？",
+            "eraseBtn": "清除本地存储用户数据，包括私钥",
+            "downloadBackup": "下载备份文件"
+        }
+    },
+    "messages": {
+        "incorrectAddress": "地址错误",
+        "incorrectNetwork": "网络错误"
+    },
+    "addToPublicKey": {
+        "title": "添加一个公共地址",
+        "info": "添加您的地址体验 Citadel.one 分析功能"
+    },
+    "addAddress": {
+        "cardTitle1": "将网络添加到助记词钱包",
+        "cardTitle2": "创建助记词钱包",
+        "cardDescP1": "Citadel 助记词钱包用户只需使用一个服务器即可为集成到平台中的所有网络创建地址",
+        "cardDescP2": "助记词短语。您不需要为各种钱包存储并记住多组助记词。",
+        "cardNote": "已推荐",
+        "cardButton": "添加网络",
+        "card1Title": "导入已有地址",
+        "card1Note": "快速",
+        "card2Title": "导入硬件钱包",
+        "card2Desc": "从Ledger或Trezor钱包导入地址以使用高级功能",
+        "card2Note": "高级",
+        "card3Title": "添加公共地址",
+        "card3Desc": "添加您的地址以尝试 Citadel 分析功能",
+        "card3Important": "注意：您将无法使用此选项质押或发送您的资产。",
+        "card3Note": "只读",
+        "button": "添加地址",
+        "invalidDerivationPath": "无效的衍生路径"
+    },
+    "addToOneSeed": {
+        "rearrangeWords": "请按正确的顺序重新排列并确认你的助记词。",
+        "exclamation": "别忘了保存你的助记词短语。您需要它来恢复帐户。如果你丢失了你的助记词短语，你的资产可能会丢失。",
+        "checkboxLabel": "我已写下我的助记词",
+        "infoTitle": "为什么助记词非常重要",
+        "infoLine1": "您在Citadel.One所有的本地地址将使用一组助记词短语。",
+        "infoLine2": "我们强烈建议您不要拍照或截图，而是将其写在纸上。",
+        "infoLine3": "如果您丢失了该信息，将无法恢复。请妥善保存。",
+        "exclamationLearn": "了解助记词",
+        "whySeedTitle": "为什么我需要助记词？",
+        "whySeedDescription": "您可以使用助记词访问您的钱包和钱包中的所有私钥。您可以把加密钱包想象成您加密资产的密码管理器，只要你拥有最重要的密码（助记词），就可以访问里面所有相关的加密资产。",
+        "selectWord": "选择词语",
+        "getStartedBtn": "开始",
+        "moreNetworks": "更多网络",
+        "walletCreated": "您的钱包已创建！",
+        "walletCreatedDescription": "如果您希望查看可用的网络列表，请在勾选框选择",
+        "errorConfirmWords1": "请检查输入的词语",
+        "errorConfirmWords2": "如果您写下的助记词有误，请返回上一步检查，确保您的记录无误。"
+    },
+    "importExistingAddress": {
+        "card1Title": "助记词",
+        "card1Info": "导入你的助记词以添加地址",
+        "card2Title": "私钥",
+        "card2Info": "导入您的私钥以添加地址",
+        "card3Info": "连接您的Web3钱包以添加地址",
+        "card4Info": "导入 Citadel 备份文件以恢复钱包",
+        "card4Title": "导入文件",
+        "card5Info": "输入您的 Citadel 助记词短语以恢复助记词钱包",
+        "card5Title": "恢复助记词"
+    },
+    "importHardwareWallet": {
+        "note": "如果使用  Windows Chrome 浏览器，在某些情况下连接 Ledger 设备时需更改浏览器设置。",
+        "card1Info": "连接您的 Ledger 设备",
+        "card2Info": "连接您的 Trezor 设备"
+    },
+    "importLedger": {
+        "title": "连接您的 Ledger 至您的个人电脑",
+        "title1": "请选择您在 Ledger 中打开的 APP"
+    },
+    "importTrezor": {
+        "title": "连接您的 Trezor 至您的个人电脑",
+        "title1": "请选择您在 Trezor 中打开的 APP"
+    },
+    "catPage": {
+        "congratulations": "恭喜",
+        "message": "已成功添加地址。您现在可以在下面的空格中添加地址名称。",
+        "addedAddress": "已添加地址",
+        "inputLabel": "输入您的命名地址",
+        "placeholderSeed": "Citadel 通用助记词",
+        "placeholderPrivate": "Citadel 私钥",
+        "placeholderPublic": "Citadel 公钥",
+        "placeholderHardware": "Citadel 硬件设备"
+    },
+    "importFile": {
+        "title": "导入或拖放备份文件以恢复钱包",
+        "selectBackupFile": "选择备份文件"
+    },
+    "restoreOneSeed": {
+        "placeholder": "输入您在 Citadel.one 中创建的助记词短语以访问助记词钱包",
+        "counterMessage": "在空格处输入单词"
+    },
+    "metamaskKeplr": {
+        "card1Info": "连接您的Metamask设备",
+        "card2Info": "连接您的Keplr设备",
+        "modalCardMessage": "需确认操作",
+        "modalCard1Info": "请在您的浏览器Metamask扩展程序弹窗中确认交易",
+        "modalCard2Info": "请在您的浏览器Keplr扩展程序弹窗中确认交易"
+    },
+    "qr": {
+        "modalErrorInfo": "选择要使用二维码传输到移动端APP的地址。请注意您一次最多可以传输3个地址。",
+        "modalInfo": "选择要使用二维码传输到移动端APP的地址",
+        "generateQR": "生成二维码"
+    },
+    "qrInfo": {
+        "title": "将Citadel.one移动端APP连接到Web平台",
+        "note": "扫描上面的二维码，将您的帐户数据传输到Citadel.one移动端APP。然后单击“下一步”获取下一步二维码。",
+        "scanQrInfo": "扫描上面的二维码，将您的帐户数据传输到Citadel.one移动端APP。",
+        "step1Info": "打开 Citadel.one APP",
+        "step2Info": "进入“添加地址”，选择“使用二维码连接”",
+        "step3Info": "扫描您的二维码"
+    },
+    "wallet": {
+        "info": {
+            "title": "导入钱包，智能管理您的资产",
+            "note": "发送、质押或交易您的代币，您需要通过助记词短语或私钥导入您的地址。",
+            "block1Title": "为什么我需要导入地址？",
+            "block1Info": "这是一个仅可查看的地址，因为您使用公钥添加该账户，或者您已注销。",
+            "block2Title": "想知道如何导入地址？",
+            "block2Info": "查看如何使用私钥或助记词短语导入地址的分步骤指导。"
+        }
+    },
+    "balanceTooltipInfo": {
+        "availableBalance": "可用余额",
+        "availableBalanceInfo": "可转账、质押和交易的代币",
+        "stakedBalance": "已质押金额",
+        "stakedBalanceBalanceInfo": "增加质押金额积累奖励",
+        "frozenBalance": "冻结余额",
+        "frozenBalanceBalanceInfo1": "暂时无法提现和交易，但仍可质押的代币",
+        "frozenBalanceBalanceInfo2": "解除质押操作后锁定的代币",
+        "withFromPeriod": "{code} 的解锁周期从",
+        "to": "至",
+        "iconPeriodLink": "查看当前解锁周期",
+        "noPeriod": "可立即解锁",
+        "unstakingPeriod": "解锁周期",
+        "is": "为",
+        "frozenBalanceTooltipTitle": "您的代币解冻期限为"
+    },
+    "transactionsPage": {
+        "placeHolderInfo1": "您的交易记录为空",
+        "placeHolderInfo2P1": "存入一些",
+        "placeHolderInfo2P2": "转账、质押并赚取奖励",
+        "buyVia": "购买自",
+        "placeHolderInfoTitle2": "从交易所充值",
+        "editCommentModalTitle": "编辑评论",
+        "editCommentModalDesc": "您可以在交易下方添加评论",
+        "transactionInfoModalTitle": "交易信息",
+        "transactionInfoModalDesc": "在下方查看交易详情"
+    },
+    "sendModal": {
+        "title1": "确认转账代币",
+        "desc1": "请确认下方详情",
+        "changingModals": {
+            "error": "余额不足以支付手续费",
+            "title": "考虑改变金额以继续",
+            "decreaseDesc": "为涵盖交易费用，我们建议您稍微降低转账金额。如果想继续发送上一笔交易金额，请点击 &#34否&#34。",
+            "increaseDesc": "交易费用较低，我们建议您增加转账金额。如果希望继续发送上一笔交易金额，请点击 &#34否&#34。"
+        },
+        "fee": {
+            "invalidAmount": "手续费金额无效"
+        },
+        "desc2": "交易进行中"
+    },
+    "yes": "是",
+    "no": "否",
+    "tryBtn": "重试一次",
+    "errorPage": {
+        "pageNotFound": "无法找到网页",
+        "toHomePage": "返回首页"
+    },
+    "lockBanner": {
+        "bannerInfo": "导入您的地址开启质押。需要教程？点击查看",
+        "thisLink": "该链接"
+    },
+    "stakePlaceholder": {
+        "title": "简单几步，开启质押！",
+        "whatIs": "是什么",
+        "card1Info": "1. 从列表中选择节点",
+        "card2Info": "2. 设置质押金额并确认",
+        "card3Info": "3. 享受被动加密货币收入",
+        "choseNodePlaceholderNote": "点击选择质押节点"
+    },
+    "staking": {
+        "chooseNodeForStaking": "选择质押节点",
+        "chooseNodeModalDesc": "点击列表中的节点，选择一个节点进行质押",
+        "chooseNodeModalDesc1": "如需质押您的资产，请选择节点并设置质押金额。请注意 {net} 的解锁周期为 <span style='color: #0A2778; font-weight: bold;'>{perioud} days</span>.",
+        "chooseNodeModalDescWithFrom": "如需质押您的资产，请选择节点并设置质押金额。请注意 {net} 的解锁周期为 <span style='color: #0A2778; font-weight: bold;'>从 {perioudFrom} 至 {perioudTo} 天</span> 。点击 <a href='{link}' style='color: #0A2778; font-weight: bold;text-decoration:none'>link</a> 查看当前解锁时间。",
+        "Stake": "质押",
+        "staking": "质押",
+        "searchNode": "搜索节点",
+        "searchInputPlaceholder": "开始输入节点名称",
+        "editNode": "编辑节点",
+        "actionModalTitle": "确认质押交易",
+        "actionModalDesc": "您的代币将被质押",
+        "stakeFrom": "质押自",
+        "stakeOn": "质押于",
+        "amountToStake": "可质押金额",
+        "inputNote": "包括回购代币的储备资金",
+        "editModeDesc": "如需进行或解除质押，请在下方设置授权金额。请注意 {net} 的解锁周期 <span style='color: #0A2778; font-weight: bold;'>{perioud} 天 </span>",
+        "editModeDescWithFrom": "如需进行或解除质押，请在下方设置授权金额。请注意 {net} 的解锁周期 <span style='color: #0A2778; font-weight: bold;'>从 {perioudFrom} 至 {perioudTo} 天</span>。点击查看当前解锁时间 <a href='{link}' style='color: #0A2778; font-weight: bold;text-decoration:none'>link</a>.",
+        "nodeIsNotActive": "节点非活跃运行状态，将无法保证奖励",
+        "nodeIsJailed": "此节点当前处于非活跃状态，质押该节点无法获得奖励。请将资产质押至另外的节点。"
+    },
+    "unstaking": {
+        "unstake": "解除质押",
+        "defaultPrefix": "选择节点并设置您想要解除质押的金额",
+        "customPrefix": "设置您想要解除质押的金额",
+        "chooseNodeForUnstaking": "选择解除质押的节点",
+        "chooseNodeModalDesc": "请注意 {net} 的解锁周期为 <span style='color: #0A2778; font-weight: bold;'>{perioud} 天</span>.\n",
+        "chooseNodeModalDescWithFrom": "请注意 {net} 的 解锁周期<span style='color: #0A2778; font-weight: bold;'>从 {perioudFrom} 至 {perioudTo} 天</span>. 点击查看当前解锁时间 <a href='{link}' style='color: #0A2778; font-weight: bold;text-decoration:none'>link</a>.\n",
+        "actionModalTitle": "确认解除质押交易",
+        "actionModalDesc": "您的代币将解除质押并锁定一段时间",
+        "unstakeTo": "解锁至",
+        "unstakeFrom": "解锁自",
+        "amountToUnstake": "可解除质押金额"
+    },
+    "singleStake": {
+        "chooseNodeModalDesc": "如需质押您的资产，选择节点并设置质押金额。请注意此处 <strong style='color:#0a2778;'> 可立即解锁 </strong> ",
+        "actionModalTitle": "确认质押",
+        "actionModalDesc": "您的资产将从当前的验证节点取消质押，并质押至新选择的节点",
+        "undelegateFrom": "质押自",
+        "delegateTo": "质押至"
+    },
+    "ledger": {
+        "connect": {
+            "title": "连接您的 Ledger",
+            "desc": "请连接您的硬件钱包至电脑"
+        },
+        "openApp": {
+            "title": "打开（或重新打开）Ledger APP",
+            "desc": "在 Ledger 设备上打开相关网络的 APP"
+        },
+        "confirm": {
+            "title": "确认操作",
+            "desc": "在您的 Ledger 设备上确认操作"
+        },
+        "action": {
+            "title": "要求操作",
+            "desc": "很抱歉，该操作未确认。<br/> 请点击您 Ledger 设备上的按钮继续。"
+        },
+        "rejected": {
+            "title": "拒绝交易",
+            "desc": "Ledger 设备拒绝交易"
+        },
+        "errors": {
+            "27404": "输入您的硬件钱包密码并重试操作"
+        }
+    },
+    "rewardsPage": {
+        "rewardsDetails": "奖励详情",
+        "periodRewards": "周期奖励",
+        "rewardsPlaceholder": "没有奖励",
+        "rigthSectionPlaceholder": "您没有奖励通知",
+        "rewardsReport": "奖励报告",
+        "totalRewards": "总奖励"
+    },
+    "DAO": {
+        "placeholderTitle": "Citadel.one DAO 即将上线",
+        "placeholderInfo": "您将很快能够参与决策集成的网络及其功能、财务和治理措施。"
+    },
+    "claim": {
+        "claim": "提取",
+        "claimTo": "提取至",
+        "amountToClaim": "可提取金额",
+        "confirmModalTitle": "确认提取奖励",
+        "confirmModalDesc": "您将在可用余额中查看应计奖励"
+    },
+    "exportWallet": {
+        "card1Info": "导出关联助记词",
+        "card2Info": "导出关联私钥",
+        "chooseExportTypeModalTitle": "选择导出选项",
+        "chooseExportTypeModalDesc": "选择如何导出该地址",
+        "approveExportModalTitle1": "导出私钥",
+        "approveExportModalDesc1": "输入密码以显示该地址私钥",
+        "approveExportModalTitle2": "导出助记词短语",
+        "approveExportModalDesc2": "输入密码以显示该地址助记词短语",
+        "exportModalTitle1": "您的私钥显示在下方",
+        "exportModalDesc": "请确保安全妥善保存",
+        "exportModalTitle2": "您的助记词显示在下方"
+    },
+    "customLists": {
+        "createListModalDesc": "选择您想要加入列表的地址",
+        "editList": "编辑列表",
+        "editListModalDesc": "编辑列表中的地址",
+        "deleteList": "删除列表",
+        "deleteListModalTitle": "确认删除该列表？",
+        "walletsCountTitle": "列表中地址",
+        "eneterListName": "请输入列表名称",
+        "warningModalDesc": "列表名称已存在，请尝试新名称。",
+        "infoBanner": "您还未添加地址至当前列表。请选择至少一个地址以创建列表。"
+    },
+    "calculator": {
+        "title": "{coin} 质押计算器",
+        "subtitle": "计算您的奖励",
+        "yearlyReturn": "年化收入",
+        "howManyYouHave": "您有多少？",
+        "yearlyReward": "年化奖励",
+        "expandTitle": "获得更多奖励",
+        "expandSubtitle": "您在 Citadel.one 节点质押越多，您将获得更多 XCT 奖励"
+    },
+    "xct": {
+        "publicKeyPlaceholderTitle": "导入您的钱包开始赚取 XCT",
+        "assignedAddresses": "已分配地址",
+        "unAssignedAddresses": "未分配地址",
+        "blocks": {
+            "title1": "您还没有地址",
+            "title2": "开始赚取 XCT",
+            "title3": "您可以赚取更多收益！",
+            "title4": "开始质押 XCT！",
+            "title5": "好样的！",
+            "title6": "通过质押XCT赚取更多奖励！",
+            "desc1": "你还未添加任何质押地址至Citadel.one当前账户。现在导入地址，开启你的加密货币增值之旅！",
+            "desc2": "您还未为获取XCT奖励分配地址。现在分配地址，除质押网络节点可获取奖励外，还可通过质押Citadel.one节点获取更多XCT奖励！",
+            "desc3": "您还未分配所有地址，这可能导致错失XCT奖励！现在分配地址以获取更多质押奖励！",
+            "desc4": "将质押的XCT奖励复投以获得更多！",
+            "desc5": "您已分配所有地址，恭喜！您将在Citadel.one最大化您的质押收益！"
+        },
+        "assignedAddressesModalTitle": "您的已分配地址",
+        "assignedAddressesModalDesc": "您可以在下方找到所有已分配或符合领取XCT奖励的地址。",
+        "addressAssigningInfoModalTitle": "XCT的BSC地址",
+        "addressAssigningInfoModalDesc": "根据以下提示，分配您的地址以接收XCT奖励",
+        "addressAssigningInfoModalBlock1Info": "从您的Citadel.one钱包中选择地址，分配至该BSC地址",
+        "addressAssigningInfoModalBlock2Info": "输入支付密码，确认地址分配",
+        "addressAssigningInfoModalNote": "如果您希望分配一个Ledger地址，您需要连接您的硬件设备以确认分配",
+        "assignAddressTooltipTitle": "已分配至BSC地址",
+        "unassignedAddressesModalTitle": "选择地址进行分配",
+        "unassignedAddressesModalDesc": "选择地址并将它分配给您在上一步中选择的BSC地址",
+        "approveAssignWithPasswordModalDesc": "输入密码，确认将该地址分配至您上一步中选择的BSC地址",
+        "newAssignedAddressesModalTitle": "已成功添加为 XCT 奖励地址",
+        "hardwareAddressesModalDesc": "连接硬件钱包并确认地址，以确保被成功分配",
+        "rewardsBlockTitle": "XCT 奖励",
+        "rewardsBlockSubtitle": "您在 Citadel.one 获取的额外奖励",
+        "XCTStakingRewards": "XCT 质押奖励",
+        "stakedOnCitadel": "在 Citadel.one 质押",
+        "setStakingAmountModalDesc": "设置 XCT 质押金额",
+        "setStakingAmountModalDesc1": "设置解除 XCT 质押金额",
+        "stakingPlaceholderCard1Info": "1. 点击按钮开始质押XCT",
+        "stakingPlaceholderCard3Info": "3. 享受额外XCT奖励",
+        "claimRewardsCheckbox2Label": "已分配的质押奖励",
+        "assignedAddressesBtn": "已分配地址",
+        "unAssignedAddressesBtn": "未分配地址"
+    },
+    "accounts": "账户",
+    "neededResources": "网络所需资源",
+    "restake": "重新质押",
+    "otherAssets": "其他资产",
+    "hardwareWallet": "硬件钱包",
+    "bscAddress": "BSC 地址",
+    "enterYourPassword": "输入您的密码",
+    "enterPaymentPassword": "输入您的支付密码",
+    "finish": "完成",
+    "assigned": "已分配",
+    "note": "注意",
+    "manage": "管理",
+    "learnMore": "了解详情",
+    "Token": "代币",
+    "searchErrorText": "无法为该请求找到地址",
+    "searchToken": "搜索代币",
+    "inputToken": "输入代币",
+    "commentPlaceholder": "为您的交易添加单词以进行指定",
+    "fail": "失败",
+    "date": "日期",
+    "inputName": "输入名称",
+    "listName": "列表名称",
+    "createList": "创建列表",
+    "cancel": "频道",
+    "enterYourCitadelPassword": "输入您的Citadel密码",
+    "show": "显示",
+    "yearAbbr": "年",
+    "monthAbbr": "月",
+    "custom": "自定义",
+    "all": "全部",
+    "oneYear": "一年",
+    "month": "月",
+    "notifications": "通知",
+    "swap": "闪兑",
+    "insufficientFunds": "金额不足",
+    "changeNode": "切换节点",
+    "startStaking": "开始质押",
+    "this": "该",
+    "AddWallet": "添加钱包",
+    "addWallet": "添加钱包",
+    "download": "下载",
+    "enterTextComment": "输入文字评论",
+    "confirmed": "已确认",
+    "min": "分",
+    "pending": "待提取",
+    "addedToMempool": "已添加至内存池",
+    "warning": "警告",
+    "viewTranscasction": "查看交易",
+    "viewBalance": "查看余额",
+    "enterSendPassword": "输入您的密码发送验证",
+    "totalAmount": "总金额",
+    "sendTo": "发送至",
+    "sendFrom": "转自",
+    "unstake": "解除质押",
+    "Stake": "质押",
+    "receive": "收款",
+    "fee": "手续费",
+    "comment": "评论",
+    "export": "导出",
+    "timeDate": "时间 & 数据",
+    "type": "类型",
+    "status": "状态",
+    "viewOnly": "只读",
+    "error": "错误",
+    "success": "成功",
+    "info": "信息",
+    "buyNow": "立即购买",
+    "settingsTitle": "设置",
+    "overallTitle": "全部",
+    "days": "日",
+    "copiedToClipboard": "已复制至剪贴板",
+    "earn": "赚取",
+    "seed": "助记词",
+    "learnHow": "学习如何使用",
+    "importAddress": "导入地址",
+    "chooseAddresses": "选择地址",
+    "addressName": "地址名称",
+    "searchAddress": "搜索地址",
+    "save": "保存",
+    "transactionFee": "交易手续费",
+    "per": "每",
+    "price": "价格",
+    "link": "链接",
+    "sendBannerInfo": "该桥允许用户在以太坊智能合约中锁仓 ETH 并铸造 secretETH。您可以在下方解除打包代币 secretETH 并取回 ETH。",
+    "selectAddress": "选择地址",
+    "advanced": "高级",
+    "max": "最多",
+    "inputMemo": "输入备忘",
+    "memo": "备忘",
+    "memoTooltip": "备注是用于特定交易收款人的标记。",
+    "includingFunds": "包括默认的网络手续费用",
+    "includingFunds-xl": "包括为回购代币储备的资金",
+    "amount": "金额",
+    "to": "至",
+    "sendAssetsToAnotherNetwork": "将资产转至其他网络",
+    "rewards": "奖励",
+    "stakingRatio": "质押比例",
+    "inflation": "通胀",
+    "tokenPrice": "代币价格",
+    "lockedForiGasGeneration": "锁仓以生成 GAS",
+    "unpledgedBalance": "未验证余额",
+    "pledgedBalance": "已验证余额",
+    "pledgeDescription": {
+        "part1": "系统需要验证您拥有IOST代币才可获得IGas。一枚通过验证的IOST代币可生成",
+        "part2": "100,000 Gas",
+        "part3": "每",
+        "part4": "天",
+        "part5": "这也被锁定且无法进行交易。解除验证代币将解锁您的 IOST，同时 Gas 的生成也会停止。"
+    },
+    "frozen": "冻结",
+    "available": "可用",
+    "staked": "已质押",
+    "balance": "余额",
+    "transactions": "交易",
+    "send": "发送",
+    "stake": "质押",
+    "youHave": "您拥有",
+    "claimRewards": "提取奖励",
+    "oneSeed": "助记词",
+    "publicKey": "公钥",
+    "hardware": "硬件",
+    "edit": "编辑",
+    "Citadel.one": "Citadel.one\n",
+    "yourE-mail": "您的邮箱",
+    "loadingFile": "载入文件",
+    "incorrectFile": "文件错误。点击这里上传其他备份文件。",
+    "incorrectPassword": "密码错误",
+    "passwordsDontMatch": "密码不匹配",
+    "passwordTooShort": "密码过短（至少8位）",
+    "confirmPassword": "确认密码",
+    "createPassword": "创建密码",
+    "password": "密码",
+    "yourComputer": "您的电脑",
+    "enterYourPrivateKey": "输入您的密钥",
+    "privateKey": "密钥",
+    "ok": "好的",
+    "select": "选择",
+    "retry": "重试",
+    "createPasswordNote": "请创建支付密码。它将用于确认 Citadel.one 平台进行的所有交易。如果密码丢失，您将无法恢复或更改密码。",
+    "enterPasswordNote": "输入您的支付密码以添加新地址至Citadel通用助记词钱包",
+    "understand": "我已知晓",
+    "enterPassword": "输入密码",
+    "repeatYourPassword": "再次输入密码",
+    "network": "网络",
+    "Network": "网络",
+    "create": "创建",
+    "guide": "指导",
+    "searchNetworks": "搜索网络",
+    "selectHardwareWallet": "选择一个硬件钱包",
+    "selectNetwork": "选择网络",
+    "addAddressExp": "添加地址",
+    "addAnAddress": "添加一个地址",
+    "chooseSuitableMethod": "选择合适的方式导入已有地址",
+    "address": "地址",
+    "enterAddress": "输入地址",
+    "import": "导入",
+    "enterMnemonicPhrase": "输入助记词短语",
+    "advancedSettings": "高级设置",
+    "mnemonicIncorrect": "助记词无效",
+    "networkNameIncorrect": "错误的网络",
+    "pleaseSelectNetwork": "请选择网络",
+    "mnemonicPassphraseOptional": "助记密码短语（可选）",
+    "inputPassphrase": "输入密码短语",
+    "next": "下一步",
+    "confirm": "确认",
+    "importExistingAddressExp": "导入已有地址",
+    "layouts": {
+        "addAddressLayout": {
+            "sidebarPlaceholder": "您的地址将展示在这里",
+            "favoritePlaceholder": "您最常用的钱包将展示在此处。点击公钥旁边的星标添加收藏。",
+            "overall": "全部",
+            "addresses": "地址"
+        }
+    },
+    "backBtn": "返回",
+    "steps": {
+        "step": "步骤",
+        "selectNetworks": "选择网络",
+        "connectYourDevice": "连接您的设备",
+        "derivationPath": "衍生路径",
+        "enterPassword": "输入密码",
+        "chooseDerivationPath": "选择一个衍生路径",
+        "createPaymentPassword": "创建支付密码",
+        "addNewAddress": "添加新地址",
+        "derivationPathInfo": "衍生路径指定您所使用的私钥（同时也会将指定地址）",
+        "setPasswordForAllIn": "设置全平台操作密码",
+        "addAddressSpecifications": "添加地址分类",
+        "enterPaymentPassword": "输入支付密码",
+        "importFileExp": "导入文件",
+        "chooseImportOption": "选择导入选项",
+        "createPassword": "创建密码",
+        "addToOneSeed": {
+            "step1HeaderInfo1": "将新网络添加至已有通用助记词钱包",
+            "createOneSeed": "创建通用助记词",
+            "createOneSeedWallet": "创建通用助记词钱包",
+            "step2HeaderInfo": "使用一个钱包即可集中管理我们的平台支持的资产",
+            "step3StepDesc": "确认助记词",
+            "step4headerInfo": "该网络的地址将通过您的助记词创建"
+        },
+        "importLedger": {
+            "step2stepDesc": "选择 Ledger APP",
+            "step2headerInfo": "选择您 Ledger 设备上的相应网络 APP",
+            "step3headerInfo": "连接 Ledger 至您的电脑并确认"
+        },
+        "importTrezor": {
+            "step2stepDesc": "选择 Trezor APP",
+            "step2headerInfo": "选择您 Trezor 设备上的相应网络APP",
+            "step3headerInfo": "连接 Trezor 至您的电脑并确认"
+        },
+        "importSeedPhrase": {
+            "step3HeaderInfo": "选择一个网络输入助记词短语"
+        },
+        "importPrivateKey": {
+            "step3HeaderInfo": "选择一个网络并输入相应的私钥"
+        },
+        "importFile": {
+            "step2HeaderInfo": "选择一个 Citadel.one 备份文件并上传",
+            "step2StepDesc": "导入备份文件",
+            "step3HeaderTitle": "输入备份密码",
+            "step3HeaderInfo": "输入备份密码以恢复Citadel.one通用助记词钱包",
+            "step3StepDesc": "输入备份文件密码"
+        },
+        "restoreOneSeed": {
+            "step3HeaderTitle": "输入Citadel.one通用助记词",
+            "step3HeaderInfo": "输入Citadel.one平台内创建的助记词",
+            "step3StepDesc": "输入助记词",
+            "step4HeaderInfo": "该网络的地址可通过您的助记词恢复"
+        }
+    },
+    "settings": {
+        "subscriptions": {
+            "title": "订阅",
+            "description": "订阅相关消息",
+            "rewardsDigest": "账户奖励摘要",
+            "addRewardsNotification": "您已订阅奖励邮件通知",
+            "removeRewardsNotification": "您已取消订阅奖励邮件通知",
+            "rewardsDigestTooltip": "您的累积奖励、可领取的代币和可质押资产每两周更新一次"
+        },
+        "transferData": {
+            "title": "几秒内将数据从web传输至移动设备",
+            "description": "为了您的方便，我们添加了一个二维码，您只需点击几下即可轻松地将数据从Citadel.one web平台传输到移动端APP。",
+            "button": "打开二维码"
+        },
+        "addresses": {
+            "title": "地址",
+            "description": "删除您的地址，或者导入助记词、私钥或查看密钥",
+            "deleteModalTitle": "您确定删除该地址吗？",
+            "deleteSeedTitle": "您确定删除通用助记词信息吗？",
+            "deleteSeedDesc": "您可以删除所有保存在本地的通用助记词",
+            "deleteSeedInfo": "提示：当您确认此操作后，您通用助记词钱包的所有信息将被移除。"
+        },
+        "changeEmail": {
+            "title": "您的邮箱",
+            "description": "您的账户邮箱",
+            "inputLabel": "您的邮箱",
+            "inputPlaceHolder": "邮箱",
+            "button": "切换"
+        },
+        "language": {
+            "title": "语言",
+            "description": "已选平台语言",
+            "inputLabel": "语言"
+        },
+        "delete": {
+            "title": "删除您的账户",
+            "description": "该操作不可逆",
+            "modalDescription": "请注意，此操作不可逆。您的资产是安全的，这将只删除您的Citadel.one帐户",
+            "button": "删除账户",
+            "inputLabel": "输入“删除”进行确认",
+            "placeholder": "delete"
+        }
+    },
+    "overallPage": {
+        "noBalance": "没有可用余额",
+        "noRewards": "没有奖励",
+        "balanceStructure": {
+            "title": "余额构成"
+        },
+        "balanceHistory": {
+            "title": "历史余额"
+        },
+        "rewardsChart": {
+            "title": "奖励表"
+        },
+        "favourites": {
+            "placeholder": {
+                "address": {
+                    "title": "追踪您常用的地址",
+                    "text": "根据您的优先级创建地址列表，设置地址名称，一站式追踪所有您常用的地址。"
+                },
+                "portfolio": {
+                    "title": "创建子投资组合",
+                    "text": "根据您的需求将地址添加到列表中，以保持子投资组合最佳表现。"
+                }
+            }
+        },
+        "problemBalance": "我们正在为该部分进行一些修复",
+        "maintance": "维护中"
+    },
+    "addedModal": {
+        "title": "该钱包已添加",
+        "desc": "您已将该地址添加至您的账户"
+    },
+    "netInfoGeneral": {
+        "marketcap": "市值",
+        "marketcapTooltip": "市值是加密货币的总价值。其计算方法是流通的代币总数乘以代币当前价格。",
+        "supply": "流动量",
+        "supplyTooltip": "流通量是指市场上可供交易和流通的代币总数",
+        "staked": "质押比例",
+        "stakedTooltip": "符合条件的已质押代币比例",
+        "inflation": "通胀率",
+        "inflationTooltip": "为解决通胀（网络通货膨胀），我们考虑将所有新铸代币和储备资金作为奖励分配。",
+        "priceChart": "价格表",
+        "apyTooltip": "年收益率百分比（APY）的计算为 质押通膨 / 质押金额",
+        "stakingRatioTooltip": "已质押的符合条件代币的百分比",
+        "dayTradingVol": "24小时交易量",
+        "dayTradingVolTooltip": "24小时交易量是指过去24小时内交易的代币数量"
+    },
+    "viewingKey": {
+        "viewingKey": "查看密钥",
+        "passwordText": "输入您的密码进行验证",
+        "confirmOperation": "确认操作",
+        "addVkFor": "添加查看密钥",
+        "vkFor": "查看密钥",
+        "importVk": "导入查看密钥",
+        "enterYourVk": "输入您的查看密钥进行验证",
+        "iHaveVk": "我拥有查看密钥",
+        "viewingKeys": "查看密钥",
+        "vkListedBelow": "SNIP-20 代币查看密钥列于下方",
+        "searchViewingKeys": "搜索查看密钥",
+        "tokenName": "代币名称",
+        "manageVks": "管理查看密钥",
+        "vkDesc": "您的 SNIP-20 代币查看密钥展示如下。您可以在此删除或创建一个查看密钥。\n",
+        "deleteKey": "删除密钥",
+        "createNew": "创建",
+        "incorrectKey": "密钥错误"
+    },
+    "tokenSearchError": "未找到代币",
+    "myTokens": "我的资产",
+    "allTokens": "所有资产",
+    "favourites": "收藏",
+    "daoTitle": "DAO",
+    "hours": "时",
+    "minutes": "分",
+    "migration": {
+        "cancel": "取消",
+        "logout": "登出",
+        "download": "下载备份文件",
+        "forgotPassword": "忘记密码？",
+        "forgotDescription": "如果您忘记了密码，您可以选择登出账户，设置一个新密码，并重置您的助记词钱包。",
+        "finishTitle": "重置通用助记词",
+        "finishDescription": "为了更方便地与平台交互，您可以立即恢复您的助记词。",
+        "restore": "重置",
+        "skip": "跳过",
+        "agree": "同意",
+        "welcomeTitle": "欢迎登录 Citadel 2.0 新版本！",
+        "welcomeDescription": "您可以快速轻松地将所有地址从旧版本的 Citadel.one 应用程序迁移到新版本。",
+        "backupPassword": "输入备用密码",
+        "title": "地址迁移",
+        "description": "我们识别到与您的帐户关联的私钥，这些私钥在您上次登录 Citadel.one 时存储在您的设备中。"
+    },
+    "multisigBalance": {
+        "title": "已解锁 XCT",
+        "labelAddress": "BSC 地址",
+        "labelPlaceholder": "选择地址",
+        "contractLabel": "选择合约",
+        "contractPlaceholder": "合约名称",
+        "claim": "提取",
+        "statsClaimed": "已提取 XCT",
+        "statsClaimedDescription": "累计已提取代币",
+        "statsUnlocked": "已解锁金额",
+        "statsUnlockedDescription": "已解锁的代币是已提取和可提取的代币总和",
+        "totalFrozen": "总冻结余额",
+        "statsFrozen": "冻结余额",
+        "statsFrozenDescription": "锁定代币",
+        "youHave": "可提取 XCT",
+        "confirmModalTitle": "确认提取奖励",
+        "confirmModalDescription": "您将在可用余额中看到累计的奖励",
+        "claimTo": "提取至",
+        "amountToClaim": "可提取数量",
+        "fee": "手续费",
+        "totalAmount": "总数量"
+    },
+    "mobileAppModal": {
+        "title": "下载 Citadel.one App!",
+        "info": "Citadel.one APP强大功能，让您享受无缝的加密货币体验",
+        "appStore": "App store",
+        "googlePlay": "Google play"
+    },
+    "redelegation": {
+        "redelegationDesc": "选择节点并设置重新质押的代币数量。请注意，同一个钱包地址最多只能在 <span style='color: #0A2778; font-weight: bold;'> 21 天 </span> 内重新质押  <span style='color: #0A2778; font-weight: bold;'> 7 次 </span>。质押无锁定期，可随时解除。",
+        "redelegate": "重新质押",
+        "chooseNodeTitle": "选择节点质押",
+        "choseNodePlaceholderNote": "点击选择质押节点"
+    },
+    "rewardDetails": {
+        "title": "奖励详情",
+        "subtitle": "您在Citadel.one节点质押越多资产，就能获得越多XCT奖励！",
+        "totalStaked": "总质押额",
+        "stakedOnCitadel": "在<b>Citadel.one</b>质押"
+    },
+    "copied": "已复制",
+    "copy": "复制",
+    "week": "周",
+    "multisigSend": {
+        "title": "多签转账",
+        "available": "可用",
+        "availableHint": "剩余可提取代币总数",
+        "spend": "已花费",
+        "spendHint": "已花费代币总额",
+        "total": "总额",
+        "totalHint": "TGE期间分配给生态基金的代币总量",
+        "claimable": "可提取",
+        "claimableHint": "可提取代币",
+        "labelAddress": "BSC地址",
+        "labelPlaceholder": "选择地址",
+        "selectFundPlaceholder": "生态系统基金",
+        "selectFundLabel": "选择资产",
+        "sendTo": "转账至",
+        "amountToSend": "转账金额",
+        "fee": "手续费",
+        "totalAmount": "总金额",
+        "confirmModalTitle": "确认转账资金",
+        "selectedFund": "已选择资产"
+    },
+    "importCustomPath": {
+        "labelSelect": "选择高清导出路径"
+    },
+    "ktAddresses": {
+        "modalTitle": "所有地址",
+        "modalDesc": "Tezos 网络有两种类型的地址：隐蔽式地址和管理地址，分别是带有 TZ 前缀的地址，以及带有 KT 前缀的原始地址。您可以在下面看到与 TZ 地址相关联的 KT 地址。"
+    },
+    "withoutDelegation": "无抵押质押",
+    "pledge": {
+        "chooseModeModalTitle1": "锁仓 IOST 以生成 iGas",
+        "chooseModeModalSubtitle": "<span style='color: #0A2778; font-weight: bold;'> 1 </span> 个质押的 IOST 每天可生成 <span style='color: #0A2778; font-weight: bold;'> 100 000 </span> iGas ",
+        "chooseModeModalTitle2": "解锁生成 iGas 的 IOST",
+        "pledge": "质押",
+        "unpledge": "取消质押",
+        "confirmModalTitle1": "确认质押交易",
+        "confirmModalDesc1": "您的代币将被质押",
+        "confirmModalTitle2": "确认取消质押操作",
+        "confirmModalDesc2": "您的代币将被取消质押"
+    },
+    "minAmmount": "金额必须大于1",
+    "maxFloatDigits": "小数点后不超过两位数",
+    "emptyPassword": "密码为空",
+    "accruedDaily": "每天下午 6 点至 7 点累积（UTC 时间）",
+    "extensions": {
+        "showLabel": "展示",
+        "headerTitle": "拓展程序商店",
+        "headerDescription": "便捷使用您最喜欢的 dApp、DeFi app 和扩展程序！",
+        "readMore": "了解更多",
+        "networks": "网络",
+        "guide": "教程",
+        "description": "描述",
+        "youCan": "通过该 APP 您可以",
+        "launch": "上线",
+        "dontShow": "不再向我展示此内容",
+        "appTooltip": "此应用程序已由 Citadel.one 团队集成",
+        "transactionData": "交易数据",
+        "transactionFee": "交易手续费",
+        "signMessage": "签名消息"
+    },
+    "tokenDescriptionComdex": "Comdex 是搭建在 Cosmos 上的去中心化合成资产协议",
+    "tokenDescriptionJuno": "Juno 是基于 Cosmos  搭建的区块链，为部署可交互操作的智能合约提供环境。",
+    "tokenDescriptionOsmosis": "Osmosis 是一个去中心化的点对点区块链，人们可以使用它来创造流动性和交易支持 IBC 的代币。",
+    "metamask": {
+        "notFound": "您的浏览器未找到 Metamask 钱包",
+        "changeNetwork": "在 Metamask 中切换网络",
+        "cancel": "取消",
+        "importWallet": "导入钱包",
+        "allreadyAdded": "地址已添加",
+        "titleModal": "导入 Metamask 钱包",
+        "descModal": "在 Metamask 中切换地址或网络"
+    },
+    "netInfo": {
+        "akash": {
+            "title": "Akash 网络",
+            "description": "Akash 是一个安全、透明和去中心化的云计算市场，为云计算技术方和需求方提供连接的平台。它也称为 Akash DeCloud，由两个主要部分构成：网络和平台。 Akash 网络是一个用于租赁云计算资源的链上去中心化市场，而 Akash 平台是一个管理工作负载的链下部署平台。",
+            "shortDescription": "Akash是一个安全、透明、分散的云计算市场，将算力资源的需求方与算力租赁方连接起来。"
+        },
+        "band": {
+            "title": "Band 网络",
+            "description": "Band 协议是一款旨在激励用户向区块链上运行的去中心化应用程序（DAPP）提供现实世界数据的软件。例如，如果一个 dapp 开发者想让用户在未来的黄金价格上下注，那么他需要在期望的未来日期确定黄金的价格。",
+            "shortDescription": "Band 协议是一款旨在激励用户向区块链上运行的去中心化应用程序（DAPP）提供现实世界数据的软件。"
+        },
+        "bsc": {
+            "title": "币安智能链（BSC）",
+            "description": "币安智能链（BSC）是除以太坊之外的一大公链，支持许多知名的 DeFi 产品。由于以太坊交易费用过高，BSC 获得了许多用户的青睐 —— BSC 使用委托权益证明共识机制（dPoS），每秒能够以更低的成本处理更多交易。BSC 的目标是让开发者能够自由构建去中心化应用，以低延迟和大容量跨链管理用户的数字资产。",
+            "shortDescription": "币安智能链（BSC）是以太坊和其他领先 DeFi 平台的另一项选择，它旨在促进快速的去中心化交易。"
+        },
+        "btc": {
+            "title": "比特币网络",
+            "description": "比特币是一种去中心化的数字货币，创建于2009年1月。它遵循神秘的中本聪（Satoshi Nakamoto）在白皮书中提出的理念，而中本聪本人的身份仍然是个谜。比特币提出了比传统在线支付更低的交易费用机制，与政府发行的货币不同，比特币由分布式的节点进行运营。",
+            "shortDescription": "比特币是2008年创建的一种数字或虚拟货币，使用点对点技术进行即时支付。"
+        },
+        "cosmos": {
+            "title": "Cosmos 网络",
+            "description": "Cosmos 网络由许多独立、并行的区块链组成，称为“区域”，每个区块链都由经典的拜占庭容错（BFT）共识协议（如 Tendermint ）提供动力（已被 ErisDB 等平台使用）。某些区域将充当其他区域的中心，允许其他区域通过共享中心进行交互。该体系结构是比特币侧链概念更广泛的应用，使用经典的 BFT 和利害关系证明算法。Cosmos 可以与多个其他应用程序和加密货币进行交互，这是其他区块链无法做到的。通过创建一个新区域，您可以将任何区块链系统植入 Cosmos 共享中心，并在这些区域之间传输代币，无需任何中介。",
+            "shortDescription": "Cosmos网络由许多独立、平行的区块链组成，称为“区域”，每个区域都由 Tendermint 等共识协议提供动力。某些区域充当其他区域的中心，允许其他区域通过共享中心进行交互。"
+        },
+        "eth": {
+            "title": "以太坊",
+            "description": "以太坊是一个社区驱动的去中心化区块链网络，由 Ether 代币支持网络运行，使用户能够进行交易、通过质押赚取利息、使用和存储 NFT、兑换加密货币、玩游戏、玩转社交媒体等等。以太坊也被称为“划时代的区块链网络”，它支持去中心化应用 (DApp)、去中心化金融 (DeFi) 和去中心化交易所 (DEX)。",
+            "shortDescription": "以太坊是一个去中心化的开源区块链，支持智能合约部署。"
+        },
+        "icon": {
+            "title": "ICON 网络",
+            "description": "ICON 网络是基于原生代币 ICX 的通用区块链协议，支持智能合约部署，采用 BFT DPoS（委托股权证明）共识协议，并使用 DPoC（委托贡献证明）经济治理协议。ICON 网络由一个名为 “loopchain” 的专有区块链引擎提供动力，每秒可处理数百笔交易。ICON 项目的启动是为了确保机构和公司之间共享数据的完整性和透明度，并在没有中心化组织的情况下，在异构区块链上迁移共有资产。\n",
+            "shortDescription": "ICON 网络是基于原生代币 ICX 的通用区块链协议，支持智能合约部署，采用 BFT-DPoS 共识机制，以及 DPoC（委托贡献证明）经济治理协议。"
+        },
+        "iost": {
+            "title": "IOST 网络",
+            "description": "IOST 是一个基于下一代共识算法“可信证明”（PoB）的超快速、去中心化区块链。IOST 的使命是搭建在线服务的基础架构，满足去中心化经济的安全性和可扩展性需求。其团队由一批久经考验的创始人领导，并得到世界级投资者的支持。",
+            "shortDescription": "IOST 是一个基于下一代共识算法“可信证明”（PoB）的超快速、去中心化区块链。"
+        },
+        "kava": {
+            "title": "KAVA 网络",
+            "description": "Kava 是一个跨链的 DeFi 中心，提供去中心化金融服务和应用。它的运作就像一个去中心化的数字资产银行，将用户与稳定币、贷款和计息账户等产品连接起来，方便用户使用数字资产完成更多事情、赚取更多利润。",
+            "shortDescription": "Kava 是一个跨链的 DeFi 中心，支持去中心化金融服务和应用。"
+        },
+        "secret": {
+            "title": "Secret 网络",
+            "description": "Secret Network是第一个提供隐私保护智能合约的区块链。这意味着建立在Secret网络上的APP可以在不向其他任何人、甚至其他网络节点透露隐私信息的情况下利用加密数据。",
+            "shortDescription": "Secret 网络是第一个支持隐私保护智能合约的区块链。这意味着建立在 Secret 网络基础上的应用程序可以利用加密数据，而无需向任何人透露信息，甚至是网络中的节点。"
+        },
+        "tez": {
+            "title": "Tezos 网络",
+            "description": "Tezos 是一个开源平台，它解决了验证者、研究人员和开发者组成的全球社区在采用区块链技术过程中所面临的关键障碍。从设计上，Tezos 支持长期升级、开放参与、协作和智能合约安全。",
+            "shortDescription": "Tezos 是一个开源平台，解决了由验证者、研究人员和开发者组成的全球社区在采用区块链过程中面临的关键障碍。"
+        },
+        "sentinel": {
+            "title": "Sentinel 网络",
+            "description": "Sentinel 是一个共享带宽的节点网络，在其上可构建去中心化 VPN 及其他服务。Sentinel 生态的目的是以可信、可证明的方式实现互联网的普遍接入。它支持世界各地的组织和个体通过 Sentinel 基于 Cosmos 的区块链来构建经济高效的、可扩展的、分布式和去中心化的网络解决方案。",
+            "shortDescription": "Sentinel 生态系统是一个由自主 dVPN 应用程序组成的全球网络，可实现私人、防审查的互联网接入。"
+        },
+        "persistence": {
+            "title": "Persistence 网络",
+            "description": "Persistence 是一个跨链的 DeFi 产品生态系统，旨在刺激全球资产流动性，实现无缝价值交换。Persistence 通过其产品将不同类型的资产引入 DeFi —— 股权证明资产（pSTAKE）、农业商品资产（Comdex）和贸易融资债务资产（ShipFi）。",
+            "shortDescription": "Persistence 是一款通过使用现实世界资产（如发票）作为抵押品的加密资产（稳定币）借贷协议，为机构开放金融赋能。"
+        },
+        "chihuahua": {
+            "title": "Chihuahua 网络",
+            "description": "Chihuahua 是一种 meme 币，它旨在成为社区驱动的项目，其100亿 HUAHUA 代币将用于资助 Chihuahua 链上项目、进行链上治理提议和投票。该项目基于\nCosmos SDK 和 Tendermint 共识构建。",
+            "shortDescription": "Chihuahua 是 Cosmos 生态上的 meme 币，HUAHUA 是 Chihuahua 链原生质押和治理代币。"
+        },
+        "umee": {
+            "title": "Umee 网络",
+            "description": "Umee是一个去中心化的跨链交互基础设施",
+            "shortDescription": "Umee 是一个去中心化的跨链交互基础设施。"
+        },
+        "stargaze": {
+            "title": "Stargaze 网络",
+            "description": "Stargaze 是 Cosmos 生态系统中一个完全去中心化的 NFT 市场。它是 Cosmos 生态系统中的一个区域，具备高度安全性、去中心化、透明度和灵活性。Stargaze 允许内容策展人通过发现内容并对其进行评价获得奖励。其原生代币 STARS 可用于质押、参与治理、在平台上互动和铸造NFT。",
+            "shortDescription": "Stargaze 是 Cosmos 生态系统中由社区拥有的跨链 NFT 市场"
+        },
+        "rizon": {
+            "title": "Rizon 网络",
+            "description": "RIZON 区块链是一个数字货币和资产中心，它提供了一个平台使全球各地的法币可以安全发行，并使企业之间得以交互。Rizon 区块链将实现主权区块链网络之间的互操作性，并为这些网络提供大量流动性的环境，前提是其满足独立项目的业务需求。RIZON 区块链拥有强大的网络背景，能够促进生态系统参与者的流入和业务的多样化。",
+            "shortDescription": "RIZON 区块链的使命是提供一个平台，让世界各地的法币可以安全地发行，并使企业能够通过 Cosmos IBC 进行交互。"
+        },
+        "comdex": {
+            "title": "Comdex 网络",
+            "description": "Comdex 旨在以高效、快速和透明的方式彻底改变零散的商品贸易行业。Comdex的愿景是彻底改变全球初级商品贸易的基本流程，以尽可能缩短结算时间，并以闪电般的速度最大限度地提高贸易发现和贸易融资的透明度、效率和不变性。",
+            "shortDescription": "Comdex 是搭建在 Cosmos 上的去中心化合成资产协议"
+        },
+        "juno": {
+            "title": "Juno 网络",
+            "description": "Juno 是 layer 1 智能合约网络，解决了第一代智能合约的瓶颈问题——可扩展性有限、部署和执行成本高，并为全球各地开发人员提供了一个轻松的环境，以便高效部署可扩展、安全的去中心化应用。",
+            "shortDescription": "Juno 是基于 Cosmos  搭建的区块链，为部署可交互操作的智能合约提供环境。"
+        },
+        "osmosis": {
+            "title": "Osmosis 网络",
+            "description": "Osmosis 是一个去中心化的点对点区块链，人们可以使用它来创建流动性和交易支持 IBC 的代币。Osmosis 区块链由免费、公开和开源软件组成。Osmosis 作为自动做市商（AMM）连接到其他基于 Tendermint 的区块链，为用户创造一种异构且可互操作的跨链交易体验。",
+            "shortDescription": "Osmosis 是一个去中心化的点对点区块链，人们可以使用它来创造流动性和交易支持 IBC 的代币。"
+        },
+        "sifchain": {
+            "title": "Sifchain 网络",
+            "description": "Sifchain 是去中心化交易所（DEX）的全链解决方案。更高的性能、更强大的交易和安全加密经济、更灵活的交易能力、可扩展的全链路线图以及最终的真正实现 DAO 治理。Sifchain 灵感来源于挪威女神 Sif，掌管大地、农业、生育、家庭和婚姻。Sif 代表了区块链行业的协作性质，以及在发展多链联系中可获得的丰厚回报。",
+            "shortDescription": "Sifchain 是一个去中心化交易所，它结合了流动性池和订单簿的最佳元素，以实现最佳订单执行。"
+        },
+        "lum": {
+            "title": "Lum 网络",
+            "description": "Lum 网络是一个开源区块链协议（layer 1），基于 Tendermint 及 Cosmos SDK，这是最先进、最安全的委托权益证明（DPoS）算法。它由其原生加密资产 LUM 提供动力。",
+            "shortDescription": "Lum 网络引入了快速、安全和可持续的开源区块链协议，设定了一个新标准促进企业和客户之间的信任，同时给予双方奖励。"
+        },
+        "cheqd": {
+            "title": "已检查网络",
+            "description": "Cheqd 团队正在构建一个安全的网络，使个人和组织能够完全控制自己的个人数据。cheqd 帮助企业创建创新的商业模式，确保自主权是一种可行且值得向客户提供的服务。",
+            "shortDescription": "Cheqd 解决方案支持新的商业模式，在这种模式下，可验证的凭证可通过可信、可重复利用、更安全、更便宜的方式进行交换。"
+        },
+        "fetch": {
+            "title": "Fetch.ai 网络",
+            "description": "Fetch.ai 是一家总部位于英国剑桥的人工智能实验室，为智能基础设施建设一个开放访问的去中心化机器学习网络。Fetch.ai 区块链是一种基于 Cosmos SDK 的链间协议，使用基于 WASM 的高性能智能合约语言（Cosmwasm），允许在链上实现高级加密和机器学习逻辑。Fetch.ai 网络还可为已饱和的区块链提供 layer 2 网络解决方案，以及作为连接外部世界的链间桥梁。",
+            "shortDescription": "Fetch.ai 是一个人工智能实验室，它构建了一个开放访问、代币化的机器学习网络，以支持围绕去中心化数字经济构建的智能基础设施。"
+        },
+        "injective": {
+            "title": "Injective 网络",
+            "description": "Injective 是一种定制的可交互 layer 1 协议，用于构建强大的交易所、DeFi、衍生品和 Web3 应用程序。Injective 基于 Cosmos SDK 创建，能够以闪电般的速度实现即时事务最终决策。INJ 是其原生的通货紧缩稀缺资产，为 Injective 及其快速增长的生态系统赋能。Injective 由币安孵化，投资方包括 Pantera Capital。",
+            "shortDescription": "Injective 是可交互的 layer 1 协议，是构建跨链 Web3 DeFi 应用的更优选择。"
+        },
+        "bitsong": {
+            "title": "Bitsong 网络",
+            "description": "BitSong 是一个分布式、开源、无需许可的音乐生态系统，于 2017 年 12 月提出构想，并基于区块链技术构建。我们的目标是创建一个去中心化的、无需信任的中心，使音乐行业的各方市场参与者实现有利的互联。",
+            "shortDescription": "BitSong 将音乐艺术家及其粉丝战略性地聚集在一个基于区块链的系统中，他们可以控制自己的收入流、使用 Web3 增长工具，并在互利的模式中把握机会。"
+        },
+        "kichain": {
+            "title": "Ki-Chain 网络\n",
+            "description": "Ki Chain 是基于 Cosmos 生态系统的区块链平台，旨在为传统及加密领域投资者提供一个便捷的投资和交易平台，这将极大地增加传统投资者的机会与加密行业轻松互动的机会。",
+            "shortDescription": "Ki Chain 区块链平台是一个基于 Cosmos 的网络，旨在为加密投资者提供基础设施，以在 CeFi 和 DeFi 市场之间灵活地切换加密资产。"
+        },
+        "regen": {
+            "title": "Regen 网络\n",
+            "description": "Regen Ledger 是基于 Cosmos SDK 的权益证明共识公链。它有两方面主要目标——为与生态系统有关的主张和内容编制索引，同时安全地跟踪一种全新的金融资产，称为生态系统服务信用，它与生态健康的可衡量变化高度关联。",
+            "shortDescription": "Regen 是一个生态知识区块链网络，旨在改变再生农业经济以扭转全球变暖。"
+        },
+        "starname": {
+            "title": "Starname 网络\n",
+            "description": "一个 *starname 即为用户提供区块链上可选择的个性化身份。您可以直接发送和接收付款、拥有和存储资产、交易，并深入参与整个加密世界——所有这些都仅需使用一个相同的 *starname。",
+            "shortDescription": "*starname 是一种真正的去中心化姓名服务，符合  Web 3的数字所有权核心理念"
+        },
+        "emoney": {
+            "title": "e-Money 网络\n",
+            "description": "e-Money 由一家丹麦金融科技公司于 2016 年成立，是一个基于区块链的支付平台，旨在将传统银行系统与一个高效的区块链层连接起来。e-Money 协议基于 Cosmos 技术基础搭建，用于发行一系列有息货币支持的稳定币。",
+            "shortDescription": "e-Money 是一个基于区块链的支付平台，基于 Cosmos 搭建，致力于实现金融普惠，帮助世界各地的人们轻松获取加密货币。"
+        },
+        "iris": {
+            "title": "Iris 网络",
+            "description": "IRISnet（即 IRIS Hub）为新一代去中心化应用程序而设，致力于成为这些应用的基础设施。IRIS Hub 采用 Cosmos SDK 构建，通过统一的服务模型实现跨链交互，同时提供多种模块以支持 DeFi 应用程序。",
+            "shortDescription": "IRIS 网络是一个区块链网络，旨在为去中心化业务应用的构建提供技术基础。"
+        },
+        "cerberus": {
+            "title": "Cerberus 网络\n",
+            "description": "Cerberus 区块链是一个完全无许可的区块链，任何人都可以加入网络并运行验证节点。社区将能够通过质押 Cerberus（$CRBRU）验证节点和流动性池并从中获取收益。2022年下半年，Cerberus 团队计划专注于启动其 NFT 项目。",
+            "shortDescription": "Cerberus 是 Cosmos 生态第一个形象为三头犬的 MEME 币以及 NFT 项目。"
+        },
+        "mantle": {
+            "title": "AssetMantle 网络\n",
+            "description": "使用 AssetMantle，您可以轻松地为特定卖家或卖家群体的各种产品创建专用市场。想象将它视为一个 NFT 的‘Shopify’，而不是简单地将产品在 NFT 市场中的 ‘Amazon’（如 OpenSea）上架。创作者和艺术家可以为自己的独特 NFT 创建属于他们自己的 Shopify 风格商店。",
+            "shortDescription": "AssetMantle 是一个独一无二的平台，旨在促进您的 NFT 的商业化运作。"
+        },
+        "gbridge": {
+            "title": "Gravity Bridge 网络\n",
+            "description": "Cosmos Gravity Bridge 是一个专门建造的、完全去中心化的、可信任的区块链，它将以太坊和 Cosmos 生态系统之间的资产连接起来。以太坊和 EVM 兼容的代币可以通过 Gravity Bridge 转移到 Cosmos 钱包，然后再转移到其他 Cosmos 生态钱包或 DEX 上。基于 Cosmos SDK 的区块链同样可以通过 Gravity Bridge 将代币发送到以太坊生态系统，使其可以在 Uniswap 或其他 ETH DEX 上进行潜在的转移或交易。",
+            "shortDescription": "Gravity Bridge 是一个去中心化的 Cosmos 区块链，其主要目的是确保区块链之间桥的安全运行。"
+        },
+        "konstellation": {
+            "title": "Konstellation 网络",
+            "description": "Konstellation 是一个基于 Cosmos 的 Layer-3 区块链协议，目前可连接 Solana 和BNB 链。借助于 IBC，Konstellation 旨在所有区块链上开发不同领域（DeFi、CeFi、NFT、DAO）的各种 dAPP。Konstellation 交互性允许用户投资跨链数字资产，铸造与法币锚定的稳定币，探索NFT机会，并参与 play-to-earn 游戏和 DAO。该网络由 DARC 代币提供交易手续费用支持，DARC 代币可用于 Konstellation 上的 dAPP 并参与 Konstellation 链上治理。",
+            "shortDescription": "Konstellation 网络是一个基于 Cosmos SDK 的区块链协议，为去中心化资本市场创造未来全球化基础设施。"
+        },
+        "evmos": {
+            "title": "Evmos 网络",
+            "description": "Evmos 是一个应用程序兼容的区块链，可通过 IBC 与以太坊、EVM兼容环境和其他 BFT 链进行交互，从而方便用户和开发人员实现跨链无缝交互。Evmos 的目标是成为 Cosmos 的 EVM 中心，使智能合约能够在 Cosmos 生态系统内轻松部署和交互。",
+            "shortDescription": "Evmos 是 Cosmos 网络的 EVM 中心。它是 Ethermint 库的标杆应用，着重交互性和新经济性。"
+        },
+        "axelar": {
+            "title": "Axelar 网络",
+            "description": "Axelar 网络是一个可扩展的跨链通信平台。区块链平台开发者可以通过它将无缝接入其他所有区块链生态系统。应用程序开发人员可以选择最好的区块链来支持其应用程序，并使用 Axelar 的跨链通信协议锁定、解锁和传输资产，并与其他链上的应用程序通信。Axelar 将 DAPP 与多个区块链生态系统连接起来，允许用户直接从其钱包与生态系统中的所有应用程序进行交互。",
+            "shortDescription": "Axelar 网络是一个去中心化的、协助完成跨链请求的状态机。该网络支持如跨链网关协议（CGP）等关键协议。"
+        },
+        "crescent": {
+            "title": "Crescent 网络\n",
+            "description": "Crescent 是一个 DeFi Hub，通过以 Cosmos 生态系统中不可见的方式统一各区块链，邀请用户探索数字资产的无限可能性。",
+            "shortDescription": "Crescent 为 Cosmos 生态系统连接 DeFi 功能，以提高资本效率并有效管理风险。"
+        },
+        "polkadot": {
+            "title": "波卡网络 Polkadot",
+            "description": "波卡是一种允许跨链传输任意数据——而不仅仅是代币——的区块链网络协议。这意味着波卡是一个真正的多链应用程序环境，支持实现跨链注册和计算。波卡支持跨链传输数据，无论是公共、开源、无许可的区块链，还是私有、需许可的区块链。",
+            "shortDescription": "波卡是一种允许跨链传输任意数据——而不仅仅是代币——的区块链网络协议。这意味着波卡是一个真正的多链应用程序环境，支持实现跨链注册和计算。"
+        }
+    },
+    "uptime": "运行时间",
+    "active": "活跃",
+    "noactive": "非活跃",
+    "jailed": "禁止",
+    "sendAssetsDestination": "目标网络",
+    "keplr": {
+        "notFound": "在您的浏览器未找到 Keplr ",
+        "cancel": "取消",
+        "importWallet": "导入钱包",
+        "allreadyAdded": "已添加该地址",
+        "titleModal": "导入 Keplr 钱包",
+        "descModal": "选择一个网络连接 Keplr",
+        "selectChainId": "选择链ID",
+        "errorSignMismatch": "请在 Keplr 钱包中更换账户为该交易进行签名",
+        "allExist": "操作取消，或是所有地址已存在",
+        "confirm": "确认",
+        "selectAll": "全选",
+        "unselectAll": "取消全选",
+        "addTitle": "从 Keplr 添加网络",
+        "addInfo": "选择网络导入您的 Keplr 钱包"
+    },
+    "faq": {
+        "privacyPolicy": "隐私条款",
+        "termsOfService": "服务条款"
+    },
+    "dontHaveEnoughFounds": "您的余额不足，无法支付交易手续费",
+    "transactionsSocket": {
+        "failed": "交易失败",
+        "completed": "交易完成",
+        "viewTitle": "在浏览器上查看"
+    },
+    "confirmModalTitle": "确认提取奖励",
+    "confirmModalDesc": "您将在可用余额中看到累计的奖励",
+    "manageStaking": "管理质押",
+    "stakeShare": "质押份额",
+    "additionalFee": "额外手续费",
+    "rewardDestination": "奖励目的地址",
+    "unstakedBalance": "解除质押余额",
+    "claimUnstakedText": "您的资产已解除质押，确认交易以立即提取资产。",
+    "stakingAmount": "质押金额",
+    "polkadot": {
+        "chooseNodeModalDesc": "设置需要质押的代币数量。然后，选择委托节点。您的资金可以分配到 <span style='color: #0A2778; font-weight: 700;'> 不超过  {maxNodes}  个节点 </span>。此外，考虑到 ${net} 的解除冻结期为 <span style='color: #0A2778' font-weight: 700;>{perioud} 天 </span>。在此期间，您的解除质押代币将被冻结<span style='color: #FF5722; font-weight: 700;'> 最低质押余额：{minStakingAmount} {code}</span>",
+        "nominatedNodesTitle": "指定节点：",
+        "error": {
+            "chooseNotMoreThan16Nodes": "选择最多16个节点"
+        }
+    },
+    "minSendAmountError": "最低交易金额为 {minAmount} {code}",
+    "changeValidators": "切换节点",
+    "redelegateNote": "您必须选择另一个验证节点重新进行质押",
+    "assets": "资产",
+    "menu": {
+        "settings": "设置",
+        "logOut": "退出登录"
+    },
+    "stakingNote": "如果您不希望切换节点，您可以设置一个新账号",
+    "assetsModal": {
+        "title": "选择代币",
+        "description": "当代币成功选择后，即可发送、质押、提取并加以管理",
+        "searchLabel": "搜索代币",
+        "searchPlaceholder": "输入代币名称",
+        "currentAsset": "当前资产"
+    },
+    "enterPasswordBackup": "输入备份文件密码以重新导入 Citade.one 通用助记词钱包",
+    "enterPasswordBackupLabel": "输入您的备份文件密码",
+    "walletsAdding": {
+        "mainMenuTitle": "添加一个新地址",
+        "importMenuTitle": "导入",
+        "mainMenuDescription": "导入 Citadel.one 平台之外创建的地址",
+        "menu": {
+            "create": "创建",
+            "createDescription": "Citadel 通用助记词钱包允许用户只使用一组助记词，即可为集成到平台中的所有网络创建地址。",
+            "import": "导入",
+            "importDescription": "导入您的地址，开始管理资产",
+            "addNetworks": "添加网络",
+            "addNetworksDescription": "Citadel 通用助记词钱包允许用户只使用一组助记词，即可为集成到平台中的所有网络创建地址。从而无需为各种钱包记住多组助记词。"
+        },
+        "menuTypes": {
+            "restoreTitle": "恢复",
+            "restoreDescription": "对于现有的 Citadel.one 用户",
+            "importWallet": "导入钱包",
+            "importDescription": "对于外部钱包用户",
+            "externalWallet": "外部钱包",
+            "externalDescription": "对于高端用户",
+            "restoreOneSeed": "重置通用助记词",
+            "restoreOneSeedDescription": "选择一种合适的方式导入您已有地址",
+            "importFile": "导入文件",
+            "importFileDescription": "选择一种合适的方式导入已有地址",
+            "seedPhrase": "助记词",
+            "seedPhraseDescription": "导入您的助记词以添加新地址",
+            "privateKey": "私钥",
+            "privateKeyDescription": "导入您的私钥以添加新地址",
+            "metamaskKeplr": "Metamask, Keplr 钱包\n",
+            "metamaskKeplrDescription": "连接您的 Web3 钱包以添加新地址",
+            "hardware": "硬件钱包",
+            "hardwareDescription": "导入 Ledger 或 Tezor 钱包地址以开启更多功能"
+        }
+    }
+}

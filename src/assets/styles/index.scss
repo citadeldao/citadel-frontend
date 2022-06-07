@@ -1,0 +1,281 @@
+@import "fonts.scss";
+@import "directives/index";
+@import "charts/index";
+@import "helpers";
+
+*{
+    box-sizing: border-box;
+}
+
+*:not(path) {
+  transition: all 0.3s;
+}
+*::-webkit-scrollbar {
+  width: 4px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: $too-ligth-blue;
+  border-radius: 8px
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: $too-ligth-blue transparent;
+}
+
+html {
+  font-family: 'Panton_Regular';
+}
+
+textarea {
+  font-family: "Panton_SemiBold";
+}
+
+body {
+    margin: 0px;
+    position: relative;
+    overflow: hidden;
+}
+button {
+   border: none;
+   cursor: pointer;
+   outline: none;
+
+}
+input{
+    outline: none;
+}
+textarea{
+  font-family: 'Panton_SemiBold'
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to,
+.fade1-enter-from,
+.fade1-leave-to  {
+  opacity: 0;
+}
+
+.fade1-enter-active,
+.fade1-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.slide-from-top-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-from-top-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-from-top-enter-from,
+.slide-from-top-leave-to {
+  transform: translateY(-20px);
+  opacity: 0;
+}
+
+.el-pager li{
+  font-size: 16px !important;
+  line-height: 19px !important;
+  color: $mid-gray !important;
+  min-width: 22px !important;
+  border-top:2px solid transparent !important;
+  display: inline-flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  @include md{
+    font-size: 14px !important;
+    line-height: 17px !important;
+  }
+}
+.el-pager li:hover {
+  color: $dark-blue !important;
+}
+.el-pager li.active{
+  color: $blue !important;
+  border-top:2px solid $blue !important;
+}
+.el-pager .more::before{
+  content: "__";
+  padding-bottom: 16px;
+}
+
+.el-switch__core .el-switch__action{
+    top: -0.1px !important;
+    left: -1px !important;
+    width: 24px !important;
+    height: 24px !important;
+    background: linear-gradient(282.38deg, #FFFFFF 0.64%, #FCF8F8 75.95%);
+    border: 0.5px solid $too-ligth-blue;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.191761), -16px -7px 24px rgba(255, 255, 255, 0.595908), 1px 4px 13px rgba(126, 126, 126, 0.124208);
+}
+.el-switch__core{
+  width: 48px !important;
+  height: 24px !important;
+  border-radius: 14px !important;
+  border: none !important;
+}
+.el-switch.is-checked .el-switch__core .el-switch__action{
+  margin-left: 25px !important;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.191761), 1px 4px 13px rgba(126, 126, 126, 0.124208) !important;
+}
+
+.el-input__inner {
+  font-size: 16px !important;
+  line-height: 19px !important;
+  color: $mid-gray !important;
+  border: 1px solid $too-ligth-blue !important;
+  &:focus{
+    border-color: $blue !important
+  }
+}
+.date-picker{
+  .el-input__inner{
+  border: none !important;
+}
+.el-range-editor.el-input__inner{
+  padding: 0;
+  align-items: flex-end;
+  justify-content: flex-end;
+  width: 100%;
+  height:17px;
+  border-radius: 8px;
+  margin-top: 7px;
+}
+
+.el-date-editor .el-range-input{
+  font-size: 14px;
+  line-height: 17px;
+  font-family: 'Panton_SemiBold';
+  color: $black;
+  height: initial;
+  width: 40%;
+}
+.el-date-editor .el-range-separator{
+  letter-spacing: -1px;
+  color: $mid-gray;
+  padding: 0;
+  padding-bottom: 5px;
+  height: initial;
+  width: initial;
+  line-height: initial;
+}
+.el-date-editor .el-range__close-icon{
+  display: none;
+}
+
+.el-date-editor .el-range__icon{
+  display: none;
+}
+.el-range-editor.is-disabled input,
+.el-range-editor.is-disabled{
+background-color: #F0F3FD;
+}
+
+}
+.el-date-table th{
+  font-size: 9px;
+  line-height: 11px;
+  text-align: center;
+  color: $mid-blue !important;
+  font-family: 'Panton_SemiBold';
+  border-bottom: 0.358227px solid $too-ligth-blue !important;
+}
+.el-date-range-picker__header div{
+  line-height: 19px;
+  text-align: center;
+  color: $too-dark-blue;
+  font-family: 'Panton_SemiBold'
+}
+.el-picker-panel__icon-btn{
+  color: $blue !important;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  margin: 0 !important;
+  border-radius: $round;
+  &:hover{
+    background: #F0F3FD
+  }
+}
+.el-picker-panel{
+  color:$black !important
+}
+.el-date-table td.start-date span{
+  background-color: $blue !important;
+}
+.el-date-table td.end-date span{
+  background-color: $white !important;
+  color:$blue !important
+}
+.el-date-table td.in-range div,
+.el-date-table td.in-range div:hover,
+.el-date-table.is-week-mode .el-date-table__row.current div,
+.el-date-table.is-week-mode .el-date-table__row:hover div{
+  background-color: rgba(197, 220, 250, 0.5) !important;
+}
+
+.el-slider{
+  & *{
+    transition: none;
+  }
+}
+.el-slider__runway{
+  background-color: $white !important;
+  height: 4px !important;
+  border-radius: 8px !important;
+  margin: 0px !important;
+}
+.el-slider__bar{
+  background-color: $dark-blue !important;
+  height: 4px !important;
+  border-top-left-radius: 8px !important;
+  border-bottom-left-radius: 8px !important;
+}
+.el-slider__button{
+  width: 24px !important;
+  height: 24px !important;
+  border: 3px solid $dark-blue !important;
+  @include md{
+    width: 16px !important;
+    height: 16px !important;
+    border: 2px solid $dark-blue !important;
+  }
+}
+
+
+::placeholder {
+  font-family: 'Panton_SemiBold';
+  font-size: 14px;
+  line-height: 17px;
+  color: $mid-blue;
+  opacity: 1;
+}
+
+:-ms-input-placeholder {
+  font-family: 'Panton_SemiBold';
+  font-size: 14px;
+  line-height: 17px;
+  color: $mid-blue;
+}
+
+::-ms-input-placeholder {
+  font-family: 'Panton_SemiBold';
+  font-size: 14px;
+  line-height: 17px;
+  color: $mid-blue;
+}
+.inactive{
+  opacity: .5;
+}
+

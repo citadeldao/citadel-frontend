@@ -1,0 +1,10 @@
+@mixin input {
+  width: 100%;
+  height: 100%;
+  border: 1px solid $too-ligth-blue;
+  border-radius: 8px;
+  padding: 28px 50px 10px 36px;
+  font-size: 14px;
+  line-height: 17px;
+  font-family: "Panton_SemiBold";
+}

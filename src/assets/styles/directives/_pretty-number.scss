@@ -1,0 +1,32 @@
+.pretty-number {
+  position: relative;
+  font-family: inherit !important;
+  transition: color 0ms !important;
+
+  &__tooltip {
+    display: inline-flex;
+    visibility: hidden;
+    position: fixed;
+    transform: translateX(-50%);
+    z-index: 10;
+    padding: 13px 12px;
+    border-radius: 6px;
+    opacity: 0;
+    background: white;
+    font-family: "Panton_SemiBold" !important;
+    box-shadow: 0 4px 25px rgba(63, 54, 137, 0.25);
+    font-size: 14px;
+    line-height: 1;
+    color: black;
+    transition: 0.3s opacity;
+    cursor: text;
+  }
+
+  &__currency {
+    font-family: "Panton_SemiBold" !important;
+    color: $mid-blue;
+    transition: 0.3s opacity;
+    padding-left: 0.25em;
+    text-transform: uppercase;
+  }
+}

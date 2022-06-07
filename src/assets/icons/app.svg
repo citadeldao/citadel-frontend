@@ -1,0 +1,6 @@
+<svg  viewBox="0 0 20 20" fill="#AFBCCB" xmlns="http://www.w3.org/2000/svg">
+<rect width="9" height="9" rx="1" />
+<rect y="11" width="9" height="9" rx="1" />
+<rect x="11" width="9" height="9" rx="1" />
+<rect x="11" y="11" width="9" height="9" rx="4.5" />
+</svg>

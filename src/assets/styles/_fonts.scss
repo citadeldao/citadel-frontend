@@ -1,0 +1,179 @@
+@font-face {
+    font-family: 'Panton_BoldItalic';
+    src:
+        url('../fonts/Panton-BoldItalic.woff2') format('woff2'),
+        url('../fonts/Panton-BoldItalic.woff') format('woff'),
+        url('../fonts/Panton-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Panton_SemiBold';
+    src:
+        url('../fonts/Panton-SemiBold.woff2') format('woff2'),
+        url('../fonts/Panton-SemiBold.woff') format('woff'),
+        url('../fonts/Panton-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Panton_ExtraBoldItalic';
+    src:
+        url('../fonts/Panton-ExtraBoldItalic.woff2') format('woff2'),
+        url('../fonts/Panton-ExtraBoldItalic.woff') format('woff'),
+        url('../fonts/Panton-ExtraBoldItalic.ttf') format('truetype');
+    font-weight: 800;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Panton_ExtraLightItalic';
+    src:
+        url('../fonts/Panton-ExtraLightItalic.woff2') format('woff2'),
+        url('../fonts/Panton-ExtraLightItalic.woff') format('woff'),
+        url('../fonts/Panton-ExtraLightItalic.ttf') format('truetype');
+    font-weight: 200;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Panton_SemiBoldItalic';
+    src:
+        url('../fonts/Panton-SemiBoldItalic.woff2') format('woff2'),
+        url('../fonts/Panton-SemiBoldItalic.woff') format('woff'),
+        url('../fonts/Panton-SemiBoldItalic.ttf') format('truetype');
+    font-weight: 600;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Panton_Black';
+    src:
+        url('../fonts/Panton-Black.woff2') format('woff2'),
+        url('../fonts/Panton-Black.woff') format('woff'),
+        url('../fonts/Panton-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Panton_BlackItalic';
+    src:
+        url('../fonts/Panton-BlackItalic.woff2') format('woff2'),
+        url('../fonts/Panton-BlackItalic.woff') format('woff'),
+        url('../fonts/Panton-BlackItalic.ttf') format('truetype');
+    font-weight: 900;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Panton_Light';
+    src:
+        url('../fonts/Panton-Light.woff2') format('woff2'),
+        url('../fonts/Panton-Light.woff') format('woff'),
+        url('../fonts/Panton-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Panton_ExtraBold';
+    src:
+        url('../fonts/Panton-ExtraBold.woff2') format('woff2'),
+        url('../fonts/Panton-ExtraBold.woff') format('woff'),
+        url('../fonts/Panton-ExtraBold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Panton_Bold';
+    src:
+        url('../fonts/Panton-Bold.woff2') format('woff2'),
+        url('../fonts/Panton-Bold.woff') format('woff'),
+        url('../fonts/Panton-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Panton_Regular';
+    src:
+        url('../fonts/Panton-Regular.woff2') format('woff2'),
+        url('../fonts/Panton-Regular.woff') format('woff'),
+        url('../fonts/Panton-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Panton_Thin';
+    src:
+        url('../fonts/Panton-Thin.woff2') format('woff2'),
+        url('../fonts/Panton-Thin.woff') format('woff'),
+        url('../fonts/Panton-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Panton_HeavyItalic';
+    src:
+        url('../fonts/Panton-HeavyItalic.woff2') format('woff2'),
+        url('../fonts/Panton-HeavyItalic.woff') format('woff'),
+        url('../fonts/Panton-HeavyItalic.ttf') format('truetype');
+    font-weight: 900;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Panton_LightItalic';
+    src:
+        url('../fonts/Panton-LightItalic.woff2') format('woff2'),
+        url('../fonts/Panton-LightItalic.woff') format('woff'),
+        url('../fonts/Panton-LightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Panton_ExtraLight';
+    src:
+        url('../fonts/Panton-ExtraLight.woff2') format('woff2'),
+        url('../fonts/Panton-ExtraLight.woff') format('woff'),
+        url('../fonts/Panton-ExtraLight.ttf') format('truetype');
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Panton_ThinItalic';
+    src: 
+        url('../fonts/Panton-ThinItalic.woff2') format('woff2'),
+        url('../fonts/Panton-ThinItalic.woff') format('woff'),
+        url('../fonts/Panton-ThinItalic.ttf') format('truetype');
+    font-weight: 100;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Panton_RegularItalic';
+    src:
+        url('../fonts/Panton-RegularItalic.woff2') format('woff2'),
+        url('../fonts/Panton-RegularItalic.woff') format('woff'),
+        url('../fonts/Panton-RegularItalic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Panton_Heavy';
+    src:
+        url('../fonts/Panton-Heavy.woff2') format('woff2'),
+        url('../fonts/Panton-Heavy.woff') format('woff'),
+        url('../fonts/Panton-Heavy.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
