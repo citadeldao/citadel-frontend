@@ -192,9 +192,9 @@ export default class CryptoCoin {
     let res;
     if(walletId){
       res = await citadel.getBalanceById(walletId, token);
-      if(token){
-        await store.dispatch('wallets/getNewWallets','lazy');
-      }
+      // if(token){
+      //   await store.dispatch('wallets/getNewWallets','lazy');
+      // }
     }else{
       res = await citadel.getBalanceByAddress(net, address);
     }

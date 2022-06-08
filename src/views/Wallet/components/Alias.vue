@@ -211,7 +211,7 @@ export default {
         walletId: props.currentWallet.id,
         title: alias.value,
       });
-      store.dispatch('wallets/getNewWallets','lazy');
+      // store.dispatch('wallets/getNewWallets','lazy');
       editMode.value = false;
       alias.value = '';
     };

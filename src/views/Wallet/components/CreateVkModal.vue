@@ -301,7 +301,7 @@ export default {
       showSuccessModal.value = true;
       isConfirmModalLoading.value = false;
 
-      await store.dispatch('wallets/getNewWallets','lazy');
+      // await store.dispatch('wallets/getNewWallets','lazy');
     };
 
     const closeHandler = async () => {
@@ -380,7 +380,7 @@ export default {
 
         return;
       }
-      await store.dispatch('wallets/getNewWallets','lazy');
+      // await store.dispatch('wallets/getNewWallets','lazy');
       txHash.value = transactionHash;
     };
 

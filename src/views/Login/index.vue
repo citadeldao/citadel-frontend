@@ -69,7 +69,8 @@ import LoginForm from './components/LoginForm';
 import LoginCarousel from './components/LoginCarousel';
 import citadelLogo from '@/assets/icons/citadelLogo.svg';
 import initPersistedstate from '@/plugins/persistedstate';
-import { SocketManager } from '@/utils/socket';
+// import { SocketManager } from '@/utils/socket';
+import { socketEventHandler } from '@/utils/socketEventHandler';
 import notify from '@/plugins/notify';
 import RoundArrowButton from '@/components/UI/RoundArrowButton';
 import conversation from '@/assets/icons/conversation.svg';
@@ -162,14 +163,18 @@ export default {
         if (!error) {
           await store.dispatch('networks/loadConfig');
           initPersistedstate(store);
-          SocketManager.connect();
+          // SocketManager.connect();
+          citadel.addEventListener('socketEvent', socketEventHandler);
+          citadel.addEventListener('walletListUpdated', async () => {
+            await store.dispatch( 'wallets/getNewWallets', 'lazy');
+          });
           //citadel.addEventListener('walletListUpdated', async ()=> await store.dispatch('wallets/getNewWallets'));
           await store.dispatch('app/setWallets');
           // await store.dispatch('wallets/getNewWallets','lazy');
           // store.dispatch('wallets/getNewWallets','detail');
           store.dispatch('wallets/getCustomWalletsList');
           store.dispatch('rewards/getRewards');
-          await store.dispatch('transactions/getMempool');
+          /* await */ store.dispatch('transactions/getMempool');
           const { wallets } = useWallets();
 
           redirectToWallet({

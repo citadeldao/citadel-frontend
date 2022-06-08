@@ -99,10 +99,10 @@ export class SocketManager {
 
       //update balance
       this.socket.on('address-balance-updated-client', async (socketObject) => {
-        const res = await citadel.parseSocketObject('address-balance-updated-client', socketObject);
-        if(!res.error){
-          store.dispatch('wallets/getNewWallets','lazy');
-        }
+        /* const res = */ await citadel.parseSocketObject('address-balance-updated-client', socketObject);
+        // if(!res.error){
+        //   store.dispatch('wallets/getNewWallets','lazy');
+        // }
       });
 
       // mempool
@@ -127,7 +127,7 @@ export class SocketManager {
         const res = await citadel.parseSocketObject('mempool-remove-tx-client', tx);
         if(!res.error){
           store.commit('transactions/REMOVE_FROM_MEMPOOL', tx);
-          store.dispatch('wallets/getNewWallets','lazy');
+          // store.dispatch('wallets/getNewWallets','lazy');
           if(res.data.updateStakeListRequired){
             await store.dispatch('staking/updateStakeList', ({ address: tx.from, net: tx.net }),{ root: true });
             if(tx.from.toLowerCase() !== tx.to.toLowerCase()){
