@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { ref, computed, inject } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import Modal from '@/components/Modal';
@@ -94,6 +94,8 @@ export default {
     const isLoading = ref(false);
     const formDisabled = ref(false);
     const showEmailModal = ref(false);
+    const citadel = inject('citadel');
+
 
     const { currentStep, nextStep, setCurrentStep } = useCurrentStep(1, null);
 
@@ -161,9 +163,10 @@ export default {
           await store.dispatch('networks/loadConfig');
           initPersistedstate(store);
           SocketManager.connect();
+          //citadel.addEventListener('walletListUpdated', async ()=> await store.dispatch('wallets/getNewWallets'));
           await store.dispatch('app/setWallets');
-          await store.dispatch('wallets/getNewWallets','lazy');
-          store.dispatch('wallets/getNewWallets','detail');
+          // await store.dispatch('wallets/getNewWallets','lazy');
+          // store.dispatch('wallets/getNewWallets','detail');
           store.dispatch('wallets/getCustomWalletsList');
           store.dispatch('rewards/getRewards');
           await store.dispatch('transactions/getMempool');

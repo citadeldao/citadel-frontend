@@ -40,9 +40,12 @@ export default {
         await dispatch('networks/loadConfig', null, { root: true });
         initPersistedstate(store);
         SocketManager.connect();
+        console.log(this);
+        const clb = async function(){await dispatch('wallets/getNewWallets');} ;
+        citadel.addEventListener('walletListUpdated', clb.bind(this));
         await dispatch('setWallets');
-        await dispatch('wallets/getNewWallets','lazy', { root: true });
-        dispatch('wallets/getNewWallets','detail', { root: true });
+        // await dispatch('wallets/getNewWallets','lazy', { root: true });
+        // dispatch('wallets/getNewWallets','detail', { root: true });
         dispatch('wallets/getCustomWalletsList', null, { root: true });
         dispatch('rewards/getRewards', null, { root: true });
         await dispatch('transactions/getMempool', null, { root: true });
