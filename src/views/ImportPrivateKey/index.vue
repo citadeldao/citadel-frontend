@@ -57,7 +57,7 @@ import CatPage from '@/components/CatPage';
 import Modal from '@/components/Modal';
 import AddressAlreadyAdded from '@/components/Modals/AddressAlreadyAdded';
 import useCurrentStep from '@/compositions/useCurrentStep';
-import { steps as prvateKeySteps } from '@/static/importPrivateKey';
+import { getSteps } from '@/static/importPrivateKey';
 import useCreateWallets from '@/compositions/useCreateWallets';
 import { WALLET_TYPES } from '../../config/walletType';
 
@@ -73,8 +73,6 @@ export default {
     AddressAlreadyAdded,
   },
   setup() {
-    const { currentStep, steps } = useCurrentStep(2, prvateKeySteps);
-
     const {
       showLoader,
       showModal,
@@ -90,6 +88,8 @@ export default {
       showAlreadyAddedModal,
       setAccount,
     } = useCreateWallets();
+
+    const { currentStep, steps } = useCurrentStep(2, getSteps(isPasswordHash.value));
 
     const finalStep = ({ net, privateKey, account }) => {
       setPrivateKey(privateKey);

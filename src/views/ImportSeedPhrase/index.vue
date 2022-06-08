@@ -54,7 +54,7 @@ import CreatePassword from './components/CreatePassword';
 import CatPage from '@/components/CatPage';
 import Modal from '@/components/Modal';
 import useCurrentStep from '@/compositions/useCurrentStep';
-import { steps as seedPhraseSteps } from '@/static/importSeedPhrase';
+import { getSteps } from '@/static/importSeedPhrase';
 import useCreateWallets from '@/compositions/useCreateWallets';
 import { ref } from 'vue';
 import { useStore } from 'vuex';
@@ -77,7 +77,6 @@ export default {
     const showModal = ref(false);
     const showLoader = ref(false);
     const router = useRouter();
-    const { currentStep, steps } = useCurrentStep(2, seedPhraseSteps);
 
     const {
       setPassword,
@@ -95,6 +94,8 @@ export default {
       setImportedFromSeed,
       redirectToNewWallet,
     } = useCreateWallets();
+
+    const { currentStep, steps } = useCurrentStep(2, getSteps(isPasswordHash.value));
 
     const setOpts = ({ net, mnemonic, passphrase }) => {
       setNets([net]);
