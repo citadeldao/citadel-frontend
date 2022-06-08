@@ -452,6 +452,7 @@ export default {
       nodesListModalCloseHandler,
       isMultiple,
       disabledPolkadot,
+      isWithoutDelegation,
     } = useStaking(
       props.stakeNodes,
       props.list,
@@ -562,13 +563,14 @@ export default {
       isLoading.value = true;
       const { rawTxs, ok } = await props.currentWallet.prepareDelegation({
         walletId: props.currentWallet.id,
-        nodeAddress: isMultiple.value ? selectedNode.value || props.list : selectedNode.value.address,
+        nodeAddress: isMultiple.value ? selectedNode.value || props.list : selectedNode.value?.address,
         amount: amount.value,
         type: activeTab.value || mode.value,
         redelegateNodeAddress: isMultiple.value ? selectedNodeForRedelegation?.value : selectedNodeForRedelegation?.value?.address,
         additionalFee: isMultiple.value ? additionalFee.value : '',
         rewardsAddress: rewardDestinationAddress.value,
         rewardsRestake: rewardDestinationOption.value === 0,
+        isWithoutDelegation: isWithoutDelegation.value,
       });
       if (ok) {
         resRawTxs.value = rawTxs;

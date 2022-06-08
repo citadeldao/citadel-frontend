@@ -1,7 +1,7 @@
 <template>
   <div class="choose-staking-node">
     <div
-      v-if="!selectedNode"
+      v-if="!selectedNode && !isWithoutDelegation"
       class="choose-staking-node__placeholder"
       data-qa="staking__node-list-button"
       @click="showNodesList"
@@ -10,7 +10,7 @@
       <span>{{ $t("stakePlaceholder.choseNodePlaceholderNote") }} </span>
     </div>
     <div
-      v-else
+      v-if="selectedNode && !isWithoutDelegation"
       class="choose-staking-node__selected-node"
     >
       <StakeListItem
@@ -24,7 +24,7 @@
       />
     </div>
     <div
-      v-if="editMode"
+      v-if="editMode || isWithoutDelegation"
       class="choose-staking-node__tabs-wrapper"
     >
       <div class="choose-staking-node__tabs">
@@ -45,7 +45,7 @@
           {{ $t("unstake") }}
         </span>
         <span
-          v-if="currentWallet.hasRedelegation"
+          v-if="currentWallet.hasRedelegation && !isWithoutDelegation"
           :class="{
             'choose-staking-node__active-tab': activeTab === 'redelegate',
           }"
@@ -158,6 +158,7 @@ export default {
     const updateAmount = inject('updateAmount');
     const getDelegationFee = inject('getDelegationFee');
     const editMode = inject('editMode');
+    const isWithoutDelegation = inject('isWithoutDelegation');
     const selectedNode = inject('selectedNode');
     const updateShowChooseNode = inject('updateShowChooseNode');
     const updateShowNodesList = inject('updateShowNodesList');
@@ -172,7 +173,7 @@ export default {
     const setActiveTab = async (value) => {
       emit('update:activeTab', value);
       updateAmount('');
-      value !== 'redelegate' &&  await getDelegationFee(value,selectedNode.value);
+      value !== 'redelegate' &&  await getDelegationFee(value, isWithoutDelegation.value ? '' : selectedNode.value);
     };
     const maxAmount = inject('maxAmount');
     const insufficientFunds = inject('insufficientFunds');
@@ -209,6 +210,7 @@ export default {
       mode,
       selectedNodeForRedelegation,
       updateRedelegationDirection,
+      isWithoutDelegation,
     };
   },
 };
