@@ -170,7 +170,7 @@ import { i18n } from '@/plugins/i18n';
 import { sha3_256 } from 'js-sha3';
 import notify from '@/plugins/notify';
 import CatPage from '@/components/CatPage';
-import citadel from '@citadel/citadel-lib';
+import citadel from '@citadeldao/lib-citadel';
 
 export default {
   components: {
