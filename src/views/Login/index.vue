@@ -25,7 +25,10 @@
       <SyncCarousel v-else />
 
       <div class="login__form">
-        <SyncStart v-if="showSyncBlock" @sync="sync" />
+        <SyncStart
+          v-if="showSyncBlock"
+          @sync="sync"
+        />
         <template v-else>
           <LoginForm
             v-if="currentStep === 1 && !showSyncBlock"
@@ -83,8 +86,8 @@ export default {
   name: 'Login',
   components: {
     citadelLogo,
-    RoundArrowButton,
-    conversation,
+    // RoundArrowButton,
+    // conversation,
     LoginForm,
     Verification,
     Modal,
@@ -104,7 +107,7 @@ export default {
     const showSyncBlock = ref(false);
 
     const hashInfo = ref('');
-    
+
     if (syncMode.value) {
       hashInfo.value = parseHash(localHashInfo);
       window.localStorage.removeItem('hashInfo');
@@ -174,6 +177,7 @@ export default {
         if (syncMode.value) {
           isLoading.value = false;
           showSyncBlock.value = true;
+
           return;
         }
         const { error } = await store.dispatch('profile/getInfo');
@@ -238,7 +242,7 @@ export default {
             },
           });
         } else {
-          localStorage.setItem('openSync', true);          
+          localStorage.setItem('openSync', true);
           router.push({ name: 'Settings' });
         }
         isLoading.value = false;

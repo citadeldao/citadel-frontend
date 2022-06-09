@@ -313,29 +313,18 @@ export default {
         console.log('syncResult', syncResult);
 
         const result = syncResult && await Promise.all(syncResult.map(async wallet => {
-          const config = store.getters['networks/configByNet'](wallet.net);
-          // const { data, error } = await citadel.addCreatedWallet({
-          //   ...config,
-          //   net: wallet.net,
-          //   address: wallet.address,
-          //   type: WALLET_TYPES.PRIVATE_KEY,
-          //   publicKey: wallet.publicKey,
-          //   networkName: config.name
-          // });
-          // console.log(data, error);
-          // return !error;
-          const priv1 = CryptoJS.AES.decrypt(wallet.privateKeyEncoded, password.value);
-          const priv2 = CryptoJS.AES.decrypt(wallet.privateKeyEncoded, password.value).toString();
-          console.log(priv1, priv2, wallet.privateKeyEncoded);
-          console.log(password.value);
+          const privateKey = CryptoJS.AES.decrypt(wallet.privateKeyEncoded, password.value).toString(CryptoJS.enc.Utf8);
+          const res = await citadel.addWalletByPrivateKey({
+            net: wallet.net,
+            privateKey,
+          });
 
+          if (res.data) {
+            const newInstance = await store.dispatch('crypto/createNewWalletInstance', { walletOpts: wallet });
+            await store.dispatch('wallets/pushWallets', { wallets: [newInstance] });
+          }
 
-          // await store.dispatch('crypto/addWalletToAccount', {
-          //   net: wallet.net,
-          //   address: wallet.address,
-          // });
-          // // add import wallet to priateWallets
-          // store.commit('crypto/addImportedToPrivateWallets', { ...wallet, type: WALLET_TYPES.PRIVATE_KEY });
+          return res.result === 'success';
         }));
 
         if (syncResult && result.every(res => !!res)) {
@@ -343,10 +332,6 @@ export default {
           syncLoading.value = false;
           password.value = '';
           importedFromWallets.value = syncResult;
-          await store.dispatch('wallets/getWallets');
-          store.dispatch('wallets/setSubtokensInfo', false);
-          store.dispatch('wallets/getWalletsDetail');
-          await store.dispatch('crypto/initPrivateWallets');
         }
       }
     };
