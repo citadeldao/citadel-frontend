@@ -589,8 +589,8 @@ export default {
           if (res.ok) {
             txHash.value = res.data;
             showConfirmClaim.value = false;
-            showClaimSuccessModal.value = true;
             showConfirmUnstakedClaim.value = false;
+            showClaimSuccessModal.value = true;
             isLoading.value = false;
           } else {
             claimModalCloseHandler();
