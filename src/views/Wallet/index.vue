@@ -564,18 +564,19 @@ export default {
           showConfirmClaim.value = false;
           clearLedgerModals();
           showConfirmLedgerModal.value = true;
-          try {
-            res = await currentWallet.value.signAndSendMulti({
-              walletId: currentWallet.value.id,
-              rawTransactions: resRawTxs.value,
-              derivationPath: currentWallet.value.derivationPath,
-            });
+          res = await currentWallet.value.signAndSendMulti({
+            walletId: currentWallet.value.id,
+            rawTransactions: resRawTxs.value,
+            derivationPath: currentWallet.value.derivationPath,
+          });
+          if(res.ok){
             txHash.value = res.data;
             showConfirmClaim.value = false;
             showConfirmLedgerModal.value = false;
+            showConfirmUnstakedClaim.value = false;
             showClaimSuccessModal.value = true;
-          } catch (e) {
-            ledgerErrorHandler(e);
+          }else{
+            ledgerErrorHandler(res.error);
           }
         }
         // if not hardware
@@ -589,6 +590,7 @@ export default {
             txHash.value = res.data;
             showConfirmClaim.value = false;
             showClaimSuccessModal.value = true;
+            showConfirmUnstakedClaim.value = false;
             isLoading.value = false;
           } else {
             claimModalCloseHandler();
