@@ -90,6 +90,16 @@ export const formattedWalletAddress = (address, wrapperWidth, fontFamily, fontSi
 
 };
 
+export const parseHash = (hash) => {
+  const hashArray = hash.slice(1).split('-');
+
+  return {
+    action: hashArray[0],
+    net: hashArray[1],
+    address: hashArray[2]
+  }
+};
+
 export const findAddressWithNet = (list, { address, net }) => list.find(
   (item) =>
     item.address?.toLowerCase() === address?.toLowerCase() &&

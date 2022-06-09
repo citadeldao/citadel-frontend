@@ -17,6 +17,10 @@
           @change="changeSubscriptionState"
         />
       </div>
+      <SyncExtension
+        v-if="global.citadel"
+        class="subscriptions__sync"
+      />
     </div>
   </div>
 </template>
@@ -27,18 +31,21 @@ import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 import Checkbox from '@/components/UI/Checkbox';
 import notify from '@/plugins/notify';
+import SyncExtension from './SyncExtension';
 
 const FREEZE_DURATION = 5000;
 
 export default {
   name: 'Subscriptions',
-  components: { Checkbox },
+  components: { Checkbox, SyncExtension },
   props: {},
   setup() {
     const store = useStore();
     const { t } = useI18n();
     const profileInfo = computed(() => store.getters['profile/info']);
     const isRewardDisabled = ref(false);
+
+    const global = computed(() => window);
 
     const changeSubscriptionState = async (newValue) => {
       isRewardDisabled.value = true;
@@ -62,6 +69,7 @@ export default {
     };
 
     return {
+      global,
       profileInfo,
       isRewardDisabled,
       changeSubscriptionState,
@@ -93,6 +101,10 @@ export default {
     @include md {
       margin-bottom: 4px;
     }
+  }
+
+  &__sync {
+    width: 100%;
   }
 
   &__desc {
