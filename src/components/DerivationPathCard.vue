@@ -282,7 +282,10 @@ export default {
     width: 340px;
     background-color: $too-ligth-gray;
     .derivation-path-card__checked-icon {
-      display: none;
+      width: 28px;
+      height: 28px;
+      margin-top: -15px;
+      // display: none;
     }
     @include md {
       width: 100%;
