@@ -30,7 +30,5 @@ export default (keyStorage) => {
 
   if (backup?.wallets.length) {
     downLoadWallets(JSON.stringify(backup));
-  } else {
-    alert('no private wallets');
   }
 };

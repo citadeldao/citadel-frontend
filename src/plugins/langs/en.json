@@ -581,6 +581,8 @@
         "addNewAddress": "Add a new address",
         "derivationPathInfo": "Derivation path specifies which private key (and thus which address) is used.",
         "setPasswordForAllIn": "Set the password for all in-platform operations",
+        "enterPasswordForAllInSeed": "Add new networks to the existing Seed-phrase",
+        "enterPasswordForAllInPrivate": "Add a network using your private key",
         "addAddressSpecifications": "Add address specifications",
         "enterPaymentPassword": "Enter a payment password",
         "importFileExp": "Import file",
