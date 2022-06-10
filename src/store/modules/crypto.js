@@ -4,6 +4,8 @@ import models from '@/models';
 import { WALLET_TYPES } from '@/config/walletType';
 import notify from '@/plugins/notify';
 import citadel from '@citadeldao/lib-citadel';
+import BigNumber from 'bignumber.js';
+import useWallets from '@/compositions/useWallets';
 
 const getDefaultState = () => {
   return {
@@ -94,6 +96,10 @@ export default {
         walletOpts.mnemonicEncoded = walletOpts.mnemonicEncoded ? walletOpts.mnemonicEncoded
           : walletOpts.mnemonic ? WalletConstructor.encodePrivateKeyByPassword(walletOpts.net,walletOpts.mnemonic, password) : null;
         walletOpts.config = rootGetters['networks/configByNet'](walletOpts.net);
+        const { currency } = useWallets(walletOpts);
+        walletOpts.balanceUSD = BigNumber(walletOpts.balance.calculatedBalance)
+          .times(currency.value?.USD)
+          .toNumber();
         const walletInstance = new WalletConstructor(walletOpts);
 
         return walletInstance;
