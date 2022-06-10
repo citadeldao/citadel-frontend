@@ -162,5 +162,9 @@ export async function socketEventHandler({ eventName, data }){
       }
 
       break;
+    // case 'marketCap-update-client':
+    //  //update marketcap
+
+    //   break;
   }
 }
