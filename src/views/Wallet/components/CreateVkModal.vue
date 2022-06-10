@@ -352,35 +352,34 @@ export default {
         showConfirmModal.value = false;
         clearLedgerModals();
         showConfirmLedgerModal.value = true;
-        let res;
 
-        try {
-          res = await citadel.setViewingKey(props.currentWallet.id, props.token.net, props.vkType, {
-            derivationPath: props.currentWallet.derivationPath,
-            fee: props.tokenFee,
-          });
-        } catch (e) {
-          ledgerErrorHandler(e);
-        }
+        const { error: resError, data } = await citadel.setViewingKey([props.currentWallet.id], props.token.net, props.vkType, {
+          derivationPath: props.currentWallet.derivationPath,
+          fee: props.tokenFee,
+        });
 
         showConfirmLedgerModal.value = false;
-        // eslint-disable-next-line prefer-destructuring
-        error = res.error;
-        // eslint-disable-next-line
-        transactionHash = res?.data?.transactionHash;
-        vk = res?.data?.viewingKey;
+        error = resError;
+        transactionHash = data?.transactionHash;
+        vk = data?.viewingKey;
       }
-      viewingKey.value = vk;
       showConfirmModal.value = false;
-      showSuccessModal.value = true;
-      isConfirmModalLoading.value = false;
-
       if (error) {
+        if(isHardwareWallet(props.currentWallet.type)){
+          ledgerErrorHandler(error);
+          clearLedgerModals();
+        }
         txError.value = error;
+
 
         return;
       }
-      // await store.dispatch('wallets/getNewWallets','lazy');
+      viewingKey.value = vk;
+      showSuccessModal.value = true;
+      isConfirmModalLoading.value = false;
+
+
+      await store.dispatch('wallets/getNewWallets','lazy');
       txHash.value = transactionHash;
     };
 
