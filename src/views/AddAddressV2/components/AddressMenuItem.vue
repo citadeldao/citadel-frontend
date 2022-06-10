@@ -56,12 +56,12 @@ export default {
     &__image {
       position: absolute;
       bottom: 40px;
-      right: 15px;
+      right: 0;
 
       @include md {
         right: -15px;
         bottom: 20px;
-        transform: scale(.8);
+        transform: scale(.7);
       }
     }
 
@@ -84,6 +84,13 @@ export default {
       @include md {
         width: 45%;
       }
+    }
+  }
+
+  @media (max-width: 1178px) {
+    .address-menu-item {
+      min-height: 380px;
+      height: auto;
     }
   }
 </style>

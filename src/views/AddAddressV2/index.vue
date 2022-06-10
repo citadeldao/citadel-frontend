@@ -115,6 +115,10 @@ export default {
         margin: 0 10px;
       }
     }
+
+    @media (max-width: 1178px) {
+      align-items: flex-start;
+    }
   }
 }
 
