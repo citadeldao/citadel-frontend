@@ -4,7 +4,7 @@
       <div
         class="custom-list-item custom-list-item--important"
         :class="{ 'custom-list-item--active': activeList === LIST_ALL && !isInWallet }"
-        :data-qa="`lists__list--${LIST_ALL}`"
+        :data-qa="`${LIST_ALL}`"
         @click="$emit('set-active-list', LIST_ALL)"
       >
         <div class="custom-list-item__title">
@@ -15,7 +15,7 @@
       <div
         class="custom-list-item custom-list-item--important custom-list-item--favourites"
         :class="{ 'custom-list-item--active': activeList === LIST_FAVOURITES && !isInWallet }"
-        :data-qa="`lists__list--${LIST_FAVOURITES.toLowerCase()}`"
+        :data-qa="`${LIST_FAVOURITES}`"
         @click="$emit('set-active-list', LIST_FAVOURITES)"
       >
         <div class="custom-list-item__title">
@@ -50,7 +50,7 @@
 
     <button
       class="custom-lists__add-list-button"
-      data-qa="lists__create-button"
+      data-qa="Create_list"
       @click="$emit('create-list')"
     >
       {{ $t('createList') }}

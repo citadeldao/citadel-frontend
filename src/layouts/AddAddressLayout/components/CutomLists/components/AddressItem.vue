@@ -2,6 +2,7 @@
   <div
     class="address-item"
     :class="{ checked, lastChild }"
+    data-qa="address-custom"
     @click="toggleChecked"
   >
     <div class="address-item__icon">

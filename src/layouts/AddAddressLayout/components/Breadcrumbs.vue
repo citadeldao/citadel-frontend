@@ -2,6 +2,7 @@
   <div class="breadcrumbs">
     <div
       class="breadcrumbs-item breadcrumbs-item--menu"
+      data-qa="breadcrumbs-menu"
       @click.self="goToOverall"
     >
       {{ currentListName }}
