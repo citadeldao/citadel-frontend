@@ -4,6 +4,7 @@
     class="address-item"
     :class="{ 'active-link': isActive }"
     draggable="false"
+    data-qa="address"
   >
     <div class="address-item__icon">
       <keep-alive>
