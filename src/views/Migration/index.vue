@@ -275,6 +275,7 @@ export default {
       if (downloadCheck.value) {
         downLoadOldBackup();
       }
+
       localStorage.removeItem(oldBackupKey.value);
       window.location.reload();
     };
@@ -322,6 +323,7 @@ export default {
 
         return;
       }
+
       showApproveModal.value = false;
       showExportModal.value = true;
       decodedPrivateKey.value = currentExportWallet.value.getPrivateKeyDecoded(password.value);
@@ -372,9 +374,11 @@ export default {
 
         return;
       }
+
       // put imported wallets to user settings
       migrationProcess.value = true;
-      for(const wallet of oldWallets.value){
+
+      for (const wallet of oldWallets.value) {
         if (wallet.net && !wallet.existWallet) {
           // add import wallet to priateWallets
           const newInstance = await store.dispatch('crypto/createNewWalletInstance',
@@ -383,8 +387,9 @@ export default {
           newWallets.push(newInstance);
         }
       }
+
       await store.dispatch('app/setWallets', { addNotAddedWallets: true });
-      await store.dispatch('wallets/getNewWallets','lazy');
+      await store.dispatch('wallets/getNewWallets', 'lazy');
 
       if (props.privateWalletsMode) {
         migrationProcess.value = false;
@@ -399,7 +404,6 @@ export default {
       localStorage.removeItem(oldBackupKey.value);
       restoreOneSeedModalFlag.value = true;
       backupModalFlag.value = false;
-
     };
 
     if (props.privateWalletsMode) {

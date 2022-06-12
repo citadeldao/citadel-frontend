@@ -34,7 +34,6 @@ export class SocketManager {
       );
 
       this.startListeners();
-
     } catch (err) {
       console.error(`Error on initSocketConnection: `, err);
     }
@@ -97,11 +96,12 @@ export class SocketManager {
         }
       });
 
-      //update balance
+      // update balance
       this.socket.on('address-balance-updated-client', async (socketObject) => {
         const res = await citadel.parseSocketObject('address-balance-updated-client', socketObject);
-        if(!res.error){
-          store.dispatch('wallets/getNewWallets','lazy');
+
+        if (!res.error) {
+          store.dispatch('wallets/getNewWallets', 'lazy');
         }
       });
 
@@ -125,13 +125,16 @@ export class SocketManager {
         }
 
         const res = await citadel.parseSocketObject('mempool-remove-tx-client', tx);
-        if(!res.error){
+
+        if (!res.error) {
           store.commit('transactions/REMOVE_FROM_MEMPOOL', tx);
-          store.dispatch('wallets/getNewWallets','lazy');
-          if(res.data.updateStakeListRequired){
-            await store.dispatch('staking/updateStakeList', ({ address: tx.from, net: tx.net }),{ root: true });
-            if(tx.from.toLowerCase() !== tx.to.toLowerCase()){
-              await store.dispatch('staking/updateStakeList', ({ address: tx.to, net: tx.net }),{ root: true });
+          store.dispatch('wallets/getNewWallets', 'lazy');
+
+          if (res.data.updateStakeListRequired) {
+            await store.dispatch('staking/updateStakeList', ({ address: tx.from, net: tx.net }), { root: true });
+
+            if (tx.from.toLowerCase() !== tx.to.toLowerCase()) {
+              await store.dispatch('staking/updateStakeList', ({ address: tx.to, net: tx.net }), { root: true });
             }
           }
         }

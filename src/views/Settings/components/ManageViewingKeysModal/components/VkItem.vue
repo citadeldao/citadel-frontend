@@ -81,15 +81,21 @@ export default {
     const isHidden = ref(true);
     const isCopied = ref(false);
     const viewingKeyParsed = computed(() => isHidden.value ? props.vk?.savedViewingKey.viewingKey.replace(/[\d\D]/g, '*') : props.vk?.savedViewingKey.viewingKey);
-    const toggleIsHidden = () => {isHidden.value = !isHidden.value;};
+    const toggleIsHidden = () => {
+      isHidden.value = !isHidden.value;
+    };
     const copyValue = () => {
       copyToClipboard(props.vk.savedViewingKey.viewingKey);
       isCopied.value = true;
-      setTimeout(() => {isCopied.value = false;}, 1500);
+      setTimeout(() => {
+        isCopied.value = false;
+      }, 1500);
     };
 
     const changeVk = inject('changeVk');
-    const change = () => {changeVk.value = props.vk;};
+    const change = () => {
+      changeVk.value = props.vk;
+    };
 
     const showIconPlaceholder = ref(false);
     const iconPlaceholder = computed(() =>

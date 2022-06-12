@@ -24,7 +24,7 @@ export default class CryptoCoin {
     this.publicKey = opts?.publicKey || null;
     this.derivationPath = opts?.derivationPath;
     this.fee_key = opts?.config?.fee_key;
-    this.config = { ...opts?.config, tokens:{} };
+    this.config = { ...opts?.config, tokens: {} };
     this.subtokensList = opts.subtokensList || [];
     this.subtokenBalanceUSD = opts.subtokenBalanceUSD || 0;
     this.balanceUSD = opts.balanceUSD;
@@ -50,7 +50,7 @@ export default class CryptoCoin {
     this.privateKey = opts?.privateKey || null;
   }
 
-  getScannerLink(){
+  getScannerLink() {
     const { data: scannerLink } = citadel.getScannerLinkById(this.id);
 
     return scannerLink;
@@ -64,16 +64,17 @@ export default class CryptoCoin {
 
   getPrivateKeyDecoded(password) {
     const { error, data } = citadel.decodePrivateKeyByPassword(this.net, this.mnemonicEncoded || this.privateKeyEncoded, password);
-    if(!error){
+
+    if (!error) {
       return data;
     }
+
     notify({
       type: 'warning',
       text: error,
     });
 
     return data;
-
   }
 
   getShortAddress(maxLength = 13, address = this.address) {
@@ -94,10 +95,11 @@ export default class CryptoCoin {
 
   async signAndSendMulti({ walletId, rawTransactions, ...options }) {
     const { data, error } = await citadel.signAndSend(walletId, rawTransactions, options);
-    if(!error){
 
+    if (!error) {
       return { ok: true, data: Array.isArray(data) ? data : [data] };
     }
+
     notify({
       type: 'warning',
       text: error,
@@ -106,12 +108,13 @@ export default class CryptoCoin {
     return { ok: false, error };
   }
 
-  async signAndSendTransfer ({ walletId, rawTransaction, ...options }) {
+  async signAndSendTransfer({ walletId, rawTransaction, ...options }) {
     const res = await citadel.signAndSend(walletId, rawTransaction, options);
 
     if (!res.error) {
       return res;
     }
+
     notify({
       type: 'warning',
       text: res.error,
@@ -125,8 +128,9 @@ export default class CryptoCoin {
     const { error, data } = await citadel.prepareTransfer(walletId, options);
 
     if (!error) {
-      return { data , error };
+      return { data, error };
     }
+
     notify({
       type: 'warning',
       text: error,
@@ -136,12 +140,13 @@ export default class CryptoCoin {
     return { data, error };
   }
 
-  async getBuildBridgeTransaction({  walletId, token, ...options }) {
+  async getBuildBridgeTransaction({ walletId, token, ...options }) {
     const res = await citadel.prepareCrossNetworkTransfer(walletId, token, options);
 
     if (!res.error) {
       return { data: res.data, error: res.error, ok: true };
     }
+
     notify({
       type: 'warning',
       text: res.error,
@@ -153,21 +158,23 @@ export default class CryptoCoin {
 
   async prepareDelegation({ walletId, ...options }) {
     const { data, error } = await citadel.prepareDelegation(walletId, options);
-    if(!error){
-      return{ ok: true, rawTxs: data };
+
+    if (!error) {
+      return { ok: true, rawTxs: data };
     }
+
     notify({
       type: 'warning',
       text: error,
     });
 
-    return{ ok: false };
+    return { ok: false };
   }
 
   async prepareClaimUnstaked(walletId) {
     const { error, data } = await citadel.prepareClaimUnstaked(walletId);
-    if(!error){
 
+    if (!error) {
       return { rawTx: data, ok: true };
     }
 
@@ -176,51 +183,57 @@ export default class CryptoCoin {
 
   async prepareClaim(walletId) {
     const { error, data } = await citadel.prepareClaim(walletId);
-    if(!error){
+
+    if (!error) {
       return { rawTxs: data, ok: true };
     }
+
     notify({
       type: 'warning',
       text: error,
     });
 
-    return{ ok: false };
+    return { ok: false };
   }
 
 
-  static async getBalance ({ walletId, net, address, token }){
+  static async getBalance({ walletId, net, address, token }) {
     let res;
-    if(walletId){
+
+    if (walletId) {
       res = await citadel.getBalanceById(walletId, token);
-      if(token){
-        await store.dispatch('wallets/getNewWallets','lazy');
+
+      if (token) {
+        await store.dispatch('wallets/getNewWallets', 'lazy');
       }
-    }else{
+    } else {
       res = await citadel.getBalanceByAddress(net, address);
     }
-    if(!res.error){
 
+    if (!res.error) {
       return { data: res.data };
     }
-    if(res.error.name === 'ViewingKeyError'){
+
+    if (res.error.name === 'ViewingKeyError') {
       await store.dispatch('subtokens/setCurrentToken', null);
       router.push({
         name: router.currentRoute.value.name,
         params: { net: router.currentRoute.value.params.net, address: router.currentRoute.value.params.address },
       });
     }
+
     notify({
       type: 'warning',
       text: res.error,
     });
 
     return {};
-
   }
 
   async getMarketcap() {
     const { error, data } = await citadel.getNetworkMarketcap(this.net);
-    if(!error){
+
+    if (!error) {
       return { data };
     }
 
@@ -232,9 +245,10 @@ export default class CryptoCoin {
     return { data: {} };
   }
 
-  async assignToDao ({ walletId, holderAddress, ...options }){
+  async assignToDao({ walletId, holderAddress, ...options }) {
     const res = await citadel.assignToDao(walletId, holderAddress, options);
-    if(res.error){
+
+    if (res.error) {
       notify({
         type: 'warning',
         text: res.error,
@@ -246,23 +260,25 @@ export default class CryptoCoin {
 
   async getFees(walletId, token) {
     const { error, data } = await citadel.getFees(walletId, token);
-    if (!error) {
 
-      return  { error, data };
+    if (!error) {
+      return { error, data };
     }
+
     notify({
       type: 'warning',
       text: error,
     });
     console.error(error);
 
-    return{ error, data };
+    return { error, data };
   }
 
   async getDelegationFee({ walletId, ...options }) {
     const { data, error } = await citadel.getDelegationFee(walletId, options);
+
     if (!error) {
-      if(!data.enough && options.transactionType !== 'transfer') {
+      if (!data.enough && options.transactionType !== 'transfer') {
         notify({
           type: 'warning',
           text: t('dontHaveEnoughFounds'),
@@ -278,6 +294,7 @@ export default class CryptoCoin {
         enough: data.enough,
       };
     }
+
     notify({
       type: 'warning',
       text: error,
@@ -295,9 +312,11 @@ export default class CryptoCoin {
 
   getCrossNetworkRoutes({ walletId, token }) {
     const res = citadel.getCrossNetworkRoutes(walletId, token);
-    if(!res.error){
+
+    if (!res.error) {
       return res.data;
     }
+
     notify({
       type: 'warning',
       text: res.error,
@@ -306,11 +325,13 @@ export default class CryptoCoin {
     return [];
   }
 
-  async prepareAssignToDaoMessage(walletId){
+  async prepareAssignToDaoMessage(walletId) {
     const res = await citadel.prepareAssignToDaoMessage(walletId);
-    if(!res.error){
+
+    if (!res.error) {
       return { data: res.data, error: res.error };
     }
+
     notify({
       type: 'warning',
       text: res.error,
@@ -319,9 +340,10 @@ export default class CryptoCoin {
     return { data: res.data, error: res.error };
   }
 
-  async sendAssignToDaoMessage(holderAddress, messageId, messageSignature){
+  async sendAssignToDaoMessage(holderAddress, messageId, messageSignature) {
     const { error } = await citadel.sendAssignToDaoMessage(holderAddress, messageId, messageSignature);
-    if(error){
+
+    if (error) {
       notify({
         type: 'warning',
         text: error,
@@ -337,20 +359,22 @@ export default class CryptoCoin {
 
   async getTxDuration({ type, fee }) {
     const { data, error } = await citadel.getTransactionDuration(this.net, { type, fee });
+
     if (error) {
       console.error(error);
     }
 
     return { data, error };
-
   }
 
 
-  static getDerivationPath (net, index, type = 'seed'){
+  static getDerivationPath(net, index, type = 'seed') {
     const res = citadel.getDerivationPathByIndex(net, type, index);
-    if(!res.error){
+
+    if (!res.error) {
       return res.data;
     }
+
     notify({
       type: 'warning',
       text: res.error,
@@ -359,11 +383,14 @@ export default class CryptoCoin {
     return '';
   }
 
-  static getDerivationPathTemplates(net, type){
+  static getDerivationPathTemplates(net, type) {
     const res = citadel.getDerivationPathTemplates(net, type);
-    if(!res.error){
+
+    if (!res.error) {
       return res.data;
-    }notify({
+    }
+
+    notify({
       type: 'warning',
       text: res.error,
     });
@@ -374,6 +401,7 @@ export default class CryptoCoin {
 
   async preparePledgeUnpledge({ walletId, type, amount }) {
     const res = await citadel.prepareGasPledgeUnpledge(walletId, type, amount);
+
     if (!res.error) {
       return { rawTxs: res.data, ok: true };
     }
@@ -384,7 +412,6 @@ export default class CryptoCoin {
     });
 
     return { ok: false };
-
   }
 
   static encodeMnemonic(mnemonic, password) {
@@ -405,9 +432,11 @@ export default class CryptoCoin {
 
   static encodePrivateKeyByPassword(net, privateKey, password) {
     const { data, error } = citadel.encodePrivateKeyByPassword(net, privateKey, password);
-    if(!error){
+
+    if (!error) {
       return data;
     }
+
     notify({
       type: 'warning',
       text: error,
@@ -416,7 +445,7 @@ export default class CryptoCoin {
     return data;
   }
 
-  //Keplr wallet factory
+  // Keplr wallet factory
   static async createWalletByKeplr( addOpts) {
     return new this(addOpts);
   }

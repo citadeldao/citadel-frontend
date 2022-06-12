@@ -29,17 +29,17 @@
 import { computed, ref } from '@vue/reactivity';
 import { formattedWalletAddress } from '@/helpers';
 export default {
-  name:'KtAddressItemMd',
-  props:{
-    item:{
+  name: 'KtAddressItemMd',
+  props: {
+    item: {
       type: Object,
       default: ()=>{},
     },
     currentWallet: {
       type: Object,
-      default:()=>{},
+      default: ()=>{},
     },
-    type:{
+    type: {
       type: String,
       default: '',
     },
@@ -64,7 +64,7 @@ export default {
       ),
     );
 
-    return{ address, wrapperWidth, handleResize, formatedAddress };
+    return { address, wrapperWidth, handleResize, formatedAddress };
   },
 };
 </script>

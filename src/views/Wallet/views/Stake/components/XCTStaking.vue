@@ -281,13 +281,13 @@ export default {
     });
 
     const showModal = computed(() => {
-      return showSetStakingAmount.value
-        || showConfirmTransaction.value
-        || showConnectLedgerModal.value
-        || showAppLedgerModal.value
-        || showConfirmLedgerModal.value
-        || showRejectedLedgerModal.value
-        || showSuccessModal.value;
+      return showSetStakingAmount.value ||
+        showConfirmTransaction.value ||
+        showConnectLedgerModal.value ||
+        showAppLedgerModal.value ||
+        showConfirmLedgerModal.value ||
+        showRejectedLedgerModal.value ||
+        showSuccessModal.value;
     });
 
     const toggleShowPlaceholder = () => {
@@ -309,20 +309,19 @@ export default {
     };
 
     const setStakingAmountModalData = computed(()=>{
-      if(mode.value === 'stake'){
-        return{
+      if (mode.value === 'stake') {
+        return {
           title: 'staking.Stake',
           desc: t('xct.setStakingAmountModalDesc'),
-          button:'staking.Stake',
+          button: 'staking.Stake',
         };
       }
 
-      return{
+      return {
         title: 'unstaking.unstake',
         desc: t('xct.setStakingAmountModalDesc1'),
-        button:'unstaking.unstake',
+        button: 'unstaking.unstake',
       };
-
     });
 
     const amount = ref('');
@@ -335,14 +334,14 @@ export default {
       if (mode.value === 'unstake') {
         return props.currentToken.tokenBalance.stake;
       }
+
       const max = props.currentToken.tokenBalance.mainBalance;
+
       if (max > 0) {
         return max;
       }
 
       return 0;
-
-
     });
     provide('maxAmount', maxAmount);
 
@@ -358,7 +357,6 @@ export default {
       }
 
       return false;
-
     });
 
     const toUnstake = () => {
@@ -387,7 +385,6 @@ export default {
         title: t('staking.actionModalTitle'),
         desc: t('staking.actionModalDesc'),
       };
-
     });
 
     const fee = ref();
@@ -401,6 +398,7 @@ export default {
         amount: amount.value,
         type: mode.value,
         parentWalletBalance: parrentWallet.value.balance.mainBalance });
+
       if (ok) {
         fee.value = resFee;
         resRawTxs.value = rawTxs;
@@ -410,6 +408,7 @@ export default {
       } else {
         modalCloseHandler();
       }
+
       isLoading.value = false;
     };
 
@@ -450,7 +449,6 @@ export default {
         button1: 'unstake',
         button2: 'Stake',
       };
-
     });
 
     const isLoading = ref(false);
@@ -478,7 +476,6 @@ export default {
     });
 
 
-
     const txError = ref();
 
     const stake = async () => {
@@ -486,6 +483,7 @@ export default {
       if (currentWalletType.value === WALLET_TYPES.METAMASK) {
         isLoading.value = true;
         const metamaskResult = await metamaskConnector.value.sendMetamaskTransaction(resRawTxs.value);
+
         if (metamaskResult.error) {
           notify({
             type: 'warning',
@@ -496,6 +494,7 @@ export default {
           showSuccessModal.value = true;
           txHash.value = [metamaskResult.txHash];
         }
+
         isLoading.value = false;
 
         return;
@@ -506,6 +505,7 @@ export default {
 
         return;
       }
+
       isLoading.value = true;
 
       if (isLedgerWallet.value) {
@@ -519,16 +519,17 @@ export default {
           rawTransactions: resRawTxs.value,
           derivationPath: props.currentWallet.derivationPath,
         });
-        if(!res.error){
+
+        if (!res.error) {
           showConfirmLedgerModal.value = false;
           showSuccessModal.value = true;
           txHash.value = res.data;
-        }else{
+        } else {
           ledgerErrorHandler(res.error);
 
           return;
         }
-      }else{
+      } else {
         const res = await props.currentWallet.signAndSendMulti({
           walletId: props.currentWallet.id,
           rawTransactions: resRawTxs.value,
@@ -545,7 +546,6 @@ export default {
           isLoading.value = false;
         }
       }
-
     };
 
     // ledger modal handlers

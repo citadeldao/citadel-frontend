@@ -93,7 +93,8 @@ export const renderBalanceStructChart = balanceStructure => {
         tooltipDiv.appendChild(tooltipTitle);
         tooltipDiv.appendChild(tooltipLine1);
         tooltipDiv.appendChild(tooltipLine2);
-        if(balanceStructure.value[net].net !== 'btc'){
+
+        if (balanceStructure.value[net].net !== 'btc') {
           tooltipDiv.appendChild(tooltipLine3);
         }
       });
@@ -103,8 +104,10 @@ export const renderBalanceStructChart = balanceStructure => {
       while (rootDiv.firstChild) {
         rootDiv.firstChild.remove();
       }
+
       rootDiv.appendChild(tooltipDiv);
     }
+
     const { offsetLeft: positionX, offsetTop: positionY } = chart.canvas;
 
     tooltipEl.style.opacity = 1;

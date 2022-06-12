@@ -86,6 +86,7 @@ export default {
 
     const setBackup = (payload) => {
       backup.value = payload;
+
       if (isPasswordHash.value && (backup.value.privateWallets || backup.value.wallets)) {
         const list = backup.value.privateWallets || backup.value.wallets;
         privateWalletsMode.value = true;
@@ -127,7 +128,7 @@ export default {
       const list = backup.value.privateWallets || backup.value.wallets;
       await Promise.all(
         list.map(async (wallet) => {
-          if(wallet.net){
+          if (wallet.net) {
             const newInstance = await store.dispatch('crypto/createNewWalletInstance',
               { walletOpts: wallet });
             await store.dispatch('wallets/pushWallets', { wallets: [newInstance] } );
@@ -147,11 +148,13 @@ export default {
       const success = !![...newWallets.value].filter((w) => w).length;
       showModal.value = false;
       showLoader.value = false;
+
       if (success) {
         showModal.value = true;
       }
-      await store.dispatch('wallets/getNewWallets','lazy');
-      store.dispatch('wallets/getNewWallets','detail');
+
+      await store.dispatch('wallets/getNewWallets', 'lazy');
+      store.dispatch('wallets/getNewWallets', 'detail');
     };
 
     const redirectToNewWallet = () => {

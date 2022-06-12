@@ -62,9 +62,10 @@ export default {
   actions: {
     async getActivity({ commit }) {
       const { error, data } = await citadel.getActiveDaoHolders();
+
       if (!error) {
         commit(types.SET_ACTIVITY, data);
-      }else{
+      } else {
         notify({
           type: 'warning',
           text: error,
@@ -76,14 +77,16 @@ export default {
       if (!rootGetters['wallets/currentWallet'].hasXCT) {
         return;
       }
-      const { error, data } =  await citadel.callTokenInfo(walletId, 'bsc_xct', 'assignedAddresses');
+
+      const { error, data } = await citadel.callTokenInfo(walletId, 'bsc_xct', 'assignedAddresses');
+
       if (!error) {
         if (data.holder) {
           commit(types.SET_HOLDER_INFO, data);
         } else {
           commit(types.SET_HOLDER_INFO, { wallets: [], holder: { totalUsdt: 0, claimed: 0, claimable: 0 } });
         }
-      }else{
+      } else {
         notify({
           type: 'warning',
           text: error,
@@ -94,15 +97,18 @@ export default {
     async getUnassignedAddresses({ commit, rootGetters }, walletId) {
       const { error, data } = await citadel.getUnassignedAddresses(walletId);
       const unassignedAddresses = [];
-      if(!error){
-        for(const address of data){
+
+      if (!error) {
+        for (const address of data) {
           const walletInstance = rootGetters['wallets/walletByAddress'](address);
-          if(walletInstance){
+
+          if (walletInstance) {
             unassignedAddresses.push(walletInstance);
           }
         }
+
         commit(types.SET_UNASSIGNED_ADDRESSES, unassignedAddresses);
-      }else{
+      } else {
         notify({
           type: 'warning',
           text: error,
@@ -113,9 +119,10 @@ export default {
 
     async getAssignedAddresses({ commit }, walletId) {
       const { error, data } = await citadel.getAssignedAddresses(walletId);
-      if(!error){
+
+      if (!error) {
         commit(types.SET_ASSIGNED_ADDRESSES, data);
-      }else{
+      } else {
         notify({
           type: 'warning',
           text: error,
@@ -128,10 +135,12 @@ export default {
       if (!rootGetters['wallets/currentWallet'].hasXCT) {
         return;
       }
+
       const { error, data } = await citadel.callTokenInfo(walletId, 'bsc_xct', 'totalClaimedRewards');
+
       if (!error) {
         commit(types.SET_TOTAL_CLAIMED_REWARDS_XCT, data);
-      }else{
+      } else {
         notify({
           type: 'warning',
           text: error,
@@ -141,10 +150,10 @@ export default {
 
     async getDaoRewardsByRange({ commit }, { walletId, from, to }) {
       const res = await citadel.getDaoRewardsByRange(walletId, from, to);
+
       if (!res.error) {
         commit(types.SET_REWARDS, res.data);
-
-      }else{
+      } else {
         notify({
           type: 'warning',
           text: res.error,
@@ -155,9 +164,10 @@ export default {
 
     async getAllDaoRewards({ commit }, { walletId }) {
       const res = await citadel.getAllDaoRewards(walletId);
+
       if (!res.error) {
         commit(types.SET_REWARDS, res.data);
-      }else{
+      } else {
         notify({
           type: 'warning',
           text: res.error,
@@ -168,10 +178,10 @@ export default {
 
     async getCalculatorData({ commit }, { walletId }) {
       const res = await citadel.getDaoCalculatorData(walletId);
+
       if (!res.error) {
         commit(types.SET_CALCULATOR_DATA, res.data);
-
-      }else{
+      } else {
         notify({
           type: 'warning',
           text: res.error,

@@ -37,7 +37,7 @@
 <script>
 import EditButton from '@/components/UI/EditButton';
 export default {
-  components:{ EditButton },
+  components: { EditButton },
   props: {
     items: {
       type: Array,
@@ -48,7 +48,7 @@ export default {
       default: () => ({}),
     },
   },
-  emits:['showNodesList'],
+  emits: ['showNodesList'],
 };
 </script>
 <style lang="scss" scoped>

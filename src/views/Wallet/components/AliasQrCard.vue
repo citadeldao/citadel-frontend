@@ -59,7 +59,7 @@ export default {
       setTimeout(()=> {
         isCopied.value = true;
         isCopying.value = false;
-      },500);
+      }, 500);
       emit('buttonClick');
     };
 

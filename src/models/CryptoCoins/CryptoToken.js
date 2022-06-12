@@ -28,9 +28,11 @@ export default class CryptoToken extends CryptoCoin {
 
   async prepareTransfer({ walletId, options }) {
     const { error, data } = await citadel.prepareTokenAction(walletId, this.net, 'transfer', options);
+
     if (!error) {
       return { data: data, error };
     }
+
     notify({
       type: 'warning',
       text: error,
@@ -40,12 +42,13 @@ export default class CryptoToken extends CryptoCoin {
     return { data, error };
   }
 
-  async signAndSendTransfer ({ walletId, rawTransaction, privateKey, derivationPath }) {
+  async signAndSendTransfer({ walletId, rawTransaction, privateKey, derivationPath }) {
     const res = await citadel.signAndSend(walletId, rawTransaction, { privateKey, derivationPath });
 
     if (!res.error) {
       return res;
     }
+
     notify({
       type: 'warning',
       text: res.error,
@@ -57,7 +60,8 @@ export default class CryptoToken extends CryptoCoin {
 
   async prepareDelegation({ walletId, amount, type, parentWalletBalance }) {
     const res = await citadel.prepareTokenAction(walletId, this.net, type, { amount });
-    if(!res.error){
+
+    if (!res.error) {
       if (parentWalletBalance < res.data.fee) {
         notify({
           type: 'warning',
@@ -69,6 +73,7 @@ export default class CryptoToken extends CryptoCoin {
 
       return { ok: true, rawTxs: res.data, resFee: res.data.fee };
     }
+
     notify({
       type: 'warning',
       text: res.error,
@@ -79,11 +84,11 @@ export default class CryptoToken extends CryptoCoin {
 
   async prepareXctClaimOrRestake({ walletId, action, type }) {
     const { error, data } = await citadel.prepareTokenAction(walletId, 'bsc_xct', action, { type });
-    if(!error){
+
+    if (!error) {
       return { rawTxs: data, fee: data.fee };
     }
 
     return { rawTxs: [], fee: 0 };
   }
-
 }

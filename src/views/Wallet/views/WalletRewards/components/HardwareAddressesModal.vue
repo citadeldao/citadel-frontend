@@ -15,21 +15,21 @@
 <script>
 import AssignAddressItem from './AssignAddressItem.vue';
 export default {
-  name:'HardwareAddressesModal',
-  components:{ AssignAddressItem },
+  name: 'HardwareAddressesModal',
+  components: { AssignAddressItem },
   props: {
     list: {
       type: Object,
       default: () => ({}),
     },
   },
-  emits:['signHardwareAddress'],
+  emits: ['signHardwareAddress'],
   setup(props, { emit }) {
     const signHardwareAddress = (address)=> {
-      emit('signHardwareAddress',address);
+      emit('signHardwareAddress', address);
     };
 
-    return{ signHardwareAddress };
+    return { signHardwareAddress };
   },
 };
 </script>

@@ -93,8 +93,8 @@ export default {
     const qrCodeValue = computed(() => {
       const coins = props.addresses.map(({ address, net }) => {
         const cryptoAddress = wallets.value.find(wallet => {
-          return wallet.address.toLowerCase() === address.toLowerCase()
-            && wallet.net === net;
+          return wallet.address.toLowerCase() === address.toLowerCase() &&
+            wallet.net === net;
         });
 
         return {

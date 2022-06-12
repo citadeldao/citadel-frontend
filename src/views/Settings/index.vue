@@ -186,7 +186,7 @@ export default {
       showCreateVkModal.value = true;
       createVkWallet.value = wallet;
       createVkViewingKey.value = vk;
-      snip20TokenFee.value = (await vk.getFees(vk.id,vk.net))?.data?.low?.fee || 0.2;
+      snip20TokenFee.value = (await vk.getFees(vk.id, vk.net))?.data?.low?.fee || 0.2;
     };
     provide('openCreateVkModal', openCreateVkModal);
     const closeCreateVkModal = () => {
@@ -204,7 +204,9 @@ export default {
 
     watch(
       () => manageVkWallets.value,
-      (val) => {showModal.value = !!val;},
+      (val) => {
+        showModal.value = !!val;
+      },
     );
 
     const modalCloseHandler = () => {
@@ -252,7 +254,6 @@ export default {
       }
 
       return {};
-
     });
     const exportModalData = computed(() => {
       if (currentExportMethod.value === WALLET_TYPES.PRIVATE_KEY) {
@@ -268,7 +269,6 @@ export default {
       }
 
       return {};
-
     });
     const decodedMnemonick = ref('');
     const decodedPrivateKey = ref('');
@@ -284,6 +284,7 @@ export default {
             password.value,
           );
         }
+
         // type wallet - private key (oneSeed), and export its oneSeed
         decodedMnemonick.value = store.getters['crypto/decodeUserMnemonic'](
           password.value,
@@ -293,6 +294,7 @@ export default {
         decodedPrivateKey.value =
           currentExportWallet.value.getPrivateKeyDecoded(password.value);
       }
+
       showApproveExportModal.value = false;
       showExportModal.value = true;
     };

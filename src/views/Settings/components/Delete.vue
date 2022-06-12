@@ -133,6 +133,7 @@ export default {
       if (needSaveBackup.value && hasWallets.value) {
         exportPrivateKeys(keyStorage.value);
       }
+
       await store.dispatch('crypto/resetState');
       await citadel.reset(true);
       removeStorage(keyStorage.value);

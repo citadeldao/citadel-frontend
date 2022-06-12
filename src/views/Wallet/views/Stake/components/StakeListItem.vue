@@ -145,7 +145,7 @@ export default {
       type: Object,
       default: () => ({}),
     },
-    balance:{
+    balance: {
       type: Object,
       default: () => ({}),
     },
@@ -207,7 +207,6 @@ export default {
       }
 
       return true;
-
     });
 
     const updateSelectedNode = inject('updateSelectedNode');
@@ -219,6 +218,7 @@ export default {
     const editMode = inject('editMode');
     const clickHandler = async (item) => {
       emit('editClick');
+
       if (selectedNode.value) {
         updateShowChooseNode(false);
         updateShowNodesList(true);
@@ -240,7 +240,6 @@ export default {
       }
 
       return false;
-
     });
 
     return {

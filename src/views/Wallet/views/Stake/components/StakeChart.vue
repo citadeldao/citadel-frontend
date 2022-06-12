@@ -35,11 +35,9 @@ export default {
         }
 
         return '';
-
       }
 
       return '';
-
     };
     const minWidth = (item) => {
       if (item.share > 0) {
@@ -47,7 +45,6 @@ export default {
       }
 
       return '';
-
     };
 
     return { nextColor, minWidth };

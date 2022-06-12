@@ -11,8 +11,14 @@ const activeMonthColor = '#B7A8FF';
 const balanceHistoryChart = {};
 
 export const renderBalanceHistoryChart = (balanceHistory, currentTab, elementId) => {
-  if (!balanceHistory || !balanceHistory.list) {return;}
-  if (balanceHistoryChart[elementId]) {balanceHistoryChart[elementId].destroy();}
+  if (!balanceHistory || !balanceHistory.list) {
+    return;
+  }
+
+  if (balanceHistoryChart[elementId]) {
+    balanceHistoryChart[elementId].destroy();
+  }
+
   // eslint-disable-next-line no-unused-vars
   const getOrCreateBalanceHistoryTooltip = (chart) => {
     let tooltipEl = chart.canvas.parentNode.querySelector('div');
@@ -74,8 +80,8 @@ export const renderBalanceHistoryChart = (balanceHistory, currentTab, elementId)
     // Tooltip Element
     const { chart, tooltip } = context;
     const tooltipEl = getOrCreateBalanceHistoryTooltip(chart);
-    //Подсветка текущей x-подписи
-    //Индекс текущей подписи
+    // Подсветка текущей x-подписи
+    // Индекс текущей подписи
     const monthTicks = chart.scales.xMonths.ticks;
     const currentPointIndex = tooltip.dataPoints[0].dataIndex;
     const currentLabelIndex = monthTicks.find(
@@ -83,7 +89,7 @@ export const renderBalanceHistoryChart = (balanceHistory, currentTab, elementId)
     )?.$context.index;
 
 
-    //Установка цвета для подписей
+    // Установка цвета для подписей
     const monthsTicksConfig =
       chart.config._config.options.scales.xMonths.ticks;
     const updateChart = false;
@@ -91,6 +97,7 @@ export const renderBalanceHistoryChart = (balanceHistory, currentTab, elementId)
     // Hide if no tooltip
     if (tooltip.opacity === 0) {
       tooltipEl.style.opacity = 0;
+
       if (monthsTicksConfig.color[currentLabelIndex] === activeMonthColor) {
         updateChart && chart.update();
       }
@@ -152,12 +159,14 @@ export const renderBalanceHistoryChart = (balanceHistory, currentTab, elementId)
     const { offsetLeft: positionX, offsetTop: positionY } = chart.canvas;
 
     let verticalLine = document.querySelector(`#verticalLineBalance${elementId}`);
+
     if (!verticalLine) {
       verticalLine = document.createElement('span');
       verticalLine.id = `verticalLineBalance${elementId}`;
       tooltipEl.appendChild(verticalLine);
       verticalLine.classList.add('chart-tooltip__vertical-line');
     }
+
     const { top: canvasTop } = chart.canvas.getBoundingClientRect();
     const xAxePositionY = canvasTop + chart.chartArea.top + chart.chartArea.height;
     const pointPositionY = tooltip.caretY + canvasTop;
@@ -166,8 +175,8 @@ export const renderBalanceHistoryChart = (balanceHistory, currentTab, elementId)
 
     // Display, position, and set styles for font
     tooltipEl.style.opacity = 1;
-    tooltipEl.style.left = `${positionX + tooltip.caretX  }px`;
-    tooltipEl.style.top = `${positionY + tooltip.caretY  }px`;
+    tooltipEl.style.left = `${positionX + tooltip.caretX }px`;
+    tooltipEl.style.top = `${positionY + tooltip.caretY }px`;
     tooltipEl.style.font = tooltip.options.bodyFont.string;
 
     // обновление графика и тултипа если необходимо

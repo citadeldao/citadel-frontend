@@ -44,10 +44,10 @@ export default {
     onMounted(() => {
       createChart();
       parentWrap = document.body.querySelector('#expand-rate-chart-wrap');
-      //скрыть тултип при скроле
+      // скрыть тултип при скроле
       parentWrap.addEventListener('scroll', () => (tooltipOpacity.value = 0));
     });
-    //число подписей и массив цветов для подсветки дат
+    // число подписей и массив цветов для подсветки дат
     const { width } = useWindowSize();
     const wSize = computed(() => {
       if (width.value < screenWidths.lg) {
@@ -89,7 +89,7 @@ export default {
     const labels = computed(
       () =>
         props.data &&
-        Object.keys(props.data),/*.map((date) =>
+        Object.keys(props.data), /* .map((date) =>
           new Date(date).toLocaleDateString('en-GB', {
             day: 'numeric',
             month: 'short',
@@ -113,12 +113,12 @@ export default {
     // let lastLabelIndex = null
     const externalTooltipHandler = (context) => {
       const { chart, tooltip } = context;
-      //текущее значение цены и даты
+      // текущее значение цены и даты
       tooltipData.value = tooltip?.dataPoints[0]?.raw;
       tooltipDate.value = tooltip?.dataPoints[0]?.label.split('-').reverse().join('.');
 
       nextTick(() => {
-        //позиция тултипа с учетом его размеров
+        // позиция тултипа с учетом его размеров
         const tooltipEl = document.body.querySelector('#tooltip-history-chart');
         const tooltipLift = 25;
         const {
@@ -139,22 +139,24 @@ export default {
           canvasTop + chart.chartArea.top + chart.chartArea.height;
         const { bottom: parentWrapBottom } = parentWrap.getBoundingClientRect();
         let hiddenAreaHeight = xAxePositionY - parentWrapBottom;
+
         if (hiddenAreaHeight < 0) {
           hiddenAreaHeight = 0;
         }
+
         const pointPositionY = tooltip.caretY + canvasTop;
         tooltipLineHeight.value =
           `${xAxePositionY - pointPositionY - hiddenAreaHeight}px`;
 
-        //Подсветка текущей x-подписи
-        //Индекс текущей подписи
+        // Подсветка текущей x-подписи
+        // Индекс текущей подписи
         // const monthTicks = chart.scales.xMonths.ticks
         // const currentPointIndex = tooltip.dataPoints[0].dataIndex
         // const currentLabelIndex = monthTicks.find(
         //   (tick) => tick.value === currentPointIndex
         // )?.$context.index
 
-        //Установка цвета для подписей
+        // Установка цвета для подписей
         // const monthsTicksConfig =
         //   chart.config._config.options.scales.xMonths.ticks
         // const daysTicksConfig = chart.config._config.options.scales.xDays.ticks
@@ -175,7 +177,7 @@ export default {
         //     updateChart = true
         //   }
         // }
-        //mouseIn/mouseOut для точки с подписью
+        // mouseIn/mouseOut для точки с подписью
         // if (
         //   (currentLabelIndex || currentLabelIndex === 0) &&
         //   ((!lastLabelIndex && lastLabelIndex !== 0) ||

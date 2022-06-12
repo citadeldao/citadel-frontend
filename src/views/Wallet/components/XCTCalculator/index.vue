@@ -155,6 +155,7 @@ export default {
       if (+e.target.value > 100000) {
         max.value = +e.target.value;
       }
+
       value.value = +e.target.value;
     };
 

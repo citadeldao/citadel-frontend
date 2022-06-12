@@ -64,8 +64,8 @@ export default {
     });
     const { currentWallet } = useWallets();
     const isCurrentWalletSelected = computed(() => {
-      return Object.keys(currentWallet?.value || {}).length
-        && route.params.address;
+      return Object.keys(currentWallet?.value || {}).length &&
+        route.params.address;
     });
     const currentWalletName = computed(() => {
       const walletName = currentWallet.value.title || currentWallet.value.address;

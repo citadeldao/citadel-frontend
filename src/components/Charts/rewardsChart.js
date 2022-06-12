@@ -51,6 +51,7 @@ export const createDatasetForRewardsChart = (rewardsChart, currentTab, showCount
       );
     }
   }
+
   const nets = Object
     .values(datasets)
     .sort((a, b) => {
@@ -217,6 +218,7 @@ export const renderRewardsChart = (rewardsChart, datasetsArray, currentTab, elem
         };
 
         const rewards = getRewards();
+
         if (!isOthers) {
           nativeDiv.appendChild(document.createTextNode(prettyNumber(rewards.amount)));
           const nativeSign = document.createElement('span');
@@ -335,7 +337,7 @@ export const renderRewardsChart = (rewardsChart, datasetsArray, currentTab, elem
           ticks: {
             color: '#AFBCCB',
             // eslint-disable-next-line no-unused-vars
-            callback: function (index) {
+            callback: function(index) {
               return getDateStr(new Date(Object.keys(rewardsChart.list)[index]));
             },
           },
@@ -349,7 +351,7 @@ export const renderRewardsChart = (rewardsChart, datasetsArray, currentTab, elem
           },
           ticks: {
             color: '#AFBCCB',
-            callback: function (index) {
+            callback: function(index) {
               return prettyNumber(index);
             },
           },

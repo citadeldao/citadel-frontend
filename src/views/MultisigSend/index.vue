@@ -377,12 +377,14 @@ export default {
 
     const selectAddress = address => {
       selectedAddress.value = address;
+
       if (address && selectedFund.value) {
         store.dispatch('investors/getBalanceFundInfo', {
           address: selectedAddress.value,
           category: selectedFund.value,
         });
       }
+
       if (address) {
         signerWallet.value = wallets.value.find(w => w.address.toLowerCase() === address.toLowerCase() && w.net === 'bsc');
       }
@@ -391,6 +393,7 @@ export default {
     const selectFund = fund => {
       // formatted param
       selectedFund.value = fund.toLowerCase();
+
       if (fund && selectedAddress.value) {
         store.dispatch('investors/getBalanceFundInfo', {
           address: selectedAddress.value,
@@ -412,6 +415,7 @@ export default {
         amount: amount.value,
         recipient: toAddress.value,
       });
+
       if (prepareTransferFund?.value?.fee) {
         showClaimModal.value = true;
       }
@@ -419,6 +423,7 @@ export default {
 
     const confirmClaim = async () => {
       confirmPassword.value = true;
+
       if ([WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(signerWallet.value.type) && incorrectPassword.value) {
         return;
       }

@@ -489,10 +489,10 @@ export default {
     };
 
     const showLedgerModalContent = computed(() => {
-      return showConnectLedgerModal.value
-        || showConfirmLedgerModal.value
-        || showAppLedgerModal.value
-        || showRejectedLedgerModal.value;
+      return showConnectLedgerModal.value ||
+        showConfirmLedgerModal.value ||
+        showAppLedgerModal.value ||
+        showRejectedLedgerModal.value;
     });
 
     const buttonsPannelData = computed(() => {
@@ -508,7 +508,6 @@ export default {
         button1: 'unstake',
         button2: 'Stake',
       };
-
     });
 
     const chartData = computed(() => {
@@ -570,6 +569,7 @@ export default {
         rewardsAddress: rewardDestinationAddress.value,
         rewardsRestake: rewardDestinationOption.value === 0,
       });
+
       if (ok) {
         resRawTxs.value = rawTxs;
         updateShowChooseNode(false);
@@ -578,6 +578,7 @@ export default {
       } else {
         modalCloseHandler();
       }
+
       isLoading.value = false;
     };
 
@@ -589,6 +590,7 @@ export default {
         isLoading.value = true;
 
         let keplrResult;
+
         try {
           keplrResult = await keplrConnector.value.sendKeplrTransaction(resRawTxs.value, props.currentWallet.address, { preferNoSetFee: true });
         } catch (err) {
@@ -666,13 +668,16 @@ export default {
 
         return;
       }
+
       isLoading.value = true;
       let res;
+
       if (isLedgerWallet.value) {
         isLoading.value = false;
         showConfirmTransaction.value = false;
         clearLedgerModals();
         showConfirmLedgerModal.value = true;
+
         try {
           res = await props.currentWallet.signAndSendMulti({
             walletId: props.currentWallet.id,
@@ -692,6 +697,7 @@ export default {
           privateKey: props.currentWallet.getPrivateKeyDecoded(password.value),
         });
       }
+
       if (res.ok) {
         txHash.value = res.data;
         updateShowConfirmTransaction(false);
@@ -701,7 +707,6 @@ export default {
         modalCloseHandler();
         isLoading.value = false;
       }
-
     };
 
     // ledger modal handlers

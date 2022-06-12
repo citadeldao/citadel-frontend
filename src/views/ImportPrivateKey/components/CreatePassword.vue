@@ -66,9 +66,9 @@ export default {
 
         return;
       }
+
       emit('createPassword', password.value);
       nextStep();
-
     };
 
     return { password, submitHandler, repeatPassword, disabled, passwordError, inputError };

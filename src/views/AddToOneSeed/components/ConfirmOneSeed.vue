@@ -85,6 +85,7 @@ export default {
   props: {
     mnemonic: {
       type: String,
+      required: true,
     },
   },
   setup(props) {
@@ -101,6 +102,7 @@ export default {
 
         return;
       }
+
       secondConfirmWord.value = word;
     };
 

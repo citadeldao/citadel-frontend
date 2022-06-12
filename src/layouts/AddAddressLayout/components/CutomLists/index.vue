@@ -231,6 +231,7 @@ export default {
 
             return;
           }
+
           break;
 
         case 'edit':
@@ -279,6 +280,7 @@ export default {
 
         return false;
       }
+
       if (!checkedWallets.value.length) {
         showWarningBanner.value = true;
 

@@ -83,8 +83,9 @@ export default {
     const appsIcon = ref();
     const filterIcon = ref();
     const searchIcon = ref();
-    const searchAppStr =  ref('');
+    const searchAppStr = ref('');
     const showAppLogo = ref(false);
+
 
     watch(() => props.appLogo, () => {
       if (!props.appLogo) {

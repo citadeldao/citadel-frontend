@@ -142,9 +142,9 @@ export default {
       ? selectedCustomFee.value
       : props.fees[selectedFeeType.value].fee);
 
-    const invalidCustomFee = computed(() => isCustomSelected.value
-        && selectedCustomFee.value <= 0
-        && selectedCustomFee.value === '');
+    const invalidCustomFee = computed(() => isCustomSelected.value &&
+        selectedCustomFee.value <= 0 &&
+        selectedCustomFee.value === '');
 
     const invalidCustomFeeText = ref('');
     const inputHandler = ()=> {
@@ -184,6 +184,7 @@ export default {
       if (!validateFee()) {
         return;
       }
+
       emit('confirm', {
         type: selectedFeeType.value,
         custom: isCustomSelected.value

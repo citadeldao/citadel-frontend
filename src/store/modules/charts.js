@@ -25,18 +25,20 @@ export default {
       if (!state.balanceHistory[list]) {
         state.balanceHistory[list] = {};
       }
+
       state.balanceHistory[list][period] = blncHistory;
     },
     [types.SET_REWARDS_CHART](state, { list, rewards, period }) {
       if (!state.rewardsChart[list]) {
         state.rewardsChart[list] = {};
       }
+
       state.rewardsChart[list][period] = rewards;
     },
   },
   actions: {
     // dateFrom and dateTo is send only on custom dates
-    async getBalanceHistory({ commit, rootGetters  }, { list, months = 1, dateFrom, dateTo }) {
+    async getBalanceHistory({ commit, rootGetters }, { list, months = 1, dateFrom, dateTo }) {
       const days = months * 30;
       const period = 86400000 * days;
 
@@ -59,6 +61,7 @@ export default {
 
         return { balanceHistory: res.data, error: null };
       }
+
       notify({
         type: 'warning',
         text: res.error,
@@ -75,11 +78,13 @@ export default {
         dateTo,
         listId: list === 'all' ? undefined : list,
       });
-      if(!res.error){
+
+      if (!res.error) {
         commit(types.SET_REWARDS_CHART, { list, rewards: res.data, period: dateFrom ? 'custom' : months });
 
         return { rewardsChart: res.data, error: null };
       }
+
       notify({
         type: 'warning',
         text: res.error,

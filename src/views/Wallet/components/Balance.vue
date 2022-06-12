@@ -257,7 +257,6 @@ export default {
           .times(frozenBalance)
           .toNumber(),
       };
-
     });
 
     const mainBalance = computed(() => {
@@ -265,6 +264,7 @@ export default {
         : currentKtAddress.value
           ? currentKtAddress?.value?.balance.calculatedBalance
           : props.currentWallet.balance.calculatedBalance;
+
       if (balance === 0) {
         return balance;
       }
@@ -276,7 +276,6 @@ export default {
       return BigNumber(currentCurrency.value)
         .times(balance)
         .toNumber();
-
     });
 
     const getFrozenTime = (timestamp) => {
@@ -287,8 +286,8 @@ export default {
       const frozenDays = Math.floor(frozenTime / SECS_IN_DAY);
       const frozenHours = Math.floor((frozenTime - (frozenDays * SECS_IN_DAY)) / SECS_IN_HOUR);
       const frozenMinutes = Math.floor(
-        ((frozenTime - (frozenDays * SECS_IN_DAY)) - (frozenHours * SECS_IN_HOUR))
-        / SECS_IN_MINUTE,
+        ((frozenTime - (frozenDays * SECS_IN_DAY)) - (frozenHours * SECS_IN_HOUR)) /
+        SECS_IN_MINUTE,
       );
 
       return `

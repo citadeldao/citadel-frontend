@@ -14,6 +14,7 @@ export default class keplrConnector {
       if (network) {
         this.chainId = network;
       }
+
       await window.keplr.enable(this.chainId);
       this.offlineSigner = window.keplr.getOfflineSigner(this.chainId);
       this.accounts = await this.offlineSigner.getAccounts();
@@ -29,14 +30,14 @@ export default class keplrConnector {
       const signature = Buffer.from(res.signature.signature, 'base64').toString('hex');
 
       return { signature, signedTx: res.signed, fullResponse: res };
-    } catch(err) {
+    } catch (err) {
       if (keplrErrors[err.message]) {
         notify({
           type: 'warning',
           text: keplrErrors[err.message],
         });
 
-        //return false;
+        // return false;
       }
 
       return { error: err };

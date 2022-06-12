@@ -78,15 +78,18 @@ export default {
   setup(props) {
     const isOpen = ref(props.opened);
     const currentIcon = ref();
+
     if (props.data) {
       import(`@/assets/icons/networks/${props.data.net}.svg`).then((val) => {
         currentIcon.value = markRaw(val.default);
       });
     }
+
     const clickHandler = () => {
-      if (props.opened){
+      if (props.opened) {
         return;
       }
+
       isOpen.value = !isOpen.value;
     };
     const total = computed(() =>

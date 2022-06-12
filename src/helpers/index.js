@@ -87,7 +87,6 @@ export const formattedWalletAddress = (address, wrapperWidth, fontFamily, fontSi
   }
 
   return address;
-
 };
 
 export const findAddressWithNet = (list, { address, net }) => list.find(

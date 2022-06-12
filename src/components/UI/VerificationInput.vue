@@ -70,15 +70,19 @@ export default {
     const { fields, code } = this;
     let vals;
     let autoFocusIndex = 0;
+
     if (code && code.length) {
       vals = [];
+
       for (let i = 0; i < fields; i++) {
         vals.push(code[i] || '');
       }
+
       autoFocusIndex = code.length >= fields ? 0 : code.length;
     } else {
       vals = Array(fields).fill('');
     }
+
     this.id = +new Date();
 
     return { values: vals, autoFocusIndex, iRefs: [] };
@@ -96,40 +100,50 @@ export default {
     onValueChange(e) {
       const index = parseInt(e.target.dataset.id);
       const { type, fields } = this;
+
       if (type === 'number') {
         e.target.value = e.target.value.replace(/[^\d]/gi, '');
       }
+
       let next;
       const { value } = e.target;
       let { values } = this;
       values = Object.assign([], values);
+
       if (value.length > 1) {
         let nextIndex = value.length + index - 1;
+
         if (nextIndex >= fields) {
           nextIndex = fields - 1;
         }
+
         next = this.iRefs[nextIndex];
         const split = value.split('');
         split.forEach((item, i) => {
           const cursor = index + i;
+
           if (cursor < fields) {
             values[cursor] = item;
           }
         });
+
         for (let i = 0; i < 6; i++) {
           values[i] = value[i];
         }
+
         this.values = values;
       } else {
         next = this.iRefs[index + 1];
         values[index] = value;
         this.values = values;
       }
+
       if (next) {
         const element = next;
         element.focus();
         element.select();
       }
+
       this.triggerChange(values);
     },
     onKeyDown(e) {
@@ -159,15 +173,19 @@ export default {
         }
         case KEY_CODE.left:
           e.preventDefault();
+
           if (prev) {
             prev.focus();
           }
+
           break;
         case KEY_CODE.right:
           e.preventDefault();
+
           if (next) {
             next.focus();
           }
+
           break;
         case KEY_CODE.up:
         case KEY_CODE.down:

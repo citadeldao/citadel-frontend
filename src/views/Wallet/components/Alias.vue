@@ -207,11 +207,12 @@ export default {
 
         return;
       }
+
       await store.dispatch('wallets/renameWalletTitle', {
         walletId: props.currentWallet.id,
         title: alias.value,
       });
-      store.dispatch('wallets/getNewWallets','lazy');
+      store.dispatch('wallets/getNewWallets', 'lazy');
       editMode.value = false;
       alias.value = '';
     };
@@ -261,6 +262,7 @@ export default {
       } else {
         await addToFavorite();
       }
+
       await store.dispatch('wallets/getCustomWalletsList');
     };
     const removeFromFavorite = async () => {
@@ -269,8 +271,8 @@ export default {
         name: 'Favourites',
         wallets: favouritesList.value.wallets.filter(
           ({ address, net }) => !(
-            address.toLowerCase() === props.currentWallet.address.toLowerCase()
-            && net === props.currentWallet.net
+            address.toLowerCase() === props.currentWallet.address.toLowerCase() &&
+            net === props.currentWallet.net
           ),
         ),
         needSetActiveList: false,
@@ -289,6 +291,7 @@ export default {
 
         return;
       }
+
       await store.dispatch('wallets/editCustomWalletsList', {
         listId: favouritesList.value.id,
         name: 'Favourites',

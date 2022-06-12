@@ -230,7 +230,7 @@ export default {
       emit('update:activeTab', value);
       updateAmount('');
       updateAdditionalFee('');
-      value !== 'redelegate' &&  await getDelegationFee(value,selectedNode.value.address);
+      value !== 'redelegate' && await getDelegationFee(value, selectedNode.value.address);
     };
     const maxAmount = inject('maxAmount');
     const maxAdditionalFee = inject('maxAdditionalFee');
@@ -238,9 +238,9 @@ export default {
     const insufficientAdditionalFee = inject('insufficientAdditionalFee');
 
     const showAmount = computed(() => {
-      if (insufficientFunds.value
-          || mode.value === 'unstake' || props.activeTab === 'unstake'
-          || mode.value === 'redelegate' || props.activeTab === 'redelegate') {
+      if (insufficientFunds.value ||
+          mode.value === 'unstake' || props.activeTab === 'unstake' ||
+          mode.value === 'redelegate' || props.activeTab === 'redelegate') {
         return false;
       }
 
@@ -257,10 +257,12 @@ export default {
       resMaxAmount.value = '';
       emit('update:activeTab', val);
       mode.value = val;
-      if(val === 'unstake' || val === 'redelegate'){
+
+      if (val === 'unstake' || val === 'redelegate') {
         await updateSelectedNode(props.list);
       }
-      if(val === 'stake'){
+
+      if (val === 'stake') {
         await getDelegationFee(val, props.list);
       }
     };

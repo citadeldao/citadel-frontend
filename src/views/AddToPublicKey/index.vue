@@ -130,6 +130,7 @@ export default {
 
         return;
       }
+
       msgError.value = '';
 
       setAddress(address.value);

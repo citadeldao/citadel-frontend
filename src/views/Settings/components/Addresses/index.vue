@@ -68,7 +68,6 @@ export default {
       });
 
       return Object.values(resultObj);
-
     });
 
     const exportWallet = (val) => {
@@ -83,6 +82,7 @@ export default {
       if (!hasPrivateWallets.length) {
         store.commit('crypto/setPasswordHash', null);
       }
+
       showSeedModal.value = false;
     };
 

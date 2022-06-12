@@ -341,7 +341,6 @@ export default {
         type: '',
         button2: 'changeNode',
       };
-
     });
 
     const actionModalData = computed(() => {
@@ -358,7 +357,6 @@ export default {
         desc: t('singleStake.actionModalDesc'),
         place: 'singleStake',
       };
-
     });
 
     const toStake = () => {
@@ -387,8 +385,8 @@ export default {
     const currentKtAddressNodeList = inject('currentKtAddressNodeList');
 
     const dataList = computed(() => {
-      const initialData = currentKtAddress.value ?
-        currentKtAddressNodeList.value
+      const initialData = currentKtAddress.value
+        ? currentKtAddressNodeList.value
         : props.list;
 
       const stakeValue = currentKtAddress.value ? currentKtAddress.value.balance.stake : props.currentWallet.balance.stake;
@@ -453,6 +451,7 @@ export default {
 
         return;
       }
+
       isLoading.value = true;
       let res;
 
@@ -481,6 +480,7 @@ export default {
           privateKey: props.currentWallet.getPrivateKeyDecoded(password.value),
         });
       }
+
       if (res.ok) {
         txHash.value = res.data;
         updateShowConfirmTransaction(false);

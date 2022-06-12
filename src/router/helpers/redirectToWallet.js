@@ -20,7 +20,7 @@ export default ({ wallet, token, root = false }) => {
   const routeName = (root && hasContext) || !hasContext
     ? context.hasSubtoken
       ? 'WalletAssets'
-      :  context.hasStake
+      : context.hasStake
         ? 'WalletStake'
         : 'WalletSend'
     : currentRoute.name;

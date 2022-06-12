@@ -46,7 +46,7 @@ export default {
         await store.dispatch('wallets/setCurrentWallet', null);
       }
     };
-    const setCurrentToken = async(address, net, token) => {
+    const setCurrentToken = async (address, net, token) => {
       if (token) {
         const currentToken = store.getters['subtokens/formatedSubtokens'](true)
           .find(({ net }) => net === token);
@@ -66,7 +66,9 @@ export default {
     // load main data
     store.dispatch('app/initDefaultState')
       .then(async () => {
-        intervalId.value = setInterval(()=> { store.dispatch('wallets/getNewWallets','lazy'); }, 10000);
+        intervalId.value = setInterval(()=> {
+          store.dispatch('wallets/getNewWallets', 'lazy');
+        }, 10000);
         const { address, net, token } = route.params;
 
         await setCurrentWallet({ address, net });
@@ -114,7 +116,7 @@ export default {
           setCurrentWallet(params);
         }
 
-        if (!params.token){
+        if (!params.token) {
           await store.dispatch('subtokens/setCurrentToken', null);
         }
       },

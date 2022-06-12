@@ -98,8 +98,13 @@ export default {
     const chains = ref(keplrNetworks);
 
     chains.value.sort((a, b) => {
-      if (a.label > b.label) {return 1;}
-      if (a.label < b.label) {return -1;}
+      if (a.label > b.label) {
+        return 1;
+      }
+
+      if (a.label < b.label) {
+        return -1;
+      }
 
       return 0;
     });
@@ -128,6 +133,7 @@ export default {
             const accs = await new KeplrConnector().connect(c.key);
 
             const find = privateWallets.value.find(w => w.address === accs[0].address);
+
             if (!find) {
               importedAddresses.value.push({
                 address: accs[0].address,
@@ -137,7 +143,7 @@ export default {
             }
 
             return true;
-          } catch(err) {
+          } catch (err) {
             notify({
               type: 'warning',
               text: `${c.label} - ${err}`,
@@ -165,11 +171,12 @@ export default {
           setNets([c.net]);
           setType('keplr');
           setAddress(c.address);
+
           try {
             await createWallets(WALLET_TYPES.KEPLR);
 
             return true;
-          } catch(err) {
+          } catch (err) {
             return false;
           }
         }),

@@ -55,7 +55,6 @@ export default function useChart({
         name: c.net === 'Others' ? 'Others' : networksConfig.value?.[c.net]?.name,
         color: c.backgroundColor,
       };
-
     }).sort((a, b) => a.percent > b.percent ? -1 : a.percent < b.percent ? 1 : 0);
 
     const others = netsPercents.find(n => n.name === 'Others');
@@ -101,15 +100,21 @@ export default function useChart({
   };
 
   const currentFilterTabChangeRewardsChartHandler = async () => {
-    if (currentFilterTab.value === 'custom') {return;}
-    if (!rewardsChart.value) {await store.dispatch(storeAction, { list: customList.value, months: currentFilterTab.value });}
+    if (currentFilterTab.value === 'custom') {
+      return;
+    }
+
+    if (!rewardsChart.value) {
+      await store.dispatch(storeAction, { list: customList.value, months: currentFilterTab.value });
+    }
+
     render(rewardsChart.value, datasetsArray.value, currentTab.value, canvasElement, networksConfig.value);
   };
 
   return {
     currentFilterTab,
     currentTab,
-    info:networksConfig,
+    info: networksConfig,
     rewardsChart,
     datasetsArray,
     netsPercent,

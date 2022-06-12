@@ -254,7 +254,6 @@ export default {
         xctMarketCap.value = data;
         isDataLoading.value = false;
       }
-
     };
 
     loadData();
@@ -341,7 +340,7 @@ export default {
         if (!showPasswordForAssign.value) {
           try {
             approveAssign();
-          } catch(err) {
+          } catch (err) {
             notify({
               type: 'warning',
               text: `Error signing assigned address ${err}`,
@@ -368,6 +367,7 @@ export default {
 
         return;
       }
+
       showApproveAsignWithPasswordModal.value = false;
       isLoading.value = true;
       // ассайним вансидовые адреса
@@ -375,6 +375,7 @@ export default {
 
       for (const item of seedAddresses.value) {
         let resError;
+
         if (item.type === WALLET_TYPES.KEPLR) {
           const { data } = await item.prepareAssignToDaoMessage(item.id);
           const { id } = data;
@@ -392,6 +393,7 @@ export default {
           });
           resError = error;
         }
+
         putStatus = !resError;
         !resError && newAssignedAddresses.value.push(item);
         newAssignedAddresses.value = sortByAlphabet(newAssignedAddresses.value, 'net');
@@ -410,7 +412,6 @@ export default {
         isLoading.value = false;
         showNewAssignedAddressesModal.value = false;
       }
-
     };
 
     const successClickHandler = async () => {

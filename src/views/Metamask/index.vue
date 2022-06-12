@@ -133,6 +133,7 @@ export default {
 
         return;
       }
+
       if (!['bsc', 'eth'].includes(metamaskConnector.value.network)) {
         notify({
           type: 'warning',
@@ -149,6 +150,7 @@ export default {
       if (accounts && accounts[0]) {
         showLoader.value = false;
       }
+
       if (['eth', 'bsc'].includes(network)) {
         import(`@/assets/icons/networks/${network}.svg`).then((val) => {
           currentIcon.value = markRaw(val.default);

@@ -41,9 +41,9 @@ import PrimaryButton from '@/components/UI/PrimaryButton';
 import downloadAppIcon from '@/assets/icons/downloadApp.png';
 
 export default {
-  name:'MobileAppModal',
-  components:{ PrimaryButton, closeIcon },
-  emits:['close'],
+  name: 'MobileAppModal',
+  components: { PrimaryButton, closeIcon },
+  emits: ['close'],
   setup() {
     const clickHandler = (link)=> {
       window.location.href = link;

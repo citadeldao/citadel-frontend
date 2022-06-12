@@ -21,15 +21,17 @@ export default function useIostProps() {
     if (hasAccount && privateKey) {
       accounts.value = [];
       const { data, error } = await citadel.getAccountsByPrivateKey('iost', privateKey);
+
       if (!error) {
         accounts.value = data.map(item => ({ label: item.name, key: item.name }));
         account.value = accounts.value[0].key;
-      }else{
+      } else {
         notify({
           type: 'warning',
           text: error,
         });
       }
+
       waitAccounts.value = false;
     }
   };

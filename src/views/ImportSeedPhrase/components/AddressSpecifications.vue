@@ -123,9 +123,11 @@ export default {
       ) {
         return t('mnemonicIncorrect');
       }
+
       if (mnemonicPhrase.value && !search.value) {
         return t('pleaseSelectNetwork');
       }
+
       if (mnemonicPhrase.value && !netByTitle[search.value]) {
         return t('networkNameIncorrect');
       }
@@ -138,6 +140,7 @@ export default {
       if (!mnemonicPhrase.value.trim()) {
         return;
       }
+
       emit('createOpts', {
         net: netByTitle[search.value],
         mnemonic: mnemonicPhrase.value,

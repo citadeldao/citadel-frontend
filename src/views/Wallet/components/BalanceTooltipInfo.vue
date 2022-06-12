@@ -99,13 +99,13 @@ export default {
   props: {
     currentWallet: {
       type: Object,
-      default:()=>({}),
+      default: ()=>({}),
     },
   },
   setup() {
     const { gas, ram } = useIostProps();
 
-    return{ gas, ram };
+    return { gas, ram };
   },
 };
 </script>

@@ -552,7 +552,7 @@ export default {
     const defaultFee = computed(() => fees.value?.medium);
     const customFee = ref(0);
 
-    //заглушка для бриджей
+    // заглушка для бриджей
     const itemsNetworks = ref([
       { key: props.currentWallet.net },
     ]);
@@ -572,8 +572,13 @@ export default {
         return wallets.value.filter(w => {
           const findFromAlias = w.net === parseNetwork && w.title.toLowerCase().includes(toAddress.value.toLowerCase());
 
-          if (!toAddress.value) {return w.net === parseNetwork || findFromAlias;}
-          if (w.address === toAddress.value) {return (w.net === parseNetwork || findFromAlias) && w.address !== toAddress.value;}
+          if (!toAddress.value) {
+            return w.net === parseNetwork || findFromAlias;
+          }
+
+          if (w.address === toAddress.value) {
+            return (w.net === parseNetwork || findFromAlias) && w.address !== toAddress.value;
+          }
 
           return w.net === parseNetwork && w.address.includes(toAddress.value) || findFromAlias;
         });
@@ -585,6 +590,7 @@ export default {
         if (!toAddress.value) {
           return w.net === bridgeTargetNet.value || findFromAlias;
         }
+
         if (w.address === toAddress.value) {
           return (w.net === bridgeTargetNet.value || findFromAlias) && w.address !== toAddress.value;
         }
@@ -654,7 +660,7 @@ export default {
     watch(
       () => route.params,
       (newParams) => {
-        if(newParams.net && newParams.address){
+        if (newParams.net && newParams.address) {
           clearState();
           loadData();
           showNetworkTargetWallets.value = false;
@@ -666,7 +672,7 @@ export default {
       { deep: true },
     );
 
-    //Calc Max Amount
+    // Calc Max Amount
     const maxAmount = computed(() => {
       if (props.currentToken) {
         return balance.value?.mainBalance;
@@ -701,7 +707,7 @@ export default {
       showFeeSelectModal.value = false;
     };
 
-    //Change amount modals management
+    // Change amount modals management
     const showDecreaseAmountModal = ref(false);
     const showIncreaseAmountModal = ref(false);
     const showChangingAmountModal = computed(
@@ -742,6 +748,7 @@ export default {
       if (feeType.value === 'custom') {
         customFee.value = lastCorrectFee.value.fee;
       }
+
       feeType.value = lastCorrectFeeType.value;
     };
 
@@ -753,13 +760,13 @@ export default {
       },
     );
 
-    //Fee Error Modal Handlers
+    // Fee Error Modal Handlers
     const closeFeeErrorModal = () => {
       backToLastCorrectFee();
       closeFeeModal();
     };
 
-    //Decrease Amount Modal Handlers
+    // Decrease Amount Modal Handlers
     const cancelDecreaseAmount = () => {
       backToLastCorrectFee();
       closeFeeModal();
@@ -769,7 +776,7 @@ export default {
       closeFeeModal();
     };
 
-    //Increase Amount Modal Handlers
+    // Increase Amount Modal Handlers
     const cancelIncreaseAmount = () => {
       closeFeeModal();
     };
@@ -782,17 +789,17 @@ export default {
       BigNumber(amount.value).plus(fee.value.fee).toNumber(),
     );
 
-    //Error Handlers
-    const insufficientFunds = computed(() =>
-    {
-      if(amount.value){
-        if(props.currentWallet.minSendAmount && props.currentWallet.minSendAmount > +amount.value){
+    // Error Handlers
+    const insufficientFunds = computed(() => {
+      if (amount.value) {
+        if (props.currentWallet.minSendAmount && props.currentWallet.minSendAmount > +amount.value) {
           return t('minSendAmountError', {
             code: props.currentWallet.code,
             minAmount: props.currentWallet.minSendAmount,
           });
         }
-        if(+amount.value > +maxAmount.value) {
+
+        if (+amount.value > +maxAmount.value) {
           return 'Insufficient funds';
         }
       }
@@ -824,7 +831,9 @@ export default {
 
       if (isSendToAnotherNetwork.value) {
         if (props.currentToken) { // check select network in cosmosnetworks ibc token to bridge
-          if (props.currentToken.net.slice(parseNetworkLength) !== bridgeTargetNet.value) {return t('messages.incorrectNetwork');}
+          if (props.currentToken.net.slice(parseNetworkLength) !== bridgeTargetNet.value) {
+            return t('messages.incorrectNetwork');
+          }
         }
 
         return toAddress.value && !validateAddress(toAddress.value) && t('messages.incorrectAddress');
@@ -853,7 +862,7 @@ export default {
         ),
     );
 
-    //Check Password
+    // Check Password
     const { password, passwordError, inputError } = useCheckPassword();
     provide('inputError', inputError);
     const confirmModalDisabled = computed(
@@ -882,7 +891,10 @@ export default {
     };
 
     const submitHandler = async () => {
-      if (prepareLoading.value) {return;}
+      if (prepareLoading.value) {
+        return;
+      }
+
       // bridge
       if (isSendToAnotherNetwork.value) {
         prepareLoading.value = true;
@@ -910,6 +922,7 @@ export default {
 
         return;
       }
+
       prepareLoading.value = true;
       await prepareTransfer(transferParams.value);
       prepareLoading.value = false;
@@ -930,19 +943,22 @@ export default {
 
     const isLoading = ref(false);
     const confirmClickHandler = async () => {
-      //prepare new tx if fee was changed
+      // prepare new tx if fee was changed
       if (fee.value && fee.value !== defaultFee.value) {
         await prepareTransfer(transferParams.value);
+
         if (rawTxError.value) {
           showConfirmModal.value = false;
           showModal.value = false;
           clearTxData();
         }
       }
+
       // metamask, ...
       if (currentWalletType.value === WALLET_TYPES.METAMASK) {
         isLoading.value = true;
         const metamaskResult = await metamaskConnector.value.sendMetamaskTransaction(rawTx.value);
+
         if (metamaskResult.error) {
           notify({
             type: 'warning',
@@ -953,6 +969,7 @@ export default {
           showSuccessModal.value = true;
           txHash.value = metamaskResult.txHash;
         }
+
         isLoading.value = false;
 
         return;
@@ -961,6 +978,7 @@ export default {
       if (props.currentWallet.type === WALLET_TYPES.KEPLR) {
         const tx = isSendToAnotherNetwork.value ? prepareBuildTransaction.value.data : rawTx.value;
         let keplrResult;
+
         try {
           keplrResult = await keplrConnector.value.sendKeplrTransaction(tx, props.currentWallet.address, { preferNoSetFee: true });
         } catch (err) {
@@ -980,6 +998,7 @@ export default {
 
           return;
         }
+
         isLoading.value = true;
 
         const { currentWallet: parentWallet } = useWallets();
@@ -1037,15 +1056,17 @@ export default {
 
         return;
       }
+
       try {
         isLoading.value = true;
 
-        //sign and send transfer
+        // sign and send transfer
         if (isLedgerWallet.value) {
           isLoading.value = false;
           showConfirmModal.value = false;
           clearLedgerModals();
           showConfirmLedgerModal.value = true;
+
           try {
             const tx = isSendToAnotherNetwork.value ? prepareBuildTransaction.value.data : rawTx.value;
             await signAndSendTransfer(tx, null, {
@@ -1073,7 +1094,6 @@ export default {
       } catch (e) {
         console.error(e);
       }
-
     };
 
     const confirmModalCloseHandler = () => {
@@ -1082,10 +1102,12 @@ export default {
       feeType.value = 'medium';
       customFee.value = 0;
       showSuccessModal.value = false;
+
       if (txHash.value) {
         amount.value = '';
         txComment.value = '';
       }
+
       clearTxData();
       showModal.value = false;
     };
@@ -1126,13 +1148,12 @@ export default {
       loadData();
       confirmModalCloseHandler();
       txComment.value = '';
-
     };
     const errorClickHandler = confirmModalCloseHandler;
 
     // add comment to a successfull tx
     const txComment = ref('');
-    const successClickHandler = async() => {
+    const successClickHandler = async () => {
       txComment.value &&
       (await store.dispatch('transactions/postTransactionNote', {
         network: props.currentWallet.net,
@@ -1182,7 +1203,7 @@ export default {
       showFeeSelectModal,
       openFeeSelectModal,
       closeFeeSelectModal,
-      /*onCustomFocus,*/
+      /* onCustomFocus,*/
       feeType,
       showChangingAmountModal,
       updateFee,

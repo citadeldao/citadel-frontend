@@ -33,6 +33,7 @@ export default {
       if (!state.mnemonic) {
         return null;
       }
+
       // export from settings when wallet import from seed
       if (customMnemonic) {
         return CryptoCoin.decodeMnemonic(customMnemonic, password);
@@ -47,7 +48,7 @@ export default {
     setNewMnemonic(state, newMnemonic) {
       state.newMnemonic = newMnemonic;
     },
-    resetState (state) {
+    resetState(state) {
       Object.assign(state, getDefaultState());
     },
     setUserMnemonic(state, mnemonic) {
@@ -65,13 +66,14 @@ export default {
   },
 
   actions: {
-    async generateNewMnemonic({ commit }){
+    async generateNewMnemonic({ commit }) {
       const { result, data } = await citadel.generateMnemonic();
-      if(result === 'success'){
+
+      if (result === 'success') {
         commit('setNewMnemonic', data);
       }
     },
-    async resetState ({ commit, dispatch }) {
+    async resetState({ commit, dispatch }) {
       await dispatch('wallets/setWallets', [], { root: true });
       commit('resetState');
     },
@@ -90,9 +92,9 @@ export default {
       try {
         const WalletConstructor = models[walletOpts.net.toUpperCase()];
         walletOpts.privateKeyEncoded = walletOpts.privateKeyEncoded ? walletOpts.privateKeyEncoded
-          : walletOpts.privateKey ? WalletConstructor.encodePrivateKeyByPassword(walletOpts.net,walletOpts.privateKey, password) : null;
+          : walletOpts.privateKey ? WalletConstructor.encodePrivateKeyByPassword(walletOpts.net, walletOpts.privateKey, password) : null;
         walletOpts.mnemonicEncoded = walletOpts.mnemonicEncoded ? walletOpts.mnemonicEncoded
-          : walletOpts.mnemonic ? WalletConstructor.encodePrivateKeyByPassword(walletOpts.net,walletOpts.mnemonic, password) : null;
+          : walletOpts.mnemonic ? WalletConstructor.encodePrivateKeyByPassword(walletOpts.net, walletOpts.mnemonic, password) : null;
         walletOpts.config = rootGetters['networks/configByNet'](walletOpts.net);
         const walletInstance = new WalletConstructor(walletOpts);
 
@@ -109,8 +111,8 @@ export default {
 
     async createWalletByMnemonic({ rootGetters, dispatch }, { walletOpts, password }) {
       try {
-        const derivationPath = walletOpts.pathIndex ?
-          models[walletOpts.net.toUpperCase()].getDerivationPath(walletOpts.net, walletOpts.pathIndex)
+        const derivationPath = walletOpts.pathIndex
+          ? models[walletOpts.net.toUpperCase()].getDerivationPath(walletOpts.net, walletOpts.pathIndex)
           : walletOpts.derivationPath;
         const { error, data } = await citadel.createWalletByMnemonic({ ...walletOpts, derivationPath });
         const wallet = {
@@ -118,16 +120,17 @@ export default {
           name: data.networkName,
         };
         const walletInstance = await dispatch('createNewWalletInstance', { walletOpts: wallet, password });
-        if(!error){
+
+        if (!error) {
           const existingWallet = rootGetters['wallets/walletByAddress'](walletInstance);
 
           return {
             walletInstance,
-            alreadyExist: !!existingWallet && existingWallet.type !==  WALLET_TYPES.PUBLIC_KEY,
+            alreadyExist: !!existingWallet && existingWallet.type !== WALLET_TYPES.PUBLIC_KEY,
           };
         }
 
-        return{};
+        return {};
       } catch (error) {
         notify({
           type: 'warning',
@@ -142,6 +145,7 @@ export default {
       const config = rootGetters['networks/configByNet'](walletOpts.net);
       const publicKey = rootGetters['keplr/keplrConnector'].accounts[0].pubkey;
       const pb = Buffer.from(publicKey).toString('hex');
+
       try {
         const walletInstance = await CryptoCoin.createWalletByKeplr(
           {
@@ -155,9 +159,9 @@ export default {
         const existingWallet = rootGetters['wallets/walletByAddress'](keplrInstance);
 
         return {
-          data:{
+          data: {
             walletInstance: keplrInstance,
-            alreadyExist: !!existingWallet && existingWallet.type !==  WALLET_TYPES.PUBLIC_KEY,
+            alreadyExist: !!existingWallet && existingWallet.type !== WALLET_TYPES.PUBLIC_KEY,
           },
           error: false,
         };
@@ -168,36 +172,39 @@ export default {
       }
     },
 
-    async addHardwareWalletToAccount({ dispatch }, { wallet }){
+    async addHardwareWalletToAccount({ dispatch }, { wallet }) {
       const { error, data } = await citadel.addCreatedWallet({ ...wallet.config, ...wallet, networkName: wallet.config.name });
-      if(!error){
+
+      if (!error) {
         const newWalletInstance = await dispatch('createNewWalletInstance', { walletOpts: { ...data, derivationPath: wallet.derivationPath } });
 
         return { newWalletInstance, error };
       }
+
       notify({
         type: 'warning',
         text: error,
       });
 
       return { error };
-
     },
-    async createLedgerWallet({ rootGetters, dispatch  }, walletOpts) {
+    async createLedgerWallet({ rootGetters, dispatch }, walletOpts) {
       try {
-        const derivationPath = walletOpts.pathIndex ?
-          models[walletOpts.net.toUpperCase()].getDerivationPath(walletOpts.net, walletOpts.pathIndex, WALLET_TYPES.LEDGER)
+        const derivationPath = walletOpts.pathIndex
+          ? models[walletOpts.net.toUpperCase()].getDerivationPath(walletOpts.net, walletOpts.pathIndex, WALLET_TYPES.LEDGER)
           : walletOpts.derivationPath;
         const { error, data } = await citadel.createWalletByLedger({ ...walletOpts, derivationPath });
-        const walletInstance = await dispatch ('createNewWalletInstance',{ walletOpts: data });
-        if(!error){
+        const walletInstance = await dispatch('createNewWalletInstance', { walletOpts: data });
+
+        if (!error) {
           const existingWallet = rootGetters['wallets/walletByAddress'](walletInstance);
 
           return {
             walletInstance,
-            alreadyExist: !!existingWallet && existingWallet.type !==  WALLET_TYPES.PUBLIC_KEY,
+            alreadyExist: !!existingWallet && existingWallet.type !== WALLET_TYPES.PUBLIC_KEY,
           };
         }
+
         notify({
           type: 'warning',
           text: error,
@@ -207,7 +214,6 @@ export default {
           walletInstance: {},
           alreadyExist: false,
         };
-
       } catch (error) {
         console.error(error);
 
@@ -224,15 +230,17 @@ export default {
     async createTrezorWallet({ dispatch, rootGetters }, walletOpts) {
       try {
         const { error, data } = await citadel.createWalletByTrezor(walletOpts);
-        const walletInstance = await dispatch ('createNewWalletInstance',{ walletOpts: data });
-        if(!error){
+        const walletInstance = await dispatch('createNewWalletInstance', { walletOpts: data });
+
+        if (!error) {
           const existingWallet = rootGetters['wallets/walletByAddress'](walletInstance);
 
           return {
             walletInstance,
-            alreadyExist: !!existingWallet && existingWallet.type !==  WALLET_TYPES.PUBLIC_KEY,
+            alreadyExist: !!existingWallet && existingWallet.type !== WALLET_TYPES.PUBLIC_KEY,
           };
         }
+
         notify({
           type: 'warning',
           text: error,
@@ -242,8 +250,6 @@ export default {
           walletInstance: {},
           alreadyExist: false,
         };
-
-
       } catch (error) {
         console.error(error);
 

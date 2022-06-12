@@ -101,7 +101,6 @@ export default {
       return t('stakingAmount');
     });
     const amount = computed(() => {
-
       return props.currentWallet?.balance?.stake;
     });
 

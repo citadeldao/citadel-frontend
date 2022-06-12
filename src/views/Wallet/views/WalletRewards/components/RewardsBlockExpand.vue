@@ -248,6 +248,7 @@ export default {
       const netIndex = accum.findIndex(({ net }) => net === item.net);
       const rewards = { address: item.address, value: item.rewards };
       let newAccum = accum;
+
       if (netIndex !== -1) {
         newAccum[netIndex].rewards = [...accum[netIndex].rewards, rewards];
       } else {
@@ -290,7 +291,6 @@ export default {
           walletId: props.currentWallet.id,
         });
         isLoading.value = false;
-
       } else if (val !== 'custom') {
         date.value = [];
         await loadData(Date.now() - 86400000 * 31 * val, Date.now());

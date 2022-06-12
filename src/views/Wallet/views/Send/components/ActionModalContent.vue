@@ -145,7 +145,7 @@ export default {
       type: Object,
     },
     amount: {
-      type: [Number,String],
+      type: [Number, String],
     },
     totalAmount: {
       type: Number,
@@ -169,7 +169,7 @@ export default {
     },
     fee: {
       type: Object,
-      default:()=>({}),
+      default: ()=>({}),
     },
     iostFee: {
       type: Number,

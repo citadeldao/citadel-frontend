@@ -40,7 +40,7 @@ export default {
       default: () => ({}),
     },
   },
-  emits:['approveExport'],
+  emits: ['approveExport'],
   setup(props) {
     const address = ref(props.currentExportWallet.address);
     const password = inject('password');

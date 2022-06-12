@@ -31,17 +31,17 @@ import { formattedWalletAddress } from '@/helpers';
 import { useWindowSize } from 'vue-window-size';
 import { screenWidths } from '@/config/sreenWidthThresholds';
 export default {
-  name:'KtAddressItem',
-  props:{
-    item:{
+  name: 'KtAddressItem',
+  props: {
+    item: {
       type: Object,
       default: ()=>{},
     },
     currentWallet: {
       type: Object,
-      default:()=>{},
+      default: ()=>{},
     },
-    type:{
+    type: {
       type: String,
       default: '',
     },
@@ -67,7 +67,7 @@ export default {
       ),
     );
 
-    return{ address, wrapperWidth, handleResize, formatedAddress };
+    return { address, wrapperWidth, handleResize, formatedAddress };
   },
 };
 </script>

@@ -16,7 +16,7 @@ export default (params = {}) => {
   };
 
   const getParams = (params) => {
-    const type =  params.type || 'warning';
+    const type = params.type || 'warning';
     const title = params.title || defaultParams[type].title;
     const text = params.text || defaultParams[type].text;
     const hash = params.hash || '';

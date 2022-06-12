@@ -72,6 +72,7 @@ export default {
         currentIcon.value = markRaw(val.default);
       });
     }
+
     const clickHandler = () => {
       isOpen.value = !isOpen.value;
     };

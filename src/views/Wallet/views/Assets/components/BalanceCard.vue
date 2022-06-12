@@ -52,7 +52,7 @@ export default {
   },
   setup(props) {
     return {
-      cssVars:{
+      cssVars: {
         '--value-color': props.valueColor,
         '--bg-color': props.bgColor,
       },

@@ -219,8 +219,8 @@ export default {
       const { data } = await store.dispatch('auth/logout');
 
       if (data) {
-
         await citadel.reset(logoutOptions.erase);
+
         if (logoutOptions.backup) {
           exportPrivateKeys(keyStorage.value);
         }
@@ -229,6 +229,7 @@ export default {
           await store.dispatch('crypto/resetState');
           removeStorage(keyStorage.value);
         }
+
         router.push({ name: 'Login' });
         window.location.reload();
       }

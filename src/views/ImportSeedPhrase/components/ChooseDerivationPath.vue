@@ -71,7 +71,7 @@ export default {
   props: {
     walletOpts: {
       type: Object,
-      default:()=>{},
+      default: ()=>{},
     },
   },
   emits: ['selectWallet'],
@@ -88,7 +88,7 @@ export default {
 
     watch(allWallets, () => {
       Promise.all(allWallets.value.map(async (item, ndx) => {
-        const balance = await CryptoCoin.getBalance ({ net: props.walletOpts.nets[0], address: item.walletInstance.address });
+        const balance = await CryptoCoin.getBalance({ net: props.walletOpts.nets[0], address: item.walletInstance.address });
 
         if (balance.data.mainBalance && !currentPath.value) {
           currentPath.value = item.templatePath;
@@ -124,7 +124,7 @@ export default {
       Promise.all(
         [...Array(numberOfPaths)].map((_, pathIndex) => {
           return store.dispatch('crypto/createWalletByMnemonic', {
-            walletOpts:{
+            walletOpts: {
               derivationPath: pathFormat.replace('N', pathIndex),
               net: props.walletOpts.nets[0],
               ...props.walletOpts,
@@ -141,7 +141,7 @@ export default {
         Promise.all(
           [...Array(numberOfPaths)].map(async (_, pathIndex) => {
             const wallet = await store.dispatch('crypto/createWalletByMnemonic', {
-              walletOpts:{
+              walletOpts: {
                 derivationPath: path.key.replace('N', pathIndex),
                 net: props.walletOpts.nets[0],
                 ...props.walletOpts,
@@ -153,7 +153,8 @@ export default {
             return wallet;
           }),
         ).then((createdWallets) => {
-          allWallets.value = allWallets.value.concat(createdWallets);});
+          allWallets.value = allWallets.value.concat(createdWallets);
+        });
       });
     } else {
       // generate default wallets in all networks
@@ -165,9 +166,9 @@ export default {
       store
         .dispatch('crypto/createWalletByMnemonic', {
 
-          walletOpts:{
+          walletOpts: {
             derivationPath: customPath,
-            pathIndex: props.walletOpts.nets[0] === 'polkadot' && !customPath && 1 ,
+            pathIndex: props.walletOpts.nets[0] === 'polkadot' && !customPath && 1,
             net: props.walletOpts.nets[0],
             ...props.walletOpts,
           },

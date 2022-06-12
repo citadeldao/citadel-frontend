@@ -88,9 +88,9 @@ import KtAddressesModalContentItem from './components/KtAddressesModalContentIte
 import { useWindowSize } from 'vue-window-size';
 import { screenWidths } from '@/config/sreenWidthThresholds';
 export default {
-  name:'KtAddresses',
+  name: 'KtAddresses',
   components: { KtAddressItem, Modal, ModalContent, KtAddressesModalContentItem },
-  props:{
+  props: {
     currentWallet: {
       type: Object,
       default: ()=>{},
@@ -106,7 +106,9 @@ export default {
       wrapperWidth.value = width;
     };
     const { width } = useWindowSize();
-    const modalCloseHandler = ()=>{ showModal.value = false;};
+    const modalCloseHandler = ()=>{
+      showModal.value = false;
+    };
     const showCount = computed(()=>{
       const placeholder = width.value >= screenWidths.xl ? 225 : 154;
       const item = width.value >= screenWidths.xl ? 322 : 159;
@@ -121,7 +123,7 @@ export default {
     const displayData = computed(()=> ktAddresses.value.slice(0, showCount.value));
     const hiddenData = computed(()=> ktAddresses.value.slice(showCount.value, ktAddresses.value.length));
 
-    return{ showCount, currentKtAddress, ktAddresses, updateCurrentKtAddress, isChecked, displayData, hiddenData, showModal, modalCloseHandler, handleResize };
+    return { showCount, currentKtAddress, ktAddresses, updateCurrentKtAddress, isChecked, displayData, hiddenData, showModal, modalCloseHandler, handleResize };
   },
 };
 </script>

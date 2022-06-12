@@ -87,7 +87,6 @@ export default {
       }
 
       return [];
-
     });
 
     const inputHandler = () => {
@@ -102,8 +101,8 @@ export default {
       if (mnemonic.value) {
         return;
       }
-      showPlaceholder.value = true;
 
+      showPlaceholder.value = true;
     };
 
     const clickHanadler = () => {
@@ -132,6 +131,7 @@ export default {
       if (!mnemonic.value.trim()) {
         return;
       }
+
       emit('confirmMnemonic', mnemonic.value);
       nextStep();
     };

@@ -26,7 +26,7 @@ export const prettyNumber = (value) => {
     return 0;
   }
 
-  //for string with range (iost APY "4.8-36.13" etc)
+  // for string with range (iost APY "4.8-36.13" etc)
   if (Number.isNaN(+value)) {
     return value;
   }
@@ -39,7 +39,8 @@ export const prettyNumber = (value) => {
   const absoluteValue = Math.abs(formatedValue);
   const intPart = Math.floor(absoluteValue);
   const valueRank = intPart === 0 ? 0 : intPart.toString().length;
-  //|value| > 1
+
+  // |value| > 1
   if (valueRank > 0) {
     const classes = Object.keys(classesAbb).sort((a, b) => b - a);
     const valueClass = classes.find((i) => valueRank > i);
@@ -49,7 +50,8 @@ export const prettyNumber = (value) => {
       abbDecimals,
     )}${classesAbb[valueClass]}`;
   }
-  //|value| < 1
+
+  // |value| < 1
   if (absoluteValue && cutNumber(absoluteValue, maxDecimals) === 0) {
     return '~0';
   }
@@ -61,7 +63,8 @@ export const prettyNumberTooltip = (value) => {
   if (!value) {
     return '0';
   }
-  //for string with range (iost APY "4.8-36.13" etc)
+
+  // for string with range (iost APY "4.8-36.13" etc)
   if (Number.isNaN(+value)) {
     return value;
   }

@@ -114,12 +114,14 @@ export default {
       fileIncorrect.value = false;
       isLoading.value = true;
       const [payload] = e.target.files;
+
       if (!payload?.name?.match(/.citadel$/)) {
         isLoading.value = false;
         file.value = null;
 
         return;
       }
+
       file.value = payload;
     };
 
@@ -149,11 +151,13 @@ export default {
 
     const clickHandler = () => {
       emit('backupLoaded', backup.value);
+
       if (backup.value[0] && backup.value[0].id) {
         emit('loadOldFormat');
 
         return;
       }
+
       nextStep();
     };
 

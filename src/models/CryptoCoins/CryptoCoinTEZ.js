@@ -18,7 +18,7 @@ export default class CryptoCoinTEZ extends CryptoCoin {
     return typeof this.publicKey === 'string' ? this.publicKey : base58check.encode(Buffer.from(this.publicKey)); // base58check.encode(Buffer.from(this.publicKey))
   }
 
-  getPublicKeyDecoded(){
+  getPublicKeyDecoded() {
     return typeof this.publicKey === 'string' ? this.publicKey : base58check.encode(Buffer.from(this.publicKey));
   }
 }
