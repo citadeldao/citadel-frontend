@@ -1,6 +1,11 @@
 import { ref, computed } from 'vue';
 
-export default function usePaginationWithSearch(array, itemsCount, pageSizesOpts, initialPage) {
+export default function usePaginationWithSearch(
+  array,
+  itemsCount,
+  pageSizesOpts,
+  initialPage
+) {
   const arr = ref(array);
   const pageSizes = ref(pageSizesOpts);
   const pageSize = ref(pageSizesOpts[0]);
@@ -29,7 +34,7 @@ export default function usePaginationWithSearch(array, itemsCount, pageSizesOpts
   const displayData = computed(() => {
     return arr.value.slice(
       pageSize.value * currentPage.value - pageSize.value,
-      pageSize.value * currentPage.value,
+      pageSize.value * currentPage.value
     );
   });
 

@@ -2,7 +2,7 @@
   <div class="nodes-list-item">
     <div
       class="nodes-list-item__section"
-      :class="{'nodes-list-item--chosen': chosen}"
+      :class="{ 'nodes-list-item--chosen': chosen }"
     >
       <div class="nodes-list-item__icon">
         <img
@@ -10,7 +10,7 @@
           :src="item.imageSource"
           class=""
           @load="onLoadLogo"
-        >
+        />
         <keep-alive v-if="!hasLogo">
           <component :is="currentIcon" />
         </keep-alive>
@@ -20,11 +20,15 @@
           <template #content>
             <div
               class="nodes-list-item-tooltip"
-              :class="{ 'nodes-list-item-tooltip--status--active': item.isActive }"
+              :class="{
+                'nodes-list-item-tooltip--status--active': item.isActive,
+              }"
             >
               <div class="nodes-list-item-tooltip__status">
                 {{ $t('status') }}:
-                <span>{{ $t(`${item.isActive ? 'active' : 'noactive'}`) }}</span>
+                <span>{{
+                  $t(`${item.isActive ? 'active' : 'noactive'}`)
+                }}</span>
               </div>
               <div
                 v-if="!item.isActive"
@@ -61,10 +65,7 @@
             </span>
           </span>
 
-          <span
-            v-if="showTag"
-            class="nodes-list-item__tags"
-          >
+          <span v-if="showTag" class="nodes-list-item__tags">
             <Label
               v-for="(tag, index) of item.tags"
               :key="`${tag.name}${index}`"
@@ -77,10 +78,7 @@
         </div>
       </div>
     </div>
-    <div
-      v-if="item.value"
-      class="nodes-list-item__value"
-    >
+    <div v-if="item.value" class="nodes-list-item__value">
       <span
         v-pretty-number="{ value: item.value, currency: currentWallet.code }"
         class="nodes-list-item__value-value"
@@ -89,10 +87,7 @@
         {{ currentWallet.code }}
       </span>
     </div>
-    <div
-      v-if="chosen"
-      class="nodes-list-item__tick"
-    >
+    <div v-if="chosen" class="nodes-list-item__tick">
       <tick />
     </div>
   </div>
@@ -220,7 +215,7 @@ export default {
     font-size: 16px;
     line-height: 19px;
     color: $mid-blue;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     margin-bottom: 4px;
     overflow: hidden;
     white-space: nowrap;
@@ -245,7 +240,7 @@ export default {
   &__info-fee-value,
   &__info-uptime-value {
     color: $red;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     margin-left: 5px;
   }
 
@@ -273,12 +268,12 @@ export default {
     font-size: 14px;
     line-height: 17px;
     color: $mid-blue;
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
   }
 
   &__value-currency {
     color: $mid-gray;
-    font-family: "Panton_Regular" !important;
+    font-family: 'Panton_Regular' !important;
     margin-left: 3px;
   }
 
@@ -299,7 +294,7 @@ export default {
     &__status {
       margin-bottom: 3px;
       font-size: 14px;
-      font-family: "Panton_SemiBold";
+      font-family: 'Panton_SemiBold';
       color: $black;
 
       span {
@@ -311,7 +306,7 @@ export default {
     &__status-hint {
       margin-bottom: 8px;
       font-size: 12px;
-      font-family: "Panton_SemiBold";
+      font-family: 'Panton_SemiBold';
       color: $red;
     }
 

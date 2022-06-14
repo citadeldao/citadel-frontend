@@ -1,10 +1,7 @@
 <template>
   <div class="header">
     <div class="column">
-      <BackButton
-        data-qa="add-address__back-button"
-        @click="goBack"
-      />
+      <BackButton data-qa="add-address__back-button" @click="goBack" />
       <div class="header__section">
         <span class="header__title">
           {{ title || currentStepInfo.headerTitle }}
@@ -44,7 +41,9 @@ export default {
   },
   setup(props) {
     const router = useRouter();
-    const currentStepInfo = computed(() => props.steps.find((item) => item.id === props.currentStep));
+    const currentStepInfo = computed(() =>
+      props.steps.find((item) => item.id === props.currentStep)
+    );
 
     const goBack = () => {
       router.back();

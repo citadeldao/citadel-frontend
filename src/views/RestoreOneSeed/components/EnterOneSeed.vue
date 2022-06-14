@@ -1,14 +1,8 @@
 <template>
   <div class="enter-one-seed">
     <form @submit.prevent="submitHandler">
-      <div
-        class="enter-one-seed__textarea"
-        @click="clickHanadler"
-      >
-        <span
-          v-show="showPlaceholder"
-          class="enter-one-seed__placeholder"
-        >
+      <div class="enter-one-seed__textarea" @click="clickHanadler">
+        <span v-show="showPlaceholder" class="enter-one-seed__placeholder">
           {{ $t('restoreOneSeed.placeholder') }}
         </span>
         <textarea
@@ -20,22 +14,13 @@
           @blur="blurHandler"
           @input="inputHandler"
         />
-        <div
-          v-if="mnemonicError"
-          class="textarea__error"
-        >
+        <div v-if="mnemonicError" class="textarea__error">
           <error class="textarea__error-icon" />
           <span class="textarea__error-text">{{ mnemonicError }}</span>
         </div>
       </div>
-      <transition
-        name="fade"
-        mode="out-in"
-      >
-        <div
-          v-show="!showPlaceholder"
-          class="enter-one-seed__counter"
-        >
+      <transition name="fade" mode="out-in">
+        <div v-show="!showPlaceholder" class="enter-one-seed__counter">
           <span class="enter-one-seed__message">
             {{ $t('restoreOneSeed.counterMessage') }}
           </span>
@@ -121,7 +106,9 @@ export default {
       return false;
     });
     const disabled = computed(() => {
-      const result = (phraseArray.value.length !== 12 || phraseArray.value.length !== 24) && !CryptoCoin.validateMnemonic(mnemonic.value);
+      const result =
+        (phraseArray.value.length !== 12 || phraseArray.value.length !== 24) &&
+        !CryptoCoin.validateMnemonic(mnemonic.value);
 
       return result;
     });

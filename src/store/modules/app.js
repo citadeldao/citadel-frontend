@@ -15,8 +15,8 @@ export default {
     routeLoader: false,
   },
   getters: {
-    showLoader: state => state.showLoader,
-    showRouteLoader: state => state.routeLoader,
+    showLoader: (state) => state.showLoader,
+    showRouteLoader: (state) => state.routeLoader,
   },
   mutations: {
     [types.SET_LOADER](state, loadingState) {
@@ -69,16 +69,20 @@ export default {
       }
 
       let walletsList = rootGetters['wallets/wallets'];
-      walletsList = walletsList.map((item)=>{
-        return {
-          net: item.net,
-          address: item.address,
-          type: item.type,
-          publicKey: item.publicKey,
-          privateKeyHash: item?.privateKeyHash,
-          savedViewingKeys: item?.savedViewingKeys,
-        };
-      }).filter(({ net })=> networksList.some((network)=> network.net === net));
+      walletsList = walletsList
+        .map((item) => {
+          return {
+            net: item.net,
+            address: item.address,
+            type: item.type,
+            publicKey: item.publicKey,
+            privateKeyHash: item?.privateKeyHash,
+            savedViewingKeys: item?.savedViewingKeys,
+          };
+        })
+        .filter(({ net }) =>
+          networksList.some((network) => network.net === net)
+        );
       await citadel.setWalletList(walletsList, options);
       commit('crypto/setPrivateWallets', [], { root: true });
     },

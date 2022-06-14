@@ -14,7 +14,7 @@ export default function useLedger() {
 
   const currentWallet = computed(() => store.getters['wallets/currentWallet']);
   const isLedgerWallet = computed(
-    () => currentWallet.value.type === WALLET_TYPES.LEDGER,
+    () => currentWallet.value.type === WALLET_TYPES.LEDGER
   );
 
   const clearLedgerModals = () => {
@@ -27,19 +27,24 @@ export default function useLedger() {
 
   const ledgerErrorHandler = (error) => {
     // unknown errors handling
-    const isUnknownStatus = RegExp(/Unknown Status Code:/gmi).test(error.message);
+    const isUnknownStatus = RegExp(/Unknown Status Code:/gim).test(
+      error.message
+    );
     const errorCode = isUnknownStatus
       ? error.message.match(/\d+/)[0]
       : undefined;
-    const errorMessage = errorCode
-      ? t(`ledger.errors.${errorCode}`)
-      : error;
+    const errorMessage = errorCode ? t(`ledger.errors.${errorCode}`) : error;
 
-    if (error.code === 11) { // appear after "not open App" error
+    if (error.code === 11) {
+      // appear after "not open App" error
       showConnectLedgerModal.value = false;
       showAppLedgerModal.value = true;
       // tx rejected
-    } else if (error.code === 27014 || error.code === 27013 || error.statusCode === 27013) {
+    } else if (
+      error.code === 27014 ||
+      error.code === 27013 ||
+      error.statusCode === 27013
+    ) {
       showConnectLedgerModal.value = false;
       showAppLedgerModal.value = false;
       showConfirmLedgerModal.value = false;

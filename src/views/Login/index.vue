@@ -1,19 +1,10 @@
 <template>
-  <transition
-    v-if="isLoading"
-    name="fade"
-  >
+  <transition v-if="isLoading" name="fade">
     <Modal>
-      <img
-        src="@/assets/gif/loader.gif"
-        alt=""
-      >
+      <img src="@/assets/gif/loader.gif" alt="" />
     </Modal>
   </transition>
-  <div
-    v-else
-    class="login"
-  >
+  <div v-else class="login">
     <header class="login__header">
       <div class="login__logo">
         <citadelLogo />
@@ -25,10 +16,7 @@
       <SyncCarousel v-else />
 
       <div class="login__form">
-        <SyncStart
-          v-if="showSyncBlock"
-          @sync="sync"
-        />
+        <SyncStart v-if="showSyncBlock" @sync="sync" />
         <template v-else>
           <LoginForm
             v-if="currentStep === 1 && !showSyncBlock"
@@ -51,16 +39,15 @@
         >
           <div class="login__question-info">
             <conversation />
-            <span>{{ $t("login.questionText1") }} <b>{{ $t("Citadel.one") }}</b>
-              {{ $t("login.questionText2") }}</span>
+            <span
+              >{{ $t('login.questionText1') }} <b>{{ $t('Citadel.one') }}</b>
+              {{ $t('login.questionText2') }}</span
+            >
           </div>
           <RoundArrowButton />
         </div>
       </div>
-      <WhyCitadel
-        v-if="showEmailModal"
-        @close="showEmailModal = false"
-      />
+      <WhyCitadel v-if="showEmailModal" @close="showEmailModal = false" />
     </main>
   </div>
 </template>
@@ -123,7 +110,9 @@ export default {
 
     const userName = ref('');
     const verificationError = ref('');
-    const isAuthenticated = computed(() => store.getters['auth/isAuthenticated']);
+    const isAuthenticated = computed(
+      () => store.getters['auth/isAuthenticated']
+    );
 
     if (isAuthenticated.value) {
       router.push({ name: 'AddAddress' });
@@ -163,7 +152,7 @@ export default {
         username: userName.value,
       });
 
-      if (error === 'You\'re authorised') {
+      if (error === "You're authorised") {
         await store.dispatch('auth/logout');
         await store.dispatch('auth/login', {
           username: userName.value,
@@ -246,7 +235,10 @@ export default {
         await store.dispatch('transactions/getMempool');
         const { wallets } = useWallets();
 
-        const hashWallet = findAddressWithNet(wallets.value, { address: hashInfo.value.address, net: hashInfo.value.net });
+        const hashWallet = findAddressWithNet(wallets.value, {
+          address: hashInfo.value.address,
+          net: hashInfo.value.net,
+        });
 
         if (hashWallet && hashWallet.type !== WALLET_TYPES.PUBLIC_KEY) {
           router.push({
@@ -313,7 +305,7 @@ export default {
   }
 
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
@@ -373,7 +365,7 @@ export default {
   }
 
   &__title {
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     font-size: 70px;
     line-height: 85px;
     color: $dark-blue;
@@ -412,7 +404,7 @@ export default {
     &:hover {
       background: $white;
       box-shadow: 0 15px 50px rgba(80, 100, 124, 0.1),
-      0 10px 15px rgba(80, 100, 124, 0.16);
+        0 10px 15px rgba(80, 100, 124, 0.16);
     }
 
     @include md {

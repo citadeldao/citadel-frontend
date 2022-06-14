@@ -17,10 +17,7 @@
         <transactionsPlacholderCitadel
           class="transactions-placeholder__block-icon"
         />
-        <PrimaryButton
-          disabled
-          data-qa="transactions__info__buy-now-button"
-        >
+        <PrimaryButton disabled data-qa="transactions__info__buy-now-button">
           {{ $t('buyNow') }}
         </PrimaryButton>
       </div>
@@ -32,10 +29,7 @@
         <transactionsPlacholderDeposit
           class="transactions-placeholder__block-icon"
         />
-        <PrimaryButton
-          disabled
-          data-qa="transactions__info__learn-how-button"
-        >
+        <PrimaryButton disabled data-qa="transactions__info__learn-how-button">
           {{ $t('learnHow') }}
         </PrimaryButton>
       </div>
@@ -60,8 +54,7 @@ export default {
       type: Object,
     },
   },
-  setup() {
-  },
+  setup() {},
 };
 </script>
 
@@ -80,7 +73,7 @@ export default {
   &__info {
     font-size: 18px;
     line-height: 27px;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
     text-align: center;
     @include md {
       font-size: 16px;
@@ -138,7 +131,7 @@ export default {
   }
 
   &__citadel {
-    font-family: "Panton_ExtraBold";
+    font-family: 'Panton_ExtraBold';
     color: $blue;
   }
 

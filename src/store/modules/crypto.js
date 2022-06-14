@@ -25,7 +25,7 @@ export default {
   }),
 
   getters: {
-    migrationPassword: state => state.migrationPassword,
+    migrationPassword: (state) => state.migrationPassword,
     privateWallets: (state) => state.privateWallets,
     newMnemonic: (state) => state.newMnemonic,
     encodeUserMnemonic: (state) => state.mnemonic,
@@ -91,10 +91,24 @@ export default {
     async createNewWalletInstance({ rootGetters }, { walletOpts, password }) {
       try {
         const WalletConstructor = models[walletOpts.net.toUpperCase()];
-        walletOpts.privateKeyEncoded = walletOpts.privateKeyEncoded ? walletOpts.privateKeyEncoded
-          : walletOpts.privateKey ? WalletConstructor.encodePrivateKeyByPassword(walletOpts.net, walletOpts.privateKey, password) : null;
-        walletOpts.mnemonicEncoded = walletOpts.mnemonicEncoded ? walletOpts.mnemonicEncoded
-          : walletOpts.mnemonic ? WalletConstructor.encodePrivateKeyByPassword(walletOpts.net, walletOpts.mnemonic, password) : null;
+        walletOpts.privateKeyEncoded = walletOpts.privateKeyEncoded
+          ? walletOpts.privateKeyEncoded
+          : walletOpts.privateKey
+          ? WalletConstructor.encodePrivateKeyByPassword(
+              walletOpts.net,
+              walletOpts.privateKey,
+              password
+            )
+          : null;
+        walletOpts.mnemonicEncoded = walletOpts.mnemonicEncoded
+          ? walletOpts.mnemonicEncoded
+          : walletOpts.mnemonic
+          ? WalletConstructor.encodePrivateKeyByPassword(
+              walletOpts.net,
+              walletOpts.mnemonic,
+              password
+            )
+          : null;
         walletOpts.config = rootGetters['networks/configByNet'](walletOpts.net);
         const walletInstance = new WalletConstructor(walletOpts);
 
@@ -109,24 +123,39 @@ export default {
       }
     },
 
-    async createWalletByMnemonic({ rootGetters, dispatch }, { walletOpts, password }) {
+    async createWalletByMnemonic(
+      { rootGetters, dispatch },
+      { walletOpts, password }
+    ) {
       try {
         const derivationPath = walletOpts.pathIndex
-          ? models[walletOpts.net.toUpperCase()].getDerivationPath(walletOpts.net, walletOpts.pathIndex)
+          ? models[walletOpts.net.toUpperCase()].getDerivationPath(
+              walletOpts.net,
+              walletOpts.pathIndex
+            )
           : walletOpts.derivationPath;
-        const { error, data } = await citadel.createWalletByMnemonic({ ...walletOpts, derivationPath });
+        const { error, data } = await citadel.createWalletByMnemonic({
+          ...walletOpts,
+          derivationPath,
+        });
         const wallet = {
           ...data,
           name: data.networkName,
         };
-        const walletInstance = await dispatch('createNewWalletInstance', { walletOpts: wallet, password });
+        const walletInstance = await dispatch('createNewWalletInstance', {
+          walletOpts: wallet,
+          password,
+        });
 
         if (!error) {
-          const existingWallet = rootGetters['wallets/walletByAddress'](walletInstance);
+          const existingWallet =
+            rootGetters['wallets/walletByAddress'](walletInstance);
 
           return {
             walletInstance,
-            alreadyExist: !!existingWallet && existingWallet.type !== WALLET_TYPES.PUBLIC_KEY,
+            alreadyExist:
+              !!existingWallet &&
+              existingWallet.type !== WALLET_TYPES.PUBLIC_KEY,
           };
         }
 
@@ -147,21 +176,28 @@ export default {
       const pb = Buffer.from(publicKey).toString('hex');
 
       try {
-        const walletInstance = await CryptoCoin.createWalletByKeplr(
-          {
-            ...walletOpts,
-            publicKey: pb,
-            type: WALLET_TYPES.KEPLR,
-            config,
-          },
-        );
-        const keplrInstance = { ...walletInstance, publicKey: pb, address: walletOpts.address, net: walletOpts.net, type: WALLET_TYPES.KEPLR };
-        const existingWallet = rootGetters['wallets/walletByAddress'](keplrInstance);
+        const walletInstance = await CryptoCoin.createWalletByKeplr({
+          ...walletOpts,
+          publicKey: pb,
+          type: WALLET_TYPES.KEPLR,
+          config,
+        });
+        const keplrInstance = {
+          ...walletInstance,
+          publicKey: pb,
+          address: walletOpts.address,
+          net: walletOpts.net,
+          type: WALLET_TYPES.KEPLR,
+        };
+        const existingWallet =
+          rootGetters['wallets/walletByAddress'](keplrInstance);
 
         return {
           data: {
             walletInstance: keplrInstance,
-            alreadyExist: !!existingWallet && existingWallet.type !== WALLET_TYPES.PUBLIC_KEY,
+            alreadyExist:
+              !!existingWallet &&
+              existingWallet.type !== WALLET_TYPES.PUBLIC_KEY,
           },
           error: false,
         };
@@ -173,10 +209,16 @@ export default {
     },
 
     async addHardwareWalletToAccount({ dispatch }, { wallet }) {
-      const { error, data } = await citadel.addCreatedWallet({ ...wallet.config, ...wallet, networkName: wallet.config.name });
+      const { error, data } = await citadel.addCreatedWallet({
+        ...wallet.config,
+        ...wallet,
+        networkName: wallet.config.name,
+      });
 
       if (!error) {
-        const newWalletInstance = await dispatch('createNewWalletInstance', { walletOpts: { ...data, derivationPath: wallet.derivationPath } });
+        const newWalletInstance = await dispatch('createNewWalletInstance', {
+          walletOpts: { ...data, derivationPath: wallet.derivationPath },
+        });
 
         return { newWalletInstance, error };
       }
@@ -191,17 +233,29 @@ export default {
     async createLedgerWallet({ rootGetters, dispatch }, walletOpts) {
       try {
         const derivationPath = walletOpts.pathIndex
-          ? models[walletOpts.net.toUpperCase()].getDerivationPath(walletOpts.net, walletOpts.pathIndex, WALLET_TYPES.LEDGER)
+          ? models[walletOpts.net.toUpperCase()].getDerivationPath(
+              walletOpts.net,
+              walletOpts.pathIndex,
+              WALLET_TYPES.LEDGER
+            )
           : walletOpts.derivationPath;
-        const { error, data } = await citadel.createWalletByLedger({ ...walletOpts, derivationPath });
-        const walletInstance = await dispatch('createNewWalletInstance', { walletOpts: data });
+        const { error, data } = await citadel.createWalletByLedger({
+          ...walletOpts,
+          derivationPath,
+        });
+        const walletInstance = await dispatch('createNewWalletInstance', {
+          walletOpts: data,
+        });
 
         if (!error) {
-          const existingWallet = rootGetters['wallets/walletByAddress'](walletInstance);
+          const existingWallet =
+            rootGetters['wallets/walletByAddress'](walletInstance);
 
           return {
             walletInstance,
-            alreadyExist: !!existingWallet && existingWallet.type !== WALLET_TYPES.PUBLIC_KEY,
+            alreadyExist:
+              !!existingWallet &&
+              existingWallet.type !== WALLET_TYPES.PUBLIC_KEY,
           };
         }
 
@@ -230,14 +284,19 @@ export default {
     async createTrezorWallet({ dispatch, rootGetters }, walletOpts) {
       try {
         const { error, data } = await citadel.createWalletByTrezor(walletOpts);
-        const walletInstance = await dispatch('createNewWalletInstance', { walletOpts: data });
+        const walletInstance = await dispatch('createNewWalletInstance', {
+          walletOpts: data,
+        });
 
         if (!error) {
-          const existingWallet = rootGetters['wallets/walletByAddress'](walletInstance);
+          const existingWallet =
+            rootGetters['wallets/walletByAddress'](walletInstance);
 
           return {
             walletInstance,
-            alreadyExist: !!existingWallet && existingWallet.type !== WALLET_TYPES.PUBLIC_KEY,
+            alreadyExist:
+              !!existingWallet &&
+              existingWallet.type !== WALLET_TYPES.PUBLIC_KEY,
           };
         }
 

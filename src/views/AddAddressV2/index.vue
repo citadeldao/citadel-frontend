@@ -92,7 +92,7 @@ export default {
   &__description {
     font-size: 14px;
     font-family: Panton_SemiBold;
-    color: #6B93C0;
+    color: #6b93c0;
     margin-bottom: 40px;
   }
 

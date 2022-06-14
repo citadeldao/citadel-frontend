@@ -1,10 +1,7 @@
 <template>
   <div class="enter-password">
     <div class="enter-password__info-banner">
-      <InfoBanner
-        icon="protection"
-        :content="$t('createPasswordNote')"
-      />
+      <InfoBanner icon="protection" :content="$t('createPasswordNote')" />
     </div>
     <form @submit.prevent="submitHandler">
       <div class="enter-password__password-input">
@@ -34,7 +31,7 @@
         :disabled="!!inputError"
         data-qa="enter-password__create-button__import-seed"
       >
-        {{ $t("create") }}
+        {{ $t('create') }}
       </PrimaryButton>
     </form>
   </div>
@@ -57,7 +54,8 @@ export default {
   setup(props, { emit }) {
     const nextStep = inject('nextStep');
 
-    const { password, repeatPassword, disabled, passwordError, inputError } = useCreatePassword();
+    const { password, repeatPassword, disabled, passwordError, inputError } =
+      useCreatePassword();
 
     const submitHandler = () => {
       if (passwordError.value) {
@@ -70,7 +68,14 @@ export default {
       nextStep();
     };
 
-    return { password, submitHandler, repeatPassword, disabled, passwordError, inputError };
+    return {
+      password,
+      submitHandler,
+      repeatPassword,
+      disabled,
+      passwordError,
+      inputError,
+    };
   },
 };
 </script>

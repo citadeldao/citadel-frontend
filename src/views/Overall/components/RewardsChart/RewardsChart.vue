@@ -53,32 +53,26 @@
           />
         </div>
         <div class="rewards-chart-inner-wrapper__right">
-          <div style="height:100%">
-            <canvas
-              id="rewardsChart"
-              :style="{width:`${wrapperWidth}px`}"
-            />
+          <div style="height: 100%">
+            <canvas id="rewardsChart" :style="{ width: `${wrapperWidth}px` }" />
           </div>
-          <resize-observer
-            :show-trigger="true"
-            @notify="handleResize"
-          />
+          <resize-observer :show-trigger="true" @notify="handleResize" />
         </div>
       </div>
     </div>
   </div>
   <teleport to="body">
-    <RewardsChartExpanded
-      v-if="isExpanded"
-      @close="isExpanded = false"
-    />
+    <RewardsChartExpanded v-if="isExpanded" @close="isExpanded = false" />
   </teleport>
 </template>
 <script>
 import { onMounted, watch, computed, nextTick, ref } from 'vue';
 import { useStore } from 'vuex';
 import BigNumber from 'bignumber.js';
-import { renderRewardsChart, createDatasetForRewardsChart } from '@/components/Charts/rewardsChart';
+import {
+  renderRewardsChart,
+  createDatasetForRewardsChart,
+} from '@/components/Charts/rewardsChart';
 import NetworkTab from '@/components/UI/NetworkTab';
 import RewardsChartItem from '@/views/Overall/components/RewardsChart/RewardsChartItem';
 import RewardsChartExpanded from '@/views/Overall/components/RewardsChart/RewardsChartExpanded';
@@ -132,7 +126,10 @@ export default {
       const othersItem = {
         name: 'Others',
         color: others[0]?.color,
-        percent: others.reduce((acc, net) => BigNumber(acc).plus(net.percent).toNumber(), 0),
+        percent: others.reduce(
+          (acc, net) => BigNumber(acc).plus(net.percent).toNumber(),
+          0
+        ),
       };
 
       if (othersItem.percent > 0) {
@@ -143,22 +140,73 @@ export default {
     });
 
     onMounted(async () => {
-      const { rewardsChart } = await store.dispatch(storeAction, { list: customList.value });
-      await renderRewardsChart(rewardsChart, createDatasetForRewardsChart(rewardsChart, currentTab.value, MAX_ITEMS_IN_PREVIEW), currentTab.value, canvasElement, info.value);
-    });
-    watch(() => currentTab.value, async () => {
-      await renderRewardsChart(rewardsChart.value, datasetsArray.value, currentTab.value, canvasElement, info.value);
-    });
-    watch(() => customList.value, async () => {
-      const { rewardsChart } = await store.dispatch(storeAction, { list: customList.value });
-      await renderRewardsChart(rewardsChart, createDatasetForRewardsChart(rewardsChart, currentTab.value, MAX_ITEMS_IN_PREVIEW), currentTab.value, canvasElement, info.value);
-    });
-    watch(() => width.value, async () => {
-      nextTick(async () => {
-        const { rewardsChart } = await store.dispatch(storeAction, { list: customList.value });
-        await renderRewardsChart(rewardsChart, createDatasetForRewardsChart(rewardsChart, currentTab.value, MAX_ITEMS_IN_PREVIEW), currentTab.value, canvasElement, info.value);
+      const { rewardsChart } = await store.dispatch(storeAction, {
+        list: customList.value,
       });
+      await renderRewardsChart(
+        rewardsChart,
+        createDatasetForRewardsChart(
+          rewardsChart,
+          currentTab.value,
+          MAX_ITEMS_IN_PREVIEW
+        ),
+        currentTab.value,
+        canvasElement,
+        info.value
+      );
     });
+    watch(
+      () => currentTab.value,
+      async () => {
+        await renderRewardsChart(
+          rewardsChart.value,
+          datasetsArray.value,
+          currentTab.value,
+          canvasElement,
+          info.value
+        );
+      }
+    );
+    watch(
+      () => customList.value,
+      async () => {
+        const { rewardsChart } = await store.dispatch(storeAction, {
+          list: customList.value,
+        });
+        await renderRewardsChart(
+          rewardsChart,
+          createDatasetForRewardsChart(
+            rewardsChart,
+            currentTab.value,
+            MAX_ITEMS_IN_PREVIEW
+          ),
+          currentTab.value,
+          canvasElement,
+          info.value
+        );
+      }
+    );
+    watch(
+      () => width.value,
+      async () => {
+        nextTick(async () => {
+          const { rewardsChart } = await store.dispatch(storeAction, {
+            list: customList.value,
+          });
+          await renderRewardsChart(
+            rewardsChart,
+            createDatasetForRewardsChart(
+              rewardsChart,
+              currentTab.value,
+              MAX_ITEMS_IN_PREVIEW
+            ),
+            currentTab.value,
+            canvasElement,
+            info.value
+          );
+        });
+      }
+    );
 
     return {
       currentTab,
@@ -180,7 +228,7 @@ export default {
 }
 
 .rewards-chart-placeholder {
-  border: 1px solid #C3CEEB;
+  border: 1px solid #c3ceeb;
   border-radius: 25px;
   width: 100%;
   height: 366px;

@@ -9,7 +9,8 @@
           v-for="item in phrase"
           :key="item"
           class="export-modal__mnemonick-phrase-list-item"
-        >{{ item }}</span>
+          >{{ item }}</span
+        >
       </div>
     </div>
     <div
@@ -20,16 +21,10 @@
         {{ privateKey }}
       </span>
     </div>
-    <div
-      class="export-modal__copy-icon"
-      @click="copyAddress"
-    >
+    <div class="export-modal__copy-icon" @click="copyAddress">
       <transition name="fade1">
-        <span
-          v-if="isCopied"
-          class="export-modal__tooltip"
-        >
-          {{ $t("copiedToClipboard") }}
+        <span v-if="isCopied" class="export-modal__tooltip">
+          {{ $t('copiedToClipboard') }}
         </span>
       </transition>
       <copyIcon />
@@ -67,7 +62,7 @@ export default {
       copyToClipboard(
         props.currentExportMethod === WALLET_TYPES.ONE_SEED
           ? props.mnemonicPhrase
-          : props.privateKey,
+          : props.privateKey
       );
       setTimeout(() => {
         isCopied.value = false;
@@ -106,7 +101,7 @@ export default {
     font-size: 14px;
     line-height: 17px;
     color: $dark-blue;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
   }
   &__copy-icon {
     width: 40px;
@@ -144,7 +139,7 @@ export default {
     line-height: 16px;
     color: $too-dark-blue;
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       bottom: 98%;
       left: 50%;
@@ -161,7 +156,7 @@ export default {
     margin-top: 36px;
   }
   &__private-key-key {
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
     font-size: 14px;
     line-height: 17px;
     color: #6b93c0;
@@ -171,4 +166,3 @@ export default {
   }
 }
 </style>
-

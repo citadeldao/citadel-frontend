@@ -2,12 +2,12 @@
   <div class="total-rewards">
     <div class="total-rewards__info">
       <span class="total-rewards__title">{{
-        $t("rewardsPage.totalRewards")
+        $t('rewardsPage.totalRewards')
       }}</span>
       <div class="total-rewards__usd-rewards">
         <span class="total-rewards__usd-rewards-currency">$</span>
         <span
-          v-pretty-number="{ value: totalUsd,currency: '$'}"
+          v-pretty-number="{ value: totalUsd, currency: '$' }"
           class="total-rewards__usd-rewards-amount"
         />
       </div>
@@ -15,7 +15,7 @@
     <hotSale />
     <div class="total-rewards__btc-rewards">
       <span
-        v-pretty-number="{ value: totalBtc,currency: 'BTC'}"
+        v-pretty-number="{ value: totalBtc, currency: 'BTC' }"
         class="total-rewards__btc-rewards-amount"
       />
       <span class="total-rewards__btc-rewards-currency">BTC</span>
@@ -77,7 +77,7 @@ export default {
     font-size: 18px;
     line-height: 22px;
     color: $too-dark-blue;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     margin-bottom: 11px;
   }
   &__usd-rewards {
@@ -89,7 +89,7 @@ export default {
     margin-right: 3px;
     font-size: 28px;
     line-height: 34px;
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
     @include lg {
       font-size: 20px;
       line-height: 24px;
@@ -138,4 +138,3 @@ export default {
   }
 }
 </style>
-

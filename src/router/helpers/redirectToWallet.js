@@ -17,13 +17,14 @@ export default ({ wallet, token, root = false }) => {
   }
 
   const context = token || wallet;
-  const routeName = (root && hasContext) || !hasContext
-    ? context.hasSubtoken
-      ? 'WalletAssets'
-      : context.hasStake
+  const routeName =
+    (root && hasContext) || !hasContext
+      ? context.hasSubtoken
+        ? 'WalletAssets'
+        : context.hasStake
         ? 'WalletStake'
         : 'WalletSend'
-    : currentRoute.name;
+      : currentRoute.name;
 
   router.push({
     name: routeName,

@@ -67,9 +67,11 @@ export default {
     const addresses = ref([]);
     const { wallets } = useWallets();
     const hasWallets = computed(() => {
-      return wallets.value.filter(wallet => wallet.type === WALLET_TYPES.ONE_SEED ||
-          wallet.type === WALLET_TYPES.PRIVATE_KEY)
-        .length;
+      return wallets.value.filter(
+        (wallet) =>
+          wallet.type === WALLET_TYPES.ONE_SEED ||
+          wallet.type === WALLET_TYPES.PRIVATE_KEY
+      ).length;
     });
 
     const generateQr = (list) => {

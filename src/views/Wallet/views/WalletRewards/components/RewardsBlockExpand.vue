@@ -1,12 +1,6 @@
 <template>
-  <div
-    id="rewardsBlockExpand"
-    class="rewards-block-expand"
-  >
-    <teleport
-      v-if="isLoading"
-      to="body"
-    >
+  <div id="rewardsBlockExpand" class="rewards-block-expand">
+    <teleport v-if="isLoading" to="body">
       <Modal>
         <Loading />
       </Modal>
@@ -20,10 +14,10 @@
     </div>
     <div class="rewards-block-expand__header">
       <span class="rewards-block-expand__header-title">
-        {{ $t("rewardDetails.title") }}
+        {{ $t('rewardDetails.title') }}
       </span>
       <span class="rewards-block-expand__header-subtitle">
-        {{ $t("rewardDetails.subtitle") }}
+        {{ $t('rewardDetails.subtitle') }}
       </span>
     </div>
     <div class="rewards-block-expand__controls">
@@ -48,42 +42,30 @@
       <tr>
         <th class="rewards-block-expand__table-header--main">
           <span>
-            {{ $t("rewards") }}
+            {{ $t('rewards') }}
           </span>
         </th>
         <th
-          class="
-            rewards-block-expand__table-header
-            rewards-block-expand__table-header--total-staked
-          "
+          class="rewards-block-expand__table-header rewards-block-expand__table-header--total-staked"
         >
-          {{ $t("rewardDetails.totalStaked") }}
+          {{ $t('rewardDetails.totalStaked') }}
         </th>
         <th
-          class="
-            rewards-block-expand__table-header
-            rewards-block-expand__table-header--citadel-staked
-          "
+          class="rewards-block-expand__table-header rewards-block-expand__table-header--citadel-staked"
           v-html="$t('rewardDetails.stakedOnCitadel')"
         />
         <th class="rewards-block-expand__table-header">
-          {{ $t("rewardsPage.totalRewards") }}
+          {{ $t('rewardsPage.totalRewards') }}
         </th>
       </tr>
       <tr :style="{ borderBottom: '1px dashed #00A3FF' }">
         <th
-          class="
-            rewards-block-expand__table-title
-            rewards-block-expand__table-title--xct
-          "
+          class="rewards-block-expand__table-title rewards-block-expand__table-title--xct"
         >
           XCT
         </th>
         <td
-          class="
-            rewards-block-expand__table-cell-total-staked
-            rewards-block-expand__table-title--xct
-          "
+          class="rewards-block-expand__table-cell-total-staked rewards-block-expand__table-title--xct"
         >
           <span
             v-pretty-number="{
@@ -97,10 +79,7 @@
           </span>
         </td>
         <td
-          class="
-            rewards-block-expand__table-cell-citadel-staked
-            rewards-block-expand__table-title--xct
-          "
+          class="rewards-block-expand__table-cell-citadel-staked rewards-block-expand__table-title--xct"
         >
           <span
             v-pretty-number="{
@@ -116,10 +95,7 @@
           </span>
         </td>
         <td
-          class="
-            rewards-block-expand__table-cell-total-rewards
-            rewards-block-expand__table-title--xct
-          "
+          class="rewards-block-expand__table-cell-total-rewards rewards-block-expand__table-title--xct"
         >
           <span
             v-pretty-number="{ value: tableData.total.xct, currency: 'XCT' }"
@@ -132,18 +108,12 @@
       </tr>
       <tr>
         <th
-          class="
-            rewards-block-expand__table-title
-            rewards-block-expand__table-title--other
-          "
+          class="rewards-block-expand__table-title rewards-block-expand__table-title--other"
         >
-          {{ $t("otherAssets") }}
+          {{ $t('otherAssets') }}
         </th>
         <td
-          class="
-            rewards-block-expand__table-cell-total-staked
-            rewards-block-expand__table-title--other
-          "
+          class="rewards-block-expand__table-cell-total-staked rewards-block-expand__table-title--other"
         >
           <span class="rewards-block-expand__table-cell-total-staked-currency">
             $
@@ -157,10 +127,7 @@
           />
         </td>
         <td
-          class="
-            rewards-block-expand__table-cell-citadel-staked
-            rewards-block-expand__table-title--other
-          "
+          class="rewards-block-expand__table-cell-citadel-staked rewards-block-expand__table-title--other"
         >
           <span
             class="rewards-block-expand__table-cell-citadel-staked-currency"
@@ -176,10 +143,7 @@
           />
         </td>
         <td
-          class="
-            rewards-block-expand__table-cell-total-rewards
-            rewards-block-expand__table-title--other
-          "
+          class="rewards-block-expand__table-cell-total-rewards rewards-block-expand__table-title--other"
         >
           <span
             v-pretty-number="{ value: tableData.total.other, currency: 'XCT' }"
@@ -191,9 +155,7 @@
         </td>
       </tr>
     </table>
-    <div
-      class="rewards-block-expand__rewards-list"
-    >
+    <div class="rewards-block-expand__rewards-list">
       <Dropdown
         v-for="item in rewardsList"
         :key="item.net"
@@ -221,7 +183,15 @@ import { screenWidths } from '@/config/sreenWidthThresholds';
 import { useStore } from 'vuex';
 export default {
   name: 'RewardsBlockExpand',
-  components: { closeIcon, closeIconHover, DatePicker, TabsGroup, Dropdown, Loading, Modal },
+  components: {
+    closeIcon,
+    closeIconHover,
+    DatePicker,
+    TabsGroup,
+    Dropdown,
+    Loading,
+    Modal,
+  },
   props: {
     tableData: {
       type: Object,
@@ -240,23 +210,33 @@ export default {
     const store = useStore();
     const { width } = useWindowSize();
     const tabs = computed(() =>
-      width.value < screenWidths.lg ? tabsListmd : tabsList,
+      width.value < screenWidths.lg ? tabsListmd : tabsList
     );
     const rewards = computed(() => store.getters['dao/rewards']);
     const networks = computed(() => store.getters['networks/networksList']);
-    const rewardsList = computed(() => rewards.value.reduce((accum, item) => {
-      const netIndex = accum.findIndex(({ net }) => net === item.net);
-      const rewards = { address: item.address, value: item.rewards };
-      let newAccum = accum;
+    const rewardsList = computed(() =>
+      rewards.value
+        .reduce((accum, item) => {
+          const netIndex = accum.findIndex(({ net }) => net === item.net);
+          const rewards = { address: item.address, value: item.rewards };
+          let newAccum = accum;
 
-      if (netIndex !== -1) {
-        newAccum[netIndex].rewards = [...accum[netIndex].rewards, rewards];
-      } else {
-        newAccum = [...accum, { ...networks.value.find((network) => network.net === item.net), code: 'XCT', rewards: [rewards] }];
-      }
+          if (netIndex !== -1) {
+            newAccum[netIndex].rewards = [...accum[netIndex].rewards, rewards];
+          } else {
+            newAccum = [
+              ...accum,
+              {
+                ...networks.value.find((network) => network.net === item.net),
+                code: 'XCT',
+                rewards: [rewards],
+              },
+            ];
+          }
 
-      return newAccum;
-    }, []).sort((item, nextItem) => item.name > nextItem.name ? 1 : -1),
+          return newAccum;
+        }, [])
+        .sort((item, nextItem) => (item.name > nextItem.name ? 1 : -1))
     );
     const loadData = async (from, to) => {
       isLoading.value = true;
@@ -278,7 +258,7 @@ export default {
         } else {
           await loadData(
             moment(val[0]).format('x'),
-            moment(val[1]).format('x'),
+            moment(val[1]).format('x')
           );
         }
       }
@@ -372,7 +352,7 @@ export default {
   &__header-title {
     font-size: 20px;
     line-height: 30px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     @include md {
       margin-bottom: 4px;
       font-size: 16px;
@@ -423,7 +403,7 @@ export default {
       font-size: 18px;
       line-height: 22px;
       color: $too-dark-blue;
-      font-family: "Panton_Bold";
+      font-family: 'Panton_Bold';
       width: 307px;
       @include lg {
         width: 178px;
@@ -469,7 +449,7 @@ export default {
   &__table-title {
     font-size: 18px;
     line-height: 30px;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
     @include md {
       font-size: 14px;
       line-height: 30px;
@@ -504,7 +484,7 @@ export default {
     color: $too-dark-blue;
     font-size: 20px;
     line-height: 24px;
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
     @include md {
       font-size: 16px;
       line-height: 20px;
@@ -513,7 +493,7 @@ export default {
   &__table-cell-citadel-staked-amount {
     color: $dark-blue;
   }
-  &__rewards-list{
+  &__rewards-list {
     display: flex;
     flex-direction: column;
     overflow-y: auto;

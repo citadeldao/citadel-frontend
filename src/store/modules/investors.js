@@ -26,10 +26,10 @@ export default {
   }),
 
   getters: {
-    privateSaleInfo: state => state.privateSaleInfo,
-    preparePrivateClaim: state => state.preparePrivateClaim,
-    prepareTransferFund: state => state.prepareTransferFund,
-    balanceFundInfo: state => state.balanceFundInfo,
+    privateSaleInfo: (state) => state.privateSaleInfo,
+    preparePrivateClaim: (state) => state.preparePrivateClaim,
+    prepareTransferFund: (state) => state.prepareTransferFund,
+    balanceFundInfo: (state) => state.balanceFundInfo,
   },
 
   mutations: {
@@ -49,7 +49,10 @@ export default {
 
   actions: {
     async getPreparePrivateClaim({ commit }, { address, category }) {
-      const { data, error } = await citadel.getPreparePrivateClaim(address, category);
+      const { data, error } = await citadel.getPreparePrivateClaim(
+        address,
+        category
+      );
 
       if (!error) {
         commit(types.SET_PREPARE_PRIVATE_CLAIM, data);
@@ -84,8 +87,16 @@ export default {
         });
       }
     },
-    async getPrepareTransferFund({ commit }, { address, category, amount, recipient }) {
-      const { data, error } = await citadel.getPrepareTransferFund(address, category, amount, recipient);
+    async getPrepareTransferFund(
+      { commit },
+      { address, category, amount, recipient }
+    ) {
+      const { data, error } = await citadel.getPrepareTransferFund(
+        address,
+        category,
+        amount,
+        recipient
+      );
 
       if (!error) {
         commit(types.SET_PREPARE_TRANSFER_FUND, data);

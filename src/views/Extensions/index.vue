@@ -1,8 +1,5 @@
 <template>
-  <div
-    :style="{ backgroundImage: `url(${appBackground})` }"
-    class="extensions"
-  >
+  <div :style="{ backgroundImage: `url(${appBackground})` }" class="extensions">
     <!-- <img class="" :src="currentApp && currentApp.bg" /> -->
     <teleport to="body">
       <Modal v-if="showSuccessModal">
@@ -30,7 +27,11 @@
       <!-- CONFIRM RESOTRE ONESEED -->
       <Modal v-if="showAppInfoModal">
         <ModalContent
-          v-click-away="() => { showAppInfoModal ? showAppInfoModal = false : null }"
+          v-click-away="
+            () => {
+              showAppInfoModal ? (showAppInfoModal = false) : null;
+            }
+          "
           width="900px"
           :title="selectedApp.name"
           :desc="selectedApp.short_description"
@@ -41,7 +42,12 @@
         >
           <AppInfo
             :app="selectedApp"
-            @launchApp="router.push({name: 'Extension', params: { name: selectedApp.name }})"
+            @launchApp="
+              router.push({
+                name: 'Extension',
+                params: { name: selectedApp.name },
+              })
+            "
           />
         </ModalContent>
       </Modal>
@@ -52,10 +58,7 @@
       :app="selectedApp"
       @search="onSearchHandler"
     />
-    <div
-      v-if="!currentApp && !loading"
-      class="extensions__apps"
-    >
+    <div v-if="!currentApp && !loading" class="extensions__apps">
       <AppBlock
         v-for="(app, ndx) in appsFiltered"
         :key="ndx"
@@ -69,22 +72,12 @@
         @openApp="onOpenApp(app.id)"
       />
     </div>
-    <div
-      v-if="loading"
-      class="extensions__loading"
-    >
+    <div v-if="loading" class="extensions__loading">
       <Loading />
     </div>
-    <div
-      v-if="currentApp"
-      class="extensions__app-wrap"
-    >
+    <div v-if="currentApp" class="extensions__app-wrap">
       <keep-alive>
-        <component
-          :is="closeIcon"
-          class="close-icon"
-          @click="closeApp()"
-        />
+        <component :is="closeIcon" class="close-icon" @click="closeApp()" />
       </keep-alive>
       <iframe
         :src="currentApp.url"
@@ -112,7 +105,13 @@
         @close="connectLedgerCloseHandler"
       />
     </Modal>
-    <Modal v-if="!showLedgerConnect && extensionTransactionForSign && !extensionTransactionForSign.error_type">
+    <Modal
+      v-if="
+        !showLedgerConnect &&
+        extensionTransactionForSign &&
+        !extensionTransactionForSign.error_type
+      "
+    >
       <ModalContent
         :title="selectedApp.name"
         :desc="selectedApp.short_description"
@@ -125,9 +124,8 @@
         @buttonClick="confirmClickHandler"
       >
         <div class="item mt30">
-          <div class="label">
-            Type operation
-          </div><span class="red">{{ extensionTransactionForSign?.type }}</span>
+          <div class="label">Type operation</div>
+          <span class="red">{{ extensionTransactionForSign?.type }}</span>
         </div>
         <div
           v-for="(meta, ndx) in extensionTransactionForSign.meta_info"
@@ -137,34 +135,39 @@
           <template v-if="typeof meta.value === 'string'">
             <div class="label">
               {{ meta.title }}
-            </div><span>{{ meta.value }}</span>
+            </div>
+            <span>{{ meta.value }}</span>
           </template>
           <!-- object link + text -->
           <template v-if="typeof meta.value === 'object'">
             <div class="label">
               {{ meta.title }}
-            </div><a
-              target="_blank"
-              :href="meta.value.url"
-            >{{ meta.value.text }} <linkIcon class="link-icon" /><linkIconHovered class="link-icon hovered" /></a>
+            </div>
+            <a target="_blank" :href="meta.value.url"
+              >{{ meta.value.text }}
+              <linkIcon class="link-icon" /><linkIconHovered
+                class="link-icon hovered"
+            /></a>
           </template>
         </div>
-        <div
-          v-if="extensionTransactionForSign.fee"
-          class="item"
-        >
+        <div v-if="extensionTransactionForSign.fee" class="item">
           <div class="label">
             {{ $t('extensions.transactionFee') }}
-          </div><div><span v-pretty-number="{ value: extensionTransactionForSign.fee, currency: selectedApp.networks[0] }" />{{ selectedApp.networks[0] }}</div>
+          </div>
+          <div>
+            <span
+              v-pretty-number="{
+                value: extensionTransactionForSign.fee,
+                currency: selectedApp.networks[0],
+              }"
+            />{{ selectedApp.networks[0] }}
+          </div>
         </div>
         <div class="item">
           <div class="label">
             {{ $t('extensions.transactionData') }}
           </div>
-          <div
-            class="show"
-            @click="showTx = !showTx"
-          >
+          <div class="show" @click="showTx = !showTx">
             {{ $t('extensions.showLabel') }}
             <keep-alive>
               <component
@@ -185,14 +188,21 @@
           />
         </pre>
         <div
-          v-if="signerWallet && [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(signerWallet.type)"
+          v-if="
+            signerWallet &&
+            [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(
+              signerWallet.type
+            )
+          "
           class="password-wrap"
         >
           <Input
             id="password"
             v-model="password"
             :show-error-text="!!incorrectPassword && confirmPassword"
-            :error="incorrectPassword && confirmPassword ? 'Incorrect password' : ''"
+            :error="
+              incorrectPassword && confirmPassword ? 'Incorrect password' : ''
+            "
             :label="$t('enterPassword')"
             :placeholder="$t('password')"
             type="password"
@@ -222,27 +232,37 @@
           <div class="item-tx">
             <highlightjs
               language="javascript"
-              :code="JSON.stringify(messageForSign.message).replaceAll(',', ', \n').replaceAll('{', '{ \n').replaceAll('}', '\n}')"
+              :code="
+                JSON.stringify(messageForSign.message)
+                  .replaceAll(',', ', \n')
+                  .replaceAll('{', '{ \n')
+                  .replaceAll('}', '\n}')
+              "
             />
           </div>
         </div>
-        <div
-          v-if="msgSuccessSignature"
-          class="item"
-        >
+        <div v-if="msgSuccessSignature" class="item">
           <div class="label signature">
             {{ msgSuccessSignature }}
           </div>
         </div>
         <div
-          v-if="!msgSuccessSignature && signerWallet && [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(signerWallet.type)"
+          v-if="
+            !msgSuccessSignature &&
+            signerWallet &&
+            [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(
+              signerWallet.type
+            )
+          "
           class="password-wrap"
         >
           <Input
             id="password-msg"
             v-model="password"
             :show-error-text="!!incorrectPassword && confirmPassword"
-            :error="incorrectPassword && confirmPassword ? 'Incorrect password' : ''"
+            :error="
+              incorrectPassword && confirmPassword ? 'Incorrect password' : ''
+            "
             :label="$t('enterPassword')"
             :placeholder="$t('password')"
             type="password"
@@ -278,10 +298,22 @@ import extensionsSocketTypes from '@/config/extensionsSocketTypes';
 import useApi from '@/api/useApi';
 import { keplrNetworksProtobufFormat } from '@/config/availableNets';
 
-
 export default {
   name: 'Extensions',
-  components: { ConnectLedgerModal, ConfirmLedgerModal, Head, AppBlock, linkIcon, linkIconHovered, AppInfo, SuccessModalContent, Loading, Modal, ModalContent, Input },
+  components: {
+    ConnectLedgerModal,
+    ConfirmLedgerModal,
+    Head,
+    AppBlock,
+    linkIcon,
+    linkIconHovered,
+    AppInfo,
+    SuccessModalContent,
+    Loading,
+    Modal,
+    ModalContent,
+    Input,
+  },
   setup() {
     const assetsDomain = ref('https://extensions-admin-test.3ahtim54r.ru/api/');
     const store = useStore();
@@ -318,7 +350,9 @@ export default {
       confirmClickHandler();
     };
 
-    const extensionsList = computed(() => store.getters['extensions/extensionsList']);
+    const extensionsList = computed(
+      () => store.getters['extensions/extensionsList']
+    );
 
     if (!extensionsList.value.length) {
       store.dispatch('extensions/fetchExtensionsList');
@@ -362,14 +396,14 @@ export default {
       });
     };
 
-    import(`@/assets/icons/extensions/close.svg`).then(val => {
+    import(`@/assets/icons/extensions/close.svg`).then((val) => {
       closeIcon.value = markRaw(val.default);
     });
-    import(`@/assets/icons/extensions/arrow_down.svg`).then(val => {
+    import(`@/assets/icons/extensions/arrow_down.svg`).then((val) => {
       arrowDownIcon.value = markRaw(val.default);
     });
 
-    const onSearchHandler = str => {
+    const onSearchHandler = (str) => {
       searchStr.value = str;
     };
 
@@ -383,25 +417,37 @@ export default {
       }
     };
 
-    const appBackground = computed(() => currentApp.value ? currentApp.value.background : null);
-    const currentAppInfo = computed(() => store.getters['extensions/currentAppInfo']);
+    const appBackground = computed(() =>
+      currentApp.value ? currentApp.value.background : null
+    );
+    const currentAppInfo = computed(
+      () => store.getters['extensions/currentAppInfo']
+    );
 
     // const privateWallets = computed(() => store.getters['wallets/wallets'].filter(w => w.type !== WALLET_TYPES.PUBLIC_KEY));
     const messageForSign = false; // computed(() => store.getters['extensions/extensionMessageForSign']);
 
     // const walletsList = computed(() => store.getters['wallets/wallets']);
 
-    const extensionTransactionForSign = computed(() => store.getters['extensions/extensionTransactionForSign']);
-    const metamaskConnector = computed(() => store.getters['metamask/metamaskConnector']);
-    const keplrConnector = computed(() => store.getters['keplr/keplrConnector']);
+    const extensionTransactionForSign = computed(
+      () => store.getters['extensions/extensionTransactionForSign']
+    );
+    const metamaskConnector = computed(
+      () => store.getters['metamask/metamaskConnector']
+    );
+    const keplrConnector = computed(
+      () => store.getters['keplr/keplrConnector']
+    );
 
     const selectApp = async () => {
       showAppInfoModal.value = false;
       currentApp.value = null;
 
-      await store.dispatch('extensions/fetchExtensionInfo', { appId: selectedApp.value.id });
+      await store.dispatch('extensions/fetchExtensionInfo', {
+        appId: selectedApp.value.id,
+      });
 
-      const nets = selectedApp.value.networks.map(net => {
+      const nets = selectedApp.value.networks.map((net) => {
         return net.toLowerCase();
       });
 
@@ -409,26 +455,44 @@ export default {
 
       if ([metamaskConnector.value.network].includes(nets[0])) {
         const metamaskNet = metamaskConnector.value.network;
-        const metamaskAddress = metamaskConnector.value.accounts[0] && metamaskConnector.value.accounts[0].toLowerCase();
+        const metamaskAddress =
+          metamaskConnector.value.accounts[0] &&
+          metamaskConnector.value.accounts[0].toLowerCase();
 
-        mergeWallet = walletsList.value.find(w => w.type === WALLET_TYPES.PUBLIC_KEY && metamaskNet === w.net && metamaskAddress === w.address.toLowerCase());
+        mergeWallet = walletsList.value.find(
+          (w) =>
+            w.type === WALLET_TYPES.PUBLIC_KEY &&
+            metamaskNet === w.net &&
+            metamaskAddress === w.address.toLowerCase()
+        );
       }
 
       if (currentAppInfo?.value?.token) {
-        const nets = selectedApp.value.networks.map(net => {
+        const nets = selectedApp.value.networks.map((net) => {
           return net.toLowerCase();
         });
         const wallets = walletsList.value
 
-        // const wallets = privateWallets.value
-          .filter(w => nets.includes(w.net.toLowerCase()) && w.type !== WALLET_TYPES.PUBLIC_KEY)
-          .map(w => ({ address: w.address, net: w.net, publicKey: (w.getPublicKeyDecoded && w.getPublicKeyDecoded()) || null }));
+          // const wallets = privateWallets.value
+          .filter(
+            (w) =>
+              nets.includes(w.net.toLowerCase()) &&
+              w.type !== WALLET_TYPES.PUBLIC_KEY
+          )
+          .map((w) => ({
+            address: w.address,
+            net: w.net,
+            publicKey:
+              (w.getPublicKeyDecoded && w.getPublicKeyDecoded()) || null,
+          }));
 
         if (mergeWallet) {
           wallets.push({ address: mergeWallet.address, net: mergeWallet.net });
         }
 
-        selectedApp.value.url += `?token=${currentAppInfo.value.token}&wallets=${JSON.stringify(wallets)}`;
+        selectedApp.value.url += `?token=${
+          currentAppInfo.value.token
+        }&wallets=${JSON.stringify(wallets)}`;
         currentApp.value = selectedApp.value;
 
         /* setTimeout(() => {
@@ -439,7 +503,10 @@ export default {
     };
 
     if (route.params.name) {
-      selectedApp.value = Object.assign({}, extensionsList.value.find(a => a.name === route.params.name));
+      selectedApp.value = Object.assign(
+        {},
+        extensionsList.value.find((a) => a.name === route.params.name)
+      );
 
       if (!selectedApp.value.id) {
         router.push({ name: 'Extensions' });
@@ -450,13 +517,22 @@ export default {
       closeApp(true);
     }
 
-    const onOpenApp = app => {
-      selectedApp.value = Object.assign({}, extensionsList.value.find(a => +a.id === +app));
-      router.push({ name: 'Extension', params: { name: selectedApp.value.name } });
+    const onOpenApp = (app) => {
+      selectedApp.value = Object.assign(
+        {},
+        extensionsList.value.find((a) => +a.id === +app)
+      );
+      router.push({
+        name: 'Extension',
+        params: { name: selectedApp.value.name },
+      });
     };
 
-    const onOpenAppInfo = app => {
-      selectedApp.value = Object.assign({}, extensionsList.value.find(a => +a.id === +app));
+    const onOpenAppInfo = (app) => {
+      selectedApp.value = Object.assign(
+        {},
+        extensionsList.value.find((a) => +a.id === +app)
+      );
       showAppInfoModal.value = true;
     };
 
@@ -465,7 +541,7 @@ export default {
         return extensionsList.value;
       }
 
-      return extensionsList.value.filter(app => {
+      return extensionsList.value.filter((app) => {
         return app.name.toLowerCase().includes(searchStr.value);
       });
     });
@@ -482,18 +558,29 @@ export default {
       if (extensionTransactionForSign?.value?.transaction) {
         const currentAddress = extensionTransactionForSign.value.address;
 
-        const nets = currentApp.value.networks.map(net => {
+        const nets = currentApp.value.networks.map((net) => {
           return net.toLowerCase();
         });
-        signerWallet.value = walletsList.value.find(w => w.address.toLowerCase() === currentAddress.toLowerCase() && nets.includes(w.net.toLowerCase()));
+        signerWallet.value = walletsList.value.find(
+          (w) =>
+            w.address.toLowerCase() === currentAddress.toLowerCase() &&
+            nets.includes(w.net.toLowerCase())
+        );
 
         // signerWallet.value = privateWallets.value.find(w => w.address.toLowerCase() === currentAddress.toLowerCase() && nets.includes(w.net.toLowerCase()));
 
         if (!signerWallet.value) {
           // metamask with public type
           const metamaskNet = metamaskConnector.value.network;
-          const metamaskAddress = metamaskConnector.value.accounts[0] && metamaskConnector.value.accounts[0].toLowerCase();
-          metamaskSigner.value = walletsList.value.find(w => w.type === WALLET_TYPES.PUBLIC_KEY && metamaskNet === w.net && metamaskAddress === w.address.toLowerCase());
+          const metamaskAddress =
+            metamaskConnector.value.accounts[0] &&
+            metamaskConnector.value.accounts[0].toLowerCase();
+          metamaskSigner.value = walletsList.value.find(
+            (w) =>
+              w.type === WALLET_TYPES.PUBLIC_KEY &&
+              metamaskNet === w.net &&
+              metamaskAddress === w.address.toLowerCase()
+          );
         } else {
           metamaskSigner.value = null;
         }
@@ -504,7 +591,10 @@ export default {
       if (!route.params.name) {
         closeApp(true);
       } else {
-        selectedApp.value = Object.assign({}, extensionsList.value.find(a => a.name === route.params.name));
+        selectedApp.value = Object.assign(
+          {},
+          extensionsList.value.find((a) => a.name === route.params.name)
+        );
 
         if (selectedApp.value.id) {
           selectApp();
@@ -543,7 +633,12 @@ export default {
     const signMessage = async () => {
       confirmPassword.value = true;
 
-      if ([WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(signerWallet.value.type) && incorrectPassword.value) {
+      if (
+        [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(
+          signerWallet.value.type
+        ) &&
+        incorrectPassword.value
+      ) {
         return;
       }
 
@@ -552,7 +647,11 @@ export default {
       }
 
       try {
-        const signResult = await signerWallet.value.signMessage(messageForSign.value.message, password.value, signerWallet.value.derivationPath);
+        const signResult = await signerWallet.value.signMessage(
+          messageForSign.value.message,
+          password.value,
+          signerWallet.value.derivationPath
+        );
 
         showLedgerConnect.value = false;
         msgSuccessSignature.value = signResult;
@@ -586,7 +685,11 @@ export default {
         let keplrResult;
 
         try {
-          keplrResult = await keplrConnector.value.sendKeplrTransaction(extensionTransactionForSign.value, signerWallet.value.address, { preferNoSetFee: true });
+          keplrResult = await keplrConnector.value.sendKeplrTransaction(
+            extensionTransactionForSign.value,
+            signerWallet.value.address,
+            { preferNoSetFee: true }
+          );
         } catch (err) {
           notify({
             type: 'warning',
@@ -629,7 +732,9 @@ export default {
         };
 
         const data = await useApi('wallet').sendSignedTransaction({
-          hash: keplrNetworksProtobufFormat.includes(signerWallet.value.net) ? protobufTx : defaultTx,
+          hash: keplrNetworksProtobufFormat.includes(signerWallet.value.net)
+            ? protobufTx
+            : defaultTx,
           deviceType: WALLET_TYPES.KEPLR,
           proxy: false,
           network: signerWallet.value.net,
@@ -658,7 +763,10 @@ export default {
 
       // metamask, ...
       if (metamaskSigner.value) {
-        const metamaskResult = await metamaskConnector.value.sendMetamaskTransaction(extensionTransactionForSign.value.transaction);
+        const metamaskResult =
+          await metamaskConnector.value.sendMetamaskTransaction(
+            extensionTransactionForSign.value.transaction
+          );
 
         if (metamaskResult.error) {
           notify({
@@ -684,7 +792,12 @@ export default {
 
       confirmPassword.value = true;
 
-      if ([WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(signerWallet.value.type) && incorrectPassword.value) {
+      if (
+        [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(
+          signerWallet.value.type
+        ) &&
+        incorrectPassword.value
+      ) {
         return;
       }
 
@@ -698,12 +811,17 @@ export default {
         result = await signerWallet.value.signAndSendTransfer({
           walletId: signerWallet.value.id,
           rawTransaction: extensionTransactionForSign.value,
-          privateKey: password.value && signerWallet.value.getPrivateKeyDecoded(password.value),
+          privateKey:
+            password.value &&
+            signerWallet.value.getPrivateKeyDecoded(password.value),
           derivationPath: signerWallet.value.derivationPath,
           proxy: false,
         });
 
-        if (typeof result.data === 'string' && [64, 66].includes(result.data.length)) {
+        if (
+          typeof result.data === 'string' &&
+          [64, 66].includes(result.data.length)
+        ) {
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;
           successTx.value = result.data;

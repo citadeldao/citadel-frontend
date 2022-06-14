@@ -15,10 +15,14 @@ export default class CryptoCoinTEZ extends CryptoCoin {
   }
 
   getFormattedPublicKey() {
-    return typeof this.publicKey === 'string' ? this.publicKey : base58check.encode(Buffer.from(this.publicKey)); // base58check.encode(Buffer.from(this.publicKey))
+    return typeof this.publicKey === 'string'
+      ? this.publicKey
+      : base58check.encode(Buffer.from(this.publicKey)); // base58check.encode(Buffer.from(this.publicKey))
   }
 
   getPublicKeyDecoded() {
-    return typeof this.publicKey === 'string' ? this.publicKey : base58check.encode(Buffer.from(this.publicKey));
+    return typeof this.publicKey === 'string'
+      ? this.publicKey
+      : base58check.encode(Buffer.from(this.publicKey));
   }
 }

@@ -15,8 +15,9 @@ export default {
     },
   },
   getters: {
-    info: state => state.info,
-    formatYeldByNet: (state) => (net) => prettyNumber(state.info?.marketcap?.[net]?.yield),
+    info: (state) => state.info,
+    formatYeldByNet: (state) => (net) =>
+      prettyNumber(state.info?.marketcap?.[net]?.yield),
   },
   mutations: {
     [types.SET_INFO](state, info) {

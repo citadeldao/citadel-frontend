@@ -6,7 +6,10 @@
       </span>
       <div
         class="info-block__block-section"
-        :class="{withTwoButtons:unassignedAddresses.length && assignedAddresses.length}"
+        :class="{
+          withTwoButtons:
+            unassignedAddresses.length && assignedAddresses.length,
+        }"
       >
         <span class="info-block__block-info">
           {{ $t(blockData.block1.desc) }}
@@ -68,17 +71,25 @@ export default {
   props: {
     unassignedAddresses: {
       type: Array,
-      default: ()=>[],
+      default: () => [],
     },
     assignedAddresses: {
       type: Array,
-      default: ()=>[],
+      default: () => [],
     },
   },
-  emits: ['block1ButtonClick', 'block2ButtonClick', 'assignedButtonClick', 'unassignedButtonClick'],
+  emits: [
+    'block1ButtonClick',
+    'block2ButtonClick',
+    'assignedButtonClick',
+    'unassignedButtonClick',
+  ],
   setup(props) {
     const blockData = computed(() => {
-      if (!props.unassignedAddresses.length && !props.assignedAddresses.length) {
+      if (
+        !props.unassignedAddresses.length &&
+        !props.assignedAddresses.length
+      ) {
         return {
           block1: {
             title: 'xct.blocks.title1',
@@ -147,13 +158,13 @@ export default {
 
 <style lang="scss" scoped>
 .info-block {
-    width: 437px;
-    @include lg {
-      width: 573px;
-    }
-    @include md {
-      width: 469px;
-    }
+  width: 437px;
+  @include lg {
+    width: 573px;
+  }
+  @include md {
+    width: 469px;
+  }
 
   &__block {
     display: flex;
@@ -175,7 +186,7 @@ export default {
   &__block-title {
     font-size: 20px;
     line-height: 30px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     margin-bottom: 15px;
   }
   &__block-section {
@@ -194,25 +205,25 @@ export default {
       justify-content: space-between;
     }
   }
-  &__block-section-controlls{
+  &__block-section-controlls {
     display: flex;
   }
-  &__block-assigned-addresses-button{
+  &__block-assigned-addresses-button {
     margin-right: 16px;
   }
   &__block-unassigned-addresses-button,
-  &__block-assigned-addresses-button{
+  &__block-assigned-addresses-button {
     margin-bottom: 9px;
-    @include lg{
+    @include lg {
       margin-right: 0;
       margin-bottom: 0;
     }
-    @include md{
+    @include md {
       margin-right: 0;
       margin-bottom: 0;
     }
   }
-  &__block-info{
+  &__block-info {
     font-size: 14px;
     line-height: 20px;
     color: $mid-blue;
@@ -228,36 +239,36 @@ export default {
     }
   }
 }
-  .withTwoButtons{
-  @include lg{
-     flex-direction: column;
-     align-items: flex-start;
-     .info-block__block-info{
-       margin-bottom: 16px;
-       width: fit-content;
-     }
-     .info-block__block-assigned-addresses-button{
-       margin-right: 16px;
-     }
-     .info-block__block-unassigned-addresses-button,
-     .info-block__block-assigned-addresses-button{
-       margin-bottom: 15px;
-     }
+.withTwoButtons {
+  @include lg {
+    flex-direction: column;
+    align-items: flex-start;
+    .info-block__block-info {
+      margin-bottom: 16px;
+      width: fit-content;
+    }
+    .info-block__block-assigned-addresses-button {
+      margin-right: 16px;
+    }
+    .info-block__block-unassigned-addresses-button,
+    .info-block__block-assigned-addresses-button {
+      margin-bottom: 15px;
+    }
   }
-  @include md{
-     flex-direction: column;
-     align-items: flex-start;
-     .info-block__block-info{
-       margin-bottom: 16px;
-       width: fit-content;
-     }
-     .info-block__block-assigned-addresses-button{
-       margin-right: 16px;
-     }
-     .info-block__block-unassigned-addresses-button,
-     .info-block__block-assigned-addresses-button{
-       margin-bottom: 4px;
-     }
+  @include md {
+    flex-direction: column;
+    align-items: flex-start;
+    .info-block__block-info {
+      margin-bottom: 16px;
+      width: fit-content;
+    }
+    .info-block__block-assigned-addresses-button {
+      margin-right: 16px;
+    }
+    .info-block__block-unassigned-addresses-button,
+    .info-block__block-assigned-addresses-button {
+      margin-bottom: 4px;
+    }
   }
 }
 </style>

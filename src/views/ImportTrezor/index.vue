@@ -1,35 +1,19 @@
 <template>
   <div class="import-trezor">
-    <Header
-      :current-step="currentStep"
-      :steps="steps"
-    />
+    <Header :current-step="currentStep" :steps="steps" />
     <div class="import-trezor__section">
       <!-- <Stepper :steps="steps" /> -->
-      <ImportHardwareWallet
-        v-if="currentStep === 2"
-        @setNet="setNet"
-      />
-      <ConnectDevice
-        v-if="currentStep === 3"
-        :net="net"
-      />
+      <ImportHardwareWallet v-if="currentStep === 2" @setNet="setNet" />
+      <ConnectDevice v-if="currentStep === 3" :net="net" />
       <ChooseDerivationPath
         v-if="currentStep === 4"
         :net="net"
         @selectWallet="addWallet"
       />
     </div>
-    <teleport
-      v-if="showModal"
-      to="body"
-    >
+    <teleport v-if="showModal" to="body">
       <Modal>
-        <img
-          v-if="showLoader"
-          src="@/assets/gif/loader.gif"
-          alt=""
-        >
+        <img v-if="showLoader" src="@/assets/gif/loader.gif" alt="" />
         <CatPage
           v-else
           v-click-away="modalClickHandler"
@@ -95,7 +79,10 @@ export default {
       showModal.value = true;
       showLoader.value = true;
 
-      const { newWalletInstance, error } = await store.dispatch('crypto/addHardwareWalletToAccount', { wallet });
+      const { newWalletInstance, error } = await store.dispatch(
+        'crypto/addHardwareWalletToAccount',
+        { wallet }
+      );
 
       if (!error) {
         newWallets.value = [newWalletInstance];

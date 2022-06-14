@@ -1,16 +1,9 @@
 <template>
-  <div
-    v-click-away="onClickAway"
-    class="autocomplete"
-    :class="{ error }"
-  >
+  <div v-click-away="onClickAway" class="autocomplete" :class="{ error }">
     <label :for="id">{{ label }}</label>
     <transition name="fade">
       <keep-alive>
-        <component
-          :is="currentIcon"
-          class="autocomplete__icon"
-        />
+        <component :is="currentIcon" class="autocomplete__icon" />
       </keep-alive>
     </transition>
     <input
@@ -25,19 +18,13 @@
       @input="onChange"
       @focus="focusHandler"
       @blur="blurHandler"
-    >
-    <div
-      v-if="error && showErrorText"
-      class="autocomplete__error"
-    >
+    />
+    <div v-if="error && showErrorText" class="autocomplete__error">
       <error class="autocomplete__error-icon" />
       <span class="autocomplete__error-text">{{ error }}</span>
     </div>
     <transition name="fade">
-      <ul
-        v-show="isOpen && results.length > 0"
-        class="autocomplete__results"
-      >
+      <ul v-show="isOpen && results.length > 0" class="autocomplete__results">
         <AutocompleteItem
           v-for="result in results"
           :key="result.id"
@@ -123,7 +110,7 @@ export default {
         import(`@/assets/icons/networks/${count}.svg`).then((val) => {
           currentIcon.value = markRaw(val.default);
         });
-      },
+      }
     );
     watch(
       () => props.value,
@@ -131,7 +118,7 @@ export default {
         if (!count) {
           updateCurrentIcon('loop');
         }
-      },
+      }
     );
 
     const results = computed(() => {
@@ -140,7 +127,7 @@ export default {
       }
 
       return props.items.filter((item) =>
-        item.title.toLowerCase().includes(props.value.toLowerCase()),
+        item.title.toLowerCase().includes(props.value.toLowerCase())
       );
     });
 
@@ -159,7 +146,9 @@ export default {
     };
 
     const deletePressHandler = () => {
-      const hasInResults = results.value.find((res) => res.title === props.value);
+      const hasInResults = results.value.find(
+        (res) => res.title === props.value
+      );
 
       if (results.value.length === 1 && hasInResults) {
         emit('update:value', '');

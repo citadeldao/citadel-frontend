@@ -1,35 +1,19 @@
 <template>
   <div class="import-ledger">
-    <Header
-      :current-step="currentStep"
-      :steps="steps"
-    />
+    <Header :current-step="currentStep" :steps="steps" />
     <div class="import-ledger__section">
       <!-- <Stepper :steps="steps" /> -->
-      <ImportHardwareWallet
-        v-if="currentStep === 2"
-        @setNet="setNet"
-      />
-      <ConnectDevice
-        v-if="currentStep === 3"
-        :net="net"
-      />
+      <ImportHardwareWallet v-if="currentStep === 2" @setNet="setNet" />
+      <ConnectDevice v-if="currentStep === 3" :net="net" />
       <ChooseDerivationPath
         v-if="currentStep === 4"
         :net="net"
         @selectWallet="addWallet"
       />
     </div>
-    <teleport
-      v-if="showModal"
-      to="body"
-    >
+    <teleport v-if="showModal" to="body">
       <Modal>
-        <img
-          v-if="showLoader"
-          src="@/assets/gif/loader.gif"
-          alt=""
-        >
+        <img v-if="showLoader" src="@/assets/gif/loader.gif" alt="" />
         <CatPage
           v-else
           v-click-away="modalClickHandler"
@@ -89,12 +73,15 @@ export default {
     const addWallet = async (wallet) => {
       showModal.value = true;
       showLoader.value = true;
-      const { newWalletInstance, error } = await store.dispatch('crypto/addHardwareWalletToAccount', { wallet });
+      const { newWalletInstance, error } = await store.dispatch(
+        'crypto/addHardwareWalletToAccount',
+        { wallet }
+      );
 
       if (!error) {
         newWallets.value = [newWalletInstance];
         const newWallet = newWalletInstance;
-        await store.dispatch('wallets/pushWallets', { wallets: [newWallet] } );
+        await store.dispatch('wallets/pushWallets', { wallets: [newWallet] });
         await store.dispatch('wallets/getNewWallets', 'lazy');
         store.dispatch('wallets/getNewWallets', 'detail');
       } else {
@@ -103,7 +90,6 @@ export default {
 
       showLoader.value = false;
     };
-
 
     return {
       steps,

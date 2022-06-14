@@ -11,12 +11,21 @@ export default function useKtAddresses() {
   const ktAddresses = computed(() => store.getters['ktAddresses/ktAddresses']);
   provide('ktAddresses', ktAddresses);
 
-  const currentKtAddress = computed(() => store.getters['ktAddresses/currentKtAddress']);
+  const currentKtAddress = computed(
+    () => store.getters['ktAddresses/currentKtAddress']
+  );
   provide('currentKtAddress', currentKtAddress);
 
   const updateCurrentKtAddress = (ktAddress) => {
     store.dispatch('ktAddresses/setCurrentKtAddress', ktAddress);
-    ktAddress && ktAddresses.value.sort((x, y) => x.address === ktAddress.address ? -1 : y.address === ktAddress.address ? 1 : 0);
+    ktAddress &&
+      ktAddresses.value.sort((x, y) =>
+        x.address === ktAddress.address
+          ? -1
+          : y.address === ktAddress.address
+          ? 1
+          : 0
+      );
   };
   provide('updateCurrentKtAddress', updateCurrentKtAddress);
 
@@ -29,12 +38,18 @@ export default function useKtAddresses() {
   };
 
   const currentKtAddressNodeList = computed(() => {
-    if (currentKtAddress.value && currentKtAddress.value?.delegate && currentKtAddress.value?.delegate?.active) {
-      return [{
-        ...currentKtAddress.value.delegate,
-        name: currentKtAddress.value.delegate.alias,
-        color: '#FF5722',
-      }];
+    if (
+      currentKtAddress.value &&
+      currentKtAddress.value?.delegate &&
+      currentKtAddress.value?.delegate?.active
+    ) {
+      return [
+        {
+          ...currentKtAddress.value.delegate,
+          name: currentKtAddress.value.delegate.alias,
+          color: '#FF5722',
+        },
+      ];
     }
 
     return [];

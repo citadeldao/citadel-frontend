@@ -6,10 +6,7 @@
     @click="toggleChecked"
   >
     <div class="address-item__icon">
-      <done
-        v-if="checked"
-        class="address-item__done"
-      />
+      <done v-if="checked" class="address-item__done" />
       <keep-alive v-else>
         <component :is="icon" />
       </keep-alive>
@@ -24,7 +21,10 @@
         </span>
         <div class="address-item__address-balance">
           <span
-            v-pretty-number="{ value: address.balance.calculatedBalance, currency: address.code }"
+            v-pretty-number="{
+              value: address.balance.calculatedBalance,
+              currency: address.code,
+            }"
             class="address-item__address-balance-balance"
           />
           <span class="address-item__address-balance-currency">
@@ -62,7 +62,9 @@ export default {
     import(`@/assets/icons/token/${props.address.net}.svg`).then((val) => {
       icon.value = markRaw(val.default);
     });
-    const walletName = computed(() => props.address.title || props.address.address);
+    const walletName = computed(
+      () => props.address.title || props.address.address
+    );
     const toggleChecked = () => {
       if (props.checked) {
         emit('uncheck', props.address);
@@ -116,7 +118,7 @@ export default {
     font-size: 16px;
     line-height: 19px;
     color: $mid-blue;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     margin-bottom: 8px;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -144,7 +146,7 @@ export default {
   &__address-balance-balance {
     font-size: 16px;
     line-height: 19px;
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
     color: $mid-blue;
     margin-right: 3px;
   }
@@ -152,7 +154,7 @@ export default {
     font-size: 14px;
     line-height: 16px;
     color: $mid-gray;
-    font-family: "Panton_Regular";
+    font-family: 'Panton_Regular';
   }
 }
 .checked {
@@ -168,5 +170,3 @@ export default {
   }
 }
 </style>
-
-

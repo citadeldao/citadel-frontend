@@ -19,7 +19,7 @@
       @input="onValueChange"
       @focus="onFocus"
       @keydown="onKeyDown"
-    >
+    />
     <div class="verification-input__error">
       {{ error }}
     </div>

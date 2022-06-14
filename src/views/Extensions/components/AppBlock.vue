@@ -1,6 +1,6 @@
 <template>
   <div
-    :style="{ borderLeft: `8px solid ${color}`}"
+    :style="{ borderLeft: `8px solid ${color}` }"
     class="app-block"
     @click="$emit('openApp', title)"
   >
@@ -8,16 +8,14 @@
       <component :is="layoutIcon" />
     </keep-alive>
     <div class="app-block__head">
-      <div
-        class="app"
-      >
+      <div class="app">
         <div>
           <img
             :src="logo"
             width="32"
             height="32"
             onerror="this.src = window.defaultIcon"
-          >
+          />
         </div>
         <!-- <keep-alive>
           <component :is="appIcon" />
@@ -26,9 +24,7 @@
       <div class="titles">
         <div class="title">
           {{ title }}
-          <Tooltip
-            :text="$t('extensions.appTooltip')"
-          >
+          <Tooltip :text="$t('extensions.appTooltip')">
             <keep-alive>
               <component :is="successIcon" />
             </keep-alive>
@@ -44,10 +40,7 @@
         {{ description }}
       </div>
     </div>
-    <div
-      class="app-block__readmore"
-      @click.stop="$emit('openAppInfo', title)"
-    >
+    <div class="app-block__readmore" @click.stop="$emit('openAppInfo', title)">
       {{ $t(`extensions.readMore`) }}
       <keep-alive>
         <component :is="rightArrowIcon" />
@@ -94,20 +87,20 @@ export default {
     const successIcon = ref();
     const rightArrowIcon = ref();
 
-    import(`@/assets/icons/extensions/layout.svg`).then(val => {
+    import(`@/assets/icons/extensions/layout.svg`).then((val) => {
       layoutIcon.value = markRaw(val.default);
     });
 
-    import(`@/assets/icons/extensions/app.svg`).then(val => {
+    import(`@/assets/icons/extensions/app.svg`).then((val) => {
       appIcon.value = markRaw(val.default);
       window.defaultIcon = appIcon.value;
     });
 
-    import(`@/assets/icons/extensions/success.svg`).then(val => {
+    import(`@/assets/icons/extensions/success.svg`).then((val) => {
       successIcon.value = markRaw(val.default);
     });
 
-    import(`@/assets/icons/extensions/right_arrow.svg`).then(val => {
+    import(`@/assets/icons/extensions/right_arrow.svg`).then((val) => {
       rightArrowIcon.value = markRaw(val.default);
     });
 
@@ -121,101 +114,101 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-  .app-block {
-    width: 300px;
-    height: 234px;
+.app-block {
+  width: 300px;
+  height: 234px;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  box-sizing: border-box;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  position: relative;
+  background: $white;
+  border-radius: 8px;
+  overflow: hidden;
+
+  .tooltip {
+    width: 200px;
+    height: 100%;
+  }
+
+  .layout-icon {
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  &__head {
     display: flex;
-    flex-direction: column;
-    padding: 15px;
-    box-sizing: border-box;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-    position: relative;
-    background: $white;
-    border-radius: 8px;
-    overflow: hidden;
+    align-items: center;
 
-    .tooltip {
-      width: 200px;
-      height: 100%;
-    }
-
-    .layout-icon {
-      z-index: -1;
-      position: absolute;
-      left: 0;
-      top: 0;
-    }
-
-    &__head {
+    .app {
+      padding-top: 5px;
+      box-sizing: border-box;
+      min-width: 48px;
+      height: 48px;
+      border-radius: 8px;
       display: flex;
+      justify-content: center;
       align-items: center;
-
-      .app {
-        padding-top: 5px;
-        box-sizing: border-box;
-        min-width: 48px;
-        height: 48px;
-        border-radius: 8px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: linear-gradient(90deg, #F3E7FF 0%, #CDE6FF 100%);
-      }
-
-      .titles {
-        margin-left: 12px;
-
-        .title {
-          color: $black;
-          font-family: 'Panton_SemiBold';
-          font-size: 18px;
-
-          svg {
-            margin-top: 3px;
-            margin-left: 12px;
-          }
-        }
-
-        .category {
-          color: $dark-blue;
-          font-family: 'Panton_SemiBold';
-          font-size: 14px;
-        }
-      }
+      background: linear-gradient(90deg, #f3e7ff 0%, #cde6ff 100%);
     }
 
-    &__body {
-      margin-top: 20px;
+    .titles {
+      margin-left: 12px;
 
-      .description {
-        color: $mid-blue;
-        font-family: 'Panton_Regular';
+      .title {
+        color: $black;
+        font-family: 'Panton_SemiBold';
+        font-size: 18px;
+
+        svg {
+          margin-top: 3px;
+          margin-left: 12px;
+        }
+      }
+
+      .category {
+        color: $dark-blue;
+        font-family: 'Panton_SemiBold';
         font-size: 14px;
-        line-height: 20px;
-        overflow: hidden;
-        max-height: 100px;
-      }
-    }
-
-    &__readmore {
-      display: flex;
-      align-items: center;
-      color: $mid-blue;
-      font-family: 'Panton_Bold';
-      font-size: 14px;
-      text-transform: uppercase;
-      position: absolute;
-      bottom: 20px;
-      right: 15px;
-
-      &:hover {
-        cursor: pointer;
-        opacity: .7;
-      }
-
-      svg {
-        margin-left: 10px;
       }
     }
   }
+
+  &__body {
+    margin-top: 20px;
+
+    .description {
+      color: $mid-blue;
+      font-family: 'Panton_Regular';
+      font-size: 14px;
+      line-height: 20px;
+      overflow: hidden;
+      max-height: 100px;
+    }
+  }
+
+  &__readmore {
+    display: flex;
+    align-items: center;
+    color: $mid-blue;
+    font-family: 'Panton_Bold';
+    font-size: 14px;
+    text-transform: uppercase;
+    position: absolute;
+    bottom: 20px;
+    right: 15px;
+
+    &:hover {
+      cursor: pointer;
+      opacity: 0.7;
+    }
+
+    svg {
+      margin-left: 10px;
+    }
+  }
+}
 </style>

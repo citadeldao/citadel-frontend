@@ -6,18 +6,25 @@ import BigNumber from 'bignumber.js';
 import { WALLET_TYPES } from '@/config/walletType';
 
 export default function useWallets(wallet = null, showCount = undefined) {
-  const currentWallet = computed(() => store.getters['wallets/currentWallet'] && findWalletInArray(wallets.value, store.getters['wallets/currentWallet']));
+  const currentWallet = computed(
+    () =>
+      store.getters['wallets/currentWallet'] &&
+      findWalletInArray(wallets.value, store.getters['wallets/currentWallet'])
+  );
 
   // instance of given wallet
   const walletByAddress = (walletInfo) =>
     store.getters['wallets/walletByAddress'](walletInfo);
 
-  const wallets = computed(() =>{
+  const wallets = computed(() => {
     const data = [];
 
     for (const wallet of store.getters['wallets/wallets']) {
-      store.getters['wallets/walletsStructure'].some(item => item.net.toLowerCase() === wallet.net.toLowerCase() &&
-      item.address.toLowerCase() === wallet.address.toLowerCase()) && data.push(wallet);
+      store.getters['wallets/walletsStructure'].some(
+        (item) =>
+          item.net.toLowerCase() === wallet.net.toLowerCase() &&
+          item.address.toLowerCase() === wallet.address.toLowerCase()
+      ) && data.push(wallet);
     }
 
     return data;
@@ -27,24 +34,24 @@ export default function useWallets(wallet = null, showCount = undefined) {
     () =>
       store.getters['profile/info']?.marketcap[
         wallet?.net || currentWallet.value?.net
-      ],
+      ]
   );
 
   const currency = computed(
     () =>
       store.getters['profile/info']?.rates[
         wallet?.net || currentWallet.value?.net
-      ],
+      ]
   );
 
   const customWalletsLists = computed(
-    () => store.getters['wallets/customWalletsList'],
+    () => store.getters['wallets/customWalletsList']
   );
   const currentList = computed(() => store.getters['wallets/activeList']);
   const customList = computed(() => {
     if (customWalletsLists.value.length > 0) {
       const customList = customWalletsLists.value.find(
-        (list) => list.name === currentList.value,
+        (list) => list.name === currentList.value
       );
 
       return (customList && customList.wallets) || [];
@@ -62,7 +69,10 @@ export default function useWallets(wallet = null, showCount = undefined) {
 
     for (const { net, address } of customList.value) {
       const data = wallets.value.filter((wallet) => {
-        return wallet.address.toLowerCase() === address.toLowerCase() && wallet.net === net;
+        return (
+          wallet.address.toLowerCase() === address.toLowerCase() &&
+          wallet.net === net
+        );
       });
       customListWallets = customListWallets.concat(data);
     }
@@ -78,8 +88,11 @@ export default function useWallets(wallet = null, showCount = undefined) {
     let customListWallets = [];
 
     for (const { net, address } of customList.value) {
-      const walletsList = wallets.value
-        .filter((wallet) => wallet.address.toLowerCase() === address.toLowerCase() && wallet.net === net);
+      const walletsList = wallets.value.filter(
+        (wallet) =>
+          wallet.address.toLowerCase() === address.toLowerCase() &&
+          wallet.net === net
+      );
       customListWallets = customListWallets.concat(walletsList);
     }
 
@@ -97,34 +110,35 @@ export default function useWallets(wallet = null, showCount = undefined) {
       ];
     }
 
-    currentWalletListSubtokensList = currentWalletListSubtokensList.reduce((obj, item) => {
-      if (!obj[item.net]?.usd) {
-        obj[item.net] = {
-          balance: 0,
-          btc: 0,
-          code: item.code,
-          name: item.name,
-          percent: 0,
-          usd: 0,
-        };
-      }
+    currentWalletListSubtokensList = currentWalletListSubtokensList.reduce(
+      (obj, item) => {
+        if (!obj[item.net]?.usd) {
+          obj[item.net] = {
+            balance: 0,
+            btc: 0,
+            code: item.code,
+            name: item.name,
+            percent: 0,
+            usd: 0,
+          };
+        }
 
-      const balance = item.tokenBalance.calculatedBalance;
+        const balance = item.tokenBalance.calculatedBalance;
 
-      obj[item.net].balance = BigNumber(obj[item.net].balance).plus(balance).toNumber();
-      obj[item.net].usd = BigNumber(obj[item.net].usd)
-        .plus(
-          BigNumber(balance).multipliedBy(item.tokenBalance.price.USD),
-        )
-        .toNumber();
-      obj[item.net].btc = BigNumber(obj[item.net].btc)
-        .plus(
-          BigNumber(balance).multipliedBy(item.tokenBalance.price.BTC),
-        )
-        .toNumber();
+        obj[item.net].balance = BigNumber(obj[item.net].balance)
+          .plus(balance)
+          .toNumber();
+        obj[item.net].usd = BigNumber(obj[item.net].usd)
+          .plus(BigNumber(balance).multipliedBy(item.tokenBalance.price.USD))
+          .toNumber();
+        obj[item.net].btc = BigNumber(obj[item.net].btc)
+          .plus(BigNumber(balance).multipliedBy(item.tokenBalance.price.BTC))
+          .toNumber();
 
-      return obj;
-    }, {});
+        return obj;
+      },
+      {}
+    );
 
     return currentWalletListSubtokensList;
   });
@@ -155,16 +169,14 @@ export default function useWallets(wallet = null, showCount = undefined) {
 
       const currency = store.getters['profile/info'].rates;
       const balance = wlt.balance.calculatedBalance;
-      blncStruct[wlt.net].balance = BigNumber(blncStruct[wlt.net].balance).plus(balance).toNumber();
+      blncStruct[wlt.net].balance = BigNumber(blncStruct[wlt.net].balance)
+        .plus(balance)
+        .toNumber();
       blncStruct[wlt.net].usd = BigNumber(blncStruct[wlt.net].usd)
-        .plus(
-          BigNumber(balance).multipliedBy(currency[wlt.net].USD),
-        )
+        .plus(BigNumber(balance).multipliedBy(currency[wlt.net].USD))
         .toNumber();
       blncStruct[wlt.net].btc = BigNumber(blncStruct[wlt.net].btc)
-        .plus(
-          BigNumber(balance).multipliedBy(currency[wlt.net].BTC),
-        )
+        .plus(BigNumber(balance).multipliedBy(currency[wlt.net].BTC))
         .toNumber();
 
       return blncStruct;
@@ -183,20 +195,23 @@ export default function useWallets(wallet = null, showCount = undefined) {
 
     // fill colors for each balances
     for (let i = 0; i < count; i++) {
-      const multiplier = Math.trunc((i / chartColors.length));
-      const index = i - (chartColors.length * multiplier);
+      const multiplier = Math.trunc(i / chartColors.length);
+      const index = i - chartColors.length * multiplier;
 
       colors[i] = chartColors[index];
     }
 
-    const totalUsd = Object.values(struct).reduce((sum, network) => sum + network.usd, 0);
+    const totalUsd = Object.values(struct).reduce(
+      (sum, network) => sum + network.usd,
+      0
+    );
 
     for (const i in struct) {
       struct[i].percent = (struct[i].usd / totalUsd) * 100;
     }
 
     struct = Object.fromEntries(
-      Object.entries(struct).sort(([, a], [, b]) => b.percent - a.percent),
+      Object.entries(struct).sort(([, a], [, b]) => b.percent - a.percent)
     );
 
     for (const i in struct) {
@@ -207,25 +222,41 @@ export default function useWallets(wallet = null, showCount = undefined) {
   });
 
   const finalStructure = computed(() => {
-    let struct = Object.keys(balanceStructure.value).map(i => ({
+    let struct = Object.keys(balanceStructure.value).map((i) => ({
       net: i,
       ...balanceStructure.value[i],
     }));
     const firs5items = struct.slice(0, showCount);
     let others = struct.slice(showCount, struct.length - 1);
-    const totalUsd = struct.reduce((total, item) => BigNumber(total).plus(item.usd).toNumber(), 0);
+    const totalUsd = struct.reduce(
+      (total, item) => BigNumber(total).plus(item.usd).toNumber(),
+      0
+    );
     others = {
       net: 'Others',
-      usd: others.reduce((total, item) => BigNumber(total).plus(item.usd).toNumber(), 0),
-      btc: others.reduce((total, item) => BigNumber(total).plus(item.btc).toNumber(), 0),
+      usd: others.reduce(
+        (total, item) => BigNumber(total).plus(item.usd).toNumber(),
+        0
+      ),
+      btc: others.reduce(
+        (total, item) => BigNumber(total).plus(item.btc).toNumber(),
+        0
+      ),
       name: 'Others',
-      percent: (others.reduce((total, item) => BigNumber(total).plus(item.usd).toNumber(), 0) / totalUsd) * 100,
+      percent:
+        (others.reduce(
+          (total, item) => BigNumber(total).plus(item.usd).toNumber(),
+          0
+        ) /
+          totalUsd) *
+        100,
       color: chartColors[5],
     };
 
-    struct = firs5items.length === struct.length
-      ? [...firs5items]
-      : [...firs5items, others];
+    struct =
+      firs5items.length === struct.length
+        ? [...firs5items]
+        : [...firs5items, others];
 
     struct = struct.filter((item) => item.usd);
 
@@ -236,9 +267,11 @@ export default function useWallets(wallet = null, showCount = undefined) {
     }, {});
   });
 
-  const isHardwareWallet = computed(() => (
-    [WALLET_TYPES.LEDGER, WALLET_TYPES.TREZOR].includes(currentWallet.value.type)
-  ));
+  const isHardwareWallet = computed(() =>
+    [WALLET_TYPES.LEDGER, WALLET_TYPES.TREZOR].includes(
+      currentWallet.value.type
+    )
+  );
 
   return {
     wallets,

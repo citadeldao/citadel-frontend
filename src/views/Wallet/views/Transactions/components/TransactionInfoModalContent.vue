@@ -1,9 +1,6 @@
 <template>
   <div class="transaction-info-modal-content">
-    <InfoBlock
-      :current-wallet="currentWallet"
-      :info="info"
-    />
+    <InfoBlock :current-wallet="currentWallet" :info="info" />
     <div
       v-if="currentWallet.hasTransactionComment"
       class="transaction-info-modal-content__textarea"
@@ -16,16 +13,13 @@
       >
         <comment />
         <span class="transaction-info-modal-content__textarea-title">
-          {{ $t("comment") }}
+          {{ $t('comment') }}
         </span>
         <span class="transaction-info-modal-content__textarea-subtitle">
-          {{ $t("commentPlaceholder") }}
+          {{ $t('commentPlaceholder') }}
         </span>
       </div>
-      <div
-        v-else
-        class="transaction-info-modal-content__textarea-textarea"
-      >
+      <div v-else class="transaction-info-modal-content__textarea-textarea">
         <Textarea
           id="comment"
           icon="text"
@@ -51,11 +45,11 @@ export default {
   props: {
     info: {
       type: Object,
-      default: ()=>({}),
+      default: () => ({}),
     },
     currentWallet: {
       type: Object,
-      default: ()=>({}),
+      default: () => ({}),
     },
     txComment: {
       type: String,
@@ -63,9 +57,9 @@ export default {
   },
   setup(props) {
     const showPlaceholder = ref(!props.info.note);
-    const togleShowPlaceholder = ()=>{
+    const togleShowPlaceholder = () => {
       showPlaceholder.value = false;
-      nextTick(() =>document.getElementById('comment').focus());
+      nextTick(() => document.getElementById('comment').focus());
     };
 
     return { showPlaceholder, togleShowPlaceholder };
@@ -74,41 +68,41 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.transaction-info-modal-content{
-    padding-top: 15px;
-    width: 100%;
+.transaction-info-modal-content {
+  padding-top: 15px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  &__textarea {
+    padding-top: 17px;
+  }
+  &__textarea-placeholder {
+    cursor: pointer;
+    padding-top: 41px;
     display: flex;
     flex-direction: column;
-    &__textarea{
-        padding-top: 17px;
-    }
-    &__textarea-placeholder{
-        cursor: pointer;
-        padding-top: 41px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        height: 180px;
-        border: 1px dashed $too-ligth-blue;
-        box-sizing: border-box;
-        border-radius: 8px;
-    }
-    &__textarea-title{
-        font-size: 18px;
-        line-height: 30px;
-        font-family: "Panton_Bold";
-        margin-top: 13px;
-        margin-bottom: 2px;
-    }
-    &__textarea-subtitle{
-        font-size: 14px;
-        line-height: 20px;
-        letter-spacing: -0.02em;
-        color: $ligth-blue;
-        font-family: 'Panton_SemiBold';
-    }
-    &__textarea-textarea{
-         height: 120px;
-    }
+    align-items: center;
+    height: 180px;
+    border: 1px dashed $too-ligth-blue;
+    box-sizing: border-box;
+    border-radius: 8px;
+  }
+  &__textarea-title {
+    font-size: 18px;
+    line-height: 30px;
+    font-family: 'Panton_Bold';
+    margin-top: 13px;
+    margin-bottom: 2px;
+  }
+  &__textarea-subtitle {
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -0.02em;
+    color: $ligth-blue;
+    font-family: 'Panton_SemiBold';
+  }
+  &__textarea-textarea {
+    height: 120px;
+  }
 }
 </style>

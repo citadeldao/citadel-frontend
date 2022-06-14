@@ -1,9 +1,6 @@
 <template>
   <div class="qr-info">
-    <closeIcon
-      class="qr-info__close-icon"
-      @click="$emit('close')"
-    />
+    <closeIcon class="qr-info__close-icon" @click="$emit('close')" />
     <div class="qr-info__header">
       <h4 class="qr-info__title">
         {{ $t('qrInfo.title') }}
@@ -92,9 +89,11 @@ export default {
     const { wallets } = useWallets();
     const qrCodeValue = computed(() => {
       const coins = props.addresses.map(({ address, net }) => {
-        const cryptoAddress = wallets.value.find(wallet => {
-          return wallet.address.toLowerCase() === address.toLowerCase() &&
-            wallet.net === net;
+        const cryptoAddress = wallets.value.find((wallet) => {
+          return (
+            wallet.address.toLowerCase() === address.toLowerCase() &&
+            wallet.net === net
+          );
         });
 
         return {
@@ -166,7 +165,7 @@ export default {
     margin: 0;
     font-size: 20px;
     line-height: 30px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     @include md {
       width: 344px;
       margin-bottom: 10px;
@@ -266,7 +265,7 @@ export default {
     width: 100%;
     font-size: 50px;
     line-height: 60px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     border-bottom: 3px solid $gainsboro1;
     text-align: center;
     padding-bottom: 6px;

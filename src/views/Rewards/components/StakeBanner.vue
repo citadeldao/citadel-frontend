@@ -1,33 +1,27 @@
 <template>
-  <div
-    class="stake-banner"
-    :style="data"
-  >
+  <div class="stake-banner" :style="data">
     <div class="stake-banner__info">
       <div class="stake-banner__info-section">
         <div class="stake-banner__info-title">
           <span class="stake-banner__info-title-title">
-            {{ $t("rewardsPage.rewardsReport") }}
+            {{ $t('rewardsPage.rewardsReport') }}
           </span>
           <div class="stake-banner__date-range">
             <span class="stake-banner__info-title-date-range-from">
-              {{ moment(date.from).format("DD MMM") }}
+              {{ moment(date.from).format('DD MMM') }}
             </span>
             -
             <span class="stake-banner__info-title-date-range-to">
-              {{ moment(date.to).format("DD MMM") }}
+              {{ moment(date.to).format('DD MMM') }}
             </span>
           </div>
         </div>
-        <p
-          class="stake-banner__text"
-          v-html="text"
-        />
+        <p class="stake-banner__text" v-html="text" />
       </div>
 
       <div class="stake-banner__reward">
         <span
-          v-pretty-number="{value: total, currency: '$'}"
+          v-pretty-number="{ value: total, currency: '$' }"
           class="stake-banner__reward-value"
         />
         <span class="stake-banner__reward-currency">$</span>
@@ -36,15 +30,15 @@
     <img
       class="stake-banner__image stake-banner__image--xl"
       :src="require(`@/assets/images/${data.name}.png`)"
-    >
+    />
     <img
       class="stake-banner__image stake-banner__image--lg"
       :src="require(`@/assets/images/${data.lg}.png`)"
-    >
+    />
     <img
       class="stake-banner__image stake-banner__image--md"
       :src="require(`@/assets/images/${data.md}.png`)"
-    >
+    />
     <div class="stake-banner__staek-count">
       {{ `x${data.value}` }}
     </div>
@@ -70,62 +64,62 @@ export default {
     const data = computed(() => {
       if (props.total < 1) {
         return {
-          'name': 'bananas',
-          'value': 1,
+          name: 'bananas',
+          value: 1,
           '--gradient': 'linear-gradient(90deg, #FC4A1A 0%, #F7B733 100%)',
-          'md': 'bananasmd',
-          'lg': 'bananaslg',
+          md: 'bananasmd',
+          lg: 'bananaslg',
         };
       } else if (props.total < 10) {
         return {
-          'name': 'coke',
-          'value': Math.round(props.total),
+          name: 'coke',
+          value: Math.round(props.total),
           '--gradient': 'linear-gradient(90deg, #9400D3 0%, #4B0082 100%)',
-          'md': 'cokemd',
-          'lg': 'cokelg',
+          md: 'cokemd',
+          lg: 'cokelg',
         };
       } else if (props.total < 100) {
         return {
-          'name': 'pizza',
-          'value': Math.round(props.total / 10),
+          name: 'pizza',
+          value: Math.round(props.total / 10),
           '--gradient':
             'linear-gradient(90deg, #00416A 0%, #799F0C 50%, #FFE000 100%)',
-          'md': 'pizzamd',
-          'lg': 'pizzalg',
+          md: 'pizzamd',
+          lg: 'pizzalg',
         };
       } else if (props.total < 1000) {
         return {
-          'name': 'trip',
-          'value': Math.round(props.total / 100),
+          name: 'trip',
+          value: Math.round(props.total / 100),
           '--gradient': 'linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)',
-          'md': 'tripmd',
-          'lg': 'triplg',
+          md: 'tripmd',
+          lg: 'triplg',
         };
       } else if (props.total < 10000) {
         return {
-          'name': 'iphone',
-          'value': Math.round(props.total / 1000),
+          name: 'iphone',
+          value: Math.round(props.total / 1000),
           '--gradient': 'linear-gradient(90deg, #EC008C 0%, #FC6767 100%)',
-          'md': 'iphonemd',
-          'lg': 'iphonelg',
+          md: 'iphonemd',
+          lg: 'iphonelg',
         };
       } else if (props.total < 100000) {
         return {
-          'name': 'watches',
-          'value': Math.round(props.total / 10000),
+          name: 'watches',
+          value: Math.round(props.total / 10000),
           '--gradient':
             'linear-gradient(90deg, #EB0000 0%, #95008A 50%, #3300FC 100%)',
-          'md': 'watchesmd',
-          'lg': 'watcheslg',
+          md: 'watchesmd',
+          lg: 'watcheslg',
         };
       }
 
       return {
-        'name': 'car',
-        'value': Math.round(props.total / 100000),
+        name: 'car',
+        value: Math.round(props.total / 100000),
         '--gradient': 'linear-gradient(90deg, #D31027 0%, #EA384D 100%)',
-        'md': 'carmd',
-        'lg': 'carlg',
+        md: 'carmd',
+        lg: 'carlg',
       };
     });
     const text = computed(() => {
@@ -187,7 +181,7 @@ export default {
   &__info-title-date-range-from,
   &__info-title-title,
   &__info-title-date-range-to {
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
   }
   &__info-title-title {
     @include lg {
@@ -198,7 +192,7 @@ export default {
     font-size: 12px;
     line-height: 14px;
     color: $white;
-    font-family: "Panton_Light";
+    font-family: 'Panton_Light';
     margin: 0;
     width: 176px;
     margin-top: 7px;
@@ -213,7 +207,7 @@ export default {
   &__reward-currency {
     font-size: 25px;
     line-height: 23px;
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
     color: $white;
     z-index: 1;
     @include md {
@@ -254,7 +248,7 @@ export default {
     background: $crimson;
     font-size: 20px;
     line-height: 23px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     color: $white;
     bottom: 22px;
     right: 80px;

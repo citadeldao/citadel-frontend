@@ -3,9 +3,7 @@
     <div class="nominated-nodes__title">
       {{ $t('polkadot.nominatedNodesTitle') }}
     </div>
-    <ol
-      class="nominated-nodes__list"
-    >
+    <ol class="nominated-nodes__list">
       <li
         v-for="(item, index) in selectedNode"
         :key="index"
@@ -35,8 +33,8 @@ export default {
     font-size: 14px;
   }
   &__item {
-     color: $dark-blue;
-     font-size: 14px;
+    color: $dark-blue;
+    font-size: 14px;
   }
 }
 </style>

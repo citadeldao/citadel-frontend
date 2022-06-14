@@ -8,10 +8,7 @@
         :pledged-balance="pledgedBalance"
       />
     </div>
-    <div
-      v-if="currentWallet.hasPledged"
-      class="balance-end-pledged__pledged"
-    >
+    <div v-if="currentWallet.hasPledged" class="balance-end-pledged__pledged">
       <PledgedBalance
         :current-wallet="currentWallet"
         :pledged-balance="pledgedBalance"

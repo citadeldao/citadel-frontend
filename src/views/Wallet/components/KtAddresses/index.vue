@@ -3,14 +3,8 @@
     <span class="kt-addresses__title">
       KT <span>{{ $t('address') }}</span>
     </span>
-    <div
-      id="list"
-      class="kt-addresses__list"
-    >
-      <resize-observer
-        :show-trigger="true"
-        @notify="handleResize"
-      />
+    <div id="list" class="kt-addresses__list">
+      <resize-observer :show-trigger="true" @notify="handleResize" />
       <KtAddressItem
         :item="currentWallet"
         :current-wallet="currentWallet"
@@ -19,7 +13,7 @@
         @click="updateCurrentKtAddress(null)"
       />
       <KtAddressItem
-        v-for="(item,index) in displayData"
+        v-for="(item, index) in displayData"
         :key="`${index}-${item.address}`"
         :item="item"
         :current-wallet="currentWallet"
@@ -29,7 +23,7 @@
       <div
         v-if="hiddenData.length"
         class="kt-addresses__hidden-items"
-        @click="showModal=true"
+        @click="showModal = true"
       >
         <span class="kt-addresses__hidden-items-title">
           {{ $t('all') }} KT <span>{{ $t('address') }}</span>
@@ -40,10 +34,7 @@
       </div>
     </div>
   </div>
-  <teleport
-    v-if="showModal"
-    to="body"
-  >
+  <teleport v-if="showModal" to="body">
     <Modal>
       <ModalContent
         v-click-away="modalCloseHandler"
@@ -55,9 +46,7 @@
         @close="modalCloseHandler"
         @buttonClick="modalCloseHandler"
       >
-        <div
-          class="kt-addresses__modal-list"
-        >
+        <div class="kt-addresses__modal-list">
           <KtAddressesModalContentItem
             :item="currentWallet"
             :current-wallet="currentWallet"
@@ -66,7 +55,7 @@
             @click.stop="updateCurrentKtAddress(null)"
           />
           <KtAddressesModalContentItem
-            v-for="(item,index) in ktAddresses"
+            v-for="(item, index) in ktAddresses"
             :key="`${index}-${item.address}`"
             :item="item"
             :current-wallet="currentWallet"
@@ -89,15 +78,20 @@ import { useWindowSize } from 'vue-window-size';
 import { screenWidths } from '@/config/sreenWidthThresholds';
 export default {
   name: 'KtAddresses',
-  components: { KtAddressItem, Modal, ModalContent, KtAddressesModalContentItem },
+  components: {
+    KtAddressItem,
+    Modal,
+    ModalContent,
+    KtAddressesModalContentItem,
+  },
   props: {
     currentWallet: {
       type: Object,
-      default: ()=>{},
+      default: () => {},
     },
   },
   setup() {
-    onMounted(()=>{
+    onMounted(() => {
       wrapperWidth.value = document.getElementById('list').offsetWidth;
     });
     const showModal = ref(false);
@@ -106,52 +100,69 @@ export default {
       wrapperWidth.value = width;
     };
     const { width } = useWindowSize();
-    const modalCloseHandler = ()=>{
+    const modalCloseHandler = () => {
       showModal.value = false;
     };
-    const showCount = computed(()=>{
+    const showCount = computed(() => {
       const placeholder = width.value >= screenWidths.xl ? 225 : 154;
       const item = width.value >= screenWidths.xl ? 322 : 159;
-      const count = Math.floor(((+wrapperWidth.value-placeholder)/item)-1);
+      const count = Math.floor((+wrapperWidth.value - placeholder) / item - 1);
 
       return count;
     });
     const currentKtAddress = inject('currentKtAddress');
     const ktAddresses = inject('ktAddresses');
     const updateCurrentKtAddress = inject('updateCurrentKtAddress');
-    const isChecked = (item)=> currentKtAddress?.value?.address?.toLowerCase() === item.address.toLowerCase();
-    const displayData = computed(()=> ktAddresses.value.slice(0, showCount.value));
-    const hiddenData = computed(()=> ktAddresses.value.slice(showCount.value, ktAddresses.value.length));
+    const isChecked = (item) =>
+      currentKtAddress?.value?.address?.toLowerCase() ===
+      item.address.toLowerCase();
+    const displayData = computed(() =>
+      ktAddresses.value.slice(0, showCount.value)
+    );
+    const hiddenData = computed(() =>
+      ktAddresses.value.slice(showCount.value, ktAddresses.value.length)
+    );
 
-    return { showCount, currentKtAddress, ktAddresses, updateCurrentKtAddress, isChecked, displayData, hiddenData, showModal, modalCloseHandler, handleResize };
+    return {
+      showCount,
+      currentKtAddress,
+      ktAddresses,
+      updateCurrentKtAddress,
+      isChecked,
+      displayData,
+      hiddenData,
+      showModal,
+      modalCloseHandler,
+      handleResize,
+    };
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.kt-addresses{
+.kt-addresses {
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
-  @include lg{
+  @include lg {
     margin-bottom: 16px;
   }
   &__title,
-  &__title > span{
+  &__title > span {
     font-size: 22px;
     line-height: 26px;
     font-family: 'Panton_Bold';
     margin-bottom: 18px;
-    & span{
+    & span {
       text-transform: lowercase;
       margin-bottom: 0;
     }
   }
-  &__list{
+  &__list {
     position: relative;
     display: flex;
   }
-  &__hidden-items{
+  &__hidden-items {
     width: 225px;
     height: 80px;
     border: 1px dashed $mid-blue;
@@ -160,35 +171,35 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    @include lg{
+    @include lg {
       width: 154px;
     }
-    &:hover{
+    &:hover {
       cursor: pointer;
       border: 1px dashed $dark-blue;
       .kt-addresses__hidden-items-title,
-      .kt-addresses__hidden-items-title > span{
+      .kt-addresses__hidden-items-title > span {
         color: $dark-blue;
       }
     }
   }
   &__hidden-items-title,
-  &__hidden-items-title > span{
+  &__hidden-items-title > span {
     font-size: 18px;
     line-height: 22px;
     color: $mid-blue;
     font-family: 'Panton_SemiBold';
   }
-  &__hidden-items-title{
+  &__hidden-items-title {
     margin-bottom: 3px;
   }
-  &__hidden-items-count{
+  &__hidden-items-count {
     font-family: 'Panton_SemiBold';
     font-size: 14px;
     line-height: 17px;
     color: $too-dark-blue;
   }
-  &__modal-list{
+  &__modal-list {
     display: flex;
     width: 100%;
     flex-direction: column;

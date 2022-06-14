@@ -1,9 +1,9 @@
 <template>
   <div class="error-page">
     <error404 />
-    <span>{{ $t("errorPage.pageNotFound") }}</span>
+    <span>{{ $t('errorPage.pageNotFound') }}</span>
     <PrimaryButton @click="toHomepage">
-      {{ $t("errorPage.toHomePage") }}
+      {{ $t('errorPage.toHomePage') }}
     </PrimaryButton>
   </div>
 </template>
@@ -42,7 +42,7 @@ export default {
     font-size: 55px;
     line-height: 66px;
     text-align: center;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     margin-bottom: 42px;
   }
 }

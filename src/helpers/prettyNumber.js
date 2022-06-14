@@ -1,15 +1,13 @@
 import BigNumber from 'bignumber.js';
 
-const cutNumber = (number, digits = 0) => Math.floor(
-  BigNumber(number)
-    .multipliedBy(10 ** digits)
-    .toNumber(),
-) / 10 ** digits;
-const formatValue = (value) =>
-  value
-    .toString()
-    .trim()
-    .replaceAll(',', '');
+const cutNumber = (number, digits = 0) =>
+  Math.floor(
+    BigNumber(number)
+      .multipliedBy(10 ** digits)
+      .toNumber()
+  ) /
+  10 ** digits;
+const formatValue = (value) => value.toString().trim().replaceAll(',', '');
 
 const classesAbb = {
   0: '',
@@ -47,7 +45,7 @@ export const prettyNumber = (value) => {
 
     return `${prefix}${cutNumber(
       absoluteValue / 10 ** valueClass,
-      abbDecimals,
+      abbDecimals
     )}${classesAbb[valueClass]}`;
   }
 

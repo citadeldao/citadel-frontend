@@ -7,12 +7,9 @@
       @click="showNodesList"
     >
       <pointer />
-      <span>{{ $t("stakePlaceholder.choseNodePlaceholderNote") }} </span>
+      <span>{{ $t('stakePlaceholder.choseNodePlaceholderNote') }} </span>
     </div>
-    <div
-      v-else
-      class="choose-staking-node__selected-node"
-    >
+    <div v-else class="choose-staking-node__selected-node">
       <StakeListItem
         title-max-width="230"
         :icon="currentWallet.net"
@@ -23,17 +20,14 @@
         @editClick="updateRedelegationDirection('from')"
       />
     </div>
-    <div
-      v-if="editMode"
-      class="choose-staking-node__tabs-wrapper"
-    >
+    <div v-if="editMode" class="choose-staking-node__tabs-wrapper">
       <div class="choose-staking-node__tabs">
         <span
           :class="{ 'choose-staking-node__active-tab': activeTab === 'stake' }"
           class="choose-staking-node__tabs-item"
           @click="setActiveTab('stake')"
         >
-          {{ $t("stake") }}
+          {{ $t('stake') }}
         </span>
         <span
           :class="{
@@ -42,7 +36,7 @@
           class="choose-staking-node__tabs-item"
           @click="setActiveTab('unstake')"
         >
-          {{ $t("unstake") }}
+          {{ $t('unstake') }}
         </span>
         <span
           v-if="currentWallet.hasRedelegation"
@@ -52,7 +46,7 @@
           class="choose-staking-node__tabs-item"
           @click="setActiveTab('redelegate')"
         >
-          {{ $t("redelegation.redelegate") }}
+          {{ $t('redelegation.redelegate') }}
         </span>
       </div>
     </div>
@@ -71,12 +65,9 @@
         @click="showNodesList('to')"
       >
         <pointer />
-        <span>{{ $t("redelegation.choseNodePlaceholderNote") }} </span>
+        <span>{{ $t('redelegation.choseNodePlaceholderNote') }} </span>
       </div>
-      <div
-        v-else
-        class="choose-staking-node__selected-node"
-      >
+      <div v-else class="choose-staking-node__selected-node">
         <StakeListItem
           title-max-width="230"
           :icon="currentWallet.net"
@@ -89,10 +80,7 @@
         />
       </div>
     </div>
-    <div
-      v-if="showInput"
-      class="choose-staking-node__amount-input"
-    >
+    <div v-if="showInput" class="choose-staking-node__amount-input">
       <Input
         id="amount"
         :value="amount"
@@ -108,11 +96,8 @@
         @input="updateAmount"
         @keyup.enter="$emit('nextStep')"
       />
-      <span
-        v-if="showAmount"
-        class="choose-staking-node__available-balance"
-      >
-        {{ $t("balanceTooltipInfo.availableBalance") }}:
+      <span v-if="showAmount" class="choose-staking-node__available-balance">
+        {{ $t('balanceTooltipInfo.availableBalance') }}:
         <span
           v-pretty-number="{ value: maxAmount, currency: currentWallet.code }"
           class="choose-staking-node__available-balance-balance"
@@ -125,7 +110,7 @@
         v-if="!insufficientFunds && currentWallet.hasPledged"
         class="choose-staking-node__input-note"
       >
-        {{ $t("staking.inputNote") }}
+        {{ $t('staking.inputNote') }}
       </span>
     </div>
   </div>
@@ -172,15 +157,20 @@ export default {
     const setActiveTab = async (value) => {
       emit('update:activeTab', value);
       updateAmount('');
-      value !== 'redelegate' && await getDelegationFee(value, selectedNode.value);
+      value !== 'redelegate' &&
+        (await getDelegationFee(value, selectedNode.value));
     };
     const maxAmount = inject('maxAmount');
     const insufficientFunds = inject('insufficientFunds');
 
     const showAmount = computed(() => {
-      if (insufficientFunds.value ||
-      mode.value === 'unstake' || props.activeTab === 'unstake' ||
-      mode.value === 'redelegate' || props.activeTab === 'redelegate') {
+      if (
+        insufficientFunds.value ||
+        mode.value === 'unstake' ||
+        props.activeTab === 'unstake' ||
+        mode.value === 'redelegate' ||
+        props.activeTab === 'redelegate'
+      ) {
         return false;
       }
 
@@ -235,26 +225,26 @@ export default {
       line-height: 24px;
       color: $mid-gray;
       margin-top: 7px;
-      font-family: "Panton_SemiBold";
+      font-family: 'Panton_SemiBold';
     }
-    &--lg-md{
-      & span{
-        @include lg{
+    &--lg-md {
+      & span {
+        @include lg {
           width: 155px;
           margin-top: 0;
           margin-left: 17px;
         }
-        @include md{
+        @include md {
           width: 155px;
           margin-top: 0;
           margin-left: 17px;
         }
       }
-      @include lg{
+      @include lg {
         height: 100px;
         flex-direction: row;
       }
-      @include md{
+      @include md {
         height: 100px;
         flex-direction: row;
       }
@@ -288,7 +278,7 @@ export default {
     border-bottom: 6px solid transparent;
     margin-right: 37px;
     padding-bottom: 17px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     &:last-child {
       margin-right: 0;
     }
@@ -298,11 +288,11 @@ export default {
     color: $too-dark-blue;
   }
 
-&__redelegation-block{
-  display: flex;
-  flex-direction: column;
-}
-&__redelegation-block-subtitle{
+  &__redelegation-block {
+    display: flex;
+    flex-direction: column;
+  }
+  &__redelegation-block-subtitle {
     font-size: 14px;
     line-height: 22px;
     color: $mid-blue;
@@ -323,13 +313,13 @@ export default {
   }
   &__available-balance-balance {
     color: $ligth-blue;
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
     margin-left: 6px;
     margin-right: 3px;
   }
   &__available-balance-currency {
   }
-  &__input-note{
+  &__input-note {
     position: absolute;
     font-size: 14px;
     line-height: 17px;

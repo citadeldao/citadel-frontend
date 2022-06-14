@@ -12,10 +12,7 @@ export default function useTransaction(transaction) {
     }
 
     if (transaction.to && transaction.from) {
-      if (
-        transaction.to.toLowerCase() ===
-        transaction.from.toLowerCase()
-      ) {
+      if (transaction.to.toLowerCase() === transaction.from.toLowerCase()) {
         return types.selfSend;
       }
     }
@@ -24,17 +21,11 @@ export default function useTransaction(transaction) {
       return types.vote;
     }
 
-    if (
-      transaction.type === 'fees' ||
-      transaction.originalOpType === 'fees'
-    ) {
+    if (transaction.type === 'fees' || transaction.originalOpType === 'fees') {
       return types.fee;
     }
 
-    if (
-      transaction.type === 'transfer' &&
-      transaction.direction === 'income'
-    ) {
+    if (transaction.type === 'transfer' && transaction.direction === 'income') {
       return types.income;
     }
 

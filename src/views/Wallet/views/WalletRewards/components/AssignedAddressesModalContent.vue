@@ -4,11 +4,11 @@
       <span class="assigned-addresses-modal-content__list-counter-value">
         {{ counterValue }}
       </span>
-      {{ $t("xct.assignedAddresses") }}
+      {{ $t('xct.assignedAddresses') }}
     </span>
     <div class="assigned-addresses-modal-content__list">
       <AssignAddressItem
-        v-for="(item,index) in list"
+        v-for="(item, index) in list"
         :key="`${item.address}${item.net}${index}`"
         :address="item"
         type="assigned"
@@ -30,7 +30,7 @@ export default {
     },
   },
   setup(props) {
-    const counterValue = computed( () => props.list.length);
+    const counterValue = computed(() => props.list.length);
 
     return { counterValue };
   },
@@ -38,25 +38,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.assigned-addresses-modal-content{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 22px 0 0 0;
-    &__list-counter{
-        font-size: 16px;
-        line-height: 19px;
-        color: $ligth-blue;
-        margin-bottom: 17px;
-    }
-    &__list-counter-value{
-        font-family: 'Panton_Bold';
-    }
-    &__list{
-        max-height: 300px;
-        padding-right: 10px;
-        overflow-y: auto;
-        overflow-x: hidden;
-    }
+.assigned-addresses-modal-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 22px 0 0 0;
+  &__list-counter {
+    font-size: 16px;
+    line-height: 19px;
+    color: $ligth-blue;
+    margin-bottom: 17px;
+  }
+  &__list-counter-value {
+    font-family: 'Panton_Bold';
+  }
+  &__list {
+    max-height: 300px;
+    padding-right: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 }
 </style>

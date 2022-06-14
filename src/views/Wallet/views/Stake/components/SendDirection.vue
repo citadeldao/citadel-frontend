@@ -1,17 +1,14 @@
 <template>
-  <div
-    v-if="place === 'singleStake'"
-    class="send-direction"
-  >
+  <div v-if="place === 'singleStake'" class="send-direction">
     <div class="send-direction__line">
-      <span class="send-direction__line-title">{{ $t("address") }}: </span>
+      <span class="send-direction__line-title">{{ $t('address') }}: </span>
       <span class="send-direction__line-from">
         {{ wallet?.address }}
       </span>
     </div>
     <div class="send-direction__line">
       <span class="send-direction__line-title">
-        {{ $t("singleStake.undelegateFrom") }}:
+        {{ $t('singleStake.undelegateFrom') }}:
       </span>
       <span class="send-direction__line-undelegate-from">
         {{ delegation.from }}
@@ -19,11 +16,14 @@
     </div>
     <div class="send-direction__line">
       <span class="send-direction__line-title">
-        {{ $t("singleStake.delegateTo") }}:
+        {{ $t('singleStake.delegateTo') }}:
       </span>
       <span
         class="send-direction__line-delegate-to"
-        :style="{color: (activeTab === 'redelegate' || mode === 'redelegate') && '#00a3ff'}"
+        :style="{
+          color:
+            (activeTab === 'redelegate' || mode === 'redelegate') && '#00a3ff',
+        }"
       >
         {{ delegation.to }}
       </span>
@@ -41,7 +41,7 @@
       </div>
     </div>
     <div class="send-direction__line">
-      <span class="send-direction__line-title"> {{ $t("fee") }}: </span>
+      <span class="send-direction__line-title"> {{ $t('fee') }}: </span>
       <div>
         <span
           v-pretty-number="{ value: fee || 0, currency: wallet?.code }"
@@ -58,25 +58,18 @@
       target="_blank"
     >
       <span class="send-direction__line-title">
-        {{ $t("viewTranscasction") }}<linkIcon class="send-direction__link-icon" /> </span></a>
+        {{ $t('viewTranscasction')
+        }}<linkIcon class="send-direction__link-icon" /> </span
+    ></a>
   </div>
-  <div
-    v-else
-    class="send-direction"
-  >
-    <div
-      v-if="titles.title1"
-      class="send-direction__line"
-    >
+  <div v-else class="send-direction">
+    <div v-if="titles.title1" class="send-direction__line">
       <span class="send-direction__line-title">{{ $t(titles.title1) }}: </span>
       <span class="send-direction__line-from">
         {{ wallet?.address }}
       </span>
     </div>
-    <div
-      v-if="to && !currentToken"
-      class="send-direction__line"
-    >
+    <div v-if="to && !currentToken" class="send-direction__line">
       <span class="send-direction__line-title"> {{ $t(titles.title2) }}: </span>
       <span class="send-direction__line-to">
         {{ to }}
@@ -95,29 +88,27 @@
       </div>
     </div>
     <div class="send-direction__line">
-      <span class="send-direction__line-title"> {{ $t("fee") }}: </span>
+      <span class="send-direction__line-title"> {{ $t('fee') }}: </span>
       <div v-if="wallet.hasPledged">
         <span
           v-pretty-number="adding.ram"
           class="send-direction__line-fee-amount"
         />
-        <span class="send-direction__line-currency">
-          iRam,
-        </span>
+        <span class="send-direction__line-currency"> iRam, </span>
         <span
           v-pretty-number="adding.gas"
           class="send-direction__line-fee-amount"
         />
-        <span class="send-direction__line-currency">
-          iGas
-        </span>
+        <span class="send-direction__line-currency"> iGas </span>
       </div>
       <div v-else>
         <span
           v-pretty-number="{ value: fee || 0, currency: wallet?.code }"
           class="send-direction__line-fee-amount"
         />
-        <span class="send-direction__line-currency"> {{ currentToken ? currentToken.parentCoin.code : wallet?.code }} </span>
+        <span class="send-direction__line-currency">
+          {{ currentToken ? currentToken.parentCoin.code : wallet?.code }}
+        </span>
       </div>
     </div>
     <a
@@ -128,7 +119,8 @@
       target="_blank"
     >
       <span class="send-direction__line-title">
-        {{ $t("viewTranscasction") }}<linkIcon class="send-direction__link-icon" />
+        {{ $t('viewTranscasction')
+        }}<linkIcon class="send-direction__link-icon" />
       </span>
     </a>
   </div>
@@ -153,7 +145,7 @@ export default {
     },
     txHash: {
       type: Array,
-      default: ()=>[],
+      default: () => [],
     },
     fee: {},
     place: {
@@ -179,7 +171,7 @@ export default {
       const data = [];
 
       if (props.txHash) {
-        const filteredData = props.txHash?.filter((item)=> item);
+        const filteredData = props.txHash?.filter((item) => item);
 
         for (const item of filteredData) {
           data.push(props.wallet?.getTxUrl(props.wallet.id, item));
@@ -204,11 +196,17 @@ export default {
           title2: 'staking.stakeOn',
           amountTitle: 'staking.amountToStake',
         };
-      } else if (activeTab.value === 'pledge' || activeTab.value === 'unpledge') {
+      } else if (
+        activeTab.value === 'pledge' ||
+        activeTab.value === 'unpledge'
+      ) {
         return {
           amountTitle: 'amount',
         };
-      } else if (activeTab.value === 'redelegate' || activeTab.value === 'redelegate') {
+      } else if (
+        activeTab.value === 'redelegate' ||
+        activeTab.value === 'redelegate'
+      ) {
         return {
           title1: 'address',
           amountTitle: 'amount',
@@ -251,7 +249,7 @@ export default {
     display: flex;
     align-items: center;
   }
-  &__link-icon{
+  &__link-icon {
     width: 17px;
     height: 15px;
   }
@@ -263,7 +261,7 @@ export default {
 
   &__line-amount,
   &__line-fee-amount {
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
     font-size: 16px;
     line-height: 19px;
     color: $blue;
@@ -279,7 +277,7 @@ export default {
   &__line-delegate-to {
     font-size: 14px;
     line-height: 30px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     color: $dark-blue;
   }
   &__line-delegate-to,

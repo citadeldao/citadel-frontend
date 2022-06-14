@@ -15,10 +15,7 @@
           {{ network.title }}
         </span>
         <div class="network-card__info">
-          <span
-            v-if="network.percent"
-            class="network-card__percent"
-          >
+          <span v-if="network.percent" class="network-card__percent">
             {{ network.percent }}%
           </span>
           <div class="network-card__abbr">
@@ -58,9 +55,11 @@ export default {
   emits: ['uncheck', 'check'],
   setup(props, { emit }) {
     const icon = ref();
-    import(`@/assets/icons/${props.iconPath}/${props.network.icon}.svg`).then((val) => {
-      icon.value = markRaw(val.default);
-    });
+    import(`@/assets/icons/${props.iconPath}/${props.network.icon}.svg`).then(
+      (val) => {
+        icon.value = markRaw(val.default);
+      }
+    );
 
     const toggleChecked = () => {
       if (props.checked) {
@@ -76,9 +75,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 @mixin getWidth($columns, $gutter) {
-  width: calc(#{100% / $columns} - #{if($columns > 2, #{$columns * $gutter} / #{$columns - 1}, $gutter)});
+  width: calc(
+    #{100% / $columns} - #{if(
+        $columns > 2,
+        #{$columns * $gutter} / #{$columns - 1},
+        $gutter
+      )}
+  );
 
   &:nth-child(#{$columns}n) {
     margin-right: 0;
@@ -101,7 +105,7 @@ export default {
   &:hover {
     background: $white;
     box-shadow: 0 15px 50px rgba(80, 100, 124, 0.1),
-    0 10px 15px rgba(80, 100, 124, 0.16);
+      0 10px 15px rgba(80, 100, 124, 0.16);
 
     .network-card {
       &__icon {
@@ -190,7 +194,7 @@ export default {
 
     &::before {
       position: absolute;
-      content: "";
+      content: '';
       top: 0;
       right: 0;
       bottom: 0;
@@ -220,7 +224,7 @@ export default {
   }
 
   &__percent {
-    font-family: "Panton_ExtraBold";
+    font-family: 'Panton_ExtraBold';
     font-size: 14px;
     line-height: 17px;
     color: $blue;

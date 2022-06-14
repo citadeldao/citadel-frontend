@@ -14,5 +14,5 @@ export default class CryptoCoinPOLKADOT extends CryptoCoin {
     this.minStakingAmount = 10;
     this.hasRedelegation = true;
   }
-  static hasNoAdvancedSettings = true
+  static hasNoAdvancedSettings = true;
 }

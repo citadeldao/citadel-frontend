@@ -14,8 +14,8 @@ export default {
   }),
 
   getters: {
-    ktAddresses: state => state.ktAddresses,
-    currentKtAddress: state => state.currentKtAddress,
+    ktAddresses: (state) => state.ktAddresses,
+    currentKtAddress: (state) => state.currentKtAddress,
   },
 
   mutations: {

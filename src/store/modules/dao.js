@@ -25,13 +25,15 @@ export default {
   }),
 
   getters: {
-    activity: state => state.activity,
-    holderInfo: state => state.holderInfo,
-    unassignedAddresses: state => (sortByAlphabet(state.unassignedAddresses, 'net')),
-    assignedAddresses: state => (sortByAlphabet(state.assignedAddresses, 'net')),
-    totalClaimedRewardsXCT: state => state.totalClaimedRewardsXCT,
-    rewards: state => state.rewards,
-    calculatorData: state => state.calculatorData,
+    activity: (state) => state.activity,
+    holderInfo: (state) => state.holderInfo,
+    unassignedAddresses: (state) =>
+      sortByAlphabet(state.unassignedAddresses, 'net'),
+    assignedAddresses: (state) =>
+      sortByAlphabet(state.assignedAddresses, 'net'),
+    totalClaimedRewardsXCT: (state) => state.totalClaimedRewardsXCT,
+    rewards: (state) => state.rewards,
+    calculatorData: (state) => state.calculatorData,
   },
 
   mutations: {
@@ -56,7 +58,6 @@ export default {
     [types.SET_CALCULATOR_DATA](state, data) {
       state.calculatorData = data;
     },
-
   },
 
   actions: {
@@ -78,13 +79,20 @@ export default {
         return;
       }
 
-      const { error, data } = await citadel.callTokenInfo(walletId, 'bsc_xct', 'assignedAddresses');
+      const { error, data } = await citadel.callTokenInfo(
+        walletId,
+        'bsc_xct',
+        'assignedAddresses'
+      );
 
       if (!error) {
         if (data.holder) {
           commit(types.SET_HOLDER_INFO, data);
         } else {
-          commit(types.SET_HOLDER_INFO, { wallets: [], holder: { totalUsdt: 0, claimed: 0, claimable: 0 } });
+          commit(types.SET_HOLDER_INFO, {
+            wallets: [],
+            holder: { totalUsdt: 0, claimed: 0, claimable: 0 },
+          });
         }
       } else {
         notify({
@@ -100,7 +108,8 @@ export default {
 
       if (!error) {
         for (const address of data) {
-          const walletInstance = rootGetters['wallets/walletByAddress'](address);
+          const walletInstance =
+            rootGetters['wallets/walletByAddress'](address);
 
           if (walletInstance) {
             unassignedAddresses.push(walletInstance);
@@ -136,7 +145,11 @@ export default {
         return;
       }
 
-      const { error, data } = await citadel.callTokenInfo(walletId, 'bsc_xct', 'totalClaimedRewards');
+      const { error, data } = await citadel.callTokenInfo(
+        walletId,
+        'bsc_xct',
+        'totalClaimedRewards'
+      );
 
       if (!error) {
         commit(types.SET_TOTAL_CLAIMED_REWARDS_XCT, data);

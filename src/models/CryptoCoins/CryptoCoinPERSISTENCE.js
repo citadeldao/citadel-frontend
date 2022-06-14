@@ -12,6 +12,8 @@ export default class CryptoCoinPERSISTENCE extends CryptoCoin {
   }
 
   getPublicKeyDecoded() {
-    return typeof this.publicKey === 'string' ? this.publicKey : Buffer.from(this.publicKey).toString('hex');
+    return typeof this.publicKey === 'string'
+      ? this.publicKey
+      : Buffer.from(this.publicKey).toString('hex');
   }
 }

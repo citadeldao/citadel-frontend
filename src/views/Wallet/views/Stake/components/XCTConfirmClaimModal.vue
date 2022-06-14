@@ -22,7 +22,10 @@
         <span
           v-pretty-number="{ value: xctRewards, currency: currentToken.code }"
           class="xct-confirm-claim-modal__checkbox-value-amount"
-          :class="{'xct-confirm-claim-modal__checkbox-value-amount--unchecked':!claimOptions.xctRewards || !xctRewards}"
+          :class="{
+            'xct-confirm-claim-modal__checkbox-value-amount--unchecked':
+              !claimOptions.xctRewards || !xctRewards,
+          }"
         />
         <span class="xct-confirm-claim-modal__checkbox-value-currency">
           {{ currentToken.code }}
@@ -43,7 +46,10 @@
         <span
           v-pretty-number="{ value: daoRewards, currency: currentToken.code }"
           class="xct-confirm-claim-modal__checkbox-value-amount"
-          :class="{'xct-confirm-claim-modal__checkbox-value-amount--unchecked':!claimOptions.daoRewards || !daoRewards}"
+          :class="{
+            'xct-confirm-claim-modal__checkbox-value-amount--unchecked':
+              !claimOptions.daoRewards || !daoRewards,
+          }"
         />
         <span class="xct-confirm-claim-modal__checkbox-value-currency">
           {{ currentToken.code }}
@@ -51,12 +57,13 @@
       </div>
     </div>
     <div class="xct-confirm-claim-modal__fee">
-      <span class="xct-confirm-claim-modal__fee-title">
-        {{ $t('fee') }}:
-      </span>
+      <span class="xct-confirm-claim-modal__fee-title"> {{ $t('fee') }}: </span>
       <div class="xct-confirm-claim-modal__fee-value">
         <span
-          v-pretty-number="{ value: fee, currency: currentToken.parentCoin.code }"
+          v-pretty-number="{
+            value: fee,
+            currency: currentToken.parentCoin.code,
+          }"
           class="xct-confirm-claim-modal__fee-value-amount"
         />
         <span class="xct-confirm-claim-modal__fee-value-currency">
@@ -66,7 +73,7 @@
     </div>
     <div class="xct-confirm-claim-modal__total">
       <span class="xct-confirm-claim-modal__total-title">
-        {{ $t("totalAmount") }}:
+        {{ $t('totalAmount') }}:
       </span>
       <div class="xct-confirm-claim-modal__total-amount">
         <div class="xct-confirm-claim-modal__total-wrapper">
@@ -79,9 +86,7 @@
           </span>
         </div>
         <span class="xct-confirm-claim-modal__total-amount-line">/</span>
-        <div
-          class="xct-confirm-claim-modal__total-wrapper"
-        >
+        <div class="xct-confirm-claim-modal__total-wrapper">
           <span
             v-pretty-number="fee || 0"
             class="xct-confirm-claim-modal__total-amount-fee"
@@ -92,10 +97,7 @@
         </div>
       </div>
     </div>
-    <div
-      v-if="!hidePassword"
-      class="xct-confirm-claim-modal__password-input"
-    >
+    <div v-if="!hidePassword" class="xct-confirm-claim-modal__password-input">
       <Input
         id="password"
         v-model="password"
@@ -129,7 +131,7 @@ export default {
     },
     claimOptions: {
       type: Object,
-      default: ()=>({}),
+      default: () => ({}),
     },
     xctRewards: {
       type: Number,
@@ -163,9 +165,8 @@ export default {
       () => password.value,
       (newVal) => {
         updatePassword(newVal);
-      },
+      }
     );
-
 
     return { password, inputError, updateOptions };
   },
@@ -179,60 +180,61 @@ export default {
   width: 100%;
   flex-direction: column;
   &__claim-to,
-  &__fee{
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+  &__fee {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
-  &__claim-to{
-      margin-bottom: 14px;
+  &__claim-to {
+    margin-bottom: 14px;
   }
   &__claim-to-title,
   &__claim-to-address,
-  &__fee-title{
-      font-size: 14px;
-      line-height: 30px;
+  &__fee-title {
+    font-size: 14px;
+    line-height: 30px;
   }
   &__claim-to-title,
-  &__fee-title{
-      color: $gray;
+  &__fee-title {
+    color: $gray;
   }
-  &__checkbox{
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      &:last-child{
-          margin-bottom: 0px;
-      }
+  &__checkbox {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &:last-child {
+      margin-bottom: 0px;
+    }
   }
-  &__checkbox-checkbox{}
+  &__checkbox-checkbox {
+  }
   &__checkbox-value,
-  &__fee-value{
-      display: flex;
-      align-items: center;
+  &__fee-value {
+    display: flex;
+    align-items: center;
   }
   &__checkbox-value-amount,
   &__checkbox-value-currency,
   &__fee-value-currency,
-  &__fee-value-amount{
-      font-size: 14px;
-      line-height: 30px;
-      color: $gray;
+  &__fee-value-amount {
+    font-size: 14px;
+    line-height: 30px;
+    color: $gray;
   }
-   &__checkbox-value-amount,
-   &__fee-value-amount{
-       margin-right: 3px;
-       font-family: "Panton_Bold" !important;
-       color: $blue;
-       &--unchecked{
-           color: $darkgray;
-        }
-   }
-   &__fee-value-amount{
-       color: $red;
-   }
-   &__total {
+  &__checkbox-value-amount,
+  &__fee-value-amount {
+    margin-right: 3px;
+    font-family: 'Panton_Bold' !important;
+    color: $blue;
+    &--unchecked {
+      color: $darkgray;
+    }
+  }
+  &__fee-value-amount {
+    color: $red;
+  }
+  &__total {
     padding-top: 22px;
     display: flex;
     justify-content: space-between;
@@ -240,16 +242,16 @@ export default {
     border-top: 1px solid $lightsteelblue;
     margin-top: 15px;
   }
-  &__total-wrapper{
+  &__total-wrapper {
     display: flex;
     align-items: center;
   }
   &__total-title {
     font-size: 18px;
     line-height: 22px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
   }
-  &__total-amount{
+  &__total-amount {
     display: flex;
   }
   &__total-amount-value,
@@ -259,15 +261,14 @@ export default {
     font-size: 18px;
     line-height: 22px;
     color: $dark-blue;
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
   }
-  &__total-amount-line{
+  &__total-amount-line {
     color: $mid-gray;
     margin: 0 9px 0 9px;
   }
   &__total-amount-fee {
     color: $red;
-
   }
   &__total-amount-currency {
     color: $mid-gray;

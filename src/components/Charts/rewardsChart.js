@@ -3,13 +3,30 @@ import { prettyNumber } from '@/helpers/prettyNumber';
 import Chart from 'chart.js/auto';
 import { chartColors } from './config';
 
-const getDateStr = dt => {
-  const days = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const getDateStr = (dt) => {
+  const days = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
 
   return `${dt.getDate()} ${days[dt.getMonth()]}`;
 };
 
-export const createDatasetForRewardsChart = (rewardsChart, currentTab, showCount = undefined) => {
+export const createDatasetForRewardsChart = (
+  rewardsChart,
+  currentTab,
+  showCount = undefined
+) => {
   if (!rewardsChart || !rewardsChart.list) {
     return [];
   }
@@ -47,16 +64,17 @@ export const createDatasetForRewardsChart = (rewardsChart, currentTab, showCount
       datasets[net].data.push(
         Object.keys(rewardsChart.list[key]).includes(net)
           ? rewardsChart.list[key][net][currentTab === 'USD' ? 2 : 1]
-          : 0,
+          : 0
       );
     }
   }
 
-  const nets = Object
-    .values(datasets)
-    .sort((a, b) => {
-      return a.data.reduce((acc, i) => acc + i, 0) - b.data.reduce((acc, i) => acc + i, 0);
-    });
+  const nets = Object.values(datasets).sort((a, b) => {
+    return (
+      a.data.reduce((acc, i) => acc + i, 0) -
+      b.data.reduce((acc, i) => acc + i, 0)
+    );
+  });
 
   const visible = nets.slice(-showCount);
   const others = nets.slice(0, -showCount);
@@ -67,33 +85,41 @@ export const createDatasetForRewardsChart = (rewardsChart, currentTab, showCount
       othersData = others[i].data;
     } else {
       others[i].data.forEach((dataItem, index) => {
-        othersData[index] = BigNumber(othersData[index]).plus(dataItem).toNumber();
+        othersData[index] = BigNumber(othersData[index])
+          .plus(dataItem)
+          .toNumber();
       });
     }
   }
 
   return showCount
     ? [
-      {
-        net: 'Others',
-        data: othersData,
-        backgroundColor: chartColors[11],
-        barThickness: 6,
-        tooltip: { net: 'Others' },
-        pointBackgroundColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointRadius: 0,
-        hoverRadius: 9,
-        pointHoverBorderWidth: 3,
-        nets: others.map(n => n.net),
-      },
-      ...visible,
-    ]
+        {
+          net: 'Others',
+          data: othersData,
+          backgroundColor: chartColors[11],
+          barThickness: 6,
+          tooltip: { net: 'Others' },
+          pointBackgroundColor: '#fff',
+          pointHoverBackgroundColor: '#fff',
+          pointRadius: 0,
+          hoverRadius: 9,
+          pointHoverBorderWidth: 3,
+          nets: others.map((n) => n.net),
+        },
+        ...visible,
+      ]
     : visible;
 };
 
 const rewardsChartElement = {};
-export const renderRewardsChart = (rewardsChart, datasetsArray, currentTab, elementId, currency) => {
+export const renderRewardsChart = (
+  rewardsChart,
+  datasetsArray,
+  currentTab,
+  elementId,
+  currency
+) => {
   if (!rewardsChart || !rewardsChart.list) {
     return;
   }
@@ -149,7 +175,10 @@ export const renderRewardsChart = (rewardsChart, datasetsArray, currentTab, elem
       // title
       const tooltipHead = document.createElement('div');
       tooltipHead.appendChild(document.createTextNode('Rewards:'));
-      tooltipHead.classList.add('chart-tooltip__head', 'chart-tooltip__head--rewards');
+      tooltipHead.classList.add(
+        'chart-tooltip__head',
+        'chart-tooltip__head--rewards'
+      );
 
       const nativeDiv = document.createElement('div');
       nativeDiv.classList.add('chart-tooltip__balance-native');
@@ -158,14 +187,20 @@ export const renderRewardsChart = (rewardsChart, datasetsArray, currentTab, elem
       usdDiv.classList.add('chart-tooltip__balance-usd');
 
       const btcDiv = document.createElement('div');
-      btcDiv.classList.add('chart-tooltip__balance-btc', 'chart-tooltip__balance-btc--rewards');
+      btcDiv.classList.add(
+        'chart-tooltip__balance-btc',
+        'chart-tooltip__balance-btc--rewards'
+      );
 
       const lineDiv = document.createElement('div');
       lineDiv.classList.add('chart-tooltip__horizontal-line');
 
       const tooltipSecondHead = document.createElement('div');
       tooltipSecondHead.appendChild(document.createTextNode('Exchange rate:'));
-      tooltipSecondHead.classList.add('chart-tooltip__head', 'chart-tooltip__head--rewards');
+      tooltipSecondHead.classList.add(
+        'chart-tooltip__head',
+        'chart-tooltip__head--rewards'
+      );
 
       const usdRate = document.createElement('div');
       usdRate.classList.add('chart-tooltip__rate');
@@ -173,18 +208,23 @@ export const renderRewardsChart = (rewardsChart, datasetsArray, currentTab, elem
       const btcRate = document.createElement('div');
       btcRate.classList.add('chart-tooltip__rate');
 
-      titleLines.forEach(title => {
+      titleLines.forEach((title) => {
         const { net } = datasetsArray[tooltip.dataPoints[0].datasetIndex];
         const isOthers = net === 'Others';
-        const others = datasetsArray.find(n => n.net === 'Others');
+        const others = datasetsArray.find((n) => n.net === 'Others');
         const dayIndex = Object.keys(rewardsChart.list).indexOf(title);
 
         const getRewards = () => {
           const getTotalOf = (name, data) => {
-            return Object
-              .entries(data)
+            return Object.entries(data)
               .filter(([key]) => others.nets.includes(key))
-              .reduce((acc, [, values]) => BigNumber(acc).plus(values[name === 'usd' ? 2 : 1]).toNumber(), 0);
+              .reduce(
+                (acc, [, values]) =>
+                  BigNumber(acc)
+                    .plus(values[name === 'usd' ? 2 : 1])
+                    .toNumber(),
+                0
+              );
           };
 
           const total = {
@@ -197,21 +237,23 @@ export const renderRewardsChart = (rewardsChart, datasetsArray, currentTab, elem
           };
           const exchangeRate = {
             currency: isOthers ? null : currency[net].code,
-            usd: isOthers ? null : BigNumber(rewardsChart.list[title][net][2])
-              .dividedBy(rewardsChart.list[title][net][0])
-              .toNumber(),
-            btc: isOthers ? null : BigNumber(rewardsChart.list[title][net][1])
-              .dividedBy(rewardsChart.list[title][net][0])
-              .toNumber(),
+            usd: isOthers
+              ? null
+              : BigNumber(rewardsChart.list[title][net][2])
+                  .dividedBy(rewardsChart.list[title][net][0])
+                  .toNumber(),
+            btc: isOthers
+              ? null
+              : BigNumber(rewardsChart.list[title][net][1])
+                  .dividedBy(rewardsChart.list[title][net][0])
+                  .toNumber(),
           };
 
           return {
             amount: isOthers
               ? others.data[dayIndex]
               : rewardsChart.list[title][net][0],
-            currency: isOthers
-              ? null
-              : currency[net].code,
+            currency: isOthers ? null : currency[net].code,
             total,
             exchangeRate,
           };
@@ -220,14 +262,18 @@ export const renderRewardsChart = (rewardsChart, datasetsArray, currentTab, elem
         const rewards = getRewards();
 
         if (!isOthers) {
-          nativeDiv.appendChild(document.createTextNode(prettyNumber(rewards.amount)));
+          nativeDiv.appendChild(
+            document.createTextNode(prettyNumber(rewards.amount))
+          );
           const nativeSign = document.createElement('span');
           nativeSign.appendChild(document.createTextNode(rewards.currency));
           nativeSign.classList.add('chart-tooltip__currency');
           nativeDiv.appendChild(nativeSign);
         }
 
-        usdDiv.appendChild(document.createTextNode(prettyNumber(rewards.total.usd)));
+        usdDiv.appendChild(
+          document.createTextNode(prettyNumber(rewards.total.usd))
+        );
         const usdSign = document.createElement('span');
         usdSign.appendChild(document.createTextNode('USD'));
         usdSign.classList.add('chart-tooltip__currency');
@@ -251,7 +297,9 @@ export const renderRewardsChart = (rewardsChart, datasetsArray, currentTab, elem
           usdRate.appendChild(document.createTextNode('1'));
           usdRate.appendChild(nativeRateSign);
           usdRate.appendChild(document.createTextNode(' = '));
-          usdRate.appendChild(document.createTextNode(prettyNumber(rewards.exchangeRate.usd)));
+          usdRate.appendChild(
+            document.createTextNode(prettyNumber(rewards.exchangeRate.usd))
+          );
           usdRate.appendChild(usdRateSign);
 
           const nativeRateSign2 = document.createElement('span');
@@ -265,7 +313,9 @@ export const renderRewardsChart = (rewardsChart, datasetsArray, currentTab, elem
           btcRate.appendChild(document.createTextNode('1'));
           btcRate.appendChild(nativeRateSign2);
           btcRate.appendChild(document.createTextNode(' = '));
-          btcRate.appendChild(document.createTextNode(prettyNumber(rewards.exchangeRate.btc)));
+          btcRate.appendChild(
+            document.createTextNode(prettyNumber(rewards.exchangeRate.btc))
+          );
           btcRate.appendChild(btcRateSign);
         }
       });
@@ -297,7 +347,12 @@ export const renderRewardsChart = (rewardsChart, datasetsArray, currentTab, elem
     tooltipEl.style.opacity = 1;
     tooltipEl.style.left = `${positionX + tooltip.caretX}px`;
     // tooltipEl.style.top = positionY + (tooltip.caretY + ((340 - tooltip.caretY) * 0.3)) + 'px';
-    tooltipEl.style.top = `${positionY + tooltip.caretY + 40 + (tooltip.dataPoints[0].element.height * 0.3)}px`;
+    tooltipEl.style.top = `${
+      positionY +
+      tooltip.caretY +
+      40 +
+      tooltip.dataPoints[0].element.height * 0.3
+    }px`;
     tooltipEl.style.font = tooltip.options.bodyFont.string;
     // tooltipEl.style.padding = tooltip.options.padding + 'px ' + tooltip.options.padding + 'px';
   }
@@ -337,8 +392,10 @@ export const renderRewardsChart = (rewardsChart, datasetsArray, currentTab, elem
           ticks: {
             color: '#AFBCCB',
             // eslint-disable-next-line no-unused-vars
-            callback: function(index) {
-              return getDateStr(new Date(Object.keys(rewardsChart.list)[index]));
+            callback: function (index) {
+              return getDateStr(
+                new Date(Object.keys(rewardsChart.list)[index])
+              );
             },
           },
         },
@@ -351,7 +408,7 @@ export const renderRewardsChart = (rewardsChart, datasetsArray, currentTab, elem
           },
           ticks: {
             color: '#AFBCCB',
-            callback: function(index) {
+            callback: function (index) {
               return prettyNumber(index);
             },
           },
@@ -359,5 +416,8 @@ export const renderRewardsChart = (rewardsChart, datasetsArray, currentTab, elem
       },
     },
   };
-  rewardsChartElement[elementId] = new Chart(document.querySelector(`#${elementId}`), config);
+  rewardsChartElement[elementId] = new Chart(
+    document.querySelector(`#${elementId}`),
+    config
+  );
 };

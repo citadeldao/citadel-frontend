@@ -2,19 +2,19 @@
   <div class="balance-tooltip-info">
     <span class="balance-tooltip-info__line">
       <span class="balance-tooltip-info__line-label">
-        {{ $t("balanceTooltipInfo.availableBalance") }}
+        {{ $t('balanceTooltipInfo.availableBalance') }}
       </span>
-      - {{ $t("balanceTooltipInfo.availableBalanceInfo") }}
+      - {{ $t('balanceTooltipInfo.availableBalanceInfo') }}
     </span>
     <span class="balance-tooltip-info__line">
       <span class="balance-tooltip-info__line-label">
-        {{ $t("balanceTooltipInfo.stakedBalance") }}
+        {{ $t('balanceTooltipInfo.stakedBalance') }}
       </span>
-      - {{ $t("balanceTooltipInfo.stakedBalanceBalanceInfo") }}
+      - {{ $t('balanceTooltipInfo.stakedBalanceBalanceInfo') }}
     </span>
     <span class="balance-tooltip-info__line">
       <span class="balance-tooltip-info__line-label">
-        {{ $t("balanceTooltipInfo.frozenBalance") }}
+        {{ $t('balanceTooltipInfo.frozenBalance') }}
       </span>
       - {{ $t(`${currentWallet.messages.frozenBalance}`) }}
     </span>
@@ -22,67 +22,60 @@
       v-if="currentWallet.unstakePerioudFrom"
       class="balance-tooltip-info__period"
     >
-      {{ $t("balanceTooltipInfo.withFromPeriod", { code: currentWallet.name }) }}
-      <span
-        class="balance-tooltip-info__period-days"
-      >{{ currentWallet.unstakePerioudFrom }}
+      {{
+        $t('balanceTooltipInfo.withFromPeriod', { code: currentWallet.name })
+      }}
+      <span class="balance-tooltip-info__period-days"
+        >{{ currentWallet.unstakePerioudFrom }}
       </span>
-      {{ $t("balanceTooltipInfo.to") }}
-      <span
-        class="balance-tooltip-info__period-days"
-      >{{ currentWallet.unstakePerioudTo }} {{ $t("days") }}.
+      {{ $t('balanceTooltipInfo.to') }}
+      <span class="balance-tooltip-info__period-days"
+        >{{ currentWallet.unstakePerioudTo }} {{ $t('days') }}.
       </span>
     </span>
     <span
       v-if="currentWallet.unstakePerioudLink"
       class="balance-tooltip-info__period"
     >
-      {{ $t("balanceTooltipInfo.iconPeriodLink") }}
+      {{ $t('balanceTooltipInfo.iconPeriodLink') }}
       <a
         target="_blank"
         :href="currentWallet.unstakePerioudLink"
         class="balance-tooltip-info__balance-title"
-      >{{ $t("link") }}.</a>
+        >{{ $t('link') }}.</a
+      >
     </span>
-    <span
-      v-else
-      class="balance-tooltip-info__period"
-    >
+    <span v-else class="balance-tooltip-info__period">
       {{
         !currentWallet.hasUnstakeingPerioud
-          ? `${$t("balanceTooltipInfo.noPeriod")} ${currentWallet.name}.`
+          ? `${$t('balanceTooltipInfo.noPeriod')} ${currentWallet.name}.`
           : `${$t(
-            "balanceTooltipInfo.unstakingPeriod"
-          )} ${currentWallet.net.toUpperCase()} ${$t(
-            "balanceTooltipInfo.is"
-          )}`
+              'balanceTooltipInfo.unstakingPeriod'
+            )} ${currentWallet.net.toUpperCase()} ${$t(
+              'balanceTooltipInfo.is'
+            )}`
       }}
       <span
         v-if="currentWallet.hasUnstakeingPerioud"
         class="balance-tooltip-info__period-days"
-      >{{ currentWallet.unstakeingPerioud }}
+        >{{ currentWallet.unstakeingPerioud }}
         days.
       </span>
     </span>
-    <div
-      v-if="currentWallet.hasPledged"
-      class="balance-tooltip-info__balance"
-    >
-      <span
-        class="balance-tooltip-info__balance-title"
-      >{{ $t("balance") }}:</span>
-      <span
-        class="balance-tooltip-info__balance-line"
-      >iGas -
+    <div v-if="currentWallet.hasPledged" class="balance-tooltip-info__balance">
+      <span class="balance-tooltip-info__balance-title"
+        >{{ $t('balance') }}:</span
+      >
+      <span class="balance-tooltip-info__balance-line"
+        >iGas -
         <span
           v-pretty-number="gas"
           class="balance-tooltip-info__balance-amount"
         />
         iGas
       </span>
-      <span
-        class="balance-tooltip-info__balance-line"
-      >iRam -
+      <span class="balance-tooltip-info__balance-line"
+        >iRam -
         <span
           v-pretty-number="ram"
           class="balance-tooltip-info__balance-amount"
@@ -99,7 +92,7 @@ export default {
   props: {
     currentWallet: {
       type: Object,
-      default: ()=>({}),
+      default: () => ({}),
     },
   },
   setup() {
@@ -133,7 +126,7 @@ export default {
   &__balance-title,
   &__balance-line,
   &__balance-amount {
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     color: $too-dark-blue;
   }
   &__period-days {

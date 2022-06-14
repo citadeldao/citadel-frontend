@@ -1,12 +1,6 @@
 <template>
-  <div
-    ref="comp"
-    class="success-modal-content"
-  >
-    <div
-      v-if="showStatuses"
-      class="success-modal-content__statuses"
-    >
+  <div ref="comp" class="success-modal-content">
+    <div v-if="showStatuses" class="success-modal-content__statuses">
       <div class="success-modal-content__status">
         <div
           class="success-modal-content__status-icon"
@@ -15,7 +9,7 @@
           <done />
         </div>
         <span class="success-modal-content__status-title">
-          {{ $t("addedToMempool") }}
+          {{ $t('addedToMempool') }}
         </span>
       </div>
       <div class="success-modal-content__status-icon-divider-rigth" />
@@ -27,8 +21,10 @@
           <clock />
         </div>
         <span class="success-modal-content__status-title">
-          {{ $t("pending") }}
-          <span class="success-modal-content__status-title-time">{{ txDuration }}</span>
+          {{ $t('pending') }}
+          <span class="success-modal-content__status-title-time">{{
+            txDuration
+          }}</span>
         </span>
       </div>
       <div class="success-modal-content__status-icon-divider-left" />
@@ -59,7 +55,9 @@
     <NominatedNodes
       v-if="isMultiple"
       class="success-modal-content__nominated-nodes"
-      :selected-node="mode === 'redelegate' ? selectedNodeForRedelegation : selectedNode"
+      :selected-node="
+        mode === 'redelegate' ? selectedNodeForRedelegation : selectedNode
+      "
     />
     <div
       v-if="txHash.length === 1 && wallet.hasTransactionComment"
@@ -79,7 +77,6 @@
 </template>
 
 <script>
-
 import { nextTick, onMounted, getCurrentInstance, ref, inject } from 'vue';
 import NominatedNodes from '../../Stake/components/NominatedNodes.vue';
 
@@ -94,7 +91,14 @@ import useWallets from '@/compositions/useWallets';
 
 export default {
   name: 'SuccessModalContent',
-  components: { done, clock, confirmed, SendDirection, Textarea, NominatedNodes },
+  components: {
+    done,
+    clock,
+    confirmed,
+    SendDirection,
+    Textarea,
+    NominatedNodes,
+  },
   props: {
     isMultiple: {
       type: Boolean,
@@ -106,11 +110,11 @@ export default {
     },
     snip20Token: {
       type: Object,
-      default: ()=>{},
+      default: () => {},
     },
     wallet: {
       type: Object,
-      default: ()=>{},
+      default: () => {},
     },
     amount: {
       type: [Number, String],
@@ -248,7 +252,7 @@ export default {
     color: $too-dark-blue;
     text-align: center;
     margin-top: 5px;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
   }
 
   &__status-title-time {

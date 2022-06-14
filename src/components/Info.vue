@@ -4,7 +4,7 @@
       {{ $t(title) }}
     </h4>
     <span class="info__note">
-      {{ $t("wallet.info.note") }}
+      {{ $t('wallet.info.note') }}
     </span>
     <div class="info__wrapper">
       <div class="info__block">
@@ -13,10 +13,10 @@
         </div>
         <div class="info__block-section">
           <h2 class="info__block-title">
-            {{ $t("wallet.info.block1Title") }}
+            {{ $t('wallet.info.block1Title') }}
           </h2>
           <span class="info__block-info">
-            {{ $t("wallet.info.block1Info") }}
+            {{ $t('wallet.info.block1Info') }}
           </span>
           <div>
             <div class="info__block-icon">
@@ -26,7 +26,7 @@
               :data-qa="dataQa && `${dataQa}__import-address-button`"
               @click="toAddAddress"
             >
-              {{ $t("importAddress") }}
+              {{ $t('importAddress') }}
             </PrimaryButton>
           </div>
         </div>
@@ -38,10 +38,10 @@
         </div>
         <div class="info__block-section">
           <h2 class="info__block-title">
-            {{ $t("wallet.info.block2Title") }}
+            {{ $t('wallet.info.block2Title') }}
           </h2>
           <span class="info__block-info">
-            {{ $t("wallet.info.block2Info") }}
+            {{ $t('wallet.info.block2Info') }}
           </span>
           <div>
             <div class="info__block-icon">
@@ -51,7 +51,7 @@
               :disabled="true"
               :data-qa="dataQa && `${dataQa}__learn-how-button`"
             >
-              {{ $t("learnHow") }}
+              {{ $t('learnHow') }}
             </PrimaryButton>
           </div>
         </div>
@@ -107,7 +107,7 @@ export default {
   &__title {
     font-size: 30px;
     line-height: 30px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     margin: 0;
     margin-bottom: 11px;
     text-align: center;
@@ -199,7 +199,7 @@ export default {
     margin: 0;
     font-size: 20px;
     line-height: 30px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     color: $too-dark-blue;
     text-align: center;
     @include lg {

@@ -1,22 +1,24 @@
 <template>
   <Info
-    v-if="currentWallet.type === WALLET_TYPES.PUBLIC_KEY && currentWalletType !== WALLET_TYPES.METAMASK"
+    v-if="
+      currentWallet.type === WALLET_TYPES.PUBLIC_KEY &&
+      currentWalletType !== WALLET_TYPES.METAMASK
+    "
     title="wallet.info.title"
     data-qa="send__info"
   />
   <div
     v-else
-    v-click-away="() => { showNetworkTargetWallets ? showNetworkTargetWallets = false : null }"
+    v-click-away="
+      () => {
+        showNetworkTargetWallets ? (showNetworkTargetWallets = false) : null;
+      }
+    "
     class="send"
   >
     <form @submit.prevent="submitHandler">
-      <div
-        v-if="itemsNetworks.length && bridgeTargetNet"
-        class="send__section"
-      >
-        <div
-          class="send__switch"
-        >
+      <div v-if="itemsNetworks.length && bridgeTargetNet" class="send__section">
+        <div class="send__switch">
           <span>{{ $t('sendAssetsToAnotherNetwork') }}</span>
           <el-switch
             v-model="isSendToAnotherNetwork"
@@ -33,7 +35,6 @@
             v-model="bridgeTargetNet"
             :label="$t('sendAssetsDestination')"
             icon="curve-arrow"
-
             :options="itemsNetworks"
             value-key="key"
             data-qa="send__destination-network-field"
@@ -72,10 +73,7 @@
             />
           </div>
           <transition name="fade">
-            <div
-              v-if="incorrectAddress"
-              class="send__section-error"
-            >
+            <div v-if="incorrectAddress" class="send__section-error">
               <error class="send__section-error-icon" />
               <span class="send__section-error-text">
                 {{ incorrectAddress }}
@@ -100,10 +98,7 @@
             show-set-max
           />
           <transition name="fade">
-            <div
-              v-if="insufficientFunds"
-              class="send__section-error"
-            >
+            <div v-if="insufficientFunds" class="send__section-error">
               <error class="send__section-error-icon" />
               <span class="send__section-error-text">
                 {{ insufficientFunds }}
@@ -111,29 +106,20 @@
             </div>
           </transition>
 
-          <span
-            v-if="false"
-            class="send__input-note-xl"
-          >{{ $t('includingFunds-xl') }}
+          <span v-if="false" class="send__input-note-xl"
+            >{{ $t('includingFunds-xl') }}
           </span>
           <span class="send__input-note">
             {{ $t('includingFunds') }}
           </span>
         </div>
       </div>
-      <div
-        v-if="!currentWallet.hideMemo"
-        class="send__memo"
-      >
+      <div v-if="!currentWallet.hideMemo" class="send__memo">
         <div class="send__memo-toggle">
           <span class="send__memo-title">
             {{ $t('memo') }}
           </span>
-          <Tooltip
-            left="-95px"
-            width="200px"
-            class="send__memo-tooltip"
-          >
+          <Tooltip left="-95px" width="200px" class="send__memo-tooltip">
             <info />
             <template #content>
               <span class="send__memo-tooltip-text">{{
@@ -149,10 +135,7 @@
           />
         </div>
         <transition name="fade">
-          <div
-            v-if="showMemo"
-            class="send__memo-input"
-          >
+          <div v-if="showMemo" class="send__memo-input">
             <Input
               id="memo"
               v-model="memo"
@@ -166,30 +149,22 @@
           </div>
         </transition>
       </div>
-      <div
-        v-if="isSendToAnotherNetwork"
-        class="send__info"
-      >
-        <div
-          v-if="false"
-          class="send__info-banner"
-        >
+      <div v-if="isSendToAnotherNetwork" class="send__info">
+        <div v-if="false" class="send__info-banner">
           <bannerInfo />
           <p>
-            {{ $t('sendBannerInfo') }}<a href="#">{{ $t('link') }}</a>.
+            {{ $t('sendBannerInfo') }}<a href="#">{{ $t('link') }}</a
+            >.
           </p>
         </div>
-        <div
-          v-if="false"
-          class="send__info-info"
-        >
+        <div v-if="false" class="send__info-info">
           <span class="send__info-line">
             {{ $t('price') }}:
             <span class="send__info-price">
               1
               <span class="send__info-currency">
                 {{ currentWallet.net }}
-                <span class="send__info-per"> {{ $t("per") }}</span>
+                <span class="send__info-per"> {{ $t('per') }}</span>
                 {{ currentWallet.net.slice(8) }}
               </span>
             </span>
@@ -204,10 +179,7 @@
         </div>
       </div>
       <div class="send__button">
-        <PrimaryButton
-          :disabled="disabledSend"
-          data-qa="send__send-button"
-        >
+        <PrimaryButton :disabled="disabledSend" data-qa="send__send-button">
           {{ $t('send') }}
         </PrimaryButton>
       </div>
@@ -223,10 +195,7 @@
       @prepareXctClaim="$emit('prepareXctClaim')"
     />
   </div>
-  <teleport
-    v-if="showModal"
-    to="body"
-  >
+  <teleport v-if="showModal" to="body">
     <Modal>
       <!--Confirm Modal -->
       <ModalContent
@@ -240,10 +209,7 @@
         @close="confirmModalCloseHandler"
         @buttonClick="confirmClickHandler"
       >
-        <div
-          v-if="isLoading"
-          class="loader"
-        >
+        <div v-if="isLoading" class="loader">
           <Loading />
         </div>
         <ActionModalContent
@@ -258,7 +224,12 @@
           :fees="fees"
           :memo="memo"
           :fee-type="feeType"
-          :hide-password="isHardwareWallet || [WALLET_TYPES.METAMASK, WALLET_TYPES.KEPLR].includes(currentWalletType)"
+          :hide-password="
+            isHardwareWallet ||
+            [WALLET_TYPES.METAMASK, WALLET_TYPES.KEPLR].includes(
+              currentWalletType
+            )
+          "
           :custom-fee="customFee"
           :current-token="currentToken"
           :fee="fee"
@@ -496,7 +467,7 @@ export default {
     const prepareLoading = ref(false);
     const { width } = useWindowSize();
     const showErrorText = computed(() =>
-      width.value < screenWidths.xl ? false : true,
+      width.value < screenWidths.xl ? false : true
     );
     const prepareBuildTransaction = ref({});
 
@@ -532,15 +503,25 @@ export default {
 
     const showNetworkTargetWallets = ref(false);
 
-    const metamaskConnector = computed(() => store.getters['metamask/metamaskConnector']);
-    const keplrConnector = computed(() => store.getters['keplr/keplrConnector']);
+    const metamaskConnector = computed(
+      () => store.getters['metamask/metamaskConnector']
+    );
+    const keplrConnector = computed(
+      () => store.getters['keplr/keplrConnector']
+    );
 
     const currentWalletType = computed(() => {
       const metamaskNet = metamaskConnector.value.network;
-      const metamaskAddress = metamaskConnector.value.accounts[0] && metamaskConnector.value.accounts[0].toLowerCase();
+      const metamaskAddress =
+        metamaskConnector.value.accounts[0] &&
+        metamaskConnector.value.accounts[0].toLowerCase();
       const { address, net, type } = props.currentWallet;
 
-      if (address.toLowerCase() === metamaskAddress && net.includes(metamaskNet) && type === WALLET_TYPES.PUBLIC_KEY) {
+      if (
+        address.toLowerCase() === metamaskAddress &&
+        net.includes(metamaskNet) &&
+        type === WALLET_TYPES.PUBLIC_KEY
+      ) {
         return WALLET_TYPES.METAMASK;
       }
 
@@ -553,9 +534,7 @@ export default {
     const customFee = ref(0);
 
     // заглушка для бриджей
-    const itemsNetworks = ref([
-      { key: props.currentWallet.net },
-    ]);
+    const itemsNetworks = ref([{ key: props.currentWallet.net }]);
 
     const bridgeTargetNet = ref(itemsNetworks.value[0].key);
 
@@ -565,43 +544,65 @@ export default {
     };
 
     const networkTargetWallets = computed(() => {
-      const parseNetwork = (props.currentWallet?.parentCoin?.net || props.currentWallet.net);
+      const parseNetwork =
+        props.currentWallet?.parentCoin?.net || props.currentWallet.net;
 
       // parent coin
       if (!isSendToAnotherNetwork.value) {
-        return wallets.value.filter(w => {
-          const findFromAlias = w.net === parseNetwork && w.title.toLowerCase().includes(toAddress.value.toLowerCase());
+        return wallets.value.filter((w) => {
+          const findFromAlias =
+            w.net === parseNetwork &&
+            w.title.toLowerCase().includes(toAddress.value.toLowerCase());
 
           if (!toAddress.value) {
             return w.net === parseNetwork || findFromAlias;
           }
 
           if (w.address === toAddress.value) {
-            return (w.net === parseNetwork || findFromAlias) && w.address !== toAddress.value;
+            return (
+              (w.net === parseNetwork || findFromAlias) &&
+              w.address !== toAddress.value
+            );
           }
 
-          return w.net === parseNetwork && w.address.includes(toAddress.value) || findFromAlias;
+          return (
+            (w.net === parseNetwork && w.address.includes(toAddress.value)) ||
+            findFromAlias
+          );
         });
       }
 
-      return wallets.value.filter(w => {
-        const findFromAlias = w.net === bridgeTargetNet.value && w.title.toLowerCase().includes(toAddress.value.toLowerCase());
+      return wallets.value.filter((w) => {
+        const findFromAlias =
+          w.net === bridgeTargetNet.value &&
+          w.title.toLowerCase().includes(toAddress.value.toLowerCase());
 
         if (!toAddress.value) {
           return w.net === bridgeTargetNet.value || findFromAlias;
         }
 
         if (w.address === toAddress.value) {
-          return (w.net === bridgeTargetNet.value || findFromAlias) && w.address !== toAddress.value;
+          return (
+            (w.net === bridgeTargetNet.value || findFromAlias) &&
+            w.address !== toAddress.value
+          );
         }
 
-        return w.net === bridgeTargetNet.value && w.address.includes(toAddress.value) || findFromAlias;
+        return (
+          (w.net === bridgeTargetNet.value &&
+            w.address.includes(toAddress.value)) ||
+          findFromAlias
+        );
       });
     });
 
     const setCosmosNetworkBridgeToken = () => {
-      const newWallet = store.getters['wallets/walletByAddress']({ net: route.params.net, address: route.params.address });
-      const parseNetwork = (props.currentWallet?.parentCoin?.net || props.currentWallet.net);
+      const newWallet = store.getters['wallets/walletByAddress']({
+        net: route.params.net,
+        address: route.params.address,
+      });
+      const parseNetwork =
+        props.currentWallet?.parentCoin?.net || props.currentWallet.net;
       const parseNetworkLength = parseNetwork.length + 1;
 
       if (route.params.token) {
@@ -609,7 +610,10 @@ export default {
           walletId: newWallet.id,
           token: route.params.token,
         });
-        const bridgeToken = itemsNetworks.value?.find(item => item.key === props.currentWallet.net.slice(parseNetworkLength));
+        const bridgeToken = itemsNetworks.value?.find(
+          (item) =>
+            item.key === props.currentWallet.net.slice(parseNetworkLength)
+        );
 
         if (bridgeToken) {
           bridgeTargetNet.value = bridgeToken.key;
@@ -617,19 +621,20 @@ export default {
           bridgeTargetNet.value = null; // itemsNetworks.value[0].key
           isSendToAnotherNetwork.value = false;
         }
-      } else /* if (cosmosBridgeNetworks.includes(route.params.net)) */ {
+      } /* if (cosmosBridgeNetworks.includes(route.params.net)) */ else {
         itemsNetworks.value = props.currentWallet.getCrossNetworkRoutes({
           walletId: newWallet.id,
           token: route.params.net,
         });
-        itemsNetworks.value = itemsNetworks.value.map(item => {
+        itemsNetworks.value = itemsNetworks.value.map((item) => {
           return {
             ...item,
             label: getDecorateLabel(props.currentWallet.net, item.label),
           };
         });
 
-        bridgeTargetNet.value = itemsNetworks.value && itemsNetworks.value[0]?.key;
+        bridgeTargetNet.value =
+          itemsNetworks.value && itemsNetworks.value[0]?.key;
       }
     };
 
@@ -653,9 +658,12 @@ export default {
     };
     loadData();
 
-    watch(() => props.currentWallet, () => {
-      setCosmosNetworkBridgeToken();
-    });
+    watch(
+      () => props.currentWallet,
+      () => {
+        setCosmosNetworkBridgeToken();
+      }
+    );
 
     watch(
       () => route.params,
@@ -669,7 +677,7 @@ export default {
           setCosmosNetworkBridgeToken();
         }
       },
-      { deep: true },
+      { deep: true }
     );
 
     // Calc Max Amount
@@ -681,8 +689,8 @@ export default {
       return props.currentWallet.hasPledged
         ? resMaxAmount.value
         : balance.value?.mainBalance > fee.value.fee
-          ? BigNumber(balance.value?.mainBalance).minus(fee.value.fee).toNumber()
-          : 0;
+        ? BigNumber(balance.value?.mainBalance).minus(fee.value.fee).toNumber()
+        : 0;
     });
     const isMaxSelected = computed(() => amount.value === maxAmount.value);
 
@@ -693,7 +701,7 @@ export default {
       // fee is object to keep fee-appropriate key (eg gasPrice)
       feeType.value === 'custom'
         ? { fee: customFee.value }
-        : fees.value?.[feeType.value] || { fee: 0 },
+        : fees.value?.[feeType.value] || { fee: 0 }
     );
 
     const openFeeSelectModal = () => {
@@ -711,7 +719,7 @@ export default {
     const showDecreaseAmountModal = ref(false);
     const showIncreaseAmountModal = ref(false);
     const showChangingAmountModal = computed(
-      () => showDecreaseAmountModal.value || showIncreaseAmountModal.value,
+      () => showDecreaseAmountModal.value || showIncreaseAmountModal.value
     );
     const closeFeeModal = () => {
       showDecreaseAmountModal.value = false;
@@ -757,7 +765,7 @@ export default {
       (newFee, prevFee) => {
         setLastCorrectFee(prevFee[0], prevFee[1]);
         onChangeFee();
-      },
+      }
     );
 
     // Fee Error Modal Handlers
@@ -786,70 +794,89 @@ export default {
     };
 
     const totalAmount = computed(() =>
-      BigNumber(amount.value).plus(fee.value.fee).toNumber(),
+      BigNumber(amount.value).plus(fee.value.fee).toNumber()
     );
 
     // Error Handlers
-    const insufficientFunds = computed(() => {
-      if (amount.value) {
-        if (props.currentWallet.minSendAmount && props.currentWallet.minSendAmount > +amount.value) {
-          return t('minSendAmountError', {
-            code: props.currentWallet.code,
-            minAmount: props.currentWallet.minSendAmount,
-          });
+    const insufficientFunds = computed(
+      () => {
+        if (amount.value) {
+          if (
+            props.currentWallet.minSendAmount &&
+            props.currentWallet.minSendAmount > +amount.value
+          ) {
+            return t('minSendAmountError', {
+              code: props.currentWallet.code,
+              minAmount: props.currentWallet.minSendAmount,
+            });
+          }
+
+          if (+amount.value > +maxAmount.value) {
+            return 'Insufficient funds';
+          }
         }
 
-        if (+amount.value > +maxAmount.value) {
-          return 'Insufficient funds';
-        }
+        return false;
       }
-
-      return false;
-    },
-    //  !!amount.value && amount.value ?
-    //   amount.value < props.currentWallet.minSendAmount ?
-    //   'The minimum transaction amount is 1 DOT.' ?
-    //     amount.value > maxAmount.value ?
-    //     'Insufficient funds' : ''
-    // const insufficientFunds = computed(
-    //   () =>
-    //     !!amount.value && +amount.value > +maxAmount.value &&
-    //     'Insufficient funds',
+      //  !!amount.value && amount.value ?
+      //   amount.value < props.currentWallet.minSendAmount ?
+      //   'The minimum transaction amount is 1 DOT.' ?
+      //     amount.value > maxAmount.value ?
+      //     'Insufficient funds' : ''
+      // const insufficientFunds = computed(
+      //   () =>
+      //     !!amount.value && +amount.value > +maxAmount.value &&
+      //     'Insufficient funds',
     );
 
     const networksConfig = computed(() => store.getters['networks/config']);
-    const parseNetwork = (props.currentWallet?.parentCoin?.net || props.currentWallet.net);
+    const parseNetwork =
+      props.currentWallet?.parentCoin?.net || props.currentWallet.net;
     const parseNetworkLength = parseNetwork.length + 1;
 
     const incorrectAddress = computed(() => {
       // validate if switch another network
       const validateAddress = (address, validateNetwork) => {
-        const regExp = new RegExp(networksConfig.value[validateNetwork || bridgeTargetNet.value].validating);
+        const regExp = new RegExp(
+          networksConfig.value[
+            validateNetwork || bridgeTargetNet.value
+          ].validating
+        );
 
         return regExp.test(address);
       };
 
       if (isSendToAnotherNetwork.value) {
-        if (props.currentToken) { // check select network in cosmosnetworks ibc token to bridge
-          if (props.currentToken.net.slice(parseNetworkLength) !== bridgeTargetNet.value) {
+        if (props.currentToken) {
+          // check select network in cosmosnetworks ibc token to bridge
+          if (
+            props.currentToken.net.slice(parseNetworkLength) !==
+            bridgeTargetNet.value
+          ) {
             return t('messages.incorrectNetwork');
           }
         }
 
-        return toAddress.value && !validateAddress(toAddress.value) && t('messages.incorrectAddress');
+        return (
+          toAddress.value &&
+          !validateAddress(toAddress.value) &&
+          t('messages.incorrectAddress')
+        );
       }
 
       // default check
-      return toAddress.value &&
-      !props.currentWallet.validateAddress(toAddress.value) &&
-      t('messages.incorrectAddress');
+      return (
+        toAddress.value &&
+        !props.currentWallet.validateAddress(toAddress.value) &&
+        t('messages.incorrectAddress')
+      );
     });
     const requestsError = computed(
       () =>
         feesError.value ||
         balanceError.value ||
         rawTxError.value ||
-        txError.value,
+        txError.value
     );
     const disabledSend = computed(
       () =>
@@ -859,7 +886,7 @@ export default {
           incorrectAddress.value ||
           !amount.value ||
           !toAddress.value
-        ),
+        )
     );
 
     // Check Password
@@ -868,7 +895,7 @@ export default {
     const confirmModalDisabled = computed(
       () =>
         (!isHardwareWallet.value && !!inputError.value) ||
-        insufficientFunds.value,
+        insufficientFunds.value
     );
     const currentKtAddress = inject('currentKtAddress');
     // Prepare and Send tx
@@ -898,13 +925,14 @@ export default {
       // bridge
       if (isSendToAnotherNetwork.value) {
         prepareLoading.value = true;
-        prepareBuildTransaction.value = await props.currentWallet.getBuildBridgeTransaction({
-          walletId: props.currentWallet.id,
-          token: props.currentWallet.net,
-          toNetwork: bridgeTargetNet.value,
-          toAddress: toAddress.value,
-          amount: amount.value,
-        });
+        prepareBuildTransaction.value =
+          await props.currentWallet.getBuildBridgeTransaction({
+            walletId: props.currentWallet.id,
+            token: props.currentWallet.net,
+            toNetwork: bridgeTargetNet.value,
+            toAddress: toAddress.value,
+            amount: amount.value,
+          });
         prepareLoading.value = false;
 
         if (prepareBuildTransaction.value.ok) {
@@ -957,7 +985,8 @@ export default {
       // metamask, ...
       if (currentWalletType.value === WALLET_TYPES.METAMASK) {
         isLoading.value = true;
-        const metamaskResult = await metamaskConnector.value.sendMetamaskTransaction(rawTx.value);
+        const metamaskResult =
+          await metamaskConnector.value.sendMetamaskTransaction(rawTx.value);
 
         if (metamaskResult.error) {
           notify({
@@ -976,11 +1005,17 @@ export default {
       }
 
       if (props.currentWallet.type === WALLET_TYPES.KEPLR) {
-        const tx = isSendToAnotherNetwork.value ? prepareBuildTransaction.value.data : rawTx.value;
+        const tx = isSendToAnotherNetwork.value
+          ? prepareBuildTransaction.value.data
+          : rawTx.value;
         let keplrResult;
 
         try {
-          keplrResult = await keplrConnector.value.sendKeplrTransaction(tx, props.currentWallet.address, { preferNoSetFee: true });
+          keplrResult = await keplrConnector.value.sendKeplrTransaction(
+            tx,
+            props.currentWallet.address,
+            { preferNoSetFee: true }
+          );
         } catch (err) {
           notify({
             type: 'warning',
@@ -1027,7 +1062,9 @@ export default {
           },
         };
         const data = await useApi('wallet').sendSignedTransaction({
-          hash: keplrNetworksProtobufFormat.includes(parentWallet.value.net) ? protobufTx : defaultTx,
+          hash: keplrNetworksProtobufFormat.includes(parentWallet.value.net)
+            ? protobufTx
+            : defaultTx,
           deviceType: WALLET_TYPES.KEPLR,
           proxy: false,
           network: parentWallet.value.net,
@@ -1068,7 +1105,9 @@ export default {
           showConfirmLedgerModal.value = true;
 
           try {
-            const tx = isSendToAnotherNetwork.value ? prepareBuildTransaction.value.data : rawTx.value;
+            const tx = isSendToAnotherNetwork.value
+              ? prepareBuildTransaction.value.data
+              : rawTx.value;
             await signAndSendTransfer(tx, null, {
               currentToken: props.currentToken,
             });
@@ -1082,7 +1121,9 @@ export default {
             }
           }
         } else {
-          const tx = isSendToAnotherNetwork.value ? prepareBuildTransaction.value.data : rawTx.value;
+          const tx = isSendToAnotherNetwork.value
+            ? prepareBuildTransaction.value.data
+            : rawTx.value;
           await signAndSendTransfer(tx, password.value, {
             currentToken: props.currentToken,
           });
@@ -1155,11 +1196,11 @@ export default {
     const txComment = ref('');
     const successClickHandler = async () => {
       txComment.value &&
-      (await store.dispatch('transactions/postTransactionNote', {
-        network: props.currentWallet.net,
-        hash: txHash.value,
-        text: txComment.value,
-      }));
+        (await store.dispatch('transactions/postTransactionNote', {
+          network: props.currentWallet.net,
+          hash: txHash.value,
+          text: txComment.value,
+        }));
       successCloseHandler();
     };
 
@@ -1290,7 +1331,7 @@ export default {
     & span {
       font-size: 18px;
       line-height: 30px;
-      font-family: "Panton_Bold";
+      font-family: 'Panton_Bold';
       @include md {
         font-size: 16px;
       }
@@ -1366,7 +1407,7 @@ export default {
     font-size: 14px;
     line-height: 17px;
     color: $red;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
   }
 
   &__input-note-xl {
@@ -1545,7 +1586,7 @@ export default {
 
       & a {
         color: $royalblue1;
-        font-family: "Panton_Bold";
+        font-family: 'Panton_Bold';
       }
     }
 
@@ -1603,7 +1644,7 @@ export default {
     font-size: 14px;
     line-height: 17px;
     color: $blue;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     margin-left: 8px;
   }
 
@@ -1614,7 +1655,7 @@ export default {
   &__info-currency {
     margin-left: 5px;
     color: $mid-gray;
-    font-family: "Panton_Regular";
+    font-family: 'Panton_Regular';
   }
 
   &__info-per {
@@ -1637,7 +1678,7 @@ export default {
   box-sizing: border-box;
   position: absolute;
   border-radius: 12px;
-  border: 1px solid #C3CEEB;
+  border: 1px solid #c3ceeb;
   // border-top: none;
   top: 70px;
 }

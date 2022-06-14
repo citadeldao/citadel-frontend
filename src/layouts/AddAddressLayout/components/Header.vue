@@ -1,23 +1,17 @@
 <template>
   <div class="header">
-    <PrivacyModal
-      v-if="showPrivacy"
-      @close="showPrivacy = false"
-    />
-    <TermsModal
-      v-if="showTerms"
-      @close="showTerms = false"
-    />
+    <PrivacyModal v-if="showPrivacy" @close="showPrivacy = false" />
+    <TermsModal v-if="showTerms" @close="showTerms = false" />
     <div
-      v-if="wallets?.length && !['multisigBalance', 'multisigSend'].includes($route.name)"
+      v-if="
+        wallets?.length &&
+        !['multisigBalance', 'multisigSend'].includes($route.name)
+      "
       class="header__breadcrumbs"
     >
       <Breadcrumbs />
     </div>
-    <h1
-      v-else
-      class="header__title"
-    >
+    <h1 v-else class="header__title">
       {{ title }}
     </h1>
     <div class="header__menu">
@@ -28,35 +22,20 @@
           data-qa="header__dao-button"
         >
           <faq class="faq" />
-          <div
-            class="faq-items"
-          >
-            <div
-              class="faq-item"
-              @click="showPrivacy = true"
-            >
+          <div class="faq-items">
+            <div class="faq-item" @click="showPrivacy = true">
               <privacy />
               <div>{{ $t('faq.privacyPolicy') }}</div>
             </div>
-            <div
-              class="faq-item"
-              @click="showTerms = true"
-            >
+            <div class="faq-item" @click="showTerms = true">
               <terms />
               <div>{{ $t('faq.termsOfService') }}</div>
             </div>
           </div>
         </button>
-        <button
-          v-if="false"
-          class="header__menu-button"
-        >
+        <button v-if="false" class="header__menu-button">
           <help />
-          <Badge
-            v-if="false"
-            :content="12"
-            background-color="#00A3FF"
-          />
+          <Badge v-if="false" :content="12" background-color="#00A3FF" />
         </button>
         <router-link
           :to="{ name: 'Dao' }"
@@ -86,10 +65,7 @@
           active-class="header__menu-button--active"
           data-qa="header__rewards-button"
         >
-          <Badge
-            :content="extensionsList?.length"
-            background-color="#6A4BFF"
-          />
+          <Badge :content="extensionsList?.length" background-color="#6A4BFF" />
           <app />
         </router-link>
 
@@ -176,10 +152,14 @@ export default {
     const showTerms = ref(false);
 
     store.dispatch('extensions/fetchExtensionsList');
-    const extensionsList = computed(() => store.getters['extensions/extensionsList']);
+    const extensionsList = computed(
+      () => store.getters['extensions/extensionsList']
+    );
 
     const rewards = computed(() => store.getters['rewards/rewards']);
-    const keyStorage = computed(() => `user_${store.getters['profile/info']?.id}`);
+    const keyStorage = computed(
+      () => `user_${store.getters['profile/info']?.id}`
+    );
     const hasWallets = computed(() => !!wallets.value.length);
 
     const logoutOptions = reactive({
@@ -189,13 +169,20 @@ export default {
     const isLogoutModalOpened = ref(false);
     const userSubMenu = ref([
       { title: t('menu.settings'), icon: 'settings' },
-      { color: '#FA3B33', title: t('menu.logOut'), icon: 'logout', hasStroke: true },
+      {
+        color: '#FA3B33',
+        title: t('menu.logOut'),
+        icon: 'logout',
+        hasStroke: true,
+      },
     ]);
 
     const isCurrentWallet = computed(() => route.path.includes('wallet'));
-    const title = computed(() => isCurrentWallet.value
-      ? currentWallet.value?.name
-      : t(route.meta.title || ''));
+    const title = computed(() =>
+      isCurrentWallet.value
+        ? currentWallet.value?.name
+        : t(route.meta.title || '')
+    );
 
     const onResetLogoutOptions = () => {
       logoutOptions.erase = false;
@@ -234,7 +221,6 @@ export default {
         window.location.reload();
       }
     };
-
 
     return {
       isCurrentWallet,
@@ -312,13 +298,14 @@ export default {
       position: relative;
 
       .faq-items {
-        transition: .3s all ease-in-out;
+        transition: 0.3s all ease-in-out;
         display: none;
         width: 259px;
         box-sizing: border-box;
         padding: 0 15px;
         background: $white;
-        box-shadow: 0px 15px 50px rgba(80, 100, 124, 0.1), 0px 10px 15px rgba(80, 100, 124, 0.16);
+        box-shadow: 0px 15px 50px rgba(80, 100, 124, 0.1),
+          0px 10px 15px rgba(80, 100, 124, 0.16);
         border-radius: 8px;
         position: absolute;
         z-index: 10;
@@ -340,7 +327,7 @@ export default {
           }
 
           &:first-child {
-            border-bottom: 1px solid #F0F3FD;
+            border-bottom: 1px solid #f0f3fd;
           }
 
           div {

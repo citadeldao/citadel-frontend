@@ -34,54 +34,66 @@ export default {
   }),
 
   getters: {
-    walletsStructure: state => state.walletsStructure,
-    wallets: (state, getters, rootState, rootGetters) => state.wallets.filter(({ net })=> rootGetters['networks/networksList'].some((network)=> network.net === net)),
-    walletByAddress: (state) => (wallet = {}) =>
-      findWalletInArray(state.wallets, wallet),
+    walletsStructure: (state) => state.walletsStructure,
+    wallets: (state, getters, rootState, rootGetters) =>
+      state.wallets.filter(({ net }) =>
+        rootGetters['networks/networksList'].some(
+          (network) => network.net === net
+        )
+      ),
+    walletByAddress:
+      (state) =>
+      (wallet = {}) =>
+        findWalletInArray(state.wallets, wallet),
     currentWallet: (state) => state.currentWallet,
     loaded: (state) => state.loaded,
-    customWalletsList: (state) => (sortByAlphabet(state.customWalletsList, 'name')),
-    customWalletsListByName: state => listName => (
-      state.customWalletsList.find(list => list.name === listName) || { wallets: [] }
-    ),
+    customWalletsList: (state) =>
+      sortByAlphabet(state.customWalletsList, 'name'),
+    customWalletsListByName: (state) => (listName) =>
+      state.customWalletsList.find((list) => list.name === listName) || {
+        wallets: [],
+      },
     activeList: (state) => state.activeList,
-    hiddenWallets: state => state.hiddenWallets,
+    hiddenWallets: (state) => state.hiddenWallets,
     freePathIndex:
       (state) =>
-        ({ net }) => {
+      ({ net }) => {
         // looking for free path index in wallets with type oneSeed
-          let pathIndex = 0;
+        let pathIndex = 0;
 
-          // 30 - max limit for wallets and loop
-          while (pathIndex < 30) {
+        // 30 - max limit for wallets and loop
+        while (pathIndex < 30) {
           // current derpath
-            const { data: derivationPath } = citadel.getDerivationPathByIndex(
-              net,
-              'seed',
-              pathIndex,
-            );
-            // find current derpath among wallets
-            const indexIsAlreadyTaken = state.wallets.find(
-              (wallet) =>
-                wallet.type === 'oneSeed' &&
+          const { data: derivationPath } = citadel.getDerivationPathByIndex(
+            net,
+            'seed',
+            pathIndex
+          );
+          // find current derpath among wallets
+          const indexIsAlreadyTaken = state.wallets.find(
+            (wallet) =>
+              wallet.type === 'oneSeed' &&
               wallet.net === net &&
-              wallet.derivationPath === derivationPath,
-            );
+              wallet.derivationPath === derivationPath
+          );
 
-            if (indexIsAlreadyTaken) {
-              pathIndex++;
-            } else {
-              return pathIndex;
-            }
+          if (indexIsAlreadyTaken) {
+            pathIndex++;
+          } else {
+            return pathIndex;
           }
+        }
 
-          return pathIndex;
-        },
+        return pathIndex;
+      },
   },
 
   mutations: {
     removeWallet(state, { net, address }) {
-      state.wallets = state.wallets.filter(w => w.net !== net || w.address.toLowerCase() !== address.toLowerCase());
+      state.wallets = state.wallets.filter(
+        (w) =>
+          w.net !== net || w.address.toLowerCase() !== address.toLowerCase()
+      );
     },
     addImportedToWallets(state, wallet) {
       state.wallets.push(wallet);
@@ -90,25 +102,26 @@ export default {
       const data = state.wallets;
 
       for (const wallet of wallets) {
-      // search dublicate
+        // search dublicate
         const searchIndex = data.findIndex(
           (w) =>
-            w.net === wallet.net && w.address.toLowerCase() === wallet.address.toLowerCase(),
+            w.net === wallet.net &&
+            w.address.toLowerCase() === wallet.address.toLowerCase()
         );
 
         if (searchIndex > -1) {
           // for public key
-          if ((wallet.type === WALLET_TYPES.PUBLIC_KEY &&
-            // if dublikate IS NOT public key type, return
-            data[searchIndex].type !== WALLET_TYPES.PUBLIC_KEY
-          ) ||
-
-          // for keplr
-          (wallet.type === WALLET_TYPES.KEPLR &&
-          // if dublikate type type IS NOT keplr AND IS NOT public key, return
-          // (
-              (data[searchIndex].type !== WALLET_TYPES.KEPLR && data[searchIndex].type !== WALLET_TYPES.PUBLIC_KEY)
-          )) {
+          if (
+            (wallet.type === WALLET_TYPES.PUBLIC_KEY &&
+              // if dublikate IS NOT public key type, return
+              data[searchIndex].type !== WALLET_TYPES.PUBLIC_KEY) ||
+            // for keplr
+            (wallet.type === WALLET_TYPES.KEPLR &&
+              // if dublikate type type IS NOT keplr AND IS NOT public key, return
+              // (
+              data[searchIndex].type !== WALLET_TYPES.KEPLR &&
+              data[searchIndex].type !== WALLET_TYPES.PUBLIC_KEY)
+          ) {
             return;
           }
 
@@ -122,8 +135,13 @@ export default {
         const filteredData = [];
 
         for (const wallet of data) {
-          if (state.walletsStructure.some(item => item.net.toLowerCase() === wallet.net.toLowerCase() &&
-         item.address.toLowerCase() === wallet.address.toLowerCase())) {
+          if (
+            state.walletsStructure.some(
+              (item) =>
+                item.net.toLowerCase() === wallet.net.toLowerCase() &&
+                item.address.toLowerCase() === wallet.address.toLowerCase()
+            )
+          ) {
             filteredData.push(wallet);
           }
         }
@@ -158,31 +176,46 @@ export default {
       state.hiddenWallets.push(address);
     },
     [types.REMOVE_WALLET_FROM_HIDDEN](state, address) {
-      const index = state.hiddenWallets.findIndex(a => a === address);
+      const index = state.hiddenWallets.findIndex((a) => a === address);
       state.hiddenWallets.splice(index, 1);
     },
   },
   actions: {
-    async getNewWallets({ getters, dispatch, rootGetters, commit }, mode ='lazy') {
+    async getNewWallets(
+      { getters, dispatch, rootGetters, commit },
+      mode = 'lazy'
+    ) {
       try {
         const { error, data: walletsList } = await citadel.getWalletList(mode);
 
         if (!error) {
-          if (JSON.stringify(walletsList) !== JSON.stringify(getters.walletsStructure)) {
+          if (
+            JSON.stringify(walletsList) !==
+            JSON.stringify(getters.walletsStructure)
+          ) {
             commit(types.SET_WALLETS_STRUCTURE, walletsList);
-            const formatedList = walletsList.map((item)=>{
-              const found = getters.wallets.find(({ net, address }) =>
-                address.toLowerCase() === item.address.toLowerCase() && net.toLowerCase() === item.net.toLowerCase());
+            const formatedList = walletsList
+              .map((item) => {
+                const found = getters.wallets.find(
+                  ({ net, address }) =>
+                    address.toLowerCase() === item.address.toLowerCase() &&
+                    net.toLowerCase() === item.net.toLowerCase()
+                );
 
-              return {
-                ...item,
-                privateKeyEncoded: found?.privateKeyEncoded || null,
-                mnemonicEncoded: found?.mnemonicEncoded || null,
-                publicKey: found?.publicKey || null,
-                derivationPath: found?.derivationPath || null,
-                importedFromSeed: found?.importedFromSeed,
-              };
-            }).filter(({ net }) => rootGetters['networks/networksList'].some((network)=> network.net === net));
+                return {
+                  ...item,
+                  privateKeyEncoded: found?.privateKeyEncoded || null,
+                  mnemonicEncoded: found?.mnemonicEncoded || null,
+                  publicKey: found?.publicKey || null,
+                  derivationPath: found?.derivationPath || null,
+                  importedFromSeed: found?.importedFromSeed,
+                };
+              })
+              .filter(({ net }) =>
+                rootGetters['networks/networksList'].some(
+                  (network) => network.net === net
+                )
+              );
             await dispatch('initWalletsInstances', formatedList);
           }
         }
@@ -205,7 +238,12 @@ export default {
         wallets.push(new WalletConstructor(walletOpts));
       }
 
-      dispatch('pushWallets', { wallets: wallets.filter((item)=> item.type === WALLET_TYPES.PUBLIC_KEY || item.publicKey), root: true });
+      dispatch('pushWallets', {
+        wallets: wallets.filter(
+          (item) => item.type === WALLET_TYPES.PUBLIC_KEY || item.publicKey
+        ),
+        root: true,
+      });
     },
 
     async setWallets({ commit }, wallets) {
@@ -263,7 +301,10 @@ export default {
       }
     },
 
-    async editCustomWalletsList({ dispatch, commit }, { listId, name, wallets, needSetActiveList = true }) {
+    async editCustomWalletsList(
+      { dispatch, commit },
+      { listId, name, wallets, needSetActiveList = true }
+    ) {
       const res = await citadel.editCustomWalletList(listId, name, wallets);
 
       if (!res.error) {
@@ -288,7 +329,10 @@ export default {
       return false;
     },
 
-    async createCustomWalletsList({ dispatch, commit }, { name, wallets, needSetActiveList = true }) {
+    async createCustomWalletsList(
+      { dispatch, commit },
+      { name, wallets, needSetActiveList = true }
+    ) {
       const res = await citadel.createCustomWalletList(name, wallets);
 
       if (!res.error) {
@@ -313,7 +357,10 @@ export default {
       return false;
     },
 
-    async deleteCustomWalletsList({ dispatch, commit }, { listId, needSetActiveList = true }) {
+    async deleteCustomWalletsList(
+      { dispatch, commit },
+      { listId, needSetActiveList = true }
+    ) {
       const res = await citadel.deleteCustomWalletList(listId);
 
       if (!res.error) {

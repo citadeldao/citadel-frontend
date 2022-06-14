@@ -1,27 +1,18 @@
 <template>
   <div class="send-direction">
-    <div
-      v-if="showFrom"
-      class="send-direction__line"
-    >
+    <div v-if="showFrom" class="send-direction__line">
       <span class="send-direction__line-title">{{ $t('sendFrom') }}: </span>
       <span class="send-direction__line-from">
         {{ address }}
       </span>
     </div>
-    <div
-      v-if="to"
-      class="send-direction__line"
-    >
+    <div v-if="to" class="send-direction__line">
       <span class="send-direction__line-title"> {{ $t('sendTo') }}: </span>
       <span class="send-direction__line-to">
         {{ to }}
       </span>
     </div>
-    <div
-      v-if="amount || amount == 0"
-      class="send-direction__line"
-    >
+    <div v-if="amount || amount == 0" class="send-direction__line">
       <span class="send-direction__line-title"> {{ $t('amount') }}: </span>
       <div>
         <span
@@ -31,41 +22,31 @@
         <span class="send-direction__line-currency"> {{ wallet?.code }} </span>
       </div>
     </div>
-    <div
-      v-if="fee"
-      class="send-direction__line"
-    >
+    <div v-if="fee" class="send-direction__line">
       <span class="send-direction__line-title"> {{ $t('fee') }}: </span>
       <div v-if="wallet.hasPledged">
         <span
           v-pretty-number="adding.ram"
           class="send-direction__line-fee-amount"
         />
-        <span class="send-direction__line-currency">
-          iRam,
-        </span>
+        <span class="send-direction__line-currency"> iRam, </span>
         <span
           v-pretty-number="adding.gas"
           class="send-direction__line-fee-amount"
         />
-        <span class="send-direction__line-currency">
-          iGas
-        </span>
+        <span class="send-direction__line-currency"> iGas </span>
       </div>
       <div v-else>
         <span
           v-pretty-number="{ value: fee || 0, currency: wallet?.code }"
           class="send-direction__line-fee-amount"
         />
-        <span class="send-direction__line-currency"> {{
-          currentToken ? currentToken.parentCoin.code : wallet?.code
-        }} </span>
+        <span class="send-direction__line-currency">
+          {{ currentToken ? currentToken.parentCoin.code : wallet?.code }}
+        </span>
       </div>
     </div>
-    <div
-      v-if="memo"
-      class="send-direction__line"
-    >
+    <div v-if="memo" class="send-direction__line">
       <span class="send-direction__line-title">{{ $t('memo') }}: </span>
       <span
         v-pretty-number="{ value: memo, noPretty: true }"
@@ -74,38 +55,18 @@
         {{ memo }}
       </span>
     </div>
-    <div
-      v-if="viewingKey"
-      class="send-direction__vk"
-    >
-      <div class="vk__title">
-        {{ $t('viewingKey.vkFor') }} {{ tokenName }}
-      </div>
+    <div v-if="viewingKey" class="send-direction__vk">
+      <div class="vk__title">{{ $t('viewingKey.vkFor') }} {{ tokenName }}</div>
       <div class="vk__val">
         <span>{{ viewingKeyParsed }}</span>
         <div class="vk__btns">
-          <div
-            class="vk__eye-btn"
-            @click="handleClick"
-          >
-            <vision
-              v-if="isVkHidden === true"
-              class="vk__eye-svg"
-            />
-            <hide
-              v-else
-              class="vk__eye-svg"
-            />
+          <div class="vk__eye-btn" @click="handleClick">
+            <vision v-if="isVkHidden === true" class="vk__eye-svg" />
+            <hide v-else class="vk__eye-svg" />
           </div>
-          <div
-            class="vk__copy-btn"
-            @click="copyValue"
-          >
+          <div class="vk__copy-btn" @click="copyValue">
             <transition name="fade1">
-              <span
-                v-if="isCopied"
-                class="tooltip"
-              >
+              <span v-if="isCopied" class="tooltip">
                 {{ $t('copiedToClipboard') }}
               </span>
             </transition>
@@ -114,10 +75,7 @@
         </div>
       </div>
     </div>
-    <div
-      v-if="iostFee"
-      class="send-direction__needed-resources"
-    >
+    <div v-if="iostFee" class="send-direction__needed-resources">
       <span
         v-pretty-number="{ value: iostFee, currency: wallet?.code }"
         class="send-direction__needed-resources-amount"
@@ -134,7 +92,9 @@
       target="_blank"
     >
       <span class="send-direction__line-title">
-        {{ $t('viewTranscasction') }}<linkIcon class="send-direction__link-icon" /> </span></a>
+        {{ $t('viewTranscasction')
+        }}<linkIcon class="send-direction__link-icon" /> </span
+    ></a>
   </div>
 </template>
 
@@ -207,7 +167,7 @@ export default {
       const data = [];
 
       if (props.txHash) {
-        const filteredData = props.txHash?.filter((item)=> item);
+        const filteredData = props.txHash?.filter((item) => item);
 
         for (const item of filteredData) {
           data.push(props.wallet?.getTxUrl(props.wallet.id, item));
@@ -235,13 +195,24 @@ export default {
         isCopied.value = false;
       }, 1500);
     };
-    const address = computed(() => (props.activeTab === 'redelegate' || props.mode === 'redelegate') && !isMultiple.value
-      ? props.redelegationNodeAddress
-      : currentKtAddress.value
+    const address = computed(() =>
+      (props.activeTab === 'redelegate' || props.mode === 'redelegate') &&
+      !isMultiple.value
+        ? props.redelegationNodeAddress
+        : currentKtAddress.value
         ? currentKtAddress.value.address
-        : props.wallet?.address);
+        : props.wallet?.address
+    );
 
-    return { txUrl, isVkHidden, viewingKeyParsed, handleClick, copyValue, isCopied, address };
+    return {
+      txUrl,
+      isVkHidden,
+      viewingKeyParsed,
+      handleClick,
+      copyValue,
+      isCopied,
+      address,
+    };
   },
 };
 </script>
@@ -321,7 +292,7 @@ export default {
 
   &__line-amount,
   &__line-fee-amount {
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
     font-size: 14px;
     line-height: 19px;
     color: $blue;
@@ -424,7 +395,7 @@ export default {
     color: $too-dark-blue;
 
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       bottom: 98%;
       left: 50%;

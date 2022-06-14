@@ -1,10 +1,7 @@
 <template>
   <div class="asset-item">
     <div class="asset-item__icon">
-      <div
-        v-if="showIconPlaceholder"
-        class="asset-item__placeholder"
-      >
+      <div v-if="showIconPlaceholder" class="asset-item__placeholder">
         <span>{{ iconPlaceholder[0] }}</span>
         <span>{{ iconPlaceholder[1] }}</span>
       </div>
@@ -13,7 +10,7 @@
         :src="getTokenIcon(asset.code.toLowerCase())"
         alt=""
         @error="showIconPlaceholder = true"
-      >
+      />
     </div>
     <div class="asset-item__info">
       <div class="asset-item__line">
@@ -22,7 +19,10 @@
         </span>
         <span class="asset-item__balance">
           <span
-            v-pretty-number="{ value: asset.tokenBalance.mainBalance, currency: asset.code }"
+            v-pretty-number="{
+              value: asset.tokenBalance.mainBalance,
+              currency: asset.code,
+            }"
             class="asset-item__amount"
           />
           <span class="asset-item__currency">
@@ -63,7 +63,7 @@ export default {
     const showIconPlaceholder = ref(false);
 
     const iconPlaceholder = computed(() =>
-      tokenIconPlaceholder(props.asset.code),
+      tokenIconPlaceholder(props.asset.code)
     );
 
     return {
@@ -140,7 +140,7 @@ export default {
       font-size: 14px;
       line-height: 17px;
       color: $white;
-      font-family: "Panton_Bold";
+      font-family: 'Panton_Bold';
       position: absolute;
       top: 8px;
       left: 9px;
@@ -171,7 +171,7 @@ export default {
     font-size: 16px;
     line-height: 19px;
     color: $mid-blue;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
   }
 
   &__balance {
@@ -187,20 +187,19 @@ export default {
         }
 
         &__currency {
-
         }
       }
     }
   }
 
   &__amount {
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
     line-height: 19px;
     color: $mid-blue;
   }
 
   &__currency {
-    font-family: "Panton_Regular";
+    font-family: 'Panton_Regular';
     line-height: 16px;
     color: $mid-gray;
   }
@@ -209,9 +208,7 @@ export default {
     font-size: 12px;
     line-height: 14px;
     color: $mid-gray;
-    font-family: "Panton_Regular";
+    font-family: 'Panton_Regular';
   }
 }
 </style>
-
-

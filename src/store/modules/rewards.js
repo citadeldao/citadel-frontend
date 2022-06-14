@@ -2,13 +2,11 @@ import { sortByAlphabet } from '@/helpers';
 import notify from '@/plugins/notify';
 import citadel from '@citadeldao/lib-citadel';
 
-
 const types = {
   SET_REWARDS: 'SET_REWARDS',
   SET_REWARDS_BY_RANGE: 'SET_REWARDS_BY_RANGE',
   SET_TOTAL: 'SET_TOTAL',
   SET_DATE: 'SET_DATE',
-
 };
 
 export default {
@@ -24,10 +22,10 @@ export default {
   }),
 
   getters: {
-    rewards: state => (sortByAlphabet(state.rewards, 'net')),
-    total: state => state.total,
-    rewardsByRange: state => state.rewardsByRange,
-    date: state => state.date,
+    rewards: (state) => sortByAlphabet(state.rewards, 'net'),
+    total: (state) => state.total,
+    rewardsByRange: (state) => state.rewardsByRange,
+    date: (state) => state.date,
   },
 
   mutations: {
@@ -43,8 +41,6 @@ export default {
     [types.SET_DATE](state, { from, to }) {
       state.date = { from, to };
     },
-
-
   },
 
   actions: {
@@ -54,7 +50,10 @@ export default {
       if (!error) {
         commit(types.SET_REWARDS, data.claims);
         commit(types.SET_TOTAL, data.total);
-        commit(types.SET_DATE, { from: data.rewards.date_from, to: data.rewards.date_to });
+        commit(types.SET_DATE, {
+          from: data.rewards.date_from,
+          to: data.rewards.date_to,
+        });
       } else {
         notify({
           type: 'warning',
@@ -63,7 +62,7 @@ export default {
       }
     },
     async getRewardsByRange({ commit }, { from, to }) {
-      const { data, error } = await citadel.getRewardsByRange(from, to );
+      const { data, error } = await citadel.getRewardsByRange(from, to);
 
       if (!error) {
         commit(types.SET_REWARDS_BY_RANGE, data);
