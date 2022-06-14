@@ -21,8 +21,8 @@
 import AssignAddressItem from './AssignAddressItem.vue';
 import { computed } from '@vue/runtime-core';
 export default {
-  name:'AssignedAddressesModalContent',
-  components:{ AssignAddressItem },
+  name: 'AssignedAddressesModalContent',
+  components: { AssignAddressItem },
   props: {
     list: {
       type: Object,
@@ -32,7 +32,7 @@ export default {
   setup(props) {
     const counterValue = computed( () => props.list.length);
 
-    return{ counterValue };
+    return { counterValue };
   },
 };
 </script>

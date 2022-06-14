@@ -25,8 +25,8 @@
 <script>
 import AssignAddressItem from './AssignAddressItem.vue';
 export default {
-  name:'NewAssignedAddressesModal',
-  components:{ AssignAddressItem },
+  name: 'NewAssignedAddressesModal',
+  components: { AssignAddressItem },
   props: {
     currentWallet: {
       type: Object,

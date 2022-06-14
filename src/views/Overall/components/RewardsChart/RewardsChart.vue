@@ -146,10 +146,10 @@ export default {
       const { rewardsChart } = await store.dispatch(storeAction, { list: customList.value });
       await renderRewardsChart(rewardsChart, createDatasetForRewardsChart(rewardsChart, currentTab.value, MAX_ITEMS_IN_PREVIEW), currentTab.value, canvasElement, info.value);
     });
-    watch(() => currentTab.value , async() => {
+    watch(() => currentTab.value, async () => {
       await renderRewardsChart(rewardsChart.value, datasetsArray.value, currentTab.value, canvasElement, info.value);
     });
-    watch(() =>  customList.value, async () => {
+    watch(() => customList.value, async () => {
       const { rewardsChart } = await store.dispatch(storeAction, { list: customList.value });
       await renderRewardsChart(rewardsChart, createDatasetForRewardsChart(rewardsChart, currentTab.value, MAX_ITEMS_IN_PREVIEW), currentTab.value, canvasElement, info.value);
     });

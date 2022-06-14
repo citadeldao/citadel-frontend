@@ -388,7 +388,7 @@ export default {
     // const privateWallets = computed(() => store.getters['wallets/wallets'].filter(w => w.type !== WALLET_TYPES.PUBLIC_KEY));
     const messageForSign = false; // computed(() => store.getters['extensions/extensionMessageForSign']);
 
-    //const walletsList = computed(() => store.getters['wallets/wallets']);
+    // const walletsList = computed(() => store.getters['wallets/wallets']);
 
     const extensionTransactionForSign = computed(() => store.getters['extensions/extensionTransactionForSign']);
     const metamaskConnector = computed(() => store.getters['metamask/metamaskConnector']);
@@ -400,9 +400,12 @@ export default {
 
       await store.dispatch('extensions/fetchExtensionInfo', { appId: selectedApp.value.id });
 
-      const nets = selectedApp.value.networks.map(net => { return net.toLowerCase(); });
+      const nets = selectedApp.value.networks.map(net => {
+        return net.toLowerCase();
+      });
 
       let mergeWallet = null; // metamask
+
       if ([metamaskConnector.value.network].includes(nets[0])) {
         const metamaskNet = metamaskConnector.value.network;
         const metamaskAddress = metamaskConnector.value.accounts[0] && metamaskConnector.value.accounts[0].toLowerCase();
@@ -411,7 +414,9 @@ export default {
       }
 
       if (currentAppInfo?.value?.token) {
-        const nets = selectedApp.value.networks.map(net => { return net.toLowerCase(); });
+        const nets = selectedApp.value.networks.map(net => {
+          return net.toLowerCase();
+        });
         const wallets = walletsList.value
 
         // const wallets = privateWallets.value
@@ -450,7 +455,9 @@ export default {
     };
 
     const appsFiltered = computed(() => {
-      if (!searchStr.value.length) {return extensionsList.value;}
+      if (!searchStr.value.length) {
+        return extensionsList.value;
+      }
 
       return extensionsList.value.filter(app => {
         return app.name.toLowerCase().includes(searchStr.value);
@@ -469,7 +476,9 @@ export default {
       if (extensionTransactionForSign?.value?.transaction) {
         const currentAddress = extensionTransactionForSign.value.address;
 
-        const nets = currentApp.value.networks.map(net => { return net.toLowerCase(); });
+        const nets = currentApp.value.networks.map(net => {
+          return net.toLowerCase();
+        });
         signerWallet.value = walletsList.value.find(w => w.address.toLowerCase() === currentAddress.toLowerCase() && nets.includes(w.net.toLowerCase()));
 
         // signerWallet.value = privateWallets.value.find(w => w.address.toLowerCase() === currentAddress.toLowerCase() && nets.includes(w.net.toLowerCase()));
@@ -490,6 +499,7 @@ export default {
         closeApp(true);
       } else {
         selectedApp.value = Object.assign({}, extensionsList.value.find(a => a.name === route.params.name));
+
         if (selectedApp.value.id) {
           selectApp();
         }
@@ -518,6 +528,7 @@ export default {
           type: extensionsSocketTypes.types.message,
         });
       }
+
       msgSuccessSignature.value = '';
       showLedgerConnect.value = false;
       store.commit('extensions/SET_MESSAGE_FOR_SIGN', null, { root: true });
@@ -642,6 +653,7 @@ export default {
       // metamask, ...
       if (metamaskSigner.value) {
         const metamaskResult = await metamaskConnector.value.sendMetamaskTransaction(extensionTransactionForSign.value.transaction);
+
         if (metamaskResult.error) {
           notify({
             type: 'warning',
@@ -665,6 +677,7 @@ export default {
       }
 
       confirmPassword.value = true;
+
       if ([WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(signerWallet.value.type) && incorrectPassword.value) {
         return;
       }
@@ -672,6 +685,7 @@ export default {
       if (signerWallet.value.type === WALLET_TYPES.LEDGER) {
         showLedgerConnect.value = true;
       }
+
       let result;
 
       try {

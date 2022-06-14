@@ -177,9 +177,11 @@ export default {
   setup(props) {
     const txUrl = computed(() => {
       const data = [];
-      if(props.txHash){
+
+      if (props.txHash) {
         const filteredData = props.txHash?.filter((item)=> item);
-        for(const item of filteredData){
+
+        for (const item of filteredData) {
           data.push(props.wallet?.getTxUrl(props.wallet.id, item));
         }
       }
@@ -206,8 +208,7 @@ export default {
         return {
           amountTitle: 'amount',
         };
-      }
-      else if (activeTab.value === 'redelegate' || activeTab.value === 'redelegate') {
+      } else if (activeTab.value === 'redelegate' || activeTab.value === 'redelegate') {
         return {
           title1: 'address',
           amountTitle: 'amount',

@@ -53,8 +53,7 @@ export default {
 
       if (!error) {
         commit(types.SET_PREPARE_PRIVATE_CLAIM, data);
-
-      }else{
+      } else {
         notify({
           type: 'warning',
           text: error,
@@ -66,7 +65,7 @@ export default {
 
       if (!error) {
         commit(types.SET_PRIVATE_SALE, data);
-      }else{
+      } else {
         notify({
           type: 'warning',
           text: error,
@@ -75,9 +74,10 @@ export default {
     },
     async getBalanceFundInfo({ commit }, { address, category }) {
       const { data, error } = await citadel.getBalanceFund(address, category);
+
       if (!error) {
         commit(types.SET_BALANCE_FUND, data);
-      }else{
+      } else {
         notify({
           type: 'warning',
           text: error,
@@ -86,9 +86,10 @@ export default {
     },
     async getPrepareTransferFund({ commit }, { address, category, amount, recipient }) {
       const { data, error } = await citadel.getPrepareTransferFund(address, category, amount, recipient);
+
       if (!error) {
         commit(types.SET_PREPARE_TRANSFER_FUND, data);
-      }else{
+      } else {
         notify({
           type: 'warning',
           text: error,

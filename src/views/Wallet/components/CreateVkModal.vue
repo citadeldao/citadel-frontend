@@ -274,11 +274,13 @@ export default {
     const confirmImportHandler = async () => {
       isConfirmModalLoading.value = true;
       let isError = false;
+
       if (passwordError.value && !isHardwareWallet(props.currentWallet.type)) {
         inputError.value = passwordError.value;
         isConfirmModalLoading.value = false;
         isError = true;
       }
+
       if (!ivk.value) {
         ivkInputError.value = t('viewingKey.incorrectKey');
         isConfirmModalLoading.value = false;
@@ -288,6 +290,7 @@ export default {
       if (isError) {
         return;
       }
+
       const { error } = await citadel.importViewingKey(props.currentWallet.id, props.token.net, ivk.value);
 
       if (error) {
@@ -296,12 +299,13 @@ export default {
 
         return;
       }
+
       viewingKey.value = ivk.value;
       showImportVkModal.value = false;
       showSuccessModal.value = true;
       isConfirmModalLoading.value = false;
 
-      await store.dispatch('wallets/getNewWallets','lazy');
+      await store.dispatch('wallets/getNewWallets', 'lazy');
     };
 
     const closeHandler = async () => {
@@ -315,6 +319,7 @@ export default {
     const successCloseHandler = async () => {
       emit('success');
       closeHandler();
+
       if (props.redirect) {
         await store.dispatch('subtokens/setCurrentToken', props.token);
 
@@ -333,7 +338,7 @@ export default {
         return;
       }
 
-      let error, transactionHash, vk;
+      let error; let transactionHash; let vk;
       isConfirmModalLoading.value = true;
 
       if (!isHardwareWallet(props.currentWallet.type)) {
@@ -370,6 +375,7 @@ export default {
         transactionHash = res?.data?.transactionHash;
         vk = res?.data?.viewingKey;
       }
+
       viewingKey.value = vk;
       showConfirmModal.value = false;
       showSuccessModal.value = true;
@@ -380,7 +386,8 @@ export default {
 
         return;
       }
-      await store.dispatch('wallets/getNewWallets','lazy');
+
+      await store.dispatch('wallets/getNewWallets', 'lazy');
       txHash.value = transactionHash;
     };
 

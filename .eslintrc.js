@@ -6,6 +6,7 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
+    'google',
     'plugin:vue/vue3-recommended',
   ],
   parser: 'vue-eslint-parser',
@@ -17,6 +18,15 @@ module.exports = {
     'vue',
   ],
   rules: {
+    'require-jsdoc': 'off',
+    'linebreak-style': 'off',
+    'max-len': 'off',
+    'eol-last': 'off',
+    'new-cap': 'off',
+    'guard-for-in': 'off',
+    'camelcase': 'off',
+    'operator-linebreak': ['error', 'after', { 'overrides': { '?': 'before', ':': 'before' } }],
+    'arrow-parens': ['off'],
     'indent': ['error', 2, { 'SwitchCase': 1 }],
     'quotes': [
       'error',
@@ -42,6 +52,8 @@ module.exports = {
     'padding-line-between-statements': [
       'error',
       { blankLine: 'always', prev: '*', next: 'return' },
+      { blankLine: 'always', prev: ['if', 'for', 'do', 'while', 'try', 'switch'], next: '*' },
+      { blankLine: 'always', prev: '*', next: ['if', 'for', 'do', 'while', 'try', 'switch'] },
     ],
     'no-undef': 'error',
     'eqeqeq': ['error', 'smart'],

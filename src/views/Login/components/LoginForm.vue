@@ -88,6 +88,7 @@ export default {
       if (checkEmpty && !email) {
         return t('login.enterEmail');
       }
+
       if (email && !validateEmail(email)) {
         return t('login.incorrectEmail');
       }

@@ -24,7 +24,7 @@ import AssignAddressItem from './AssignAddressItem.vue';
 import { inject } from '@vue/runtime-core';
 import { findAddressWithNet } from '@/helpers';
 export default {
-  name:'UnassignedAddressesModalContenet',
+  name: 'UnassignedAddressesModalContenet',
   components: { AssignAddressItem },
   props: {
     list: {
@@ -36,7 +36,7 @@ export default {
     const checkedAddresses = inject('checkedAddresses');
     const updateCheckedAddresses = inject('updateCheckedAddresses');
 
-    const checked = (item) => !!findAddressWithNet(checkedAddresses.value,item);
+    const checked = (item) => !!findAddressWithNet(checkedAddresses.value, item);
 
     const addItem = (item) => {
       checkedAddresses.value.push(item);
@@ -45,7 +45,7 @@ export default {
 
     const removeItem = (item) => {
       checkedAddresses.value = checkedAddresses.value.filter(
-        ({ address,net }) => !(address.toLowerCase() === item.address.toLowerCase() && net === item.net),
+        ({ address, net }) => !(address.toLowerCase() === item.address.toLowerCase() && net === item.net),
       ),
       updateCheckedAddresses(checkedAddresses.value);
     };

@@ -70,64 +70,63 @@ export default {
     const data = computed(() => {
       if (props.total < 1) {
         return {
-          name: 'bananas',
-          value: 1,
+          'name': 'bananas',
+          'value': 1,
           '--gradient': 'linear-gradient(90deg, #FC4A1A 0%, #F7B733 100%)',
-          md: 'bananasmd',
-          lg: 'bananaslg',
+          'md': 'bananasmd',
+          'lg': 'bananaslg',
         };
       } else if (props.total < 10) {
         return {
-          name: 'coke',
-          value: Math.round(props.total),
+          'name': 'coke',
+          'value': Math.round(props.total),
           '--gradient': 'linear-gradient(90deg, #9400D3 0%, #4B0082 100%)',
-          md: 'cokemd',
-          lg: 'cokelg',
+          'md': 'cokemd',
+          'lg': 'cokelg',
         };
       } else if (props.total < 100) {
         return {
-          name: 'pizza',
-          value: Math.round(props.total / 10),
+          'name': 'pizza',
+          'value': Math.round(props.total / 10),
           '--gradient':
             'linear-gradient(90deg, #00416A 0%, #799F0C 50%, #FFE000 100%)',
-          md: 'pizzamd',
-          lg: 'pizzalg',
+          'md': 'pizzamd',
+          'lg': 'pizzalg',
         };
       } else if (props.total < 1000) {
         return {
-          name: 'trip',
-          value: Math.round(props.total / 100),
+          'name': 'trip',
+          'value': Math.round(props.total / 100),
           '--gradient': 'linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)',
-          md: 'tripmd',
-          lg: 'triplg',
+          'md': 'tripmd',
+          'lg': 'triplg',
         };
       } else if (props.total < 10000) {
         return {
-          name: 'iphone',
-          value: Math.round(props.total / 1000),
+          'name': 'iphone',
+          'value': Math.round(props.total / 1000),
           '--gradient': 'linear-gradient(90deg, #EC008C 0%, #FC6767 100%)',
-          md: 'iphonemd',
-          lg: 'iphonelg',
+          'md': 'iphonemd',
+          'lg': 'iphonelg',
         };
       } else if (props.total < 100000) {
         return {
-          name: 'watches',
-          value: Math.round(props.total / 10000),
+          'name': 'watches',
+          'value': Math.round(props.total / 10000),
           '--gradient':
             'linear-gradient(90deg, #EB0000 0%, #95008A 50%, #3300FC 100%)',
-          md: 'watchesmd',
-          lg: 'watcheslg',
+          'md': 'watchesmd',
+          'lg': 'watcheslg',
         };
       }
 
       return {
-        name: 'car',
-        value: Math.round(props.total / 100000),
+        'name': 'car',
+        'value': Math.round(props.total / 100000),
         '--gradient': 'linear-gradient(90deg, #D31027 0%, #EA384D 100%)',
-        md: 'carmd',
-        lg: 'carlg',
+        'md': 'carmd',
+        'lg': 'carlg',
       };
-
     });
     const text = computed(() => {
       if (data.value.name !== 'trip') {
@@ -135,7 +134,6 @@ export default {
       }
 
       return `You could fly <strong> Paris → Rome</strong> with your claimed tokens`;
-
     });
 
     return { data, moment, text };

@@ -354,7 +354,8 @@ export default {
       txComment.value = transaction.note;
       showModal.value = true;
       showTransactionInfoModal.value = true;
-      if(props.currentWallet.hasTransactionComment){
+
+      if (props.currentWallet.hasTransactionComment) {
         nextTick(() =>document.getElementById('comment').focus());
       }
     };

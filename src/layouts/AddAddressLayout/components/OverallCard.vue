@@ -55,10 +55,10 @@ export default {
   components: { NetworkTab },
   props: {
     balance: {
-      type: [String,Number],
+      type: [String, Number],
     },
     cryptobalance: {
-      type: [String,Number],
+      type: [String, Number],
     },
     title: {
       type: String,

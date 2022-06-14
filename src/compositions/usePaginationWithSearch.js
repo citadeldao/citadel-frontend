@@ -7,7 +7,7 @@ export default function usePaginationWithSearch(array, itemsCount, pageSizesOpts
   const currentPage = ref(initialPage);
   // const keyword = ref('');
 
-  /*const searching = computed(() => {
+  /* const searching = computed(() => {
     if (!keyword.value) {
       total.value = arr.value.length;
 

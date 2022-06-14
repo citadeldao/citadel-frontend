@@ -20,8 +20,6 @@ import Vue from 'vue';
 const app = createApp(App);
 
 
-
-
 if (process.env.NODE_ENV === 'production') {
   Sentry.init({
     Vue,
@@ -36,10 +34,10 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-if(window.navigator && navigator.serviceWorker) {
+if (window.navigator && navigator.serviceWorker) {
   navigator.serviceWorker.getRegistrations()
     .then((registrations) => {
-      for(const registration of registrations) {
+      for (const registration of registrations) {
         registration.unregister();
       }
     });

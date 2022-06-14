@@ -63,81 +63,84 @@ import { computed } from '@vue/runtime-core';
 import RoundArrowButton from '@/components/UI/RoundArrowButton';
 import AssignButton from './AssignButton.vue';
 export default {
-  name:'InfoBlocks',
-  components:{ RoundArrowButton, AssignButton },
-  props:{
-    unassignedAddresses:{
+  name: 'InfoBlocks',
+  components: { RoundArrowButton, AssignButton },
+  props: {
+    unassignedAddresses: {
       type: Array,
-      default:()=>[],
+      default: ()=>[],
     },
-    assignedAddresses:{
+    assignedAddresses: {
       type: Array,
-      default:()=>[],
+      default: ()=>[],
     },
   },
-  emits:['block1ButtonClick', 'block2ButtonClick','assignedButtonClick','unassignedButtonClick'],
+  emits: ['block1ButtonClick', 'block2ButtonClick', 'assignedButtonClick', 'unassignedButtonClick'],
   setup(props) {
     const blockData = computed(() => {
-      if(!props.unassignedAddresses.length && !props.assignedAddresses.length){
-        return{
-          block1:{
+      if (!props.unassignedAddresses.length && !props.assignedAddresses.length) {
+        return {
+          block1: {
             title: 'xct.blocks.title1',
             desc: 'xct.blocks.desc1',
             showRoundButton: true,
           },
-          block2:{
+          block2: {
             title: 'xct.blocks.title2',
             desc: 'xct.blocks.desc2',
           },
         };
       }
-      if(props.unassignedAddresses.length && !props.assignedAddresses.length){
+
+      if (props.unassignedAddresses.length && !props.assignedAddresses.length) {
         return {
-          block1:{
+          block1: {
             title: 'xct.blocks.title3',
             desc: 'xct.blocks.desc3',
             showRoundButton: false,
           },
-          block2:{
+          block2: {
             title: 'xct.blocks.title4',
             desc: 'xct.blocks.desc4',
           },
         };
       }
-      if(!props.unassignedAddresses.length && props.assignedAddresses.length){
+
+      if (!props.unassignedAddresses.length && props.assignedAddresses.length) {
         return {
-          block1:{
+          block1: {
             title: 'xct.blocks.title5',
             desc: 'xct.blocks.desc5',
             showRoundButton: false,
           },
-          block2:{
+          block2: {
             title: 'xct.blocks.title6',
             desc: 'xct.blocks.desc4',
           },
         };
       }
-      if(props.unassignedAddresses.length && props.assignedAddresses.length){
+
+      if (props.unassignedAddresses.length && props.assignedAddresses.length) {
         return {
-          block1:{
+          block1: {
             title: 'xct.blocks.title3',
             desc: 'xct.blocks.desc5',
             showRoundButton: false,
           },
-          block2:{
+          block2: {
             title: 'xct.blocks.title3',
             desc: 'xct.blocks.desc4',
           },
         };
       }
 
-      return{
-        block1:{},
-        block2:{},
+      return {
+        block1: {},
+        block2: {},
       };
     });
 
-    return{ blockData };
+    return { blockData };
   },
 };
 </script>

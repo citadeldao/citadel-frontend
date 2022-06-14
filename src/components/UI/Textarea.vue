@@ -59,6 +59,7 @@ export default {
   setup(props, { emit }) {
     const hasFocus = ref(false);
     const currentIcon = ref();
+
     if (props.icon) {
       import(`@/assets/icons/input/${props.icon}.svg`).then((val) => {
         currentIcon.value = markRaw(val.default);

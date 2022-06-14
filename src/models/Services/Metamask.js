@@ -50,6 +50,7 @@ export default class MetamaskConnector {
 
   async sendMetamaskTransaction(rawTx) {
     const transaction = rawTx.transaction || rawTx;
+
     if (Array.isArray(transaction)) {
       const txs = transaction.map(tx => {
         return {
@@ -68,7 +69,7 @@ export default class MetamaskConnector {
         return await Promise.all(txs.map(async tx => {
           return await window.ethereum.request({ method: 'eth_sendTransaction', params: [tx] });
         }));
-      } catch(err) {
+      } catch (err) {
         return { error: 'Metamask sign txs error' };
       }
 
@@ -91,11 +92,12 @@ export default class MetamaskConnector {
       gasPrice: `0x${parseInt(transaction.gasPrice).toString(16)}`,
       value: transaction.value ? `0x${parseInt(transaction.value).toString(16)}` : '',
     };
+
     try {
       const txHash = await window.ethereum.request({ method: 'eth_sendTransaction', params: [tx] });
 
       return { txHash };
-    } catch(err) {
+    } catch (err) {
       return { error: 'Metamask sign tx error' };
     }
   }

@@ -64,11 +64,13 @@ export default {
   setup(props, { emit }) {
     const isOpen = ref(false);
     const currentIcon = ref();
+
     if (props.data) {
       import(`@/assets/icons/networks/${props.data.icon}.svg`).then((val) => {
         currentIcon.value = markRaw(val.default);
       });
     }
+
     const clickHandler = () => {
       isOpen.value = !isOpen.value;
     };

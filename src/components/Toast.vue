@@ -77,8 +77,13 @@ export default {
 
     const txTitle = computed(() => {
       if (props.hash) {
-        if (props.type === 'warning') {return t('transactionsSocket.failed');}
-        if (props.type === 'success') {return t('transactionsSocket.completed');}
+        if (props.type === 'warning') {
+          return t('transactionsSocket.failed');
+        }
+
+        if (props.type === 'success') {
+          return t('transactionsSocket.completed');
+        }
 
         return props.title;
       }

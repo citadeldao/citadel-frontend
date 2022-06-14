@@ -81,7 +81,9 @@ export default {
       return 'xl';
     });
     const walletName = computed(() => {
-      if (wSize.value === 'md') {return props.wallet.getShortAddress(13, props.wallet.title || props.wallet.address);}
+      if (wSize.value === 'md') {
+        return props.wallet.getShortAddress(13, props.wallet.title || props.wallet.address);
+      }
 
       return props.wallet.getShortAddress(19, props.wallet.title || props.wallet.address);
     });

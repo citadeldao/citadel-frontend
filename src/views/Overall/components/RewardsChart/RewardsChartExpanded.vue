@@ -74,7 +74,7 @@ import Modal from '@/components/Modal';
 import NetworkTab from '@/components/UI/NetworkTab';
 import TabsGroup from '@/components/UI/TabsGroup';
 import DatePicker from '@/components/UI/DatePicker';
-import {  renderRewardsChart , createDatasetForRewardsChart } from '@/components/Charts/rewardsChart';
+import { renderRewardsChart, createDatasetForRewardsChart } from '@/components/Charts/rewardsChart';
 import RewardsChartItem from '@/views/Overall/components/RewardsChart/RewardsChartItem';
 import toggleInfoClose from '@/assets/icons/toggle-info-close.svg';
 

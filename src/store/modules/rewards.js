@@ -50,11 +50,12 @@ export default {
   actions: {
     async getRewards({ commit }) {
       const { data, error } = await citadel.getRewards();
+
       if (!error) {
         commit(types.SET_REWARDS, data.claims);
         commit(types.SET_TOTAL, data.total);
         commit(types.SET_DATE, { from: data.rewards.date_from, to: data.rewards.date_to });
-      }else{
+      } else {
         notify({
           type: 'warning',
           text: error,
@@ -63,9 +64,10 @@ export default {
     },
     async getRewardsByRange({ commit }, { from, to }) {
       const { data, error } = await citadel.getRewardsByRange(from, to );
+
       if (!error) {
         commit(types.SET_REWARDS_BY_RANGE, data);
-      }else{
+      } else {
         notify({
           type: 'warning',
           text: error,
@@ -75,9 +77,10 @@ export default {
     },
     async getAllRewards({ commit }) {
       const { data, error } = await citadel.getAllRewards();
+
       if (!error) {
         commit(types.SET_REWARDS_BY_RANGE, data);
-      }else{
+      } else {
         notify({
           type: 'warning',
           text: error,

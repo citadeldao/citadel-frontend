@@ -50,6 +50,7 @@ export default function usePledge() {
 
   const insufficientFunds = computed(() => {
     const symbolCount = amount.value.toString().split('.')[1]?.length || 0;
+
     if (amount.value && amount.value > maxAmount.value) {
       return t('insufficientFunds');
     } else if (amount.value && amount.value < 1) {
@@ -58,8 +59,7 @@ export default function usePledge() {
       return t('maxFloatDigits');
     }
 
-    return'';
-
+    return '';
   });
   provide('insufficientFunds', insufficientFunds);
 
@@ -77,6 +77,7 @@ export default function usePledge() {
       transactionType: activeTab.value,
       nodeAddress: currentWallet.value.address,
     });
+
     if (ok) {
       fee.value = resFee;
       adding.value = resAdding;
@@ -85,6 +86,7 @@ export default function usePledge() {
     } else {
       modalCloseHandler();
     }
+
     isLoading.value = false;
   };
   provide('getDelegationFee', getDelegationFee);
@@ -94,13 +96,17 @@ export default function usePledge() {
 
   const resRawTxs = ref();
   const preparePledgeUnpledge = async () => {
-    if (isLoading.value) {return;}
+    if (isLoading.value) {
+      return;
+    }
+
     isLoading.value = true;
     const { rawTxs, ok } = await currentWallet.value.preparePledgeUnpledge({
       walletId: currentWallet.value.id,
       type: activeTab.value,
       amount: amount.value,
     });
+
     if (ok) {
       resRawTxs.value = rawTxs;
       showCooseModeModal.value = false;
@@ -109,6 +115,7 @@ export default function usePledge() {
     } else {
       modalCloseHandler();
     }
+
     isLoading.value = false;
   };
   provide('preparePledgeUnpledge', preparePledgeUnpledge);
@@ -122,12 +129,14 @@ export default function usePledge() {
 
       return;
     }
+
     isLoading.value = true;
     const res = await currentWallet.value.signAndSendMulti({
       walletId: currentWallet.value.id,
       rawTransactions: resRawTxs.value,
       privateKey: currentWallet.value.getPrivateKeyDecoded(password.value),
     });
+
     if (res.ok) {
       txHash.value = res.data;
       showConfirmModal.value = false;
@@ -137,7 +146,6 @@ export default function usePledge() {
       modalCloseHandler();
       isLoading.value = false;
     }
-
   };
   provide('send', send);
 
@@ -172,6 +180,7 @@ export default function usePledge() {
         subtitle: t('pledge.chooseModeModalSubtitle'),
       };
     }
+
     if (activeTab.value === 'unpledge') {
       return {
         title: t('pledge.chooseModeModalTitle2'),
@@ -179,8 +188,7 @@ export default function usePledge() {
       };
     }
 
-    return{};
-
+    return {};
   });
   provide('chooseNodeModalData', chooseNodeModalData);
 
@@ -191,6 +199,7 @@ export default function usePledge() {
         desc: t('pledge.confirmModalDesc1'),
       };
     }
+
     if (activeTab.value === 'unpledge') {
       return {
         title: t('pledge.confirmModalTitle2'),
@@ -199,7 +208,6 @@ export default function usePledge() {
     }
 
     return {};
-
   });
   provide('actionModalData', actionModalData);
 

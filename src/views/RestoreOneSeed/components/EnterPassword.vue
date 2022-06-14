@@ -52,9 +52,9 @@ export default {
 
         return;
       }
+
       emit('passwordConfirmed', password.value);
       nextStep();
-
     };
 
     // migration auto set password block and go to input mnemonic

@@ -62,7 +62,6 @@ export default {
       }
     },
     async fetchExtensionInfo({ commit }, { appId }) {
-
       const { ok, data } = await extensionsApi.getExtensionsInfo({ appId });
 
       if (ok) {

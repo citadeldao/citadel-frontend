@@ -53,9 +53,9 @@ export default {
 
         return;
       }
+
       emit('passwordConfirmed', password.value);
       nextStep();
-
     };
 
     return {

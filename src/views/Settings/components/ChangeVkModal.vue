@@ -70,9 +70,9 @@ export default {
     const createNewVk = async () => {
       openCreateVkModal({ wallet: props.wallet, vk: props.vk });
     };
-    const deleteVk = async() => {
+    const deleteVk = async () => {
       await citadel.deleteViewingKey(props.vk.id, props.vk.net);
-      await store.dispatch('wallets/getNewWallets','lazy');
+      await store.dispatch('wallets/getNewWallets', 'lazy');
 
       changeVk.value = null;
       notify({

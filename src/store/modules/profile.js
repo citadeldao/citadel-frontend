@@ -32,6 +32,7 @@ export default {
         backendUrl: process.env.VUE_APP_BACKEND_URL,
         debug: JSON.parse(process.env.VUE_APP_DEBUG_LIB),
       });
+
       if (!error) {
         const { data: marketcap } = await citadel.getAllMarketcaps();
         const { data: rates } = await citadel.getAllRates();
@@ -45,6 +46,7 @@ export default {
 
         return { error };
       }
+
       dispatch('auth/setIsAuthenticated', false, { root: true });
       router.push({ name: 'Login' });
 

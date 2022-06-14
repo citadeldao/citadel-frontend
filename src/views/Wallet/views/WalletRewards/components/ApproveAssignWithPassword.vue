@@ -19,9 +19,9 @@
 import Input from '@/components/UI/Input';
 import { inject, watch } from '@vue/runtime-core';
 export default {
-  name:'ApproveAssignWithPassword',
-  components:{ Input },
-  emits:['approveAssign'],
+  name: 'ApproveAssignWithPassword',
+  components: { Input },
+  emits: ['approveAssign'],
   setup() {
     const password = inject('password');
     const inputError = inject('inputError');
@@ -33,7 +33,7 @@ export default {
       },
     );
 
-    return{ password, inputError };
+    return { password, inputError };
   },
 };
 </script>

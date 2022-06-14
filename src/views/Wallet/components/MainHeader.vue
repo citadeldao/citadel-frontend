@@ -78,7 +78,7 @@ export default {
     },
   },
   setup() {
-    return{ OUR_TOKEN };
+    return { OUR_TOKEN };
   },
 };
 </script>

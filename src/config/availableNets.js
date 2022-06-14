@@ -34,7 +34,7 @@ export const ledgerNets = [
   'konstellation',
   'mantle',
   'crescent',
-  //'evmos',
+  // 'evmos',
 ];
 
 export const trezorNets = ['btc', 'eth', 'bsc', 'tez'];

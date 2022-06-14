@@ -180,7 +180,6 @@ export default {
 
     const subtokensBalanceUSD = computed(() => {
       return walletsList.value.reduce((total, currentValue) => {
-
         return BigNumber(total).plus(currentValue.subtokenBalanceUSD || 0).toNumber();
       }, 0);
     });
@@ -224,7 +223,7 @@ export default {
       }
 
 
-      for (const { net,address } of customList.value) {
+      for (const { net, address } of customList.value) {
         const walletsList = wallets.value.filter((wallet) => wallet.address.toLowerCase() === address.toLowerCase() && wallet.net === net);
         customListWallets = customListWallets.concat(walletsList);
       }
@@ -235,6 +234,7 @@ export default {
       const data = walletsList.value;
       const byAlphabet = sortByAlphabet(data, 'title', 'address');
       const byValue = data.sort((a, b) => a.balanceUSD - b.balanceUSD);
+
       switch (filterValue.value) {
         case 'byAlphabet':
           return byAlphabet;
@@ -257,7 +257,7 @@ export default {
       return filteredWallets.value.filter((item) =>
         item.title.toLowerCase().includes(keyword.value.toLowerCase()) ||
           item.code.toLowerCase().includes(keyword.value.toLowerCase()) ||
-         item.address.toLowerCase().includes(keyword.value.toLowerCase()) ,
+         item.address.toLowerCase().includes(keyword.value.toLowerCase()),
       );
     });
 

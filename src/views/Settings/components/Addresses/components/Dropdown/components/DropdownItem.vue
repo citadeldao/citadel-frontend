@@ -118,7 +118,7 @@ export default {
     };
     const customWalletsList = computed(() => store.getters['wallets/customWalletsList']);
     const currentList = computed(() => store.getters['wallets/activeList']);
-    //const wallets = computed(() => store.getters['wallets/wallets']);
+    // const wallets = computed(() => store.getters['wallets/wallets']);
 
     const removeWallet = async () => {
       isLoading.value = true;
@@ -134,10 +134,11 @@ export default {
         walletId: props.wallet.id,
       });
 
-      await store.dispatch('wallets/getNewWallets','lazy');
+      await store.dispatch('wallets/getNewWallets', 'lazy');
       await store.dispatch('wallets/getCustomWalletsList');
 
       isLoading.value = false;
+
       if (currentList.value !== 'all' && !customWalletsList.value.find(item => item.name === currentList.value)) {
         store.commit('wallets/SET_ACTIVE_LIST', 'all');
       }

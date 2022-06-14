@@ -27,9 +27,9 @@
 import { inject } from '@vue/runtime-core';
 import KtAddressItemMd from './components/KtAddressItemMd.vue';
 export default {
-  name:'KtAddressesMd',
-  components:{ KtAddressItemMd },
-  props:{
+  name: 'KtAddressesMd',
+  components: { KtAddressItemMd },
+  props: {
     currentWallet: {
       type: Object,
       default: ()=>{},
@@ -41,7 +41,7 @@ export default {
     const updateCurrentKtAddress = inject('updateCurrentKtAddress');
     const isChecked = (item)=> currentKtAddress?.value?.address?.toLowerCase() === item.address.toLowerCase();
 
-    return{ currentKtAddress, ktAddresses, updateCurrentKtAddress, isChecked };
+    return { currentKtAddress, ktAddresses, updateCurrentKtAddress, isChecked };
   },
 };
 </script>

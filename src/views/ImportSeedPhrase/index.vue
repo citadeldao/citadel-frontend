@@ -116,14 +116,15 @@ export default {
       showModal.value = true;
       showLoader.value = true;
       setImportedFromSeed();
-      const { data, error } = await  await citadel.addCreatedWallet({
+      const { data, error } = await await citadel.addCreatedWallet({
         ...wallet,
         ...wallet.config,
-        type:  walletOpts.mnemonic === userMnemonic(walletOpts.password) || !isUserMnemonic.value ?
-          'oneSeed' : 'privateKey',
+        type: walletOpts.mnemonic === userMnemonic(walletOpts.password) || !isUserMnemonic.value
+          ? 'oneSeed' : 'privateKey',
         networkName: wallet.config.name,
       });
-      if(!error){
+
+      if (!error) {
         !isPasswordHash.value && savePassword();
         !isUserMnemonic.value && saveMnemonic();
         const newInstance = await store.dispatch('crypto/createNewWalletInstance',
@@ -137,11 +138,12 @@ export default {
         newWallets.value = [newInstance];
         const newWallet = newInstance;
         await store.dispatch('wallets/pushWallets', { wallets: [newWallet] } );
-        await store.dispatch('wallets/getNewWallets','lazy');
-        store.dispatch('wallets/getNewWallets','detail');
-      }else{
+        await store.dispatch('wallets/getNewWallets', 'lazy');
+        store.dispatch('wallets/getNewWallets', 'detail');
+      } else {
         router.push({ name: 'AddAddress' });
       }
+
       showLoader.value = false;
     };
 

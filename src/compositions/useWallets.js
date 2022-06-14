@@ -6,7 +6,7 @@ import BigNumber from 'bignumber.js';
 import { WALLET_TYPES } from '@/config/walletType';
 
 export default function useWallets(wallet = null, showCount = undefined) {
-  const currentWallet = computed(() => store.getters['wallets/currentWallet'] && findWalletInArray(wallets.value, store.getters['wallets/currentWallet'])) ;
+  const currentWallet = computed(() => store.getters['wallets/currentWallet'] && findWalletInArray(wallets.value, store.getters['wallets/currentWallet']));
 
   // instance of given wallet
   const walletByAddress = (walletInfo) =>
@@ -14,7 +14,8 @@ export default function useWallets(wallet = null, showCount = undefined) {
 
   const wallets = computed(() =>{
     const data = [];
-    for(const wallet of store.getters['wallets/wallets'])  {
+
+    for (const wallet of store.getters['wallets/wallets']) {
       store.getters['wallets/walletsStructure'].some(item => item.net.toLowerCase() === wallet.net.toLowerCase() &&
       item.address.toLowerCase() === wallet.address.toLowerCase()) && data.push(wallet);
     }
@@ -56,7 +57,9 @@ export default function useWallets(wallet = null, showCount = undefined) {
     if (currentList.value === 'all') {
       return wallets.value;
     }
+
     let customListWallets = [];
+
     for (const { net, address } of customList.value) {
       const data = wallets.value.filter((wallet) => {
         return wallet.address.toLowerCase() === address.toLowerCase() && wallet.net === net;
@@ -65,7 +68,6 @@ export default function useWallets(wallet = null, showCount = undefined) {
     }
 
     return customListWallets;
-
   });
 
   const currentWalletsListWithSubtokensList = computed(() => {
@@ -86,6 +88,7 @@ export default function useWallets(wallet = null, showCount = undefined) {
 
   const currentWalletListSubtokensList = computed(() => {
     let currentWalletListSubtokensList = [];
+
     for (const item of currentWalletsListWithSubtokensList.value) {
       const subtokens = item.subtokensList;
       currentWalletListSubtokensList = [
@@ -93,8 +96,8 @@ export default function useWallets(wallet = null, showCount = undefined) {
         ...subtokens,
       ];
     }
-    currentWalletListSubtokensList = currentWalletListSubtokensList.reduce((obj, item) => {
 
+    currentWalletListSubtokensList = currentWalletListSubtokensList.reduce((obj, item) => {
       if (!obj[item.net]?.usd) {
         obj[item.net] = {
           balance: 0,
@@ -149,6 +152,7 @@ export default function useWallets(wallet = null, showCount = undefined) {
           name: store.getters['networks/configByNet'](wlt.net).name,
         };
       }
+
       const currency = store.getters['profile/info'].rates;
       const balance = wlt.balance.calculatedBalance;
       blncStruct[wlt.net].balance = BigNumber(blncStruct[wlt.net].balance).plus(balance).toNumber();

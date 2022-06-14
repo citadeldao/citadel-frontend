@@ -31,8 +31,8 @@
 import selectFromList from '@/assets/icons/select-from-list.svg';
 import whiteHardware from '@/assets/icons/white-hardware.svg';
 export default {
-  name:'AddressAssigningInfo',
-  components:{ whiteHardware,selectFromList },
+  name: 'AddressAssigningInfo',
+  components: { whiteHardware, selectFromList },
   setup() {
 
   },

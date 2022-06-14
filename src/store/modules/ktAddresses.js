@@ -32,10 +32,12 @@ export default {
       if (!rootGetters['wallets/currentWallet'].hasKtAddresses) {
         return;
       }
+
       const res = await citadel.getKTAddresses(walletId);
+
       if (!res.error) {
         commit(types.SET_KT_ADRESSES, res.data);
-      }else{
+      } else {
         notify({
           type: 'warning',
           text: res.error,

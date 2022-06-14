@@ -53,12 +53,15 @@ export default function useOldBackup() {
         if (wallet.type === 1) {
           type = 'oneSeed';
         }
+
         if (wallet.type === 2) {
           type = 'ledger';
         }
+
         if (wallet.type === 3) {
           type = 'Trezor';
         }
+
         if (wallet.type === 4) {
           type = 'Trezor';
         }
@@ -94,7 +97,7 @@ export default function useOldBackup() {
     });
   });
 
-  //remove duplicate in old backup
+  // remove duplicate in old backup
   oldWallets.value = oldWallets.value
     .filter(w => w.address)
     .filter((w, index, self) =>
@@ -106,7 +109,8 @@ export default function useOldBackup() {
     citadel2FormatWallets.value.forEach(structItem => {
       // check duplicate wallet in Wallets
       const searchWallet = wallets.value.filter((item)=> item.type !== WALLET_TYPES.PUBLIC_KEY)
-        .find(w => w.address.toLowerCase() === wallet.address.toLowerCase() && w.net === wallet.net  );
+        .find(w => w.address.toLowerCase() === wallet.address.toLowerCase() && w.net === wallet.net );
+
       if (searchWallet) {
         wallet.existWallet = true;
       }

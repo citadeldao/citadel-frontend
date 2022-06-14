@@ -103,12 +103,12 @@ export default {
     checked: {
       type: Boolean,
     },
-    type:{
+    type: {
       type: String,
-      default:'',
+      default: '',
     },
   },
-  emits: ['uncheck', 'check','signHardwareAddress'],
+  emits: ['uncheck', 'check', 'signHardwareAddress'],
   setup(props, { emit }) {
     const icon = ref();
     import(`@/assets/icons/token/${props.address.net}.svg`).then((val) => {

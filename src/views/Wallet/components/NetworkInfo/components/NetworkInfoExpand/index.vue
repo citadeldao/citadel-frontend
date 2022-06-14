@@ -269,9 +269,11 @@ export default {
     };
     const currentTabChangeHandler = (val) => {
       let newVal = val;
+
       if (val === 'all') {
         newVal = 36;
       }
+
       if (val !== 'custom') {
         date.value = [];
         loadData(Date.now() - 86400000 * 31 * newVal, Date.now());

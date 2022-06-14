@@ -369,6 +369,7 @@ export default {
     const confirmClaim = async () => {
       if (selectedAddress.value && selectedAddress.value.toLowerCase() === metamaskConnector.value.accounts[0]?.toLowerCase()) {
         const metamaskResult = await metamaskConnector.value.sendMetamaskTransaction(preparePrivateClaim.value.tx);
+
         if (metamaskResult.error) {
           notify({
             type: 'warning',
@@ -387,6 +388,7 @@ export default {
 
 
       confirmPassword.value = true;
+
       if ([WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(signerWallet.value.type) && incorrectPassword.value) {
         return;
       }

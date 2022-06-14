@@ -157,11 +157,14 @@ export default {
     const { wallets } = useWallets();
     const listData = computed(() => {
       const mixedData = [];
+
       for (const item in data.value) {
         const rewards = [];
+
         for (const reward in data.value[item]) {
           rewards.push({ value: data.value[item][reward], address: reward });
         }
+
         mixedData.push({
           ...networks.value.find((network) => network.net === item),
           rewards,

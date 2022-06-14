@@ -53,8 +53,8 @@ export default {
 
         return;
       }
-      emit('passwordConfirmed', password.value);
 
+      emit('passwordConfirmed', password.value);
     };
     const { password, passwordIncorrect, passwordError, inputError } = useCheckPassword(props.passwordHash);
 

@@ -129,6 +129,7 @@ export default {
           .multipliedBy(value.value)
           .toNumber();
       let result;
+
       switch (props.currentTab) {
         case 7:
           result = BigNumber(tokenRewardPerYear).dividedBy(365).multipliedBy(7).toNumber();
@@ -145,6 +146,7 @@ export default {
         default:
           result = tokenRewardPerYear;
       }
+
       emit('change', { value: result, net: props.data.net });
 
       return result;

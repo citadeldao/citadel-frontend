@@ -79,6 +79,7 @@ export default {
     carouselHeight.value = 600;
     onMounted(() => {
       window.addEventListener('resize', onScreenWidthChange);
+
       if (screenWidth.value < 1280) {
         carouselHeight.value = 400;
       } else {

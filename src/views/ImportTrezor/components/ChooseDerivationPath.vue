@@ -93,7 +93,6 @@ export default {
         addSingleItem(wallet.walletInstance);
         isCustomLoading.value = false;
         showLoader.value = false;
-
       } catch (err) {
         console.error(err);
         customWallet.value = false;

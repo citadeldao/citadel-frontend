@@ -112,20 +112,25 @@ export default {
     const formSubmit = async (username) => {
       formDisabled.value = true;
       userName.value = username;
+
       if (userName.value) {
         if (isAuthenticated.value) {
           await store.dispatch('auth/logout');
         }
+
         const { error, data } = await sendVerificationCode();
+
         if (error) {
           setCurrentStep(1);
         }
+
         if (data) {
           nextStep();
         }
 
         formDisabled.value = false;
       }
+
       formDisabled.value = false;
     };
 
@@ -154,6 +159,7 @@ export default {
         code,
         username: userName.value,
       });
+
       if (data) {
         const { error } = await store.dispatch('profile/getInfo');
 
@@ -162,8 +168,8 @@ export default {
           initPersistedstate(store);
           SocketManager.connect();
           await store.dispatch('app/setWallets');
-          await store.dispatch('wallets/getNewWallets','lazy');
-          store.dispatch('wallets/getNewWallets','detail');
+          await store.dispatch('wallets/getNewWallets', 'lazy');
+          store.dispatch('wallets/getNewWallets', 'detail');
           store.dispatch('wallets/getCustomWalletsList');
           store.dispatch('rewards/getRewards');
           await store.dispatch('transactions/getMempool');

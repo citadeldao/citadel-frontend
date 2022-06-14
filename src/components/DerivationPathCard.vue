@@ -200,8 +200,8 @@ export default {
       const customPathSplit = customPath.split(separator.value);
       const originalSplit = props.wallet?.derivationPath.split(separator.value);
 
-      if ((customPathSplit[0] !== originalSplit[0] || customPathSplit[1] !== originalSplit[1])
-      && props.wallet.net !== 'polkadot' && props.wallet.type !== WALLET_TYPES.LEDGER) {
+      if ((customPathSplit[0] !== originalSplit[0] || customPathSplit[1] !== originalSplit[1]) &&
+      props.wallet.net !== 'polkadot' && props.wallet.type !== WALLET_TYPES.LEDGER) {
         notify({
           type: 'warning',
           text: `Invalid custom path ${customPath}`,
@@ -220,14 +220,13 @@ export default {
     });
 
     const toggleChecked = () => {
-      if(props.type === 'custom' || !props.exist){
+      if (props.type === 'custom' || !props.exist) {
         if (props.checked) {
           emit('uncheck', props.wallet);
         } else {
           emit('check', props.wallet);
         }
       }
-
     };
 
     const { width } = useWindowSize();

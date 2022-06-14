@@ -51,7 +51,8 @@ export default {
         ({ net }) => {
         // looking for free path index in wallets with type oneSeed
           let pathIndex = 0;
-          //30 - max limit for wallets and loop
+
+          // 30 - max limit for wallets and loop
           while (pathIndex < 30) {
           // current derpath
             const { data: derivationPath } = citadel.getDerivationPathByIndex(
@@ -66,6 +67,7 @@ export default {
               wallet.net === net &&
               wallet.derivationPath === derivationPath,
             );
+
             if (indexIsAlreadyTaken) {
               pathIndex++;
             } else {
@@ -86,45 +88,50 @@ export default {
     },
     pushWallets(state, { wallets, root = false }) {
       const data = state.wallets;
-      for(const wallet of wallets){
+
+      for (const wallet of wallets) {
       // search dublicate
         const searchIndex = data.findIndex(
           (w) =>
             w.net === wallet.net && w.address.toLowerCase() === wallet.address.toLowerCase(),
         );
-        if (searchIndex > -1) {
 
+        if (searchIndex > -1) {
           // for public key
-          if((wallet.type === WALLET_TYPES.PUBLIC_KEY &&
-            //if dublikate IS NOT public key type, return
+          if ((wallet.type === WALLET_TYPES.PUBLIC_KEY &&
+            // if dublikate IS NOT public key type, return
             data[searchIndex].type !== WALLET_TYPES.PUBLIC_KEY
           ) ||
 
-          //for keplr
+          // for keplr
           (wallet.type === WALLET_TYPES.KEPLR &&
-          //if dublikate type type IS NOT keplr AND IS NOT public key, return
+          // if dublikate type type IS NOT keplr AND IS NOT public key, return
           // (
               (data[searchIndex].type !== WALLET_TYPES.KEPLR && data[searchIndex].type !== WALLET_TYPES.PUBLIC_KEY)
-          )){
+          )) {
             return;
           }
+
           data.splice(searchIndex, 1);
         }
+
         data.push(wallet);
       }
-      if(root){
+
+      if (root) {
         const filteredData = [];
-        for(const wallet of data){
-          if(state.walletsStructure.some(item => item.net.toLowerCase() === wallet.net.toLowerCase()
-         && item.address.toLowerCase() === wallet.address.toLowerCase())){
+
+        for (const wallet of data) {
+          if (state.walletsStructure.some(item => item.net.toLowerCase() === wallet.net.toLowerCase() &&
+         item.address.toLowerCase() === wallet.address.toLowerCase())) {
             filteredData.push(wallet);
           }
         }
+
         state.wallets = filteredData;
-      }else{
+      } else {
         state.wallets = data;
       }
-
     },
     setWallets(state, wallets) {
       state.wallets = wallets;
@@ -159,16 +166,17 @@ export default {
     async getNewWallets({ getters, dispatch, rootGetters, commit }, mode ='lazy') {
       try {
         const { error, data: walletsList } = await citadel.getWalletList(mode);
-        if(!error){
-          if(JSON.stringify(walletsList) !== JSON.stringify(getters.walletsStructure)){
+
+        if (!error) {
+          if (JSON.stringify(walletsList) !== JSON.stringify(getters.walletsStructure)) {
             commit(types.SET_WALLETS_STRUCTURE, walletsList);
             const formatedList = walletsList.map((item)=>{
               const found = getters.wallets.find(({ net, address }) =>
                 address.toLowerCase() === item.address.toLowerCase() && net.toLowerCase() === item.net.toLowerCase());
 
-              return{
+              return {
                 ...item,
-                privateKeyEncoded : found?.privateKeyEncoded || null,
+                privateKeyEncoded: found?.privateKeyEncoded || null,
                 mnemonicEncoded: found?.mnemonicEncoded || null,
                 publicKey: found?.publicKey || null,
                 derivationPath: found?.derivationPath || null,
@@ -186,6 +194,7 @@ export default {
       const wallets = [];
       const list = wlletsList || getters.wallets;
       list.sort((a, b) => (a.networkName > b.networkName ? 1 : -1));
+
       for (const walletOpts of list) {
         const { currency } = useWallets(walletOpts);
         const WalletConstructor = models[walletOpts.net.toUpperCase()];
@@ -195,10 +204,11 @@ export default {
           .toNumber();
         wallets.push(new WalletConstructor(walletOpts));
       }
+
       dispatch('pushWallets', { wallets: wallets.filter((item)=> item.type === WALLET_TYPES.PUBLIC_KEY || item.publicKey), root: true });
     },
 
-    async setWallets({ commit }, wallets){
+    async setWallets({ commit }, wallets) {
       commit('setWallets', wallets);
     },
 
@@ -208,6 +218,7 @@ export default {
 
     async renameWalletTitle(context, { walletId, title }) {
       const { error } = await citadel.renameWalletTitleById(walletId, title);
+
       if (error) {
         notify({
           type: 'warning',
@@ -227,9 +238,11 @@ export default {
     async removeWallet({ commit, getters, dispatch }, { wallet, walletId }) {
       try {
         await citadel.removeWalletById(walletId);
+
         if (getters.walletByAddress(wallet)) {
           commit('removeWallet', wallet);
         }
+
         dispatch('removeWalletFromHidden', wallet);
       } catch (e) {
         console.error(e);
@@ -238,9 +251,10 @@ export default {
 
     async getCustomWalletsList({ commit }) {
       const res = await citadel.getCustomWalletLists();
+
       if (!res.error) {
         commit(types.SET_CUSTOM_WALLETS_LIST, res.data);
-      }else{
+      } else {
         notify({
           type: 'warning',
           text: res.error,
@@ -251,6 +265,7 @@ export default {
 
     async editCustomWalletsList({ dispatch, commit }, { listId, name, wallets, needSetActiveList = true }) {
       const res = await citadel.editCustomWalletList(listId, name, wallets);
+
       if (!res.error) {
         await dispatch('getCustomWalletsList');
 
@@ -260,6 +275,7 @@ export default {
 
         return true;
       }
+
       notify({
         type: 'warning',
         text: res.error,
@@ -274,6 +290,7 @@ export default {
 
     async createCustomWalletsList({ dispatch, commit }, { name, wallets, needSetActiveList = true }) {
       const res = await citadel.createCustomWalletList(name, wallets);
+
       if (!res.error) {
         await dispatch('getCustomWalletsList');
 
@@ -298,16 +315,19 @@ export default {
 
     async deleteCustomWalletsList({ dispatch, commit }, { listId, needSetActiveList = true }) {
       const res = await citadel.deleteCustomWalletList(listId);
+
       if (!res.error) {
         await dispatch('getCustomWalletsList');
+
         if (needSetActiveList) {
           commit(types.SET_ACTIVE_LIST, 'all');
         }
-      }else{
+      } else {
         notify({
           type: 'warning',
           text: res.error,
         });
+
         if (needSetActiveList) {
           commit(types.SET_ACTIVE_LIST, 'all');
         }

@@ -12,6 +12,7 @@ export default function copyToClipboard(text) {
   el.select();
   document.execCommand('copy');
   document.body.removeChild(el);
+
   if (selected) {
     document.getSelection().removeAllRanges();
     document.getSelection().addRange(selected);

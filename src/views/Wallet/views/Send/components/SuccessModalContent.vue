@@ -96,7 +96,7 @@ export default {
   name: 'SuccessModalContent',
   components: { done, clock, confirmed, SendDirection, Textarea, NominatedNodes },
   props: {
-    isMultiple:{
+    isMultiple: {
       type: Boolean,
       default: false,
     },
@@ -117,7 +117,7 @@ export default {
       default: 0,
     },
     txHash: {
-      type:[Array, String],
+      type: [Array, String],
       default: '',
     },
     showStatuses: {
@@ -169,7 +169,7 @@ export default {
       default: 'transfer',
     },
   },
-  emits:['update:txComment'],
+  emits: ['update:txComment'],
   setup(props) {
     const { t } = useI18n();
     const instance = getCurrentInstance();

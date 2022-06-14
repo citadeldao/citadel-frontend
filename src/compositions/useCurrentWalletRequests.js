@@ -60,6 +60,7 @@ export default function useCurrentWalletRequests() {
     });
     const { data } = res;
     const { error } = res;
+
     if (error) {
       txError.value = error;
     } else {

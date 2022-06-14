@@ -56,7 +56,7 @@
 import Input from '@/components/UI/Input';
 import { computed, inject } from '@vue/runtime-core';
 export default {
-  name:'XCTSetStakingAmount',
+  name: 'XCTSetStakingAmount',
   components: { Input },
   props: {
     currentWallet: {
@@ -79,14 +79,14 @@ export default {
         return false;
       } else if (mode.value === 'unstake') {
         return false;
-      }else if (mode.value === 'stake') {
+      } else if (mode.value === 'stake') {
         return true;
       }
 
       return false;
     });
 
-    return{ updateAmount, maxAmount, insufficientFunds, showAmount, mode };
+    return { updateAmount, maxAmount, insufficientFunds, showAmount, mode };
   },
 };
 </script>

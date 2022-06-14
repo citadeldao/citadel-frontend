@@ -70,7 +70,7 @@
 
 <script>
 import redelegate from '@/assets/icons/redelegate.svg';
-//import useWallets from '@/compositions/useWallets';
+// import useWallets from '@/compositions/useWallets';
 import hotSale from '@/assets/icons/hot-sale.svg';
 import paperPlane from '@/assets/icons/paper-plane.svg';
 import { computed, inject } from 'vue';
@@ -123,7 +123,7 @@ export default {
     'redelegationButtonClick',
   ],
   setup(props, { emit }) {
-    //const { walletInfo } = useWallets();
+    // const { walletInfo } = useWallets();
     const store = useStore();
     const router = useRouter();
     const route = useRoute();
@@ -135,7 +135,7 @@ export default {
     const currentWalletInfo = computed(() =>
       props.currentToken
         ? props.currentToken.tokenBalance
-        : props.currentWallet.balance,//walletInfo.value.balance,
+        : props.currentWallet.balance, // walletInfo.value.balance,
     );
 
     const rewardCount = computed(
@@ -149,14 +149,13 @@ export default {
 
     const disableStake = computed(() => {
       // only for start staking button
-      if(props.button2 === 'startStaking'){
+      if (props.button2 === 'startStaking') {
         const canStake = inject('canStake');
 
         return !canStake.value;
       }
 
       return false;
-
     });
 
 

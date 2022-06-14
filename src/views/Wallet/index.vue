@@ -331,14 +331,14 @@ export default {
     const { loadKtAddresses, ktAddresses } = useKtAddresses();
 
     const showClaimModal = computed(() => {
-      return showConfirmClaim.value
-        || showXctConfirmClaim.value
-        || showClaimSuccessModal.value
-        || showConnectLedgerModal.value
-        || showAppLedgerModal.value
-        || showConfirmLedgerModal.value
-        || showRejectedLedgerModal.value
-        || showConfirmUnstakedClaim.value;
+      return showConfirmClaim.value ||
+        showXctConfirmClaim.value ||
+        showClaimSuccessModal.value ||
+        showConnectLedgerModal.value ||
+        showAppLedgerModal.value ||
+        showConfirmLedgerModal.value ||
+        showRejectedLedgerModal.value ||
+        showConfirmUnstakedClaim.value;
     });
 
     const keplrConnector = computed(() => store.getters['keplr/keplrConnector']);
@@ -357,12 +357,11 @@ export default {
           params.address.toLowerCase() !== oldParams.address.toLowerCase()
         ) {
           store.dispatch('ktAddresses/setCurrentKtAddress', null);
-          if(params.net && params.address){
+
+          if (params.net && params.address) {
             await loadKtAddresses(currentWallet?.value?.id);
             await loadXCTInfo();
           }
-
-
         }
       },
       { deep: true },
@@ -428,29 +427,32 @@ export default {
       if (isLoading.value) {
         return;
       }
+
       isLoading.value = true;
-      const { resAdding, ok: feeOk, resFee, enough } =  await currentWallet.value.getDelegationFee({
+      const { resAdding, ok: feeOk, resFee, enough } = await currentWallet.value.getDelegationFee({
         walletId: currentWallet.value.id,
         transactionType: 'claim' });
 
-      if(feeOk){
-        if(!enough) {
+      if (feeOk) {
+        if (!enough) {
           isLoading.value = false;
 
           return;
         }
+
         adding.value = resAdding;
         fee.value = resFee;
         const { rawTxs, ok: prepOk } = await currentWallet.value.prepareClaim(currentWallet.value.id);
-        if(prepOk){
+
+        if (prepOk) {
           resRawTxs.value = rawTxs;
           showConfirmClaim.value = true;
           isLoading.value = false;
-        }else{
+        } else {
           claimModalCloseHandler();
           isLoading.value = false;
         }
-      }else{
+      } else {
         return;
       }
     };
@@ -459,10 +461,12 @@ export default {
       if (isLoading.value) {
         return;
       }
+
       isLoading.value = true;
 
       const { rawTx, ok } = await currentWallet.value.prepareClaimUnstaked(currentWallet.value.id);
       const resOk = ok;
+
       if (resOk) {
         fee.value = rawTx.fee;
         resRawTxs.value = rawTx;
@@ -479,6 +483,7 @@ export default {
       if (currentWallet.value.type === WALLET_TYPES.KEPLR) {
         isLoading.value = true;
         let keplrResult;
+
         try {
           keplrResult = await keplrConnector.value.sendKeplrTransaction(resRawTxs.value, currentWallet.value.address, { preferNoSetFee: true });
         } catch (err) {
@@ -559,11 +564,13 @@ export default {
         showConfirmLedgerModal.value = false;
         showRejectedLedgerModal.value = false;
         let res;
+
         if (isLedgerWallet.value) {
           isLoading.value = false;
           showConfirmClaim.value = false;
           clearLedgerModals();
           showConfirmLedgerModal.value = true;
+
           try {
             res = await currentWallet.value.signAndSendMulti({
               walletId: currentWallet.value.id,
@@ -585,6 +592,7 @@ export default {
             rawTransactions: resRawTxs.value,
             privateKey: currentWallet.value.getPrivateKeyDecoded(password.value),
           });
+
           if (res.ok) {
             txHash.value = res.data;
             showConfirmClaim.value = false;
@@ -623,8 +631,8 @@ export default {
 
     // ledger modal handlers
     const connectLedgerClickHandler = () => {
-      xctAction.value === 'restake' ? restakeXctRewards() :
-        xctAction.value === 'claim' ? claimXctRewards() : claim();
+      xctAction.value === 'restake' ? restakeXctRewards()
+        : xctAction.value === 'claim' ? claimXctRewards() : claim();
     };
     const connectLedgerCloseHandler = () => {
       clearLedgerModals();
@@ -635,8 +643,8 @@ export default {
       claimModalCloseHandler();
     };
     const appLedgerClickHandler = () => {
-      xctAction.value === 'restake' ? restakeXctRewards() :
-        xctAction.value === 'claim' ? claimXctRewards() : claim();
+      xctAction.value === 'restake' ? restakeXctRewards()
+        : xctAction.value === 'claim' ? claimXctRewards() : claim();
     };
     const appLedgerCloseHandler = () => {
       connectLedgerCloseHandler();
@@ -722,7 +730,9 @@ export default {
       if (isLoading.value) {
         return;
       }
+
       isLoading.value = true;
+
       try {
         const { rawTxs: claimAllRawTxs, fee: claimAllRewardsFee } = await currentToken.value.prepareXctClaimOrRestake({
           walletId: currentToken.value.id,
@@ -793,10 +803,12 @@ export default {
     const restakeXctRewards = async () => {
       // metamask, ...
       xctAction.value = 'restake';
+
       if (currentWalletType.value === WALLET_TYPES.METAMASK) {
         isLoading.value = true;
 
         const metamaskResult = await metamaskConnector.value.sendMetamaskTransaction(restakeAllTxs.value);
+
         if (metamaskResult.error) {
           notify({
             type: 'warning',
@@ -807,6 +819,7 @@ export default {
           txHash.value = metamaskResult.txHash ? [metamaskResult.txHash] : metamaskResult;
           showClaimSuccessModal.value = true;
         }
+
         isLoading.value = false;
 
         return;
@@ -833,6 +846,7 @@ export default {
 
             return;
           }
+
           res = await currentToken.value.signAndSendMulti({
             walletId: currentToken.value.id,
             rawTransactions: restakeAllTxs.value,
@@ -847,6 +861,7 @@ export default {
 
             return;
           }
+
           res = await currentToken.value.signAndSendMulti({
             walletId: currentToken.value.id,
             rawTransactions: restakeXctTxs.value,
@@ -861,6 +876,7 @@ export default {
 
             return;
           }
+
           res = await currentToken.value.signAndSendMulti({
             walletId: currentToken.value.id,
             rawTransactions: restakeDaoTxs.value,
@@ -868,31 +884,36 @@ export default {
             derivationPath: isHardwareWallet.value && currentToken.value.derivationPath,
           });
         }
-        if(res.ok){
+
+        if (res.ok) {
           txHash.value = res.data;
           showClaimSuccessModal.value = true;
           isLoading.value = false;
 
           return;
         }
-        if(!res.ok){
-          if(isHardwareWallet.value){
+
+        if (!res.ok) {
+          if (isHardwareWallet.value) {
             ledgerErrorHandler(res.error);
-          }else{
+          } else {
             claimModalCloseHandler();
           }
         }
+
         isLoading.value = false;
       }
     };
 
     const claimXctRewards = async () => {
       xctAction.value = 'claim';
+
       // metamask, ...
       if (currentWalletType.value === WALLET_TYPES.METAMASK) {
         isLoading.value = true;
 
         const metamaskResult = await metamaskConnector.value.sendMetamaskTransaction(claimAllTxs.value);
+
         if (metamaskResult.error) {
           notify({
             type: 'warning',
@@ -903,6 +924,7 @@ export default {
           txHash.value = metamaskResult.txHash ? [metamaskResult.txHash] : metamaskResult;
           showClaimSuccessModal.value = true;
         }
+
         isLoading.value = false;
 
         return;
@@ -928,6 +950,7 @@ export default {
 
             return;
           }
+
           res = await currentToken.value.signAndSendMulti({
             walletId: currentToken.value.id,
             rawTransactions: claimAllTxs.value,
@@ -935,12 +958,14 @@ export default {
             derivationPath: isHardwareWallet.value && currentToken.value.derivationPath,
           });
         }
+
         if (claimOptions.value.xctRewards && !claimOptions.value.daoRewards) {
           if (currentWallet.value.balance.mainBalance < claimXctFee.value) {
             showWarning();
 
             return;
           }
+
           res = await currentToken.value.signAndSendMulti({
             walletId: currentToken.value.id,
             rawTransactions: claimXctTxs.value,
@@ -948,12 +973,14 @@ export default {
             derivationPath: isHardwareWallet.value && currentToken.value.derivationPath,
           });
         }
+
         if (!claimOptions.value.xctRewards && claimOptions.value.daoRewards) {
           if (currentWallet.value.balance.mainBalance < claimDaoFee.value) {
             showWarning();
 
             return;
           }
+
           res = await currentToken.value.signAndSendMulti({
             walletId: currentToken.value.id,
             rawTransactions: claimDaoTxs.value,
@@ -961,7 +988,8 @@ export default {
             derivationPath: isHardwareWallet.value && currentToken.value.derivationPath,
           });
         }
-        if(res.ok){
+
+        if (res.ok) {
           txHash.value = res.data;
           showClaimSuccessModal.value = true;
           isLoading.value = false;
@@ -969,13 +997,14 @@ export default {
           return;
         }
 
-        if(!res.ok){
-          if(isHardwareWallet.value){
+        if (!res.ok) {
+          if (isHardwareWallet.value) {
             ledgerErrorHandler(res.error);
-          }else{
+          } else {
             claimModalCloseHandler();
           }
         }
+
         isLoading.value = false;
       }
     };

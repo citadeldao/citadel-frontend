@@ -113,6 +113,7 @@ export default {
       wallets.value = [];
 
       let currentPath = 0;
+
       while (currentPath < numberOfPaths) {
         const wallet = await store.dispatch('crypto/createLedgerWallet', {
           derivationPath: templatePath.replace('N', currentPath),
@@ -120,17 +121,20 @@ export default {
         });
         wallets.value.push(wallet);
         const isLastIteration = currentPath === numberOfPaths - 1;
+
         if (isLastIteration) {
           await setCustomWallet();
           showModal.value = false;
           showLoader.value = false;
         }
+
         currentPath++;
       }
     };
 
     const createWallets = async () => {
       let currentPath = 0;
+
       while (currentPath < numberOfPaths) {
         const wallet = await store.dispatch('crypto/createLedgerWallet', {
           pathIndex: currentPath,
@@ -138,11 +142,13 @@ export default {
         });
         wallets.value.push(wallet);
         const isLastIteration = currentPath === numberOfPaths - 1;
+
         if (isLastIteration) {
           await setCustomWallet();
           showModal.value = false;
           showLoader.value = false;
         }
+
         currentPath++;
       }
     };
@@ -184,7 +190,7 @@ export default {
     const disabled = computed(() => {
       const isChecked = checkedItems.value?.length;
       const existingWallet = store.getters['wallets/walletByAddress'](checkedItems.value[0]);
-      const isExist = !!existingWallet && existingWallet.type !==  WALLET_TYPES.PUBLIC_KEY;
+      const isExist = !!existingWallet && existingWallet.type !== WALLET_TYPES.PUBLIC_KEY;
 
       return !isChecked || isExist;
     });
@@ -243,6 +249,7 @@ export default {
     padding-top: 24px;
     padding-left: 24px;
   }
+
   &__card-wrapper {
     width: 100%;
     display: flex;
@@ -258,6 +265,7 @@ export default {
       gap: 8px;
     }
   }
+
   &__custom {
     display: flex;
     flex-direction: column;
@@ -266,6 +274,7 @@ export default {
     @include md {
       margin-bottom: 24px;
     }
+
     & span {
       font-size: 20px;
       line-height: 24px;

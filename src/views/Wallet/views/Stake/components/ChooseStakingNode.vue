@@ -172,20 +172,19 @@ export default {
     const setActiveTab = async (value) => {
       emit('update:activeTab', value);
       updateAmount('');
-      value !== 'redelegate' &&  await getDelegationFee(value,selectedNode.value);
+      value !== 'redelegate' && await getDelegationFee(value, selectedNode.value);
     };
     const maxAmount = inject('maxAmount');
     const insufficientFunds = inject('insufficientFunds');
 
     const showAmount = computed(() => {
-      if (insufficientFunds.value
-      || mode.value === 'unstake' || props.activeTab === 'unstake'
-      || mode.value === 'redelegate' || props.activeTab === 'redelegate') {
+      if (insufficientFunds.value ||
+      mode.value === 'unstake' || props.activeTab === 'unstake' ||
+      mode.value === 'redelegate' || props.activeTab === 'redelegate') {
         return false;
       }
 
       return true;
-
     });
     const showInput = computed(() => {
       if (props.currentWallet.isSingleStake) {
@@ -193,7 +192,6 @@ export default {
       }
 
       return true;
-
     });
 
     return {

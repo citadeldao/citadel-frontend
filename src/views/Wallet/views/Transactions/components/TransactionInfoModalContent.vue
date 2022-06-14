@@ -46,16 +46,16 @@ import Textarea from '@/components/UI/Textarea';
 import comment from '@/assets/icons/comment.svg';
 import InfoBlock from './InfoBlock.vue';
 export default {
-  namae:'TransactionInfoModalContent',
-  components:{ InfoBlock,comment,Textarea },
+  namae: 'TransactionInfoModalContent',
+  components: { InfoBlock, comment, Textarea },
   props: {
-    info:{
-      type:Object,
-      default:()=>({}),
+    info: {
+      type: Object,
+      default: ()=>({}),
     },
     currentWallet: {
       type: Object,
-      default:()=>({}),
+      default: ()=>({}),
     },
     txComment: {
       type: String,
@@ -68,7 +68,7 @@ export default {
       nextTick(() =>document.getElementById('comment').focus());
     };
 
-    return{ showPlaceholder, togleShowPlaceholder };
+    return { showPlaceholder, togleShowPlaceholder };
   },
 };
 </script>

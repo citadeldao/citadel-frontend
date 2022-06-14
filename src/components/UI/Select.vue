@@ -77,7 +77,7 @@ export default {
       default: () => [],
     },
     modelValue: {
-      type: [String,Number],
+      type: [String, Number],
       default: '',
     },
     valueKey: {
@@ -112,12 +112,18 @@ export default {
     };
 
     const toggleVisibleOptions = () => {
-      if (props.disabled) {return;}
+      if (props.disabled) {
+        return;
+      }
+
       isOptionsVisible.value = !isOptionsVisible.value;
     };
 
     const handleChangeValue = (val) => {
-      if (props.disabled) {return;}
+      if (props.disabled) {
+        return;
+      }
+
       closeOptions();
 
       if (val === selected.value[props.valueKey]) {

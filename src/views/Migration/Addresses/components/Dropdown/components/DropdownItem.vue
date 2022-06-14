@@ -29,7 +29,7 @@
 <script>
 import { ref, markRaw } from 'vue';
 import removeIcon from '@/assets/icons/settings/remove.svg';
-import { WALLET_TYPES  } from '@/config/walletType';
+import { WALLET_TYPES } from '@/config/walletType';
 import keyIcon from '@/assets/icons/settings/key.svg';
 import notificationIcon from '@/assets/icons/settings/notification.svg';
 import exportIcon from '@/assets/icons/settings/export.svg';

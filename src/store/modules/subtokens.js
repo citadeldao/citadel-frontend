@@ -42,8 +42,8 @@ export default {
         const { data: actions } = citadel.getTokenActions(currentWallet.id, item.net);
 
         const config = rootGetters['networks/configByNet'](currentWallet.net)?.tokens?.[item.net] || null;
-        const tokenBalance = item.tokenBalance
-          || {
+        const tokenBalance = item.tokenBalance ||
+          {
             adding: [],
             delegatedBalance: 0,
             frozenBalance: 0,
@@ -65,8 +65,8 @@ export default {
           mnemonicEncoded: currentWallet.mnemonicEncoded,
           privateKeyEncoded: currentWallet.privateKeyEncoded,
           publicKey: currentWallet.publicKey,
-          linked: tokenBalance.linked ,
-          parentCoin:{ net: currentWallet.net, code: currentWallet.code },
+          linked: tokenBalance.linked,
+          parentCoin: { net: currentWallet.net, code: currentWallet.code },
           fee_key: currentWallet.fee_key,
           id: currentWallet.id,
           savedViewingKey: item.savedViewingKey,

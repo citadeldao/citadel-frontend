@@ -46,7 +46,7 @@
 import EditButton from '@/components/UI/EditButton';
 export default {
   name: 'PolkadotUnstakeListItems',
-  components:{ EditButton },
+  components: { EditButton },
   props: {
     list: {
       type: Array,
@@ -61,7 +61,7 @@ export default {
       default: false,
     },
   },
-  emits:['showNodesList'],
+  emits: ['showNodesList'],
   setup() {
 
   },

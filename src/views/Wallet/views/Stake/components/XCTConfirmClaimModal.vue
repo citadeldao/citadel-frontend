@@ -139,7 +139,7 @@ export default {
       type: Number,
       default: 0,
     },
-    fee:{
+    fee: {
       type: Number,
       default: 0,
     },
@@ -148,8 +148,8 @@ export default {
       default: 0,
     },
   },
-  emits: ['submitSend','update:options'],
-  setup(props,{ emit }) {
+  emits: ['submitSend', 'update:options'],
+  setup(props, { emit }) {
     const password = inject('password');
     const inputError = inject('inputError');
     const updatePassword = inject('updatePassword');

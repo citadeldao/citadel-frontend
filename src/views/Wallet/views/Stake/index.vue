@@ -152,7 +152,7 @@ export default {
     });
 
     const loadData = async (currentWallet) => {
-      //if subtoken has no stake list and stake nodes
+      // if subtoken has no stake list and stake nodes
       if (!props.currentToken && props.currentWallet.hasStake) {
         isLoading.value = true;
         await store.dispatch('staking/getStakeNodes', currentWallet.net);
@@ -182,7 +182,7 @@ export default {
           newWallet?.hasStake && await loadData(newWallet);
         }
       },
-      { deep:true },
+      { deep: true },
     );
 
     return {

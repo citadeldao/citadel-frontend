@@ -90,15 +90,17 @@ export default {
       showModal.value = true;
       showLoader.value = true;
       const { newWalletInstance, error } = await store.dispatch('crypto/addHardwareWalletToAccount', { wallet });
-      if(!error){
+
+      if (!error) {
         newWallets.value = [newWalletInstance];
         const newWallet = newWalletInstance;
         await store.dispatch('wallets/pushWallets', { wallets: [newWallet] } );
-        await store.dispatch('wallets/getNewWallets','lazy');
-        store.dispatch('wallets/getNewWallets','detail');
-      }else{
+        await store.dispatch('wallets/getNewWallets', 'lazy');
+        store.dispatch('wallets/getNewWallets', 'detail');
+      } else {
         router.push({ name: 'AddAddress' });
       }
+
       showLoader.value = false;
     };
 

@@ -114,13 +114,15 @@ export default {
       default: () => ({}),
     },
     totalClaimedRewardsXCT: {
-      type:Number,
+      type: Number,
       default: 0,
     },
   },
   setup(props) {
     const showModal = ref(false);
-    const modalCloseHandler = () => {showModal.value = false;};
+    const modalCloseHandler = () => {
+      showModal.value = false;
+    };
     const tableData = computed(() => {
       const stakedOnOtherAssets = props.holderInfo.wallets.reduce((accum, item) => {
         const price = BigNumber(item.usdt).dividedBy(item.amount).multipliedBy(item.totalStaked).toNumber();
@@ -129,19 +131,19 @@ export default {
         return BigNumber(accum).plus(adding).toNumber();
       }, 0);
 
-      return{
-        xctStaking:{
-          other:'-',
+      return {
+        xctStaking: {
+          other: '-',
           xct: BigNumber(props.currentWallet.tokenBalance?.rewards)
             .times(props.xctMarketCap.priceUsd)
             .toNumber(),
         },
-        stakedCitadel:{
+        stakedCitadel: {
           other: BigNumber(props.holderInfo.holder.totalUsdt).toNumber(),
           xct: BigNumber(props.currentWallet.tokenBalance?.stake)
             .toNumber(),
         },
-        total:{
+        total: {
           other: BigNumber(props.holderInfo.holder.claimed)
             .toNumber(),
           xct: BigNumber(props.totalClaimedRewardsXCT)

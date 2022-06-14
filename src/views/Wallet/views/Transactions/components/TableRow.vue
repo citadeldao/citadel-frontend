@@ -198,7 +198,6 @@ export default {
       }
 
       return { title: 'confirmed', color: '#0FB774' };
-
     });
     const address = computed(() => {
       if (props.fromMempool) {
@@ -210,6 +209,7 @@ export default {
       if (direction.value === 'outcome') {
         return props.transaction.to;
       }
+
       if (direction.value === 'income') {
         return props.transaction.from;
       }
@@ -232,7 +232,6 @@ export default {
         )
           .times(props.transaction.fee)
           .toNumber();
-
     });
     const formatedValue = computed(() => {
       return BigNumber(props.transaction.value).toNumber();

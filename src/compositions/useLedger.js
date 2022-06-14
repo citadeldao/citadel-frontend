@@ -35,10 +35,10 @@ export default function useLedger() {
       ? t(`ledger.errors.${errorCode}`)
       : error;
 
-    if (error.code === 11) { //appear after "not open App" error
+    if (error.code === 11) { // appear after "not open App" error
       showConnectLedgerModal.value = false;
       showAppLedgerModal.value = true;
-      //tx rejected
+      // tx rejected
     } else if (error.code === 27014 || error.code === 27013 || error.statusCode === 27013) {
       showConnectLedgerModal.value = false;
       showAppLedgerModal.value = false;

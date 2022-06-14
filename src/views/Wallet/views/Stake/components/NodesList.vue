@@ -84,7 +84,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    stakedNodes:{
+    stakedNodes: {
       type: Array,
       default: () => [],
     },
@@ -118,10 +118,11 @@ export default {
       // if multiple mode collect items in array
       if (props.isMultipleMode) {
         errorMsg.value = '';
+
         if (items.value.find(c => c.address === item.address)) {
           items.value = items.value.filter(c => c.address !== item.address);
         } else {
-          if ((mode.value === 'stake' && items.value.length + props.stakedNodes.length  > 15) ||
+          if ((mode.value === 'stake' && items.value.length + props.stakedNodes.length > 15) ||
           (mode.value === 'redelegate' && items.value.length > 15)) {
             errorMsg.value = 'chooseNotMoreThan16Nodes';
 
@@ -158,14 +159,13 @@ export default {
       updateShowChooseNode(true);
       updateShowNodesList(false);
       const chosenAddresses = items.value.map(c => c.address);
-      if(mode.value === 'redelegate'){
+
+      if (mode.value === 'redelegate') {
         await updateSelectedNodeForRedelegation(displayData.value.filter(c => chosenAddresses.includes(c.address)));
         updateAmount(resMaxAmount.value);
-      }else{
+      } else {
         await updateSelectedNode(displayData.value.filter(c => chosenAddresses.includes(c.address)));
       }
-
-
     };
 
     onMounted(() => {

@@ -91,19 +91,20 @@ export default {
       for (const key in totalData) {
         delete totalData[key];
       }
+
       await loadData();
     });
     const loadData = async () => {
       isLoading.value = true;
-      await store.dispatch('dao/getCalculatorData',{ walletId: props.currentToken.id });
+      await store.dispatch('dao/getCalculatorData', { walletId: props.currentToken.id });
       isLoading.value = false;
     };
 
     const networks = computed(() => store.getters['networks/networksList']);
     const data = computed(() => Object.keys(store.getters['dao/calculatorData']).map(i => {
-      const info = i === OUR_TOKEN ?
-        { name: 'XCT', net: OUR_TOKEN, code: 'XCT', icon: 'citadel' }
-        : { ...networks.value.find((network) => network.net === i),icon: i };
+      const info = i === OUR_TOKEN
+        ? { name: 'XCT', net: OUR_TOKEN, code: 'XCT', icon: 'citadel' }
+        : { ...networks.value.find((network) => network.net === i), icon: i };
 
       return {
         ...info,
@@ -112,12 +113,13 @@ export default {
     }) );
 
     const totalData = reactive({});
-    const changeHandler = ({ value,net })=> {
+    const changeHandler = ({ value, net })=> {
       totalData[net] = value;
     };
-    const total = computed(()=> Object.values(totalData).reduce((accum, item)=> BigNumber(accum).plus(item).toNumber() , 0));
+    const total = computed(()=> Object.values(totalData).reduce((accum, item)=> BigNumber(accum).plus(item).toNumber(), 0));
     const closeHandler = ()=> {
       emit('close');
+
       for (const key in totalData) {
         delete totalData[key];
       }

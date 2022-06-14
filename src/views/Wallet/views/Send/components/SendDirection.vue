@@ -205,9 +205,11 @@ export default {
     const currentKtAddress = inject('currentKtAddress');
     const txUrl = computed(() => {
       const data = [];
-      if(props.txHash){
+
+      if (props.txHash) {
         const filteredData = props.txHash?.filter((item)=> item);
-        for(const item of filteredData){
+
+        for (const item of filteredData) {
           data.push(props.wallet?.getTxUrl(props.wallet.id, item));
         }
       }

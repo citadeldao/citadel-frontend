@@ -70,13 +70,13 @@ export default {
   name: 'InfoBlock',
   components: { linkIcon },
   props: {
-    info:{
-      type:Object,
-      default:()=>({}),
+    info: {
+      type: Object,
+      default: ()=>({}),
     },
     currentWallet: {
       type: Object,
-      default:()=>({}),
+      default: ()=>({}),
     },
   },
 

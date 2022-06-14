@@ -135,7 +135,7 @@ export default {
   name: 'Input',
   components: { vision, hide, copy, info, mail, error, closeIcon },
   props: {
-    autofocus:{
+    autofocus: {
       type: Boolean,
       default: false,
     },
@@ -263,9 +263,9 @@ export default {
     );
 
     const placeholderShown = computed(() => {
-      return !focusFlag.value
-        && !!dynamicPlaceholder.value
-        && !valueRef.value;
+      return !focusFlag.value &&
+        !!dynamicPlaceholder.value &&
+        !valueRef.value;
     });
 
     watch(valueRef, (val) => {
@@ -293,15 +293,15 @@ export default {
       if (isTypeCurrency.value) {
         return value
           .toString()
-          //remove spaces
+          // remove spaces
           .replace(/\s+/g, '')
           .replace(/[БбЮю]/, '.')
           .replace(',', '.')
-          //only number
+          // only number
           .replace(/[^.\d]+/g, '')
           // remove extra 0 before decimal
           .replace(/^0+/, '0')
-          //remove extra dots
+          // remove extra dots
           // eslint-disable-next-line no-useless-escape
           .replace(/^([^\.]*\.)|\./g, '$1');
       }
@@ -320,8 +320,8 @@ export default {
     const setCurrencyOffset = () => {
       nextTick(() => {
         textWidth.value = currencyTextRef.value.clientWidth;
-        currencyOffset.value = inputPaddingLeft.value
-          + (textWidth.value >= inputWidth.value ? inputWidth.value : textWidth.value);
+        currencyOffset.value = inputPaddingLeft.value +
+          (textWidth.value >= inputWidth.value ? inputWidth.value : textWidth.value);
       });
     };
 
@@ -331,12 +331,13 @@ export default {
       const inputComputedStyles = window.getComputedStyle(inputRef.value);
 
       inputPaddingLeft.value = parseInt(inputComputedStyles.paddingLeft);
-      inputWidth.value = inputRef.value.clientWidth
-        - inputPaddingLeft.value
-        - parseInt(inputComputedStyles.paddingRight);
+      inputWidth.value = inputRef.value.clientWidth -
+        inputPaddingLeft.value -
+        parseInt(inputComputedStyles.paddingRight);
 
       setCurrencyOffset();
-      if(props.autofocus){
+
+      if (props.autofocus) {
         inputRef.value.focus();
       }
     });

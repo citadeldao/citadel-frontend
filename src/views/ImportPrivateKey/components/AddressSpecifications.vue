@@ -74,6 +74,7 @@ export default {
       if (!privateKey.value.trim()) {
         return;
       }
+
       emit('setSpecifications', {
         net: netByTitle[search.value],
         privateKey: privateKey.value,
@@ -87,11 +88,11 @@ export default {
     watch(
       ()=> privateKey.value,
       async (newVal)=> {
-        await loadAccounts(newVal,models[netByTitle[search.value]?.toUpperCase()]?.hasAccount);
+        await loadAccounts(newVal, models[netByTitle[search.value]?.toUpperCase()]?.hasAccount);
       },
     );
     const networkChangeHandler = async (value)=> {
-      await loadAccounts(privateKey.value,models[netByTitle[value]?.toUpperCase()]?.hasAccount);
+      await loadAccounts(privateKey.value, models[netByTitle[value]?.toUpperCase()]?.hasAccount);
     };
 
     return {
