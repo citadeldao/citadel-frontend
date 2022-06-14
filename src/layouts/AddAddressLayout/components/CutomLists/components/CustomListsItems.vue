@@ -6,7 +6,7 @@
         :class="{
           'custom-list-item--active': activeList === LIST_ALL && !isInWallet,
         }"
-        :data-qa="`${LIST_ALL}`"
+        data-qa="All"
         @click="$emit('set-active-list', LIST_ALL)"
       >
         <div class="custom-list-item__title">
@@ -45,7 +45,7 @@
           <div class="custom-list-item__edit-button__wrapper">
             <EditButton
               class="custom-list-item__edit-button"
-              :data-qa="`lists__list--${item.name}__edit`"
+              :data-qa="`Edit-${item.name}`"
               @click="$emit('edit-list', item)"
             >
               {{ $t('edit') }}
