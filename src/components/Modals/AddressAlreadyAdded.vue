@@ -14,9 +14,7 @@
         {{ $t('addedModal.desc') }}
       </div>
       <div class="modal__btn">
-        <PrimaryButton @click.stop="clickHandler">
-          Ok
-        </PrimaryButton>
+        <PrimaryButton @click.stop="clickHandler"> Ok </PrimaryButton>
       </div>
     </div>
   </div>

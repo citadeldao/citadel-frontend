@@ -15,14 +15,18 @@ export default function useCurrentWalletRequests() {
 
   const getFees = async () => {
     if (wallet.value.hasFee) {
-      const { data, error } = await wallet.value.getFees(wallet.value.id, currentToken?.value?.net);
+      const { data, error } = await wallet.value.getFees(
+        wallet.value.id,
+        currentToken?.value?.net
+      );
       fees.value = pickKeys(data, ['low', 'medium', 'high']);
       feesError.value = error;
     } else if (wallet.value.hasPledged) {
-      const { resFee, maxAmount, error, resAdding } = await wallet.value.getDelegationFee({
-        walletId: wallet.value.id,
-        transactionType: 'transfer',
-      });
+      const { resFee, maxAmount, error, resAdding } =
+        await wallet.value.getDelegationFee({
+          walletId: wallet.value.id,
+          transactionType: 'transfer',
+        });
       iostFee.value = resFee;
       adding.value = resAdding;
       resMaxAmount.value = maxAmount;
@@ -33,7 +37,10 @@ export default function useCurrentWalletRequests() {
   const balance = ref(null);
   const balanceError = ref(null);
   const getDelegationBalance = async () => {
-    const { data, error } = await CryptoCoin.getBalance({ walletId: wallet.value.id, token: currentToken?.value?.net });
+    const { data, error } = await CryptoCoin.getBalance({
+      walletId: wallet.value.id,
+      token: currentToken?.value?.net,
+    });
     balance.value = data;
     balanceError.value = error;
   };
@@ -43,7 +50,10 @@ export default function useCurrentWalletRequests() {
   const rawTx = ref(null);
   const rawTxError = ref(null);
   const prepareTransfer = async (options) => {
-    const { data, error } = await wallet.value.prepareTransfer({ walletId: wallet.value.id, options });
+    const { data, error } = await wallet.value.prepareTransfer({
+      walletId: wallet.value.id,
+      options,
+    });
     rawTx.value = data;
     rawTxError.value = error;
   };
@@ -51,7 +61,7 @@ export default function useCurrentWalletRequests() {
   const txHash = ref(null);
   const txError = ref(null);
 
-  const signAndSendTransfer = async (rawTx, password ) => {
+  const signAndSendTransfer = async (rawTx, password) => {
     const res = await wallet.value.signAndSendTransfer({
       walletId: wallet.value.id,
       rawTransaction: rawTx,
@@ -60,6 +70,7 @@ export default function useCurrentWalletRequests() {
     });
     const { data } = res;
     const { error } = res;
+
     if (error) {
       txError.value = error;
     } else {

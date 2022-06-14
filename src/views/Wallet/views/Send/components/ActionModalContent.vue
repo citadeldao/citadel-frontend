@@ -2,7 +2,7 @@
   <div class="action-modal-content">
     <div
       class="action-modal-content__send-direction"
-      :style="{marginBottom:wallet.hasPledged?'20px':''}"
+      :style="{ marginBottom: wallet.hasPledged ? '20px' : '' }"
     >
       <SendDirection
         :to="to"
@@ -16,10 +16,7 @@
       />
     </div>
 
-    <div
-      v-if="wallet.hasFee && !hideFee"
-      class="action-modal-content__fees"
-    >
+    <div v-if="wallet.hasFee && !hideFee" class="action-modal-content__fees">
       <Fees
         :current-token="currentToken"
         :fees="fees"
@@ -32,7 +29,7 @@
 
     <div class="action-modal-content__total-amount">
       <span class="action-modal-content__total-amount-title">
-        {{ $t("totalAmount") }}:
+        {{ $t('totalAmount') }}:
       </span>
       <div
         v-if="wallet.hasPledged || currentToken"
@@ -51,7 +48,8 @@
         <span
           v-if="wallet.hasPledged || (!wallet.hasPledged && fee.fee)"
           class="action-modal-content__total-amount-line"
-        >/</span>
+          >/</span
+        >
         <div
           v-if="wallet.hasPledged"
           class="action-modal-content__total-wrapper"
@@ -63,7 +61,7 @@
           <span class="action-modal-content__total-amount-currency">
             iRam
           </span>
-           &nbsp;&nbsp;
+          &nbsp;&nbsp;
           <span
             v-pretty-number="adding.gas"
             class="action-modal-content__total-amount-fee"
@@ -78,7 +76,12 @@
           class="action-modal-content__total-wrapper"
         >
           <span
-            v-pretty-number="{ value: fee.fee || 0, currency: currentToken ? currentToken.parentCoin.code : wallet?.code }"
+            v-pretty-number="{
+              value: fee.fee || 0,
+              currency: currentToken
+                ? currentToken.parentCoin.code
+                : wallet?.code,
+            }"
             class="action-modal-content__total-amount-fee"
           />
           <span class="action-modal-content__total-amount-currency">
@@ -86,12 +89,9 @@
           </span>
         </div>
       </div>
-      <div
-        v-else
-        class="action-modal-content__total-amount-wrapper"
-      >
+      <div v-else class="action-modal-content__total-amount-wrapper">
         <span
-          v-pretty-number="{ value: totalAmount, currency: wallet?.code}"
+          v-pretty-number="{ value: totalAmount, currency: wallet?.code }"
           class="action-modal-content__total-amount-amount"
         />
         <span class="action-modal-content__total-amount-currency">
@@ -99,10 +99,7 @@
         </span>
       </div>
     </div>
-    <div
-      v-if="!hidePassword"
-      class="action-modal-content__password-input"
-    >
+    <div v-if="!hidePassword" class="action-modal-content__password-input">
       <Input
         id="password"
         :value="password"
@@ -145,7 +142,7 @@ export default {
       type: Object,
     },
     amount: {
-      type: [Number,String],
+      type: [Number, String],
     },
     totalAmount: {
       type: Number,
@@ -169,7 +166,7 @@ export default {
     },
     fee: {
       type: Object,
-      default:()=>({}),
+      default: () => ({}),
     },
     iostFee: {
       type: Number,
@@ -184,11 +181,7 @@ export default {
       default: '',
     },
   },
-  emits: [
-    'update:password',
-    'submitSend',
-    'select-fee',
-  ],
+  emits: ['update:password', 'submitSend', 'select-fee'],
   setup() {
     const inputError = inject('inputError');
 
@@ -217,7 +210,7 @@ export default {
   &__total-amount-title {
     font-size: 18px;
     line-height: 22px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
   }
   &__total-amount-wrapper,
   &__total-amount,
@@ -239,7 +232,7 @@ export default {
   &__total-amount-line,
   &__total-amount-fee {
     color: $red;
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
     margin-right: 3px;
   }
   &__password-input {
@@ -255,7 +248,7 @@ export default {
     font-weight: 700;
   }
   &__token-amount-code {
-    color: $fieldName
+    color: $fieldName;
   }
   &__token-divider {
     color: $mid-gray;
@@ -267,10 +260,10 @@ export default {
   &__token-fee-code {
     color: $fieldName;
   }
-  &__total-amount-value{
+  &__total-amount-value {
     color: $dark-blue;
   }
-  &__total-amount-line{
+  &__total-amount-line {
     color: $mid-gray;
     margin: 0 9px 0 9px;
   }

@@ -11,10 +11,7 @@
             {{ $t('wallet.info.note') }}
           </div>
         </div>
-        <div
-          class="info-modal__upper-right"
-          @click="$emit('close')"
-        >
+        <div class="info-modal__upper-right" @click="$emit('close')">
           <closeIcon />
         </div>
       </div>
@@ -24,13 +21,13 @@
             {{ $t('wallet.info.block1Title') }}
           </div>
           <div class="side__secondary-title">
-            {{ $t("wallet.info.block1Info") }}
+            {{ $t('wallet.info.block1Info') }}
           </div>
           <div class="side__icon">
             <placeholderKey />
           </div>
           <PrimaryButton @click="toAddAddress">
-            {{ $t("importAddress") }}
+            {{ $t('importAddress') }}
           </PrimaryButton>
         </div>
         <div class="info-modal__side-divider" />
@@ -39,13 +36,13 @@
             {{ $t('wallet.info.block2Title') }}
           </div>
           <div class="side__secondary-title">
-            {{ $t("wallet.info.block2Info") }}
+            {{ $t('wallet.info.block2Info') }}
           </div>
           <div class="side__icon">
             <placeholderQuestion class="question" />
           </div>
           <PrimaryButton :disabled="true">
-            {{ $t("learnHow") }}
+            {{ $t('learnHow') }}
           </PrimaryButton>
         </div>
       </div>

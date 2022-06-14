@@ -5,5 +5,5 @@ export const getDecorateLabel = (net, label) => {
     },
   };
 
-  return labels[net] && labels[net][label] || label;
+  return (labels[net] && labels[net][label]) || label;
 };

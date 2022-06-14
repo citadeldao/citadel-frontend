@@ -115,9 +115,13 @@ export default {
     const inputError = ref();
     const listName = ref('');
 
-    const customLists = computed(() => store.getters['wallets/customWalletsList']);
+    const customLists = computed(
+      () => store.getters['wallets/customWalletsList']
+    );
     const activeList = computed(() => store.getters['wallets/activeList']);
-    const showModal = computed(() => store.getters['modal/isModalShown'](CUSTOM_LIST_MODAL));
+    const showModal = computed(() =>
+      store.getters['modal/isModalShown'](CUSTOM_LIST_MODAL)
+    );
 
     const createList = () => {
       mode.value = 'create';
@@ -198,7 +202,7 @@ export default {
         if (newVal) {
           inputError.value = '';
         }
-      },
+      }
     );
 
     const saveList = async () => {
@@ -231,10 +235,18 @@ export default {
 
             return;
           }
+
           break;
 
         case 'edit':
-          if (existInList(customLists.value.filter((item) => item.id !== currentCustomList.value.id), listName.value)) {
+          if (
+            existInList(
+              customLists.value.filter(
+                (item) => item.id !== currentCustomList.value.id
+              ),
+              listName.value
+            )
+          ) {
             showWarningModal.value = true;
 
             return;
@@ -270,7 +282,7 @@ export default {
       () => {
         showWarningBanner.value = false;
       },
-      { deep: true },
+      { deep: true }
     );
 
     const validateBeforeSave = () => {
@@ -279,6 +291,7 @@ export default {
 
         return false;
       }
+
       if (!checkedWallets.value.length) {
         showWarningBanner.value = true;
 
@@ -361,7 +374,7 @@ export default {
   & span {
     font-size: 18px;
     line-height: 27px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     text-decoration-line: underline;
     color: $red;
   }

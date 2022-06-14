@@ -79,7 +79,7 @@ export default {
   min-height: 60px;
   border-radius: 50px;
   box-shadow: var(--buttonShadow);
-  font-family: "Panton_SemiBold";
+  font-family: 'Panton_SemiBold';
   font-size: 20px;
   line-height: 24px;
   background: var(--backgroundColor);

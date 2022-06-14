@@ -49,12 +49,8 @@ export default {
 
       nextTick(() => {
         const tooltip = document.getElementById('tooltip');
-        const {
-          left,
-          top,
-          width,
-          height,
-        } = event.target.getBoundingClientRect();
+        const { left, top, width, height } =
+          event.target.getBoundingClientRect();
         tooltipX.value = left - (tooltip.offsetWidth - width) / 2;
         tooltipY.value = top - tooltip.offsetHeight - height / 2;
       });

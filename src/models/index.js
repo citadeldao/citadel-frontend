@@ -50,7 +50,7 @@ export default {
   ETH: CryptoCoinETH,
   SECRET: CryptoCoinSECRET,
   PERSISTENCE: CryptoCoinPERSISTENCE,
-  SENTINEL:CryptoCoinSENTINEL,
+  SENTINEL: CryptoCoinSENTINEL,
   CHIHUAHUA: CryptoCoinCHIHUAHUA,
   STARGAZE: CryptoCoinSTARGAZE,
   RIZON: CryptoCoinRIZON,

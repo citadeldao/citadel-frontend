@@ -10,7 +10,7 @@ export default class CryptoCoinSIFCHAIN extends CryptoCoin {
     this.hasRedelegation = true;
   }
 
-  getPublicKeyDecoded(){
+  getPublicKeyDecoded() {
     return typeof this.publicKey === 'string'
       ? this.publicKey
       : Buffer.from(this.publicKey).toString('hex');

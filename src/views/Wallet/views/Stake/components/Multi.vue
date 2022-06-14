@@ -4,26 +4,17 @@
       v-if="!list.length > 0 && currentWallet.type !== WALLET_TYPES.PUBLIC_KEY"
       @click:placeholder="toStake"
     />
-    <div
-      v-else
-      class="multi"
-    >
+    <div v-else class="multi">
       <div
         v-if="currentWallet.type === WALLET_TYPES.PUBLIC_KEY"
         class="multi__lock-banner"
       >
         <LockBanner @showPlaceholder="$emit('showPlaceholder')" />
       </div>
-      <div
-        v-if="list.length > 0"
-        class="multi__stake-chart"
-      >
+      <div v-if="list.length > 0" class="multi__stake-chart">
         <StakeChart :chart-data="chartData" />
       </div>
-      <div
-        v-if="list.length > 0"
-        class="multi__stake-list"
-      >
+      <div v-if="list.length > 0" class="multi__stake-list">
         <div class="multi__stake-list-item multi__stake-list-item--md">
           <StakeListItem
             icon="citadel"
@@ -120,11 +111,9 @@
         </PrimaryButton>
         <div
           class="multi__buttons-section"
-          :style="{width:!currentWallet.hasRedelegation && '100%'}"
+          :style="{ width: !currentWallet.hasRedelegation && '100%' }"
         >
-          <div
-            class="multi__buttons-section-unstake-button"
-          >
+          <div class="multi__buttons-section-unstake-button">
             <PrimaryButton
               bg-color="white"
               color="#6B93C0"
@@ -159,21 +148,12 @@
       @prepareClaim="$emit('prepareClaim')"
       @prepareXctClaim="$emit('prepareXctClaim')"
     />
-    <teleport
-      v-if="isLoading"
-      to="body"
-    >
+    <teleport v-if="isLoading" to="body">
       <Modal>
-        <img
-          src="@/assets/gif/loader.gif"
-          alt=""
-        >
+        <img src="@/assets/gif/loader.gif" alt="" />
       </Modal>
     </teleport>
-    <teleport
-      v-if="showModal || showLedgerModalContent"
-      to="body"
-    >
+    <teleport v-if="showModal || showLedgerModalContent" to="body">
       <Modal>
         <!-- if POLKADOT -->
         <ModalContent
@@ -261,10 +241,21 @@
             :wallet="currentWallet"
             :staking-amount="amount"
             :staking-fee="fee"
-            :hide-password="isHardwareWallet || [WALLET_TYPES.KEPLR].includes(currentWallet.type)"
+            :hide-password="
+              isHardwareWallet ||
+              [WALLET_TYPES.KEPLR].includes(currentWallet.type)
+            "
             :adding="adding"
-            :place="(mode === 'redelegate' || activeTab === 'redelegate') && !isMultiple ? 'singleStake' : ''"
-            :delegation="{ from: selectedNode?.name, to: selectedNodeForRedelegation?.name }"
+            :place="
+              (mode === 'redelegate' || activeTab === 'redelegate') &&
+              !isMultiple
+                ? 'singleStake'
+                : ''
+            "
+            :delegation="{
+              from: selectedNode?.name,
+              to: selectedNodeForRedelegation?.name,
+            }"
             @submitSend="stake"
           />
         </ModalContent>
@@ -307,7 +298,11 @@
         >
           <SuccessModalContent
             v-model:tx-comment="txComment"
-            :to="mode === 'redelegate' || activeTab === 'redelegate' ? selectedNodeForRedelegation?.address : selectedNode?.address"
+            :to="
+              mode === 'redelegate' || activeTab === 'redelegate'
+                ? selectedNodeForRedelegation?.address
+                : selectedNode?.address
+            "
             :wallet="currentWallet"
             :amount="amount"
             :fee="fee"
@@ -453,16 +448,15 @@ export default {
       isMultiple,
       disabledPolkadot,
       isWithoutDelegation,
-    } = useStaking(
-      props.stakeNodes,
-      props.list,
-    );
+    } = useStaking(props.stakeNodes, props.list);
 
-    const keplrConnector = computed(() => store.getters['keplr/keplrConnector']);
+    const keplrConnector = computed(
+      () => store.getters['keplr/keplrConnector']
+    );
 
     const { isHardwareWallet } = useWallets();
     const disabledConfirm = computed(
-      () => passwordIncorrect.value && !isHardwareWallet.value,
+      () => passwordIncorrect.value && !isHardwareWallet.value
     );
 
     const {
@@ -479,21 +473,23 @@ export default {
     const txComment = ref('');
     const successClickHandler = async () => {
       txComment.value &&
-      (await store.dispatch('transactions/postTransactionNote', {
-        network: props.currentWallet.net,
-        hash: txHash.value[0],
-        text: txComment.value,
-      }));
+        (await store.dispatch('transactions/postTransactionNote', {
+          network: props.currentWallet.net,
+          hash: txHash.value[0],
+          text: txComment.value,
+        }));
       txComment.value = '';
       emit('stake');
       finalClose();
     };
 
     const showLedgerModalContent = computed(() => {
-      return showConnectLedgerModal.value
-        || showConfirmLedgerModal.value
-        || showAppLedgerModal.value
-        || showRejectedLedgerModal.value;
+      return (
+        showConnectLedgerModal.value ||
+        showConfirmLedgerModal.value ||
+        showAppLedgerModal.value ||
+        showRejectedLedgerModal.value
+      );
     });
 
     const buttonsPannelData = computed(() => {
@@ -509,26 +505,33 @@ export default {
         button1: 'unstake',
         button2: 'Stake',
       };
-
     });
 
     const chartData = computed(() => {
-      const withoutDelegation = props.currentWallet.hasStake === 'finalStakeAndDelegation'
-        ? {
-          name: 'Stake without delegation',
-          color: '#C3CEEB',
-          share: shareInValue(
-            props.currentWallet.balance.calculatedBalance,
-            BigNumber(props.currentWallet.balance.stake).minus(props.currentWallet.balance.delegatedBalance).toNumber(),
-          ),
-        } : {};
-      const finalData = isMultiple.value ? [{
-        color: '#FF5722',
-        share: shareInValue(
-          props.currentWallet.balance.calculatedBalance,
-          props.currentWallet.balance.stake,
-        ),
-      }] : props.list;
+      const withoutDelegation =
+        props.currentWallet.hasStake === 'finalStakeAndDelegation'
+          ? {
+              name: 'Stake without delegation',
+              color: '#C3CEEB',
+              share: shareInValue(
+                props.currentWallet.balance.calculatedBalance,
+                BigNumber(props.currentWallet.balance.stake)
+                  .minus(props.currentWallet.balance.delegatedBalance)
+                  .toNumber()
+              ),
+            }
+          : {};
+      const finalData = isMultiple.value
+        ? [
+            {
+              color: '#FF5722',
+              share: shareInValue(
+                props.currentWallet.balance.calculatedBalance,
+                props.currentWallet.balance.stake
+              ),
+            },
+          ]
+        : props.list;
       const data = [
         ...finalData,
         {
@@ -536,7 +539,7 @@ export default {
           color: '#AFBCCB',
           share: shareInValue(
             props.currentWallet.balance.calculatedBalance,
-            props.currentWallet.balance.mainBalance,
+            props.currentWallet.balance.mainBalance
           ),
         },
         {
@@ -544,13 +547,13 @@ export default {
           color: '#6B93C0',
           share: shareInValue(
             props.currentWallet.balance.calculatedBalance,
-            props.currentWallet.balance.frozenBalance,
+            props.currentWallet.balance.frozenBalance
           ),
         },
         withoutDelegation,
       ];
 
-      return data.filter(item => item.share > 0);
+      return data.filter((item) => item.share > 0);
     });
 
     const txHash = ref();
@@ -563,15 +566,20 @@ export default {
       isLoading.value = true;
       const { rawTxs, ok } = await props.currentWallet.prepareDelegation({
         walletId: props.currentWallet.id,
-        nodeAddress: isMultiple.value ? selectedNode.value || props.list : selectedNode.value?.address,
+        nodeAddress: isMultiple.value
+          ? selectedNode.value || props.list
+          : selectedNode.value?.address,
         amount: amount.value,
         type: activeTab.value || mode.value,
-        redelegateNodeAddress: isMultiple.value ? selectedNodeForRedelegation?.value : selectedNodeForRedelegation?.value?.address,
+        redelegateNodeAddress: isMultiple.value
+          ? selectedNodeForRedelegation?.value
+          : selectedNodeForRedelegation?.value?.address,
         additionalFee: isMultiple.value ? additionalFee.value : '',
         rewardsAddress: rewardDestinationAddress.value,
         rewardsRestake: rewardDestinationOption.value === 0,
         isWithoutDelegation: isWithoutDelegation.value,
       });
+
       if (ok) {
         resRawTxs.value = rawTxs;
         updateShowChooseNode(false);
@@ -580,6 +588,7 @@ export default {
       } else {
         modalCloseHandler();
       }
+
       isLoading.value = false;
     };
 
@@ -591,8 +600,13 @@ export default {
         isLoading.value = true;
 
         let keplrResult;
+
         try {
-          keplrResult = await keplrConnector.value.sendKeplrTransaction(resRawTxs.value, props.currentWallet.address, { preferNoSetFee: true });
+          keplrResult = await keplrConnector.value.sendKeplrTransaction(
+            resRawTxs.value,
+            props.currentWallet.address,
+            { preferNoSetFee: true }
+          );
         } catch (err) {
           notify({
             type: 'warning',
@@ -638,7 +652,9 @@ export default {
         };
 
         const data = await useApi('wallet').sendSignedTransaction({
-          hash: keplrNetworksProtobufFormat.includes(props.currentWallet.net) ? protobufTx : defaultTx,
+          hash: keplrNetworksProtobufFormat.includes(props.currentWallet.net)
+            ? protobufTx
+            : defaultTx,
           deviceType: WALLET_TYPES.KEPLR,
           proxy: false,
           network: props.currentWallet.net,
@@ -668,13 +684,16 @@ export default {
 
         return;
       }
+
       isLoading.value = true;
       let res;
+
       if (isLedgerWallet.value) {
         isLoading.value = false;
         showConfirmTransaction.value = false;
         clearLedgerModals();
         showConfirmLedgerModal.value = true;
+
         try {
           res = await props.currentWallet.signAndSendMulti({
             walletId: props.currentWallet.id,
@@ -694,6 +713,7 @@ export default {
           privateKey: props.currentWallet.getPrivateKeyDecoded(password.value),
         });
       }
+
       if (res.ok) {
         txHash.value = res.data;
         updateShowConfirmTransaction(false);
@@ -703,7 +723,6 @@ export default {
         modalCloseHandler();
         isLoading.value = false;
       }
-
     };
 
     // ledger modal handlers

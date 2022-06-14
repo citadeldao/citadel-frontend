@@ -7,7 +7,7 @@
       @click="showNodesList"
     >
       <pointer />
-      <span>{{ $t("stakePlaceholder.choseNodePlaceholderNote") }} </span>
+      <span>{{ $t('stakePlaceholder.choseNodePlaceholderNote') }} </span>
     </div>
     <div
       v-else-if="selectedNode && mode === 'stake'"
@@ -28,9 +28,7 @@
     >
       {{ $t('stakingNote') }}
     </span>
-    <div
-      class="choose-staking-node__tabs-wrapper"
-    >
+    <div class="choose-staking-node__tabs-wrapper">
       <div class="choose-staking-node__tabs">
         <div
           class="choose-staking-node__tabs-item"
@@ -55,7 +53,7 @@
           class="choose-staking-node__tabs-item"
           @click="changeMode('redelegate')"
         >
-          {{ $t("redelegation.redelegate") }}
+          {{ $t('redelegation.redelegate') }}
         </span>
       </div>
     </div>
@@ -76,13 +74,10 @@
       v-if="!showInput && !selectedNodeForRedelegation"
       class="choose-staking-node__validators-note"
     >
-      {{ $t("redelegateNote") }}
+      {{ $t('redelegateNote') }}
     </span>
 
-    <div
-      v-if="showInput"
-      class="choose-staking-node__amount-input"
-    >
+    <div v-if="showInput" class="choose-staking-node__amount-input">
       <Input
         id="amount"
         :value="amount"
@@ -98,11 +93,8 @@
         @input="updateAmount"
         @keyup.enter="$emit('nextStep')"
       />
-      <span
-        v-if="showAmount"
-        class="choose-staking-node__available-balance"
-      >
-        {{ $t("balanceTooltipInfo.availableBalance") }}:
+      <span v-if="showAmount" class="choose-staking-node__available-balance">
+        {{ $t('balanceTooltipInfo.availableBalance') }}:
         <span
           v-pretty-number="{ value: maxAmount, currency: currentWallet.code }"
           class="choose-staking-node__available-balance-balance"
@@ -115,7 +107,7 @@
         v-if="!insufficientFunds && currentWallet.hasPledged"
         class="choose-staking-node__input-note"
       >
-        {{ $t("staking.inputNote") }}
+        {{ $t('staking.inputNote') }}
       </span>
     </div>
     <div class="choose-staking-node__additional-fee">
@@ -173,7 +165,13 @@ import { polkadotRewardDestinationOptions } from './config';
 import PolkadotUnstakeListItems from './PolkadotUnstakeListItems.vue';
 export default {
   name: 'PolkadotChooseStakingNode',
-  components: { Select, pointer, Input, PolkadotStakeListItems, PolkadotUnstakeListItems },
+  components: {
+    Select,
+    pointer,
+    Input,
+    PolkadotStakeListItems,
+    PolkadotUnstakeListItems,
+  },
   props: {
     amount: {
       type: [Number, String],
@@ -204,8 +202,12 @@ export default {
   setup(props, { emit }) {
     const updateAmount = inject('updateAmount');
     const updateAdditionalFee = inject('updateAdditionalFee');
-    const updateRewardDestinationAddress = inject('updateRewardDestinationAddress');
-    const updateRewardDestinationOption = inject('updateRewardDestinationOption');
+    const updateRewardDestinationAddress = inject(
+      'updateRewardDestinationAddress'
+    );
+    const updateRewardDestinationOption = inject(
+      'updateRewardDestinationOption'
+    );
     const getDelegationFee = inject('getDelegationFee');
     const editMode = inject('editMode');
     const selectedNode = inject('selectedNode');
@@ -217,7 +219,9 @@ export default {
     const resMaxAmount = inject('resMaxAmount');
     const mode = inject('mode');
 
-    const finalNodesList = computed(()=> selectedNodeForRedelegation.value || props.list);
+    const finalNodesList = computed(
+      () => selectedNodeForRedelegation.value || props.list
+    );
 
     const rewardDestinationOptionChangeHandler = (value) => {
       updateRewardDestinationOption(value);
@@ -230,7 +234,8 @@ export default {
       emit('update:activeTab', value);
       updateAmount('');
       updateAdditionalFee('');
-      value !== 'redelegate' &&  await getDelegationFee(value,selectedNode.value.address);
+      value !== 'redelegate' &&
+        (await getDelegationFee(value, selectedNode.value.address));
     };
     const maxAmount = inject('maxAmount');
     const maxAdditionalFee = inject('maxAdditionalFee');
@@ -238,15 +243,21 @@ export default {
     const insufficientAdditionalFee = inject('insufficientAdditionalFee');
 
     const showAmount = computed(() => {
-      if (insufficientFunds.value
-          || mode.value === 'unstake' || props.activeTab === 'unstake'
-          || mode.value === 'redelegate' || props.activeTab === 'redelegate') {
+      if (
+        insufficientFunds.value ||
+        mode.value === 'unstake' ||
+        props.activeTab === 'unstake' ||
+        mode.value === 'redelegate' ||
+        props.activeTab === 'redelegate'
+      ) {
         return false;
       }
 
       return true;
     });
-    const showInput = computed(() => !(mode.value === 'redelegate' || props.activeTab === 'redelegate'));
+    const showInput = computed(
+      () => !(mode.value === 'redelegate' || props.activeTab === 'redelegate')
+    );
 
     const changeMode = async (val) => {
       updateAmount('');
@@ -257,10 +268,12 @@ export default {
       resMaxAmount.value = '';
       emit('update:activeTab', val);
       mode.value = val;
-      if(val === 'unstake' || val === 'redelegate'){
+
+      if (val === 'unstake' || val === 'redelegate') {
         await updateSelectedNode(props.list);
       }
-      if(val === 'stake'){
+
+      if (val === 'stake') {
         await getDelegationFee(val, props.list);
       }
     };
@@ -314,26 +327,26 @@ export default {
       line-height: 24px;
       color: $mid-gray;
       margin-top: 7px;
-      font-family: "Panton_SemiBold";
+      font-family: 'Panton_SemiBold';
     }
-    &--lg-md{
-      & span{
-        @include lg{
+    &--lg-md {
+      & span {
+        @include lg {
           width: 155px;
           margin-top: 0;
           margin-left: 17px;
         }
-        @include md{
+        @include md {
           width: 155px;
           margin-top: 0;
           margin-left: 17px;
         }
       }
-      @include lg{
+      @include lg {
         height: 100px;
         flex-direction: row;
       }
-      @include md{
+      @include md {
         height: 100px;
         flex-direction: row;
       }
@@ -343,13 +356,13 @@ export default {
     margin-bottom: 16px;
   }
   &__validators-note,
-  &__staking-note{
+  &__staking-note {
     font-size: 14px;
     line-height: 22px;
     text-align: center;
     color: $mid-blue;
   }
-  &__staking-note{
+  &__staking-note {
     text-align: left;
   }
   &__amount-input {
@@ -393,7 +406,7 @@ export default {
     border-bottom: 6px solid transparent;
     margin-right: 37px;
     padding-bottom: 17px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     &:last-child {
       margin-right: 0;
     }
@@ -403,11 +416,11 @@ export default {
     color: $too-dark-blue;
   }
 
-  &__redelegation-block{
+  &__redelegation-block {
     display: flex;
     flex-direction: column;
   }
-  &__redelegation-block-subtitle{
+  &__redelegation-block-subtitle {
     font-size: 14px;
     line-height: 22px;
     color: $mid-blue;
@@ -428,13 +441,13 @@ export default {
   }
   &__available-balance-balance {
     color: $ligth-blue;
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
     margin-left: 6px;
     margin-right: 3px;
   }
   &__available-balance-currency {
   }
-  &__input-note{
+  &__input-note {
     position: absolute;
     font-size: 14px;
     line-height: 17px;

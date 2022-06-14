@@ -24,7 +24,7 @@
         {{ $t('addAddress.cardButton') }}
       </PrimaryButton>
     </div>
-    <img src="@/assets/images/one-seed-image.png">
+    <img src="@/assets/images/one-seed-image.png" />
   </div>
 </template>
 
@@ -84,7 +84,7 @@ export default {
 
   &::before {
     position: absolute;
-    content: "";
+    content: '';
     top: 0;
     right: 0;
     bottom: 0;
@@ -119,7 +119,7 @@ export default {
     font-size: 40px;
     line-height: 30px;
     color: $white;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     @include lg {
       font-size: 30px;
       line-height: 30px;
@@ -165,7 +165,7 @@ export default {
     color: $white;
     margin-bottom: 66px;
     font-weight: bold;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
 
     @include lg {
       font-size: 20px;

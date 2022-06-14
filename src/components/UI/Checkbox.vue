@@ -8,13 +8,9 @@
       :disabled="disabled"
       :data-qa="dataQa"
       @change="changeHandler"
-    >
-    <label
-      :for="id"
-    >
-      <span
-        class="checkbox__checkmark"
-      >
+    />
+    <label :for="id">
+      <span class="checkbox__checkmark">
         <template v-if="value">
           <checkmarkDisabled v-if="disabled" />
           <checkmark v-else />
@@ -24,10 +20,7 @@
         {{ label }}
       </span>
     </label>
-    <Tooltip
-      v-if="info"
-      :text="info"
-    >
+    <Tooltip v-if="info" :text="info">
       <info />
     </Tooltip>
   </div>
@@ -86,7 +79,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-input[type="checkbox"] {
+input[type='checkbox'] {
   display: none;
 
   & + label {
@@ -106,7 +99,7 @@ input[type="checkbox"] {
   &:checked + label {
     .checkbox {
       &__checkmark {
-        transition: all .3s ease-in-out;
+        transition: all 0.3s ease-in-out;
         background: $too-dark-blue;
         border: none;
       }
@@ -149,7 +142,7 @@ input[type="checkbox"] {
     border: 1px solid $too-ligth-blue;
     border-radius: 4px;
     margin-right: 14px;
-    transition: all .2s;
+    transition: all 0.2s;
 
     & svg {
       width: 11px;

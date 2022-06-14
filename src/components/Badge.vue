@@ -1,9 +1,5 @@
 <template>
-  <div
-    v-if="content"
-    :style="{ backgroundColor }"
-    class="badge"
-  >
+  <div v-if="content" :style="{ backgroundColor }" class="badge">
     <span>{{ content }}</span>
   </div>
 </template>

@@ -7,11 +7,10 @@ export default {
   }),
 
   getters: {
-    keplrConnector: state => state.keplrConnector,
+    keplrConnector: (state) => state.keplrConnector,
   },
 
-  mutations: {
-  },
+  mutations: {},
 
   actions: {
     async connectToKeplr({ state }, chainId) {

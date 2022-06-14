@@ -10,7 +10,7 @@ export default {
   }),
 
   getters: {
-    toasts: state => state.toasts,
+    toasts: (state) => state.toasts,
   },
 
   mutations: {
@@ -18,7 +18,7 @@ export default {
       state.toasts.unshift(toast);
     },
     [types.REMOVE_TOAST](state, id) {
-      const index = state.toasts.findIndex(n => n.id === id);
+      const index = state.toasts.findIndex((n) => n.id === id);
       state.toasts.splice(index, 1);
     },
   },

@@ -42,10 +42,7 @@
             />
           </div>
 
-          <div
-            v-if="hasWallets"
-            class="delete-modal__checkbox"
-          >
+          <div v-if="hasWallets" class="delete-modal__checkbox">
             <Checkbox
               id="backup"
               v-model:value="needSaveBackup"
@@ -72,7 +69,7 @@
               data-qa="settings__delete-account__cancel-button"
               @click="closeDeleteAccountModal"
             >
-              {{ $t("cancel") }}
+              {{ $t('cancel') }}
             </TextButton>
           </div>
         </template>
@@ -133,6 +130,7 @@ export default {
       if (needSaveBackup.value && hasWallets.value) {
         exportPrivateKeys(keyStorage.value);
       }
+
       await store.dispatch('crypto/resetState');
       await citadel.reset(true);
       removeStorage(keyStorage.value);
@@ -231,7 +229,7 @@ export default {
   }
 
   &__button,
-  &__checkbox{
+  &__checkbox {
     margin-bottom: 24px;
   }
 }

@@ -1,32 +1,23 @@
 <template>
-  <div
-    v-if="isLoading"
-    class="xct-calculator xct-calculator--loading"
-  >
+  <div v-if="isLoading" class="xct-calculator xct-calculator--loading">
     <Loading />
   </div>
-  <div
-    v-else
-    class="xct-calculator"
-  >
-    <div
-      class="xct-calculator__toggle-info-icon"
-      @click="showModal = true"
-    >
+  <div v-else class="xct-calculator">
+    <div class="xct-calculator__toggle-info-icon" @click="showModal = true">
       <toogleInfo />
     </div>
     <div class="xct-calculator__header">
       <div class="xct-calculator__header-header">
         <span class="xct-calculator__header-header-title">
-          {{ $t("calculator.title", { coin: currentToken.code }) }}
+          {{ $t('calculator.title', { coin: currentToken.code }) }}
         </span>
         <span class="xct-calculator__header-header-subtitle">
-          {{ $t("calculator.subtitle") }}
+          {{ $t('calculator.subtitle') }}
         </span>
       </div>
       <div class="xct-calculator__header-yield">
         <span class="xct-calculator__header-yield-title">
-          {{ $t("calculator.yearlyReturn") }}
+          {{ $t('calculator.yearlyReturn') }}
         </span>
         <div class="xct-calculator__header-yield-procent">
           <span
@@ -49,12 +40,9 @@
     <div class="xct-calculator__footer">
       <div class="xct-calculator__footer-you-have">
         <span class="xct-calculator__footer-you-have-title">
-          {{ $t("calculator.howManyYouHave") }}
+          {{ $t('calculator.howManyYouHave') }}
         </span>
-        <div
-          v-if="showInput"
-          class="xct-calculator__input"
-        >
+        <div v-if="showInput" class="xct-calculator__input">
           <input
             ref="valueInput"
             :value="value"
@@ -62,7 +50,7 @@
             @input="inputHandler"
             @blur="showInput = false"
             @keyup.enter="showInput = false"
-          >
+          />
           <span>{{ currentToken.code }}</span>
         </div>
         <div
@@ -81,7 +69,7 @@
       </div>
       <div class="xct-calculator__footer-yearly-reward">
         <span class="xct-calculator__footer-yearly-reward-title">
-          {{ $t("calculator.yearlyReward") }}
+          {{ $t('calculator.yearlyReward') }}
         </span>
         <div class="xct-calculator__footer-yearly-reward-amount">
           <span
@@ -98,10 +86,7 @@
       </div>
     </div>
   </div>
-  <teleport
-    v-if="showModal"
-    to="body"
-  >
+  <teleport v-if="showModal" to="body">
     <Modal>
       <XCTCalculatorExpand
         v-click-away="modalCloseHandler"
@@ -142,7 +127,7 @@ export default {
     const max = ref(100000);
     const value = ref(10000);
     const yearlyReward = computed(
-      () => (props.info.yieldPct / 100) * value.value,
+      () => (props.info.yieldPct / 100) * value.value
     );
     const showInput = ref(false);
     const valueInput = ref(null);
@@ -155,6 +140,7 @@ export default {
       if (+e.target.value > 100000) {
         max.value = +e.target.value;
       }
+
       value.value = +e.target.value;
     };
 
@@ -185,7 +171,7 @@ export default {
   background-size: cover;
   border-radius: 16px;
   padding: 25px 27px 25px 24px;
-  background-image: url("~@/assets/images/calculatorbg.jpg");
+  background-image: url('~@/assets/images/calculatorbg.jpg');
   position: relative;
   display: flex;
   flex-direction: column;
@@ -201,7 +187,7 @@ export default {
     padding: 17px 16px 18px 16px;
   }
   &::before {
-    content: "";
+    content: '';
     opacity: 0.15;
     top: 0;
     left: 0;
@@ -269,7 +255,7 @@ export default {
   &__header-header-title {
     font-size: 18px;
     line-height: 22px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     margin-bottom: 4px;
     @include lg {
       width: 127px;
@@ -323,7 +309,7 @@ export default {
     font-size: 24px;
     line-height: 29px;
     color: $slategray;
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
     @include md {
       font-size: 16px;
       line-height: 19px;
@@ -412,7 +398,7 @@ export default {
     font-size: 24px;
     line-height: 29px;
     color: $blue;
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
     margin-right: 3px;
     @include md {
       font-size: 16px;
@@ -462,7 +448,7 @@ export default {
       padding: 7px 39px 7px 9px;
       font-size: 16px;
       line-height: 19px;
-      font-family: "Panton_SemiBold";
+      font-family: 'Panton_SemiBold';
       text-indent: 2px;
       background: transparent;
       @include lg {
@@ -472,12 +458,12 @@ export default {
       @include md {
         font-size: 14px;
       }
-      &[type="number"]::-webkit-outer-spin-button,
-      &[type="number"]::-webkit-inner-spin-button {
+      &[type='number']::-webkit-outer-spin-button,
+      &[type='number']::-webkit-inner-spin-button {
         -webkit-appearance: none;
         margin: 0;
       }
-      &[type="number"] {
+      &[type='number'] {
         -moz-appearance: textfield;
       }
       &:focus {

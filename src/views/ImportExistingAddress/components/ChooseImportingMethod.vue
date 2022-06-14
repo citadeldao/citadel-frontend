@@ -107,7 +107,7 @@ export default {
 
     if (isPasswordHash.value) {
       // hide import while when has passwordhash
-      methods1 = methods1.filter(m => m.routeName !== 'ImportFile');
+      methods1 = methods1.filter((m) => m.routeName !== 'ImportFile');
     }
 
     const currentMethods = isUserMnemonic.value ? methods : methods1;

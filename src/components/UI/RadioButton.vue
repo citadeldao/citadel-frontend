@@ -6,12 +6,9 @@
       type="radio"
       name="radio"
       :checked="checked"
-    >
+    />
     <span class="radio-button__checkmark" />
-    <label
-      class="radio-button__label"
-      :for="value"
-    >
+    <label class="radio-button__label" :for="value">
       {{ label }}
       <slot />
     </label>
@@ -58,7 +55,7 @@ export default {
     flex-direction: column;
     font-size: 14px;
     line-height: 17px;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
     text-transform: capitalize;
   }
   & input {
@@ -84,7 +81,7 @@ export default {
   }
 
   &__checkmark:after {
-    content: "";
+    content: '';
     position: absolute;
     display: none;
   }

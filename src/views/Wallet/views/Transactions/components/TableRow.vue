@@ -7,11 +7,7 @@
     <td class="table-row__type">
       <div class="table-row__type-block">
         <keep-alive>
-          <component
-            :is="icon"
-            :width="32"
-            :height="32"
-          />
+          <component :is="icon" :width="32" :height="32" />
         </keep-alive>
         <span class="table-row__type-block-type">
           {{ type.title }}
@@ -32,7 +28,9 @@
       </div>
     </td>
     <td class="table-row__date-time">
-      <span>{{ transaction.date ? moment(transaction.date).fromNow() : '' }}</span>
+      <span>{{
+        transaction.date ? moment(transaction.date).fromNow() : ''
+      }}</span>
     </td>
     <td class="table-row__to">
       <div class="table-row__to-section">
@@ -57,11 +55,16 @@
         <div class="table-row__amount-block">
           <div class="table-row__amount-block-line">
             <div class="table-row__amount-block-date-time">
-              <span>{{ transaction.date ? moment(transaction.date).fromNow() : '' }}</span>
+              <span>{{
+                transaction.date ? moment(transaction.date).fromNow() : ''
+              }}</span>
             </div>
             <div class="table-row__amount-value">
               <span
-                v-pretty-number="{ value: formatedValue, currency: currentWallet.code }"
+                v-pretty-number="{
+                  value: formatedValue,
+                  currency: currentWallet.code,
+                }"
                 class="table-row__amount-value-value"
                 :style="{ color: valueColor }"
               />
@@ -76,14 +79,16 @@
           </div>
           <div class="table-row__amount-block-line">
             <div class="table-row__amount-block-to">
-              <out v-if="direction === 'income' || (fromMempool && transaction.direction === 'transfer')" />
+              <out
+                v-if="
+                  direction === 'income' ||
+                  (fromMempool && transaction.direction === 'transfer')
+                "
+              />
               <inIcon v-if="direction === 'outcome'" />
               <span>{{ address }}</span>
             </div>
-            <span
-              v-if="!isNaN(fee)"
-              class="table-row__amount-fee"
-            >
+            <span v-if="!isNaN(fee)" class="table-row__amount-fee">
               <span class="table-row__amount-fee-fee">{{ $t('fee') }}:</span>
               <span
                 v-pretty-number="{ value: fee, currency: 'USD' }"
@@ -99,7 +104,10 @@
         <div class="table-row__amount-info">
           <div class="table-row__amount-value">
             <span
-              v-pretty-number="{ value: formatedValue, currency: currentWallet.code }"
+              v-pretty-number="{
+                value: formatedValue,
+                currency: currentWallet.code,
+              }"
               class="table-row__amount-value-value"
               :style="{ color: valueColor }"
             />
@@ -107,10 +115,7 @@
               {{ currentWallet.code }}
             </span>
           </div>
-          <span
-            v-if="!isNaN(fee)"
-            class="table-row__amount-fee"
-          >
+          <span v-if="!isNaN(fee)" class="table-row__amount-fee">
             <span class="table-row__amount-fee-fee">{{ $t('fee') }}:</span>
             <span
               v-pretty-number="{ value: fee, currency: 'USD' }"
@@ -119,18 +124,12 @@
             <span class="table-row__amount-fee-currency"> $ </span>
           </span>
         </div>
-        <comment
-          v-if="transaction.note"
-          class="table-row__comment-icon"
-        />
+        <comment v-if="transaction.note" class="table-row__comment-icon" />
       </div>
     </td>
   </tr>
   <tr v-if="transaction.note">
-    <td
-      colspan="5"
-      class="table-row__comment"
-    >
+    <td colspan="5" class="table-row__comment">
       <div class="table-row__arrow">
         <curveArrow />
       </div>
@@ -190,15 +189,11 @@ export default {
         return { title: 'waiting', color: '#F4BD13' };
       }
 
-      if (
-        props.transaction.isCanceled ||
-        props.transaction.type === 'unvote'
-      ) {
+      if (props.transaction.isCanceled || props.transaction.type === 'unvote') {
         return { title: 'fail', color: '#FA3B33' };
       }
 
       return { title: 'confirmed', color: '#0FB774' };
-
     });
     const address = computed(() => {
       if (props.fromMempool) {
@@ -210,6 +205,7 @@ export default {
       if (direction.value === 'outcome') {
         return props.transaction.to;
       }
+
       if (direction.value === 'income') {
         return props.transaction.from;
       }
@@ -217,7 +213,7 @@ export default {
       return '';
     });
     const valueColor = computed(() =>
-      direction.value === 'outcome' ? `#FA3B33` : `#0FB774`,
+      direction.value === 'outcome' ? `#FA3B33` : `#0FB774`
     );
 
     const fee = computed(() => {
@@ -228,11 +224,10 @@ export default {
       return props.fromMempool
         ? props.transaction.fee
         : BigNumber(
-          props.transaction.price?.USD || props.transaction.price?.usd,
-        )
-          .times(props.transaction.fee)
-          .toNumber();
-
+            props.transaction.price?.USD || props.transaction.price?.usd
+          )
+            .times(props.transaction.fee)
+            .toNumber();
     });
     const formatedValue = computed(() => {
       return BigNumber(props.transaction.value).toNumber();
@@ -240,7 +235,9 @@ export default {
     const currentTransaction = ref({
       ...props.transaction,
       formatedStatus: status.value,
-      date: props.transaction.date ? moment(props.transaction.date).fromNow() : '',
+      date: props.transaction.date
+        ? moment(props.transaction.date).fromNow()
+        : '',
       value: formatedValue.value,
     });
 
@@ -293,7 +290,6 @@ export default {
       @include lg {
         width: 48px;
       }
-
     }
 
     &:last-child {
@@ -336,7 +332,7 @@ export default {
   &__amount-block-type,
   &__status-info-status,
   &__status-info-type {
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     font-size: 16px;
     line-height: 19px;
   }
@@ -534,11 +530,11 @@ export default {
     font-size: 16px;
     line-height: 19px;
     color: $black;
-    font-family: "Panton_Regular";
+    font-family: 'Panton_Regular';
   }
 
   &__amount-value-value {
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
     margin-right: 3px;
   }
 
@@ -557,7 +553,7 @@ export default {
   }
 
   &__amount-fee-value {
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
     letter-spacing: -0.02em;
     color: $mid-blue;
     margin-right: 3px;
@@ -624,7 +620,7 @@ export default {
       font-size: 16px;
       line-height: 25px;
       color: $too-dark-blue;
-      font-family: "Panton_SemiBold";
+      font-family: 'Panton_SemiBold';
       margin-right: 6px;
     }
   }

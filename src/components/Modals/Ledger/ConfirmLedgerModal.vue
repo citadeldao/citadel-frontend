@@ -10,9 +10,7 @@
       <div class="connect__image">
         <confirmLedger />
         <div class="loader__wrap">
-          <Loading
-            ledger
-          />
+          <Loading ledger />
         </div>
       </div>
     </div>

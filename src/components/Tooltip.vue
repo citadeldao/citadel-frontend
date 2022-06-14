@@ -1,10 +1,7 @@
 <template>
   <div class="tooltip">
     <slot />
-    <div
-      class="tooltip__content"
-      :style="{ width, left }"
-    >
+    <div class="tooltip__content" :style="{ width, left }">
       <slot name="content" />
     </div>
   </div>
@@ -44,7 +41,7 @@ export default {
     z-index: 1001;
     top: 22px;
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       bottom: 100%;
       left: 50%;

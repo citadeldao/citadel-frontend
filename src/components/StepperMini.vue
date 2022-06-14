@@ -6,7 +6,7 @@
       :key="ndx"
       :class="{
         active: statuses.active === item.status,
-        finished: statuses.inactive === item.status && ndx < activeStepIndex
+        finished: statuses.inactive === item.status && ndx < activeStepIndex,
       }"
       class="stepper-mini__step"
     >
@@ -29,7 +29,9 @@ export default {
       inactive: 'inactive',
     });
 
-    const activeStepIndex = computed(() => props.steps.findIndex(step => step.status === statuses.value.active));
+    const activeStepIndex = computed(() =>
+      props.steps.findIndex((step) => step.status === statuses.value.active)
+    );
 
     return {
       statuses,
@@ -39,56 +41,56 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-  .stepper-mini {
-    display: flex;
-    align-items: center;
-    position: relative;
+.stepper-mini {
+  display: flex;
+  align-items: center;
+  position: relative;
 
-    &__line {
-      position: absolute;
-      background: $too-ligth-blue;
-      height: 1px;
-      width: calc(100% - 10px);
-      left: 4%;
-      top: 9px;
-      z-index: 0;
+  &__line {
+    position: absolute;
+    background: $too-ligth-blue;
+    height: 1px;
+    width: calc(100% - 10px);
+    left: 4%;
+    top: 9px;
+    z-index: 0;
+  }
+
+  &__step {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    box-sizing: border-box;
+    border: 2px solid $too-ligth-blue;
+    border-radius: 50%;
+    margin-right: 30px;
+    z-index: 11;
+    background: $white;
+
+    &:last-child {
+      margin-right: 0;
     }
 
-    &__step {
-      position: relative;
-      width: 18px;
-      height: 18px;
-      box-sizing: border-box;
-      border: 2px solid $too-ligth-blue;
-      border-radius: 50%;
-      margin-right: 30px;
-      z-index: 11;
-      background: $white;
-
-      &:last-child {
-        margin-right: 0;
-      }
-
-      &.active {
-        background-color: $blue;
-
-        .num {
-          color: $black;
-        }
-      }
-
-      &.finished {
-        background-color: $green;
-      }
+    &.active {
+      background-color: $blue;
 
       .num {
-        position: absolute;
-        left: 3px;
-        top: 20px;
-        font-family: 'Panton_SemiBold';
-        font-size: 17px;
-        color: $darkgray;
+        color: $black;
       }
     }
+
+    &.finished {
+      background-color: $green;
+    }
+
+    .num {
+      position: absolute;
+      left: 3px;
+      top: 20px;
+      font-family: 'Panton_SemiBold';
+      font-size: 17px;
+      color: $darkgray;
+    }
   }
+}
 </style>

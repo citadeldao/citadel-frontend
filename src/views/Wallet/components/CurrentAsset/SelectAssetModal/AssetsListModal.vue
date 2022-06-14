@@ -1,8 +1,6 @@
 <template>
   <div class="assets-list-modal-content">
-    <div
-      class="assets-list-modal-content__input"
-    >
+    <div class="assets-list-modal-content__input">
       <Input
         id="assetName"
         v-model="searchQuery"
@@ -13,9 +11,7 @@
         data-qa="create-list__name"
       />
     </div>
-    <div
-      class="assets-list-modal-content__addresses"
-    >
+    <div class="assets-list-modal-content__addresses">
       <AssetItem
         v-for="(asset, index) of filteredAssets"
         :key="`${asset.net}${asset.address}${index}`"
@@ -46,10 +42,15 @@ export default {
     const store = useStore();
 
     const searchQuery = ref('');
-    const assetsList = computed(() => store.getters['subtokens/formatedSubtokens'](false, props.currentWallet));
+    const assetsList = computed(() =>
+      store.getters['subtokens/formatedSubtokens'](false, props.currentWallet)
+    );
 
-    const filteredAssets = computed(() => assetsList.value
-      .filter(a => a.name.toLowerCase().includes(searchQuery.value.toLowerCase())));
+    const filteredAssets = computed(() =>
+      assetsList.value.filter((a) =>
+        a.name.toLowerCase().includes(searchQuery.value.toLowerCase())
+      )
+    );
 
     return {
       assetsList,
@@ -101,7 +102,7 @@ export default {
 
   &__wallets-count-count {
     margin-right: 3px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
   }
 
   &__info-banner {
@@ -145,7 +146,7 @@ export default {
       font-size: 14px;
       line-height: 20px;
       color: $red;
-      font-family: "Panton_SemiBold";
+      font-family: 'Panton_SemiBold';
     }
   }
 }

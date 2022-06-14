@@ -1,7 +1,7 @@
 <template>
   <div class="serch-placeholder">
     <searchError />
-    <span>{{ $t("searchErrorText") }}</span>
+    <span>{{ $t('searchErrorText') }}</span>
   </div>
 </template>
 

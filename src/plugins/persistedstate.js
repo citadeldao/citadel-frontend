@@ -5,7 +5,13 @@ export default function initPersistedstate(store) {
   const postfix = computed(() => store.getters['profile/info']?.id);
   createPersistedState({
     key: 'user',
-    paths: ['crypto.privateWallets', 'crypto.mnemonic', 'wallets.wallets', 'crypto.passwordHash', 'extensions.extensionsList'],
+    paths: [
+      'crypto.privateWallets',
+      'crypto.mnemonic',
+      'wallets.wallets',
+      'crypto.passwordHash',
+      'extensions.extensionsList',
+    ],
     storage: {
       getItem: (key) => {
         if (!postfix.value) {

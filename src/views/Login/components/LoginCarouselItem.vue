@@ -5,7 +5,7 @@
         :src="require(`@/assets/images/auth/${image}.png`)"
         alt=""
         class="login-carousel-item__image"
-      >
+      />
 
       <figcaption class="login-carousel-item__caption">
         <h3 class="login-carousel-item__title">
@@ -74,7 +74,7 @@ export default {
     font-size: 35px;
     line-height: 1.3;
     color: $dark-blue;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
 
     @include lg {
       width: 100%;

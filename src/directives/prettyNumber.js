@@ -1,9 +1,7 @@
 import { prettyNumber, prettyNumberTooltip } from '@/helpers/prettyNumber';
 
 const insertHtml = (el, args, tooltipStyle) => {
-  const value = typeof args === 'object'
-    ? args?.value
-    : args;
+  const value = typeof args === 'object' ? args?.value : args;
   const currency = typeof args === 'object' && args?.currency;
   const currencyHtml = currency
     ? `<span class="pretty-number__currency">${currency}</span>`
@@ -33,7 +31,9 @@ const insertHtml = (el, args, tooltipStyle) => {
     switch (true) {
       case el.getBoundingClientRect().left < 100:
         break;
-      case (el.ownerDocument.activeElement.clientWidth - el.getBoundingClientRect().left) < 100:
+      case el.ownerDocument.activeElement.clientWidth -
+        el.getBoundingClientRect().left <
+        100:
         offsetX = width;
         translateX = -100;
         break;

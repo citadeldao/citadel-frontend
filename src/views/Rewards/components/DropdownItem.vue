@@ -69,10 +69,10 @@ export default {
     border-bottom: 1px dashed $gainsboro;
     margin-left: 5px;
     align-self: flex-end;
-    @include lg{
+    @include lg {
       margin-left: 2px;
     }
-    @include md{
+    @include md {
       margin-left: 2px;
     }
   }
@@ -85,7 +85,7 @@ export default {
     font-size: 16px;
     line-height: 19px;
     letter-spacing: -0.02em;
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
     margin-right: 3px;
     @include lg {
       font-size: 14px;
@@ -97,7 +97,7 @@ export default {
     }
   }
   &__value-currency {
-    font-family: "Panton_Regular" !important;
+    font-family: 'Panton_Regular' !important;
     margin-right: 0px;
   }
 }

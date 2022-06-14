@@ -3,7 +3,7 @@
     <div class="rewards-chart-item__left">
       <div
         class="rewards-chart-item__circle"
-        :style="{'background-color': item.color}"
+        :style="{ 'background-color': item.color }"
       />
     </div>
     <div class="rewards-chart-item__right">

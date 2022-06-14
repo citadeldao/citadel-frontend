@@ -1,13 +1,14 @@
 <template>
-  <div
-    :class="{ exists: wallet.existWallet }"
-    class="dropdown-item"
-  >
+  <div :class="{ exists: wallet.existWallet }" class="dropdown-item">
     <div class="dropdown-item__icon">
       <component :is="currentIcon" />
     </div>
     <div class="dropdown-item__address">
-      {{ hidden ? Array(wallet.address.length).fill('*').join('') : wallet.address }}
+      {{
+        hidden
+          ? Array(wallet.address.length).fill('*').join('')
+          : wallet.address
+      }}
     </div>
     <div
       v-if="hasVisibleButton"
@@ -17,7 +18,11 @@
       <visionIcon />
     </div>
     <div
-      v-if="[WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(wallet.type) && true"
+      v-if="
+        [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(
+          wallet.type
+        ) && true
+      "
       class="dropdown-item__btn dropdown-item__btn--export"
       @click="exportWallet"
     >
@@ -29,7 +34,7 @@
 <script>
 import { ref, markRaw } from 'vue';
 import removeIcon from '@/assets/icons/settings/remove.svg';
-import { WALLET_TYPES  } from '@/config/walletType';
+import { WALLET_TYPES } from '@/config/walletType';
 import keyIcon from '@/assets/icons/settings/key.svg';
 import notificationIcon from '@/assets/icons/settings/notification.svg';
 import exportIcon from '@/assets/icons/settings/export.svg';
@@ -97,7 +102,7 @@ export default {
   padding: 0 10px;
 
   &.exists {
-    opacity: .2;
+    opacity: 0.2;
   }
 
   &__icon {
