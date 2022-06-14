@@ -27,6 +27,8 @@ import useWallets from '@/compositions/useWallets';
 import { findAddressWithNet } from '@/helpers';
 // import citadel from '@citadeldao/lib-citadel'
 import redirectToWallet from '@/router/helpers/redirectToWallet';
+import { parseHash } from '@/helpers';
+import { WALLET_TYPES } from '../config/walletType';
 
 export default {
   name: 'AppLayout',
@@ -38,6 +40,15 @@ export default {
     const intervalId = ref();
     const showLoader = computed(() => store.getters['app/showLoader'] || store.getters['app/showRouteLoader']);
     const { walletByAddress, wallets } = useWallets();
+
+    // for browser ext
+    const localHashInfo = localStorage.getItem('hashInfo');
+    const hashInfo = ref('');
+
+    if (localHashInfo) {
+      hashInfo.value = parseHash(localHashInfo);
+      window.localStorage.removeItem('hashInfo');
+    }
 
     const setCurrentWallet = async ({ net, address } = {}) => {
       if (net && address) {
@@ -118,6 +129,23 @@ export default {
 
         if (!params.token) {
           await store.dispatch('subtokens/setCurrentToken', null);
+        }
+        
+        if (hashInfo.value) {
+          const hashWallet = findAddressWithNet(wallets.value, { address: hashInfo.value.address, net: hashInfo.value.net });
+          if (hashWallet && hashWallet.type !== WALLET_TYPES.PUBLIC_KEY) {
+            router.push({
+              name: 'WalletStake',
+              params: {
+                net: hashInfo.value.net,
+                address: hashInfo.value.address,
+              },
+            });
+            hashInfo.value = '';
+          } else {
+            localStorage.setItem('openSync', true);
+            router.push({ name: 'Settings' });
+          }
         }
       },
     );

@@ -92,6 +92,7 @@
         width="550"
         height="710"
         align="left"
+        name="target"
         class="extensions__frame"
       />
     </div>
@@ -429,6 +430,11 @@ export default {
 
         selectedApp.value.url += `?token=${currentAppInfo.value.token}&wallets=${JSON.stringify(wallets)}`;
         currentApp.value = selectedApp.value;
+
+        /* setTimeout(() => {
+          const win = window.frames.target;
+          win.postMessage('Message from citadel', selectedApp.value.url);
+        }, 5000); */
       }
     };
 
