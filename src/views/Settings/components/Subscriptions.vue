@@ -18,7 +18,7 @@
         />
       </div>
       <SyncExtension
-        v-if="global.citadel"
+        v-if="global.citadel && isPasswordHash"
         class="subscriptions__sync"
       />
     </div>
@@ -43,6 +43,7 @@ export default {
     const store = useStore();
     const { t } = useI18n();
     const profileInfo = computed(() => store.getters['profile/info']);
+    const isPasswordHash = computed(() => store.getters['crypto/passwordHash']);
     const isRewardDisabled = ref(false);
 
     const global = computed(() => window);
@@ -70,6 +71,7 @@ export default {
 
     return {
       global,
+      isPasswordHash,
       profileInfo,
       isRewardDisabled,
       changeSubscriptionState,
