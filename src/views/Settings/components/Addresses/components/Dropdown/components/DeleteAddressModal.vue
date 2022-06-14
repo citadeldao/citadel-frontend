@@ -1,14 +1,7 @@
 <template>
   <Modal v-if="show">
-    <ModalContent
-      type="warning"
-      :submit-button="false"
-      @close="$emit('close')"
-    >
-      <div
-        v-if="isLoading"
-        class="delete-address-modal__loader"
-      >
+    <ModalContent type="warning" :submit-button="false" @close="$emit('close')">
+      <div v-if="isLoading" class="delete-address-modal__loader">
         <Loading />
       </div>
 
@@ -26,9 +19,7 @@
       >
         {{ $t('yes') }}
       </PrimaryButton>
-      <TextButton
-        @click="$emit('close')"
-      >
+      <TextButton @click="$emit('close')">
         {{ $t('no') }}
       </TextButton>
     </ModalContent>
@@ -69,7 +60,7 @@ export default {
 .delete-address-modal {
   &__title {
     margin: 30px 0;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     font-size: 20px;
     line-height: 30px;
   }
@@ -86,7 +77,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba($black, .2);
+    background-color: rgba($black, 0.2);
   }
 }
 </style>

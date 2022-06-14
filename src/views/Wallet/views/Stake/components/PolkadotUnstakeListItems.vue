@@ -13,11 +13,7 @@
       </span>
     </div>
     <div class="items__wrapper">
-      <div
-        v-for="(item, index) in list"
-        :key="index"
-        class="item"
-      >
+      <div v-for="(item, index) in list" :key="index" class="item">
         <div class="item__upper">
           {{ item.name }}
         </div>
@@ -26,16 +22,11 @@
           <span class="item__red">
             {{ item.fee }}
           </span>
-          <span class="item__percent">
-            %
-          </span>
+          <span class="item__percent"> % </span>
         </div>
       </div>
     </div>
-    <div
-      v-if="showEditButton"
-      class="items__edit-button"
-    >
+    <div v-if="showEditButton" class="items__edit-button">
       <EditButton @click="$emit('showNodesList')">
         {{ $t('changeValidators') }}
       </EditButton>
@@ -50,7 +41,7 @@ export default {
   props: {
     list: {
       type: Array,
-      default: () => ([]),
+      default: () => [],
     },
     currentWallet: {
       type: Object,
@@ -62,9 +53,7 @@ export default {
     },
   },
   emits: ['showNodesList'],
-  setup() {
-
-  },
+  setup() {},
 };
 </script>
 <style lang="scss" scoped>
@@ -75,14 +64,14 @@ export default {
   padding: 16px 16px 0px 16px;
   margin-bottom: 21px;
 
-  &__wrapper{
+  &__wrapper {
     display: flex;
     flex-wrap: wrap;
     max-height: 113px;
     overflow-y: auto;
     overflow-x: hidden;
   }
-  &__edit-button{
+  &__edit-button {
     margin-bottom: 14px;
     display: flex;
     justify-content: center;

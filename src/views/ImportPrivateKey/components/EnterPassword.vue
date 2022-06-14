@@ -1,10 +1,7 @@
 <template>
   <div class="enter-password">
     <div class="enter-password__info-banner">
-      <InfoBanner
-        icon="protection"
-        :content="$t('enterPasswordNote')"
-      />
+      <InfoBanner icon="protection" :content="$t('enterPasswordNote')" />
     </div>
     <form @submit.prevent="submitHandler">
       <div class="enter-password__password-input">
@@ -23,7 +20,7 @@
         :disabled="!!inputError"
         data-qa="add-address__existing__private-key__next-button"
       >
-        {{ $t("next") }}
+        {{ $t('next') }}
       </PrimaryButton>
     </form>
   </div>

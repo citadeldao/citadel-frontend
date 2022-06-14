@@ -1,19 +1,13 @@
 <template>
   <div class="calculator-list-item">
     <keep-alive>
-      <component
-        :is="currentIcon"
-        class="calculator-list-item__icon"
-      />
+      <component :is="currentIcon" class="calculator-list-item__icon" />
     </keep-alive>
     <div class="calculator-list-item__main">
       <span class="calculator-list-item__main-title">
         {{ data.name }}
       </span>
-      <div
-        v-if="data.net !== OUR_TOKEN"
-        class="calculator-list-item__slider"
-      >
+      <div v-if="data.net !== OUR_TOKEN" class="calculator-list-item__slider">
         <el-slider
           v-model="value"
           :min="0"
@@ -28,17 +22,14 @@
             class="calculator-list-item__info-line-block-title"
             v-html="$t('rewardDetails.stakedOnCitadel')"
           />
-          <div
-            v-if="showInput"
-            class="calculator-list-item__input"
-          >
+          <div v-if="showInput" class="calculator-list-item__input">
             <input
               ref="valueInput"
               :value="value"
               type="number"
               @input="inputHandler"
-              @blur="showInput=false"
-            >
+              @blur="showInput = false"
+            />
           </div>
           <div
             v-else
@@ -54,13 +45,18 @@
             </span>
           </div>
         </div>
-        <div class="calculator-list-item__info-line-block calculator-list-item__info-line-block--total-staked">
+        <div
+          class="calculator-list-item__info-line-block calculator-list-item__info-line-block--total-staked"
+        >
           <span class="calculator-list-item__info-line-block-title">
             {{ $t('rewardDetails.totalStaked') }}
           </span>
           <div class="calculator-list-item__info-line-block-amount">
             <span
-              v-pretty-number="{ value: +data.totalTokens, currency: data.code }"
+              v-pretty-number="{
+                value: +data.totalTokens,
+                currency: data.code,
+              }"
               class="calculator-list-item__info-line-block-value calculator-list-item__info-line-block-value--total"
             />
             <span class="calculator-list-item__info-line-block-title-currency">
@@ -105,8 +101,7 @@ export default {
   props: {
     data: {
       type: Object,
-      default: () => {
-      },
+      default: () => {},
     },
     currentTab: {
       type: Number,
@@ -122,17 +117,22 @@ export default {
     });
     const value = ref(+props.data.activeTokens);
     const reward = computed(() => {
-      const tokenRewardPerYear = props.data.net === OUR_TOKEN ? BigNumber(props.data.rewardsPerToken)
-        .multipliedBy(value.value)
-        .toNumber()
-        : BigNumber(props.data.rewardsPerToken)
-          .multipliedBy(value.value)
-          .toNumber();
+      const tokenRewardPerYear =
+        props.data.net === OUR_TOKEN
+          ? BigNumber(props.data.rewardsPerToken)
+              .multipliedBy(value.value)
+              .toNumber()
+          : BigNumber(props.data.rewardsPerToken)
+              .multipliedBy(value.value)
+              .toNumber();
       let result;
 
       switch (props.currentTab) {
         case 7:
-          result = BigNumber(tokenRewardPerYear).dividedBy(365).multipliedBy(7).toNumber();
+          result = BigNumber(tokenRewardPerYear)
+            .dividedBy(365)
+            .multipliedBy(7)
+            .toNumber();
           break;
         case 30:
           result = BigNumber(tokenRewardPerYear).dividedBy(12).toNumber();
@@ -220,7 +220,7 @@ export default {
   &__main-title {
     font-size: 20px;
     line-height: 30px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     margin-bottom: 30px;
     @include md {
       margin-bottom: 24px;
@@ -282,7 +282,7 @@ export default {
   &__right-section-info-value {
     font-size: 20px;
     line-height: 24px;
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
     color: $dark-blue;
     margin-right: 3px;
 
@@ -317,7 +317,7 @@ export default {
   }
 
   &__right-section-icon {
-    fill: #0F69B2;
+    fill: #0f69b2;
     margin-left: 64px;
     opacity: 0.07;
     width: 79px;
@@ -342,7 +342,7 @@ export default {
   }
 
   &__right-section-info-title {
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     margin-bottom: 8px;
     text-align: right;
     @include md {
@@ -365,13 +365,13 @@ export default {
       background: $white;
       border: none;
 
-      &[type="number"]::-webkit-outer-spin-button,
-      &[type="number"]::-webkit-inner-spin-button {
+      &[type='number']::-webkit-outer-spin-button,
+      &[type='number']::-webkit-inner-spin-button {
         -webkit-appearance: none;
         margin: 0;
       }
 
-      &[type="number"] {
+      &[type='number'] {
         -moz-appearance: textfield;
       }
     }

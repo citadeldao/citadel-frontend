@@ -2,10 +2,7 @@
   <div class="alias-qr-card">
     <div class="alias-qr-card__header" />
     <div class="alias-qr-card__content">
-      <closeIcon
-        class="alias-qr-card__close-icon"
-        @click="$emit('close')"
-      />
+      <closeIcon class="alias-qr-card__close-icon" @click="$emit('close')" />
       <qrcode-vue
         id="qr"
         :value="currentWallet.address"
@@ -16,11 +13,8 @@
         class="alias-qr-card__qr"
       />
       <h4>{{ currentWallet.address }}</h4>
-      <PrimaryButton
-        :disabled="isCopying"
-        @click="clickHandler"
-      >
-        {{ $t(isCopied ? "copied":"copy") }}
+      <PrimaryButton :disabled="isCopying" @click="clickHandler">
+        {{ $t(isCopied ? 'copied' : 'copy') }}
       </PrimaryButton>
     </div>
   </div>
@@ -56,7 +50,7 @@ export default {
       // link.href = res;
       // link.click();
       copyToClipboard(props.currentWallet.address);
-      setTimeout(()=> {
+      setTimeout(() => {
         isCopied.value = true;
         isCopying.value = false;
       }, 500);
@@ -111,7 +105,7 @@ export default {
     margin: 0;
     font-size: 20px;
     line-height: 30px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     margin-bottom: 27px;
   }
 }

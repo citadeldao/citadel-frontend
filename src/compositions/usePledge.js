@@ -1,4 +1,3 @@
-
 import { computed, provide, ref } from 'vue';
 import useCheckPassword from '@/compositions/useCheckPassword';
 import { useI18n } from 'vue-i18n';
@@ -26,11 +25,9 @@ export default function usePledge() {
   const showSuccessModal = ref(false);
   provide('showSuccessModal', showSuccessModal);
 
-
   const openPledgeModal = async () => {
     await getDelegationFee(activeTab.value);
-    showModal.value = true,
-    showCooseModeModal.value = true;
+    (showModal.value = true), (showCooseModeModal.value = true);
   };
   provide('openPledgeModal', openPledgeModal);
 
@@ -45,7 +42,9 @@ export default function usePledge() {
   };
   provide('updateAmount', updateAmount);
 
-  const maxAmount = computed(() => +BigNumber(resMaxAmount.value).toFixed(2, 1) || 0);
+  const maxAmount = computed(
+    () => +BigNumber(resMaxAmount.value).toFixed(2, 1) || 0
+  );
   provide('maxAmount', maxAmount);
 
   const insufficientFunds = computed(() => {
@@ -72,11 +71,12 @@ export default function usePledge() {
   const resMaxAmount = ref();
   const getDelegationFee = async () => {
     isLoading.value = true;
-    const { ok, resFee, maxAmount, resAdding, enough } = await currentWallet.value.getDelegationFee({
-      walletId: currentWallet.value.id,
-      transactionType: activeTab.value,
-      nodeAddress: currentWallet.value.address,
-    });
+    const { ok, resFee, maxAmount, resAdding, enough } =
+      await currentWallet.value.getDelegationFee({
+        walletId: currentWallet.value.id,
+        transactionType: activeTab.value,
+        nodeAddress: currentWallet.value.address,
+      });
 
     if (ok) {
       fee.value = resFee;
@@ -91,7 +91,9 @@ export default function usePledge() {
   };
   provide('getDelegationFee', getDelegationFee);
 
-  const disabled = computed(() => !resEnough.value || !amount.value || !!insufficientFunds.value);
+  const disabled = computed(
+    () => !resEnough.value || !amount.value || !!insufficientFunds.value
+  );
   provide('disabled', disabled);
 
   const resRawTxs = ref();
@@ -163,11 +165,11 @@ export default function usePledge() {
 
   const successClickHandler = async () => {
     txComment.value &&
-            (await store.dispatch('transactions/postTransactionNote', {
-              network: currentWallet.value.net,
-              hash: txHash.value[0],
-              text: txComment.value,
-            }));
+      (await store.dispatch('transactions/postTransactionNote', {
+        network: currentWallet.value.net,
+        hash: txHash.value[0],
+        text: txComment.value,
+      }));
     txComment.value = '';
     modalCloseHandler();
   };

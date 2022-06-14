@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="socials"
-    class="links"
-  >
+  <div v-if="socials" class="links">
     <a
       v-if="socials.web"
       class="links__item"
@@ -99,7 +96,7 @@ export default {
     }
   }
 }
-.link-icon{
+.link-icon {
   width: 17px;
   height: 15px;
 }

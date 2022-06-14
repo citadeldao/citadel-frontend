@@ -1,10 +1,7 @@
 <template>
   <div class="enter-password">
     <div class="enter-password__info-banner">
-      <InfoBanner
-        icon="protection"
-        :content="$t('enterPasswordNote')"
-      />
+      <InfoBanner icon="protection" :content="$t('enterPasswordNote')" />
     </div>
     <form @submit.prevent="submitHandler">
       <div class="enter-password__password-input">
@@ -19,7 +16,7 @@
         />
       </div>
       <PrimaryButton :disabled="!!inputError">
-        {{ $t("next") }}
+        {{ $t('next') }}
       </PrimaryButton>
     </form>
   </div>
@@ -43,7 +40,8 @@ export default {
   emits: ['passwordConfirmed'],
   setup(props, { emit }) {
     const store = useStore();
-    const { password, passwordIncorrect, passwordError, inputError } = useCheckPassword();
+    const { password, passwordIncorrect, passwordError, inputError } =
+      useCheckPassword();
 
     const nextStep = inject('nextStep');
     const submitHandler = () => {
@@ -64,7 +62,13 @@ export default {
       submitHandler();
     }
 
-    return { password, submitHandler, passwordIncorrect, passwordError, inputError };
+    return {
+      password,
+      submitHandler,
+      passwordIncorrect,
+      passwordError,
+      inputError,
+    };
   },
 };
 </script>

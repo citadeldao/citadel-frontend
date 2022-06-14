@@ -34,11 +34,8 @@
       <div class="desc">
         {{ $t('addToOneSeed.walletCreatedDescription') }}
       </div>
-      <PrimaryButton
-        :disabled="!checkedItems.length"
-        @click="clickHandler"
-      >
-        {{ $t("addToOneSeed.getStartedBtn") }}
+      <PrimaryButton :disabled="!checkedItems.length" @click="clickHandler">
+        {{ $t('addToOneSeed.getStartedBtn') }}
       </PrimaryButton>
     </div>
   </div>
@@ -60,14 +57,16 @@ export default {
     const store = useStore();
     const networksAmount = ref(6);
     const networksList = store.getters['networks/networksList'];
-    const networks = computed(() => networksList.map((network, index) => ({
-      id: index,
-      title: network.name,
-      percent: store.getters['profile/formatYeldByNet'](network.net),
-      abbr: network.code,
-      icon: network.net,
-      net: network.net,
-    })));
+    const networks = computed(() =>
+      networksList.map((network, index) => ({
+        id: index,
+        title: network.name,
+        percent: store.getters['profile/formatYeldByNet'](network.net),
+        abbr: network.code,
+        icon: network.net,
+        net: network.net,
+      }))
+    );
 
     const keyword = ref('');
     const displayData = computed(() => {
@@ -75,9 +74,10 @@ export default {
         return networks.value;
       }
 
-      return networks.value.filter((item) =>
-        item.title.toLowerCase().includes(keyword.value.toLowerCase()) ||
-          item.abbr.toLowerCase().includes(keyword.value.toLowerCase()),
+      return networks.value.filter(
+        (item) =>
+          item.title.toLowerCase().includes(keyword.value.toLowerCase()) ||
+          item.abbr.toLowerCase().includes(keyword.value.toLowerCase())
       );
     });
 
@@ -89,7 +89,7 @@ export default {
 
     const clickHandler = () => {
       const checkedNets = checkedItems.value.map(
-        (index) => networks.value[index].net,
+        (index) => networks.value[index].net
       );
       emit('selectNets', checkedNets);
     };
@@ -172,7 +172,7 @@ export default {
     padding-left: 25px;
 
     .more {
-      color: #0A2778;
+      color: #0a2778;
       display: flex;
       align-items: center;
       font-family: Panton_Bold;
@@ -193,7 +193,7 @@ export default {
 
     .desc {
       margin: 15px 0 25px;
-      color: #6B93C0;
+      color: #6b93c0;
       font-size: 14px;
     }
   }

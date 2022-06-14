@@ -23,7 +23,7 @@ export default (params = {}) => {
     const duration = params.duration || 3000;
 
     return {
-      id: (+new Date).toString(36),
+      id: (+new Date()).toString(36),
       type,
       title,
       text,

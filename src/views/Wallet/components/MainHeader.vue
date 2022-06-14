@@ -19,11 +19,11 @@
         class="main-header__tabs-item"
         :to="{
           name: 'WalletStake',
-          params: {...$route.params},
+          params: { ...$route.params },
         }"
         data-qa="wallet__stake-tab-button"
       >
-        {{ $t("stake") }}
+        {{ $t('stake') }}
       </router-link>
       <router-link
         v-if="currentToken?.net === OUR_TOKEN"
@@ -31,33 +31,33 @@
         class="main-header__tabs-item"
         :to="{
           name: 'WalletRewards',
-          params: {...$route.params},
+          params: { ...$route.params },
         }"
         data-qa="wallet__rewards-tab-button"
       >
-        {{ $t("rewards") }}
+        {{ $t('rewards') }}
       </router-link>
       <router-link
         active-class="main-header__active"
         class="main-header__tabs-item"
         :to="{
           name: 'WalletSend',
-          params: {...$route.params},
+          params: { ...$route.params },
         }"
         data-qa="wallet__send-tab-button"
       >
-        {{ $t("send") }}
+        {{ $t('send') }}
       </router-link>
       <router-link
         active-class="main-header__active"
         class="main-header__tabs-item"
         :to="{
           name: 'WalletTransactions',
-          params: {...$route.params},
+          params: { ...$route.params },
         }"
         data-qa="wallet__transactions-tab-button"
       >
-        {{ $t("transactions") }}
+        {{ $t('transactions') }}
       </router-link>
     </div>
   </div>
@@ -114,7 +114,7 @@ export default {
     border-bottom: 6px solid transparent;
     margin-right: 37px;
     padding-bottom: 25px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     @include lg {
       font-size: 17px;
       padding-bottom: 10px;

@@ -57,7 +57,7 @@ export default {
         isRewardDisabled.value = false;
       }, FREEZE_DURATION);
 
-      const type = newValue ? 'success': 'info';
+      const type = newValue ? 'success' : 'info';
       const text = newValue
         ? t('settings.subscriptions.addRewardsNotification')
         : t('settings.subscriptions.removeRewardsNotification');

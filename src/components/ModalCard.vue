@@ -1,9 +1,6 @@
 <template>
   <div class="modal-card">
-    <closeIcon
-      class="modal-card__close-icon"
-      @click="$emit('close')"
-    />
+    <closeIcon class="modal-card__close-icon" @click="$emit('close')" />
     <div class="modal-card__header" />
     <div class="modal-card__icon">
       <keep-alive>
@@ -13,7 +10,7 @@
     <span class="modal-card__message">{{ message }}</span>
     <span class="modal-card__info">{{ info }}</span>
     <PrimaryButton @click="clickHandler">
-      {{ $t("ok") }}
+      {{ $t('ok') }}
     </PrimaryButton>
   </div>
 </template>
@@ -88,7 +85,7 @@ export default {
     line-height: 30px;
     margin-bottom: 10px;
     text-align: center;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
   }
   &__info {
     font-size: 16px;

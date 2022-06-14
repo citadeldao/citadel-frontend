@@ -1,9 +1,6 @@
 <template>
   <div class="stake">
-    <div
-      v-if="isLoading"
-      class="stake__loader"
-    >
+    <div v-if="isLoading" class="stake__loader">
       <Loading />
     </div>
     <XCTStaking
@@ -39,10 +36,7 @@
       @stake="stakeHandler"
     />
   </div>
-  <teleport
-    v-if="showModal"
-    to="body"
-  >
+  <teleport v-if="showModal" to="body">
     <Modal>
       <ModalContent
         v-click-away="modalCloseHandler"
@@ -124,17 +118,20 @@ export default {
     });
 
     const stakeNodes = computed(() => store.getters['staking/stakeNodes']);
-    const stakeList = computed(() => store.getters['staking/stakeList']
-      .filter(item => item.staked));
+    const stakeList = computed(() =>
+      store.getters['staking/stakeList'].filter((item) => item.staked)
+    );
     const totalStake = computed(() => {
-      return stakeList.value.reduce((total, currentValue) => BigNumber(total)
-        .plus(currentValue.value)
-        .toNumber(), 0);
+      return stakeList.value.reduce(
+        (total, currentValue) =>
+          BigNumber(total).plus(currentValue.value).toNumber(),
+        0
+      );
     });
     const list = computed(() => {
       const data = stakeList.value.map((i, index) => {
         const stakedNodeInNodeList = stakeNodes.value?.find(
-          (item) => item.address?.toLowerCase() === i.current?.toLowerCase(),
+          (item) => item.address?.toLowerCase() === i.current?.toLowerCase()
         );
 
         return {
@@ -142,7 +139,10 @@ export default {
           ...stakedNodeInNodeList,
           address: stakedNodeInNodeList?.address || i.current,
           name: stakedNodeInNodeList?.name || i.current,
-          share: shareInValue(props.currentWallet.balance?.calculatedBalance, i.value),
+          share: shareInValue(
+            props.currentWallet.balance?.calculatedBalance,
+            i.value
+          ),
           color: colors[index],
           stakeShare: shareInValue(totalStake.value, i.value),
         };
@@ -178,11 +178,14 @@ export default {
           params.address.toLowerCase() !== oldParams.address.toLowerCase()
         ) {
           await store.dispatch('subtokens/setCurrentToken', null);
-          const newWallet = store.getters['wallets/walletByAddress']({ net: params.net, address: params.address });
-          newWallet?.hasStake && await loadData(newWallet);
+          const newWallet = store.getters['wallets/walletByAddress']({
+            net: params.net,
+            address: params.address,
+          });
+          newWallet?.hasStake && (await loadData(newWallet));
         }
       },
-      { deep: true },
+      { deep: true }
     );
 
     return {

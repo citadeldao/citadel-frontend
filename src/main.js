@@ -19,7 +19,6 @@ import Vue from 'vue';
 
 const app = createApp(App);
 
-
 if (process.env.NODE_ENV === 'production') {
   Sentry.init({
     Vue,
@@ -29,21 +28,24 @@ if (process.env.NODE_ENV === 'production') {
         routingInstrumentation: Sentry.vueRouterInstrumentation(router),
       }),
     ],
-    environment: process.env.VUE_APP_HOST === 'app.citadel.one' ? 'production' : 'development',
+    environment:
+      process.env.VUE_APP_HOST === 'app.citadel.one'
+        ? 'production'
+        : 'development',
     tracesSampleRate: 1.0,
   });
 }
 
 if (window.navigator && navigator.serviceWorker) {
-  navigator.serviceWorker.getRegistrations()
-    .then((registrations) => {
-      for (const registration of registrations) {
-        registration.unregister();
-      }
-    });
+  navigator.serviceWorker.getRegistrations().then((registrations) => {
+    for (const registration of registrations) {
+      registration.unregister();
+    }
+  });
 }
 
-app.directive('pretty-number', prettyNumber)
+app
+  .directive('pretty-number', prettyNumber)
   .use(hljsVuePlugin)
   .use(i18n)
   .use(VueClickAway)
@@ -54,5 +56,3 @@ app.directive('pretty-number', prettyNumber)
   .component('AppLayout', AppLayout)
   .provide('citadel', citadel)
   .mount('#app');
-
-

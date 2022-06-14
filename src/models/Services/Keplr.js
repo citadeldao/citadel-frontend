@@ -23,11 +23,18 @@ export default class keplrConnector {
     }
   }
 
-  async sendKeplrTransaction(rawTx, signer, advancedParams={}) {
+  async sendKeplrTransaction(rawTx, signer, advancedParams = {}) {
     try {
       const data = rawTx.transaction || rawTx;
-      const res = await window.keplr.signAmino(data.chain_id || data.json.chain_id, signer, data.json || data, advancedParams);
-      const signature = Buffer.from(res.signature.signature, 'base64').toString('hex');
+      const res = await window.keplr.signAmino(
+        data.chain_id || data.json.chain_id,
+        signer,
+        data.json || data,
+        advancedParams
+      );
+      const signature = Buffer.from(res.signature.signature, 'base64').toString(
+        'hex'
+      );
 
       return { signature, signedTx: res.signed, fullResponse: res };
     } catch (err) {
@@ -44,6 +51,5 @@ export default class keplrConnector {
     }
   }
 
-  async changeNetwork() {
-  }
+  async changeNetwork() {}
 }

@@ -14,7 +14,7 @@
           :src="getTokenIcon(vk.code.toLowerCase())"
           alt=""
           @error="showIconPlaceholder = true"
-        >
+        />
       </div>
       <div class="change-vk__name">
         {{ vk.name }}
@@ -27,10 +27,7 @@
       <PrimaryButton @click="createNewVk">
         {{ $t('viewingKey.createNew') }}
       </PrimaryButton>
-      <div
-        class="change-vk__delete-btn"
-        @click="deleteVk"
-      >
+      <div class="change-vk__delete-btn" @click="deleteVk">
         <trashCan />
         &nbsp;
         <span>{{ $t('viewingKey.deleteKey') }}</span>
@@ -82,9 +79,7 @@ export default {
     };
 
     const showIconPlaceholder = ref(false);
-    const iconPlaceholder = computed(() =>
-      tokenIconPlaceholder(props.vk.name),
-    );
+    const iconPlaceholder = computed(() => tokenIconPlaceholder(props.vk.name));
 
     return {
       createNewVk,
@@ -120,14 +115,14 @@ export default {
     }
   }
   &__logo-icon-placeholder {
-     position: relative;
+    position: relative;
     width: 100%;
     height: 100%;
     & span {
       font-size: 14px;
       line-height: 17px;
       color: $white;
-      font-family: "Panton_Bold";
+      font-family: 'Panton_Bold';
       position: absolute;
       top: 7px;
       left: 6px;

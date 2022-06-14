@@ -17,15 +17,8 @@
         </div>
       </template>
       <template v-else>
-        <div
-          v-show="showAppLogo"
-          class="logo"
-        >
-          <img
-            :src="appLogo"
-            width="32"
-            height="32"
-          >
+        <div v-show="showAppLogo" class="logo">
+          <img :src="appLogo" width="32" height="32" />
         </div>
         <div class="descriptions">
           <div class="label">
@@ -37,10 +30,7 @@
         </div>
       </template>
     </div>
-    <div
-      v-if="showFilter"
-      class="extensions__head-filter"
-    >
+    <div v-if="showFilter" class="extensions__head-filter">
       <div class="wrap-input">
         <keep-alive class="icon">
           <component :is="searchIcon" />
@@ -49,12 +39,9 @@
           v-model="searchAppStr"
           class="filter-input"
           @input="$emit('search', searchAppStr)"
-        >
+        />
       </div>
-      <div
-        v-if="false"
-        class="filter"
-      >
+      <div v-if="false" class="filter">
         <keep-alive>
           <component :is="filterIcon" />
         </keep-alive>
@@ -86,24 +73,26 @@ export default {
     const searchAppStr = ref('');
     const showAppLogo = ref(false);
 
-
-    watch(() => props.appLogo, () => {
-      if (!props.appLogo) {
-        showAppLogo.value = false;
-      } else {
-        setTimeout(() => {
-          showAppLogo.value = true;
-        }, 700);
+    watch(
+      () => props.appLogo,
+      () => {
+        if (!props.appLogo) {
+          showAppLogo.value = false;
+        } else {
+          setTimeout(() => {
+            showAppLogo.value = true;
+          }, 700);
+        }
       }
-    });
+    );
 
-    import(`@/assets/icons/extensions/apps.svg`).then(val => {
+    import(`@/assets/icons/extensions/apps.svg`).then((val) => {
       appsIcon.value = markRaw(val.default);
     });
-    import(`@/assets/icons/extensions/filter.svg`).then(val => {
+    import(`@/assets/icons/extensions/filter.svg`).then((val) => {
       filterIcon.value = markRaw(val.default);
     });
-    import(`@/assets/icons/extensions/find.svg`).then(val => {
+    import(`@/assets/icons/extensions/find.svg`).then((val) => {
       searchIcon.value = markRaw(val.default);
     });
 
@@ -118,98 +107,97 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-  .extensions__head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-sizing: border-box;
-    padding: 0 25px;
-    width: 100%;
-    background: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
-    border-radius: 16px 16px 0px 0px;
-    min-height: 80px;
-  }
+.extensions__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0 25px;
+  width: 100%;
+  background: linear-gradient(90deg, #4776e6 0%, #8e54e9 100%);
+  border-radius: 16px 16px 0px 0px;
+  min-height: 80px;
+}
 
-  .extensions__head-logo {
+.extensions__head-logo {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+
+  .logo {
     display: flex;
+    align-items: center;
     justify-content: center;
-    align-content: center;
+    background: linear-gradient(90deg, #f3e7ff 0%, #cde6ff 100%);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    width: 48px;
+    height: 48px;
+  }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(90deg, #F3E7FF 0%, #CDE6FF 100%);
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-      border-radius: 8px;
-      width: 48px;
-      height: 48px;
+  .descriptions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 48px;
+    color: $white;
+    margin-left: 12px;
+
+    .label {
+      font-family: 'Panton_SemiBold';
+      font-size: 18px;
     }
 
-    .descriptions {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      min-height: 48px;
-      color: $white;
-      margin-left: 12px;
+    .description {
+      margin-top: 5px;
+      font-family: 'Panton_Regular';
+      font-size: 14px;
+    }
+  }
+}
 
-      .label {
-        font-family: 'Panton_SemiBold';
-        font-size: 18px;
-      }
+.extensions__head-filter {
+  display: flex;
+  align-items: center;
 
-      .description {
-        margin-top: 5px;
-        font-family: 'Panton_Regular';
-        font-size: 14px;
-      }
+  .wrap-input {
+    position: relative;
+
+    .icon {
+      position: absolute;
+      left: 12px;
+      top: 18px;
     }
   }
 
-  .extensions__head-filter {
+  .filter-input {
+    color: #c3ceeb;
+    padding-left: 32px;
+    padding-right: 12px;
+    margin-right: 12px;
+    box-sizing: border-box;
+    width: 275px;
+    height: 48px;
+    background: transparent;
+    border: 1px solid #c3ceeb;
+    box-sizing: border-box;
+    border-radius: 8px;
+    outline: none;
+  }
+
+  .filter {
     display: flex;
     align-items: center;
+    justify-content: center;
+    border: 1px dashed #c3ceeb;
+    border-radius: 8px;
+    width: 48px;
+    height: 48px;
 
-    .wrap-input {
-      position: relative;
-
-      .icon {
-        position: absolute;
-        left: 12px;
-        top: 18px;
-      }
-    }
-
-    .filter-input {
-      color: #C3CEEB;
-      padding-left: 32px;
-      padding-right: 12px;
-      margin-right: 12px;
-      box-sizing: border-box;
-      width: 275px;
-      height: 48px;
-      background: transparent;
-      border: 1px solid #C3CEEB;
-      box-sizing: border-box;
-      border-radius: 8px;
-      outline: none;
-    }
-
-    .filter {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px dashed #C3CEEB;
-      border-radius: 8px;
-      width: 48px;
-      height: 48px;
-
-      &:hover {
-        cursor: pointer;
-        opacity: .7;
-      }
+    &:hover {
+      cursor: pointer;
+      opacity: 0.7;
     }
   }
+}
 </style>
-

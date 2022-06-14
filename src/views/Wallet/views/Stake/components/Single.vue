@@ -5,20 +5,14 @@
     :current-token="currentToken"
     @click:placeholder="toggleShowPlaceholder"
   />
-  <div
-    v-else
-    class="single"
-  >
+  <div v-else class="single">
     <div
       v-if="currentWallet.type === WALLET_TYPES.PUBLIC_KEY"
       class="single__lock-banner"
     >
       <LockBanner @showPlaceholder="$emit('showPlaceholder')" />
     </div>
-    <div
-      v-if="dataList.length"
-      class="single__stake-chart"
-    >
+    <div v-if="dataList.length" class="single__stake-chart">
       <StakeChart :chart-data="dataList" />
     </div>
     <div class="single__stake-list">
@@ -57,27 +51,20 @@
     @prepareClaim="$emit('prepareClaim')"
     @prepareXctClaim="$emit('prepareXctClaim')"
   />
-  <teleport
-    v-if="isLoading"
-    to="body"
-  >
+  <teleport v-if="isLoading" to="body">
     <Modal>
-      <img
-        src="@/assets/gif/loader.gif"
-        alt=""
-      >
+      <img src="@/assets/gif/loader.gif" alt="" />
     </Modal>
   </teleport>
-  <teleport
-    v-if="showModal"
-    to="body"
-  >
+  <teleport v-if="showModal" to="body">
     <Modal>
       <ModalContent
         v-if="showChooseNode"
         v-click-away="modalCloseHandler"
         :title="$t('staking.Stake')"
-        :desc="`${$t('singleStake.chooseNodeModalDesc')} ${currentWallet.name}.`"
+        :desc="`${$t('singleStake.chooseNodeModalDesc')} ${
+          currentWallet.name
+        }.`"
         type="action"
         width="600px"
         button-text="staking.Stake"
@@ -97,7 +84,9 @@
         v-if="showNodesList"
         v-click-away="modalCloseHandler"
         :title="$t('staking.chooseNodeForStaking')"
-        :desc="`${$t('singleStake.chooseNodeModalDesc')} ${currentWallet.name}.`"
+        :desc="`${$t('singleStake.chooseNodeModalDesc')} ${
+          currentWallet.name
+        }.`"
         type="action"
         width="600px"
         :submit-button="false"
@@ -123,12 +112,19 @@
       >
         <ActionModalContent
           :to="selectedNode.address"
-          :wallet="currentKtAddress ? {...currentWallet, address: currentKtAddress.address} : currentWallet"
+          :wallet="
+            currentKtAddress
+              ? { ...currentWallet, address: currentKtAddress.address }
+              : currentWallet
+          "
           :staking-amount="currentWallet.balance.mainBalance"
           :staking-fee="fee"
           :place="actionModalData.place"
           :hide-password="isHardwareWallet"
-          :delegation="{ from: dataList[0]?.name || currentWallet.address, to: selectedNode.name }"
+          :delegation="{
+            from: dataList[0]?.name || currentWallet.address,
+            to: selectedNode.name,
+          }"
           @submitSend="stake"
         />
       </ModalContent>
@@ -289,10 +285,7 @@ export default {
       isLoading,
       fee,
       mode,
-    } = useStaking(
-      props.stakeNodes,
-      props.list,
-    );
+    } = useStaking(props.stakeNodes, props.list);
 
     const { isHardwareWallet } = useWallets();
     const {
@@ -372,11 +365,11 @@ export default {
     const txComment = ref('');
     const successClickHandler = async () => {
       txComment.value &&
-      (await store.dispatch('transactions/postTransactionNote', {
-        network: props.currentWallet.net,
-        hash: txHash.value[0],
-        text: txComment.value,
-      }));
+        (await store.dispatch('transactions/postTransactionNote', {
+          network: props.currentWallet.net,
+          hash: txHash.value[0],
+          text: txComment.value,
+        }));
       txComment.value = '';
       emit('stake');
       finalClose();
@@ -389,33 +382,31 @@ export default {
         ? currentKtAddressNodeList.value
         : props.list;
 
-      const stakeValue = currentKtAddress.value ? currentKtAddress.value.balance.stake : props.currentWallet.balance.stake;
+      const stakeValue = currentKtAddress.value
+        ? currentKtAddress.value.balance.stake
+        : props.currentWallet.balance.stake;
       const data = initialData.map((item) => ({
         ...item,
         value: stakeValue,
-        share: shareInValue(
-          stakeValue,
-          stakeValue,
-        ),
-        stakeShare: shareInValue(
-          stakeValue,
-          stakeValue),
+        share: shareInValue(stakeValue, stakeValue),
+        stakeShare: shareInValue(stakeValue, stakeValue),
       }));
 
       return data;
     });
 
     const stakeNodesWithValue = computed(() => {
-      return props.stakeNodes
-        .map((item) => {
-          const stakedNode = dataList.value.find((i) => i.address.toLowerCase() === item.address.toLowerCase());
+      return props.stakeNodes.map((item) => {
+        const stakedNode = dataList.value.find(
+          (i) => i.address.toLowerCase() === item.address.toLowerCase()
+        );
 
-          if (stakedNode) {
-            return { ...stakedNode, value: props.currentWallet.balance.stake };
-          }
+        if (stakedNode) {
+          return { ...stakedNode, value: props.currentWallet.balance.stake };
+        }
 
-          return item;
-        });
+        return item;
+      });
     });
 
     const txHash = ref();

@@ -43,9 +43,7 @@
           v-if="currentFilterTab === 'custom'"
           class="rewards-chart-expanded__date-picker"
         >
-          <DatePicker
-            @update:date="dateChangeHandler"
-          />
+          <DatePicker @update:date="dateChangeHandler" />
         </div>
       </div>
       <div class="rewards-chart-expanded__main">
@@ -74,7 +72,10 @@ import Modal from '@/components/Modal';
 import NetworkTab from '@/components/UI/NetworkTab';
 import TabsGroup from '@/components/UI/TabsGroup';
 import DatePicker from '@/components/UI/DatePicker';
-import { renderRewardsChart, createDatasetForRewardsChart } from '@/components/Charts/rewardsChart';
+import {
+  renderRewardsChart,
+  createDatasetForRewardsChart,
+} from '@/components/Charts/rewardsChart';
 import RewardsChartItem from '@/views/Overall/components/RewardsChart/RewardsChartItem';
 import toggleInfoClose from '@/assets/icons/toggle-info-close.svg';
 
@@ -113,15 +114,41 @@ export default {
     });
 
     onMounted(async () => {
-      const { rewardsChart } = await store.dispatch(storeAction, { list: customList.value });
-      renderRewardsChart(rewardsChart, createDatasetForRewardsChart(rewardsChart, currentTab.value), currentTab.value, canvasElement, info.value);
+      const { rewardsChart } = await store.dispatch(storeAction, {
+        list: customList.value,
+      });
+      renderRewardsChart(
+        rewardsChart,
+        createDatasetForRewardsChart(rewardsChart, currentTab.value),
+        currentTab.value,
+        canvasElement,
+        info.value
+      );
     });
-    watch(() => currentTab.value, () => {
-      renderRewardsChart(rewardsChart.value, datasetsArray.value, currentTab.value, canvasElement, info.value);
-    });
-    watch(() => rewardsChart.value, () => {
-      renderRewardsChart(rewardsChart.value, datasetsArray.value, currentTab.value, canvasElement, info.value);
-    });
+    watch(
+      () => currentTab.value,
+      () => {
+        renderRewardsChart(
+          rewardsChart.value,
+          datasetsArray.value,
+          currentTab.value,
+          canvasElement,
+          info.value
+        );
+      }
+    );
+    watch(
+      () => rewardsChart.value,
+      () => {
+        renderRewardsChart(
+          rewardsChart.value,
+          datasetsArray.value,
+          currentTab.value,
+          canvasElement,
+          info.value
+        );
+      }
+    );
 
     return {
       currentFilterTab,

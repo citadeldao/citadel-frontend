@@ -21,8 +21,8 @@ export default {
   }),
 
   getters: {
-    username: state => state.username,
-    isAuthenticated: state => state.isAuthenticated,
+    username: (state) => state.username,
+    isAuthenticated: (state) => state.isAuthenticated,
   },
 
   mutations: {
@@ -65,7 +65,10 @@ export default {
 
         return { data: null, error: error };
       } catch (error) {
-        return { data: null, error: error.response && error.response.data.error };
+        return {
+          data: null,
+          error: error.response && error.response.data.error,
+        };
       }
     },
     loginSocial(_, { social }) {

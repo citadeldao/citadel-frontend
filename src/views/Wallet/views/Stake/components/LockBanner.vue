@@ -4,11 +4,8 @@
       <lock class="lock-banner__icon" />
       <div class="lock-banner__info">
         <span v-html="$t('lockBanner.bannerInfo')" />
-        <span
-          class="lock-banner__link"
-          @click="$emit('showPlaceholder')"
-        >
-          {{ $t("lockBanner.thisLink") }}
+        <span class="lock-banner__link" @click="$emit('showPlaceholder')">
+          {{ $t('lockBanner.thisLink') }}
         </span>
         .
       </div>
@@ -20,7 +17,7 @@
         box-shadow="0px 0px 25px rgba(255, 87, 34, 0.5)"
         @click="clickHandler"
       >
-        {{ $t("AddWallet") }}
+        {{ $t('AddWallet') }}
       </PrimaryButton>
     </div>
   </div>
@@ -88,7 +85,7 @@ export default {
   &__info,
   &__info span,
   &__link {
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     font-size: 20px;
     line-height: 30px;
     @include lg {

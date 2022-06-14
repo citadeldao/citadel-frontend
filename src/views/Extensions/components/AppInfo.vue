@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="app-info"
-  >
+  <div class="app-info">
     <div class="main-info">
       <div class="column">
         <div class="rows">
@@ -22,10 +20,7 @@
           </div>
         </div>
       </div>
-      <div
-        v-if="app.url_video"
-        class="column mt-20"
-      >
+      <div v-if="app.url_video" class="column mt-20">
         <div class="title">
           {{ $t('extensions.guide') }}
         </div>
@@ -41,10 +36,7 @@
         </div>
       </div>
     </div>
-    <div
-      v-if="app.what_you_can"
-      class="main-info mt-15"
-    >
+    <div v-if="app.what_you_can" class="main-info mt-15">
       <div class="column">
         <div class="title">
           {{ $t('extensions.youCan') }}
@@ -55,7 +47,7 @@
     <PrimaryButton
       class="launch-btn"
       :style="{ marginTop: '20px' }"
-      @click="$emit('launchApp', {app })"
+      @click="$emit('launchApp', { app })"
     >
       {{ $t('extensions.launch') }}
     </PrimaryButton>
@@ -83,7 +75,7 @@ export default {
   setup() {
     const successIcon = ref();
 
-    import(`@/assets/icons/extensions/success.svg`).then(val => {
+    import(`@/assets/icons/extensions/success.svg`).then((val) => {
       successIcon.value = markRaw(val.default);
     });
 
@@ -94,62 +86,62 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-  .app-info {
-    width: 900px;
-    display: flex;
-    box-sizing: border-box;
-    flex-direction: column;
-    padding: 25px 40px 0;
-    box-sizing: border-box;
+.app-info {
+  width: 900px;
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  padding: 25px 40px 0;
+  box-sizing: border-box;
 
-    .launch-btn {
-      margin: 0 auto;
+  .launch-btn {
+    margin: 0 auto;
+  }
+
+  .main-info {
+    display: flex;
+    flex-direction: column; // SOMETIMES
+    justify-content: space-between;
+
+    .extensions__frame {
+      border-radius: 12px;
     }
 
-    .main-info {
+    &.mt-15 {
+      margin-top: 15px;
+    }
+
+    .column {
       display: flex;
-      flex-direction: column; // SOMETIMES
-      justify-content: space-between;
+      flex-direction: column;
 
-      .extensions__frame {
-        border-radius: 12px;
+      &.mt-20 {
+        margin-top: 20px;
+        margin-bottom: 20px;
       }
 
-      &.mt-15 {
-        margin-top: 15px;
-      }
-
-      .column {
+      .rows {
         display: flex;
         flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+      }
 
-        &.mt-20 {
-          margin-top: 20px;
-          margin-bottom: 20px;
-        }
+      .title {
+        margin-bottom: 15px;
+        font-family: 'Panton_SemiBold';
+        font-size: 20px;
+        color: $black;
+      }
 
-        .rows {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          justify-content: space-between;
-        }
-
-        .title {
-          margin-bottom: 15px;
-          font-family: 'Panton_SemiBold';
-          font-size: 20px;
-          color: $black;
-        }
-
-        .description {
-          width: 100%;
-          font-family: 'Panton_Regular';
-          line-height: 24px;
-          font-size: 14px;
-          color: #6B758E;
-        }
+      .description {
+        width: 100%;
+        font-family: 'Panton_Regular';
+        line-height: 24px;
+        font-size: 14px;
+        color: #6b758e;
       }
     }
   }
+}
 </style>

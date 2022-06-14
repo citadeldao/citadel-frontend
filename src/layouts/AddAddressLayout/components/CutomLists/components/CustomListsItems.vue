@@ -3,7 +3,9 @@
     <div class="custom-lists__list">
       <div
         class="custom-list-item custom-list-item--important"
-        :class="{ 'custom-list-item--active': activeList === LIST_ALL && !isInWallet }"
+        :class="{
+          'custom-list-item--active': activeList === LIST_ALL && !isInWallet,
+        }"
         :data-qa="`${LIST_ALL}`"
         @click="$emit('set-active-list', LIST_ALL)"
       >
@@ -14,7 +16,10 @@
       </div>
       <div
         class="custom-list-item custom-list-item--important custom-list-item--favourites"
-        :class="{ 'custom-list-item--active': activeList === LIST_FAVOURITES && !isInWallet }"
+        :class="{
+          'custom-list-item--active':
+            activeList === LIST_FAVOURITES && !isInWallet,
+        }"
         :data-qa="`${LIST_FAVOURITES}`"
         @click="$emit('set-active-list', LIST_FAVOURITES)"
       >
@@ -28,7 +33,9 @@
           v-for="item in listWithoutFavourites"
           :key="item.id"
           class="custom-list-item"
-          :class="{ 'custom-list-item--active': activeList === item.name && !isInWallet }"
+          :class="{
+            'custom-list-item--active': activeList === item.name && !isInWallet,
+          }"
           :data-qa="`lists__list--${item.name}`"
           @click="$emit('set-active-list', item.name)"
         >
@@ -85,11 +92,7 @@ export default {
       default: '',
     },
   },
-  emits: [
-    'edit-list',
-    'create-list',
-    'set-active-list',
-  ],
+  emits: ['edit-list', 'create-list', 'set-active-list'],
   setup(props) {
     const route = useRoute();
     const LIST_ALL = 'all';
@@ -97,12 +100,13 @@ export default {
 
     const isInWallet = computed(() => route.path.includes('wallet'));
     const listWithoutFavourites = computed(() => {
-      return props.listData.filter(item => item.name !== LIST_FAVOURITES);
+      return props.listData.filter((item) => item.name !== LIST_FAVOURITES);
     });
 
-    const getListName = (name) => name.length > MAX_NAME_LENGTH
-      ? `${name.slice(0, MAX_NAME_LENGTH)}...`
-      : name;
+    const getListName = (name) =>
+      name.length > MAX_NAME_LENGTH
+        ? `${name.slice(0, MAX_NAME_LENGTH)}...`
+        : name;
 
     return {
       LIST_ALL,
@@ -192,7 +196,7 @@ export default {
     &--important {
       .custom-list-item__title {
         color: $black;
-        font-family: "Panton_SemiBold";
+        font-family: 'Panton_SemiBold';
       }
 
       &:nth-child(2) {
@@ -214,7 +218,7 @@ export default {
       cursor: default;
 
       .custom-list-item__title {
-        font-family: "Panton_SemiBold";
+        font-family: 'Panton_SemiBold';
         color: $black;
 
         svg {
@@ -242,7 +246,7 @@ export default {
     align-items: center;
     justify-content: space-between;
     height: 69px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     font-size: 14px;
     line-height: 17px;
 
@@ -269,6 +273,4 @@ export default {
     }
   }
 }
-
-
 </style>

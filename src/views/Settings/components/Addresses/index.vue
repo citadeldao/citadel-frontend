@@ -46,7 +46,9 @@ export default {
     const store = useStore();
     const { wallets } = useWallets();
     const showSeedModal = ref(false);
-    const hiddenWallets = computed(() => store.getters['wallets/hiddenWallets']);
+    const hiddenWallets = computed(
+      () => store.getters['wallets/hiddenWallets']
+    );
 
     const onDeleteSeed = () => {
       showSeedModal.value = true;
@@ -75,7 +77,9 @@ export default {
     };
 
     const removeSeed = () => {
-      const hasPrivateWallets = wallets.value.filter(w => [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(w.type));
+      const hasPrivateWallets = wallets.value.filter((w) =>
+        [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(w.type)
+      );
 
       store.commit('crypto/setUserMnemonic', null);
 
@@ -89,7 +93,8 @@ export default {
     const toggleWalletHidden = (wallet) => {
       store.dispatch('wallets/toggleHiddenWallet', wallet);
     };
-    const hasVisibleButton = (group) => netsWithVisibleButton.includes(group.net);
+    const hasVisibleButton = (group) =>
+      netsWithVisibleButton.includes(group.net);
 
     return {
       onDeleteSeed,
@@ -130,7 +135,7 @@ export default {
   &__title {
     font-size: 20px;
     line-height: 30px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     @include md {
       margin-bottom: 4px;
     }

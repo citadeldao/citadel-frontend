@@ -1,12 +1,8 @@
 <template>
   <div class="sync-extension">
-    <teleport
-      to="body"
-    >
+    <teleport to="body">
       <!-- MENU MODAL -->
-      <Modal
-        v-if="showMenuModal"
-      >
+      <Modal v-if="showMenuModal">
         <ModalContent
           :submit-button="false"
           :title="$t('syncExtensions.modalMenuTitle')"
@@ -14,20 +10,18 @@
           type="action"
           @close="$emit('close')"
         >
-          <div
-            class="menu-container"
-          >
-            <PrimaryButton
-              class="btn"
-              @click="syncTo"
-            >
+          <div class="menu-container">
+            <PrimaryButton class="btn" @click="syncTo">
               {{ $t('syncExtensions.syncTo') }}
             </PrimaryButton>
             <PrimaryButton
               hover-bg-color="#f76132"
               bg-color="#FF5722"
               class="btn"
-              @click="showMenuModal = false; showSyncFromModal = true;"
+              @click="
+                showMenuModal = false;
+                showSyncFromModal = true;
+              "
             >
               {{ $t('syncExtensions.syncFrom') }}
             </PrimaryButton>
@@ -74,7 +68,11 @@
                   id="password"
                   v-model="password"
                   :show-error-text="!!incorrectPassword && confirmPassword"
-                  :error="incorrectPassword && confirmPassword ? 'Incorrect password' : ''"
+                  :error="
+                    incorrectPassword && confirmPassword
+                      ? 'Incorrect password'
+                      : ''
+                  "
                   :label="$t('enterPassword')"
                   :placeholder="$t('password')"
                   type="password"
@@ -86,8 +84,14 @@
                 <Input
                   id="password"
                   v-model="passwordExtension"
-                  :show-error-text="!!incorrectPasswordExtension && confirmPassword"
-                  :error="incorrectPasswordExtension && confirmPassword ? $t('syncExtensions.incorrectPasswordExtension') : ''"
+                  :show-error-text="
+                    !!incorrectPasswordExtension && confirmPassword
+                  "
+                  :error="
+                    incorrectPasswordExtension && confirmPassword
+                      ? $t('syncExtensions.incorrectPasswordExtension')
+                      : ''
+                  "
                   :label="$t('syncExtensions.enterPassword')"
                   :placeholder="$t('password')"
                   type="password"
@@ -123,7 +127,11 @@
                   id="password"
                   v-model="password"
                   :show-error-text="!!incorrectPassword && confirmPassword"
-                  :error="incorrectPassword && confirmPassword ? 'Incorrect password' : ''"
+                  :error="
+                    incorrectPassword && confirmPassword
+                      ? 'Incorrect password'
+                      : ''
+                  "
                   :label="$t('enterPassword')"
                   :placeholder="$t('password')"
                   type="password"
@@ -131,10 +139,7 @@
                   @keyup.enter="syncFrom"
                 />
               </div>
-              <PrimaryButton
-                class="btn"
-                @click="syncFrom"
-              >
+              <PrimaryButton class="btn" @click="syncFrom">
                 {{ $t('next') }}
               </PrimaryButton>
             </template>
@@ -220,15 +225,19 @@ export default {
         return;
       }
 
-      walletsWithoutDublicates.value = await Promise.all(wallets.value.map(async w => {
-        const exist = await window.citadel.isWalletExists(w.address, w.net);
-        if (!exist && w.privateKeyEncoded) {
-          return w;
-        }
+      walletsWithoutDublicates.value = await Promise.all(
+        wallets.value.map(async (w) => {
+          const exist = await window.citadel.isWalletExists(w.address, w.net);
+          if (!exist && w.privateKeyEncoded) {
+            return w;
+          }
 
-        return null;
-      }));
-      walletsWithoutDublicates.value = walletsWithoutDublicates.value.filter(w => w);
+          return null;
+        })
+      );
+      walletsWithoutDublicates.value = walletsWithoutDublicates.value.filter(
+        (w) => w
+      );
     });
 
     const walletsToSync = computed(() => {
@@ -238,14 +247,19 @@ export default {
 
       const str = searchWalletStr.value.toLowerCase();
 
-      return walletsWithoutDublicates.value.filter(w => w.address.toLowerCase().includes(str) || w.title.toLowerCase().includes(str));
+      return walletsWithoutDublicates.value.filter(
+        (w) =>
+          w.address.toLowerCase().includes(str) ||
+          w.title.toLowerCase().includes(str)
+      );
     });
 
     const incorrectPassword = computed(() => {
       return sha3_256(password.value) !== store.getters['crypto/passwordHash'];
     });
 
-    const isCheck = (wallet) => !!findAddressWithNet(checkedItems.value, wallet);
+    const isCheck = (wallet) =>
+      !!findAddressWithNet(checkedItems.value, wallet);
 
     const addItem = (item) => {
       checkedItems.value.push(item);
@@ -253,7 +267,11 @@ export default {
 
     const removeItem = (wallet) => {
       checkedItems.value = checkedItems.value.filter(
-        ({ address, net }) => !(address.toLowerCase() === wallet.address.toLowerCase() && net === wallet.net),
+        ({ address, net }) =>
+          !(
+            address.toLowerCase() === wallet.address.toLowerCase() &&
+            net === wallet.net
+          )
       );
     };
 
@@ -298,36 +316,55 @@ export default {
         let syncResult = null;
 
         syncLoading.value = true;
-        const networks = store.getters['networks/networksList'].map(network => network.net);
+        const networks = store.getters['networks/networksList'].map(
+          (network) => network.net
+        );
 
         try {
           await window.citadel.setUserId(userId.value);
 
-          const phForChrome = CryptoJS.SHA256(CryptoJS.lib.WordArray.create(password.value)).toString();
+          const phForChrome = CryptoJS.SHA256(
+            CryptoJS.lib.WordArray.create(password.value)
+          ).toString();
 
-          syncResult = await window.citadel.syncFromExtension(networks, phForChrome);
+          syncResult = await window.citadel.syncFromExtension(
+            networks,
+            phForChrome
+          );
         } catch (err) {
           syncLoading.value = false;
         }
 
         console.log('syncResult', syncResult);
 
-        const result = syncResult && await Promise.all(syncResult.map(async wallet => {
-          const privateKey = CryptoJS.AES.decrypt(wallet.privateKeyEncoded, password.value).toString(CryptoJS.enc.Utf8);
-          const res = await citadel.addWalletByPrivateKey({
-            net: wallet.net,
-            privateKey,
-          });
+        const result =
+          syncResult &&
+          (await Promise.all(
+            syncResult.map(async (wallet) => {
+              const privateKey = CryptoJS.AES.decrypt(
+                wallet.privateKeyEncoded,
+                password.value
+              ).toString(CryptoJS.enc.Utf8);
+              const res = await citadel.addWalletByPrivateKey({
+                net: wallet.net,
+                privateKey,
+              });
 
-          if (res.data) {
-            const newInstance = await store.dispatch('crypto/createNewWalletInstance', { walletOpts: wallet });
-            await store.dispatch('wallets/pushWallets', { wallets: [newInstance] });
-          }
+              if (res.data) {
+                const newInstance = await store.dispatch(
+                  'crypto/createNewWalletInstance',
+                  { walletOpts: wallet }
+                );
+                await store.dispatch('wallets/pushWallets', {
+                  wallets: [newInstance],
+                });
+              }
 
-          return res.result === 'success';
-        }));
+              return res.result === 'success';
+            })
+          ));
 
-        if (syncResult && result.every(res => !!res)) {
+        if (syncResult && result.every((res) => !!res)) {
           showSuccessFromSyncModal.value = true;
           syncLoading.value = false;
           password.value = '';
@@ -354,7 +391,9 @@ export default {
       confirmPassword.value = true;
 
       if (window.citadel && !incorrectPassword.value) {
-        const citadelPasswordHash = CryptoJS.SHA256(CryptoJS.lib.WordArray.create(passwordExtension.value)).toString();
+        const citadelPasswordHash = CryptoJS.SHA256(
+          CryptoJS.lib.WordArray.create(passwordExtension.value)
+        ).toString();
         if (citadelPasswordHash !== extensionPasswordHash) {
           incorrectPasswordExtension.value = true;
 
@@ -372,23 +411,33 @@ export default {
 
         try {
           syncResult = await window.citadel.syncToExtension(
-            checkedItems.value.map(w => {
+            checkedItems.value.map((w) => {
               return {
-                mnemonic: CryptoJS.AES.encrypt(store.getters['crypto/decodeUserMnemonic'](password.value, w.importedFromSeed || null), passwordExtension.value).toString(),
-                wallets: [{
-                  type: WALLET_TYPES.ONE_SEED,
-                  net: w.net,
-                  address: w.address,
-                  privateKeyEncoded: CryptoJS.AES.encrypt(w.getPrivateKeyDecoded(password.value).toString('hex'), passwordExtension.value).toString(),
-                }],
+                mnemonic: CryptoJS.AES.encrypt(
+                  store.getters['crypto/decodeUserMnemonic'](
+                    password.value,
+                    w.importedFromSeed || null
+                  ),
+                  passwordExtension.value
+                ).toString(),
+                wallets: [
+                  {
+                    type: WALLET_TYPES.ONE_SEED,
+                    net: w.net,
+                    address: w.address,
+                    privateKeyEncoded: CryptoJS.AES.encrypt(
+                      w.getPrivateKeyDecoded(password.value).toString('hex'),
+                      passwordExtension.value
+                    ).toString(),
+                  },
+                ],
               };
-            }),
+            })
           );
           syncLoading.value = false;
 
           if (syncResult === true) {
             emit('close');
-
           }
         } catch (err) {
           console.log('error');
@@ -426,47 +475,47 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-  .menu-container {
-    display: flex;
-    flex-direction: column;
-    margin: 40px 0 0 0;
+.menu-container {
+  display: flex;
+  flex-direction: column;
+  margin: 40px 0 0 0;
 
-    .btn {
-      margin: 5px 0;
-    }
+  .btn {
+    margin: 5px 0;
   }
+}
 
-  .syncto-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.syncto-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 15px 0;
+
+  .syncto-input {
+    height: 68px;
     width: 100%;
-    margin: 15px 0;
+    margin-bottom: 15px;
+  }
 
-    .syncto-input {
-      height: 68px;
-      width: 100%;
-      margin-bottom: 15px;
-    }
+  .password-wrap {
+    width: 100%;
+    height: 90px;
+    padding-top: 20px;
 
-    .password-wrap {
-      width: 100%;
-      height: 90px;
-      padding-top: 20px;
-
-      &.mt-10 {
-        margin-top: 15px;
-      }
-    }
-
-    .syncto-addresses {
-      width: 100%;
-      max-height: 300px;
-      overflow-y: auto;
-    }
-
-    .btn {
-      margin: 30px auto 0;
+    &.mt-10 {
+      margin-top: 15px;
     }
   }
+
+  .syncto-addresses {
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  .btn {
+    margin: 30px auto 0;
+  }
+}
 </style>

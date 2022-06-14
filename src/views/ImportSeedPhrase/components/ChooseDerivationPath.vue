@@ -1,12 +1,6 @@
 <template>
-  <div
-    v-if="wallets.length"
-    class="choose-derivation-path"
-  >
-    <div
-      v-if="pathOptions.length > 1"
-      class="autocomplete-wrap"
-    >
+  <div v-if="wallets.length" class="choose-derivation-path">
+    <div v-if="pathOptions.length > 1" class="autocomplete-wrap">
       <div class="autocomplete">
         <Select
           v-model="currentPath"
@@ -41,11 +35,7 @@
         @check="addSingleItem"
       />
     </div>
-    <PrimaryButton
-      :disabled="disabled"
-      data-qa="Import"
-      @click="clickHandler"
-    >
+    <PrimaryButton :disabled="disabled" data-qa="Import" @click="clickHandler">
       {{ $t('import') }}
     </PrimaryButton>
   </div>
@@ -71,7 +61,7 @@ export default {
   props: {
     walletOpts: {
       type: Object,
-      default: ()=>{},
+      default: () => {},
     },
   },
   emits: ['selectWallet'],
@@ -81,28 +71,35 @@ export default {
 
     const allWallets = ref([]);
     const currentPath = ref('');
-    const pathOptions = ref(CryptoCoin.getDerivationPathTemplates(props.walletOpts.nets[0], 'seed'));
+    const pathOptions = ref(
+      CryptoCoin.getDerivationPathTemplates(props.walletOpts.nets[0], 'seed')
+    );
     const numberOfPaths = 5;
     const wallets = ref([]);
     const isInvalid = ref(false);
 
     watch(allWallets, () => {
-      Promise.all(allWallets.value.map(async (item, ndx) => {
-        const balance = await CryptoCoin.getBalance({ net: props.walletOpts.nets[0], address: item.walletInstance.address });
+      Promise.all(
+        allWallets.value.map(async (item, ndx) => {
+          const balance = await CryptoCoin.getBalance({
+            net: props.walletOpts.nets[0],
+            address: item.walletInstance.address,
+          });
 
-        if (balance.data.mainBalance && !currentPath.value) {
-          currentPath.value = item.templatePath;
-          selectCustomPathFormat(currentPath.value);
-        }
+          if (balance.data.mainBalance && !currentPath.value) {
+            currentPath.value = item.templatePath;
+            selectCustomPathFormat(currentPath.value);
+          }
 
-        // if 0 and end
-        if (allWallets.value.length - 1 === ndx && !currentPath.value) {
-          currentPath.value = pathOptions.value[0].key;
-          selectCustomPathFormat(currentPath.value);
-        }
+          // if 0 and end
+          if (allWallets.value.length - 1 === ndx && !currentPath.value) {
+            currentPath.value = pathOptions.value[0].key;
+            selectCustomPathFormat(currentPath.value);
+          }
 
-        return balance;
-      }));
+          return balance;
+        })
+      );
     });
 
     const createDefaultWallets = () => {
@@ -116,11 +113,11 @@ export default {
             },
             password: props.walletOpts.password,
           });
-        }),
+        })
       ).then((createdWallets) => (wallets.value = createdWallets));
     };
 
-    const selectCustomPathFormat = pathFormat => {
+    const selectCustomPathFormat = (pathFormat) => {
       Promise.all(
         [...Array(numberOfPaths)].map((_, pathIndex) => {
           return store.dispatch('crypto/createWalletByMnemonic', {
@@ -131,27 +128,30 @@ export default {
             },
             password: props.walletOpts.password,
           });
-        }),
+        })
       ).then((createdWallets) => (wallets.value = createdWallets));
     };
 
     // when coins has walletTemplatesDerivation
     if (pathOptions.value.length > 1) {
-      pathOptions.value.forEach(path => {
+      pathOptions.value.forEach((path) => {
         Promise.all(
           [...Array(numberOfPaths)].map(async (_, pathIndex) => {
-            const wallet = await store.dispatch('crypto/createWalletByMnemonic', {
-              walletOpts: {
-                derivationPath: path.key.replace('N', pathIndex),
-                net: props.walletOpts.nets[0],
-                ...props.walletOpts,
-              },
-              password: props.walletOpts.password,
-            });
+            const wallet = await store.dispatch(
+              'crypto/createWalletByMnemonic',
+              {
+                walletOpts: {
+                  derivationPath: path.key.replace('N', pathIndex),
+                  net: props.walletOpts.nets[0],
+                  ...props.walletOpts,
+                },
+                password: props.walletOpts.password,
+              }
+            );
             wallet.templatePath = path.key;
 
             return wallet;
-          }),
+          })
         ).then((createdWallets) => {
           allWallets.value = allWallets.value.concat(createdWallets);
         });
@@ -165,10 +165,10 @@ export default {
     const setCustomWallet = (customPath) => {
       store
         .dispatch('crypto/createWalletByMnemonic', {
-
           walletOpts: {
             derivationPath: customPath,
-            pathIndex: props.walletOpts.nets[0] === 'polkadot' && !customPath && 1,
+            pathIndex:
+              props.walletOpts.nets[0] === 'polkadot' && !customPath && 1,
             net: props.walletOpts.nets[0],
             ...props.walletOpts,
           },
@@ -193,8 +193,11 @@ export default {
 
     const disabled = computed(() => {
       const isChecked = checkedItems.value?.length;
-      const foundAddress = store.getters['wallets/walletByAddress'](checkedItems.value[0]);
-      const isExist = !!foundAddress && foundAddress.type !== WALLET_TYPES.PUBLIC_KEY;
+      const foundAddress = store.getters['wallets/walletByAddress'](
+        checkedItems.value[0]
+      );
+      const isExist =
+        !!foundAddress && foundAddress.type !== WALLET_TYPES.PUBLIC_KEY;
 
       return !isChecked || isExist || isInvalid.value;
     });

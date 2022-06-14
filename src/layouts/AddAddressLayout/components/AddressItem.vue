@@ -18,7 +18,12 @@
     <div class="address-item__info">
       <span class="address-item__name">{{ walletName }}</span>
       <span class="address-item__balance">
-        <span v-pretty-number="{ value: wallet.balance.calculatedBalance, currency: wallet.code }" />
+        <span
+          v-pretty-number="{
+            value: wallet.balance.calculatedBalance,
+            currency: wallet.code,
+          }"
+        />
         <span class="address-item__currency">{{ wallet.code }}</span>
       </span>
     </div>
@@ -51,14 +56,22 @@ export default {
       icon.value = markRaw(val.default);
     });
 
-    const metamaskConnector = computed(() => store.getters['metamask/metamaskConnector']);
+    const metamaskConnector = computed(
+      () => store.getters['metamask/metamaskConnector']
+    );
 
     const currentWalletType = computed(() => {
       const metamaskNet = metamaskConnector.value.network;
-      const metamaskAddress = metamaskConnector.value.accounts[0] && metamaskConnector.value.accounts[0].toLowerCase();
+      const metamaskAddress =
+        metamaskConnector.value.accounts[0] &&
+        metamaskConnector.value.accounts[0].toLowerCase();
       const { address, net, type } = props.wallet;
 
-      if (address.toLowerCase() === metamaskAddress && net === metamaskNet && type === WALLET_TYPES.PUBLIC_KEY) {
+      if (
+        address.toLowerCase() === metamaskAddress &&
+        net === metamaskNet &&
+        type === WALLET_TYPES.PUBLIC_KEY
+      ) {
         return WALLET_TYPES.METAMASK;
       }
 
@@ -82,10 +95,16 @@ export default {
     });
     const walletName = computed(() => {
       if (wSize.value === 'md') {
-        return props.wallet.getShortAddress(13, props.wallet.title || props.wallet.address);
+        return props.wallet.getShortAddress(
+          13,
+          props.wallet.title || props.wallet.address
+        );
       }
 
-      return props.wallet.getShortAddress(19, props.wallet.title || props.wallet.address);
+      return props.wallet.getShortAddress(
+        19,
+        props.wallet.title || props.wallet.address
+      );
     });
 
     const to = computed(() => {
@@ -110,8 +129,9 @@ export default {
     });
     const isActive = computed(
       () =>
-        route.params.address?.toLowerCase() === props.wallet.address.toLowerCase() &&
-        route.params.net.toLowerCase() === props.wallet.net.toLowerCase(),
+        route.params.address?.toLowerCase() ===
+          props.wallet.address.toLowerCase() &&
+        route.params.net.toLowerCase() === props.wallet.net.toLowerCase()
     );
 
     const instance = getCurrentInstance();
@@ -151,7 +171,7 @@ export default {
   &__icon {
     width: 40px;
     height: 40px;
-    background: #8496C0;
+    background: #8496c0;
     border-radius: $round;
     display: flex;
     align-items: center;
@@ -195,7 +215,7 @@ export default {
   &__balance {
     font-size: 18px;
     line-height: 22px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     margin-top: 5px;
     color: $mid-blue;
     @include md {
@@ -204,7 +224,7 @@ export default {
     }
   }
   &__currency {
-    font-family: "Panton_Regular";
+    font-family: 'Panton_Regular';
     color: $slategray;
   }
 }

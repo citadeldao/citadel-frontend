@@ -15,8 +15,12 @@ export const getSteps = (hasPasswordHash) => {
       id: 2,
       stepDesc: t('steps.enterPaymentPassword'),
       icon: 'key',
-      headerTitle: hasPasswordHash ? t('steps.enterPassword') : t('steps.createPaymentPassword'),
-      headerInfo: hasPasswordHash ? t('steps.enterPasswordForAllInPrivate') : t('steps.setPasswordForAllIn'),
+      headerTitle: hasPasswordHash
+        ? t('steps.enterPassword')
+        : t('steps.createPaymentPassword'),
+      headerInfo: hasPasswordHash
+        ? t('steps.enterPasswordForAllInPrivate')
+        : t('steps.setPasswordForAllIn'),
       status: 'active',
     },
     {

@@ -24,25 +24,28 @@ export default {
   }),
 
   getters: {
-    transactions: state => state.transactions?.map(({
-      type,
-      direction,
-      isCanceled,
-      isReward,
-      originalOpType,
-      ...rest
-    }) => ({
-      ...rest,
-      type,
-      direction,
-      isCanceled,
-      isReward,
-      originalOpType,
-      status: {},
-    })),
-    isTransactionsLoading: state => state.isTransactionsLoading,
-    transactionsCount: state => state.transactionsCount,
-    mempool: state => state.mempool,
+    transactions: (state) =>
+      state.transactions?.map(
+        ({
+          type,
+          direction,
+          isCanceled,
+          isReward,
+          originalOpType,
+          ...rest
+        }) => ({
+          ...rest,
+          type,
+          direction,
+          isCanceled,
+          isReward,
+          originalOpType,
+          status: {},
+        })
+      ),
+    isTransactionsLoading: (state) => state.isTransactionsLoading,
+    transactionsCount: (state) => state.transactionsCount,
+    mempool: (state) => state.mempool,
   },
 
   mutations: {
@@ -58,9 +61,12 @@ export default {
     [types.SET_MEMPOOL](state, mempool) {
       // saving txs in state
       for (const tx of mempool) {
-        const found = state.mempool.find((stateTx) => tx.hash === stateTx.hash &&
-          tx.net === stateTx.net &&
-          tx.direction === stateTx.direction);
+        const found = state.mempool.find(
+          (stateTx) =>
+            tx.hash === stateTx.hash &&
+            tx.net === stateTx.net &&
+            tx.direction === stateTx.direction
+        );
 
         if (!found) {
           state.mempool.push(tx);
@@ -68,18 +74,24 @@ export default {
       }
     },
     [types.ADD_TO_MEMPOOL](state, tx) {
-      const found = state.mempool.find((mempoolTx) => tx.hash === mempoolTx.hash &&
-        tx.net === mempoolTx.net &&
-        tx.direction === mempoolTx.direction);
+      const found = state.mempool.find(
+        (mempoolTx) =>
+          tx.hash === mempoolTx.hash &&
+          tx.net === mempoolTx.net &&
+          tx.direction === mempoolTx.direction
+      );
 
       if (!found) {
         state.mempool.push(tx);
       }
     },
     [types.REMOVE_FROM_MEMPOOL](state, tx) {
-      state.mempool = state.mempool.filter(c => !(c.hash === tx.hash) &&
-        !(c.net === tx.net) &&
-        !(c.direction === tx.direction));
+      state.mempool = state.mempool.filter(
+        (c) =>
+          !(c.hash === tx.hash) &&
+          !(c.net === tx.net) &&
+          !(c.direction === tx.direction)
+      );
     },
   },
 
@@ -87,7 +99,10 @@ export default {
     async getTransactions({ commit }, { walletId, ...options }) {
       commit(types.SET_TRANSACTIONS, null);
       commit(types.SET_IS_TRANSACTIONS_LOADING, true);
-      const { data, error } = await citadel.getTransactionsById(walletId, options);
+      const { data, error } = await citadel.getTransactionsById(
+        walletId,
+        options
+      );
 
       if (!error) {
         commit(types.SET_TRANSACTIONS, data.list);
@@ -103,7 +118,11 @@ export default {
       }
     },
     async postTransactionNote(_, { network, hash, text }) {
-      const { error } = await citadel.postTransactionNote(network.toLowerCase(), hash, text);
+      const { error } = await citadel.postTransactionNote(
+        network.toLowerCase(),
+        hash,
+        text
+      );
 
       if (error) {
         notify({
@@ -126,7 +145,10 @@ export default {
 
         for (const tx of data.data) {
           if (
-            findWalletInArray(walletList.value, { address: tx.from, net: tx.net }) &&
+            findWalletInArray(walletList.value, {
+              address: tx.from,
+              net: tx.net,
+            }) &&
             findWalletInArray(walletList.value, { address: tx.to, net: tx.net })
           ) {
             txs.push({ ...tx, direction: 'income' });

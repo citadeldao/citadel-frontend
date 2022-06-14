@@ -3,16 +3,22 @@ import Chart from 'chart.js/auto';
 
 let balanceStructureChart = null;
 
-export const renderBalanceStructChart = balanceStructure => {
+export const renderBalanceStructChart = (balanceStructure) => {
   if (balanceStructureChart) {
     balanceStructureChart.destroy();
   }
 
   const data = {
-    datasets: [{
-      backgroundColor: Object.values(balanceStructure.value).map(c => c.color),
-      data: Object.values(balanceStructure.value).map(c => c.percent > 2 ? c.percent : 2), // minimum 2% when displaying pie chart
-    }],
+    datasets: [
+      {
+        backgroundColor: Object.values(balanceStructure.value).map(
+          (c) => c.color
+        ),
+        data: Object.values(balanceStructure.value).map((c) =>
+          c.percent > 2 ? c.percent : 2
+        ), // minimum 2% when displaying pie chart
+      },
+    ],
     labels: Object.keys(balanceStructure.value),
   };
   const getOrCreateBalanceStructureTooltip = (chart) => {
@@ -43,29 +49,38 @@ export const renderBalanceStructChart = balanceStructure => {
     }
 
     if (tooltip.body) {
-      const bodyLines = tooltip.body.map(b => b.lines);
+      const bodyLines = tooltip.body.map((b) => b.lines);
       const tooltipDiv = document.createElement('div');
       tooltipDiv.classList.add('chart-tooltip__section');
 
-      bodyLines.forEach(body => {
+      bodyLines.forEach((body) => {
         // HERE BODY OF TOOLTIP <--------------------------------------------------------------------
         const tooltipTitle = document.createElement('div');
         tooltipTitle.classList.add('chart-tooltip__title');
 
         const tooltipLine1 = document.createElement('div');
-        tooltipLine1.classList.add('chart-tooltip__balance-native', 'chart-tooltip__balance-native--balanceStruct');
+        tooltipLine1.classList.add(
+          'chart-tooltip__balance-native',
+          'chart-tooltip__balance-native--balanceStruct'
+        );
 
         const tooltipLine1Code = document.createElement('span');
         tooltipLine1Code.classList.add('chart-tooltip__currency');
 
         const tooltipLine2 = document.createElement('div');
-        tooltipLine2.classList.add('chart-tooltip__balance-usd', 'chart-tooltip__balance-usd--balanceStruct');
+        tooltipLine2.classList.add(
+          'chart-tooltip__balance-usd',
+          'chart-tooltip__balance-usd--balanceStruct'
+        );
 
         const tooltipLine2Code = document.createElement('span');
         tooltipLine2Code.classList.add('chart-tooltip__currency');
 
         const tooltipLine3 = document.createElement('div');
-        tooltipLine3.classList.add('chart-tooltip__balance-btc', 'chart-tooltip__balance-btc--balanceStruct');
+        tooltipLine3.classList.add(
+          'chart-tooltip__balance-btc',
+          'chart-tooltip__balance-btc--balanceStruct'
+        );
 
         const tooltipLine3Code = document.createElement('span');
         tooltipLine3Code.classList.add('chart-tooltip__currency');
@@ -75,20 +90,35 @@ export const renderBalanceStructChart = balanceStructure => {
         tooltipTitle.appendChild(document.createTextNode('Balance:'));
 
         // coin
-        balanceStructure.value[net].balance && tooltipLine1Code.appendChild(document.createTextNode(` ${balanceStructure.value[net].code}`));
-        balanceStructure.value[net].balance && tooltipLine1.appendChild(document.createTextNode(`${prettyNumber(balanceStructure.value[net].balance)}`));
+        balanceStructure.value[net].balance &&
+          tooltipLine1Code.appendChild(
+            document.createTextNode(` ${balanceStructure.value[net].code}`)
+          );
+        balanceStructure.value[net].balance &&
+          tooltipLine1.appendChild(
+            document.createTextNode(
+              `${prettyNumber(balanceStructure.value[net].balance)}`
+            )
+          );
         tooltipLine1.appendChild(tooltipLine1Code);
 
         // usd
         tooltipLine2Code.appendChild(document.createTextNode(` USD`)); // space is intentional
-        tooltipLine2.appendChild(document.createTextNode(`${prettyNumber(balanceStructure.value[net].usd)}`));
+        tooltipLine2.appendChild(
+          document.createTextNode(
+            `${prettyNumber(balanceStructure.value[net].usd)}`
+          )
+        );
         tooltipLine2.appendChild(tooltipLine2Code);
 
         // btc
         tooltipLine3Code.appendChild(document.createTextNode(` BTC`)); // space is intentional
-        tooltipLine3.appendChild(document.createTextNode(`${prettyNumber(balanceStructure.value[net].btc)}`));
+        tooltipLine3.appendChild(
+          document.createTextNode(
+            `${prettyNumber(balanceStructure.value[net].btc)}`
+          )
+        );
         tooltipLine3.appendChild(tooltipLine3Code);
-
 
         tooltipDiv.appendChild(tooltipTitle);
         tooltipDiv.appendChild(tooltipLine1);
@@ -135,6 +165,6 @@ export const renderBalanceStructChart = balanceStructure => {
   };
   balanceStructureChart = new Chart(
     document.querySelector('#balanceStructureChart'),
-    config,
+    config
   );
 };

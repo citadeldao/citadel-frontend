@@ -1,38 +1,32 @@
 <template>
   <div
     class="assign-address-item"
-    :class="[{checked},type,{}]"
+    :class="[{ checked }, type, {}]"
     @click="toggleChecked"
   >
     <div class="assign-address-item__icon">
-      <done
-        v-if="checked"
-        class="assign-address-item__done"
-      />
+      <done v-if="checked" class="assign-address-item__done" />
       <keep-alive v-else>
         <component :is="icon" />
       </keep-alive>
     </div>
     <div class="assign-address-item__info">
       <div class="assign-address-item__info-line">
-        <span
-          class="assign-address-item__title"
-          :style="{maxWidth}"
-        >
+        <span class="assign-address-item__title" :style="{ maxWidth }">
           {{ walletName }}
         </span>
         <div
-          v-if="address.assignedTo && type!=='newAssigned'"
+          v-if="address.assignedTo && type !== 'newAssigned'"
           class="assign-address-item__assigned-mark"
         >
           <span class="assign-address-item__assigned-mark-text">
-            {{ $t("assigned") }}
+            {{ $t('assigned') }}
           </span>
           <Tooltip>
             <template #content>
               <div class="assign-address-item__tooltip-content">
                 <span class="assign-address-item__tooltip-content-title">
-                  {{ $t("xct.assignAddressTooltipTitle") }}
+                  {{ $t('xct.assignAddressTooltipTitle') }}
                 </span>
                 <span class="assign-address-item__tooltip-content-address">
                   {{ address.assignedTo }}
@@ -54,7 +48,10 @@
           class="assign-address-item__address-balance"
         >
           <span
-            v-pretty-number="{ value: address?.balance?.calculatedBalance , currency: address.code }"
+            v-pretty-number="{
+              value: address?.balance?.calculatedBalance,
+              currency: address.code,
+            }"
             class="assign-address-item__address-balance-balance"
           />
           <span class="assign-address-item__address-balance-currency">
@@ -63,16 +60,13 @@
         </div>
       </div>
     </div>
-    <div
-      v-if="type === 'hardware'"
-      class="assign-address-item__assign-button"
-    >
+    <div v-if="type === 'hardware'" class="assign-address-item__assign-button">
       <EditButton
         v-if="!address.signStatus"
         class="custom-lists__list-item-edit-button"
         @click="$emit('signHardwareAddress', address)"
       >
-        {{ $t("confirm") }}
+        {{ $t('confirm') }}
       </EditButton>
       <success v-else-if="address.signStatus === 'success'" />
       <refresh
@@ -115,7 +109,9 @@ export default {
       icon.value = markRaw(val.default);
     });
 
-    const walletName = computed(() => props.address.title || props.address.address);
+    const walletName = computed(
+      () => props.address.title || props.address.address
+    );
     const toggleChecked = () => {
       if (props.checked) {
         emit('uncheck', props.address);
@@ -124,9 +120,15 @@ export default {
       }
     };
 
-    const maxWidth = computed(()=> props.type === 'newAssigned' ? '460px'
-      : props.address.assignedTo && props.type === 'hardware'
-        ? '284px' : props.address.assignedTo ? '360px' : '');
+    const maxWidth = computed(() =>
+      props.type === 'newAssigned'
+        ? '460px'
+        : props.address.assignedTo && props.type === 'hardware'
+        ? '284px'
+        : props.address.assignedTo
+        ? '360px'
+        : ''
+    );
 
     return {
       icon,
@@ -170,50 +172,50 @@ export default {
     flex-direction: column;
     flex-grow: 1;
   }
-  &__info-line{
-      display: flex;
-      justify-content: space-between;
+  &__info-line {
+    display: flex;
+    justify-content: space-between;
   }
   &__title {
     font-size: 16px;
     line-height: 19px;
     color: $mid-blue;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     margin-bottom: 8px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
   }
-  &__assigned-mark{
-      display: flex;
-      flex-shrink: 0;
-      align-items: center;
-      & svg{
-          & :hover{
-              fill: $too-dark-blue;
-          }
+  &__assigned-mark {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    & svg {
+      & :hover {
+        fill: $too-dark-blue;
       }
+    }
   }
-  &__assigned-mark-text{
-       font-size: 14px;
-       line-height: 17px;
-       color: $orange;
-       font-family: 'Panton_SemiBold';
-       margin-right: 8px;
+  &__assigned-mark-text {
+    font-size: 14px;
+    line-height: 17px;
+    color: $orange;
+    font-family: 'Panton_SemiBold';
+    margin-right: 8px;
   }
-  &__tooltip-content{
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+  &__tooltip-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   &__tooltip-content-title,
-  &__tooltip-content-address{
-      font-size: 12px;
-      line-height: 16px;
-      color: $too-dark-blue;
+  &__tooltip-content-address {
+    font-size: 12px;
+    line-height: 16px;
+    color: $too-dark-blue;
   }
-  &__tooltip-content-address{
-      color: $mid-blue;
+  &__tooltip-content-address {
+    color: $mid-blue;
   }
   &__address {
     display: flex;
@@ -236,7 +238,7 @@ export default {
   &__address-balance-balance {
     font-size: 16px;
     line-height: 19px;
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
     color: $mid-blue;
     margin-right: 3px;
   }
@@ -244,12 +246,12 @@ export default {
     font-size: 14px;
     line-height: 16px;
     color: $mid-gray;
-    font-family: "Panton_Regular";
+    font-family: 'Panton_Regular';
   }
-  &__assign-button{
+  &__assign-button {
     margin-left: 17px;
     cursor: pointer;
-    & svg{
+    & svg {
       width: 24px;
       height: 24px;
     }
@@ -269,15 +271,13 @@ export default {
     color: $dark-blue;
   }
 }
-.hardware{
+.hardware {
   cursor: default;
 }
 .assigned,
-.newAssigned{
-  &:hover{
+.newAssigned {
+  &:hover {
     cursor: initial;
   }
 }
 </style>
-
-

@@ -2,17 +2,14 @@
   <div
     class="input"
     :class="{
-      empty: type ==='empty',
+      empty: type === 'empty',
       error,
       'input--type--currency': isTypeCurrency,
     }"
   >
     <label :for="id">
       {{ label }}
-      <info
-        v-if="labelInfo"
-        class="input__label-info"
-      />
+      <info v-if="labelInfo" class="input__label-info" />
     </label>
     <input
       :id="id"
@@ -30,15 +27,9 @@
       @input="inputHandler"
       @focus="onFocusHandler"
       @blur="onBlurHandler"
-    >
-    <span
-      v-if="type === 'number' && text"
-      class="input__text"
-    >{{ text }}</span>
-    <div
-      v-if="error && showErrorText"
-      class="input__error"
-    >
+    />
+    <span v-if="type === 'number' && text" class="input__text">{{ text }}</span>
+    <div v-if="error && showErrorText" class="input__error">
       <error class="input__error-icon" />
       <span class="input__error-text">{{ error }}</span>
     </div>
@@ -56,14 +47,8 @@
       @click="hide = !hide"
     >
       <transition name="fade">
-        <hide
-          v-if="hide"
-          class="input__visibility-icon"
-        />
-        <vision
-          v-else
-          class="input__visibility-icon"
-        />
+        <hide v-if="hide" class="input__visibility-icon" />
+        <vision v-else class="input__visibility-icon" />
       </transition>
     </div>
 
@@ -77,19 +62,10 @@
       </div>
     </transition>
 
-    <div
-      v-if="withCopy && valueRef"
-      class="input__copy"
-    >
-      <copy
-        :data-qa="dataQa && `${dataQa}__copy-button`"
-        @click="copyValue"
-      />
+    <div v-if="withCopy && valueRef" class="input__copy">
+      <copy :data-qa="dataQa && `${dataQa}__copy-button`" @click="copyValue" />
       <transition name="fade1">
-        <span
-          v-if="isCopied"
-          class="input__tooltip"
-        >
+        <span v-if="isCopied" class="input__tooltip">
           {{ $t('copiedToClipboard') }}
         </span>
       </transition>
@@ -113,10 +89,9 @@
     </span>
 
     <!-- for get value width in px -->
-    <span
-      ref="currencyTextRef"
-      class="input__hidden-value"
-    >{{ valueRef || dynamicPlaceholder }}</span>
+    <span ref="currencyTextRef" class="input__hidden-value">{{
+      valueRef || dynamicPlaceholder
+    }}</span>
   </div>
 </template>
 
@@ -259,13 +234,11 @@ export default {
 
     // when focus, placeholder = ''
     const dynamicPlaceholder = computed(() =>
-      focusFlag.value ? '' : props.placeholder,
+      focusFlag.value ? '' : props.placeholder
     );
 
     const placeholderShown = computed(() => {
-      return !focusFlag.value &&
-        !!dynamicPlaceholder.value &&
-        !valueRef.value;
+      return !focusFlag.value && !!dynamicPlaceholder.value && !valueRef.value;
     });
 
     watch(valueRef, (val) => {
@@ -276,14 +249,20 @@ export default {
     });
 
     // update value from modelValue changed outside
-    watch(() => props.modelValue, (val) => {
-      valueRef.value = prepareRealValue(val);
-    });
+    watch(
+      () => props.modelValue,
+      (val) => {
+        valueRef.value = prepareRealValue(val);
+      }
+    );
 
     // update value from :value prop
-    watch(() => props.value, (val) => {
-      valueRef.value = prepareRealValue(val);
-    });
+    watch(
+      () => props.value,
+      (val) => {
+        valueRef.value = prepareRealValue(val);
+      }
+    );
 
     watch(placeholderShown, () => {
       setCurrencyOffset();
@@ -291,19 +270,21 @@ export default {
 
     const prepareRealValue = (value) => {
       if (isTypeCurrency.value) {
-        return value
-          .toString()
-          // remove spaces
-          .replace(/\s+/g, '')
-          .replace(/[БбЮю]/, '.')
-          .replace(',', '.')
-          // only number
-          .replace(/[^.\d]+/g, '')
-          // remove extra 0 before decimal
-          .replace(/^0+/, '0')
-          // remove extra dots
-          // eslint-disable-next-line no-useless-escape
-          .replace(/^([^\.]*\.)|\./g, '$1');
+        return (
+          value
+            .toString()
+            // remove spaces
+            .replace(/\s+/g, '')
+            .replace(/[БбЮю]/, '.')
+            .replace(',', '.')
+            // only number
+            .replace(/[^.\d]+/g, '')
+            // remove extra 0 before decimal
+            .replace(/^0+/, '0')
+            // remove extra dots
+            // eslint-disable-next-line no-useless-escape
+            .replace(/^([^\.]*\.)|\./g, '$1')
+        );
       }
 
       return value;
@@ -320,8 +301,11 @@ export default {
     const setCurrencyOffset = () => {
       nextTick(() => {
         textWidth.value = currencyTextRef.value.clientWidth;
-        currencyOffset.value = inputPaddingLeft.value +
-          (textWidth.value >= inputWidth.value ? inputWidth.value : textWidth.value);
+        currencyOffset.value =
+          inputPaddingLeft.value +
+          (textWidth.value >= inputWidth.value
+            ? inputWidth.value
+            : textWidth.value);
       });
     };
 
@@ -331,7 +315,8 @@ export default {
       const inputComputedStyles = window.getComputedStyle(inputRef.value);
 
       inputPaddingLeft.value = parseInt(inputComputedStyles.paddingLeft);
-      inputWidth.value = inputRef.value.clientWidth -
+      inputWidth.value =
+        inputRef.value.clientWidth -
         inputPaddingLeft.value -
         parseInt(inputComputedStyles.paddingRight);
 
@@ -424,7 +409,7 @@ export default {
     top: 12px;
     left: 15px;
     z-index: 1;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
   }
 
   &__label-info {
@@ -444,13 +429,13 @@ export default {
       padding-right: 15px;
     }
 
-    &[type="number"]::-webkit-outer-spin-button,
-    &[type="number"]::-webkit-inner-spin-button {
+    &[type='number']::-webkit-outer-spin-button,
+    &[type='number']::-webkit-inner-spin-button {
       -webkit-appearance: none;
       margin: 0;
     }
 
-    &[type="number"] {
+    &[type='number'] {
       -moz-appearance: textfield;
     }
 
@@ -533,7 +518,7 @@ export default {
     bottom: 14px;
     font-size: 14px;
     line-height: 30px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     text-transform: uppercase;
   }
 
@@ -571,7 +556,7 @@ export default {
     color: $too-dark-blue;
 
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       bottom: 98%;
       left: 50%;
@@ -590,14 +575,14 @@ export default {
     cursor: pointer;
     font-size: 14px;
     line-height: 30px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
   }
 
   &__currency {
     position: absolute;
     bottom: 16px;
     padding-left: 5px;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
     font-size: 14px;
     line-height: 17px;
     color: $dark-blue;
@@ -609,7 +594,7 @@ export default {
     opacity: 0;
     z-index: -100;
     font-size: 14px;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
     text-indent: 2px;
   }
 }
@@ -623,8 +608,8 @@ export default {
     }
   }
 }
-.empty{
-   & input {
+.empty {
+  & input {
     border-radius: 0;
     border: none;
     padding: 2px 20px 8px 31px;
@@ -636,19 +621,19 @@ export default {
       border-bottom: 1px solid $blue;
     }
   }
-  .input__icon{
+  .input__icon {
     left: 0;
     bottom: 6px;
     max-width: 20px;
     max-height: 20px;
     fill: $too-dark-blue;
-    @include md{
+    @include md {
       max-width: 16px;
       max-height: 16px;
       cursor: pointer;
     }
   }
-  .input__clear-icon{
+  .input__clear-icon {
     right: 0;
     bottom: 11px;
   }

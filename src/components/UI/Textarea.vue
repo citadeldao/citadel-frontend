@@ -13,10 +13,7 @@
       @input="inputHandler"
     />
     <keep-alive v-if="icon">
-      <component
-        :is="currentIcon"
-        class="textarea__icon"
-      />
+      <component :is="currentIcon" class="textarea__icon" />
     </keep-alive>
   </div>
 </template>
@@ -83,7 +80,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped >
+<style lang="scss" scoped>
 .textarea {
   width: 100%;
   height: 100%;
@@ -100,7 +97,7 @@ export default {
     position: absolute;
     top: 12px;
     left: 15px;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
   }
 
   & textarea {

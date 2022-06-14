@@ -16,7 +16,7 @@
           name="file-input"
           accept=".citadel"
           @change="handleFileInput"
-        >
+        />
         <div
           v-if="!isLoading && !file && !fileIncorrect"
           class="drag-input__placeholder"
@@ -25,10 +25,7 @@
           <span> {{ $t('importFile.selectBackupFile') }} </span>
         </div>
 
-        <div
-          v-else-if="isLoading"
-          class="drag-input__isLoading"
-        >
+        <div v-else-if="isLoading" class="drag-input__isLoading">
           <Loading />
           <span> {{ $t('loadingFile') }} </span>
         </div>
@@ -41,25 +38,16 @@
           <span> {{ $t('incorrectFile') }} </span>
         </div>
 
-        <div
-          v-else-if="!isLoading && file"
-          class="drag-input__file"
-        >
+        <div v-else-if="!isLoading && file" class="drag-input__file">
           <div class="drag-input__icon">
             <downloadedFile class="drag-input__file-icon" />
-            <deleteX
-              class="drag-input__delete-icon"
-              @click="removeFile"
-            />
+            <deleteX class="drag-input__delete-icon" @click="removeFile" />
           </div>
           <span>{{ file.name }}</span>
         </div>
       </div>
     </div>
-    <PrimaryButton
-      :disabled="!file"
-      @click="clickHandler"
-    >
+    <PrimaryButton :disabled="!file" @click="clickHandler">
       {{ $t('import') }}
     </PrimaryButton>
   </div>
@@ -98,7 +86,7 @@ export default {
           readFile(file);
           isLoading.value = false;
         }
-      },
+      }
     );
 
     watch(
@@ -107,7 +95,7 @@ export default {
         if (val) {
           file.value = null;
         }
-      },
+      }
     );
 
     const handleFileInput = (e) => {
@@ -136,7 +124,13 @@ export default {
         try {
           backup.value = JSON.parse(event.target.result);
 
-          if (!(backup.value?.privateWallets?.length || backup.value?.wallets?.length) && !backup.value[0].id) {
+          if (
+            !(
+              backup.value?.privateWallets?.length ||
+              backup.value?.wallets?.length
+            ) &&
+            !backup.value[0].id
+          ) {
             fileIncorrect.value = true;
           }
         } catch (error) {

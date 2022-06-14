@@ -12,7 +12,9 @@ export default function useCheckPassword(oldHash) {
   const passwordIncorrect = computed(() => {
     return sha3_256(password.value) !== hash;
   });
-  const passwordError = computed(() => passwordIncorrect.value && t('incorrectPassword'));
+  const passwordError = computed(
+    () => passwordIncorrect.value && t('incorrectPassword')
+  );
   const inputError = ref(false);
 
   watch(
@@ -21,7 +23,7 @@ export default function useCheckPassword(oldHash) {
       if (inputError.value) {
         inputError.value = false;
       }
-    },
+    }
   );
 
   return {

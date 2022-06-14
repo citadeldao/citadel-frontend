@@ -2,19 +2,12 @@
   <div class="confirm-one-seed">
     <div class="confirm-one-seed__confirms">
       <div class="item">
-        <div class="num">
-          {{ firstRandomIndexCofirmWord + 1 }}th word
-        </div>
-        <div
-          :class="{ active: !firstConfirmWord }"
-          class="field"
-        >
+        <div class="num">{{ firstRandomIndexCofirmWord + 1 }}th word</div>
+        <div :class="{ active: !firstConfirmWord }" class="field">
           <span v-if="firstConfirmWord">{{ firstConfirmWord }}</span>
-          <span
-            v-else
-            class="select-word"
-            data-qa="first-word"
-          >{{ $t('addToOneSeed.selectWord') }}</span>
+          <span v-else class="select-word" data-qa="first-word">{{
+            $t('addToOneSeed.selectWord')
+          }}</span>
           <deleteIcon
             v-if="firstConfirmWord"
             class="remove"
@@ -23,19 +16,12 @@
         </div>
       </div>
       <div class="item">
-        <div class="num">
-          {{ secondRandomIndexCofirmWord + 1 }}th word
-        </div>
-        <div
-          :class="{ active: firstConfirmWord }"
-          class="field"
-        >
+        <div class="num">{{ secondRandomIndexCofirmWord + 1 }}th word</div>
+        <div :class="{ active: firstConfirmWord }" class="field">
           <span v-if="secondConfirmWord">{{ secondConfirmWord }}</span>
-          <span
-            v-else
-            class="select-word"
-            data-qa="second-word"
-          >{{ $t('addToOneSeed.selectWord') }}</span>
+          <span v-else class="select-word" data-qa="second-word">{{
+            $t('addToOneSeed.selectWord')
+          }}</span>
           <deleteIcon
             v-if="secondConfirmWord"
             class="remove"
@@ -54,11 +40,9 @@
         {{ word.item }}
       </div>
     </div>
-    <div
-      v-if="!isMnemonicCorrect"
-      class="confirm-one-seed__error"
-    >
-      <span>{{ $t('addToOneSeed.errorConfirmWords1') }}</span> {{ $t('addToOneSeed.errorConfirmWords2') }}
+    <div v-if="!isMnemonicCorrect" class="confirm-one-seed__error">
+      <span>{{ $t('addToOneSeed.errorConfirmWords1') }}</span>
+      {{ $t('addToOneSeed.errorConfirmWords2') }}
     </div>
     <PrimaryButton
       data-qa="Confirm"
@@ -116,8 +100,12 @@ export default {
     shuffledMnemonicArray = shuffleArray(shuffledMnemonicArray);
 
     const isMnemonicCorrect = computed(() => {
-      return initialMnemonicArray.value[firstRandomIndexCofirmWord.value] === firstConfirmWord.value &&
-      initialMnemonicArray.value[secondRandomIndexCofirmWord.value] === secondConfirmWord.value;
+      return (
+        initialMnemonicArray.value[firstRandomIndexCofirmWord.value] ===
+          firstConfirmWord.value &&
+        initialMnemonicArray.value[secondRandomIndexCofirmWord.value] ===
+          secondConfirmWord.value
+      );
     });
 
     const nextStep = inject('nextStep');
@@ -166,7 +154,7 @@ export default {
     .item {
       .num {
         font-size: 14px;
-        color: #756AA8;
+        color: #756aa8;
         margin-bottom: 10px;
       }
 
@@ -177,8 +165,8 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background: #F0F3FD;
-        border: 1px solid #C3CEEB;
+        background: #f0f3fd;
+        border: 1px solid #c3ceeb;
         box-sizing: border-box;
         border-radius: 6px;
         padding: 0 10px;
@@ -186,11 +174,11 @@ export default {
         color: $black;
 
         &.active {
-          border: 1px solid #1A53F0;
+          border: 1px solid #1a53f0;
         }
 
         .select-word {
-          color: #8B9BC7;
+          color: #8b9bc7;
         }
 
         .remove {
@@ -199,7 +187,7 @@ export default {
 
           &:hover {
             cursor: pointer;
-            opacity: .7;
+            opacity: 0.7;
           }
         }
       }
@@ -219,7 +207,7 @@ export default {
     width: 100px;
     height: 40px;
     margin: 5px;
-    background: #E1E7F5;
+    background: #e1e7f5;
     border-radius: 6px;
     color: $dark-blue;
     display: flex;
@@ -229,7 +217,7 @@ export default {
 
     &:hover {
       cursor: pointer;
-      background: #6A4BFF;
+      background: #6a4bff;
       color: $white;
     }
   }
@@ -244,7 +232,7 @@ export default {
 
     span {
       font-family: Panton_SemiBold;
-      color: #FA3B33;
+      color: #fa3b33;
     }
   }
   //

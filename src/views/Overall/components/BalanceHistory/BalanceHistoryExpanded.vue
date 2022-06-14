@@ -43,9 +43,7 @@
           v-if="currentFilterTab === 'custom'"
           class="balance-history-expanded__date-picker"
         >
-          <DatePicker
-            @update:date="dateChangeHandler"
-          />
+          <DatePicker @update:date="dateChangeHandler" />
         </div>
       </div>
       <div class="balance-history-expanded__chart">
@@ -95,14 +93,26 @@ export default {
     });
 
     onMounted(() => {
-      renderBalanceHistoryChart(balanceHistory.value, currentTab.value, canvasElement);
-    });
-    watch(() => currentTab.value, (crntTab) => {
-      renderBalanceHistoryChart(balanceHistory.value, crntTab, canvasElement);
+      renderBalanceHistoryChart(
+        balanceHistory.value,
+        currentTab.value,
+        canvasElement
+      );
     });
     watch(
+      () => currentTab.value,
+      (crntTab) => {
+        renderBalanceHistoryChart(balanceHistory.value, crntTab, canvasElement);
+      }
+    );
+    watch(
       () => balanceHistory.value,
-      () => renderBalanceHistoryChart(balanceHistory.value, currentTab.value, canvasElement),
+      () =>
+        renderBalanceHistoryChart(
+          balanceHistory.value,
+          currentTab.value,
+          canvasElement
+        )
     );
 
     return {

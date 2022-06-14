@@ -10,7 +10,11 @@ const monthsColorsDefault = Array(maxTicksLimit).fill(defaultMonthColor);
 const activeMonthColor = '#B7A8FF';
 const balanceHistoryChart = {};
 
-export const renderBalanceHistoryChart = (balanceHistory, currentTab, elementId) => {
+export const renderBalanceHistoryChart = (
+  balanceHistory,
+  currentTab,
+  elementId
+) => {
   if (!balanceHistory || !balanceHistory.list) {
     return;
   }
@@ -44,13 +48,13 @@ export const renderBalanceHistoryChart = (balanceHistory, currentTab, elementId)
 
   // Манипуляции с отображением дат
   const convertInDate = (date) => {
-    const isDate = !isNaN(+(new Date(date)));
+    const isDate = !isNaN(+new Date(date));
 
     return isDate
       ? new Date(date).toLocaleDateString('en-GB', {
-        day: 'numeric',
-        month: 'short',
-      })
+          day: 'numeric',
+          month: 'short',
+        })
       : date;
   };
 
@@ -58,7 +62,7 @@ export const renderBalanceHistoryChart = (balanceHistory, currentTab, elementId)
   const labels = days.map(convertInDate);
 
   const createVisibleLabels = () => {
-    const tickGap = Math.round((days.length / maxTicksLimit)) || 1;
+    const tickGap = Math.round(days.length / maxTicksLimit) || 1;
     const visibleLabels = [];
 
     for (let i = days.length - 1; i >= 0; i = i - tickGap) {
@@ -70,9 +74,7 @@ export const renderBalanceHistoryChart = (balanceHistory, currentTab, elementId)
 
   const visibleLabels = createVisibleLabels();
   const renderDate = (index, key, value) => {
-    return visibleLabels.includes(key)
-      ? value
-      : '';
+    return visibleLabels.includes(key) ? value : '';
   };
 
   // let lastLabelIndex = null
@@ -85,13 +87,11 @@ export const renderBalanceHistoryChart = (balanceHistory, currentTab, elementId)
     const monthTicks = chart.scales.xMonths.ticks;
     const currentPointIndex = tooltip.dataPoints[0].dataIndex;
     const currentLabelIndex = monthTicks.find(
-      (tick) => tick.value === currentPointIndex,
+      (tick) => tick.value === currentPointIndex
     )?.$context.index;
 
-
     // Установка цвета для подписей
-    const monthsTicksConfig =
-      chart.config._config.options.scales.xMonths.ticks;
+    const monthsTicksConfig = chart.config._config.options.scales.xMonths.ticks;
     const updateChart = false;
 
     // Hide if no tooltip
@@ -125,17 +125,21 @@ export const renderBalanceHistoryChart = (balanceHistory, currentTab, elementId)
       const btcDiv = document.createElement('div');
       btcDiv.classList.add('chart-tooltip__balance-btc');
 
-      titleLines.forEach(title => {
+      titleLines.forEach((title) => {
         const formattedDate = title.split('-').reverse().join('.');
         tooltipDate.appendChild(document.createTextNode(formattedDate));
 
-        usdDiv.appendChild(document.createTextNode(prettyNumber(balanceHistory.list[title].usd)));
+        usdDiv.appendChild(
+          document.createTextNode(prettyNumber(balanceHistory.list[title].usd))
+        );
         const usdSign = document.createElement('span');
         usdSign.appendChild(document.createTextNode(' USD'));
         usdSign.classList.add('chart-tooltip__currency');
         usdDiv.appendChild(usdSign);
 
-        btcDiv.appendChild(document.createTextNode(prettyNumber(balanceHistory.list[title].btc)));
+        btcDiv.appendChild(
+          document.createTextNode(prettyNumber(balanceHistory.list[title].btc))
+        );
         const btcSign = document.createElement('span');
         btcSign.appendChild(document.createTextNode(' BTC'));
         btcSign.classList.add('chart-tooltip__currency');
@@ -158,7 +162,9 @@ export const renderBalanceHistoryChart = (balanceHistory, currentTab, elementId)
 
     const { offsetLeft: positionX, offsetTop: positionY } = chart.canvas;
 
-    let verticalLine = document.querySelector(`#verticalLineBalance${elementId}`);
+    let verticalLine = document.querySelector(
+      `#verticalLineBalance${elementId}`
+    );
 
     if (!verticalLine) {
       verticalLine = document.createElement('span');
@@ -168,21 +174,21 @@ export const renderBalanceHistoryChart = (balanceHistory, currentTab, elementId)
     }
 
     const { top: canvasTop } = chart.canvas.getBoundingClientRect();
-    const xAxePositionY = canvasTop + chart.chartArea.top + chart.chartArea.height;
+    const xAxePositionY =
+      canvasTop + chart.chartArea.top + chart.chartArea.height;
     const pointPositionY = tooltip.caretY + canvasTop;
     verticalLine.style.height = `${xAxePositionY - pointPositionY + 27}px`;
     verticalLine.style.bottom = `-${xAxePositionY - pointPositionY + 33}px`;
 
     // Display, position, and set styles for font
     tooltipEl.style.opacity = 1;
-    tooltipEl.style.left = `${positionX + tooltip.caretX }px`;
-    tooltipEl.style.top = `${positionY + tooltip.caretY }px`;
+    tooltipEl.style.left = `${positionX + tooltip.caretX}px`;
+    tooltipEl.style.top = `${positionY + tooltip.caretY}px`;
     tooltipEl.style.font = tooltip.options.bodyFont.string;
 
     // обновление графика и тултипа если необходимо
     updateChart && chart.update();
   };
-
 
   const data = {
     labels: Object.keys(balanceHistory.list),
@@ -191,7 +197,9 @@ export const renderBalanceHistoryChart = (balanceHistory, currentTab, elementId)
         label: '',
         backgroundColor: 'rgba(255, 87, 34, 0.2)',
         borderColor: '#FF5722',
-        data: Object.keys(balanceHistory.list).map(key => balanceHistory.list[key][currentTab?.toLowerCase()]),
+        data: Object.keys(balanceHistory.list).map(
+          (key) => balanceHistory.list[key][currentTab?.toLowerCase()]
+        ),
         fill: true,
         cubicInterpolationMode: 'monotone',
         tension: 0.4,
@@ -217,13 +225,14 @@ export const renderBalanceHistoryChart = (balanceHistory, currentTab, elementId)
           ticks: {
             autoSkip: false,
             maxRotation: 0,
-            callback: (value, index) => renderDate(index, labels[index], labels[index]?.split(' ')[1]),
+            callback: (value, index) =>
+              renderDate(index, labels[index], labels[index]?.split(' ')[1]),
             color: monthsColorsDefault,
             font: {
               lineHeight: 0.6,
               size: 14,
               weight: 'normal',
-              family: '\'Panton_Regular\'',
+              family: "'Panton_Regular'",
             },
             backdropPadding: 100,
           },
@@ -237,7 +246,8 @@ export const renderBalanceHistoryChart = (balanceHistory, currentTab, elementId)
             padding: 0,
             maxRotation: 0,
             autoSkip: false,
-            callback: (value, index) => renderDate(index, labels[index], labels[index]?.split(' ')[0]),
+            callback: (value, index) =>
+              renderDate(index, labels[index], labels[index]?.split(' ')[0]),
             color: daysColorsDefault,
             font: {
               lineHeight: 0.7,
@@ -255,7 +265,7 @@ export const renderBalanceHistoryChart = (balanceHistory, currentTab, elementId)
             tickLength: 0,
           },
           ticks: {
-            callback: function(index) {
+            callback: function (index) {
               return BigNumber(index).toNumber();
             },
             color: '#AFBCCB',
@@ -296,6 +306,6 @@ export const renderBalanceHistoryChart = (balanceHistory, currentTab, elementId)
   };
   balanceHistoryChart[elementId] = new Chart(
     document.querySelector(`#${elementId}`),
-    config,
+    config
   );
 };

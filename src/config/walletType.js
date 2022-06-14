@@ -10,7 +10,8 @@ export const WALLET_TYPES = {
   KEPLR: 'keplr',
 };
 
-export const isHardwareWallet = (type) => [WALLET_TYPES.LEDGER, WALLET_TYPES.TREZOR].includes(type);
+export const isHardwareWallet = (type) =>
+  [WALLET_TYPES.LEDGER, WALLET_TYPES.TREZOR].includes(type);
 
 export const types = {
   oneSeed: {

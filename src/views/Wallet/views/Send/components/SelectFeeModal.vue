@@ -10,11 +10,7 @@
     @button-click="handleClickConfirm"
   >
     <div class="fee-modal-content">
-      <div
-        v-for="(fee, type) in fees"
-        :key="type"
-        class="fee-radio"
-      >
+      <div v-for="(fee, type) in fees" :key="type" class="fee-radio">
         <input
           :id="type"
           v-model="selectedFeeType"
@@ -22,7 +18,7 @@
           name="fee"
           :value="type"
           @change="changeHandler"
-        >
+        />
         <label :for="type">
           <span>
             <span class="fee-radio__type">
@@ -44,20 +40,15 @@
           type="radio"
           name="fee"
           value="custom"
-        >
+        />
         <label for="custom">
-          <span class="fee-radio__type">
-            Custom
-          </span>
+          <span class="fee-radio__type"> Custom </span>
           <checkmark class="fee-radio__checkmark" />
         </label>
       </div>
 
       <transition name="slide-from-top">
-        <div
-          v-if="selectedFeeType === 'custom'"
-          class="select-fee-input"
-        >
+        <div v-if="selectedFeeType === 'custom'" class="select-fee-input">
           <Input
             id="amount"
             v-model="selectedCustomFee"
@@ -138,19 +129,26 @@ export default {
 
     const isCustomSelected = computed(() => selectedFeeType.value === 'custom');
 
-    const selectedFeeAmount = computed(() => isCustomSelected.value
-      ? selectedCustomFee.value
-      : props.fees[selectedFeeType.value].fee);
+    const selectedFeeAmount = computed(() =>
+      isCustomSelected.value
+        ? selectedCustomFee.value
+        : props.fees[selectedFeeType.value].fee
+    );
 
-    const invalidCustomFee = computed(() => isCustomSelected.value &&
+    const invalidCustomFee = computed(
+      () =>
+        isCustomSelected.value &&
         selectedCustomFee.value <= 0 &&
-        selectedCustomFee.value === '');
+        selectedCustomFee.value === ''
+    );
 
     const invalidCustomFeeText = ref('');
-    const inputHandler = ()=> {
-      invalidCustomFeeText.value = invalidCustomFee.value ? t('sendModal.fee.invalidAmount') : false;
+    const inputHandler = () => {
+      invalidCustomFeeText.value = invalidCustomFee.value
+        ? t('sendModal.fee.invalidAmount')
+        : false;
     };
-    const changeHandler = ()=> {
+    const changeHandler = () => {
       invalidCustomFeeText.value = '';
       selectedCustomFee.value = '';
     };
@@ -187,9 +185,7 @@ export default {
 
       emit('confirm', {
         type: selectedFeeType.value,
-        custom: isCustomSelected.value
-          ? selectedCustomFee.value
-          : 0,
+        custom: isCustomSelected.value ? selectedCustomFee.value : 0,
       });
     };
 
@@ -233,17 +229,17 @@ export default {
   &__type {
     display: inline-block;
     width: 100px;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
     text-transform: capitalize;
     color: $mid-blue;
   }
 
   &__amount {
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
     color: $slategray;
   }
 
-  & > input[type="radio"] {
+  & > input[type='radio'] {
     position: absolute;
     top: 0;
     left: 0;
@@ -283,7 +279,7 @@ export default {
 .slide-from-top-leave-active {
   transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
 }
-.select-fee-input{
+.select-fee-input {
   height: 68px;
 }
 </style>

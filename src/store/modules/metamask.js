@@ -7,11 +7,10 @@ export default {
   }),
 
   getters: {
-    metamaskConnector: state => state.metamaskConnector,
+    metamaskConnector: (state) => state.metamaskConnector,
   },
 
-  mutations: {
-  },
+  mutations: {},
 
   actions: {
     async connectToMetamask({ state }) {

@@ -1,7 +1,6 @@
 import citadel from '@citadeldao/lib-citadel';
 import notify from '@/plugins/notify';
 
-
 const types = {
   SET_STAKE_NODES: 'SET_STAKE_NODES',
   SET_STAKE_LIST: 'SET_STAKE_LIST',
@@ -15,8 +14,8 @@ export default {
   }),
 
   getters: {
-    stakeNodes: state => state.stakeNodes,
-    stakeList: state => state.stakeList,
+    stakeNodes: (state) => state.stakeNodes,
+    stakeList: (state) => state.stakeList,
   },
 
   mutations: {
@@ -48,8 +47,11 @@ export default {
       if (!error) {
         const currentWallet = rootGetters['wallets/currentWallet'];
 
-        if (currentWallet?.net?.toLowerCase() === wallet?.net?.toLowerCase() &&
-        currentWallet?.address?.toLowerCase() === wallet?.address?.toLowerCase()) {
+        if (
+          currentWallet?.net?.toLowerCase() === wallet?.net?.toLowerCase() &&
+          currentWallet?.address?.toLowerCase() ===
+            wallet?.address?.toLowerCase()
+        ) {
           commit(types.SET_STAKE_LIST, data);
         }
       } else {
@@ -64,11 +66,13 @@ export default {
     async updateStakeList({ dispatch, rootGetters }, { address, net }) {
       const currentWallet = rootGetters['wallets/currentWallet'];
       const currentToken = rootGetters['subtokens/currentToken'];
-      const isCurrentWallet = address.toLowerCase() === currentWallet?.address?.toLowerCase() &&
-      net.toLowerCase() === currentWallet?.net?.toLowerCase();
+      const isCurrentWallet =
+        address.toLowerCase() === currentWallet?.address?.toLowerCase() &&
+        net.toLowerCase() === currentWallet?.net?.toLowerCase();
       // for token, if it has stakeList
-      const isCurrentToken = address.toLowerCase() === currentToken?.address?.toLowerCase() &&
-      net.toLowerCase() === currentToken?.net?.toLowerCase();
+      const isCurrentToken =
+        address.toLowerCase() === currentToken?.address?.toLowerCase() &&
+        net.toLowerCase() === currentToken?.net?.toLowerCase();
 
       if (isCurrentWallet) {
         await dispatch('getStakeList', currentWallet);

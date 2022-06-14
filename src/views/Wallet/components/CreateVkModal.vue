@@ -11,10 +11,7 @@
       @close="closeHandler"
       @buttonClick="confirmClickHandler"
     >
-      <div
-        v-if="isConfirmModalLoading"
-        class="loader"
-      >
+      <div v-if="isConfirmModalLoading" class="loader">
         <Loading />
       </div>
       <div class="fields">
@@ -22,7 +19,7 @@
           <div class="fieldName">
             {{ $t('sendFrom') }}
           </div>
-          <div> {{ address }}</div>
+          <div>{{ address }}</div>
         </div>
         <div class="field">
           <div class="fieldName">
@@ -77,10 +74,7 @@
       @close="closeHandler"
       @buttonClick="confirmImportHandler"
     >
-      <div
-        v-if="isConfirmModalLoading"
-        class="loader"
-      >
+      <div v-if="isConfirmModalLoading" class="loader">
         <Loading />
       </div>
       <div class="vk-input">
@@ -98,7 +92,7 @@
       <div
         v-if="!isHardwareWallet(currentWallet.type)"
         class="createVkPassword"
-        :class="{'mt-40': ivkInputError}"
+        :class="{ 'mt-40': ivkInputError }"
       >
         <Input
           id="createVkPassword"
@@ -291,7 +285,11 @@ export default {
         return;
       }
 
-      const { error } = await citadel.importViewingKey(props.currentWallet.id, props.token.net, ivk.value);
+      const { error } = await citadel.importViewingKey(
+        props.currentWallet.id,
+        props.token.net,
+        ivk.value
+      );
 
       if (error) {
         txError.value = error;
@@ -338,14 +336,23 @@ export default {
         return;
       }
 
-      let error; let transactionHash; let vk;
+      let error;
+      let transactionHash;
+      let vk;
       isConfirmModalLoading.value = true;
 
       if (!isHardwareWallet(props.currentWallet.type)) {
-        const res = await citadel.setViewingKey(props.currentWallet.id, props.token.net, props.vkType, {
-          privateKey: await props.currentWallet.getPrivateKeyDecoded(password.value),
-          fee: props.tokenFee,
-        });
+        const res = await citadel.setViewingKey(
+          props.currentWallet.id,
+          props.token.net,
+          props.vkType,
+          {
+            privateKey: await props.currentWallet.getPrivateKeyDecoded(
+              password.value
+            ),
+            fee: props.tokenFee,
+          }
+        );
 
         // eslint-disable-next-line prefer-destructuring
         error = res.error;
@@ -360,10 +367,15 @@ export default {
         let res;
 
         try {
-          res = await citadel.setViewingKey(props.currentWallet.id, props.token.net, props.vkType, {
-            derivationPath: props.currentWallet.derivationPath,
-            fee: props.tokenFee,
-          });
+          res = await citadel.setViewingKey(
+            props.currentWallet.id,
+            props.token.net,
+            props.vkType,
+            {
+              derivationPath: props.currentWallet.derivationPath,
+              fee: props.tokenFee,
+            }
+          );
         } catch (e) {
           ledgerErrorHandler(e);
         }
@@ -395,7 +407,7 @@ export default {
       () => ivk.value,
       () => {
         ivkInputError.value = '';
-      },
+      }
     );
 
     return {

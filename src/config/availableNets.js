@@ -39,7 +39,6 @@ export const ledgerNets = [
 
 export const trezorNets = ['btc', 'eth', 'bsc', 'tez'];
 
-
 export const keplrNetworksProtobufFormat = ['starname', 'kichain', 'emoney'];
 export const keplrNetworks = [
   { label: 'Cosmos Hub: cosmoshub-4', key: 'cosmoshub-4', net: 'cosmos' },
@@ -68,10 +67,22 @@ export const keplrNetworks = [
   { label: 'Umee: umee-1', key: 'umee-1', net: 'umee' },
   { label: 'Regen: regen-1', key: 'regen-1', net: 'regen' },
   { label: 'Iris Network: irishub-1', key: 'irishub-1', net: 'iris' },
-  { label: 'Starname: iov-mainnet-ibc', key: 'iov-mainnet-ibc', net: 'starname' },
-  { label: 'Cerberus: cerberus-chain-1', key: 'cerberus-chain-1', net: 'cerberus' },
+  {
+    label: 'Starname: iov-mainnet-ibc',
+    key: 'iov-mainnet-ibc',
+    net: 'starname',
+  },
+  {
+    label: 'Cerberus: cerberus-chain-1',
+    key: 'cerberus-chain-1',
+    net: 'cerberus',
+  },
   { label: 'Konstellation: darchub', key: 'darchub', net: 'konstellation' },
-  { label: 'Gravity Bridge: gravity-bridge-3', key: 'gravity-bridge-3', net: 'gbridge' },
+  {
+    label: 'Gravity Bridge: gravity-bridge-3',
+    key: 'gravity-bridge-3',
+    net: 'gbridge',
+  },
   { label: 'AssetMantle: mantle-1', key: 'mantle-1', net: 'mantle' },
   { label: 'Crescent: crescent-1', key: 'crescent-1', net: 'crescent' },
 ];

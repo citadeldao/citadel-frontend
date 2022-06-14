@@ -1,4 +1,3 @@
-
 <script>
 import useWallets from '@/compositions/useWallets';
 import redirectToWallet from '@/router/helpers/redirectToWallet';

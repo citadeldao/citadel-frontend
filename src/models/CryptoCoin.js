@@ -63,7 +63,11 @@ export default class CryptoCoin {
   }
 
   getPrivateKeyDecoded(password) {
-    const { error, data } = citadel.decodePrivateKeyByPassword(this.net, this.mnemonicEncoded || this.privateKeyEncoded, password);
+    const { error, data } = citadel.decodePrivateKeyByPassword(
+      this.net,
+      this.mnemonicEncoded || this.privateKeyEncoded,
+      password
+    );
 
     if (!error) {
       return data;
@@ -81,9 +85,7 @@ export default class CryptoCoin {
     const tailsLength = Math.floor((maxLength - 3) / 2);
 
     return address.length > maxLength
-      ? `${address.slice(0, tailsLength)}...${address.slice(
-        -tailsLength,
-      )}`
+      ? `${address.slice(0, tailsLength)}...${address.slice(-tailsLength)}`
       : address;
   }
 
@@ -94,7 +96,11 @@ export default class CryptoCoin {
   }
 
   async signAndSendMulti({ walletId, rawTransactions, ...options }) {
-    const { data, error } = await citadel.signAndSend(walletId, rawTransactions, options);
+    const { data, error } = await citadel.signAndSend(
+      walletId,
+      rawTransactions,
+      options
+    );
 
     if (!error) {
       return { ok: true, data: Array.isArray(data) ? data : [data] };
@@ -141,7 +147,11 @@ export default class CryptoCoin {
   }
 
   async getBuildBridgeTransaction({ walletId, token, ...options }) {
-    const res = await citadel.prepareCrossNetworkTransfer(walletId, token, options);
+    const res = await citadel.prepareCrossNetworkTransfer(
+      walletId,
+      token,
+      options
+    );
 
     if (!res.error) {
       return { data: res.data, error: res.error, ok: true };
@@ -196,7 +206,6 @@ export default class CryptoCoin {
     return { ok: false };
   }
 
-
   static async getBalance({ walletId, net, address, token }) {
     let res;
 
@@ -218,7 +227,10 @@ export default class CryptoCoin {
       await store.dispatch('subtokens/setCurrentToken', null);
       router.push({
         name: router.currentRoute.value.name,
-        params: { net: router.currentRoute.value.params.net, address: router.currentRoute.value.params.address },
+        params: {
+          net: router.currentRoute.value.params.net,
+          address: router.currentRoute.value.params.address,
+        },
       });
     }
 
@@ -341,7 +353,11 @@ export default class CryptoCoin {
   }
 
   async sendAssignToDaoMessage(holderAddress, messageId, messageSignature) {
-    const { error } = await citadel.sendAssignToDaoMessage(holderAddress, messageId, messageSignature);
+    const { error } = await citadel.sendAssignToDaoMessage(
+      holderAddress,
+      messageId,
+      messageSignature
+    );
 
     if (error) {
       notify({
@@ -354,11 +370,16 @@ export default class CryptoCoin {
   }
 
   getFormattedPublicKey() {
-    return typeof this.publicKey === 'string' ? this.publicKey : Buffer.from(this.publicKey).toString('hex');
+    return typeof this.publicKey === 'string'
+      ? this.publicKey
+      : Buffer.from(this.publicKey).toString('hex');
   }
 
   async getTxDuration({ type, fee }) {
-    const { data, error } = await citadel.getTransactionDuration(this.net, { type, fee });
+    const { data, error } = await citadel.getTransactionDuration(this.net, {
+      type,
+      fee,
+    });
 
     if (error) {
       console.error(error);
@@ -366,7 +387,6 @@ export default class CryptoCoin {
 
     return { data, error };
   }
-
 
   static getDerivationPath(net, index, type = 'seed') {
     const res = citadel.getDerivationPathByIndex(net, type, index);
@@ -398,7 +418,6 @@ export default class CryptoCoin {
     return [];
   }
 
-
   async preparePledgeUnpledge({ walletId, type, amount }) {
     const res = await citadel.prepareGasPledgeUnpledge(walletId, type, amount);
 
@@ -420,18 +439,20 @@ export default class CryptoCoin {
 
   static decodeMnemonic(encodeMnemonic, password) {
     return CryptoJS.AES.decrypt(encodeMnemonic, password).toString(
-      CryptoJS.enc.Utf8,
+      CryptoJS.enc.Utf8
     );
   }
-
 
   static validateMnemonic(mnemonic) {
     return bip39.validateMnemonic(mnemonic);
   }
 
-
   static encodePrivateKeyByPassword(net, privateKey, password) {
-    const { data, error } = citadel.encodePrivateKeyByPassword(net, privateKey, password);
+    const { data, error } = citadel.encodePrivateKeyByPassword(
+      net,
+      privateKey,
+      password
+    );
 
     if (!error) {
       return data;
@@ -446,7 +467,7 @@ export default class CryptoCoin {
   }
 
   // Keplr wallet factory
-  static async createWalletByKeplr( addOpts) {
+  static async createWalletByKeplr(addOpts) {
     return new this(addOpts);
   }
 }

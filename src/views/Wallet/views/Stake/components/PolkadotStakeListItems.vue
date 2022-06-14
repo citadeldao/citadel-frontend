@@ -10,7 +10,8 @@
           {{ item.name }} {{ item.address }}
         </div>
         <div class="stake-list-items__item-info">
-          {{ $t('fee') }}: <span class="stake-list-items__red">{{ item.fee }}</span>
+          {{ $t('fee') }}:
+          <span class="stake-list-items__red">{{ item.fee }}</span>
         </div>
       </div>
     </div>
@@ -57,9 +58,9 @@ export default {
   border: 1px solid $too-ligth-blue;
   padding: 13px 17px;
   border-radius: 8px;
-  &__wrapper{
-     max-height: 148px;
-     overflow-y: auto;
+  &__wrapper {
+    max-height: 148px;
+    overflow-y: auto;
   }
 
   &__item {
@@ -91,7 +92,7 @@ export default {
   }
 }
 .staking-amount {
-  &__section-wrapper{
+  &__section-wrapper {
     display: flex;
     align-items: center;
   }
@@ -110,7 +111,7 @@ export default {
   &__code {
     font-weight: 400;
   }
-  &__button{
+  &__button {
     margin-left: 16px;
   }
 }

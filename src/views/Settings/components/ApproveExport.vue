@@ -50,7 +50,7 @@ export default {
       () => password.value,
       (newVal) => {
         updatePassword(newVal);
-      },
+      }
     );
 
     return { password, inputError, address };

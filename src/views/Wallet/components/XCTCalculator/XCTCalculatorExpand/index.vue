@@ -1,26 +1,16 @@
 <template>
-  <img
-    v-if="isLoading"
-    src="@/assets/gif/loader.gif"
-    alt=""
-  >
-  <div
-    v-else
-    class="xct-calculator-expand"
-  >
-    <div
-      class="xct-calculator-expand__close-icon"
-      @click="closeHandler"
-    >
+  <img v-if="isLoading" src="@/assets/gif/loader.gif" alt="" />
+  <div v-else class="xct-calculator-expand">
+    <div class="xct-calculator-expand__close-icon" @click="closeHandler">
       <closeIcon />
       <closeIconHover id="hover" />
     </div>
     <div class="xct-calculator-expand__header">
       <span class="xct-calculator-expand__header-title">
-        {{ $t("calculator.expandTitle") }}
+        {{ $t('calculator.expandTitle') }}
       </span>
       <span class="xct-calculator-expand__header-subtitle">
-        {{ $t("calculator.expandSubtitle") }}
+        {{ $t('calculator.expandSubtitle') }}
       </span>
     </div>
     <div class="xct-calculator-expand__controls">
@@ -48,9 +38,7 @@
           v-pretty-number="{ value: total, currency: 'XCT' }"
           class="xct-calculator-expand__total-value"
         />
-        <span class="xct-calculator-expand__total-currency">
-          XCT
-        </span>
+        <span class="xct-calculator-expand__total-currency"> XCT </span>
       </div>
     </div>
   </div>
@@ -85,9 +73,9 @@ export default {
     const store = useStore();
     const { width } = useWindowSize();
     const tabs = computed(() =>
-      width.value < screenWidths.lg ? tabsListWithDaysMd : tabsListWithDays,
+      width.value < screenWidths.lg ? tabsListWithDaysMd : tabsListWithDays
     );
-    onMounted(async ()=>{
+    onMounted(async () => {
       for (const key in totalData) {
         delete totalData[key];
       }
@@ -96,28 +84,41 @@ export default {
     });
     const loadData = async () => {
       isLoading.value = true;
-      await store.dispatch('dao/getCalculatorData', { walletId: props.currentToken.id });
+      await store.dispatch('dao/getCalculatorData', {
+        walletId: props.currentToken.id,
+      });
       isLoading.value = false;
     };
 
     const networks = computed(() => store.getters['networks/networksList']);
-    const data = computed(() => Object.keys(store.getters['dao/calculatorData']).map(i => {
-      const info = i === OUR_TOKEN
-        ? { name: 'XCT', net: OUR_TOKEN, code: 'XCT', icon: 'citadel' }
-        : { ...networks.value.find((network) => network.net === i), icon: i };
+    const data = computed(() =>
+      Object.keys(store.getters['dao/calculatorData']).map((i) => {
+        const info =
+          i === OUR_TOKEN
+            ? { name: 'XCT', net: OUR_TOKEN, code: 'XCT', icon: 'citadel' }
+            : {
+                ...networks.value.find((network) => network.net === i),
+                icon: i,
+              };
 
-      return {
-        ...info,
-        ...store.getters['dao/calculatorData'][i],
-      };
-    }) );
+        return {
+          ...info,
+          ...store.getters['dao/calculatorData'][i],
+        };
+      })
+    );
 
     const totalData = reactive({});
-    const changeHandler = ({ value, net })=> {
+    const changeHandler = ({ value, net }) => {
       totalData[net] = value;
     };
-    const total = computed(()=> Object.values(totalData).reduce((accum, item)=> BigNumber(accum).plus(item).toNumber(), 0));
-    const closeHandler = ()=> {
+    const total = computed(() =>
+      Object.values(totalData).reduce(
+        (accum, item) => BigNumber(accum).plus(item).toNumber(),
+        0
+      )
+    );
+    const closeHandler = () => {
       emit('close');
 
       for (const key in totalData) {
@@ -190,7 +191,7 @@ export default {
   &__header-title {
     font-size: 20px;
     line-height: 30px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     @include md {
       margin-bottom: 4px;
       font-size: 16px;
@@ -219,17 +220,17 @@ export default {
       margin-right: 13px;
     }
   }
-  &__list{
+  &__list {
     overflow-x: hidden;
     overflow-y: auto;
     padding: 0 31px 0 45px;
     margin: 0 10px 31px 0;
     @include md {
-       padding: 0 10px 0 24px;
-       margin-bottom: 16px;
+      padding: 0 10px 0 24px;
+      margin-bottom: 16px;
     }
   }
-  &__total{
+  &__total {
     padding-top: 22px;
     border-top: 1px solid $lightsteelblue;
     display: flex;
@@ -241,32 +242,32 @@ export default {
       margin: 0 24px 0 24px;
     }
   }
-  &__total-title{
+  &__total-title {
     font-size: 18px;
     line-height: 22px;
-    font-family: "Panton_Bold";
-    @include md{
+    font-family: 'Panton_Bold';
+    @include md {
       font-size: 16px;
       line-height: 19px;
     }
   }
-  &__total-amount{
+  &__total-amount {
     display: flex;
     align-items: center;
   }
   &__total-value,
-  &__total-currency{
+  &__total-currency {
     font-size: 18px;
     line-height: 22px;
     color: $mid-gray;
-    @include md{
+    @include md {
       font-size: 16px;
       line-height: 19px;
     }
   }
-  &__total-value{
+  &__total-value {
     margin-right: 3px;
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
     color: $dark-blue;
   }
 }

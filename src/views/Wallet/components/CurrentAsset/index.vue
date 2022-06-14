@@ -8,7 +8,7 @@
     <img
       :src="require('@/assets/images/waves/red.png')"
       class="current-asset__wave"
-    >
+    />
 
     <AssetIcon
       :name="currentWallet.name"
@@ -43,10 +43,7 @@
       </Modal>
     </teleport>
 
-    <teleport
-      v-if="showCreateVkModal"
-      to="body"
-    >
+    <teleport v-if="showCreateVkModal" to="body">
       <CreateVkModal
         :address="currentWallet.address"
         :token="snip20Token"
@@ -96,7 +93,9 @@ export default {
     const { currentWallet: wallet } = useWallets();
 
     const isNotLinkedSnip20 = (token) => {
-      const isSnip20 = computed(() => token.config.standard === TOKEN_STANDARDS.SNIP_20);
+      const isSnip20 = computed(
+        () => token.config.standard === TOKEN_STANDARDS.SNIP_20
+      );
 
       return isSnip20.value && !token.linked;
     };
@@ -117,7 +116,8 @@ export default {
     const goToAsset = async (asset) => {
       if (isNotLinkedSnip20(asset)) {
         mainIsLoading.value = true;
-        snip20TokenFee.value = (await asset.getFees(asset.id, asset.net))?.data?.low?.fee || 0.2;
+        snip20TokenFee.value =
+          (await asset.getFees(asset.id, asset.net))?.data?.low?.fee || 0.2;
         mainIsLoading.value = false;
         showCreateVkModal.value = true;
         snip20Token.value = asset;
@@ -159,10 +159,10 @@ export default {
   border-radius: 8px;
   overflow: hidden;
   background: linear-gradient(
-      90deg,
-      rgba(250, 208, 196, 0.4) 0%,
-      rgba(250, 208, 196, 0.4) 1%,
-      rgba(255, 209, 255, 0.4) 100%
+    90deg,
+    rgba(250, 208, 196, 0.4) 0%,
+    rgba(250, 208, 196, 0.4) 1%,
+    rgba(255, 209, 255, 0.4) 100%
   );
   cursor: pointer;
   transition: initial;
@@ -173,10 +173,10 @@ export default {
 
   &:hover {
     background: linear-gradient(
-        90deg,
-        rgba(#FAD0C4, 0.6) 0%,
-        rgba(#FAD0C4, 0.6) 1%,
-        rgba(#FFD1FF, 0.6) 100%
+      90deg,
+      rgba(#fad0c4, 0.6) 0%,
+      rgba(#fad0c4, 0.6) 1%,
+      rgba(#ffd1ff, 0.6) 100%
     );
 
     .current-asset__wave {
@@ -187,7 +187,6 @@ export default {
   &:last-child {
     margin-right: 0;
   }
-
 
   &:before {
     content: '';
@@ -230,7 +229,12 @@ export default {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: linear-gradient(90deg, #FF9A9E7F 0%, #FAD0C47F 99%, #FAD0C47F 100%);
+    background: linear-gradient(
+      90deg,
+      #ff9a9e7f 0%,
+      #fad0c47f 99%,
+      #fad0c47f 100%
+    );
 
     &:before {
       content: '⭢';
@@ -238,7 +242,7 @@ export default {
       top: 1px;
       left: 14px;
       font-size: 24px;
-      font-family: "Panton_Bold";
+      font-family: 'Panton_Bold';
       color: $dark-blue;
     }
   }
@@ -283,7 +287,7 @@ export default {
     display: flex;
     font-size: 22px;
     line-height: 1.1;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
 
     @include lg {
       font-size: 17px;

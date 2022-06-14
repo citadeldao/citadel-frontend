@@ -1,13 +1,7 @@
 <template>
   <div class="sync-data">
-    <SyncToFromExtension
-      v-if="syncModal"
-      @close="syncModal = false"
-    />
-    <PrimaryButton
-      class="sync-data__btn"
-      @click="openSync"
-    >
+    <SyncToFromExtension v-if="syncModal" @close="syncModal = false" />
+    <PrimaryButton class="sync-data__btn" @click="openSync">
       {{ $t('syncExtensions.syncWithExtension') }}
     </PrimaryButton>
   </div>
@@ -49,14 +43,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .sync-data {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.sync-data {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    &__btn {
-      width: 90%;
-      margin-top: 100px;
-    }
+  &__btn {
+    width: 90%;
+    margin-top: 100px;
   }
+}
 </style>
