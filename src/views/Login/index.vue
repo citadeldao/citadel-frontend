@@ -44,14 +44,18 @@
             @sendVerificationCode="sendVerificationCode"
           />
         </template>
-        <!--        <div class="login__question inactive">-->
-        <!--          <div class="login__question-info">-->
-        <!--            <conversation />-->
-        <!--            <span>{{ $t("login.questionText1") }} <b>{{ $t("Citadel.one") }}</b>-->
-        <!--            {{ $t("login.questionText2") }}</span>-->
-        <!--          </div>-->
-        <!--          <RoundArrowButton />-->
-        <!--        </div>-->
+        <div
+          v-if="currentStep === 1 && !showSyncBlock"
+          class="login__question"
+          @click="showEmailModal = true"
+        >
+          <div class="login__question-info">
+            <conversation />
+            <span>{{ $t("login.questionText1") }} <b>{{ $t("Citadel.one") }}</b>
+              {{ $t("login.questionText2") }}</span>
+          </div>
+          <RoundArrowButton />
+        </div>
       </div>
       <WhyCitadel
         v-if="showEmailModal"
@@ -81,13 +85,15 @@ import WhyCitadel from './components/WhyCitadel';
 import redirectToWallet from '@/router/helpers/redirectToWallet';
 import { parseHash, findAddressWithNet } from '@/helpers';
 import { WALLET_TYPES } from '@/config/walletType';
+import RoundArrowButton from '@/components/UI/RoundArrowButton';
+import conversation from '@/assets/icons/conversation.svg';
 
 export default {
   name: 'Login',
   components: {
     citadelLogo,
-    // RoundArrowButton,
-    // conversation,
+    RoundArrowButton,
+    conversation,
     LoginForm,
     Verification,
     Modal,
@@ -186,6 +192,7 @@ export default {
 
           return;
         }
+
         const { error } = await store.dispatch('profile/getInfo');
 
         if (!error) {
@@ -226,19 +233,21 @@ export default {
       isLoading.value = true;
 
       const { error } = await store.dispatch('profile/getInfo');
+
       if (!error) {
         await store.dispatch('networks/loadConfig');
         initPersistedstate(store);
         SocketManager.connect();
         await store.dispatch('app/setWallets');
-        await store.dispatch('wallets/getNewWallets','lazy');
-        store.dispatch('wallets/getNewWallets','detail');
+        await store.dispatch('wallets/getNewWallets', 'lazy');
+        store.dispatch('wallets/getNewWallets', 'detail');
         store.dispatch('wallets/getCustomWalletsList');
         store.dispatch('rewards/getRewards');
         await store.dispatch('transactions/getMempool');
         const { wallets } = useWallets();
 
         const hashWallet = findAddressWithNet(wallets.value, { address: hashInfo.value.address, net: hashInfo.value.net });
+
         if (hashWallet && hashWallet.type !== WALLET_TYPES.PUBLIC_KEY) {
           router.push({
             name: wallets?.value[0].hasStake ? 'WalletStake' : 'Wallet',
@@ -251,6 +260,7 @@ export default {
           localStorage.setItem('openSync', true);
           router.push({ name: 'Settings' });
         }
+
         isLoading.value = false;
         showSyncBlock.value = false;
       } else {
