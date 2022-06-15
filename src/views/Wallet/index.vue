@@ -54,7 +54,7 @@
           class="wallet__claim-rewards-lg"
         >
           <ClaimRewards
-            :disabled="true"
+            :disabled="currentWallet.isStub"
             :is-current-token="!!currentToken"
             :current-wallet="currentToken || currentWallet"
           />
