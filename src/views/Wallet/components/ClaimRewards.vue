@@ -83,6 +83,9 @@ export default {
   name: 'ClaimRewards',
   components: { hotSale, RoundArrowButton, claimBlockLock, Modal, InfoModal },
   props: {
+    disabled: {
+      type: Boolean,
+    },
     currentWallet: {
       type: Object,
       required: true,
@@ -147,13 +150,15 @@ export default {
     };
 
     const handleButtonClick = () => {
-      if (currentWalletInfo.value?.claimableRewards) {
-        props.isCurrentToken ? emit('prepareXctClaim') : emit('prepareClaim');
-      } else {
-        router.push({
-          name: 'WalletStake',
-          params: { ...route.params },
-        });
+      if (!props.disabled) {
+        if (currentWalletInfo.value?.claimableRewards) {
+          props.isCurrentToken ? emit('prepareXctClaim') : emit('prepareClaim');
+        } else {
+          router.push({
+            name: 'WalletStake',
+            params: { ...route.params },
+          });
+        }
       }
     };
 

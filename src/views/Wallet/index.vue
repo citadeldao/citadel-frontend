@@ -54,10 +54,9 @@
           class="wallet__claim-rewards-lg"
         >
           <ClaimRewards
+            :disabled="true"
             :is-current-token="!!currentToken"
             :current-wallet="currentToken || currentWallet"
-            @prepareClaim="prepareClaim"
-            @prepareXctClaim="prepareXctClaim"
           />
         </div>
       </transition>
