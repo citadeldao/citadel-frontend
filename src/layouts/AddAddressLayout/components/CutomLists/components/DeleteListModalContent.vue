@@ -8,6 +8,7 @@
       {{ $t('customLists.deleteListModalTitle') }}
     </h4>
     <PrimaryButton
+      data-qa="Yes"
       color="#FFFFFF"
       bg-color="#FA3B33"
       box-shadow="0px 0px 25px rgba(219, 71, 60, 0.3)"

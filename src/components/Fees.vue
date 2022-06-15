@@ -12,10 +12,11 @@
         class="fees__amount"
       />
       &nbsp;
-      <span class="fees__currency">{{
+      <span :class="{ hideCustomFee }" class="fees__currency">{{
         currentToken ? currentToken.parentCoin.code : wallet?.code
       }}</span>
       <IconButton
+        v-if="!hideCustomFee"
         icon="arrow-rigth"
         data-qa="fee-button"
         @click="$emit('select-fee')"
@@ -32,6 +33,10 @@ export default {
   name: 'Fees',
   components: { IconButton },
   props: {
+    hideCustomFee: {
+      type: Boolean,
+      default: false,
+    },
     fees: {
       type: Object,
       default: () => {},
@@ -89,6 +94,10 @@ export default {
 
   &__currency {
     padding-right: 10px;
+
+    &.hideCustomFee {
+      padding-right: 0;
+    }
   }
 }
 </style>

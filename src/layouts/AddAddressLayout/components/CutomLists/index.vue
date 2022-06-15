@@ -44,7 +44,7 @@
           <div
             v-if="mode === 'edit'"
             class="create-list__delete"
-            data-qa="create-list__delete-button"
+            data-qa="Delete-list"
             @click="toDeleteList"
           >
             <removeIcon />

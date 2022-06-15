@@ -1,4 +1,5 @@
 import CryptoCoin from '@/models/CryptoCoin';
+
 export default class CryptoCoinPOLKADOT extends CryptoCoin {
   constructor(opts) {
     super(opts);
@@ -14,5 +15,6 @@ export default class CryptoCoinPOLKADOT extends CryptoCoin {
     this.minStakingAmount = 10;
     this.hasRedelegation = true;
   }
+
   static hasNoAdvancedSettings = true;
 }
