@@ -32,6 +32,9 @@ export default {
   @include lg {
     font-size: 12px;
   }
+  @include md {
+    font-size: 10px !important;
+  }
 }
 h2 {
   margin: 33px auto 11px auto;
