@@ -34,7 +34,7 @@ import CryptoCoinTEZ from './CryptoCoins/CryptoCoinTEZ';
 import CryptoCoinAKASH from './CryptoCoins/CryptoCoinAKASH';
 import CryptoCoinKAVA from './CryptoCoins/CryptoCoinKAVA';
 import CryptoCoinBSC from './CryptoCoins/CryptoCoinBSC';
-import CryptoCoinPOLKADOT from './CryptoCoins/CryptoCoinPolkadot';
+import CryptoCoinPOLKADOT from './CryptoCoins/CryptoCoinPOLKADOT';
 import CryptoCoinEVMOS from './CryptoCoins/CryptoCoinEVMOS';
 import CryptoCoinCRESCENT from './CryptoCoins/CryptoCoinCRESCENT';
 
@@ -80,5 +80,3 @@ export default {
   EVMOS: CryptoCoinEVMOS,
   CRESCENT: CryptoCoinCRESCENT,
 };
-
-export const KICHAIN = CryptoCoinKICHAIN;
