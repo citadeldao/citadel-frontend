@@ -26,7 +26,7 @@
         <KtAddresses :current-wallet="currentWallet" />
       </div>
       <div class="wallet__main">
-        <template v-if="currentWallet.net !== 'kichain'">
+        <template v-if="!kichain.isStub">
           <MainHeader
             :current-wallet="currentWallet"
             :current-token="currentToken"
@@ -261,7 +261,6 @@ import ModalContent from '@/components/ModalContent';
 import AliasQrCard from './components/AliasQrCard';
 import Modal from '@/components/Modal';
 import Loading from '@/components/Loading';
-// eslint-disable-next-line no-unused-vars
 import KiChainStub from '@/views/Wallet/components/KiChainStub.vue';
 import NetworkInfo from './components/NetworkInfo';
 import ClaimRewards from './components/ClaimRewards';
@@ -288,7 +287,7 @@ import notify from '@/plugins/notify';
 import { useI18n } from 'vue-i18n';
 import useApi from '@/api/useApi';
 import { keplrNetworksProtobufFormat } from '@/config/availableNets';
-
+import { KICHAIN } from '@/models';
 export default {
   name: 'Wallet',
   components: {
@@ -321,7 +320,7 @@ export default {
     const { currency, currentWallet, isHardwareWallet } = useWallets();
     const subtokensIsLoading = ref(false);
     const { loadKtAddresses, ktAddresses } = useKtAddresses();
-
+    const kichain = new KICHAIN();
     const showClaimModal = computed(() => {
       return (
         showConfirmClaim.value ||
@@ -1160,6 +1159,7 @@ export default {
       adding,
       ktAddresses,
       mode,
+      kichain,
     };
   },
 };

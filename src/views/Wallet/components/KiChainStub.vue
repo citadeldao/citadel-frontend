@@ -4,12 +4,10 @@
     <h2>{{ $t('wallet.stubs.chain') }}</h2>
     <div class="stub_description">
       <p>
-        We’ll be back shortly! Please take into account that your funds are
-        safe!
+        {{ $t('wallet.stubs.description') }}
       </p>
       <p>
-        Note: you will be still receiving XCT rewards if you assigned your
-        address.
+        {{ $t('wallet.stubs.subdescription') }}
       </p>
     </div>
   </div>
@@ -23,8 +21,10 @@ export default {
     kiChainIcon,
   },
   setup() {
-    // eslint-disable-next-line no-unused-vars
     const { t } = useI18n();
+    return {
+      t,
+    };
   },
 };
 </script>
@@ -36,7 +36,7 @@ export default {
   text-align: center;
   align-items: center;
   padding: 104px 0 143px;
-  @media (max-width: 1280px) {
+  @include lg {
     font-size: 12px;
   }
 }

@@ -80,3 +80,5 @@ export default {
   EVMOS: CryptoCoinEVMOS,
   CRESCENT: CryptoCoinCRESCENT,
 };
+
+export const KICHAIN = CryptoCoinKICHAIN;
