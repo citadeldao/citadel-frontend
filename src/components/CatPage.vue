@@ -1,14 +1,8 @@
 <template>
-  <div
-    class="cat-page"
-    :class="{ noCat: data.length > 2 }"
-  >
+  <div class="cat-page" :class="{ noCat: data.length > 2 }">
     <div class="cat-page__header" />
     <div class="cat-page__content">
-      <closeIcon
-        class="cat-page__close-icon"
-        @click="$emit('close')"
-      />
+      <closeIcon class="cat-page__close-icon" @click="$emit('close')" />
       <div class="cat-page__section">
         <div class="cat-page__cat-icon">
           <catIcon />
@@ -22,10 +16,7 @@
           </p>
         </div>
       </div>
-      <div
-        v-if="data"
-        class="cat-page__addresses"
-      >
+      <div v-if="data" class="cat-page__addresses">
         <template
           v-for="(wallet, index) in data"
           :key="`${wallet.address}_${wallet.net}`"

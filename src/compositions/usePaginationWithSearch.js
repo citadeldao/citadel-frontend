@@ -1,13 +1,18 @@
 import { ref, computed } from 'vue';
 
-export default function usePaginationWithSearch(array, itemsCount, pageSizesOpts, initialPage) {
+export default function usePaginationWithSearch(
+  array,
+  itemsCount,
+  pageSizesOpts,
+  initialPage
+) {
   const arr = ref(array);
   const pageSizes = ref(pageSizesOpts);
   const pageSize = ref(pageSizesOpts[0]);
   const currentPage = ref(initialPage);
   // const keyword = ref('');
 
-  /*const searching = computed(() => {
+  /* const searching = computed(() => {
     if (!keyword.value) {
       total.value = arr.value.length;
 
@@ -29,7 +34,7 @@ export default function usePaginationWithSearch(array, itemsCount, pageSizesOpts
   const displayData = computed(() => {
     return arr.value.slice(
       pageSize.value * currentPage.value - pageSize.value,
-      pageSize.value * currentPage.value,
+      pageSize.value * currentPage.value
     );
   });
 

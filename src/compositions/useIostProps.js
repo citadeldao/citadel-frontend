@@ -5,9 +5,22 @@ import citadel from '@citadeldao/lib-citadel';
 
 export default function useIostProps() {
   const { currentWallet } = useWallets();
-  const gas = computed(() => currentWallet.value.balance.adding?.find(({ name }) => name === 'GAS')?.current || 0);
-  const ram = computed(() => currentWallet.value.balance.adding?.find(({ name }) => name === 'RAM')?.current || 0);
-  const pledgedBalance = computed(() => currentWallet.value.balance.adding?.find(({ name }) => name === 'Pledged IOST')?.current || 0);
+  const gas = computed(
+    () =>
+      currentWallet.value.balance.adding?.find(({ name }) => name === 'GAS')
+        ?.current || 0
+  );
+  const ram = computed(
+    () =>
+      currentWallet.value.balance.adding?.find(({ name }) => name === 'RAM')
+        ?.current || 0
+  );
+  const pledgedBalance = computed(
+    () =>
+      currentWallet.value.balance.adding?.find(
+        ({ name }) => name === 'Pledged IOST'
+      )?.current || 0
+  );
 
   const waitAccounts = ref(false);
   const accounts = ref([]);
@@ -20,16 +33,24 @@ export default function useIostProps() {
 
     if (hasAccount && privateKey) {
       accounts.value = [];
-      const { data, error } = await citadel.getAccountsByPrivateKey('iost', privateKey);
+      const { data, error } = await citadel.getAccountsByPrivateKey(
+        'iost',
+        privateKey
+      );
+
       if (!error) {
-        accounts.value = data.map(item => ({ label: item.name, key: item.name }));
+        accounts.value = data.map((item) => ({
+          label: item.name,
+          key: item.name,
+        }));
         account.value = accounts.value[0].key;
-      }else{
+      } else {
         notify({
           type: 'warning',
           text: error,
         });
       }
+
       waitAccounts.value = false;
     }
   };

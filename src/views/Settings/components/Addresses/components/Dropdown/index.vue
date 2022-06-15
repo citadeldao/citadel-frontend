@@ -17,10 +17,7 @@
         <arrowDown v-else />
       </div>
     </div>
-    <div
-      v-show="isOpen"
-      class="dropdown__items"
-    >
+    <div v-show="isOpen" class="dropdown__items">
       <div
         v-for="wallet in data.wallets"
         :key="`${wallet.net}${wallet.address}`"
@@ -72,6 +69,7 @@ export default {
         currentIcon.value = markRaw(val.default);
       });
     }
+
     const clickHandler = () => {
       isOpen.value = !isOpen.value;
     };
@@ -80,7 +78,8 @@ export default {
       emit('exportWallet', val);
     };
 
-    const isWalletHidden = ({ address, net }) => props.hiddenWallets.includes(`${net}_${address}`);
+    const isWalletHidden = ({ address, net }) =>
+      props.hiddenWallets.includes(`${net}_${address}`);
 
     return {
       currentIcon,

@@ -9,11 +9,8 @@
       <img
         v-if="hovered"
         :src="require(`@/assets/images/${type.hoveredIcon}.png`)"
-      >
-      <img
-        v-else
-        :src="require(`@/assets/images/${type.icon}.png`)"
-      >
+      />
+      <img v-else :src="require(`@/assets/images/${type.icon}.png`)" />
     </div>
     <div class="address-adding-type-card__info">
       <span class="address-adding-type-card__title">
@@ -25,10 +22,7 @@
       <span class="address-adding-type-card__important">
         {{ type.important }}
       </span>
-      <span
-        :style="cssVars"
-        class="address-adding-type-card__note"
-      >
+      <span :style="cssVars" class="address-adding-type-card__note">
         {{ type.note }}
       </span>
     </div>
@@ -138,7 +132,7 @@ export default {
   &__title {
     font-size: 20px;
     line-height: 30px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     @include md {
       font-size: 16px;
       line-height: 30px;
@@ -159,7 +153,7 @@ export default {
   }
 
   &__important {
-    font-family: "Panton_SemiBoldItalic";
+    font-family: 'Panton_SemiBoldItalic';
     font-size: 14px;
     line-height: 27px;
     color: $dark-blue;
@@ -177,7 +171,7 @@ export default {
     margin-top: 11px;
     font-size: 18px;
     line-height: 27px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     color: var(--textColor);
     margin-bottom: 15px;
     @include md {

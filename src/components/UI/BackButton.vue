@@ -1,16 +1,10 @@
 <template>
-  <button
-    class="back-button"
-    @click="$emit('click')"
-  >
-    <div
-      :class="{ isDown }"
-      class="back-button__icon"
-    >
+  <button class="back-button" @click="$emit('click')">
+    <div :class="{ isDown }" class="back-button__icon">
       <arrowRigth />
     </div>
     <template v-if="!isDown">
-      {{ $t("backBtn") }}
+      {{ $t('backBtn') }}
     </template>
   </button>
 </template>
@@ -40,7 +34,7 @@ export default {
   font-size: 18px;
   line-height: 22px;
   color: $too-dark-blue;
-  font-family: "Panton_Bold";
+  font-family: 'Panton_Bold';
   background: transparent;
   @include md {
     font-size: 14px;

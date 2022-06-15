@@ -12,15 +12,11 @@
 
 <script>
 import ModalContent from '@/components/ModalContent';
-import Loading from '@/components/Loading';
-import confirmLedger from '@/assets/icons/ledger/confirm-ledger.svg';
 
 export default {
   name: 'ActionLedgerModal',
   components: {
     ModalContent,
-    Loading,
-    confirmLedger,
   },
   emits: ['close'],
   setup() {
@@ -29,5 +25,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

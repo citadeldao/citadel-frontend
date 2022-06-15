@@ -1,9 +1,5 @@
 <template>
-  <button
-    :disabled="disabled"
-    class="edit-button"
-    @click.stop="$emit('click')"
-  >
+  <button :disabled="disabled" class="edit-button" @click.stop="$emit('click')">
     <slot />
   </button>
 </template>
@@ -34,7 +30,7 @@ button {
   color: $orange;
   height: 30px;
   min-width: 40px;
-  font-family: "Panton_Bold";
+  font-family: 'Panton_Bold';
   font-size: 14px;
   line-height: 17px;
   border-radius: 4px;

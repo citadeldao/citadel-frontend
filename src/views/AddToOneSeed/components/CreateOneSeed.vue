@@ -1,12 +1,6 @@
 <template>
-  <transition
-    name="fade"
-    mode="out-in"
-  >
-    <div
-      v-if="isUnderstand"
-      class="create-one-seed"
-    >
+  <transition name="fade" mode="out-in">
+    <div v-if="isUnderstand" class="create-one-seed">
       <div class="create-one-seed__info-banner">
         <InfoBanner
           icon="exclamation"
@@ -32,57 +26,44 @@
           info=""
         />
       </div>
-      <PrimaryButton
-        data-qa="Next"
-        :disabled="!agree"
-        @click="next"
-      >
-        {{ $t("next") }}
+      <PrimaryButton data-qa="Next" :disabled="!agree" @click="next">
+        {{ $t('next') }}
       </PrimaryButton>
     </div>
-    <div
-      v-else
-      class="create-one-seed"
-    >
+    <div v-else class="create-one-seed">
       <div class="create-one-seed__wallpaper">
-        <img
-          src="@/assets/images/seed-phrase.png"
-          alt=""
-        >
+        <img src="@/assets/images/seed-phrase.png" alt="" />
       </div>
       <div class="create-one-seed__info">
         <h4 class="create-one-seed__title">
-          {{ $t("addToOneSeed.infoTitle") }}
+          {{ $t('addToOneSeed.infoTitle') }}
         </h4>
         <ol class="create-one-seed__description">
           <li class="create-one-seed__description-item">
-            {{ $t("addToOneSeed.infoLine1") }}
+            {{ $t('addToOneSeed.infoLine1') }}
           </li>
           <li class="create-one-seed__description-item">
-            {{ $t("addToOneSeed.infoLine2") }}
+            {{ $t('addToOneSeed.infoLine2') }}
           </li>
           <li class="create-one-seed__description-item">
-            {{ $t("addToOneSeed.infoLine3") }}
+            {{ $t('addToOneSeed.infoLine3') }}
           </li>
         </ol>
       </div>
-      <PrimaryButton
-        data-qa="I understand"
-        @click="clickHandler"
-      >
-        {{
-          $t("understand")
-        }}
+      <PrimaryButton data-qa="I understand" @click="clickHandler">
+        {{ $t('understand') }}
       </PrimaryButton>
     </div>
   </transition>
   <teleport to="body">
-    <Modal
-      v-if="showDescriptionFlag"
-    >
+    <Modal v-if="showDescriptionFlag">
       <ModalContent
         :submit-button="false"
-        @close="() => { showDescriptionFlag = false; }"
+        @close="
+          () => {
+            showDescriptionFlag = false;
+          }
+        "
       >
         <div class="seed-info-container">
           <keep-alive>
@@ -96,7 +77,11 @@
           </div>
           <PrimaryButton
             :style="{ marginTop: '30px' }"
-            @click="() => { showDescriptionFlag = false; }"
+            @click="
+              () => {
+                showDescriptionFlag = false;
+              }
+            "
           >
             {{ $t('ok') }}
           </PrimaryButton>
@@ -140,14 +125,16 @@ export default {
       showDescriptionFlag.value = true;
     };
 
-    onMounted(async ()=> {
+    onMounted(async () => {
       await store.dispatch('crypto/generateNewMnemonic');
     });
-    const mnemonic = computed(()=> store.getters['crypto/newMnemonic']);
-    const mnemonicArray = computed(() =>
-      mnemonic.value && mnemonic.value
-        .split(' ')
-        .map((item, index) => ({ item, key: `${index + 1}. ${item}` })),
+    const mnemonic = computed(() => store.getters['crypto/newMnemonic']);
+    const mnemonicArray = computed(
+      () =>
+        mnemonic.value &&
+        mnemonic.value
+          .split(' ')
+          .map((item, index) => ({ item, key: `${index + 1}. ${item}` }))
     );
 
     const nextStep = inject('nextStep');
@@ -162,7 +149,16 @@ export default {
 
     clickHandler();
 
-    return { isUnderstand, welcomeIcon, showDescriptionFlag, clickHandler, agree, mnemonicArray, next, onShowDescription };
+    return {
+      isUnderstand,
+      welcomeIcon,
+      showDescriptionFlag,
+      clickHandler,
+      agree,
+      mnemonicArray,
+      next,
+      onShowDescription,
+    };
   },
 };
 </script>
@@ -288,7 +284,7 @@ export default {
   box-sizing: border-box;
 
   svg {
-    transform: scale(.9);
+    transform: scale(0.9);
   }
 
   &__title {

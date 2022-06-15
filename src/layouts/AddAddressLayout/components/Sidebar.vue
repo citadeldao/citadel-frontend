@@ -17,16 +17,13 @@
       @click="setActiveTab(activeTab)"
     />
 
-    <div
-      v-if="walletsList?.length > 0"
-      class="sidebar__overall"
-    >
+    <div v-if="walletsList?.length > 0" class="sidebar__overall">
       <div class="sidebar__addresses">
         <div class="sidebar__addresses-header">
           <h4 class="sidebar__addresses-header-title">
             {{
-              activeTab === "all"
-                ? $t("layouts.addAddressLayout.addresses")
+              activeTab === 'all'
+                ? $t('layouts.addAddressLayout.addresses')
                 : activeTab
             }}
           </h4>
@@ -49,10 +46,7 @@
           </div>
         </div>
         <transition name="fade">
-          <div
-            v-if="showSearchInput"
-            class="sidebar__addresses-serach-input"
-          >
+          <div v-if="showSearchInput" class="sidebar__addresses-serach-input">
             <Input
               id="walletSearch"
               v-model="keyword"
@@ -68,19 +62,11 @@
             />
           </div>
         </transition>
-        <div
-          v-if="!displayData.length"
-          class="sidebar__addresses-addresses"
-        >
+        <div v-if="!displayData.length" class="sidebar__addresses-addresses">
           <SerchPlaceholder />
         </div>
-        <div
-          v-else
-          class="sidebar__addresses-addresses"
-        >
-          <transition-group
-            name="drop"
-          >
+        <div v-else class="sidebar__addresses-addresses">
+          <transition-group name="drop">
             <AddressItem
               v-for="wallet in displayData"
               :key="`${wallet.net}${wallet.address}`"
@@ -90,10 +76,7 @@
         </div>
       </div>
     </div>
-    <div
-      v-if="walletsList?.length === 0"
-      class="sidebar__address-placeholder"
-    >
+    <div v-if="walletsList?.length === 0" class="sidebar__address-placeholder">
       <AddressPlaceholder :active-tab="activeTab" />
     </div>
     <button
@@ -101,7 +84,7 @@
       data-qa="sidebar__add-address-button"
       @click="toAddAddress"
     >
-      {{ $t("addAddressExp") }}
+      {{ $t('addAddressExp') }}
       <div>+</div>
     </button>
   </div>
@@ -162,7 +145,9 @@ export default {
     const currency = computed(() => store.getters['profile/info'].rates);
 
     const activeTab = computed(() => store.getters['wallets/activeList']);
-    const customWalletsList = computed(() => store.getters['wallets/customWalletsList']);
+    const customWalletsList = computed(
+      () => store.getters['wallets/customWalletsList']
+    );
     const setActiveTab = (list) => {
       store.commit('wallets/SET_ACTIVE_LIST', list);
       router.push({ name: 'Overall' });
@@ -180,8 +165,9 @@ export default {
 
     const subtokensBalanceUSD = computed(() => {
       return walletsList.value.reduce((total, currentValue) => {
-
-        return BigNumber(total).plus(currentValue.subtokenBalanceUSD || 0).toNumber();
+        return BigNumber(total)
+          .plus(currentValue.subtokenBalanceUSD || 0)
+          .toNumber();
       }, 0);
     });
 
@@ -207,7 +193,7 @@ export default {
     const customList = computed(() => {
       if (customWalletsList.value.length > 0) {
         const customList = customWalletsList.value.find(
-          (list) => list.name === activeTab.value,
+          (list) => list.name === activeTab.value
         );
 
         return (customList && customList.wallets) || [];
@@ -223,9 +209,12 @@ export default {
         return wallets.value;
       }
 
-
-      for (const { net,address } of customList.value) {
-        const walletsList = wallets.value.filter((wallet) => wallet.address.toLowerCase() === address.toLowerCase() && wallet.net === net);
+      for (const { net, address } of customList.value) {
+        const walletsList = wallets.value.filter(
+          (wallet) =>
+            wallet.address.toLowerCase() === address.toLowerCase() &&
+            wallet.net === net
+        );
         customListWallets = customListWallets.concat(walletsList);
       }
 
@@ -235,6 +224,7 @@ export default {
       const data = walletsList.value;
       const byAlphabet = sortByAlphabet(data, 'title', 'address');
       const byValue = data.sort((a, b) => a.balanceUSD - b.balanceUSD);
+
       switch (filterValue.value) {
         case 'byAlphabet':
           return byAlphabet;
@@ -254,10 +244,11 @@ export default {
         return filteredWallets.value;
       }
 
-      return filteredWallets.value.filter((item) =>
-        item.title.toLowerCase().includes(keyword.value.toLowerCase()) ||
+      return filteredWallets.value.filter(
+        (item) =>
+          item.title.toLowerCase().includes(keyword.value.toLowerCase()) ||
           item.code.toLowerCase().includes(keyword.value.toLowerCase()) ||
-         item.address.toLowerCase().includes(keyword.value.toLowerCase()) ,
+          item.address.toLowerCase().includes(keyword.value.toLowerCase())
       );
     });
 
@@ -276,14 +267,14 @@ export default {
       emit('createList');
     };
     const walletsCustomLists = computed(() =>
-      customWalletsList.value.filter((item) => item.name !== 'Favourites'),
+      customWalletsList.value.filter((item) => item.name !== 'Favourites')
     );
-    const toggleShowSearchInput = (value)=> {
+    const toggleShowSearchInput = (value) => {
       showSearchInput.value = value;
       keyword.value = '';
     };
-    const blurHandrer = async (value)=>{
-      setTimeout(()=> {
+    const blurHandrer = async (value) => {
+      setTimeout(() => {
         showSearchInput.value = value;
         keyword.value = '';
       }, 200);
@@ -318,8 +309,7 @@ export default {
 <style lang="scss" scoped>
 .active {
   background-image: $blue-gradient;
-  box-shadow: 0 10px 15px 0 #50647C29,
-    0 15px 50px 0 #50647C1A;
+  box-shadow: 0 10px 15px 0 #50647c29, 0 15px 50px 0 #50647c1a;
 }
 .sidebar {
   padding: 42px 0 0 24px;
@@ -380,7 +370,7 @@ export default {
   &__addresses-header-title {
     font-size: 20px;
     line-height: 30px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     margin: 0;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -400,28 +390,27 @@ export default {
     align-items: center;
   }
   &__addresses-header-controls-serach-icon {
-    & svg{
+    & svg {
       width: 20px;
       height: 20px;
       fill: $mid-blue;
       margin-right: 19px;
       cursor: pointer;
-    @include md{
-      width: 18px;
-      height: 18px;
+      @include md {
+        width: 18px;
+        height: 18px;
+      }
+      &:hover {
+        fill: $blue;
+      }
     }
-    &:hover {
-      fill: $blue;
-    }
-    }
-
   }
   &__active-icon {
-    & svg{
-       fill: $too-dark-blue;
-    &:hover {
+    & svg {
       fill: $too-dark-blue;
-    }
+      &:hover {
+        fill: $too-dark-blue;
+      }
     }
   }
   &__addresses-serach-input {
@@ -450,7 +439,7 @@ export default {
     height: 80px;
     border-radius: 16px;
     background: $white;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     font-size: 18px;
     line-height: 22px;
     margin-top: 10px;
@@ -492,7 +481,7 @@ export default {
 
 .drop-enter-active,
 .drop-leave-active {
-  transition: all .7s ease;
+  transition: all 0.7s ease;
 }
 
 .drop-enter-from,

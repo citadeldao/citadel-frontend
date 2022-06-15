@@ -1,19 +1,10 @@
 <template>
-  <div
-    :style="{ background }"
-    class="info-banner"
-  >
+  <div :style="{ background }" class="info-banner">
     <keep-alive>
-      <component
-        :is="currentIcon"
-        class="info-banner__icon"
-      />
+      <component :is="currentIcon" class="info-banner__icon" />
     </keep-alive>
     <div class="info-banner__text">
-      <span
-        class="text-main"
-        :style="{ color }"
-      > {{ content }}</span>
+      <span class="text-main" :style="{ color }"> {{ content }}</span>
       <div
         v-if="description"
         class="info-banner__description"
@@ -103,7 +94,7 @@ export default {
     font-weight: 600;
     color: $orange;
     margin: 0;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
     @include md {
       width: 414px;
     }

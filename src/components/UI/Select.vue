@@ -32,15 +32,14 @@
       </div>
     </div>
     <transition name="fade">
-      <div
-        v-show="isOptionsVisible"
-        class="select__options"
-      >
+      <div v-show="isOptionsVisible" class="select__options">
         <div
           v-for="(option, index) of options"
           :key="index"
           class="select__option"
-          :class="{ 'select__option--selected': option[valueKey] === selected[valueKey] }"
+          :class="{
+            'select__option--selected': option[valueKey] === selected[valueKey],
+          }"
           :data-qa="dataQa && `${dataQa}--${option[valueKey]}`"
           @click.stop="handleChangeValue(option[valueKey])"
         >
@@ -77,7 +76,7 @@ export default {
       default: () => [],
     },
     modelValue: {
-      type: [String,Number],
+      type: [String, Number],
       default: '',
     },
     valueKey: {
@@ -90,11 +89,13 @@ export default {
     },
   },
   emits: ['update:modelValue', 'change'],
-  setup(props, { emit } ) {
+  setup(props, { emit }) {
     const currentIcon = ref();
     const isOptionsVisible = ref(false);
     const selected = computed(() => {
-      return props.options.find(option => option[props.valueKey] === props.modelValue);
+      return props.options.find(
+        (option) => option[props.valueKey] === props.modelValue
+      );
     });
 
     if (props.icon) {
@@ -112,12 +113,18 @@ export default {
     };
 
     const toggleVisibleOptions = () => {
-      if (props.disabled) {return;}
+      if (props.disabled) {
+        return;
+      }
+
       isOptionsVisible.value = !isOptionsVisible.value;
     };
 
     const handleChangeValue = (val) => {
-      if (props.disabled) {return;}
+      if (props.disabled) {
+        return;
+      }
+
       closeOptions();
 
       if (val === selected.value[props.valueKey]) {
@@ -159,7 +166,7 @@ export default {
 
   &__label {
     margin-bottom: 7px;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
     font-size: 14px;
     line-height: 17px;
     color: $mid-gray;
@@ -168,7 +175,7 @@ export default {
   &__value {
     display: flex;
     align-items: center;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
     font-size: 14px;
     padding-right: 20px;
   }
@@ -208,7 +215,7 @@ export default {
 
   &__option {
     font-size: 14px;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
     line-height: 36px;
     padding-left: 21px; // future: area for icons
 

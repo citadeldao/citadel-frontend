@@ -1,9 +1,6 @@
 <template>
   <div class="import-seed-phrase">
-    <Header
-      :current-step="currentStep"
-      :steps="steps"
-    />
+    <Header :current-step="currentStep" :steps="steps" />
     <div class="import-seed-phrase__section">
       <!-- <Stepper :steps="steps" /> -->
       <EnterPassword
@@ -13,10 +10,7 @@
       <keep-alive v-else-if="currentStep === 2">
         <CreatePassword @createPassword="setPassword" />
       </keep-alive>
-      <AddressSpecifications
-        v-if="currentStep === 3"
-        @createOpts="setOpts"
-      />
+      <AddressSpecifications v-if="currentStep === 3" @createOpts="setOpts" />
       <ChooseDerivationPath
         v-if="currentStep === 4"
         :wallet-opts="walletOpts"
@@ -26,11 +20,7 @@
     <teleport to="body">
       <transition name="fade">
         <Modal v-if="showModal">
-          <img
-            v-if="showLoader"
-            src="@/assets/gif/loader.gif"
-            alt=""
-          >
+          <img v-if="showLoader" src="@/assets/gif/loader.gif" alt="" />
           <CatPage
             v-else
             v-click-away="modalClickHandler"
@@ -54,7 +44,7 @@ import CreatePassword from './components/CreatePassword';
 import CatPage from '@/components/CatPage';
 import Modal from '@/components/Modal';
 import useCurrentStep from '@/compositions/useCurrentStep';
-import { steps as seedPhraseSteps } from '@/static/importSeedPhrase';
+import { getSteps } from '@/static/importSeedPhrase';
 import useCreateWallets from '@/compositions/useCreateWallets';
 import { ref } from 'vue';
 import { useStore } from 'vuex';
@@ -77,7 +67,6 @@ export default {
     const showModal = ref(false);
     const showLoader = ref(false);
     const router = useRouter();
-    const { currentStep, steps } = useCurrentStep(2, seedPhraseSteps);
 
     const {
       setPassword,
@@ -96,6 +85,11 @@ export default {
       redirectToNewWallet,
     } = useCreateWallets();
 
+    const { currentStep, steps } = useCurrentStep(
+      2,
+      getSteps(isPasswordHash.value)
+    );
+
     const setOpts = ({ net, mnemonic, passphrase }) => {
       setNets([net]);
       setMnemonic(mnemonic);
@@ -111,36 +105,45 @@ export default {
       redirectToNewWallet();
     };
 
-    const finalStep = async ( wallet ) => {
+    const finalStep = async (wallet) => {
       showModal.value = true;
       showLoader.value = true;
       setImportedFromSeed();
-      const { data, error } = await  await citadel.addCreatedWallet({
+      const { data, error } = await await citadel.addCreatedWallet({
         ...wallet,
         ...wallet.config,
-        type:  walletOpts.mnemonic === userMnemonic(walletOpts.password) || !isUserMnemonic.value ?
-          'oneSeed' : 'privateKey',
+        type:
+          walletOpts.mnemonic === userMnemonic(walletOpts.password) ||
+          !isUserMnemonic.value
+            ? 'oneSeed'
+            : 'privateKey',
         networkName: wallet.config.name,
       });
-      if(!error){
+
+      if (!error) {
         !isPasswordHash.value && savePassword();
         !isUserMnemonic.value && saveMnemonic();
-        const newInstance = await store.dispatch('crypto/createNewWalletInstance',
-          { walletOpts: {
-            ...data,
-            importedFromSeed: walletOpts.importedFromSeed,
-            mnemonicEncoded: wallet.mnemonicEncoded,
-            privateKeyEncoded: wallet.privateKeyEncoded,
-          },
-          password: walletOpts.password });
+        const newInstance = await store.dispatch(
+          'crypto/createNewWalletInstance',
+          {
+            walletOpts: {
+              ...data,
+              importedFromSeed: walletOpts.importedFromSeed,
+              mnemonicEncoded: wallet.mnemonicEncoded,
+              privateKeyEncoded: wallet.privateKeyEncoded,
+            },
+            password: walletOpts.password,
+          }
+        );
         newWallets.value = [newInstance];
         const newWallet = newInstance;
-        await store.dispatch('wallets/pushWallets', { wallets: [newWallet] } );
+        await store.dispatch('wallets/pushWallets', { wallets: [newWallet] });
         // await store.dispatch('wallets/getNewWallets','lazy');
         // store.dispatch('wallets/getNewWallets','detail');
-      }else{
+      } else {
         router.push({ name: 'AddAddress' });
       }
+
       showLoader.value = false;
     };
 

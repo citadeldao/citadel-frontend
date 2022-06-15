@@ -1,14 +1,11 @@
 <template>
   <div
     class="list-item"
-    :class="{'active-list-item':value===item.value}"
+    :class="{ 'active-list-item': value === item.value }"
     :data-qa="`sidebar__sort-button--${item.value.toLowerCase()}`"
   >
     <keep-alive>
-      <component
-        :is="icon"
-        class="list-item__icon"
-      />
+      <component :is="icon" class="list-item__icon" />
     </keep-alive>
   </div>
 </template>
@@ -22,7 +19,7 @@ export default {
       type: Object,
       default: () => ({}),
     },
-    value:{
+    value: {
       type: String,
       default: '',
     },
@@ -57,7 +54,7 @@ export default {
     border-bottom: none;
   }
   &__icon {
-    @include md{
+    @include md {
       max-width: 16px;
       max-height: 16px;
     }

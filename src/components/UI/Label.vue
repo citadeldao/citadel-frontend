@@ -5,10 +5,7 @@
     :style="cssVars"
     @click="$emit('click')"
   >
-    <div
-      v-if="type === types.TAG"
-      class="label__icon"
-    >
+    <div v-if="type === types.TAG" class="label__icon">
       <component :is="currentIcon" />
     </div>
     <div class="label__text">
@@ -90,7 +87,7 @@ export default {
 
   &__text {
     padding: 3px 7px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     line-height: 1;
   }
 
@@ -103,7 +100,7 @@ export default {
       .label {
         &__text {
           padding: 4px;
-          font-family: "Panton_SemiBold";
+          font-family: 'Panton_SemiBold';
         }
       }
     }

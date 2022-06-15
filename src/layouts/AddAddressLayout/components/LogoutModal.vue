@@ -12,10 +12,7 @@
             {{ $t('logout.modal.title') }}
           </h4>
 
-          <div
-            v-if="hasWallets"
-            class="logout-modal__form"
-          >
+          <div v-if="hasWallets" class="logout-modal__form">
             <div class="logout-modal__checkbox">
               <Checkbox
                 id="erase"
@@ -35,15 +32,10 @@
           </div>
 
           <div class="logout-modal__footer">
-            <PrimaryButton
-              class="logout-modal__button"
-              @click="close"
-            >
+            <PrimaryButton class="logout-modal__button" @click="close">
               {{ $t('no') }}
             </PrimaryButton>
-            <TextButton
-              @click="$emit('confirm')"
-            >
+            <TextButton @click="$emit('confirm')">
               {{ $t('yes') }}
             </TextButton>
           </div>

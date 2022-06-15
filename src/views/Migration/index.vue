@@ -26,9 +26,7 @@
         </ModalContent>
       </Modal>
       <!-- FORGOT PASSWORD -->
-      <Modal
-        v-if="forgotModalFlag"
-      >
+      <Modal v-if="forgotModalFlag">
         <ModalContent
           v-show="forgotModalFlag"
           :hide-close="true"
@@ -39,8 +37,14 @@
           :button-text2="$t('migration.cancel')"
           :submit-button="false"
           @buttonClick="forgotHandler"
-          @buttonClick2="forgotModalFlag = false; backupModalFlag = true"
-          @close="forgotModalFlag = false; backupModalFlag = true"
+          @buttonClick2="
+            forgotModalFlag = false;
+            backupModalFlag = true;
+          "
+          @close="
+            forgotModalFlag = false;
+            backupModalFlag = true;
+          "
         >
           <div class="forgot-container">
             <keep-alive>
@@ -62,9 +66,7 @@
         </ModalContent>
       </Modal>
       <!-- WELCOME -->
-      <Modal
-        v-if="existOldBackup && welcomeModalFlag"
-      >
+      <Modal v-if="existOldBackup && welcomeModalFlag">
         <ModalContent
           v-show="welcomeModalFlag"
           button-text="save"
@@ -92,9 +94,7 @@
         </ModalContent>
       </Modal>
       <!-- EXIST OLD BACKUP -->
-      <Modal
-        v-if="existOldBackup && backupModalFlag"
-      >
+      <Modal v-if="existOldBackup && backupModalFlag">
         <ModalContent
           v-show="migrationModalFlag"
           :title="$t('migration.title')"
@@ -103,12 +103,13 @@
           :hide-close="!privateWalletsMode"
           type="system"
           :submit-button="false"
-          @close="migrationModalFlag = false; backupModalFlag = false; $router.push({ name: 'AddWalletTypes' })"
+          @close="
+            migrationModalFlag = false;
+            backupModalFlag = false;
+            $router.push({ name: 'AddWalletTypes' });
+          "
         >
-          <div
-            v-if="migrationProcess"
-            class="loader-layout"
-          >
+          <div v-if="migrationProcess" class="loader-layout">
             <Loading />
           </div>
           <Migration
@@ -123,7 +124,9 @@
               :placeholder="$t('password')"
               type="password"
               icon="key"
-              :error="migrationError && passwordIncorrect ? 'Incorrect password' : ''"
+              :error="
+                migrationError && passwordIncorrect ? 'Incorrect password' : ''
+              "
               :show-error-text="true"
               :style="{ marginTop: '15px' }"
               @input="onChangeMigrationPassword"
@@ -137,16 +140,11 @@
           >
             {{ $t('migration.forgotPassword') }}
           </div>
-          <div
-            v-if="!privateWalletsMode"
-            class="migration-download"
-          >
+          <div v-if="!privateWalletsMode" class="migration-download">
             <keep-alive>
               <component :is="downloadIcon" />
             </keep-alive>
-            <div @click="downLoadOldBackup">
-              Download backup file
-            </div>
+            <div @click="downLoadOldBackup">Download backup file</div>
           </div>
           <PrimaryButton
             :disabled="migrationProcess"
@@ -275,6 +273,7 @@ export default {
       if (downloadCheck.value) {
         downLoadOldBackup();
       }
+
       localStorage.removeItem(oldBackupKey.value);
       window.location.reload();
     };
@@ -284,7 +283,7 @@ export default {
       welcomeModalFlag.value = false;
     };
 
-    const exportWallet = exportWallet => {
+    const exportWallet = (exportWallet) => {
       currentExportWallet.value = exportWallet;
       showApproveModal.value = true;
       migrationModalFlag.value = false;
@@ -322,9 +321,12 @@ export default {
 
         return;
       }
+
       showApproveModal.value = false;
       showExportModal.value = true;
-      decodedPrivateKey.value = currentExportWallet.value.getPrivateKeyDecoded(password.value);
+      decodedPrivateKey.value = currentExportWallet.value.getPrivateKeyDecoded(
+        password.value
+      );
     };
 
     const {
@@ -357,7 +359,9 @@ export default {
       }
     };
 
-    const passwordIncorrect = computed(() => sha3_256(migrationPassword.value) !== oldPasswordHash.value);
+    const passwordIncorrect = computed(
+      () => sha3_256(migrationPassword.value) !== oldPasswordHash.value
+    );
 
     const onChangeMigrationPassword = (val) => {
       migrationPassword.value = val;
@@ -372,17 +376,24 @@ export default {
 
         return;
       }
+
       // put imported wallets to user settings
       migrationProcess.value = true;
-      for(const wallet of oldWallets.value){
+
+      for (const wallet of oldWallets.value) {
         if (wallet.net && !wallet.existWallet) {
           // add import wallet to priateWallets
-          const newInstance = await store.dispatch('crypto/createNewWalletInstance',
-            { walletOpts: wallet });
-          await store.dispatch('wallets/pushWallets', { wallets: [newInstance] } );
+          const newInstance = await store.dispatch(
+            'crypto/createNewWalletInstance',
+            { walletOpts: wallet }
+          );
+          await store.dispatch('wallets/pushWallets', {
+            wallets: [newInstance],
+          });
           newWallets.push(newInstance);
         }
       }
+
       await store.dispatch('app/setWallets', { addNotAddedWallets: true });
       // await store.dispatch('wallets/getNewWallets','lazy');
 
@@ -399,7 +410,6 @@ export default {
       localStorage.removeItem(oldBackupKey.value);
       restoreOneSeedModalFlag.value = true;
       backupModalFlag.value = false;
-
     };
 
     if (props.privateWalletsMode) {
@@ -477,7 +487,7 @@ export default {
   }
 
   &:hover {
-    opacity: .6;
+    opacity: 0.6;
   }
 }
 
@@ -542,7 +552,7 @@ export default {
   box-sizing: border-box;
 
   svg {
-    transform: scale(.8);
+    transform: scale(0.8);
   }
 
   &__title {

@@ -10,9 +10,7 @@ export default function useCheckItem() {
     checkedItems.value.push(id);
   };
   const removeItem = (id) => {
-    checkedItems.value = checkedItems.value.filter(
-      (item) => item !== id,
-    );
+    checkedItems.value = checkedItems.value.filter((item) => item !== id);
   };
 
   const addSingleItem = (id) => {

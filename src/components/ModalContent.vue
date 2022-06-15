@@ -12,24 +12,14 @@
         :data-qa="dataQa && `${dataQa}__close-button`"
         @click.stop="$emit('close', $event)"
       />
-      <div
-        v-if="title"
-        class="modal_content__block-header"
-      >
+      <div v-if="title" class="modal_content__block-header">
         <div
           v-if="internalIcon"
           class="modal_content__block-header-internal-icon"
         >
-          <img
-            :src="internalIcon"
-            width="32"
-            height="32"
-          >
+          <img :src="internalIcon" width="32" height="32" />
         </div>
-        <div
-          v-if="icon"
-          class="modal_content__block-header-icon"
-        >
+        <div v-if="icon" class="modal_content__block-header-icon">
           <keep-alive>
             <component :is="currentIcon" />
           </keep-alive>
@@ -47,10 +37,7 @@
       </div>
       <slot />
       <slot name="footer">
-        <div
-          v-if="buttonText2"
-          class="modal_content__buttons-block"
-        >
+        <div v-if="buttonText2" class="modal_content__buttons-block">
           <div class="modal__btn">
             <!-- WITH CUSTOM COLOR -->
             <PrimaryButton
@@ -90,7 +77,12 @@
             v-if="submitButton"
             ref="primaryButton"
             :disabled="disabled"
-            :data-qa="dataQa && `${dataQa}__${$t(buttonText).toLowerCase().replace(' ', '-')}-button`"
+            :data-qa="
+              dataQa &&
+              `${dataQa}__${$t(buttonText)
+                .toLowerCase()
+                .replace(' ', '-')}-button`
+            "
             @click.stop="clickHandler"
           >
             {{ $t(`${buttonText}`) }}
@@ -268,7 +260,7 @@ export default {
   background: $white;
   border-radius: 16px;
   box-shadow: 15px 15px 15px rgba(63, 54, 137, 0.2);
-  &__buttons-block{
+  &__buttons-block {
     display: flex;
     flex-direction: column;
   }
@@ -314,7 +306,7 @@ export default {
 
   &__block-header-internal-icon {
     margin-top: 2px;
-    background: linear-gradient(90deg, #F3E7FF 0%, #CDE6FF 100%);
+    background: linear-gradient(90deg, #f3e7ff 0%, #cde6ff 100%);
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -341,7 +333,7 @@ export default {
     font-size: 20px;
     line-height: 24px;
     margin: 0;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     // width: 507px;
     margin-bottom: 10px;
   }
@@ -362,11 +354,11 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  & button{
-    @include lg{
+  & button {
+    @include lg {
       order: 2;
     }
-    @include md{
+    @include md {
       order: 2;
     }
   }

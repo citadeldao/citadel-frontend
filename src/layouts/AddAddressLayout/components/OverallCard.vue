@@ -1,16 +1,18 @@
 <template>
-  <div
-    :class="{ active: route.path.includes('overall') }"
-    class="overall-card"
-  >
+  <div :class="{ active: route.path.includes('overall') }" class="overall-card">
     <span class="overall-card__title">
-      {{ title === "all" ? $t("layouts.addAddressLayout.overall") : title }}
+      {{ title === 'all' ? $t('layouts.addAddressLayout.overall') : title }}
     </span>
     <span class="overall-card__balance-md">
       <span class="overall-card__currency-md">
-        {{ currentTab === "USD" ? `$` : `BTC` }}
+        {{ currentTab === 'USD' ? `$` : `BTC` }}
       </span>
-      <span v-pretty-number="{ value: (currentTab === 'USD' ? balance : cryptobalance), currency: currentTab }" />
+      <span
+        v-pretty-number="{
+          value: currentTab === 'USD' ? balance : cryptobalance,
+          currency: currentTab,
+        }"
+      />
     </span>
     <span class="overall-card__balance">
       <span class="overall-card__currency">$</span>
@@ -55,10 +57,10 @@ export default {
   components: { NetworkTab },
   props: {
     balance: {
-      type: [String,Number],
+      type: [String, Number],
     },
     cryptobalance: {
-      type: [String,Number],
+      type: [String, Number],
     },
     title: {
       type: String,
@@ -92,7 +94,7 @@ export default {
     .overall-card__cryptobalance,
     .overall-card__title,
     .overall-card__balance,
-    .overall-card__balance-md{
+    .overall-card__balance-md {
       color: $white;
     }
   }
@@ -136,13 +138,13 @@ export default {
       max-width: 73px;
       font-size: 14px;
       line-height: 30px;
-      font-family: "Panton_Bold";
+      font-family: 'Panton_Bold';
       margin-bottom: 3px;
     }
   }
   &__balance,
   &__balance-md {
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     color: $dark-blue;
     font-size: 28px;
     line-height: 34px;
@@ -168,7 +170,7 @@ export default {
   &__currency-md,
   &__currency {
     color: $black;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
   }
   &__balance-md {
     font-size: 18px;

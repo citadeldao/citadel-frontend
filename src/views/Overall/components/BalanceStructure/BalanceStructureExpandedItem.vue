@@ -1,10 +1,7 @@
 <template>
   <div class="item">
     <div class="item__dot-wrapper">
-      <div
-        class="item__dot"
-        :style="{'background-color': item.color}"
-      />
+      <div class="item__dot" :style="{ 'background-color': item.color }" />
     </div>
     <div class="item__title-wrapper">
       <div class="item__title">
@@ -12,22 +9,16 @@
       </div>
     </div>
     <div class="item__percent-wrapper">
-      <span
-        v-pretty-number="item.percent.toFixed(2)"
-        class="item__percent"
-      />
+      <span v-pretty-number="item.percent.toFixed(2)" class="item__percent" />
       <span class="item__percent-sign">%</span>
     </div>
     <div class="item__bar-wrapper">
       <div
         class="item__bar"
-        :style="{'background-color': item.color, 'flex-basis': `${percent}%`}"
+        :style="{ 'background-color': item.color, 'flex-basis': `${percent}%` }"
       />
     </div>
-    <div
-      v-if="item.balance"
-      class="item__balance-wrapper"
-    >
+    <div v-if="item.balance" class="item__balance-wrapper">
       <span
         v-pretty-number="{ value: item.balance, currency: item.code }"
         class="item__balance"
@@ -35,10 +26,7 @@
       &nbsp;
       <span class="item__code">{{ item.code }}</span>
     </div>
-    <span
-      v-if="item.balance"
-      class="item__balance-divider"
-    >/</span>
+    <span v-if="item.balance" class="item__balance-divider">/</span>
     <div class="item__balance-wrapper item__common-balance-wrapper">
       <span
         v-pretty-number="{ value: commonBalance, currency: currentTab }"
@@ -71,9 +59,14 @@ export default {
     },
   },
   setup(props) {
-    const commonBalance = computed(() => props.currentTab === 'BTC' ? props.item.btc : props.item.usd);
+    const commonBalance = computed(() =>
+      props.currentTab === 'BTC' ? props.item.btc : props.item.usd
+    );
     const percent = computed(() => {
-      const res = BigNumber(props.item.percent).dividedBy(props.maxPercent).multipliedBy(100).toNumber();
+      const res = BigNumber(props.item.percent)
+        .dividedBy(props.maxPercent)
+        .multipliedBy(100)
+        .toNumber();
 
       return res < 1 ? 1 : res;
     });
@@ -88,7 +81,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .item {
-  border-bottom: 1px dashed #BCC2D8;
+  border-bottom: 1px dashed #bcc2d8;
   display: flex;
   align-items: center;
   margin-bottom: 34px;
@@ -131,10 +124,10 @@ export default {
     align-items: center;
     flex-shrink: 1;
     overflow: hidden;
-    @include lg{
+    @include lg {
       flex-basis: 550px;
     }
-    @include md{
+    @include md {
       flex-basis: 420px;
     }
   }

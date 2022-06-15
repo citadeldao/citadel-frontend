@@ -19,9 +19,9 @@
 import Input from '@/components/UI/Input';
 import { inject, watch } from '@vue/runtime-core';
 export default {
-  name:'ApproveAssignWithPassword',
-  components:{ Input },
-  emits:['approveAssign'],
+  name: 'ApproveAssignWithPassword',
+  components: { Input },
+  emits: ['approveAssign'],
   setup() {
     const password = inject('password');
     const inputError = inject('inputError');
@@ -30,20 +30,20 @@ export default {
       () => password.value,
       (newVal) => {
         updatePassword(newVal);
-      },
+      }
     );
 
-    return{ password, inputError };
+    return { password, inputError };
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.approve-assign-with-password{
-    padding: 23px 0 0 0;
-    width: 100%;
-    &__password-input{
-        height: 68px;
-    }
+.approve-assign-with-password {
+  padding: 23px 0 0 0;
+  width: 100%;
+  &__password-input {
+    height: 68px;
+  }
 }
 </style>

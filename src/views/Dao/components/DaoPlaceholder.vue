@@ -1,10 +1,10 @@
 <template>
   <div class="dao-placeholder">
     <h2 class="dao-placeholder__title">
-      {{ $t("DAO.placeholderTitle") }}
+      {{ $t('DAO.placeholderTitle') }}
     </h2>
     <p class="dao-placeholder__info">
-      {{ $t("DAO.placeholderInfo") }}
+      {{ $t('DAO.placeholderInfo') }}
     </p>
     <daoPlaceholderIcon />
   </div>
@@ -28,7 +28,7 @@ export default {
   align-items: center;
   &__title {
     margin: 0;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     font-size: 30px;
     line-height: 30px;
     margin-top: 104px;

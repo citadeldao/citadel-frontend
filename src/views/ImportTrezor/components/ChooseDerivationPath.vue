@@ -1,9 +1,6 @@
 <template>
   <div class="choose-derivation-path">
-    <div
-      v-if="customWallet"
-      class="choose-derivation-path__custom"
-    >
+    <div v-if="customWallet" class="choose-derivation-path__custom">
       <DerivationPathCard
         :wallet="customWallet.walletInstance"
         type="custom"
@@ -14,22 +11,12 @@
         @check="addSingleItem"
       />
     </div>
-    <PrimaryButton
-      v-if="customWallet"
-      :disabled="disabled"
-      @click="confirm"
-    >
+    <PrimaryButton v-if="customWallet" :disabled="disabled" @click="confirm">
       {{ $t('import') }}
     </PrimaryButton>
-    <teleport
-      v-if="showLoader"
-      to="body"
-    >
+    <teleport v-if="showLoader" to="body">
       <Modal>
-        <img
-          src="@/assets/gif/loader.gif"
-          alt=""
-        >
+        <img src="@/assets/gif/loader.gif" alt="" />
       </Modal>
     </teleport>
   </div>
@@ -61,11 +48,7 @@ export default {
     const showModal = ref(true);
     const showLoader = ref(true);
 
-    const {
-      checked,
-      addSingleItem,
-      checkedItems,
-    } = useCheckItem();
+    const { checked, addSingleItem, checkedItems } = useCheckItem();
     const store = useStore();
 
     const isCustomLoading = ref(false);
@@ -93,7 +76,6 @@ export default {
         addSingleItem(wallet.walletInstance);
         isCustomLoading.value = false;
         showLoader.value = false;
-
       } catch (err) {
         console.error(err);
         customWallet.value = false;
@@ -111,8 +93,11 @@ export default {
 
     const disabled = computed(() => {
       const isChecked = checkedItems.value?.length;
-      const existingWallet = store.getters['wallets/walletByAddress'](checkedItems.value[0]);
-      const isExist = !!existingWallet && existingWallet.type !== WALLET_TYPES.PUBLIC_KEY;
+      const existingWallet = store.getters['wallets/walletByAddress'](
+        checkedItems.value[0]
+      );
+      const isExist =
+        !!existingWallet && existingWallet.type !== WALLET_TYPES.PUBLIC_KEY;
 
       return isCustomLoading.value || showLoader.value || !isChecked || isExist;
     });

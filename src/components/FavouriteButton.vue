@@ -31,9 +31,13 @@ export default {
     const icon = ref();
     const isHovered = ref(false);
 
-    watch(() => props.value, (val) => {
-      icon.value = markRaw(val ? favorite : favoriteEmpty);
-    }, { immediate: true });
+    watch(
+      () => props.value,
+      (val) => {
+        icon.value = markRaw(val ? favorite : favoriteEmpty);
+      },
+      { immediate: true }
+    );
 
     const mouseOverHandler = () => {
       isHovered.value = true;

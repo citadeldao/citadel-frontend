@@ -4,10 +4,7 @@ module.exports = {
   parallel: false,
   lintOnSave: process.env.NODE_ENV !== 'production',
   runtimeCompiler: true,
-  transpileDependencies: [
-    '@citadeldao/lib-citadel',
-    '@polkadot',
-  ],
+  transpileDependencies: ['@citadeldao/lib-citadel', '@polkadot'],
   chainWebpack: (config) => {
     const svgRule = config.module.rule('svg');
 
@@ -26,9 +23,7 @@ module.exports = {
     devServer: {
       // overlay: false,
     },
-    plugins: [
-      new NodePolyfillPlugin(),
-    ],
+    plugins: [new NodePolyfillPlugin()],
 
     module: {
       rules: [

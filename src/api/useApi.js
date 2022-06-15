@@ -20,5 +20,4 @@ export default function useApi(type = 'general', separate = false) {
   });
 
   return api;
-
 }

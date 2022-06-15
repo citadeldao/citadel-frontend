@@ -18,19 +18,14 @@ export const shuffleArray = (array) => {
 };
 
 export const shareInValue = (value, itemValue) => {
-  return BigNumber(itemValue)
-    .dividedBy(value)
-    .times(100)
-    .toNumber();
+  return BigNumber(itemValue).dividedBy(value).times(100).toNumber();
 };
 export const findWalletInArray = (arr = [], { address, net } = {}) => {
-  return arr.find(w => {
+  return arr.find((w) => {
     const isAddress = w.address?.toLowerCase() === address?.toLowerCase();
     const isNet = w.net?.toLowerCase() === net?.toLowerCase();
 
-    return net
-      ? isAddress && isNet
-      : isAddress;
+    return net ? isAddress && isNet : isAddress;
   });
 };
 
@@ -68,17 +63,19 @@ export const addressTextWidth = (text, fontFamily, fontSize) => {
   return width;
 };
 
-export const formattedWalletAddress = (address, wrapperWidth, fontFamily, fontSize) => {
+export const formattedWalletAddress = (
+  address,
+  wrapperWidth,
+  fontFamily,
+  fontSize
+) => {
   if (addressTextWidth(address, fontFamily, fontSize) > +wrapperWidth) {
     const addressEnd = `...${address.substr(address.length - 4)}`;
     let addressStart = address.substring(0, address.length - 4);
 
     while (
-      addressTextWidth(
-        `${addressStart}${addressEnd}`,
-        fontFamily,
-        fontSize,
-      ) > +wrapperWidth
+      addressTextWidth(`${addressStart}${addressEnd}`, fontFamily, fontSize) >
+      +wrapperWidth
     ) {
       addressStart = addressStart.substring(0, addressStart.length - 1);
     }
@@ -87,14 +84,23 @@ export const formattedWalletAddress = (address, wrapperWidth, fontFamily, fontSi
   }
 
   return address;
-
 };
 
-export const findAddressWithNet = (list, { address, net }) => list.find(
-  (item) =>
-    item.address?.toLowerCase() === address?.toLowerCase() &&
-    item.net === net,
-);
+export const parseHash = (hash) => {
+  const hashArray = hash.slice(1).split('-');
+
+  return {
+    action: hashArray[0],
+    net: hashArray[1],
+    address: hashArray[2],
+  };
+};
+
+export const findAddressWithNet = (list, { address, net }) =>
+  list.find(
+    (item) =>
+      item.address?.toLowerCase() === address?.toLowerCase() && item.net === net
+  );
 
 export const getTokenIcon = (code) => {
   return `//${process.env.VUE_APP_HOST}/cryptofont/SVG/${code}.svg`;
@@ -127,13 +133,11 @@ export const shortNameCrypto = (name) => {
 };
 
 export const parseSnip20Txs = (txs, decimals = 6) => {
-  const newTxs = txs.map(c => ({
+  const newTxs = txs.map((c) => ({
     to: c.receiver,
     from: c.sender,
     value: BigNumber(c.coins?.amount)
-      .div(
-        BigNumber(10).pow(decimals),
-      )
+      .div(BigNumber(10).pow(decimals))
       .toNumber(),
   }));
 

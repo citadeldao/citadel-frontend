@@ -1,12 +1,6 @@
 <template>
-  <div
-    class="dropdown"
-    :class="{ opened: isOpen }"
-  >
-    <div
-      class="dropdown__title"
-      @click="clickHandler"
-    >
+  <div class="dropdown" :class="{ opened: isOpen }">
+    <div class="dropdown__title" @click="clickHandler">
       <div class="title__icon">
         <component :is="currentIcon" />
       </div>
@@ -22,34 +16,21 @@
           />
           <span class="title__value-currency">{{ data.code }}</span>
         </div>
-        <div
-          v-if="!opened"
-          class="title__vertical-line"
-        />
-        <div
-          v-if="!opened"
-          class="title__arrow"
-        >
+        <div v-if="!opened" class="title__vertical-line" />
+        <div v-if="!opened" class="title__arrow">
           <arrowUp v-if="isOpen" />
           <arrowDown v-else />
         </div>
       </div>
     </div>
     <transition name="fade">
-      <div
-        v-show="isOpen"
-        class="dropdown__items"
-      >
+      <div v-show="isOpen" class="dropdown__items">
         <div
           v-for="(item, index) in data.rewards"
           :key="`${index}${item.value}${item.address}`"
           class="dropdown__item"
         >
-          <DropdownItem
-            :reward="item"
-            :currency="data.code"
-            opened
-          />
+          <DropdownItem :reward="item" :currency="data.code" opened />
         </div>
       </div>
     </transition>
@@ -78,23 +59,26 @@ export default {
   setup(props) {
     const isOpen = ref(props.opened);
     const currentIcon = ref();
+
     if (props.data) {
       import(`@/assets/icons/networks/${props.data.net}.svg`).then((val) => {
         currentIcon.value = markRaw(val.default);
       });
     }
+
     const clickHandler = () => {
-      if (props.opened){
+      if (props.opened) {
         return;
       }
+
       isOpen.value = !isOpen.value;
     };
     const total = computed(() =>
       props.data.rewards.reduce(
         (total, currentValue) =>
           BigNumber(total).plus(currentValue.value).toNumber(),
-        0,
-      ),
+        0
+      )
     );
 
     return { currentIcon, isOpen, clickHandler, total };
@@ -202,7 +186,7 @@ export default {
       margin-left: 15px;
       margin-right: 22px;
       font-size: 22px;
-      font-family: "Panton_Bold";
+      font-family: 'Panton_Bold';
       line-height: 26px;
       @include lg {
         margin-left: 7px;
@@ -242,7 +226,7 @@ export default {
       line-height: 26px;
       letter-spacing: -0.02em;
       color: $blue;
-      font-family: "Panton_Bold" !important;
+      font-family: 'Panton_Bold' !important;
       margin-right: 3px;
       @include lg {
         font-size: 18px;
@@ -254,7 +238,7 @@ export default {
       }
     }
     &__value-currency {
-      font-family: "Panton_Regular" !important;
+      font-family: 'Panton_Regular' !important;
       color: $black;
       margin-right: 0;
     }

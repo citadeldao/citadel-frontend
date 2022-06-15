@@ -4,7 +4,11 @@
       <component :is="currentIcon" />
     </div>
     <div class="dropdown-item__address">
-      {{ hidden ? Array(wallet.address.length).fill('*').join('') : wallet.address }}
+      {{
+        hidden
+          ? Array(wallet.address.length).fill('*').join('')
+          : wallet.address
+      }}
     </div>
     <div
       v-if="isSnip20"
@@ -30,7 +34,9 @@
       <visionIcon />
     </div>
     <div
-      v-if="[WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(wallet.type)"
+      v-if="
+        [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(wallet.type)
+      "
       class="dropdown-item__btn dropdown-item__btn--export"
       data-qa="settings__address__export-button"
       @click="exportWallet"
@@ -103,9 +109,11 @@ export default {
     const isShowDeleteModal = ref(false);
     const isLoading = ref(false);
     // const isLastWallet = computed(() => store.getters['wallets/wallets'].length === 0);
-    const isSnip20 = computed(() =>
-      props.wallet.net === SNIP20_PARENT_NET &&
-      props.wallet.subtokensList.filter((item)=> item.standard === 'snip20').length,
+    const isSnip20 = computed(
+      () =>
+        props.wallet.net === SNIP20_PARENT_NET &&
+        props.wallet.subtokensList.filter((item) => item.standard === 'snip20')
+          .length
       // store.getters['snip20Subtokens/availableSnip20TokenList'][props.wallet.address]?.length,
     );
 
@@ -116,14 +124,20 @@ export default {
     const toggleNotification = () => {
       notification.value = !notification.value;
     };
-    const customWalletsList = computed(() => store.getters['wallets/customWalletsList']);
+    const customWalletsList = computed(
+      () => store.getters['wallets/customWalletsList']
+    );
     const currentList = computed(() => store.getters['wallets/activeList']);
-    //const wallets = computed(() => store.getters['wallets/wallets']);
+    // const wallets = computed(() => store.getters['wallets/wallets']);
 
     const removeWallet = async () => {
       isLoading.value = true;
-      const hasOneSeedWallet = wallets.value.filter(w => w.type === WALLET_TYPES.ONE_SEED);
-      const showSeedModal = hasOneSeedWallet.length === 1 && props.wallet.type === WALLET_TYPES.ONE_SEED;
+      const hasOneSeedWallet = wallets.value.filter(
+        (w) => w.type === WALLET_TYPES.ONE_SEED
+      );
+      const showSeedModal =
+        hasOneSeedWallet.length === 1 &&
+        props.wallet.type === WALLET_TYPES.ONE_SEED;
 
       if (showSeedModal) {
         emit('deleteSeedModal');
@@ -138,7 +152,11 @@ export default {
       await store.dispatch('wallets/getCustomWalletsList');
 
       isLoading.value = false;
-      if (currentList.value !== 'all' && !customWalletsList.value.find(item => item.name === currentList.value)) {
+
+      if (
+        currentList.value !== 'all' &&
+        !customWalletsList.value.find((item) => item.name === currentList.value)
+      ) {
         store.commit('wallets/SET_ACTIVE_LIST', 'all');
       }
     };

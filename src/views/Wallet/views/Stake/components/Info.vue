@@ -3,16 +3,16 @@
     <div class="info__block">
       <div class="info__block-section">
         <h2 class="info__block-title">
-          {{ $t("wallet.info.block1Title") }}
+          {{ $t('wallet.info.block1Title') }}
         </h2>
         <span class="info__block-info">
-          {{ $t("wallet.info.block1Info") }}
+          {{ $t('wallet.info.block1Info') }}
         </span>
         <div class="info__block-icon">
           <placeholderKey />
         </div>
         <PrimaryButton @click="toAddAddress">
-          {{ $t("importAddress") }}
+          {{ $t('importAddress') }}
         </PrimaryButton>
       </div>
     </div>
@@ -20,16 +20,16 @@
     <div class="info__block">
       <div class="info__block-section">
         <h2 class="info__block-title">
-          {{ $t("wallet.info.block2Title") }}
+          {{ $t('wallet.info.block2Title') }}
         </h2>
         <span class="info__block-info">
-          {{ $t("wallet.info.block2Info") }}
+          {{ $t('wallet.info.block2Info') }}
         </span>
         <div class="info__block-icon">
           <placeholderQuestion />
         </div>
         <PrimaryButton :disabled="true">
-          {{ $t("learnHow") }}
+          {{ $t('learnHow') }}
         </PrimaryButton>
       </div>
     </div>
@@ -85,7 +85,7 @@ export default {
     margin: 0;
     font-size: 18px;
     line-height: 30px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     color: $too-dark-blue;
     text-align: center;
   }

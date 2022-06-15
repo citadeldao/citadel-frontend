@@ -7,10 +7,7 @@
           data-qa="wallet__favourite"
           @change="toggleFavorite"
         />
-        <div
-          v-click-away="onClickAway"
-          class="alias__edit"
-        >
+        <div v-click-away="onClickAway" class="alias__edit">
           <input
             v-if="editMode"
             ref="titleInput"
@@ -21,17 +18,14 @@
             @focus="focus = true"
             @blur="focus = false"
             @keyup.enter="setAlias()"
-          >
+          />
           <h4
             v-else
             ref="nameRef"
             :style="maxNameWidth"
             class="alias__wallet-name"
           >
-            <resize-observer
-              :show-trigger="true"
-              @notify="handleNameResize"
-            />
+            <resize-observer :show-trigger="true" @notify="handleNameResize" />
             {{ currentWallet.title || formattedWalletName }}
           </h4>
           <EditButton @click="clickHandler">
@@ -55,10 +49,7 @@
             @mouseenter="showAddressTooltip = true"
             @mouseleave="showAddressTooltip = false"
           >
-            <resize-observer
-              :show-trigger="true"
-              @notify="handleResize"
-            />
+            <resize-observer :show-trigger="true" @notify="handleResize" />
             {{ formattedAddress }}
           </span>
           <div
@@ -67,21 +58,14 @@
             @click="copyAddress(currentWallet.address)"
           >
             <transition name="fade1">
-              <span
-                v-if="isCopied"
-                class="alias__tooltip"
-              >
+              <span v-if="isCopied" class="alias__tooltip">
                 {{ $t('copiedToClipboard') }}
               </span>
             </transition>
             <copy />
           </div>
           <div class="alias__scanner-icon">
-            <a
-              :title="scannerLink"
-              :href="scannerLink"
-              target="_blank"
-            >
+            <a :title="scannerLink" :href="scannerLink" target="_blank">
               <linkIcon />
             </a>
           </div>
@@ -124,7 +108,14 @@ import { WALLET_TYPES } from '@/config/walletType';
 
 export default {
   name: 'Alias',
-  components: { EditButton, FavouriteButton, WalletTypeCard, copy, qr, linkIcon },
+  components: {
+    EditButton,
+    FavouriteButton,
+    WalletTypeCard,
+    copy,
+    qr,
+    linkIcon,
+  },
   props: {
     currentWallet: {
       type: Object,
@@ -139,7 +130,7 @@ export default {
     const wrapperWidth = ref();
     const wrapperNameWidth = ref();
 
-    const scannerLink = computed(()=> props.currentWallet.getScannerLink());
+    const scannerLink = computed(() => props.currentWallet.getScannerLink());
 
     const handleResize = ({ width }) => {
       wrapperWidth.value = width;
@@ -155,22 +146,40 @@ export default {
     });
 
     const maxWidth = computed(() =>
-      addressTextWidth(props.currentWallet?.address, 'Panton_Regular', fontSizes.value.address),
+      addressTextWidth(
+        props.currentWallet?.address,
+        'Panton_Regular',
+        fontSizes.value.address
+      )
     );
     const maxNameWidth = computed(() => {
       return props.currentWallet.title
         ? {}
-        : { maxWidth: `${addressTextWidth(props.currentWallet?.address, 'Panton_Bold', fontSizes.value.name)}px` };
+        : {
+            maxWidth: `${addressTextWidth(
+              props.currentWallet?.address,
+              'Panton_Bold',
+              fontSizes.value.name
+            )}px`,
+          };
     });
 
-    const metamaskConnector = computed(() => store.getters['metamask/metamaskConnector']);
+    const metamaskConnector = computed(
+      () => store.getters['metamask/metamaskConnector']
+    );
 
     const currentWalletType = computed(() => {
       const metamaskNet = metamaskConnector.value.network;
-      const metamaskAddress = metamaskConnector.value.accounts[0] && metamaskConnector.value.accounts[0].toLowerCase();
+      const metamaskAddress =
+        metamaskConnector.value.accounts[0] &&
+        metamaskConnector.value.accounts[0].toLowerCase();
       const { address, net, type } = props.currentWallet;
 
-      if (address.toLowerCase() === metamaskAddress && net === metamaskNet && type === WALLET_TYPES.PUBLIC_KEY) {
+      if (
+        address.toLowerCase() === metamaskAddress &&
+        net === metamaskNet &&
+        type === WALLET_TYPES.PUBLIC_KEY
+      ) {
         return WALLET_TYPES.METAMASK;
       }
 
@@ -182,7 +191,7 @@ export default {
         props.currentWallet?.address,
         +wrapperWidth.value,
         'Panton_Regular',
-        fontSizes.value.address,
+        fontSizes.value.address
       );
     });
 
@@ -191,7 +200,7 @@ export default {
         props.currentWallet?.address,
         +wrapperNameWidth.value,
         'Panton_Bold',
-        fontSizes.value.name,
+        fontSizes.value.name
       );
     });
 
@@ -207,6 +216,7 @@ export default {
 
         return;
       }
+
       await store.dispatch('wallets/renameWalletTitle', {
         walletId: props.currentWallet.id,
         title: alias.value,
@@ -242,18 +252,18 @@ export default {
     };
 
     const customWalletsList = computed(
-      () => store.getters['wallets/customWalletsList'],
+      () => store.getters['wallets/customWalletsList']
     );
     const favouritesList = computed(
       () =>
         customWalletsList.value.length > 0 &&
-        customWalletsList.value.find((list) => list.name === 'Favourites'),
+        customWalletsList.value.find((list) => list.name === 'Favourites')
     );
 
     const isFavorite = computed(
       () =>
         favouritesList.value &&
-        !!findAddressWithNet(favouritesList.value.wallets, props.currentWallet),
+        !!findAddressWithNet(favouritesList.value.wallets, props.currentWallet)
     );
     const toggleFavorite = async () => {
       if (isFavorite.value) {
@@ -261,6 +271,7 @@ export default {
       } else {
         await addToFavorite();
       }
+
       await store.dispatch('wallets/getCustomWalletsList');
     };
     const removeFromFavorite = async () => {
@@ -268,10 +279,12 @@ export default {
         listId: favouritesList.value.id,
         name: 'Favourites',
         wallets: favouritesList.value.wallets.filter(
-          ({ address, net }) => !(
-            address.toLowerCase() === props.currentWallet.address.toLowerCase()
-            && net === props.currentWallet.net
-          ),
+          ({ address, net }) =>
+            !(
+              address.toLowerCase() ===
+                props.currentWallet.address.toLowerCase() &&
+              net === props.currentWallet.net
+            )
         ),
         needSetActiveList: false,
       });
@@ -280,15 +293,18 @@ export default {
       if (!favouritesList.value) {
         await store.dispatch('wallets/createCustomWalletsList', {
           name: 'Favourites',
-          wallets: [{
-            net: props.currentWallet.net,
-            address: props.currentWallet.address,
-          }],
+          wallets: [
+            {
+              net: props.currentWallet.net,
+              address: props.currentWallet.address,
+            },
+          ],
           needSetActiveList: false,
         });
 
         return;
       }
+
       await store.dispatch('wallets/editCustomWalletsList', {
         listId: favouritesList.value.id,
         name: 'Favourites',
@@ -391,7 +407,7 @@ export default {
     position: relative;
     flex: 1;
     margin: 0;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     margin-right: 16px;
     font-size: 20px;
     line-height: 30px;
@@ -417,7 +433,7 @@ export default {
     border-radius: 4px;
     height: 30px;
     padding: 0 9px;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
 
     &:focus {
       border: 1px solid $blue;
@@ -543,7 +559,7 @@ export default {
     color: $too-dark-blue;
 
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       bottom: 98%;
       left: 50%;

@@ -9,7 +9,7 @@
       @click.prevent="$emit('redelegationButtonClick', $event)"
     >
       <redelegate />
-      {{ $t("redelegation.redelegate") }}
+      {{ $t('redelegation.redelegate') }}
     </button>
     <button
       v-if="type === 'stake'"
@@ -33,12 +33,10 @@
     <transition name="fade">
       <button
         v-if="currentWallet.hasClaim"
-        class="
-          wallet-buttons-panel__button wallet-buttons-panel__button-rewards
-        "
+        class="wallet-buttons-panel__button wallet-buttons-panel__button-rewards"
         :data-qa="
           dataQa &&
-            `${dataQa}__${currentWalletInfo?.stake ? 'rewards' : 'earn'}-button`
+          `${dataQa}__${currentWalletInfo?.stake ? 'rewards' : 'earn'}-button`
         "
         @click="claimButtonHandler"
       >
@@ -47,7 +45,7 @@
           v-if="!showRedelegationButton"
           class="wallet-buttons-panel__button-rewards-rewards"
         >
-          {{ $t("rewards") }}
+          {{ $t('rewards') }}
         </span>
         <div class="wallet-buttons-panel__button-rewards-count">
           <span class="wallet-buttons-panel__button-rewards-value">
@@ -70,7 +68,7 @@
 
 <script>
 import redelegate from '@/assets/icons/redelegate.svg';
-//import useWallets from '@/compositions/useWallets';
+// import useWallets from '@/compositions/useWallets';
 import hotSale from '@/assets/icons/hot-sale.svg';
 import paperPlane from '@/assets/icons/paper-plane.svg';
 import { computed, inject } from 'vue';
@@ -123,42 +121,40 @@ export default {
     'redelegationButtonClick',
   ],
   setup(props, { emit }) {
-    //const { walletInfo } = useWallets();
+    // const { walletInfo } = useWallets();
     const store = useStore();
     const router = useRouter();
     const route = useRoute();
     const apy = computed(() =>
       props.currentToken
         ? store.getters['subtokens/inflationInfoXCT'].yieldPct
-        : store.getters['profile/formatYeldByNet'](props.currentWallet.net),
+        : store.getters['profile/formatYeldByNet'](props.currentWallet.net)
     );
-    const currentWalletInfo = computed(() =>
-      props.currentToken
-        ? props.currentToken.tokenBalance
-        : props.currentWallet.balance,//walletInfo.value.balance,
+    const currentWalletInfo = computed(
+      () =>
+        props.currentToken
+          ? props.currentToken.tokenBalance
+          : props.currentWallet.balance // walletInfo.value.balance,
     );
 
     const rewardCount = computed(
-      () => currentWalletInfo.value?.claimableRewards || apy.value,
+      () => currentWalletInfo.value?.claimableRewards || apy.value
     );
 
     const rewardCurrency = computed(() =>
-      currentWalletInfo.value?.claimableRewards ? props.currentWallet.code : `%`,
+      currentWalletInfo.value?.claimableRewards ? props.currentWallet.code : `%`
     );
-
 
     const disableStake = computed(() => {
       // only for start staking button
-      if(props.button2 === 'startStaking'){
+      if (props.button2 === 'startStaking') {
         const canStake = inject('canStake');
 
         return !canStake.value;
       }
 
       return false;
-
     });
-
 
     const claimButtonHandler = () => {
       if (currentWalletInfo.value?.claimableRewards) {
@@ -198,7 +194,7 @@ export default {
     font-size: 14px;
     line-height: 17px;
     padding: 0 4px;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
     height: 100%;
     display: flex;
     align-items: center;
@@ -250,7 +246,7 @@ export default {
 
   &__button-rewards {
     &:hover {
-      .wallet-buttons-panel__button-rewards-value{
+      .wallet-buttons-panel__button-rewards-value {
         color: $dark-blue;
       }
       & svg {
@@ -274,15 +270,15 @@ export default {
   &__button-rewards-rewards {
     font-size: 14px;
     line-height: 17px;
-    font-family: "Panton_Regular";
+    font-family: 'Panton_Regular';
   }
   &__button-rewards-rewards {
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
     margin-right: 8px;
   }
   &__button-rewards-value {
     color: $ligth-blue;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
   }
 
   &__button-rewards-currency,

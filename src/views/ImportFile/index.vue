@@ -5,10 +5,7 @@
       :private-wallets-mode="privateWalletsMode"
       :from-upload-file="true"
     />
-    <Header
-      :current-step="currentStep"
-      :steps="steps"
-    />
+    <Header :current-step="currentStep" :steps="steps" />
     <div class="import-file__section">
       <!-- <Stepper :steps="steps" /> -->
       <UploadFile
@@ -22,16 +19,9 @@
         @passwordConfirmed="finalStep"
       />
     </div>
-    <teleport
-      v-if="showModal"
-      to="body"
-    >
+    <teleport v-if="showModal" to="body">
       <Modal>
-        <img
-          v-if="showLoader"
-          src="@/assets/gif/loader.gif"
-          alt=""
-        >
+        <img v-if="showLoader" src="@/assets/gif/loader.gif" alt="" />
         <CatPage
           v-else
           v-click-away="modalClickHandler"
@@ -81,22 +71,32 @@ export default {
     const privateWalletsMode = ref(false); // citadel accs, when has oneseed
     const { isPasswordHash } = useCreateWallets();
 
-
-    const oldBackupKey = computed(() => `__wallets__${store.getters['profile/info']?.id}`);
+    const oldBackupKey = computed(
+      () => `__wallets__${store.getters['profile/info']?.id}`
+    );
 
     const setBackup = (payload) => {
       backup.value = payload;
-      if (isPasswordHash.value && (backup.value.privateWallets || backup.value.wallets)) {
+
+      if (
+        isPasswordHash.value &&
+        (backup.value.privateWallets || backup.value.wallets)
+      ) {
         const list = backup.value.privateWallets || backup.value.wallets;
         privateWalletsMode.value = true;
         setTimeout(() => {
-          localStorage.setItem(oldBackupKey.value, JSON.stringify(
-            [
+          localStorage.setItem(
+            oldBackupKey.value,
+            JSON.stringify([
               {
                 type: 1,
                 coins: list
-                  .filter(w => [WALLET_TYPES.PRIVATE_KEY, WALLET_TYPES.ONE_SEED].includes(w.type))
-                  .map(w => ({
+                  .filter((w) =>
+                    [WALLET_TYPES.PRIVATE_KEY, WALLET_TYPES.ONE_SEED].includes(
+                      w.type
+                    )
+                  )
+                  .map((w) => ({
                     ...w,
                     coin: w.net,
                     keys: {
@@ -107,8 +107,8 @@ export default {
                   })),
                 passwordHash: backup.value.passwordHash,
               },
-            ],
-          ));
+            ])
+          );
           oldFormat.value = true;
         }, 500);
       }
@@ -127,15 +127,18 @@ export default {
       const list = backup.value.privateWallets || backup.value.wallets;
       await Promise.all(
         list.map(async (wallet) => {
-          if(wallet.net){
-            const newInstance = await store.dispatch('crypto/createNewWalletInstance',
-              { walletOpts: wallet });
-            await store.dispatch('wallets/pushWallets', { wallets: [newInstance] } );
+          if (wallet.net) {
+            const newInstance = await store.dispatch(
+              'crypto/createNewWalletInstance',
+              { walletOpts: wallet }
+            );
+            await store.dispatch('wallets/pushWallets', {
+              wallets: [newInstance],
+            });
             newWallets.value.push(newInstance);
           }
-        }),
+        })
       );
-
 
       store.commit('crypto/setUserMnemonic', backup.value.mnemonic, {
         root: true,
@@ -147,6 +150,7 @@ export default {
       const success = !![...newWallets.value].filter((w) => w).length;
       showModal.value = false;
       showLoader.value = false;
+
       if (success) {
         showModal.value = true;
       }
