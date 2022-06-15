@@ -50,13 +50,17 @@
     <div class="wallet__right-section">
       <transition name="fade">
         <div
-          v-if="currentToken ? currentToken?.hasClaim : currentWallet.hasClaim"
+          v-if="
+            (currentToken ? currentToken?.hasClaim : currentWallet.hasClaim) &&
+            !currentWallet.isStub
+          "
           class="wallet__claim-rewards-lg"
         >
           <ClaimRewards
-            :disabled="currentWallet.isStub"
             :is-current-token="!!currentToken"
             :current-wallet="currentToken || currentWallet"
+            @prepareClaim="prepareClaim"
+            @prepareXctClaim="prepareXctClaim"
           />
         </div>
       </transition>

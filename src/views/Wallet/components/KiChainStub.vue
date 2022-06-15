@@ -14,17 +14,10 @@
 </template>
 <script>
 import kiChainIcon from '@/assets/icons/ki-chain.svg';
-import { useI18n } from 'vue-i18n';
 export default {
   name: 'KiChainStub',
   components: {
     kiChainIcon,
-  },
-  setup() {
-    const { t } = useI18n();
-    return {
-      t,
-    };
   },
 };
 </script>
