@@ -26,22 +26,25 @@
         <KtAddresses :current-wallet="currentWallet" />
       </div>
       <div class="wallet__main">
-        <MainHeader
-          :current-wallet="currentWallet"
-          :current-token="currentToken"
-        />
-        <div v-if="$route.name === 'Wallet'" class="wallet__loading">
-          <Loading />
-        </div>
-        <router-view
-          v-else
-          :subtokens-is-loading="subtokensIsLoading"
-          :current-wallet="currentToken || currentWallet"
-          :token-list="subtokens"
-          :current-token="currentToken"
-          @prepareClaim="prepareClaim"
-          @prepareXctClaim="prepareXctClaim"
-        />
+        <template v-if="currentWallet.net !== 'kichain'">
+          <MainHeader
+            :current-wallet="currentWallet"
+            :current-token="currentToken"
+          />
+          <div v-if="$route.name === 'Wallet'" class="wallet__loading">
+            <Loading />
+          </div>
+          <router-view
+            v-else
+            :subtokens-is-loading="subtokensIsLoading"
+            :current-wallet="currentToken || currentWallet"
+            :token-list="subtokens"
+            :current-token="currentToken"
+            @prepareClaim="prepareClaim"
+            @prepareXctClaim="prepareXctClaim"
+          />
+        </template>
+        <KiChainStub v-else></KiChainStub>
       </div>
     </div>
     <div class="wallet__right-section">
@@ -259,6 +262,7 @@ import AliasQrCard from './components/AliasQrCard';
 import Modal from '@/components/Modal';
 import Loading from '@/components/Loading';
 // eslint-disable-next-line no-unused-vars
+import KiChainStub from '@/views/Wallet/components/KiChainStub.vue';
 import NetworkInfo from './components/NetworkInfo';
 import ClaimRewards from './components/ClaimRewards';
 import ClaimUnstakedBlock from './components/ClaimUnstakedBlock';
@@ -308,6 +312,7 @@ export default {
     KtAddressesMd,
     Loading,
     ClaimUnstakedBlock,
+    KiChainStub,
   },
   setup() {
     const { t } = useI18n();

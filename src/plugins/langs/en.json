@@ -187,6 +187,9 @@
             "block1Info": "This is a view-only address, because you've added it with a public key or you were logged out.",
             "block2Title": "Need some guidance on address import?",
             "block2Info": "Check the step-by-step guide on how to import an address with your private key or a seed phrase."
+        },
+        "stubs":{
+            "chain": "Ki-chain is temporarily unavailable"
         }
     },
     "balanceTooltipInfo": {
@@ -1163,6 +1166,7 @@
     "changeValidators": "Change validators",
     "redelegateNote": "You must choose another validator to redelegate",
     "assets": "Assets",
+
     "menu": {
         "settings": "Settings",
         "logOut": "Log Out"

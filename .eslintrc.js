@@ -24,6 +24,12 @@ module.exports = {
     'vue/max-attributes-per-line': 'off',
     'arrow-parens': ['error', 'always'],
     'no-irregular-whitespace': 'off',
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
   },
 
   overrides: [
