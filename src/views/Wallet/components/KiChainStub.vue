@@ -33,7 +33,7 @@ export default {
     font-size: 12px;
   }
   @include md {
-    font-size: 10px !important;
+    font-size: 10px;
   }
 }
 h2 {
