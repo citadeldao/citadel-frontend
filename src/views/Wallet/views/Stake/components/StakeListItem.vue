@@ -203,18 +203,27 @@ export default {
     });
 
     const updateSelectedNode = inject('updateSelectedNode');
+    const activeTab = inject('activeTab');
     const selectedNode = inject('selectedNode');
     const updateShowChooseNode = inject('updateShowChooseNode');
     const updateShowNodesList = inject('updateShowNodesList');
     const updateShowModal = inject('updateShowModal');
     const updateEditMode = inject('updateEditMode');
     const editMode = inject('editMode');
+    const updateIsWithoutDelegation = inject('updateIsWithoutDelegation');
+    const getDelegationFee = inject('getDelegationFee');
+
     const clickHandler = async (item) => {
       emit('editClick');
 
       if (selectedNode.value) {
         updateShowChooseNode(false);
         updateShowNodesList(true);
+      } else if (props.type === 'withoutDelegation') {
+        updateIsWithoutDelegation(true);
+        await getDelegationFee(activeTab.value);
+        updateShowModal(true);
+        updateShowChooseNode(true);
       } else {
         updateEditMode(true);
         await updateSelectedNode(item);
@@ -226,7 +235,10 @@ export default {
     const showEditButton = computed(() => {
       if (editMode.value && !props.redelegationNodeTo) {
         return false;
-      } else if (editMode.value && props.redelegationNodeTo) {
+      } else if (
+        (editMode.value && props.redelegationNodeTo) ||
+        props.type === 'withoutDelegation'
+      ) {
         return true;
       } else if (
         props.currentWallet.type !== WALLET_TYPES.PUBLIC_KEY &&

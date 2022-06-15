@@ -18,6 +18,7 @@
 
     <div v-if="wallet.hasFee && !hideFee" class="action-modal-content__fees">
       <Fees
+        :hide-custom-fee="wallet.hideCustomFee"
         :current-token="currentToken"
         :fees="fees"
         :wallet="wallet"
