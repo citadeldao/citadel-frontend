@@ -366,7 +366,7 @@ export default {
         showConfirmLedgerModal.value = true;
 
         const { error: resError, data } = await citadel.setViewingKey(
-          [props.currentWallet.id],
+          props.currentWallet.id,
           props.token.net,
           props.vkType,
           {

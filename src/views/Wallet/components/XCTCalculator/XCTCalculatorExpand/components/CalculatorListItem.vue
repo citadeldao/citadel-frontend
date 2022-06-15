@@ -26,7 +26,8 @@
             <input
               ref="valueInput"
               :value="value"
-              type="number"
+              type="text"
+              @keypress="keypressHandler"
               @input="inputHandler"
               @blur="showInput = false"
             />
@@ -152,16 +153,39 @@ export default {
       return result;
     });
     const inputHandler = (e) => {
-      if (+e.target.value > +props.data.totalTokens) {
+      const formatedValue = e.target.value
+        .toString()
+        // remove spaces
+        .replace(/\s+/g, '')
+        .replace(/[БбЮю]/, '.')
+        .replace(',', '.')
+        // only number
+        .replace(/[^.\d]+/g, '')
+        // remove extra 0 before decimal
+        .replace(/^0+/, '0')
+        // remove extra dots
+        // eslint-disable-next-line no-useless-escape
+        .replace(/^([^\.]*\.)|\./g, '$1');
+      if (+formatedValue > +props.data.totalTokens) {
         value.value = +props.data.totalTokens;
       } else {
-        value.value = +e.target.value;
+        if (!isNaN(+formatedValue)) {
+          value.value = +formatedValue;
+        }
       }
     };
     const valueInput = ref(null);
     const toggleShowInput = () => {
       showInput.value = true;
       nextTick(() => valueInput.value.focus());
+    };
+
+    const keypressHandler = (e) => {
+      // eslint-disable-next-line
+      if(!/^[0-9\.\-\/]+$/.test(e.key)){
+
+        e.preventDefault();
+      }
     };
 
     return {
@@ -173,6 +197,7 @@ export default {
       toggleShowInput,
       valueInput,
       OUR_TOKEN,
+      keypressHandler,
     };
   },
 };
