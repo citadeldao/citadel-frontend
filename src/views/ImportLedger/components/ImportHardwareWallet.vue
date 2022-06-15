@@ -45,7 +45,7 @@ export default {
     const net = computed(() => netByTitle[search.value]);
 
     const error = computed(
-      () => search.value && !net.value && t('networkNameIncorrect'),
+      () => search.value && !net.value && t('networkNameIncorrect')
     );
 
     const disabled = computed(() => !search.value || error.value);
@@ -90,7 +90,7 @@ export default {
     font-size: 20px;
     line-height: 30px;
     margin: 0;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     margin-bottom: 24px;
   }
 

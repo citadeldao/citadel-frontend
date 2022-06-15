@@ -1,19 +1,16 @@
 <template>
   <Info
-    v-if="currentWallet.type === WALLET_TYPES.PUBLIC_KEY && currentWalletType !== WALLET_TYPES.METAMASK"
+    v-if="
+      currentWallet.type === WALLET_TYPES.PUBLIC_KEY &&
+      currentWalletType !== WALLET_TYPES.METAMASK
+    "
     title="xct.publicKeyPlaceholderTitle"
   />
   <div v-else>
-    <div
-      v-if="isDataLoading"
-      class="wallet-rewards wallet-rewards--loading"
-    >
+    <div v-if="isDataLoading" class="wallet-rewards wallet-rewards--loading">
       <Loading />
     </div>
-    <div
-      v-else
-      class="wallet-rewards"
-    >
+    <div v-else class="wallet-rewards">
       <div class="wallet-rewards__content">
         <InfoBlocks
           :unassigned-addresses="unassignedAddresses"
@@ -22,10 +19,7 @@
           @assignedButtonClick="showAssignedAddresses"
           @unassignedButtonClick="startAddressAssigning"
         />
-        <div
-          v-if="showRewardesBlock"
-          class="wallet-rewards__rewards-block"
-        >
+        <div v-if="showRewardesBlock" class="wallet-rewards__rewards-block">
           <RewardsBlock
             :holder-info="holderInfo"
             :xct-market-cap="xctMarketCap"
@@ -33,10 +27,7 @@
             :total-claimed-rewards-x-c-t="totalClaimedRewardsXCT"
           />
         </div>
-        <sadMad
-          v-else
-          class="wallet-rewards__sad-man"
-        />
+        <sadMad v-else class="wallet-rewards__sad-man" />
       </div>
     </div>
   </div>
@@ -48,21 +39,12 @@
     @button2click="startAddressAssigning"
     @prepareXctClaim="$emit('prepareXctClaim')"
   />
-  <teleport
-    v-if="isLoading"
-    to="body"
-  >
+  <teleport v-if="isLoading" to="body">
     <Modal>
-      <img
-        src="@/assets/gif/loader.gif"
-        alt=""
-      >
+      <img src="@/assets/gif/loader.gif" alt="" />
     </Modal>
   </teleport>
-  <teleport
-    v-if="showModal"
-    to="body"
-  >
+  <teleport v-if="showModal" to="body">
     <Modal>
       <ModalContent
         v-if="showAssignedAddressesModal"
@@ -123,7 +105,8 @@
           <span
             class="wallet-rewards__modal-back-button"
             @click="backToUnassignedList"
-          >{{ $t('backBtn') }}</span>
+            >{{ $t('backBtn') }}</span
+          >
         </template>
       </ModalContent>
       <ModalContent
@@ -229,14 +212,22 @@ export default {
     const store = useStore();
     const xctMarketCap = ref({});
 
-    const metamaskConnector = computed(() => store.getters['metamask/metamaskConnector']);
+    const metamaskConnector = computed(
+      () => store.getters['metamask/metamaskConnector']
+    );
 
     const currentWalletType = computed(() => {
       const metamaskNet = metamaskConnector.value.network;
-      const metamaskAddress = metamaskConnector.value.accounts[0] && metamaskConnector.value.accounts[0].toLowerCase();
+      const metamaskAddress =
+        metamaskConnector.value.accounts[0] &&
+        metamaskConnector.value.accounts[0].toLowerCase();
       const { address, net, type } = props.currentWallet;
 
-      if (address.toLowerCase() === metamaskAddress && net.includes(metamaskNet) && type === WALLET_TYPES.PUBLIC_KEY) {
+      if (
+        address.toLowerCase() === metamaskAddress &&
+        net.includes(metamaskNet) &&
+        type === WALLET_TYPES.PUBLIC_KEY
+      ) {
         return WALLET_TYPES.METAMASK;
       }
 
@@ -248,24 +239,42 @@ export default {
         isDataLoading.value = true;
         await store.dispatch('dao/getActivity');
         await store.dispatch('dao/getHolderInfo', props.currentWallet.id);
-        await store.dispatch('dao/getUnassignedAddresses', props.currentWallet.id);
-        await store.dispatch('dao/getTotalClaimedRewardsXCT', props.currentWallet.id);
+        await store.dispatch(
+          'dao/getUnassignedAddresses',
+          props.currentWallet.id
+        );
+        await store.dispatch(
+          'dao/getTotalClaimedRewardsXCT',
+          props.currentWallet.id
+        );
         const { data } = await props.currentWallet.getMarketcap();
         xctMarketCap.value = data;
         isDataLoading.value = false;
       }
-
     };
 
     loadData();
 
     const holderInfo = computed(() => store.getters['dao/holderInfo']);
-    const unassignedAddresses = computed(() => store.getters['dao/unassignedAddresses']);
-    const assignedAddresses = computed(() => store.getters['dao/assignedAddresses']);
-    const totalClaimedRewardsXCT = computed(() => store.getters['dao/totalClaimedRewardsXCT']);
-    const keplrConnector = computed(() => store.getters['keplr/keplrConnector']);
+    const unassignedAddresses = computed(
+      () => store.getters['dao/unassignedAddresses']
+    );
+    const assignedAddresses = computed(
+      () => store.getters['dao/assignedAddresses']
+    );
+    const totalClaimedRewardsXCT = computed(
+      () => store.getters['dao/totalClaimedRewardsXCT']
+    );
+    const keplrConnector = computed(
+      () => store.getters['keplr/keplrConnector']
+    );
 
-    const showPasswordForAssign = computed(() => !!unassignedAddresses.value.find(w => [WALLET_TYPES.PRIVATE_KEY, WALLET_TYPES.ONE_SEED].includes(w.type)));
+    const showPasswordForAssign = computed(
+      () =>
+        !!unassignedAddresses.value.find((w) =>
+          [WALLET_TYPES.PRIVATE_KEY, WALLET_TYPES.ONE_SEED].includes(w.type)
+        )
+    );
 
     const showModal = ref(false);
     const showAssignedAddressesModal = ref(false);
@@ -282,8 +291,7 @@ export default {
     provide('updateCheckedAddresses', updateCheckedAddresses);
     provide('checkedAddresses', checkedAddresses);
 
-    const { password, passwordError, inputError } =
-      useCheckPassword();
+    const { password, passwordError, inputError } = useCheckPassword();
     const { isHardwareWallet } = useWallets();
     const updatePassword = (value) => {
       password.value = value;
@@ -332,8 +340,24 @@ export default {
       showUnassignedAddressesModal.value = true;
     };
 
-    const seedAddresses = computed(() => sortByAlphabet(checkedAddresses.value.filter(({ type }) => !(type === WALLET_TYPES.TREZOR) && !(type === WALLET_TYPES.LEDGER)), 'net'));
-    const hardwareAddresses = computed(() => sortByAlphabet(checkedAddresses.value.filter(({ type }) => type === WALLET_TYPES.TREZOR || type === WALLET_TYPES.LEDGER), 'net'));
+    const seedAddresses = computed(() =>
+      sortByAlphabet(
+        checkedAddresses.value.filter(
+          ({ type }) =>
+            !(type === WALLET_TYPES.TREZOR) && !(type === WALLET_TYPES.LEDGER)
+        ),
+        'net'
+      )
+    );
+    const hardwareAddresses = computed(() =>
+      sortByAlphabet(
+        checkedAddresses.value.filter(
+          ({ type }) =>
+            type === WALLET_TYPES.TREZOR || type === WALLET_TYPES.LEDGER
+        ),
+        'net'
+      )
+    );
     const toApproveAssign = () => {
       showUnassignedAddressesModal.value = false;
 
@@ -341,7 +365,7 @@ export default {
         if (!showPasswordForAssign.value) {
           try {
             approveAssign();
-          } catch(err) {
+          } catch (err) {
             notify({
               type: 'warning',
               text: `Error signing assigned address ${err}`,
@@ -368,6 +392,7 @@ export default {
 
         return;
       }
+
       showApproveAsignWithPasswordModal.value = false;
       isLoading.value = true;
       // ассайним вансидовые адреса
@@ -375,14 +400,23 @@ export default {
 
       for (const item of seedAddresses.value) {
         let resError;
+
         if (item.type === WALLET_TYPES.KEPLR) {
           const { data } = await item.prepareAssignToDaoMessage(item.id);
           const { id } = data;
-          const keplrResult = await keplrConnector.value.sendKeplrTransaction(data.message, item.address, {
-            preferNoSetFee: true,
-            preferNoSetMemo: true,
-          });
-          const { error } = await item.sendAssignToDaoMessage(props.currentWallet.address, id, keplrResult.signature );
+          const keplrResult = await keplrConnector.value.sendKeplrTransaction(
+            data.message,
+            item.address,
+            {
+              preferNoSetFee: true,
+              preferNoSetMemo: true,
+            }
+          );
+          const { error } = await item.sendAssignToDaoMessage(
+            props.currentWallet.address,
+            id,
+            keplrResult.signature
+          );
           resError = error;
         } else {
           const { error } = await item.assignToDao({
@@ -392,9 +426,13 @@ export default {
           });
           resError = error;
         }
+
         putStatus = !resError;
         !resError && newAssignedAddresses.value.push(item);
-        newAssignedAddresses.value = sortByAlphabet(newAssignedAddresses.value, 'net');
+        newAssignedAddresses.value = sortByAlphabet(
+          newAssignedAddresses.value,
+          'net'
+        );
       }
 
       if (hardwareAddresses.value.length) {
@@ -410,7 +448,6 @@ export default {
         isLoading.value = false;
         showNewAssignedAddressesModal.value = false;
       }
-
     };
 
     const successClickHandler = async () => {
@@ -427,16 +464,23 @@ export default {
         });
 
         if (!error) {
-          const index = checkedAddresses.value.findIndex((wlt) => wlt.net === item.net && wlt.address === item.address);
+          const index = checkedAddresses.value.findIndex(
+            (wlt) => wlt.net === item.net && wlt.address === item.address
+          );
           checkedAddresses.value[index].signStatus = 'success';
           newAssignedAddresses.value.push(checkedAddresses.value[index]);
-          newAssignedAddresses.value = sortByAlphabet(newAssignedAddresses.value, 'net');
+          newAssignedAddresses.value = sortByAlphabet(
+            newAssignedAddresses.value,
+            'net'
+          );
         } else {
           throw error;
         }
       } catch (err) {
         console.error('Error signing assigned address', err);
-        const index = checkedAddresses.value.findIndex((wlt) => wlt.net === item.net && wlt.address === item.address);
+        const index = checkedAddresses.value.findIndex(
+          (wlt) => wlt.net === item.net && wlt.address === item.address
+        );
         checkedAddresses.value[index].signStatus = 'retry';
       }
     };
@@ -454,9 +498,14 @@ export default {
       router.push({ name: 'AddAddress' });
     };
 
-    const showRewardesBlock = computed(() =>
-      +holderInfo.value.holder.totalUsdt || +props.currentWallet.tokenBalance.stake ||
-      +holderInfo.value.holder.claimed || +totalClaimedRewardsXCT.value) || +props.currentWallet.tokenBalance.rewards;
+    const showRewardesBlock =
+      computed(
+        () =>
+          +holderInfo.value.holder.totalUsdt ||
+          +props.currentWallet.tokenBalance.stake ||
+          +holderInfo.value.holder.claimed ||
+          +totalClaimedRewardsXCT.value
+      ) || +props.currentWallet.tokenBalance.rewards;
 
     return {
       isHardwareWallet,

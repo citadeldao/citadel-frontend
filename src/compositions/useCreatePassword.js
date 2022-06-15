@@ -20,21 +20,22 @@ export default function useCreatePassword() {
       return t('passwordsDontMatch');
     }
 
-    if (password.value !== '' && repeatPassword.value !== '' && password.value.length < 8) {
+    if (
+      password.value !== '' &&
+      repeatPassword.value !== '' &&
+      password.value.length < 8
+    ) {
       return t('passwordTooShort');
     }
 
     return '';
   });
 
-  watch(
-    [password, repeatPassword],
-    () => {
-      if (inputError.value) {
-        inputError.value = false;
-      }
-    },
-  );
+  watch([password, repeatPassword], () => {
+    if (inputError.value) {
+      inputError.value = false;
+    }
+  });
 
   return {
     password,

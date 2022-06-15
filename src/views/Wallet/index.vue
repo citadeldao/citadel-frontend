@@ -1,17 +1,13 @@
 <template>
-  <div
-    v-if="currentWallet"
-    class="wallet"
-  >
+  <div v-if="currentWallet" class="wallet">
     <div class="wallet__central-section">
       <div class="wallet__section-wrapper">
-        <Alias
-          :current-wallet="currentWallet"
-          @qrClick="qrClick"
-        />
+        <Alias :current-wallet="currentWallet" @qrClick="qrClick" />
         <transition name="fade">
           <div
-            v-if="currentToken ? currentToken?.hasClaim : currentWallet.hasClaim"
+            v-if="
+              currentToken ? currentToken?.hasClaim : currentWallet.hasClaim
+            "
             class="wallet__claim-rewards"
           >
             <ClaimRewards
@@ -27,19 +23,14 @@
         v-if="currentWallet.hasKtAddresses && ktAddresses.length"
         class="wallet__kt-addresses"
       >
-        <KtAddresses
-          :current-wallet="currentWallet"
-        />
+        <KtAddresses :current-wallet="currentWallet" />
       </div>
       <div class="wallet__main">
         <MainHeader
           :current-wallet="currentWallet"
           :current-token="currentToken"
         />
-        <div
-          v-if="$route.name === 'Wallet'"
-          class="wallet__loading"
-        >
+        <div v-if="$route.name === 'Wallet'" class="wallet__loading">
           <Loading />
         </div>
         <router-view
@@ -87,9 +78,7 @@
         v-if="currentWallet.hasKtAddresses && ktAddresses.length"
         class="wallet__kt-addresses-md"
       >
-        <KtAddressesMd
-          :current-wallet="currentWallet"
-        />
+        <KtAddressesMd :current-wallet="currentWallet" />
       </div>
       <div
         v-if="currentToken?.net === OUR_TOKEN"
@@ -108,21 +97,12 @@
         />
       </div>
     </div>
-    <teleport
-      v-if="isLoading"
-      to="body"
-    >
+    <teleport v-if="isLoading" to="body">
       <Modal>
-        <img
-          src="@/assets/gif/loader.gif"
-          alt=""
-        >
+        <img src="@/assets/gif/loader.gif" alt="" />
       </Modal>
     </teleport>
-    <teleport
-      v-if="showClaimModal"
-      to="body"
-    >
+    <teleport v-if="showClaimModal" to="body">
       <Modal>
         <ModalContent
           v-if="showConfirmClaim"
@@ -140,7 +120,10 @@
             :wallet="currentWallet"
             :staking-amount="currentWallet.balance.claimableRewards"
             :staking-fee="fee"
-            :hide-password="isHardwareWallet || [WALLET_TYPES.KEPLR].includes(currentWallet.type)"
+            :hide-password="
+              isHardwareWallet ||
+              [WALLET_TYPES.KEPLR].includes(currentWallet.type)
+            "
             :adding="adding"
             @submitSend="claim"
           />
@@ -182,7 +165,9 @@
               :current-token="currentToken"
               :claim-options="claimOptions"
               :xct-rewards="xctRewards"
-              :hide-password="isHardwareWallet || currentWalletType === WALLET_TYPES.METAMASK"
+              :hide-password="
+                isHardwareWallet || currentWalletType === WALLET_TYPES.METAMASK
+              "
               :dao-rewards="daoRewards"
               :total-amount="totalAmount"
               @update:options="updateOptions"
@@ -192,9 +177,10 @@
           <template #cancelButton>
             <span
               class="wallet__modal-claim-button"
-              :class="{'wallet__modal-claim-button--disabled':disabled}"
+              :class="{ 'wallet__modal-claim-button--disabled': disabled }"
               @click="claimXctRewards"
-            >{{ $t('claim.claim') }}</span>
+              >{{ $t('claim.claim') }}</span
+            >
           </template>
         </ModalContent>
         <ModalContent
@@ -212,7 +198,11 @@
             v-model:txComment="txComment"
             :to="currentToken ? '' : currentWallet.address"
             :wallet="currentToken || currentWallet"
-            :amount="currentToken ? totalAmount : currentWallet.balance.claimableRewards"
+            :amount="
+              currentToken
+                ? totalAmount
+                : currentWallet.balance.claimableRewards
+            "
             :tx-hash="txHash"
             :show-from="false"
             type="reward"
@@ -246,10 +236,7 @@
         />
       </Modal>
     </teleport>
-    <teleport
-      v-if="showModal"
-      to="body"
-    >
+    <teleport v-if="showModal" to="body">
       <Modal>
         <AliasQrCard
           v-click-away="modalCloseHandler"
@@ -326,25 +313,32 @@ export default {
     const { t } = useI18n();
     const store = useStore();
     const route = useRoute();
-    const { currency, currentWallet, isHardwareWallet, currentToken } = useWallets();
+    const { currency, currentWallet, isHardwareWallet, currentToken } =
+      useWallets();
     const subtokensIsLoading = ref(false);
     const { loadKtAddresses, ktAddresses } = useKtAddresses();
 
     const showClaimModal = computed(() => {
-      return showConfirmClaim.value
-        || showXctConfirmClaim.value
-        || showClaimSuccessModal.value
-        || showConnectLedgerModal.value
-        || showAppLedgerModal.value
-        || showConfirmLedgerModal.value
-        || showRejectedLedgerModal.value
-        || showConfirmUnstakedClaim.value;
+      return (
+        showConfirmClaim.value ||
+        showXctConfirmClaim.value ||
+        showClaimSuccessModal.value ||
+        showConnectLedgerModal.value ||
+        showAppLedgerModal.value ||
+        showConfirmLedgerModal.value ||
+        showRejectedLedgerModal.value ||
+        showConfirmUnstakedClaim.value
+      );
     });
 
-    const keplrConnector = computed(() => store.getters['keplr/keplrConnector']);
-    const subtokens = computed(() => store.getters['subtokens/formatedSubtokens']());
+    const keplrConnector = computed(
+      () => store.getters['keplr/keplrConnector']
+    );
+    const subtokens = computed(() =>
+      store.getters['subtokens/formatedSubtokens']()
+    );
     // const currentToken = computed(()=> store.getters['subtokens/currentToken']);
-    onMounted(async ()=> {
+    onMounted(async () => {
       await loadKtAddresses(currentWallet?.value?.id);
       await loadXCTInfo();
     });
@@ -357,26 +351,31 @@ export default {
           params.address.toLowerCase() !== oldParams.address.toLowerCase()
         ) {
           store.dispatch('ktAddresses/setCurrentKtAddress', null);
-          if(params.net && params.address){
+
+          if (params.net && params.address) {
             await loadKtAddresses(currentWallet?.value?.id);
             await loadXCTInfo();
           }
-
-
         }
       },
-      { deep: true },
+      { deep: true }
     );
     const xctInflationIsLoading = ref(false);
     const inflationInfoXCT = computed(
-      () => store.getters['subtokens/inflationInfoXCT'],
+      () => store.getters['subtokens/inflationInfoXCT']
     );
     const loadXCTInfo = async () => {
       if (currentWallet.value?.hasXCT) {
         xctInflationIsLoading.value = true;
-        await store.dispatch('subtokens/getInflationInfoXCT', currentWallet.value.id);
+        await store.dispatch(
+          'subtokens/getInflationInfoXCT',
+          currentWallet.value.id
+        );
         await store.dispatch('dao/getHolderInfo', currentWallet.value.id);
-        await store.dispatch('dao/getTotalClaimedRewardsXCT', currentWallet.value.id);
+        await store.dispatch(
+          'dao/getTotalClaimedRewardsXCT',
+          currentWallet.value.id
+        );
         xctInflationIsLoading.value = false;
       }
     };
@@ -428,29 +427,40 @@ export default {
       if (isLoading.value) {
         return;
       }
-      isLoading.value = true;
-      const { resAdding, ok: feeOk, resFee, enough } =  await currentWallet.value.getDelegationFee({
-        walletId: currentWallet.value.id,
-        transactionType: 'claim' });
 
-      if(feeOk){
-        if(!enough) {
+      isLoading.value = true;
+      const {
+        resAdding,
+        ok: feeOk,
+        resFee,
+        enough,
+      } = await currentWallet.value.getDelegationFee({
+        walletId: currentWallet.value.id,
+        transactionType: 'claim',
+      });
+
+      if (feeOk) {
+        if (!enough) {
           isLoading.value = false;
 
           return;
         }
+
         adding.value = resAdding;
         fee.value = resFee;
-        const { rawTxs, ok: prepOk } = await currentWallet.value.prepareClaim(currentWallet.value.id);
-        if(prepOk){
+        const { rawTxs, ok: prepOk } = await currentWallet.value.prepareClaim(
+          currentWallet.value.id
+        );
+
+        if (prepOk) {
           resRawTxs.value = rawTxs;
           showConfirmClaim.value = true;
           isLoading.value = false;
-        }else{
+        } else {
           claimModalCloseHandler();
           isLoading.value = false;
         }
-      }else{
+      } else {
         return;
       }
     };
@@ -459,10 +469,14 @@ export default {
       if (isLoading.value) {
         return;
       }
+
       isLoading.value = true;
 
-      const { rawTx, ok } = await currentWallet.value.prepareClaimUnstaked(currentWallet.value.id);
+      const { rawTx, ok } = await currentWallet.value.prepareClaimUnstaked(
+        currentWallet.value.id
+      );
       const resOk = ok;
+
       if (resOk) {
         fee.value = rawTx.fee;
         resRawTxs.value = rawTx;
@@ -479,8 +493,13 @@ export default {
       if (currentWallet.value.type === WALLET_TYPES.KEPLR) {
         isLoading.value = true;
         let keplrResult;
+
         try {
-          keplrResult = await keplrConnector.value.sendKeplrTransaction(resRawTxs.value, currentWallet.value.address, { preferNoSetFee: true });
+          keplrResult = await keplrConnector.value.sendKeplrTransaction(
+            resRawTxs.value,
+            currentWallet.value.address,
+            { preferNoSetFee: true }
+          );
         } catch (err) {
           notify({
             type: 'warning',
@@ -524,7 +543,9 @@ export default {
           },
         };
         const data = await useApi('wallet').sendSignedTransaction({
-          hash: keplrNetworksProtobufFormat.includes(currentWallet.value.net) ? protobufTx : defaultTx,
+          hash: keplrNetworksProtobufFormat.includes(currentWallet.value.net)
+            ? protobufTx
+            : defaultTx,
           deviceType: WALLET_TYPES.KEPLR,
           proxy: false,
           network: currentWallet.value.net,
@@ -559,11 +580,13 @@ export default {
         showConfirmLedgerModal.value = false;
         showRejectedLedgerModal.value = false;
         let res;
+
         if (isLedgerWallet.value) {
           isLoading.value = false;
           showConfirmClaim.value = false;
           clearLedgerModals();
           showConfirmLedgerModal.value = true;
+
           try {
             res = await currentWallet.value.signAndSendMulti({
               walletId: currentWallet.value.id,
@@ -583,8 +606,11 @@ export default {
           res = await currentWallet.value.signAndSendMulti({
             walletId: currentWallet.value.id,
             rawTransactions: resRawTxs.value,
-            privateKey: currentWallet.value.getPrivateKeyDecoded(password.value),
+            privateKey: currentWallet.value.getPrivateKeyDecoded(
+              password.value
+            ),
           });
+
           if (res.ok) {
             txHash.value = res.data;
             showConfirmClaim.value = false;
@@ -605,26 +631,32 @@ export default {
       showClaimSuccessModal.value = false;
       showXctConfirmClaim.value = false;
       showConfirmUnstakedClaim.value = false;
-      updateOptions({ xctRewards: !!xctRewards.value, daoRewards: !!daoRewards.value });
+      updateOptions({
+        xctRewards: !!xctRewards.value,
+        daoRewards: !!daoRewards.value,
+      });
       fees.value = [];
       clearLedgerModals();
     };
 
     const successClickHandler = async () => {
       txComment.value &&
-      (await store.dispatch('transactions/postTransactionNote', {
-        network: currentWallet.value.net,
-        hash: txHash.value[0],
-        text: txComment.value,
-      }));
+        (await store.dispatch('transactions/postTransactionNote', {
+          network: currentWallet.value.net,
+          hash: txHash.value[0],
+          text: txComment.value,
+        }));
       txComment.value = '';
       claimModalCloseHandler();
     };
 
     // ledger modal handlers
     const connectLedgerClickHandler = () => {
-      xctAction.value === 'restake' ? restakeXctRewards() :
-        xctAction.value === 'claim' ? claimXctRewards() : claim();
+      xctAction.value === 'restake'
+        ? restakeXctRewards()
+        : xctAction.value === 'claim'
+        ? claimXctRewards()
+        : claim();
     };
     const connectLedgerCloseHandler = () => {
       clearLedgerModals();
@@ -635,8 +667,11 @@ export default {
       claimModalCloseHandler();
     };
     const appLedgerClickHandler = () => {
-      xctAction.value === 'restake' ? restakeXctRewards() :
-        xctAction.value === 'claim' ? claimXctRewards() : claim();
+      xctAction.value === 'restake'
+        ? restakeXctRewards()
+        : xctAction.value === 'claim'
+        ? claimXctRewards()
+        : claim();
     };
     const appLedgerCloseHandler = () => {
       connectLedgerCloseHandler();
@@ -651,10 +686,14 @@ export default {
       connectLedgerCloseHandler();
     };
 
-    const daoRewards = computed(() => store.getters['dao/holderInfo'].holder?.claimable);
+    const daoRewards = computed(
+      () => store.getters['dao/holderInfo'].holder?.claimable
+    );
     const xctRewards = computed(() =>
       BigNumber(currentToken.value?.tokenBalance.claimableRewards)
-        .minus(daoRewards.value).toNumber());
+        .minus(daoRewards.value)
+        .toNumber()
+    );
     const claimOptions = ref({
       xctRewards: !!xctRewards.value,
       daoRewards: !!daoRewards.value,
@@ -664,19 +703,19 @@ export default {
       () => password.value,
       (newVal) => {
         updatePassword(newVal);
-      },
+      }
     );
     watch(
       () => daoRewards.value,
       (newVal) => {
         claimOptions.value.daoRewards = !!newVal;
-      },
+      }
     );
     watch(
       () => xctRewards.value,
       (newVal) => {
         claimOptions.value.xctRewards = !!newVal;
-      },
+      }
     );
 
     const updateOptions = (options) => {
@@ -703,14 +742,22 @@ export default {
     const claimDaoTxs = ref();
     const claimDaoFee = ref();
 
-    const metamaskConnector = computed(() => store.getters['metamask/metamaskConnector']);
+    const metamaskConnector = computed(
+      () => store.getters['metamask/metamaskConnector']
+    );
 
     const currentWalletType = computed(() => {
       const metamaskNet = metamaskConnector.value.network;
-      const metamaskAddress = metamaskConnector.value.accounts[0] && metamaskConnector.value.accounts[0].toLowerCase();
+      const metamaskAddress =
+        metamaskConnector.value.accounts[0] &&
+        metamaskConnector.value.accounts[0].toLowerCase();
       const { address, net, type } = currentWallet.value;
 
-      if (address.toLowerCase() === metamaskAddress && net.includes(metamaskNet) && type === WALLET_TYPES.PUBLIC_KEY) {
+      if (
+        address.toLowerCase() === metamaskAddress &&
+        net.includes(metamaskNet) &&
+        type === WALLET_TYPES.PUBLIC_KEY
+      ) {
         return WALLET_TYPES.METAMASK;
       }
 
@@ -722,53 +769,61 @@ export default {
       if (isLoading.value) {
         return;
       }
+
       isLoading.value = true;
+
       try {
-        const { rawTxs: claimAllRawTxs, fee: claimAllRewardsFee } = await currentToken.value.prepareXctClaimOrRestake({
-          walletId: currentToken.value.id,
-          action: 'claim',
-          type: 'all',
-        });
+        const { rawTxs: claimAllRawTxs, fee: claimAllRewardsFee } =
+          await currentToken.value.prepareXctClaimOrRestake({
+            walletId: currentToken.value.id,
+            action: 'claim',
+            type: 'all',
+          });
         claimAllTxs.value = claimAllRawTxs;
         claimAllFee.value = claimAllRewardsFee;
         fees.value.push(claimAllRewardsFee);
-        const { rawTxs: restakeAllRawTxs, fee: restakeAllRewardsFee } = await currentToken.value.prepareXctClaimOrRestake({
-          walletId: currentToken.value.id,
-          action: 'restake',
-          type: 'all',
-        });
+        const { rawTxs: restakeAllRawTxs, fee: restakeAllRewardsFee } =
+          await currentToken.value.prepareXctClaimOrRestake({
+            walletId: currentToken.value.id,
+            action: 'restake',
+            type: 'all',
+          });
         restakeAllTxs.value = restakeAllRawTxs;
         restakeAllFee.value = restakeAllRewardsFee;
         fees.value.push(restakeAllRewardsFee);
-        const { rawTxs: claimXctRawTxs, fee: claimXctRewardsFee } = await currentToken.value.prepareXctClaimOrRestake({
-          walletId: currentToken.value.id,
-          action: 'claim',
-          type: 'xct',
-        });
+        const { rawTxs: claimXctRawTxs, fee: claimXctRewardsFee } =
+          await currentToken.value.prepareXctClaimOrRestake({
+            walletId: currentToken.value.id,
+            action: 'claim',
+            type: 'xct',
+          });
         claimXctTxs.value = claimXctRawTxs;
         claimXctFee.value = claimXctRewardsFee;
         fees.value.push(claimXctRewardsFee);
-        const { rawTxs: claimDaoRawTxs, fee: claimDaoRewardsFee } = await currentToken.value.prepareXctClaimOrRestake({
-          walletId: currentToken.value.id,
-          action: 'claim',
-          type: 'dao',
-        });
+        const { rawTxs: claimDaoRawTxs, fee: claimDaoRewardsFee } =
+          await currentToken.value.prepareXctClaimOrRestake({
+            walletId: currentToken.value.id,
+            action: 'claim',
+            type: 'dao',
+          });
         claimDaoTxs.value = claimDaoRawTxs;
         claimDaoFee.value = claimDaoRewardsFee;
         fees.value.push(claimDaoRewardsFee);
-        const { rawTxs: restakeXctRawTxs, fee: restakeXctRewardsFee } = await currentToken.value.prepareXctClaimOrRestake({
-          walletId: currentToken.value.id,
-          action: 'restake',
-          type: 'xct',
-        });
+        const { rawTxs: restakeXctRawTxs, fee: restakeXctRewardsFee } =
+          await currentToken.value.prepareXctClaimOrRestake({
+            walletId: currentToken.value.id,
+            action: 'restake',
+            type: 'xct',
+          });
         restakeXctTxs.value = restakeXctRawTxs;
         restakeXctFee.value = restakeXctRewardsFee;
         fees.value.push(restakeXctRewardsFee);
-        const { rawTxs: restakeDaoRawTxs, fee: restakeDaoRewardsFee } = await currentToken.value.prepareXctClaimOrRestake({
-          walletId: currentToken.value.id,
-          action: 'restake',
-          type: 'dao',
-        });
+        const { rawTxs: restakeDaoRawTxs, fee: restakeDaoRewardsFee } =
+          await currentToken.value.prepareXctClaimOrRestake({
+            walletId: currentToken.value.id,
+            action: 'restake',
+            type: 'dao',
+          });
         restakeDaoTxs.value = restakeDaoRawTxs;
         restakeDaoFee.value = restakeDaoRewardsFee;
         fees.value.push(restakeDaoRewardsFee);
@@ -793,10 +848,15 @@ export default {
     const restakeXctRewards = async () => {
       // metamask, ...
       xctAction.value = 'restake';
+
       if (currentWalletType.value === WALLET_TYPES.METAMASK) {
         isLoading.value = true;
 
-        const metamaskResult = await metamaskConnector.value.sendMetamaskTransaction(restakeAllTxs.value);
+        const metamaskResult =
+          await metamaskConnector.value.sendMetamaskTransaction(
+            restakeAllTxs.value
+          );
+
         if (metamaskResult.error) {
           notify({
             type: 'warning',
@@ -804,9 +864,12 @@ export default {
           });
         } else {
           showXctConfirmClaim.value = false;
-          txHash.value = metamaskResult.txHash ? [metamaskResult.txHash] : metamaskResult;
+          txHash.value = metamaskResult.txHash
+            ? [metamaskResult.txHash]
+            : metamaskResult;
           showClaimSuccessModal.value = true;
         }
+
         isLoading.value = false;
 
         return;
@@ -833,11 +896,15 @@ export default {
 
             return;
           }
+
           res = await currentToken.value.signAndSendMulti({
             walletId: currentToken.value.id,
             rawTransactions: restakeAllTxs.value,
-            privateKey: !isHardwareWallet.value && currentToken.value.getPrivateKeyDecoded(password.value),
-            derivationPath: isHardwareWallet.value && currentToken.value.derivationPath,
+            privateKey:
+              !isHardwareWallet.value &&
+              currentToken.value.getPrivateKeyDecoded(password.value),
+            derivationPath:
+              isHardwareWallet.value && currentToken.value.derivationPath,
           });
         }
 
@@ -847,11 +914,15 @@ export default {
 
             return;
           }
+
           res = await currentToken.value.signAndSendMulti({
             walletId: currentToken.value.id,
             rawTransactions: restakeXctTxs.value,
-            privateKey: !isHardwareWallet.value && currentToken.value.getPrivateKeyDecoded(password.value),
-            derivationPath: isHardwareWallet.value && currentToken.value.derivationPath,
+            privateKey:
+              !isHardwareWallet.value &&
+              currentToken.value.getPrivateKeyDecoded(password.value),
+            derivationPath:
+              isHardwareWallet.value && currentToken.value.derivationPath,
           });
         }
 
@@ -861,38 +932,50 @@ export default {
 
             return;
           }
+
           res = await currentToken.value.signAndSendMulti({
             walletId: currentToken.value.id,
             rawTransactions: restakeDaoTxs.value,
-            privateKey: !isHardwareWallet.value && currentToken.value.getPrivateKeyDecoded(password.value),
-            derivationPath: isHardwareWallet.value && currentToken.value.derivationPath,
+            privateKey:
+              !isHardwareWallet.value &&
+              currentToken.value.getPrivateKeyDecoded(password.value),
+            derivationPath:
+              isHardwareWallet.value && currentToken.value.derivationPath,
           });
         }
-        if(res.ok){
+
+        if (res.ok) {
           txHash.value = res.data;
           showClaimSuccessModal.value = true;
           isLoading.value = false;
 
           return;
         }
-        if(!res.ok){
-          if(isHardwareWallet.value){
+
+        if (!res.ok) {
+          if (isHardwareWallet.value) {
             ledgerErrorHandler(res.error);
-          }else{
+          } else {
             claimModalCloseHandler();
           }
         }
+
         isLoading.value = false;
       }
     };
 
     const claimXctRewards = async () => {
       xctAction.value = 'claim';
+
       // metamask, ...
       if (currentWalletType.value === WALLET_TYPES.METAMASK) {
         isLoading.value = true;
 
-        const metamaskResult = await metamaskConnector.value.sendMetamaskTransaction(claimAllTxs.value);
+        const metamaskResult =
+          await metamaskConnector.value.sendMetamaskTransaction(
+            claimAllTxs.value
+          );
+
         if (metamaskResult.error) {
           notify({
             type: 'warning',
@@ -900,9 +983,12 @@ export default {
           });
         } else {
           showXctConfirmClaim.value = false;
-          txHash.value = metamaskResult.txHash ? [metamaskResult.txHash] : metamaskResult;
+          txHash.value = metamaskResult.txHash
+            ? [metamaskResult.txHash]
+            : metamaskResult;
           showClaimSuccessModal.value = true;
         }
+
         isLoading.value = false;
 
         return;
@@ -928,40 +1014,55 @@ export default {
 
             return;
           }
+
           res = await currentToken.value.signAndSendMulti({
             walletId: currentToken.value.id,
             rawTransactions: claimAllTxs.value,
-            privateKey: !isHardwareWallet.value && currentToken.value.getPrivateKeyDecoded(password.value),
-            derivationPath: isHardwareWallet.value && currentToken.value.derivationPath,
+            privateKey:
+              !isHardwareWallet.value &&
+              currentToken.value.getPrivateKeyDecoded(password.value),
+            derivationPath:
+              isHardwareWallet.value && currentToken.value.derivationPath,
           });
         }
+
         if (claimOptions.value.xctRewards && !claimOptions.value.daoRewards) {
           if (currentWallet.value.balance.mainBalance < claimXctFee.value) {
             showWarning();
 
             return;
           }
+
           res = await currentToken.value.signAndSendMulti({
             walletId: currentToken.value.id,
             rawTransactions: claimXctTxs.value,
-            privateKey: !isHardwareWallet.value && currentToken.value.getPrivateKeyDecoded(password.value),
-            derivationPath: isHardwareWallet.value && currentToken.value.derivationPath,
+            privateKey:
+              !isHardwareWallet.value &&
+              currentToken.value.getPrivateKeyDecoded(password.value),
+            derivationPath:
+              isHardwareWallet.value && currentToken.value.derivationPath,
           });
         }
+
         if (!claimOptions.value.xctRewards && claimOptions.value.daoRewards) {
           if (currentWallet.value.balance.mainBalance < claimDaoFee.value) {
             showWarning();
 
             return;
           }
+
           res = await currentToken.value.signAndSendMulti({
             walletId: currentToken.value.id,
             rawTransactions: claimDaoTxs.value,
-            privateKey: !isHardwareWallet.value && currentToken.value.getPrivateKeyDecoded(password.value),
-            derivationPath: isHardwareWallet.value && currentToken.value.derivationPath,
+            privateKey:
+              !isHardwareWallet.value &&
+              currentToken.value.getPrivateKeyDecoded(password.value),
+            derivationPath:
+              isHardwareWallet.value && currentToken.value.derivationPath,
           });
         }
-        if(res.ok){
+
+        if (res.ok) {
           txHash.value = res.data;
           showClaimSuccessModal.value = true;
           isLoading.value = false;
@@ -969,19 +1070,32 @@ export default {
           return;
         }
 
-        if(!res.ok){
-          if(isHardwareWallet.value){
+        if (!res.ok) {
+          if (isHardwareWallet.value) {
             ledgerErrorHandler(res.error);
-          }else{
+          } else {
             claimModalCloseHandler();
           }
         }
+
         isLoading.value = false;
       }
     };
-    const disabled = computed(() => !!inputError.value || (!claimOptions.value.xctRewards && !claimOptions.value.daoRewards));
-    const rewardsArray = computed(() => [claimOptions.value.xctRewards ? xctRewards.value : 0, claimOptions.value.daoRewards ? daoRewards.value : 0]);
-    const totalAmount = computed(() => rewardsArray.value.reduce((total, currentValue) => BigNumber(total).plus(currentValue).toNumber(), 0));
+    const disabled = computed(
+      () =>
+        !!inputError.value ||
+        (!claimOptions.value.xctRewards && !claimOptions.value.daoRewards)
+    );
+    const rewardsArray = computed(() => [
+      claimOptions.value.xctRewards ? xctRewards.value : 0,
+      claimOptions.value.daoRewards ? daoRewards.value : 0,
+    ]);
+    const totalAmount = computed(() =>
+      rewardsArray.value.reduce(
+        (total, currentValue) => BigNumber(total).plus(currentValue).toNumber(),
+        0
+      )
+    );
 
     return {
       WALLET_TYPES,
@@ -1115,7 +1229,7 @@ export default {
   &__claim-unstaked {
     margin-bottom: 22px;
   }
-  &__subtokens-block{
+  &__subtokens-block {
     margin-bottom: 24px;
     @include lg {
       margin-bottom: 16px;

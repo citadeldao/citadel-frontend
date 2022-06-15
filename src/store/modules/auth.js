@@ -21,8 +21,8 @@ export default {
   }),
 
   getters: {
-    username: state => state.username,
-    isAuthenticated: state => state.isAuthenticated,
+    username: (state) => state.username,
+    isAuthenticated: (state) => state.isAuthenticated,
   },
 
   mutations: {
@@ -38,6 +38,7 @@ export default {
     async login({ commit }, { username }) {
       try {
         const { ok, error } = await api.login(username);
+
         if (ok) {
           commit(types.SET_USERNAME, username);
 
@@ -50,7 +51,6 @@ export default {
         });
 
         return { data: null, error: error };
-
       } catch (error) {
         return { data: null, error: error };
       }
@@ -58,21 +58,23 @@ export default {
     async confirmCode(_, { code, username }) {
       try {
         const { ok, error } = await api.confirmCode({ code, username });
-        if (ok) {
 
+        if (ok) {
           return { data: ok, error: null };
         }
 
         return { data: null, error: error };
-
       } catch (error) {
-        return { data: null, error: error.response && error.response.data.error };
+        return {
+          data: null,
+          error: error.response && error.response.data.error,
+        };
       }
     },
     loginSocial(_, { social }) {
       window.location.href = `${process.env.VUE_APP_BACKEND_URL}/profile/auth/${social}`;
     },
-    setIsAuthenticated({ commit },value) {
+    setIsAuthenticated({ commit }, value) {
       setStorage(lsTypes.IS_AUTHENTICATED, value);
       commit(types.SET_IS_AUTHENTICATED, value);
     },
@@ -97,22 +99,21 @@ export default {
     async deleteAccount({ commit }) {
       try {
         const { ok, error } = await api.deleteAccount();
+
         if (ok) {
           commit(types.SET_USERNAME, null);
           commit(types.SET_IS_AUTHENTICATED, false);
-        }else{
+        } else {
           notify({
             type: 'warning',
             text: error,
           });
         }
-
       } catch (error) {
         notify({
           type: 'warning',
           text: 'error',
         });
-
       }
     },
   },

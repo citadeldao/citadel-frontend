@@ -67,11 +67,10 @@
         </div>
         <div class="multisig-balance__stats">
           <div class="multisig-balance__info-line">
-            <span class="multisig-balance__info-title">{{ $t('multisigSend.available') }}</span>
-            <BalanceTooltip
-              left="-128px"
-              width="280px"
-            >
+            <span class="multisig-balance__info-title">{{
+              $t('multisigSend.available')
+            }}</span>
+            <BalanceTooltip left="-128px" width="280px">
               <info class="info-icon" />
               <template #content>
                 <div class="hint">
@@ -81,18 +80,22 @@
             </BalanceTooltip>
             <div class="multisig-balance__info-white-space" />
             <span class="multisig-balance__info-value">
-              <span v-pretty-number="{ value: balanceFundInfo.total - balanceFundInfo.used, currency: 'XCT' }" />
+              <span
+                v-pretty-number="{
+                  value: balanceFundInfo.total - balanceFundInfo.used,
+                  currency: 'XCT',
+                }"
+              />
               <span class="multisig-balance__info-currency">
                 {{ 'XCT' }}
               </span>
             </span>
           </div>
           <div class="multisig-balance__info-line">
-            <span class="multisig-balance__info-title">{{ $t('multisigSend.spend') }}</span>
-            <BalanceTooltip
-              left="-88px"
-              width="200px"
-            >
+            <span class="multisig-balance__info-title">{{
+              $t('multisigSend.spend')
+            }}</span>
+            <BalanceTooltip left="-88px" width="200px">
               <info class="info-icon" />
               <template #content>
                 <div class="hint">
@@ -102,18 +105,22 @@
             </BalanceTooltip>
             <div class="multisig-balance__info-white-space" />
             <span class="multisig-balance__info-value">
-              <span v-pretty-number="{ value: balanceFundInfo.used, currency: 'XCT' }" />
+              <span
+                v-pretty-number="{
+                  value: balanceFundInfo.used,
+                  currency: 'XCT',
+                }"
+              />
               <span class="multisig-balance__info-currency">
                 {{ 'XCT' }}
               </span>
             </span>
           </div>
           <div class="multisig-balance__info-line">
-            <span class="multisig-balance__info-title">{{ $t('multisigSend.total') }}</span>
-            <BalanceTooltip
-              left="-88px"
-              width="200px"
-            >
+            <span class="multisig-balance__info-title">{{
+              $t('multisigSend.total')
+            }}</span>
+            <BalanceTooltip left="-88px" width="200px">
               <info class="info-icon" />
               <template #content>
                 <div class="hint">
@@ -123,18 +130,22 @@
             </BalanceTooltip>
             <div class="multisig-balance__info-white-space" />
             <span class="multisig-balance__info-value">
-              <span v-pretty-number="{ value: balanceFundInfo.total, currency: 'XCT' }" />
+              <span
+                v-pretty-number="{
+                  value: balanceFundInfo.total,
+                  currency: 'XCT',
+                }"
+              />
               <span class="multisig-balance__info-currency">
                 {{ 'XCT' }}
               </span>
             </span>
           </div>
           <div class="multisig-balance__info-line">
-            <span class="multisig-balance__info-title">{{ $t('multisigSend.claimable') }}</span>
-            <BalanceTooltip
-              left="-88px"
-              width="200px"
-            >
+            <span class="multisig-balance__info-title">{{
+              $t('multisigSend.claimable')
+            }}</span>
+            <BalanceTooltip left="-88px" width="200px">
               <info class="info-icon" />
               <template #content>
                 <div class="hint">
@@ -144,7 +155,12 @@
             </BalanceTooltip>
             <div class="multisig-balance__info-white-space" />
             <span class="multisig-balance__info-value">
-              <span v-pretty-number="{ value: balanceFundInfo.pending, currency: 'XCT' }" />
+              <span
+                v-pretty-number="{
+                  value: balanceFundInfo.pending,
+                  currency: 'XCT',
+                }"
+              />
               <span class="multisig-balance__info-currency">
                 {{ 'XCT' }}
               </span>
@@ -153,7 +169,14 @@
         </div>
       </div>
       <PrimaryButton
-        :disabled="!selectedAddress || !selectedFund || !amount || !toAddress || !!incorrectAddress || !!insufficientFunds"
+        :disabled="
+          !selectedAddress ||
+          !selectedFund ||
+          !amount ||
+          !toAddress ||
+          !!incorrectAddress ||
+          !!insufficientFunds
+        "
         class="claim-btn"
         @click="prepareClaim"
       >
@@ -174,75 +197,81 @@
           @close="showClaimModal = false"
         >
           <div class="claim-container">
-            <div
-              v-if="confirmModalDisabled"
-              class="claim-loader"
-            >
+            <div v-if="confirmModalDisabled" class="claim-loader">
               <Loading />
             </div>
             <div class="rows">
               <div class="claim-item">
-                <div class="label">
-                  {{ $t('multisigSend.selectedFund') }}:
-                </div>
+                <div class="label">{{ $t('multisigSend.selectedFund') }}:</div>
                 <div class="value">
                   {{ selectedFund }}
                 </div>
               </div>
               <div class="claim-item">
-                <div class="label">
-                  {{ $t('multisigSend.sendTo') }}:
-                </div>
+                <div class="label">{{ $t('multisigSend.sendTo') }}:</div>
                 <div class="value">
                   {{ toAddress }}
                 </div>
               </div>
               <div class="claim-item">
-                <div class="label">
-                  {{ $t('multisigSend.amountToSend') }}:
-                </div>
+                <div class="label">{{ $t('multisigSend.amountToSend') }}:</div>
                 <div class="value">
                   <span
                     v-pretty-number="{ value: amount, currency: 'XCT' }"
                     class="blue"
-                  /> XCT
+                  />
+                  XCT
                 </div>
               </div>
               <div class="claim-item">
-                <div class="label">
-                  {{ $t('multisigSend.fee') }}:
-                </div>
+                <div class="label">{{ $t('multisigSend.fee') }}:</div>
                 <div class="value">
                   <span
-                    v-pretty-number="{ value: prepareTransferFund?.fee, currency: 'BNB' }"
+                    v-pretty-number="{
+                      value: prepareTransferFund?.fee,
+                      currency: 'BNB',
+                    }"
                     class="red"
-                  /> BNB
+                  />
+                  BNB
                 </div>
               </div>
             </div>
             <div class="total">
-              <div class="label">
-                {{ $t('multisigSend.totalAmount') }}:
-              </div>
+              <div class="label">{{ $t('multisigSend.totalAmount') }}:</div>
               <div class="value">
                 <span
                   v-pretty-number="{ value: amount, currency: 'XCT' }"
                   class="blue"
-                /> XCT&nbsp;&nbsp;/&nbsp;&nbsp;<span
-                  v-pretty-number="{ value: prepareTransferFund?.fee, currency: 'BNB' }"
+                />
+                XCT&nbsp;&nbsp;/&nbsp;&nbsp;<span
+                  v-pretty-number="{
+                    value: prepareTransferFund?.fee,
+                    currency: 'BNB',
+                  }"
                   class="red"
-                /> BNB
+                />
+                BNB
               </div>
             </div>
             <div
-              v-if="signerWallet && [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(signerWallet.type)"
+              v-if="
+                signerWallet &&
+                [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(
+                  signerWallet.type
+                )
+              "
               class="password-wrap"
             >
               <Input
                 id="password"
                 v-model="password"
                 :show-error-text="!!incorrectPassword && confirmPassword"
-                :error="incorrectPassword && confirmPassword ? 'Incorrect password' : ''"
+                :error="
+                  incorrectPassword && confirmPassword
+                    ? 'Incorrect password'
+                    : ''
+                "
                 :label="$t('enterPassword')"
                 :placeholder="$t('password')"
                 type="password"
@@ -341,32 +370,38 @@ export default {
     const { wallets } = useWallets();
     const addresses = computed(() => {
       return wallets.value
-        .filter(w => w.net === 'bsc' && w.type !== WALLET_TYPES.PUBLIC_KEY)
-        .map(w => {
+        .filter((w) => w.net === 'bsc' && w.type !== WALLET_TYPES.PUBLIC_KEY)
+        .map((w) => {
           return {
             id: w.address,
             title: w.address,
             icon: 'bsc',
           };
         });
-    },
+    });
+
+    const incorrectPassword = computed(
+      () => sha3_256(password.value) !== store.getters['crypto/passwordHash']
     );
 
-    const incorrectPassword = computed(() => sha3_256(password.value) !== store.getters['crypto/passwordHash']);
-
-    const balanceFundInfo = computed(() => store.getters['investors/balanceFundInfo']);
-    const prepareTransferFund = computed(() => store.getters['investors/prepareTransferFund']);
+    const balanceFundInfo = computed(
+      () => store.getters['investors/balanceFundInfo']
+    );
+    const prepareTransferFund = computed(
+      () => store.getters['investors/prepareTransferFund']
+    );
 
     const insufficientFunds = computed(
       () =>
-        (!!amount.value && amount.value) > (balanceFundInfo.value.total - balanceFundInfo.value.used) &&
-        'Insufficient funds',
+        (!!amount.value && amount.value) >
+          balanceFundInfo.value.total - balanceFundInfo.value.used &&
+        'Insufficient funds'
     );
     const incorrectAddress = computed(
       () =>
         toAddress.value &&
         !signerWallet.value.validateAddress(toAddress.value) &&
-        'Incorrect address',
+        'Incorrect address'
     );
 
     const funds = ref([
@@ -375,22 +410,28 @@ export default {
       { id: 3, title: 'Ecosystem' },
     ]);
 
-    const selectAddress = address => {
+    const selectAddress = (address) => {
       selectedAddress.value = address;
+
       if (address && selectedFund.value) {
         store.dispatch('investors/getBalanceFundInfo', {
           address: selectedAddress.value,
           category: selectedFund.value,
         });
       }
+
       if (address) {
-        signerWallet.value = wallets.value.find(w => w.address.toLowerCase() === address.toLowerCase() && w.net === 'bsc');
+        signerWallet.value = wallets.value.find(
+          (w) =>
+            w.address.toLowerCase() === address.toLowerCase() && w.net === 'bsc'
+        );
       }
     };
 
-    const selectFund = fund => {
+    const selectFund = (fund) => {
       // formatted param
       selectedFund.value = fund.toLowerCase();
+
       if (fund && selectedAddress.value) {
         store.dispatch('investors/getBalanceFundInfo', {
           address: selectedAddress.value,
@@ -412,6 +453,7 @@ export default {
         amount: amount.value,
         recipient: toAddress.value,
       });
+
       if (prepareTransferFund?.value?.fee) {
         showClaimModal.value = true;
       }
@@ -419,7 +461,13 @@ export default {
 
     const confirmClaim = async () => {
       confirmPassword.value = true;
-      if ([WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(signerWallet.value.type) && incorrectPassword.value) {
+
+      if (
+        [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(
+          signerWallet.value.type
+        ) &&
+        incorrectPassword.value
+      ) {
         return;
       }
 
@@ -428,13 +476,17 @@ export default {
       const result = await signerWallet.value.signAndSendTransfer({
         walletId: signerWallet.value.id,
         rawTransaction: prepareTransferFund.value.tx,
-        privateKey: password.value && signerWallet.value.getPrivateKeyDecoded(password.value),
+        privateKey:
+          password.value &&
+          signerWallet.value.getPrivateKeyDecoded(password.value),
         derivationPath: signerWallet.value.derivationPath,
       });
 
       if (result.error) {
         confirmModalDisabled.value = false;
-        store.commit('investors/SET_PREPARE_TRANSFER_FUND', null, { root: true });
+        store.commit('investors/SET_PREPARE_TRANSFER_FUND', null, {
+          root: true,
+        });
         showClaimModal.value = false;
 
         notify({
@@ -454,11 +506,11 @@ export default {
 
     const successClickHandler = async () => {
       txComment.value &&
-      (await store.dispatch('transactions/postTransactionNote', {
-        network: 'bsc',
-        hash: successTx.value,
-        text: txComment.value,
-      }));
+        (await store.dispatch('transactions/postTransactionNote', {
+          network: 'bsc',
+          hash: successTx.value,
+          text: txComment.value,
+        }));
       txComment.value = '';
 
       confirmPassword.value = false;
@@ -543,14 +595,14 @@ export default {
   }
 
   &__title {
-    color: #0A2778;
+    color: #0a2778;
     text-transform: uppercase;
     font-size: 20px;
     font-family: 'Panton_SemiBold';
   }
 
   &__line {
-    background: #F0F3FD;
+    background: #f0f3fd;
     border-radius: 50px;
     height: 2px;
     width: 100%;
@@ -615,7 +667,7 @@ export default {
   &__info-title {
     font-size: 16px;
     line-height: 19px;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
     white-space: nowrap;
     display: flex;
     align-items: center;
@@ -639,7 +691,7 @@ export default {
   &__info-value {
     font-size: 16px;
     line-height: 19px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     color: $ligth-blue;
     @include md {
       font-size: 14px;
@@ -648,7 +700,7 @@ export default {
   }
 
   &__info-currency {
-    font-family: "Panton_Light";
+    font-family: 'Panton_Light';
     color: $black;
   }
 
@@ -666,7 +718,7 @@ export default {
   }
 
   .hint {
-    color: #6B93C0;
+    color: #6b93c0;
     font-size: 14px;
     font-family: 'Panton_Regular';
   }
@@ -698,7 +750,7 @@ export default {
     width: 100%;
     padding-top: 20px;
     padding-bottom: 15px;
-    border-bottom: 1px solid #BCC2D8;
+    border-bottom: 1px solid #bcc2d8;
 
     .claim-item {
       width: 100%;
@@ -767,6 +819,5 @@ export default {
     margin-top: 20px;
     height: 66px;
   }
-
 }
 </style>

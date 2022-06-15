@@ -1,9 +1,6 @@
 <template>
   <div class="delete-list-modal-content">
-    <div
-      v-if="isLoading"
-      class="loader"
-    >
+    <div v-if="isLoading" class="loader">
       <Loading />
     </div>
 
@@ -56,7 +53,7 @@ export default {
   margin-top: 30px;
 
   &__title {
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     font-size: 20px;
     line-height: 30px;
     margin: 0;
@@ -68,7 +65,7 @@ export default {
     line-height: 27px;
     text-decoration-line: underline;
     color: $too-dark-blue;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     margin-top: 24px;
     cursor: pointer;
 
@@ -87,7 +84,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba($black, .2);
+    background-color: rgba($black, 0.2);
   }
 }
 </style>

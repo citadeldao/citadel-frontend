@@ -1,14 +1,14 @@
 <template>
   <div class="action-modal-content">
     <div
-      v-if="!currentToken &&( activeTab === 'unstake' || mode === 'unstake')"
+      v-if="!currentToken && (activeTab === 'unstake' || mode === 'unstake')"
       class="action-modal-content__info"
     >
       <exclamation class="action-modal-content__info-icon" />
       <span class="action-modal-content__info-text">
         After the confirmation of unstaking transaction, your assets will be
-        locked for <strong>{{ wallet.unstakeingPerioud || 21 }} days</strong>. Unstaked assets will be depicted in
-        the frozen balance section.
+        locked for <strong>{{ wallet.unstakeingPerioud || 21 }} days</strong>.
+        Unstaked assets will be depicted in the frozen balance section.
       </span>
     </div>
     <NominatedNodes
@@ -28,7 +28,7 @@
     />
     <div class="action-modal-content__total">
       <span class="action-modal-content__total-title">
-        {{ $t("totalAmount") }}:
+        {{ $t('totalAmount') }}:
       </span>
       <div class="action-modal-content__total-amount">
         <div class="action-modal-content__total-wrapper">
@@ -44,7 +44,8 @@
         <span
           v-if="wallet.hasPledged || (!wallet.hasPledged && stakingFee)"
           class="action-modal-content__total-amount-line"
-        >/</span>
+          >/</span
+        >
         <div
           v-if="wallet.hasPledged"
           class="action-modal-content__total-wrapper"
@@ -56,7 +57,7 @@
           <span class="action-modal-content__total-amount-currency">
             iRam
           </span>
-           &nbsp;&nbsp;
+          &nbsp;&nbsp;
           <span
             v-pretty-number="adding.gas"
             class="action-modal-content__total-amount-fee"
@@ -71,7 +72,12 @@
           class="action-modal-content__total-wrapper"
         >
           <span
-            v-pretty-number="{ value: stakingFee || 0, currency: currentToken ? currentToken.parentCoin.code : wallet?.code }"
+            v-pretty-number="{
+              value: stakingFee || 0,
+              currency: currentToken
+                ? currentToken.parentCoin.code
+                : wallet?.code,
+            }"
             class="action-modal-content__total-amount-fee"
           />
           <span class="action-modal-content__total-amount-currency">
@@ -80,10 +86,7 @@
         </div>
       </div>
     </div>
-    <div
-      v-if="!hidePassword"
-      class="action-modal-content__password-input"
-    >
+    <div v-if="!hidePassword" class="action-modal-content__password-input">
       <Input
         id="password"
         v-model="password"
@@ -116,7 +119,7 @@ export default {
     },
     wallet: {
       type: Object,
-      default: ()=>({}),
+      default: () => ({}),
     },
     hidePassword: {
       type: Boolean,
@@ -156,14 +159,23 @@ export default {
       () => password.value,
       (newVal) => {
         updatePassword(newVal);
-      },
+      }
     );
 
     const activeTab = inject('activeTab');
     const mode = inject('mode');
-    const finalNodesList = computed(()=> selectedNodeForRedelegation.value || props.selectedNode);
+    const finalNodesList = computed(
+      () => selectedNodeForRedelegation.value || props.selectedNode
+    );
 
-    return { password, inputError, activeTab, mode, finalNodesList, isMultiple };
+    return {
+      password,
+      inputError,
+      activeTab,
+      mode,
+      finalNodesList,
+      isMultiple,
+    };
   },
 };
 </script>
@@ -194,7 +206,7 @@ export default {
     font-size: 14px;
     line-height: 20px;
     color: $red;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
   }
   &__total {
     padding-top: 22px;
@@ -204,16 +216,16 @@ export default {
     border-top: 1px solid $lightsteelblue;
     margin-top: 15px;
   }
-  &__total-wrapper{
+  &__total-wrapper {
     display: flex;
     align-items: center;
   }
   &__total-title {
     font-size: 18px;
     line-height: 22px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
   }
-  &__total-amount{
+  &__total-amount {
     display: flex;
   }
   &__total-amount-value,
@@ -223,15 +235,14 @@ export default {
     font-size: 18px;
     line-height: 22px;
     color: $dark-blue;
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
   }
-  &__total-amount-line{
+  &__total-amount-line {
     color: $mid-gray;
     margin: 0 9px 0 9px;
   }
   &__total-amount-fee {
     color: $red;
-
   }
   &__total-amount-currency {
     color: $mid-gray;

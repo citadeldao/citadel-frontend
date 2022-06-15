@@ -4,30 +4,17 @@
       {{ $t('importLedger.title') }}
     </h4>
     <div class="connect-device__card-wrapper">
-      <ConnectCard
-        icon="laptop"
-        :title="$t('yourComputer')"
-      />
-      <ConnectCard
-        icon="ledger"
-        title="Ledger"
-        :style="{ marginRight: 0 }"
-      />
+      <ConnectCard icon="laptop" :title="$t('yourComputer')" />
+      <ConnectCard icon="ledger" title="Ledger" :style="{ marginRight: 0 }" />
       <div class="connect-device__direction">
         <arrowRigth />
       </div>
     </div>
-    <transition
-      name="fade"
-      mode="out-in"
-    >
+    <transition name="fade" mode="out-in">
       <div v-if="isLoading">
         <Loading small />
       </div>
-      <div
-        v-else
-        class="connect-device__section"
-      >
+      <div v-else class="connect-device__section">
         <div class="connect-device__error-message">
           <warning />
           <span>{{ ledgerError }}</span>
@@ -118,7 +105,7 @@ export default {
     font-size: 20px;
     line-height: 30px;
     margin: 0;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     margin-bottom: 24px;
     font-weight: 700;
   }

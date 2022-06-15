@@ -14,27 +14,19 @@ export class SocketManager {
 
   static async connect() {
     try {
-      const {
-        ok,
-        data: token,
-        error,
-      } = await api.getSocketToken();
+      const { ok, data: token, error } = await api.getSocketToken();
 
       if (!ok) {
         throw error;
       }
 
-      this.socket = io(
-        process.env.VUE_APP_BACKEND_WS_URL,
-        {
-          transports: ['websocket'],
-          upgrade: false,
-          query: { token },
-        },
-      );
+      this.socket = io(process.env.VUE_APP_BACKEND_WS_URL, {
+        transports: ['websocket'],
+        upgrade: false,
+        query: { token },
+      });
 
       this.startListeners();
-
     } catch (err) {
       console.error(`Error on initSocketConnection: `, err);
     }
@@ -70,12 +62,15 @@ export class SocketManager {
 
           const { wallets } = useWallets();
           const wallet = wallets.value
-            .filter(w => w.type !== WALLET_TYPES.WALLET_TYPES)
-            .find(w => w.address === secretAddress);
+            .filter((w) => w.type !== WALLET_TYPES.WALLET_TYPES)
+            .find((w) => w.address === secretAddress);
 
           if (wallet) {
             store.dispatch('wallets/setCurrentWallet', wallet);
-            const searchToken = store.getters['subtokens/formatedSubtokens']('myTokens', wallet);
+            const searchToken = store.getters['subtokens/formatedSubtokens'](
+              'myTokens',
+              wallet
+            );
 
             if (searchToken[0] && searchToken[0].tokenBalance) {
               store.dispatch('extensions/sendCustomMsg', {
@@ -93,15 +88,21 @@ export class SocketManager {
         }
 
         if (data.type === 'sign-message') {
-          store.commit('extensions/SET_MESSAGE_FOR_SIGN', data.message, { root: true });
+          store.commit('extensions/SET_MESSAGE_FOR_SIGN', data.message, {
+            root: true,
+          });
         }
       });
 
-      //update balance
+      // update balance
       this.socket.on('address-balance-updated-client', async (socketObject) => {
-        const res = await citadel.parseSocketObject('address-balance-updated-client', socketObject);
-        if(!res.error){
-          store.dispatch('wallets/getNewWallets','lazy');
+        const res = await citadel.parseSocketObject(
+          'address-balance-updated-client',
+          socketObject
+        );
+
+        if (!res.error) {
+          store.dispatch('wallets/getNewWallets', 'lazy');
         }
       });
 
@@ -113,7 +114,11 @@ export class SocketManager {
       this.socket.on('mempool-remove-tx-client', async (tx) => {
         // show notify when tx success
         const { wallets } = useWallets();
-        const wallet = wallets.value.find(w => w.net === tx.net && tx.from.toLowerCase() === w.address.toLowerCase());
+        const wallet = wallets.value.find(
+          (w) =>
+            w.net === tx.net &&
+            tx.from.toLowerCase() === w.address.toLowerCase()
+        );
 
         if (wallet) {
           notify({
@@ -124,14 +129,28 @@ export class SocketManager {
           });
         }
 
-        const res = await citadel.parseSocketObject('mempool-remove-tx-client', tx);
-        if(!res.error){
+        const res = await citadel.parseSocketObject(
+          'mempool-remove-tx-client',
+          tx
+        );
+
+        if (!res.error) {
           store.commit('transactions/REMOVE_FROM_MEMPOOL', tx);
-          store.dispatch('wallets/getNewWallets','lazy');
-          if(res.data.updateStakeListRequired){
-            await store.dispatch('staking/updateStakeList', ({ address: tx.from, net: tx.net }),{ root: true });
-            if(tx.from.toLowerCase() !== tx.to.toLowerCase()){
-              await store.dispatch('staking/updateStakeList', ({ address: tx.to, net: tx.net }),{ root: true });
+          store.dispatch('wallets/getNewWallets', 'lazy');
+
+          if (res.data.updateStakeListRequired) {
+            await store.dispatch(
+              'staking/updateStakeList',
+              { address: tx.from, net: tx.net },
+              { root: true }
+            );
+
+            if (tx.from.toLowerCase() !== tx.to.toLowerCase()) {
+              await store.dispatch(
+                'staking/updateStakeList',
+                { address: tx.to, net: tx.net },
+                { root: true }
+              );
             }
           }
         }

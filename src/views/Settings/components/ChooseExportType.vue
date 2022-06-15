@@ -44,10 +44,10 @@ const methods = [
 export default {
   name: 'ChooseExportType',
   components: { SelectCard },
-  props:{
-    currentExportWallet:{
-      type:Object,
-      default:() => ({}),
+  props: {
+    currentExportWallet: {
+      type: Object,
+      default: () => ({}),
     },
   },
   emits: ['chooseMethod'],
@@ -56,6 +56,7 @@ export default {
       if (props.currentExportWallet.type === WALLET_TYPES.PUBLIC_KEY) {
         return false;
       }
+
       // if type private key, it maybe import from oneSeed
       if (props.currentExportWallet.type === WALLET_TYPES.PRIVATE_KEY) {
         return props.currentExportWallet.importedFromSeed ? true : false;

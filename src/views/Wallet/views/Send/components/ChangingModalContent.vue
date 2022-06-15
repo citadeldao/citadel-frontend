@@ -1,9 +1,7 @@
 <template>
   <div class="content__wrap">
     <div class="content__amount">
-      <div class="amount__title">
-        Amount
-      </div>
+      <div class="amount__title">Amount</div>
       <div class="amount__prev">
         {{ amount }}
         <span class="content__currency">{{ currency }}</span>
@@ -17,9 +15,7 @@
       </div>
     </div>
     <div class="content__fee">
-      <div class="fee__title">
-        Fee
-      </div>
+      <div class="fee__title">Fee</div>
       <div class="fee__prev">
         {{ feePrev }}
         <span class="content__currency">{{ currency }}</span>
@@ -75,7 +71,7 @@ export default {
   }
   &__currency {
     font-weight: 400;
-    color: #AFBCCB;
+    color: #afbccb;
   }
   &__amount {
     display: flex;
@@ -97,7 +93,7 @@ export default {
   &__next,
   &__prev {
     font-weight: 700;
-    color: #1A53F0;
+    color: #1a53f0;
   }
 }
 
@@ -109,7 +105,7 @@ export default {
   &__next,
   &__prev {
     font-weight: 700;
-    color: #FA3B33;
+    color: #fa3b33;
   }
 }
 </style>

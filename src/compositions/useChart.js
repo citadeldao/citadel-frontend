@@ -25,42 +25,66 @@ export default function useChart({
   const networksConfig = computed(() => store.getters['networks/config']);
 
   const { width } = useWindowSize();
-  const tabs = computed(() => (width.value < screenWidths.lg ? tabsListmd2 : tabsList2));
+  const tabs = computed(() =>
+    width.value < screenWidths.lg ? tabsListmd2 : tabsList2
+  );
 
   const customList = computed(() =>
     store.getters['wallets/activeList'] === 'all'
       ? 'all'
-      : store.getters['wallets/customWalletsList']
-        .find(c => c.name === store.getters['wallets/activeList'])
-        ?.id,
+      : store.getters['wallets/customWalletsList'].find(
+          (c) => c.name === store.getters['wallets/activeList']
+        )?.id
   );
 
-  const balanceHistory = computed(() => store.getters[storeGetter][customList.value]?.[currentFilterTab.value]);
-  const rewardsChart = computed(() => store.getters[storeGetter][customList.value]?.[currentFilterTab.value]);
-  const datasetsArray = computed(() => createDatasetForRewardsChart(rewardsChart.value, currentTab.value, showCount));
+  const balanceHistory = computed(
+    () => store.getters[storeGetter][customList.value]?.[currentFilterTab.value]
+  );
+  const rewardsChart = computed(
+    () => store.getters[storeGetter][customList.value]?.[currentFilterTab.value]
+  );
+  const datasetsArray = computed(() =>
+    createDatasetForRewardsChart(
+      rewardsChart.value,
+      currentTab.value,
+      showCount
+    )
+  );
 
   const netsPercent = computed(() => {
-    const hasOthers = !!datasetsArray.value.find(n => n.net === 'Others');
+    const hasOthers = !!datasetsArray.value.find((n) => n.net === 'Others');
     // sum of all rewards in all networks
-    const maxValue = datasetsArray.value.reduce((maxVal, c) =>
-      BigNumber(maxVal)
-        .plus(c.data.reduce((sum, i) => BigNumber(sum).plus(i).toNumber(), 0))
-        .toNumber()
-    , 0);
-    let netsPercents = datasetsArray.value.map(c => {
-      const sumOfData = c.data.reduce((sum, i) => BigNumber(sum).plus(i).toNumber(), 0);
+    const maxValue = datasetsArray.value.reduce(
+      (maxVal, c) =>
+        BigNumber(maxVal)
+          .plus(c.data.reduce((sum, i) => BigNumber(sum).plus(i).toNumber(), 0))
+          .toNumber(),
+      0
+    );
+    let netsPercents = datasetsArray.value
+      .map((c) => {
+        const sumOfData = c.data.reduce(
+          (sum, i) => BigNumber(sum).plus(i).toNumber(),
+          0
+        );
 
-      return {
-        percent: BigNumber(sumOfData).dividedBy(maxValue).multipliedBy(100).toNumber(),
-        name: c.net === 'Others' ? 'Others' : networksConfig.value?.[c.net]?.name,
-        color: c.backgroundColor,
-      };
+        return {
+          percent: BigNumber(sumOfData)
+            .dividedBy(maxValue)
+            .multipliedBy(100)
+            .toNumber(),
+          name:
+            c.net === 'Others' ? 'Others' : networksConfig.value?.[c.net]?.name,
+          color: c.backgroundColor,
+        };
+      })
+      .sort((a, b) =>
+        a.percent > b.percent ? -1 : a.percent < b.percent ? 1 : 0
+      );
 
-    }).sort((a, b) => a.percent > b.percent ? -1 : a.percent < b.percent ? 1 : 0);
+    const others = netsPercents.find((n) => n.name === 'Others');
 
-    const others = netsPercents.find(n => n.name === 'Others');
-
-    netsPercents = netsPercents.filter(n => n.name !== 'Others');
+    netsPercents = netsPercents.filter((n) => n.name !== 'Others');
 
     if (hasOthers && others.percent !== 0) {
       netsPercents.push(others);
@@ -75,7 +99,7 @@ export default function useChart({
     const now = +moment();
 
     if (from || to) {
-      if ((to > now) || (from > now)) {
+      if (to > now || from > now) {
         notify({
           type: 'warning',
           text: 'Incorrect Date',
@@ -83,7 +107,11 @@ export default function useChart({
       } else {
         const dateFrom = +moment(from).startOf('day');
         const dateTo = +moment(to).endOf('day');
-        await store.dispatch(storeAction, { list: customList.value, dateFrom, dateTo });
+        await store.dispatch(storeAction, {
+          list: customList.value,
+          dateFrom,
+          dateTo,
+        });
       }
     }
   };
@@ -94,22 +122,40 @@ export default function useChart({
     }
 
     if (!balanceHistory.value) {
-      await store.dispatch(storeAction, { list: customList.value, months: currentFilterTab.value });
+      await store.dispatch(storeAction, {
+        list: customList.value,
+        months: currentFilterTab.value,
+      });
     }
 
     render(balanceHistory.value, currentTab.value, canvasElement);
   };
 
   const currentFilterTabChangeRewardsChartHandler = async () => {
-    if (currentFilterTab.value === 'custom') {return;}
-    if (!rewardsChart.value) {await store.dispatch(storeAction, { list: customList.value, months: currentFilterTab.value });}
-    render(rewardsChart.value, datasetsArray.value, currentTab.value, canvasElement, networksConfig.value);
+    if (currentFilterTab.value === 'custom') {
+      return;
+    }
+
+    if (!rewardsChart.value) {
+      await store.dispatch(storeAction, {
+        list: customList.value,
+        months: currentFilterTab.value,
+      });
+    }
+
+    render(
+      rewardsChart.value,
+      datasetsArray.value,
+      currentTab.value,
+      canvasElement,
+      networksConfig.value
+    );
   };
 
   return {
     currentFilterTab,
     currentTab,
-    info:networksConfig,
+    info: networksConfig,
     rewardsChart,
     datasetsArray,
     netsPercent,
@@ -123,4 +169,3 @@ export default function useChart({
     isToggleHovered,
   };
 }
-

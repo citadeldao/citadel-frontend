@@ -1,7 +1,7 @@
 <template>
   <div class="xct-set-staking-amount">
     <div
-      v-if="mode==='unstake'"
+      v-if="mode === 'unstake'"
       class="xct-set-staking-amount__stake-balance"
     >
       <span class="xct-set-staking-amount__stake-balance-title">
@@ -10,7 +10,10 @@
       <div class="xct-set-staking-amount__stake-balance-line" />
       <div class="xct-set-staking-amount__stake-balance-balance">
         <span
-          v-pretty-number="{ value: currentWallet.tokenBalance.stake, currency: currentWallet.code }"
+          v-pretty-number="{
+            value: currentWallet.tokenBalance.stake,
+            currency: currentWallet.code,
+          }"
           class="xct-set-staking-amount__stake-balance-amount"
         />
         <span class="xct-set-staking-amount__stake-balance-currency">
@@ -18,9 +21,7 @@
         </span>
       </div>
     </div>
-    <div
-      class="xct-set-staking-amount__amount-input"
-    >
+    <div class="xct-set-staking-amount__amount-input">
       <Input
         id="amount"
         :value="amount"
@@ -35,13 +36,13 @@
         @input="updateAmount"
         @keyup.enter="$emit('nextStep')"
       />
-      <span
-        v-if="showAmount"
-        class="xct-set-staking-amount__available-balance"
-      >
-        {{ $t("balanceTooltipInfo.availableBalance") }}:
+      <span v-if="showAmount" class="xct-set-staking-amount__available-balance">
+        {{ $t('balanceTooltipInfo.availableBalance') }}:
         <span
-          v-pretty-number="{ value: currentWallet.tokenBalance.mainBalance, currency: currentWallet.code }"
+          v-pretty-number="{
+            value: currentWallet.tokenBalance.mainBalance,
+            currency: currentWallet.code,
+          }"
           class="xct-set-staking-amount__available-balance-balance"
         />
         <span class="xct-set-staking-amount__available-balance-currency">
@@ -56,7 +57,7 @@
 import Input from '@/components/UI/Input';
 import { computed, inject } from '@vue/runtime-core';
 export default {
-  name:'XCTSetStakingAmount',
+  name: 'XCTSetStakingAmount',
   components: { Input },
   props: {
     currentWallet: {
@@ -79,50 +80,50 @@ export default {
         return false;
       } else if (mode.value === 'unstake') {
         return false;
-      }else if (mode.value === 'stake') {
+      } else if (mode.value === 'stake') {
         return true;
       }
 
       return false;
     });
 
-    return{ updateAmount, maxAmount, insufficientFunds, showAmount, mode };
+    return { updateAmount, maxAmount, insufficientFunds, showAmount, mode };
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.xct-set-staking-amount{
-    width: 100%;
+.xct-set-staking-amount {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-top: 24px;
+  &__stake-balance {
     display: flex;
-    flex-direction: column;
-    padding-top: 24px;
-      &__stake-balance{
-          display: flex;
-          margin-bottom: 15px;
-          align-items: baseline;
-      }
-      &__stake-balance-title,
-      &__stake-balance-amount,
-      &__stake-balance-currency{
-          font-size: 16px;
-          line-height: 19px;
-          font-family: "Panton_Bold" !important;
-      }
-      &__stake-balance-line{
-          flex-grow: 1;
-          border-bottom: 1px dashed $gainsboro;
-      }
-      &__stake-balance-balance{
-          display: flex;
-      }
-      &__stake-balance-amount{
-           color: $blue;
-           margin-right: 3px;
-      }
-      &__stake-balance-currency{
-          font-family: 'Panton_Regular' !important;
-      }
+    margin-bottom: 15px;
+    align-items: baseline;
+  }
+  &__stake-balance-title,
+  &__stake-balance-amount,
+  &__stake-balance-currency {
+    font-size: 16px;
+    line-height: 19px;
+    font-family: 'Panton_Bold' !important;
+  }
+  &__stake-balance-line {
+    flex-grow: 1;
+    border-bottom: 1px dashed $gainsboro;
+  }
+  &__stake-balance-balance {
+    display: flex;
+  }
+  &__stake-balance-amount {
+    color: $blue;
+    margin-right: 3px;
+  }
+  &__stake-balance-currency {
+    font-family: 'Panton_Regular' !important;
+  }
   &__amount-input {
     height: 68px;
     position: relative;
@@ -142,11 +143,11 @@ export default {
   }
   &__available-balance-balance {
     color: $ligth-blue;
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
     margin-left: 6px;
     margin-right: 3px;
   }
-  &__input-note{
+  &__input-note {
     position: absolute;
     font-size: 14px;
     line-height: 17px;
@@ -156,4 +157,3 @@ export default {
   }
 }
 </style>
-

@@ -44,10 +44,10 @@ export default {
     onMounted(() => {
       createChart();
       parentWrap = document.body.querySelector('#expand-rate-chart-wrap');
-      //скрыть тултип при скроле
+      // скрыть тултип при скроле
       parentWrap.addEventListener('scroll', () => (tooltipOpacity.value = 0));
     });
-    //число подписей и массив цветов для подсветки дат
+    // число подписей и массив цветов для подсветки дат
     const { width } = useWindowSize();
     const wSize = computed(() => {
       if (width.value < screenWidths.lg) {
@@ -62,10 +62,10 @@ export default {
     });
     const maxTicksLimit = computed(() => (wSize.value === 'xl' ? 11 : 8));
     const daysColorsDefault = computed(() =>
-      Array(maxTicksLimit.value).fill(defaultDayColor),
+      Array(maxTicksLimit.value).fill(defaultDayColor)
     );
     const monthsColorsDefault = computed(() =>
-      Array(maxTicksLimit.value).fill(defaultMonthColor),
+      Array(maxTicksLimit.value).fill(defaultMonthColor)
     );
 
     let parentWrap;
@@ -87,9 +87,7 @@ export default {
     };
 
     const labels = computed(
-      () =>
-        props.data &&
-        Object.keys(props.data),/*.map((date) =>
+      () => props.data && Object.keys(props.data) /* .map((date) =>
           new Date(date).toLocaleDateString('en-GB', {
             day: 'numeric',
             month: 'short',
@@ -107,28 +105,27 @@ export default {
               data: Object.values(props.data),
             },
           ],
-        },
+        }
     );
 
     // let lastLabelIndex = null
     const externalTooltipHandler = (context) => {
       const { chart, tooltip } = context;
-      //текущее значение цены и даты
+      // текущее значение цены и даты
       tooltipData.value = tooltip?.dataPoints[0]?.raw;
-      tooltipDate.value = tooltip?.dataPoints[0]?.label.split('-').reverse().join('.');
+      tooltipDate.value = tooltip?.dataPoints[0]?.label
+        .split('-')
+        .reverse()
+        .join('.');
 
       nextTick(() => {
-        //позиция тултипа с учетом его размеров
+        // позиция тултипа с учетом его размеров
         const tooltipEl = document.body.querySelector('#tooltip-history-chart');
         const tooltipLift = 25;
-        const {
-          left: canvasLeft,
-          top: canvasTop,
-        } = chart.canvas.getBoundingClientRect();
-        const {
-          width: tooltipWidth,
-          height: tooltipHeight,
-        } = tooltipEl.getBoundingClientRect();
+        const { left: canvasLeft, top: canvasTop } =
+          chart.canvas.getBoundingClientRect();
+        const { width: tooltipWidth, height: tooltipHeight } =
+          tooltipEl.getBoundingClientRect();
 
         tooltipLeft.value = tooltip.caretX + canvasLeft - tooltipWidth / 2;
         tooltipTop.value =
@@ -139,22 +136,25 @@ export default {
           canvasTop + chart.chartArea.top + chart.chartArea.height;
         const { bottom: parentWrapBottom } = parentWrap.getBoundingClientRect();
         let hiddenAreaHeight = xAxePositionY - parentWrapBottom;
+
         if (hiddenAreaHeight < 0) {
           hiddenAreaHeight = 0;
         }
-        const pointPositionY = tooltip.caretY + canvasTop;
-        tooltipLineHeight.value =
-          `${xAxePositionY - pointPositionY - hiddenAreaHeight}px`;
 
-        //Подсветка текущей x-подписи
-        //Индекс текущей подписи
+        const pointPositionY = tooltip.caretY + canvasTop;
+        tooltipLineHeight.value = `${
+          xAxePositionY - pointPositionY - hiddenAreaHeight
+        }px`;
+
+        // Подсветка текущей x-подписи
+        // Индекс текущей подписи
         // const monthTicks = chart.scales.xMonths.ticks
         // const currentPointIndex = tooltip.dataPoints[0].dataIndex
         // const currentLabelIndex = monthTicks.find(
         //   (tick) => tick.value === currentPointIndex
         // )?.$context.index
 
-        //Установка цвета для подписей
+        // Установка цвета для подписей
         // const monthsTicksConfig =
         //   chart.config._config.options.scales.xMonths.ticks
         // const daysTicksConfig = chart.config._config.options.scales.xDays.ticks
@@ -175,7 +175,7 @@ export default {
         //     updateChart = true
         //   }
         // }
-        //mouseIn/mouseOut для точки с подписью
+        // mouseIn/mouseOut для точки с подписью
         // if (
         //   (currentLabelIndex || currentLabelIndex === 0) &&
         //   ((!lastLabelIndex && lastLabelIndex !== 0) ||
@@ -201,19 +201,19 @@ export default {
     };
 
     const convertInDate = (date) => {
-      const isDate = !isNaN(+(new Date(date)));
+      const isDate = !isNaN(+new Date(date));
 
       return isDate
         ? new Date(date).toLocaleDateString('en-GB', {
-          day: 'numeric',
-          month: 'short',
-        })
+            day: 'numeric',
+            month: 'short',
+          })
         : date;
     };
 
     const visibleLabels = computed(() => {
       const days = Object.keys(props.data);
-      const tickGap = Math.round((days.length / maxTicksLimit.value)) || 1;
+      const tickGap = Math.round(days.length / maxTicksLimit.value) || 1;
       const visibleLabels = [];
 
       for (let i = days.length - 1; i >= 0; i = i - tickGap) {
@@ -223,9 +223,8 @@ export default {
       return visibleLabels;
     });
 
-    const renderDate = (index, key, value) => visibleLabels.value.includes(key)
-      ? value
-      : '';
+    const renderDate = (index, key, value) =>
+      visibleLabels.value.includes(key) ? value : '';
 
     const chartConfig = {
       fill: true,
@@ -266,17 +265,18 @@ export default {
             maxTicksLimit: maxTicksLimit.value,
             maxRotation: 0,
             autoSkip: false,
-            callback: (value, index) => renderDate(
-              index,
-              labels.value[index],
-              convertInDate(labels.value[index])?.split(' ')[1],
-            ),
+            callback: (value, index) =>
+              renderDate(
+                index,
+                labels.value[index],
+                convertInDate(labels.value[index])?.split(' ')[1]
+              ),
             color: monthsColorsDefault.value,
             font: {
               lineHeight: 0.6,
               size: 14,
               weight: 'normal',
-              family: '\'Panton_Regular\'',
+              family: "'Panton_Regular'",
             },
             backdropPadding: 100,
           },
@@ -292,11 +292,12 @@ export default {
             maxRotation: 0,
             autoSkip: false,
 
-            callback: (value, index) => renderDate(
-              index,
-              labels.value[index],
-              convertInDate(labels.value[index])?.split(' ')[0],
-            ),
+            callback: (value, index) =>
+              renderDate(
+                index,
+                labels.value[index],
+                convertInDate(labels.value[index])?.split(' ')[0]
+              ),
             color: daysColorsDefault.value,
             font: {
               lineHeight: 0.5,
@@ -332,10 +333,12 @@ export default {
     watch(
       () => wSize.value,
       () => {
-        rateChart.config._config.options.scales.xMonths.ticks.maxTicksLimit = maxTicksLimit.value;
-        rateChart.config._config.options.scales.xDays.ticks.maxTicksLimit = maxTicksLimit.value;
+        rateChart.config._config.options.scales.xMonths.ticks.maxTicksLimit =
+          maxTicksLimit.value;
+        rateChart.config._config.options.scales.xDays.ticks.maxTicksLimit =
+          maxTicksLimit.value;
         rateChart.update();
-      },
+      }
     );
 
     watch(
@@ -343,7 +346,7 @@ export default {
       () => {
         rateChart.data = chartData.value;
         rateChart.update();
-      },
+      }
     );
 
     return {

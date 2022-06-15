@@ -20,12 +20,13 @@ const downLoadWallets = (backup) => {
 };
 
 export default (keyStorage) => {
-  const storage = getStorage(keyStorage) &&
-      JSON.parse(getStorage(keyStorage));
+  const storage = getStorage(keyStorage) && JSON.parse(getStorage(keyStorage));
   const backup = storage && {
     mnemonic: storage.crypto.mnemonic,
     passwordHash: storage.crypto.passwordHash,
-    wallets: storage.wallets.wallets.filter((item)=> item.net && item.type !== WALLET_TYPES.PUBLIC_KEY),
+    wallets: storage.wallets.wallets.filter(
+      (item) => item.net && item.type !== WALLET_TYPES.PUBLIC_KEY
+    ),
   };
 
   if (backup?.wallets.length) {

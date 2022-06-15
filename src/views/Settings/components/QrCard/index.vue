@@ -59,14 +59,25 @@ export default {
     const isError = computed(() => checkedItems.value.length > 2);
     const { addItem, checkedItems } = useCheckItem();
     const addItemHandler = (item) => {
-      if (!isError.value) {addItem(item);}
+      if (!isError.value) {
+        addItem(item);
+      }
     };
     const wallets = computed(() => {
       return walletsList.value
-        .filter(wallet => wallet.type === WALLET_TYPES.ONE_SEED
-          || wallet.type === WALLET_TYPES.PRIVATE_KEY)
-        .filter((v,i,a)=>a.findIndex(
-          t => (t.address.toLowerCase() === v.address.toLowerCase() && t.net === v.net)) === i);
+        .filter(
+          (wallet) =>
+            wallet.type === WALLET_TYPES.ONE_SEED ||
+            wallet.type === WALLET_TYPES.PRIVATE_KEY
+        )
+        .filter(
+          (v, i, a) =>
+            a.findIndex(
+              (t) =>
+                t.address.toLowerCase() === v.address.toLowerCase() &&
+                t.net === v.net
+            ) === i
+        );
     });
     const displayData = computed(() => {
       if (!keyword.value) {
@@ -75,26 +86,35 @@ export default {
 
       return wallets.value.filter(
         (data) =>
-          (
-            data.title?.toLowerCase().includes(keyword.value.toLowerCase())
-            || data.address?.toLowerCase().includes(keyword.value.toLowerCase())
-          ) && (data.type === WALLET_TYPES.ONE_SEED || data.type === WALLET_TYPES.PRIVATE_KEY),
+          (data.title?.toLowerCase().includes(keyword.value.toLowerCase()) ||
+            data.address
+              ?.toLowerCase()
+              .includes(keyword.value.toLowerCase())) &&
+          (data.type === WALLET_TYPES.ONE_SEED ||
+            data.type === WALLET_TYPES.PRIVATE_KEY)
+      );
+    });
+    const modalDesc = computed(() =>
+      isError.value
+        ? `<span class="text-color--red">${t('qr.modalErrorInfo')}</span>`
+        : t('qr.modalInfo')
+    );
+
+    const checked = ({ address, net }) =>
+      checkedItems.value.some(
+        (item) =>
+          item.address.toLowerCase() === address.toLowerCase() &&
+          item.net === net
       );
 
-    });
-    const modalDesc = computed(() => isError.value
-      ? `<span class="text-color--red">${t('qr.modalErrorInfo')}</span>`
-      : t('qr.modalInfo'));
-
-    const checked = ({
-      address,
-      net,
-    }) => checkedItems.value.some((item) => item.address.toLowerCase() === address.toLowerCase()
-      && item.net === net);
-
     const removeItem = ({ address, net }) => {
-      checkedItems.value = checkedItems.value
-        .filter(item => !(address.toLowerCase() === item.address.toLowerCase() && net === item.net));
+      checkedItems.value = checkedItems.value.filter(
+        (item) =>
+          !(
+            address.toLowerCase() === item.address.toLowerCase() &&
+            net === item.net
+          )
+      );
 
       return checkedItems.value;
     };

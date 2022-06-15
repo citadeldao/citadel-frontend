@@ -1,15 +1,9 @@
 <template>
-  <li
-    class="autocomplete-result"
-    @click="clickHandler"
-  >
+  <li class="autocomplete-result" @click="clickHandler">
     <keep-alive v-if="result.icon">
       <component :is="currentIcon" />
     </keep-alive>
-    <span
-      v-else
-      class="no-icon"
-    />
+    <span v-else class="no-icon" />
     <span class="title">{{ result.title }}</span>
   </li>
 </template>

@@ -1,4 +1,3 @@
-
 import { computed, provide, ref } from 'vue';
 import useCheckPassword from '@/compositions/useCheckPassword';
 import { useI18n } from 'vue-i18n';
@@ -26,11 +25,9 @@ export default function usePledge() {
   const showSuccessModal = ref(false);
   provide('showSuccessModal', showSuccessModal);
 
-
   const openPledgeModal = async () => {
     await getDelegationFee(activeTab.value);
-    showModal.value = true,
-    showCooseModeModal.value = true;
+    (showModal.value = true), (showCooseModeModal.value = true);
   };
   provide('openPledgeModal', openPledgeModal);
 
@@ -45,11 +42,14 @@ export default function usePledge() {
   };
   provide('updateAmount', updateAmount);
 
-  const maxAmount = computed(() => +BigNumber(resMaxAmount.value).toFixed(2, 1) || 0);
+  const maxAmount = computed(
+    () => +BigNumber(resMaxAmount.value).toFixed(2, 1) || 0
+  );
   provide('maxAmount', maxAmount);
 
   const insufficientFunds = computed(() => {
     const symbolCount = amount.value.toString().split('.')[1]?.length || 0;
+
     if (amount.value && amount.value > maxAmount.value) {
       return t('insufficientFunds');
     } else if (amount.value && amount.value < 1) {
@@ -58,8 +58,7 @@ export default function usePledge() {
       return t('maxFloatDigits');
     }
 
-    return'';
-
+    return '';
   });
   provide('insufficientFunds', insufficientFunds);
 
@@ -72,11 +71,13 @@ export default function usePledge() {
   const resMaxAmount = ref();
   const getDelegationFee = async () => {
     isLoading.value = true;
-    const { ok, resFee, maxAmount, resAdding, enough } = await currentWallet.value.getDelegationFee({
-      walletId: currentWallet.value.id,
-      transactionType: activeTab.value,
-      nodeAddress: currentWallet.value.address,
-    });
+    const { ok, resFee, maxAmount, resAdding, enough } =
+      await currentWallet.value.getDelegationFee({
+        walletId: currentWallet.value.id,
+        transactionType: activeTab.value,
+        nodeAddress: currentWallet.value.address,
+      });
+
     if (ok) {
       fee.value = resFee;
       adding.value = resAdding;
@@ -85,22 +86,29 @@ export default function usePledge() {
     } else {
       modalCloseHandler();
     }
+
     isLoading.value = false;
   };
   provide('getDelegationFee', getDelegationFee);
 
-  const disabled = computed(() => !resEnough.value || !amount.value || !!insufficientFunds.value);
+  const disabled = computed(
+    () => !resEnough.value || !amount.value || !!insufficientFunds.value
+  );
   provide('disabled', disabled);
 
   const resRawTxs = ref();
   const preparePledgeUnpledge = async () => {
-    if (isLoading.value) {return;}
+    if (isLoading.value) {
+      return;
+    }
+
     isLoading.value = true;
     const { rawTxs, ok } = await currentWallet.value.preparePledgeUnpledge({
       walletId: currentWallet.value.id,
       type: activeTab.value,
       amount: amount.value,
     });
+
     if (ok) {
       resRawTxs.value = rawTxs;
       showCooseModeModal.value = false;
@@ -109,6 +117,7 @@ export default function usePledge() {
     } else {
       modalCloseHandler();
     }
+
     isLoading.value = false;
   };
   provide('preparePledgeUnpledge', preparePledgeUnpledge);
@@ -122,12 +131,14 @@ export default function usePledge() {
 
       return;
     }
+
     isLoading.value = true;
     const res = await currentWallet.value.signAndSendMulti({
       walletId: currentWallet.value.id,
       rawTransactions: resRawTxs.value,
       privateKey: currentWallet.value.getPrivateKeyDecoded(password.value),
     });
+
     if (res.ok) {
       txHash.value = res.data;
       showConfirmModal.value = false;
@@ -137,7 +148,6 @@ export default function usePledge() {
       modalCloseHandler();
       isLoading.value = false;
     }
-
   };
   provide('send', send);
 
@@ -155,11 +165,11 @@ export default function usePledge() {
 
   const successClickHandler = async () => {
     txComment.value &&
-            (await store.dispatch('transactions/postTransactionNote', {
-              network: currentWallet.value.net,
-              hash: txHash.value[0],
-              text: txComment.value,
-            }));
+      (await store.dispatch('transactions/postTransactionNote', {
+        network: currentWallet.value.net,
+        hash: txHash.value[0],
+        text: txComment.value,
+      }));
     txComment.value = '';
     modalCloseHandler();
   };
@@ -172,6 +182,7 @@ export default function usePledge() {
         subtitle: t('pledge.chooseModeModalSubtitle'),
       };
     }
+
     if (activeTab.value === 'unpledge') {
       return {
         title: t('pledge.chooseModeModalTitle2'),
@@ -179,8 +190,7 @@ export default function usePledge() {
       };
     }
 
-    return{};
-
+    return {};
   });
   provide('chooseNodeModalData', chooseNodeModalData);
 
@@ -191,6 +201,7 @@ export default function usePledge() {
         desc: t('pledge.confirmModalDesc1'),
       };
     }
+
     if (activeTab.value === 'unpledge') {
       return {
         title: t('pledge.confirmModalTitle2'),
@@ -199,7 +210,6 @@ export default function usePledge() {
     }
 
     return {};
-
   });
   provide('actionModalData', actionModalData);
 

@@ -1,8 +1,5 @@
 <template>
-  <div
-    :style="{ marginTop: '20px' }"
-    class="addresses"
-  >
+  <div :style="{ marginTop: '20px' }" class="addresses">
     <div class="addresses__info">
       <span class="addresses__title">
         {{ $t('settings.addresses.title') }}
@@ -42,7 +39,9 @@ export default {
   setup(props, { emit }) {
     const store = useStore();
 
-    const hiddenWallets = computed(() => store.getters['wallets/hiddenWallets']);
+    const hiddenWallets = computed(
+      () => store.getters['wallets/hiddenWallets']
+    );
 
     const exportWallet = (val) => {
       emit('exportWallet', val);
@@ -51,7 +50,8 @@ export default {
     const toggleWalletHidden = (wallet) => {
       store.dispatch('wallets/toggleHiddenWallet', wallet);
     };
-    const hasVisibleButton = (group) => netsWithVisibleButton.includes(group.net);
+    const hasVisibleButton = (group) =>
+      netsWithVisibleButton.includes(group.net);
 
     return {
       hiddenWallets,
@@ -83,7 +83,7 @@ export default {
     font-size: 20px;
     line-height: 30px;
     margin: -15px 0 15px 0;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     @include md {
       margin-bottom: 4px;
     }

@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="tabs-group"
-    :class="{ expand }"
-  >
+  <div class="tabs-group" :class="{ expand }">
     <div
       v-for="item in tabs"
       :key="item.value"
@@ -62,7 +59,7 @@ export default {
       width: 60px;
       margin-right: 4px;
     }
-     @include md {
+    @include md {
       width: 43px;
       height: 42px;
       margin-right: 4px;

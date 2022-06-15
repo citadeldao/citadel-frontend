@@ -1,9 +1,6 @@
 <template>
   <div class="restore-one-seed">
-    <Header
-      :current-step="currentStep"
-      :steps="steps"
-    />
+    <Header :current-step="currentStep" :steps="steps" />
     <div class="restore-one-seed__section">
       <!-- <Stepper :steps="steps" /> -->
       <EnterPassword
@@ -13,23 +10,13 @@
       <keep-alive v-else-if="currentStep === 2">
         <CreatePassword @createPassword="setPassword" />
       </keep-alive>
-      <EnterOneSeed
-        v-if="currentStep === 3"
-        @confirmMnemonic="setMnemonic"
-      />
-      <SelectNetworks
-        v-if="currentStep === 4"
-        @selectNets="finalStep"
-      />
+      <EnterOneSeed v-if="currentStep === 3" @confirmMnemonic="setMnemonic" />
+      <SelectNetworks v-if="currentStep === 4" @selectNets="finalStep" />
     </div>
     <teleport to="body">
       <transition name="fade">
         <Modal v-if="showModal">
-          <img
-            v-if="showLoader"
-            src="@/assets/gif/loader.gif"
-            alt=""
-          >
+          <img v-if="showLoader" src="@/assets/gif/loader.gif" alt="" />
           <CatPage
             v-else
             v-click-away="modalClickHandler"

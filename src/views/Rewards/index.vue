@@ -1,33 +1,21 @@
 <template>
   <div class="rewards">
-    <div
-      v-if="data.rewards && !isLoading"
-      class="rewards__main"
-    >
+    <div v-if="data.rewards && !isLoading" class="rewards__main">
       <RewardsPlaceholder />
     </div>
 
-    <div
-      v-else
-      class="rewards__main"
-    >
+    <div v-else class="rewards__main">
       <h4 class="rewards__main-title">
-        {{ $t("rewardsPage.rewardsDetails") }}
+        {{ $t('rewardsPage.rewardsDetails') }}
       </h4>
-      <div
-        v-if="!data.rewards"
-        class="rewards__controls"
-      >
+      <div v-if="!data.rewards" class="rewards__controls">
         <TabsGroup
           v-model:currentValue="currentTab"
           :tabs="tabs"
           data-qa="rewards__period"
           @update:currentValue="currentTabChangeHandler"
         />
-        <div
-          v-if="currentTab === 'custom'"
-          class="rewards__date-picker"
-        >
+        <div v-if="currentTab === 'custom'" class="rewards__date-picker">
           <DatePicker
             v-model:date="date"
             expand
@@ -35,10 +23,7 @@
           />
         </div>
       </div>
-      <div
-        v-if="isLoading"
-        class="rewards__loader"
-      >
+      <div v-if="isLoading" class="rewards__loader">
         <Loading />
       </div>
       <RewardsPlaceholder
@@ -54,39 +39,23 @@
           <TotalForRange :total="total" />
         </div>
         <div class="rewards__rewards-list">
-          <Dropdown
-            v-for="item in listData"
-            :key="item.net"
-            :data="item"
-          />
+          <Dropdown v-for="item in listData" :key="item.net" :data="item" />
         </div>
       </div>
     </div>
     <div class="rewards__rigth-section">
-      <div
-        v-if="data.rewards"
-        class="rewards__rigth-section-placholder"
-      >
+      <div v-if="data.rewards" class="rewards__rigth-section-placholder">
         <RigthSectionPlaceholder />
       </div>
       <div class="rewards__rigth-section-block">
-        <div
-          v-if="!data.rewards"
-          class="rewards__total-rewards"
-        >
+        <div v-if="!data.rewards" class="rewards__total-rewards">
           <TotalRewards
             :total-btc="totalRewardsInBTC"
             :total-usd="totalRewardsInUSD"
           />
         </div>
-        <div
-          v-if="totalForStakeBanner > 0"
-          class="rewards__stake-banner"
-        >
-          <StakeBanner
-            :total="totalForStakeBanner"
-            :date="stakeBannerDate"
-          />
+        <div v-if="totalForStakeBanner > 0" class="rewards__stake-banner">
+          <StakeBanner :total="totalForStakeBanner" :date="stakeBannerDate" />
         </div>
       </div>
     </div>
@@ -130,7 +99,9 @@ export default {
   setup() {
     const store = useStore();
     const { width } = useWindowSize();
-    const tabs = computed(() => (width.value < screenWidths.lg ? tabsListmd : tabsList));
+    const tabs = computed(() =>
+      width.value < screenWidths.lg ? tabsListmd : tabsList
+    );
     const currentTab = ref(1);
     const isLoading = ref(false);
 
@@ -149,7 +120,7 @@ export default {
     };
     loadData(
       Date.now() - 1000 * 60 * 60 * 24 * 31 * currentTab.value,
-      Date.now(),
+      Date.now()
     );
 
     const data = computed(() => store.getters['rewards/rewardsByRange']);
@@ -157,11 +128,14 @@ export default {
     const { wallets } = useWallets();
     const listData = computed(() => {
       const mixedData = [];
+
       for (const item in data.value) {
         const rewards = [];
+
         for (const reward in data.value[item]) {
           rewards.push({ value: data.value[item][reward], address: reward });
         }
+
         mixedData.push({
           ...networks.value.find((network) => network.net === item),
           rewards,
@@ -170,7 +144,7 @@ export default {
 
       return mixedData
         .filter((item) => item.net)
-        .sort((item, nextItem) => item.name > nextItem.name ? 1 : -1);
+        .sort((item, nextItem) => (item.name > nextItem.name ? 1 : -1));
     });
 
     const currency = computed(() => store.getters['profile/info']?.rates);
@@ -180,7 +154,7 @@ export default {
           (total, currentValue) => {
             return BigNumber(total).plus(currentValue.value).toNumber();
           },
-          0,
+          0
         );
         const totalForNetInUsd = BigNumber(totalForNet)
           .times(currency.value[currentValue.net]?.USD)
@@ -192,7 +166,9 @@ export default {
 
     const totalRewardsInBTC = computed(() => {
       return wallets.value.reduce((total, currentValue) => {
-        const rewardInUsd = BigNumber(currentValue.balance?.claimableRewards || 0)
+        const rewardInUsd = BigNumber(
+          currentValue.balance?.claimableRewards || 0
+        )
           .times(currency.value[currentValue.net].BTC)
           .toNumber();
 
@@ -202,7 +178,7 @@ export default {
     const totalRewardsInUSD = computed(() =>
       BigNumber(totalRewardsInBTC.value)
         .times(currency.value?.btc.USD)
-        .toNumber(),
+        .toNumber()
     );
     const dateChangeHandler = (val) => {
       if (val.length > 0) {
@@ -314,7 +290,7 @@ export default {
     font-size: 20px;
     line-height: 30px;
     margin-bottom: 27px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     padding: 40px 45px 0 45px;
     @include lg {
       padding: 40px 40px 0 40px;

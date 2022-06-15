@@ -1,36 +1,31 @@
 <template>
   <div class="rewards-block">
-    <div
-      class="rewards-block__toggle-info-icon"
-      @click="showModal=true"
-    >
+    <div class="rewards-block__toggle-info-icon" @click="showModal = true">
       <toogleInfo />
     </div>
     <div class="rewards-block__header">
       <span class="rewards-block__header-title">
-        {{ $t("xct.rewardsBlockTitle") }}
+        {{ $t('xct.rewardsBlockTitle') }}
       </span>
       <span class="rewards-block__header-subtitle">
-        {{ $t("xct.rewardsBlockSubtitle") }}
+        {{ $t('xct.rewardsBlockSubtitle') }}
       </span>
     </div>
     <table class="rewards-block__table">
       <tr>
         <th class="rewards-block__table-header" />
+        <th class="rewards-block__table-header">XCT</th>
         <th class="rewards-block__table-header">
-          XCT
-        </th>
-        <th class="rewards-block__table-header">
-          {{ $t("otherAssets") }}
+          {{ $t('otherAssets') }}
         </th>
       </tr>
       <tr>
         <td class="rewards-block__table-title">
-          {{ $t("xct.stakedOnCitadel") }}
+          {{ $t('xct.stakedOnCitadel') }}
           <Tooltip>
             <template #content>
               <span :style="{ maxWidth: '200px', display: 'flex' }">
-                {{ $t("netInfoGeneral.apyTooltip") }}
+                {{ $t('netInfoGeneral.apyTooltip') }}
               </span>
             </template>
             <template #default>
@@ -40,7 +35,10 @@
         </td>
         <td class="rewards-block__table-cell-other">
           <span
-            v-pretty-number="{value:tableData.stakedCitadel.xct,currency:'XCT'}"
+            v-pretty-number="{
+              value: tableData.stakedCitadel.xct,
+              currency: 'XCT',
+            }"
             class="rewards-block__table-cell-other-amount"
           />
           <span class="rewards-block__table-cell-other-currency">XCT</span>
@@ -48,25 +46,28 @@
         <td class="rewards-block__table-cell-xct">
           <span class="rewards-block__table-cell-xct-currency">$</span>
           <span
-            v-pretty-number="{value:tableData.stakedCitadel.other,currency:'$'}"
+            v-pretty-number="{
+              value: tableData.stakedCitadel.other,
+              currency: '$',
+            }"
             class="rewards-block__table-cell-xct-amount"
           />
         </td>
       </tr>
       <tr>
         <td class="rewards-block__table-title">
-          {{ $t("rewardsPage.totalRewards") }}
+          {{ $t('rewardsPage.totalRewards') }}
         </td>
         <td class="rewards-block__table-cell-other">
           <span
-            v-pretty-number="{value:tableData.total.xct,currency:'XCT'}"
+            v-pretty-number="{ value: tableData.total.xct, currency: 'XCT' }"
             class="rewards-block__table-cell-other-amount"
           />
           <span class="rewards-block__table-cell-other-currency">XCT</span>
         </td>
         <td class="rewards-block__table-cell-xct">
           <span
-            v-pretty-number="{value:tableData.total.other,currency:'XCT'}"
+            v-pretty-number="{ value: tableData.total.other, currency: 'XCT' }"
             class="rewards-block__table-cell-xct-amount"
           />
           <span class="rewards-block__table-cell-xct-currency">XCT</span>
@@ -74,10 +75,7 @@
       </tr>
     </table>
   </div>
-  <teleport
-    v-if="showModal"
-    to="body"
-  >
+  <teleport v-if="showModal" to="body">
     <Modal>
       <RewardsBlockExpand
         v-click-away="modalCloseHandler"
@@ -114,38 +112,43 @@ export default {
       default: () => ({}),
     },
     totalClaimedRewardsXCT: {
-      type:Number,
+      type: Number,
       default: 0,
     },
   },
   setup(props) {
     const showModal = ref(false);
-    const modalCloseHandler = () => {showModal.value = false;};
+    const modalCloseHandler = () => {
+      showModal.value = false;
+    };
     const tableData = computed(() => {
-      const stakedOnOtherAssets = props.holderInfo.wallets.reduce((accum, item) => {
-        const price = BigNumber(item.usdt).dividedBy(item.amount).multipliedBy(item.totalStaked).toNumber();
-        const adding = isNaN(price) ? 0 : price;
+      const stakedOnOtherAssets = props.holderInfo.wallets.reduce(
+        (accum, item) => {
+          const price = BigNumber(item.usdt)
+            .dividedBy(item.amount)
+            .multipliedBy(item.totalStaked)
+            .toNumber();
+          const adding = isNaN(price) ? 0 : price;
 
-        return BigNumber(accum).plus(adding).toNumber();
-      }, 0);
+          return BigNumber(accum).plus(adding).toNumber();
+        },
+        0
+      );
 
-      return{
-        xctStaking:{
-          other:'-',
+      return {
+        xctStaking: {
+          other: '-',
           xct: BigNumber(props.currentWallet.tokenBalance?.rewards)
             .times(props.xctMarketCap.priceUsd)
             .toNumber(),
         },
-        stakedCitadel:{
+        stakedCitadel: {
           other: BigNumber(props.holderInfo.holder.totalUsdt).toNumber(),
-          xct: BigNumber(props.currentWallet.tokenBalance?.stake)
-            .toNumber(),
+          xct: BigNumber(props.currentWallet.tokenBalance?.stake).toNumber(),
         },
-        total:{
-          other: BigNumber(props.holderInfo.holder.claimed)
-            .toNumber(),
-          xct: BigNumber(props.totalClaimedRewardsXCT)
-            .toNumber(),
+        total: {
+          other: BigNumber(props.holderInfo.holder.claimed).toNumber(),
+          xct: BigNumber(props.totalClaimedRewardsXCT).toNumber(),
         },
         stakedOnOtherAssets,
       };
@@ -164,18 +167,18 @@ export default {
   padding: 33px 0 0 24px;
   background-repeat: no-repeat;
   background-size: cover;
-  background-image: url("~@/assets/images/xctRewardsBg.jpg");
+  background-image: url('~@/assets/images/xctRewardsBg.jpg');
   display: flex;
   flex-direction: column;
   position: relative;
   @include lg {
-    background-image: url("~@/assets/images/xctRewardsBglg.jpg");
+    background-image: url('~@/assets/images/xctRewardsBglg.jpg');
     padding: 25px 0 0 24px;
     width: 574px;
     height: 234px;
   }
   @include md {
-    background-image: url("~@/assets/images/xctRewardsBgmd.jpg");
+    background-image: url('~@/assets/images/xctRewardsBgmd.jpg');
     padding: 25px 16px 0 24px;
     width: 469px;
     height: 211px;
@@ -192,10 +195,10 @@ export default {
     border-radius: $round;
     justify-content: center;
     cursor: pointer;
-    @include lg{
+    @include lg {
       background: $lavander-dark;
     }
-    @include md{
+    @include md {
       background: $lavander-dark;
     }
     & svg {
@@ -221,17 +224,17 @@ export default {
     margin-bottom: 61px;
     display: flex;
     flex-direction: column;
-    @include lg{
+    @include lg {
       margin-bottom: 31px;
     }
-     @include md{
+    @include md {
       margin-bottom: 15px;
     }
   }
   &__header-title {
     font-size: 18px;
     line-height: 22px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     margin-bottom: 4px;
   }
   &__header-subtitle {
@@ -244,7 +247,7 @@ export default {
   &__table-header {
     font-size: 18px;
     line-height: 30px;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
     padding: 0;
     text-align: left;
     @include md {
@@ -280,10 +283,10 @@ export default {
     line-height: 45px;
     color: $slategray1;
     margin-right: 5px;
-    @include lg{
+    @include lg {
       line-height: 35px;
     }
-    @include md{
+    @include md {
       line-height: 30px;
     }
   }
@@ -292,11 +295,11 @@ export default {
     font-size: 20px;
     line-height: 45px;
     color: $dark-blue;
-    font-family: "Panton_Bold"!important;
-    @include lg{
+    font-family: 'Panton_Bold' !important;
+    @include lg {
       line-height: 35px;
     }
-    @include md{
+    @include md {
       line-height: 30px;
     }
   }

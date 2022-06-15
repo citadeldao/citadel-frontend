@@ -16,6 +16,20 @@
         "inputPlaceholder": "input e-mail",
         "enterEmail": "Enter email",
         "incorrectEmail": "Incorrect email",
+        "sync": {
+            "chooseValidator": {
+                "title": "1. Choose a validator",
+                "text": "You can select any validator from a full list of available nodes"
+            },
+            "setAmount": {
+                "title": "2. Set the amount to stake",
+                "text": "Assets will be delegated to the chosen validator"
+            },
+            "claimRewards": {
+                "title": "3. Enjoy your staking rewards!",
+                "text": "You can claim your rewards in a couple of clicks"
+            }
+        },
         "carousel": {
             "stake": {
                 "title": "Stake & Maximize your rewards ",
@@ -1073,7 +1087,35 @@
     "uptime": "Uptime",
     "active": "Active",
     "noactive": "inactive",
+    "tokenDescriptionPersistence": "Persistence is an ecosystem of multi-chain DeFi products designed to stimulate global liquidity and enable seamless value exchange. Persistence is bringing different asset classes into DeFi through its products - Proof-of-Stake assets (pSTAKE), Agri Commodity assets (Comdex) and Trade Finance Debt assets (ShipFi).",
+    "tokenDescriptionSENTINEL": "Sentinel is a network of nodes that share their bandwidth, on which Decentralized VPNs and other such services are built. The purpose of the Sentinel ecosystem is to empower universal access to the internet in a trusted and provable manner. This will be done by allowing organizations and individuals around the world to construct cost-effective, scalable, distributed and decentralized networking solutions on Sentinel’s Cosmos-based blockchain.",
+    "tokenDescriptionChihuahua": "Chihuahua is a meme coin and aims to be a community-driven project with a Community Pool of 10B HUAHUA that can be used to fund projects on top of the chain proposed and voted via the Governance built-in in the Chihuahua chain. The project is built using the Cosmos SDK and Tendermint consensus.",
+    "tokenDescriptionUmee": "Umee is a cross chain DeFi hub that interconnects between blockchains. As a base layer blockchain, applications and money lego primitives can be built on top of Umee to access cross chain leverage and liquidity. The Umee Blockchain facilitates interoperability between the Cosmos ecosystem, Ethereum network, side chain architectures, layer two scaling solutions, and alternative base layer protocols.",
+    "tokenDescriptionStargaze": "Stargaze is a community-owned Interchain NFT marketplace in the Cosmos ecosystem.",
+    "tokenDescriptionRizon": "The mission of RIZON Blockchain is to provide a platform where fiat currencies around the world can be securely issued on and enable businesses to interoperate with each other through the Cosmos IBC.",
+    "tokenDescriptionSifchain": "Sifchain is the omni-chain solution for DEXs. More performant, more robust cryptoeconomics for trading and security, more flexible trading capabilities, an extensible omni-chain roadmap and eventual true DAO governance. Sifchain is the brainchild of Sif, the Norse goddess of earth, agriculture, fertility, family, and marriage. Sif represents the collaborative nature of the blockchain industry and the lush rewards that can be found in cultivating connections between multiple other chains.",
+    "tokenDescriptionLum": "The Lum Network is an open source blockchain protocol (layer 1) based on the Tendermint & Cosmos SDK, the most advanced and secure Delegated Proof-Of-Stake algorithm. It is powered by the LUM, its native crypto-asset.",
+    "tokenDescriptionCheqd": "Cheqd team is building a secure network that enables individuals and organizations to fully control their personal data. cheqd helps companies create new and innovative business models, ensuring self-sovereign identity is a viable and rewarding service to offer to customers.",
+    "tokenDescriptionInjective": "Injective is the interoperable layer 1 protocol optimized for building cross-chain Web3 DeFi apps.",
     "jailed": "JAILED",
+    "syncExtensions": {
+        "modalMenuTitle": "Select addresses",
+        "modalMenuDescription": "Select addresses to sync with the extension",
+        "syncTo": "Export adresses",
+        "syncFrom": "Import adresses",
+        "syncDescription": "Choose addresses you want to add to your Citadel.one browser extension",
+        "notFound": "Citadel browser extension not found",
+        "walletsNotFound": "Not wallets found to sync with browser extension",
+        "emptyWallets": "You must setup browser extension before syncing",
+        "syncWithExtension": "Exporting addresses to browser extension",
+        "syncingFromTitle": "Importing addresses from  browser extension",
+        "syncingFromDescription": "Confirm this operation with a password",
+        "incorrectPasswordExtension": "Incorrect extension password",
+        "enterPassword": "Enter extension password",
+        "syncMainTitle": "Synchronize addresses",
+        "syncMainDescription": "Synchronize your addresses with Citadel.one Browser Extension in seconds",
+        "syncMainSync": "Sync"
+    },
     "sendAssetsDestination": "Destination network",
     "keplr": {
         "notFound": "Keplr not found in your browser",

@@ -1,10 +1,7 @@
 <template>
   <div class="vk-item">
     <div class="vk-item__icon-wrapper">
-      <div
-        v-if="showIconPlaceholder"
-        class="vk-item__logo-icon-placeholder"
-      >
+      <div v-if="showIconPlaceholder" class="vk-item__logo-icon-placeholder">
         <span>{{ iconPlaceholder[0] }}</span>
         <span>{{ iconPlaceholder[1] }}</span>
       </div>
@@ -13,15 +10,12 @@
         :src="getTokenIcon(vk.code?.toLowerCase())"
         alt=""
         @error="showIconPlaceholder = true"
-      >
+      />
     </div>
     <div class="vk-item__name">
       {{ vk.name }}
     </div>
-    <span
-      class="vk-item__vk"
-      :class="{'vk-item__vk--hide': isHidden}"
-    >
+    <span class="vk-item__vk" :class="{ 'vk-item__vk--hide': isHidden }">
       <span>
         {{ viewingKeyParsed }}
       </span>
@@ -29,29 +23,20 @@
     <div class="vk-item__buttons">
       <div
         class="vk-item__btn"
-        :class="{'vk-item__btn--active': !isHidden}"
+        :class="{ 'vk-item__btn--active': !isHidden }"
         @click="toggleIsHidden"
       >
         <vision class="vk-item__vision-svg" />
       </div>
-      <div
-        class="vk-item__btn"
-        @click="copyValue"
-      >
+      <div class="vk-item__btn" @click="copyValue">
         <transition name="fade1">
-          <span
-            v-if="isCopied"
-            class="tooltip"
-          >
-            {{ $t("copiedToClipboard") }}
+          <span v-if="isCopied" class="tooltip">
+            {{ $t('copiedToClipboard') }}
           </span>
         </transition>
         <copyIcon />
       </div>
-      <div
-        class="vk-item__btn"
-        @click="change"
-      >
+      <div class="vk-item__btn" @click="change">
         <lockRefresh />
       </div>
     </div>
@@ -80,21 +65,29 @@ export default {
   setup(props) {
     const isHidden = ref(true);
     const isCopied = ref(false);
-    const viewingKeyParsed = computed(() => isHidden.value ? props.vk?.savedViewingKey.viewingKey.replace(/[\d\D]/g, '*') : props.vk?.savedViewingKey.viewingKey);
-    const toggleIsHidden = () => {isHidden.value = !isHidden.value;};
+    const viewingKeyParsed = computed(() =>
+      isHidden.value
+        ? props.vk?.savedViewingKey.viewingKey.replace(/[\d\D]/g, '*')
+        : props.vk?.savedViewingKey.viewingKey
+    );
+    const toggleIsHidden = () => {
+      isHidden.value = !isHidden.value;
+    };
     const copyValue = () => {
       copyToClipboard(props.vk.savedViewingKey.viewingKey);
       isCopied.value = true;
-      setTimeout(() => {isCopied.value = false;}, 1500);
+      setTimeout(() => {
+        isCopied.value = false;
+      }, 1500);
     };
 
     const changeVk = inject('changeVk');
-    const change = () => {changeVk.value = props.vk;};
+    const change = () => {
+      changeVk.value = props.vk;
+    };
 
     const showIconPlaceholder = ref(false);
-    const iconPlaceholder = computed(() =>
-      tokenIconPlaceholder(props.vk.name),
-    );
+    const iconPlaceholder = computed(() => tokenIconPlaceholder(props.vk.name));
 
     return {
       isHidden,
@@ -141,7 +134,7 @@ export default {
       font-size: 14px;
       line-height: 17px;
       color: $white;
-      font-family: "Panton_Bold";
+      font-family: 'Panton_Bold';
       position: absolute;
       top: 7px;
       left: 6px;
@@ -228,31 +221,31 @@ export default {
   }
 }
 .tooltip {
-    background-color: $too-ligth-gray;
-    text-align: center;
-    border-radius: 6px;
-    padding: 8px 9px;
+  background-color: $too-ligth-gray;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 9px;
+  position: absolute;
+  white-space: nowrap;
+  z-index: 1;
+  top: 110%;
+  left: 50%;
+  margin-left: -60px;
+  box-shadow: 0px 4px 25px rgba(63, 54, 137, 0.25);
+  border-radius: 6px;
+  font-size: 12px;
+  line-height: 16px;
+  color: $too-dark-blue;
+  &::after {
+    content: '';
     position: absolute;
-    white-space: nowrap;
-    z-index: 1;
-    top: 110%;
+    bottom: 98%;
     left: 50%;
-    margin-left: -60px;
-    box-shadow: 0px 4px 25px rgba(63, 54, 137, 0.25);
-    border-radius: 6px;
-    font-size: 12px;
-    line-height: 16px;
-    color: $too-dark-blue;
-    &::after {
-      content: "";
-      position: absolute;
-      bottom: 98%;
-      left: 50%;
-      margin-left: -5px;
-      border-width: 5px;
-      border-radius: 2px;
-      border-style: solid;
-      border-color: transparent transparent $too-ligth-gray transparent;
-    }
+    margin-left: -5px;
+    border-width: 5px;
+    border-radius: 2px;
+    border-style: solid;
+    border-color: transparent transparent $too-ligth-gray transparent;
   }
+}
 </style>

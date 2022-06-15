@@ -74,24 +74,33 @@ export default {
       if (!privateKey.value.trim()) {
         return;
       }
+
       emit('setSpecifications', {
         net: netByTitle[search.value],
         privateKey: privateKey.value,
         account: account.value,
       });
     };
-    const disabled = computed(() => !(search.value && privateKey.value && !waitAccounts.value));
+    const disabled = computed(
+      () => !(search.value && privateKey.value && !waitAccounts.value)
+    );
 
     const { loadAccounts, waitAccounts, accounts, account } = useIostProps();
 
     watch(
-      ()=> privateKey.value,
-      async (newVal)=> {
-        await loadAccounts(newVal,models[netByTitle[search.value]?.toUpperCase()]?.hasAccount);
-      },
+      () => privateKey.value,
+      async (newVal) => {
+        await loadAccounts(
+          newVal,
+          models[netByTitle[search.value]?.toUpperCase()]?.hasAccount
+        );
+      }
     );
-    const networkChangeHandler = async (value)=> {
-      await loadAccounts(privateKey.value,models[netByTitle[value]?.toUpperCase()]?.hasAccount);
+    const networkChangeHandler = async (value) => {
+      await loadAccounts(
+        privateKey.value,
+        models[netByTitle[value]?.toUpperCase()]?.hasAccount
+      );
     };
 
     return {

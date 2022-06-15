@@ -92,7 +92,7 @@ export default {
   &__description {
     font-size: 14px;
     font-family: Panton_SemiBold;
-    color: #6B93C0;
+    color: #6b93c0;
     margin-bottom: 40px;
   }
 
@@ -114,6 +114,10 @@ export default {
         width: 44%;
         margin: 0 10px;
       }
+    }
+
+    @media (max-width: 1178px) {
+      align-items: flex-start;
     }
   }
 }

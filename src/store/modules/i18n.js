@@ -15,8 +15,8 @@ export default {
   }),
 
   getters: {
-    locale: state => state.locale,
-    locales: state => state.locales,
+    locale: (state) => state.locale,
+    locales: (state) => state.locales,
   },
 
   actions: {

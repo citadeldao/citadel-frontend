@@ -1,19 +1,13 @@
 <template>
   <div class="balance-history">
-    <div
-      v-show="showPlaceholder"
-      class="balance-history-placeholder"
-    >
+    <div v-show="showPlaceholder" class="balance-history-placeholder">
       <balanceHistoryPlaceholder />
       <span class="balance-history-placeholder__text">
         <div>{{ $t('overallPage.maintance') }}</div>
         {{ $t('overallPage.problemBalance') }}
       </span>
     </div>
-    <div
-      v-show="!showPlaceholder"
-      class="balance-history-chart-wrapper"
-    >
+    <div v-show="!showPlaceholder" class="balance-history-chart-wrapper">
       <div class="top">
         <div class="top__title">
           {{ $t('overallPage.balanceHistory.title') }}
@@ -56,18 +50,12 @@
             class="balance-history-chart__canvas"
           />
         </div>
-        <resize-observer
-          :show-trigger="true"
-          @notify="handleResize"
-        />
+        <resize-observer :show-trigger="true" @notify="handleResize" />
       </div>
     </div>
   </div>
   <teleport to="body">
-    <BalanceHistoryExpanded
-      v-if="isExpanded"
-      @close="isExpanded = false"
-    />
+    <BalanceHistoryExpanded v-if="isExpanded" @close="isExpanded = false" />
   </teleport>
 </template>
 <script>
@@ -123,7 +111,7 @@ export default {
       await renderBalanceHistoryChart(
         balanceHistory,
         currentTab.value,
-        canvasElement,
+        canvasElement
       );
     });
     watch(
@@ -132,9 +120,9 @@ export default {
         await renderBalanceHistoryChart(
           balanceHistory.value,
           currentTab.value,
-          canvasElement,
+          canvasElement
         );
-      },
+      }
     );
     watch(
       () => customList.value,
@@ -145,9 +133,9 @@ export default {
         await renderBalanceHistoryChart(
           balanceHistory,
           currentTab.value,
-          canvasElement,
+          canvasElement
         );
-      },
+      }
     );
     watch(
       () => width.value,
@@ -159,10 +147,10 @@ export default {
           await renderBalanceHistoryChart(
             balanceHistory,
             currentTab.value,
-            canvasElement,
+            canvasElement
           );
         });
-      },
+      }
     );
 
     return {
@@ -274,5 +262,3 @@ export default {
   }
 }
 </style>
-
-
