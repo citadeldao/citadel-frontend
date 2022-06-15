@@ -150,7 +150,7 @@ export default {
     };
 
     const handleButtonClick = () => {
-      if (props.disabled) {
+      if (!props.disabled) {
         if (currentWalletInfo.value?.claimableRewards) {
           props.isCurrentToken ? emit('prepareXctClaim') : emit('prepareClaim');
         } else {
