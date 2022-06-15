@@ -113,7 +113,9 @@ export default {
           : null;
         walletOpts.config = rootGetters['networks/configByNet'](walletOpts.net);
         const { currency } = useWallets(walletOpts);
-        walletOpts.balanceUSD = BigNumber(walletOpts.balance.calculatedBalance)
+        walletOpts.balanceUSD = BigNumber(
+          walletOpts?.balance?.calculatedBalance
+        )
           .times(currency.value?.USD)
           .toNumber();
         const walletInstance = new WalletConstructor(walletOpts);
