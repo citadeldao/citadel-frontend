@@ -1,5 +1,5 @@
 <template>
-  <form class="verification" @submit.prevent="submitHandler">
+  <div class="verification">
     <span class="verification__title">
       {{ $t('login.verification') }}
     </span>
@@ -20,6 +20,7 @@
         :disabled="timerMode"
         data-qa="login-verification__resend-code"
         @click="sendCode"
+        id="codeResendButton"
       >
         <span v-if="timerMode" class="verification__timer">
           {{ time }}s
@@ -37,6 +38,8 @@
       {{ $t('login.verificationNote') }}
     </span>
     <PrimaryButton
+      @click="submitHandler"
+      id="codeSubmitButton"
       data-qa="login-verification__confirm-button"
       :disabled="code.length < 6"
     >
@@ -47,7 +50,7 @@
         {{ $t('backBtn') }}
       </TextButton>
     </div>
-  </form>
+  </div>
 </template>
 
 <script>
@@ -107,15 +110,27 @@ export default {
       () => timerMode.value,
       (value) => {
         if (value) {
+          nextTick(() => {
+            document.getElementById('codeSubmitButton').focus();
+          });
           showResendCode.value = false;
         } else {
+          nextTick(() => {
+            document.getElementById('codeResendButton').focus();
+          });
           showResendCode.value = true;
         }
-      }
+      },
+      { immediate: true }
     );
 
     watch(code, (value) => {
       emit('change', value);
+      if (value.length === 6 && timerMode.value) {
+        nextTick(() => {
+          document.getElementById('codeSubmitButton').focus();
+        });
+      }
     });
 
     const submitHandler = () => {
