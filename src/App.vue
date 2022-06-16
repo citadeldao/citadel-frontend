@@ -5,10 +5,7 @@
   <teleport to="body">
     <Toasts />
   </teleport>
-  <teleport
-    v-if="showModal"
-    to="body"
-  >
+  <teleport v-if="showModal" to="body">
     <Modal>
       <MobileAppModal @close="isClosed = true" />
     </Modal>
@@ -38,16 +35,15 @@ export default {
     const isClosed = ref(false);
     const store = useStore();
     const { width } = useWindowSize();
-    const showModal = computed(() => !!(width.value < screenWidths.md && !isClosed.value && isMobile ));
+    const showModal = computed(
+      () => !!(width.value < screenWidths.md && !isClosed.value && isMobile)
+    );
 
     onMounted(() => {
       store.dispatch('i18n/init');
     });
 
-
     return { showModal, isClosed };
   },
 };
 </script>
-
-

@@ -5,6 +5,10 @@ import store from '@/store';
 export default async (to, from, next) => {
   const isAuthenticated = getStorage(types.IS_AUTHENTICATED) === 'true';
 
+  if (to.hash) {
+    localStorage.setItem('hashInfo', to.hash);
+  }
+
   if (from.meta.guard !== to.meta.guard) {
     store.dispatch('app/setRouteLoader', true);
   }

@@ -1,13 +1,9 @@
 <template>
-  <div
-    class="balance-card"
-    :class="`balance-card--${type}`"
-    :style="cssVars"
-  >
+  <div class="balance-card" :class="`balance-card--${type}`" :style="cssVars">
     <img
       :src="require(`@/assets/images/waves/${type}.png`)"
       class="balance-card__wave"
-    >
+    />
     <div class="balance-card__description">
       {{ text }}
     </div>
@@ -52,7 +48,7 @@ export default {
   },
   setup(props) {
     return {
-      cssVars:{
+      cssVars: {
         '--value-color': props.valueColor,
         '--bg-color': props.bgColor,
       },
@@ -95,7 +91,7 @@ export default {
     position: absolute;
     object-fit: contain;
     object-position: bottom;
-    opacity: .2;
+    opacity: 0.2;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -134,7 +130,7 @@ export default {
   }
 
   &__amount {
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
     color: var(--value-color);
   }
 
@@ -145,18 +141,18 @@ export default {
 
   &--red {
     background: linear-gradient(
-        90deg,
-        rgba(250, 208, 196, 0.4) 0%,
-        rgba(250, 208, 196, 0.4) 1%,
-        rgba(255, 209, 255, 0.4) 100%
+      90deg,
+      rgba(250, 208, 196, 0.4) 0%,
+      rgba(250, 208, 196, 0.4) 1%,
+      rgba(255, 209, 255, 0.4) 100%
     );
   }
 
   &--blue {
     background: linear-gradient(
-        90deg,
-        rgba(161, 196, 253, 0.3) 0%,
-        rgba(194, 233, 251, 0.3) 100%
+      90deg,
+      rgba(161, 196, 253, 0.3) 0%,
+      rgba(194, 233, 251, 0.3) 100%
     );
   }
 }

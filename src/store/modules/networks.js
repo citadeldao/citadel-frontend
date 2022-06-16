@@ -14,11 +14,13 @@ export default {
   getters: {
     config: (state) => state.config,
     configByNet: (state) => (net) => state.config[net],
-    networksList: (state) => Object.values(state.config)
-      .filter((network) => models[network.net.toUpperCase()])
-      .sort((a, b) => (a.name > b.name ? 1 : -1)),
+    networksList: (state) =>
+      Object.values(state.config)
+        .filter((network) => models[network.net.toUpperCase()])
+        .sort((a, b) => (a.name > b.name ? 1 : -1)),
     getSubtokensByNet: (state) => (net) => {
       const data = [];
+
       for (const item in state.config[net].tokens) {
         data.push({ net: item, ...state.config[net].tokens[item] });
       }
@@ -29,11 +31,12 @@ export default {
 
   mutations: {
     [types.SET_CONFIG](state, config) {
-      for(const item in config){
-        config[item]={
+      for (const item in config) {
+        config[item] = {
           ...config[item],
         };
       }
+
       state.config = config;
     },
   },
@@ -41,9 +44,10 @@ export default {
   actions: {
     async loadConfig({ commit }) {
       const { error, data } = await citadel.getAllNetworksConfig();
-      if(!error){
+
+      if (!error) {
         commit(types.SET_CONFIG, data);
-      }else{
+      } else {
         notify({
           type: 'warning',
           text: error,
@@ -52,17 +56,22 @@ export default {
     },
 
     async getCurrencyHistoryByRange(_, { net, from, to }) {
-      const { data, error } = await citadel.getCurrencyHistoryByRange( net, from, to );
+      const { data, error } = await citadel.getCurrencyHistoryByRange(
+        net,
+        from,
+        to
+      );
+
       if (!error) {
         return { data, error: null };
       }
+
       notify({
         type: 'warning',
         text: error,
       });
 
       return { data: null, error: error };
-
     },
   },
 };

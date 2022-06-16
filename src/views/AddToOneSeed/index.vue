@@ -1,27 +1,15 @@
 <template>
   <div class="add-to-one-seed">
-    <Header
-      :current-step="currentStep"
-      :steps="steps"
-    />
-    <div
-      v-if="isUserMnemonic"
-      class="add-to-one-seed__section"
-    >
+    <Header :current-step="currentStep" :steps="steps" />
+    <div v-if="isUserMnemonic" class="add-to-one-seed__section">
       <!-- <Stepper :steps="steps" /> -->
       <EnterPassword
         v-if="currentStep === 1"
         @passwordConfirmed="setPassword"
       />
-      <SelectNetworks
-        v-if="currentStep === 2"
-        @selectNets="finalStep"
-      />
+      <SelectNetworks v-if="currentStep === 2" @selectNets="finalStep" />
     </div>
-    <div
-      v-else
-      class="add-to-one-seed__section"
-    >
+    <div v-else class="add-to-one-seed__section">
       <!-- <Stepper :steps="steps" /> -->
       <EnterPassword
         v-if="currentStep === 1 && isPasswordHash"
@@ -30,27 +18,17 @@
       <keep-alive v-else-if="currentStep === 1">
         <CreatePassword @createPassword="setPassword" />
       </keep-alive>
-      <CreateOneSeed
-        v-if="currentStep === 2"
-        @createMnemonic="setMnemonic"
-      />
+      <CreateOneSeed v-if="currentStep === 2" @createMnemonic="setMnemonic" />
       <ConfirmOneSeed
         v-if="currentStep === 3"
         :mnemonic="walletOpts.mnemonic"
       />
-      <SelectNetworks
-        v-if="currentStep === 4"
-        @selectNets="finalStep"
-      />
+      <SelectNetworks v-if="currentStep === 4" @selectNets="finalStep" />
     </div>
     <teleport to="body">
       <transition name="fade">
         <Modal v-if="showModal">
-          <img
-            v-if="showLoader"
-            src="@/assets/gif/loader.gif"
-            alt=""
-          >
+          <img v-if="showLoader" src="@/assets/gif/loader.gif" alt="" />
           <CatPage
             v-else
             v-click-away="modalClickHandler"
@@ -75,7 +53,10 @@ import Header from '../AddAddress/components/Header';
 import EnterPassword from './components/EnterPassword';
 import CreatePassword from './components/CreatePassword';
 import useCurrentStep from '@/compositions/useCurrentStep';
-import { steps as stepsOneSeed, steps1 as stepsOneSeed1 } from '@/static/addToOneSeed';
+import {
+  steps as stepsOneSeed,
+  steps1 as stepsOneSeed1,
+} from '@/static/addToOneSeed';
 import useCreateWallets from '@/compositions/useCreateWallets';
 import { WALLET_TYPES } from '../../config/walletType';
 
@@ -121,7 +102,10 @@ export default {
       });
     };
 
-    const { currentStep, steps } = useCurrentStep(1, isUserMnemonic.value ? stepsOneSeed : stepsOneSeed1);
+    const { currentStep, steps } = useCurrentStep(
+      1,
+      isUserMnemonic.value ? stepsOneSeed : stepsOneSeed1
+    );
 
     const modalCloseHandler = () => {
       showModal.value = false;
@@ -165,7 +149,7 @@ export default {
 
   @include lg {
     padding: 0 40px;
-    height: calc(100% + 50px);;
+    height: calc(100% + 50px);
   }
   @include md {
     padding: 0 31px;

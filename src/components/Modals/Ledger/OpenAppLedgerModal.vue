@@ -10,15 +10,10 @@
       <div class="open__image">
         <confirmLedger />
         <keep-alive>
-          <component
-            :is="currentIcon"
-            class="open__icon"
-          />
+          <component :is="currentIcon" class="open__icon" />
         </keep-alive>
       </div>
-      <PrimaryButton
-        @click.stop="clickHandler"
-      >
+      <PrimaryButton @click.stop="clickHandler">
         {{ $t(`retry`) }}
       </PrimaryButton>
     </div>
@@ -46,9 +41,11 @@ export default {
       emit('buttonClick');
     };
     const currentIcon = ref();
-    import(`@/assets/icons/networks/${currentWallet.value.net}.svg`).then((val) => {
-      currentIcon.value = markRaw(val.default);
-    });
+    import(`@/assets/icons/networks/${currentWallet.value.net}.svg`).then(
+      (val) => {
+        currentIcon.value = markRaw(val.default);
+      }
+    );
 
     return { clickHandler, currentIcon };
   },
@@ -60,7 +57,7 @@ export default {
   &__wrap {
     flex-direction: column;
     display: flex;
-    align-items: center
+    align-items: center;
   }
   &__image {
     position: relative;

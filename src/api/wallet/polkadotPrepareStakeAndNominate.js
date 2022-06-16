@@ -1,4 +1,9 @@
-export const polkadotPrepareStakeAndNominate = ({ address, delegations, amount, tip }) => {
+export const polkadotPrepareStakeAndNominate = ({
+  address,
+  delegations,
+  amount,
+  tip,
+}) => {
   return {
     url: `/transactions/polkadot/${address}/prepareStakeAndNominate`,
     method: 'get',

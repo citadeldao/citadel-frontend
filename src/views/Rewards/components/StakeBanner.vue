@@ -1,33 +1,27 @@
 <template>
-  <div
-    class="stake-banner"
-    :style="data"
-  >
+  <div class="stake-banner" :style="data">
     <div class="stake-banner__info">
       <div class="stake-banner__info-section">
         <div class="stake-banner__info-title">
           <span class="stake-banner__info-title-title">
-            {{ $t("rewardsPage.rewardsReport") }}
+            {{ $t('rewardsPage.rewardsReport') }}
           </span>
           <div class="stake-banner__date-range">
             <span class="stake-banner__info-title-date-range-from">
-              {{ moment(date.from).format("DD MMM") }}
+              {{ moment(date.from).format('DD MMM') }}
             </span>
             -
             <span class="stake-banner__info-title-date-range-to">
-              {{ moment(date.to).format("DD MMM") }}
+              {{ moment(date.to).format('DD MMM') }}
             </span>
           </div>
         </div>
-        <p
-          class="stake-banner__text"
-          v-html="text"
-        />
+        <p class="stake-banner__text" v-html="text" />
       </div>
 
       <div class="stake-banner__reward">
         <span
-          v-pretty-number="{value: total, currency: '$'}"
+          v-pretty-number="{ value: total, currency: '$' }"
           class="stake-banner__reward-value"
         />
         <span class="stake-banner__reward-currency">$</span>
@@ -36,15 +30,15 @@
     <img
       class="stake-banner__image stake-banner__image--xl"
       :src="require(`@/assets/images/${data.name}.png`)"
-    >
+    />
     <img
       class="stake-banner__image stake-banner__image--lg"
       :src="require(`@/assets/images/${data.lg}.png`)"
-    >
+    />
     <img
       class="stake-banner__image stake-banner__image--md"
       :src="require(`@/assets/images/${data.md}.png`)"
-    >
+    />
     <div class="stake-banner__staek-count">
       {{ `x${data.value}` }}
     </div>
@@ -127,7 +121,6 @@ export default {
         md: 'carmd',
         lg: 'carlg',
       };
-
     });
     const text = computed(() => {
       if (data.value.name !== 'trip') {
@@ -135,7 +128,6 @@ export default {
       }
 
       return `You could fly <strong> Paris → Rome</strong> with your claimed tokens`;
-
     });
 
     return { data, moment, text };
@@ -189,7 +181,7 @@ export default {
   &__info-title-date-range-from,
   &__info-title-title,
   &__info-title-date-range-to {
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
   }
   &__info-title-title {
     @include lg {
@@ -200,7 +192,7 @@ export default {
     font-size: 12px;
     line-height: 14px;
     color: $white;
-    font-family: "Panton_Light";
+    font-family: 'Panton_Light';
     margin: 0;
     width: 176px;
     margin-top: 7px;
@@ -215,7 +207,7 @@ export default {
   &__reward-currency {
     font-size: 25px;
     line-height: 23px;
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
     color: $white;
     z-index: 1;
     @include md {
@@ -256,7 +248,7 @@ export default {
     background: $crimson;
     font-size: 20px;
     line-height: 23px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     color: $white;
     bottom: 22px;
     right: 80px;

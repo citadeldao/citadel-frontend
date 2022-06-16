@@ -1,7 +1,7 @@
 <template>
   <div class="total-for-range">
     <span class="total-for-range__title">
-      {{ $t("rewardsPage.periodRewards") }}
+      {{ $t('rewardsPage.periodRewards') }}
     </span>
     <div class="total-for-range__line" />
     <div class="total-for-range__value">
@@ -58,7 +58,7 @@ export default {
     line-height: 26px;
     letter-spacing: -0.02em;
     color: $white;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     @include lg {
       font-size: 18px;
       line-height: 22px;
@@ -84,7 +84,7 @@ export default {
     line-height: 26px;
     letter-spacing: -0.02em;
     color: $white;
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
     margin-right: 3px;
     @include lg {
       font-size: 18px;
@@ -96,7 +96,7 @@ export default {
     }
   }
   &__value-currency {
-    font-family: "Panton_Regular" !important;
+    font-family: 'Panton_Regular' !important;
     margin-right: 0px;
   }
 }

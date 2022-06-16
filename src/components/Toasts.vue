@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="toasts"
-  >
+  <div class="toasts">
     <transition-group name="slide-from-top">
       <Toast
         v-for="toast of toasts"
@@ -50,5 +48,4 @@ export default {
   transform: translateX(-50%);
   width: 100%;
 }
-
 </style>

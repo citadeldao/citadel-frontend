@@ -2,7 +2,8 @@ import useApi from '@/api/useApi';
 const extensionsApi = useApi('extensions');
 import axios from 'axios';
 
-const APP_DOMEN = 'https://api-extensions-service.apps.citadel.okd.3ahtim54r.ru';
+const APP_DOMEN =
+  'https://api-extensions-service.apps.citadel.okd.3ahtim54r.ru';
 
 const types = {
   SET_CURRENT_APP_INFO: 'SET_CURRENT_APP_INFO',
@@ -20,10 +21,10 @@ export default {
     extensionsList: [],
   }),
   getters: {
-    currentAppInfo: state => state.currentAppInfo,
-    extensionTransactionForSign: state => state.extensionTransactionForSign,
-    extensionMessageForSign: state => state.extensionMessageForSign,
-    extensionsList: state => state.extensionsList,
+    currentAppInfo: (state) => state.currentAppInfo,
+    extensionTransactionForSign: (state) => state.extensionTransactionForSign,
+    extensionMessageForSign: (state) => state.extensionMessageForSign,
+    extensionsList: (state) => state.extensionsList,
   },
   mutations: {
     [types.SET_CURRENT_APP_INFO](state, value) {
@@ -62,7 +63,6 @@ export default {
       }
     },
     async fetchExtensionInfo({ commit }, { appId }) {
-
       const { ok, data } = await extensionsApi.getExtensionsInfo({ appId });
 
       if (ok) {

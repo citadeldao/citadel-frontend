@@ -10,11 +10,7 @@
     />
   </div>
   <div class="manage-vk__vk-list">
-    <VkItem
-      v-for="(vk, index) in vkList"
-      :key="index"
-      :vk="vk"
-    />
+    <VkItem v-for="(vk, index) in vkList" :key="index" :vk="vk" />
   </div>
 </template>
 <script>
@@ -40,13 +36,20 @@ export default {
     const store = useStore();
     const search = ref('');
 
-    const vkList = computed(() => store.getters['subtokens/formatedSubtokens'](true, props.wallet).filter(c => {
-      if (search.value) {
-        return c.name?.toLowerCase().includes(search.value?.toLowerCase()) && c.config.standard === 'snip20';
-      }
+    const vkList = computed(() =>
+      store.getters['subtokens/formatedSubtokens'](true, props.wallet).filter(
+        (c) => {
+          if (search.value) {
+            return (
+              c.name?.toLowerCase().includes(search.value?.toLowerCase()) &&
+              c.config.standard === 'snip20'
+            );
+          }
 
-      return c.config.standard === 'snip20';
-    }));
+          return c.config.standard === 'snip20';
+        }
+      )
+    );
 
     return {
       vkList,

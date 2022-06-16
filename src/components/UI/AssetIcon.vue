@@ -1,12 +1,6 @@
 <template>
-  <div
-    class="asset-icon"
-    :style="cssVars"
-  >
-    <div
-      v-if="showIconPlaceholder"
-      class="asset-icon__placeholder"
-    >
+  <div class="asset-icon" :style="cssVars">
+    <div v-if="showIconPlaceholder" class="asset-icon__placeholder">
       <span>{{ iconPlaceholder[0] }}</span>
       <span>{{ iconPlaceholder[1] }}</span>
     </div>
@@ -17,7 +11,7 @@
       alt=""
       @error="showIconPlaceholder = true"
       @load="showIconPlaceholder = false"
-    >
+    />
   </div>
 </template>
 
@@ -87,7 +81,7 @@ export default {
       font-size: 14px;
       line-height: 17px;
       color: $white;
-      font-family: "Panton_Bold";
+      font-family: 'Panton_Bold';
       position: absolute;
       top: 7px;
       left: 6px;

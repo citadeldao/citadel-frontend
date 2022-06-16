@@ -7,18 +7,12 @@
       :submit-button="false"
       @close="$emit('close')"
     >
-      <div
-        v-if="isLoading"
-        class="delete-seed-modal__loader"
-      >
+      <div v-if="isLoading" class="delete-seed-modal__loader">
         <Loading />
       </div>
 
       <div class="delete-seed-modal__notify">
-        <exclamation
-          width="59"
-          height="59"
-        />
+        <exclamation width="59" height="59" />
         <div class="delete-seed-modal__text">
           {{ $t('settings.addresses.deleteSeedInfo') }}
         </div>
@@ -34,9 +28,7 @@
       >
         {{ $t('yes') }}
       </PrimaryButton>
-      <TextButton
-        @click="$emit('close')"
-      >
+      <TextButton @click="$emit('close')">
         {{ $t('no') }}
       </TextButton>
     </ModalContent>
@@ -72,7 +64,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .delete-seed-modal {
   &__notify {
     width: 530px;
@@ -82,11 +73,11 @@ export default {
     justify-content: center;
     border-radius: 10px;
     margin: 30px 0;
-    background: #FFF1ED;
+    background: #fff1ed;
   }
   &__text {
     margin-left: 20px;
-    color: #FA3B33;
+    color: #fa3b33;
     width: 386px;
     font-size: 14px;
     line-height: 20px;
@@ -104,7 +95,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba($black, .2);
+    background-color: rgba($black, 0.2);
   }
 }
 </style>

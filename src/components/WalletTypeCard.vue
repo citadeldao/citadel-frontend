@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="wallet-type-card"
-    :class="typeClass"
-  >
+  <div class="wallet-type-card" :class="typeClass">
     <div :style="{ backgroundColor: typeObject.color }" />
     <span :style="{ color: typeObject.color }">
       {{ typeObject.text }}
@@ -40,7 +37,7 @@ export default {
   position: relative;
 
   &::after {
-    content: "";
+    content: '';
     opacity: 0.2;
     top: 0;
     left: 0;
@@ -109,7 +106,7 @@ export default {
 
   &__keplr {
     &::after {
-      background: #E336E7;
+      background: #e336e7;
     }
   }
 }

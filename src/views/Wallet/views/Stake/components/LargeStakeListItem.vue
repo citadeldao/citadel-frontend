@@ -2,9 +2,7 @@
   <div class="large-stake-list-item">
     <div class="large-stake-list-item__upper">
       <div class="large-stake-list-item__left">
-        <div
-          class="large-stake-list-item__icon-wrapper"
-        >
+        <div class="large-stake-list-item__icon-wrapper">
           <div class="large-stake-list-item__icon">
             <keep-alive :style="{ fill: '#FF5722' }">
               <component :is="currentIcon" />
@@ -37,29 +35,20 @@
           <div class="large-stake-list-item__stake-share-text">
             {{ $t('stakeShare') }}
           </div>
-          &nbsp;
-          &nbsp;
+          &nbsp; &nbsp;
           <div
             v-pretty-number="stakeShare"
             class="large-stake-list-item__stake-share-value"
           />
           &nbsp;
-          <div class="large-stake-list-item__stake-share-percent">
-            %
-          </div>
+          <div class="large-stake-list-item__stake-share-percent">%</div>
         </div>
       </div>
     </div>
     <div class="large-stake-list-item__divider" />
     <div class="large-stake-list-item__lower">
-      <div
-        v-for="(item, index) in validators"
-        :key="index"
-        class="lower-item"
-      >
-        <div class="lower-item__title">
-          {{ item.name }} {{ item.address }}
-        </div>
+      <div v-for="(item, index) in validators" :key="index" class="lower-item">
+        <div class="lower-item__title">{{ item.name }} {{ item.address }}</div>
         <div class="lower-item__info">
           {{ $t('fee') }}: <span class="lower-item__red">{{ item.fee }}</span>
           <span class="lower-item__black">%</span>
@@ -78,7 +67,7 @@ export default {
   props: {
     validators: {
       type: Array,
-      default: () => ([]),
+      default: () => [],
     },
     icon: {
       type: String,
@@ -93,24 +82,27 @@ export default {
     const { t } = useI18n();
     const currentIcon = ref();
     props.icon &&
-    import(`@/assets/icons/token/${props.icon}.svg`).then((val) => {
-      currentIcon.value = markRaw(val.default);
-    });
+      import(`@/assets/icons/token/${props.icon}.svg`).then((val) => {
+        currentIcon.value = markRaw(val.default);
+      });
 
     const title = computed(() => {
       return t('stakingAmount');
     });
     const amount = computed(() => {
-
       return props.currentWallet?.balance?.stake;
     });
 
     const stakeShare = computed(() => {
       const sum = BigNumber(props.currentWallet.balance.mainBalance)
         .plus(props.currentWallet.balance.frozenBalance)
-        .plus(props.currentWallet.balance.delegatedBalance).toNumber();
+        .plus(props.currentWallet.balance.delegatedBalance)
+        .toNumber();
 
-      return BigNumber(props.currentWallet.balance.stake).dividedBy(sum).multipliedBy(100).toNumber();
+      return BigNumber(props.currentWallet.balance.stake)
+        .dividedBy(sum)
+        .multipliedBy(100)
+        .toNumber();
     });
 
     return {
@@ -173,7 +165,7 @@ export default {
   &__title {
     font-size: 17px;
     line-height: 20px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     margin-bottom: 7px;
     max-width: 268px;
     white-space: nowrap;
@@ -275,7 +267,7 @@ export default {
     gap: 20px;
   }
   .lower-item {
-     display: flex;
+    display: flex;
     flex-direction: column;
     background: $ultralightblue;
     border-left: 3px solid $blue;
@@ -305,7 +297,7 @@ export default {
       font-weight: 700;
       color: $red;
     }
-    &__black{
+    &__black {
       color: $black;
     }
   }

@@ -1,16 +1,12 @@
 <template>
   <TransactionsPlaceholder
-    v-if="transactions?.length === 0 && currentPage === 1 && !txsFromMempool.length"
+    v-if="
+      transactions?.length === 0 && currentPage === 1 && !txsFromMempool.length
+    "
     :current-wallet="currentWallet"
   />
-  <div
-    v-else
-    class="transactions"
-  >
-    <div
-      v-if="isLoading"
-      class="transactions__loader"
-    >
+  <div v-else class="transactions">
+    <div v-if="isLoading" class="transactions__loader">
       <Loading />
     </div>
     <table
@@ -18,19 +14,18 @@
       class="transactions__table"
     >
       <tr>
-        <th>{{ $t("type") }}</th>
+        <th>{{ $t('type') }}</th>
         <th class="transactions__table-xl">
-          {{ $t("status") }}
+          {{ $t('status') }}
         </th>
         <th class="transactions__table-xl">
-          {{ $t("timeDate") }}
+          {{ $t('timeDate') }}
         </th>
         <th class="transactions__table-xl">
-          {{ $t("address") }}
+          {{ $t('address') }}
         </th>
-        <th>{{ $t("amount") }}</th>
+        <th>{{ $t('amount') }}</th>
       </tr>
-
 
       <template v-if="currentPage === 1">
         <TableRow
@@ -55,24 +50,18 @@
     </table>
 
     <div class="transactions__section">
-      <div
-        style="opacity: 0"
-        class="transactions__export-csv"
-      >
+      <div style="opacity: 0" class="transactions__export-csv">
         <fileExport />
-        <span>CSV {{ $t("export") }}</span>
+        <span>CSV {{ $t('export') }}</span>
       </div>
       <div class="transactions__pagination">
-        <div
-          v-if="transactions?.length"
-          class="transactions__item-count"
-        >
-          <span
-            class="transactions__current-amount"
+        <div v-if="transactions?.length" class="transactions__item-count">
+          <span class="transactions__current-amount">
+            {{ (currentPage - 1) * pageLimit + 1 }} </span
+          >&nbsp;
+          <span class="transactions__total-amount">
+            - {{ lastItemOnPage }}</span
           >
-            {{ ((currentPage - 1) * pageLimit) + 1 }}
-          </span>&nbsp;
-          <span class="transactions__total-amount"> - {{ lastItemOnPage }}</span>
           <span class="transactions__total-amount"> / {{ total }}</span>
         </div>
         <el-pagination
@@ -136,7 +125,7 @@
             class="transactions__edit-comment-modal-cancel"
             @click="modalCloseHandler"
           >
-            {{ $t("cancel") }}
+            {{ $t('cancel') }}
           </span>
         </template>
       </ModalContent>
@@ -208,7 +197,11 @@ export default {
   emits: ['prepareClaim', 'prepareXctClaim'],
   setup(props) {
     const currentKtAddress = inject('currentKtAddress');
-    const currentAddress = computed(()=> currentKtAddress.value ? currentKtAddress.value.address : route.params.address);
+    const currentAddress = computed(() =>
+      currentKtAddress.value
+        ? currentKtAddress.value.address
+        : route.params.address
+    );
     const route = useRoute();
     const pageLimit = ref(10);
     const options = ref([10, 20, 50]);
@@ -216,37 +209,32 @@ export default {
 
     const mempool = computed(() => store.getters['transactions/mempool']);
     const txsFromMempool = computed(() => {
-      return mempool.value.filter(tx => {
-        const hasFrom = tx.from.toLowerCase() === currentAddress.value?.toLowerCase();
-        const hasTo = tx.to.toLowerCase() === currentAddress.value?.toLowerCase();
-        const txBelongToWallet = (hasFrom || hasTo) && tx.net === props.currentWallet.net;
+      return mempool.value
+        .filter((tx) => {
+          const hasFrom =
+            tx.from.toLowerCase() === currentAddress.value?.toLowerCase();
+          const hasTo =
+            tx.to.toLowerCase() === currentAddress.value?.toLowerCase();
+          const txBelongToWallet =
+            (hasFrom || hasTo) && tx.net === props.currentWallet.net;
 
-        return (txBelongToWallet
-        );
-      })
-        .sort((a, b) => a.date > b.date ? -1 : 1);
+          return txBelongToWallet;
+        })
+        .sort((a, b) => (a.date > b.date ? -1 : 1));
     });
 
     const setCurrentPage = (val) => {
       currentPage.value = val;
-      getTransactions(
-        props.currentWallet.id,
-        val,
-        pageLimit.value,
-      );
+      getTransactions(props.currentWallet.id, val, pageLimit.value);
     };
     const setLimit = (val) => {
       currentPage.value = 1;
-      getTransactions(
-        props.currentWallet.id,
-        currentPage.value,
-        val,
-      );
+      getTransactions(props.currentWallet.id, currentPage.value, val);
     };
 
     const store = useStore();
     const isLoading = computed(
-      () => store.getters['transactions/isTransactionsLoading'],
+      () => store.getters['transactions/isTransactionsLoading']
     );
     const getTransactions = async (walletId, page, pageSize) => {
       await store.dispatch('transactions/getTransactions', {
@@ -258,25 +246,18 @@ export default {
       });
     };
 
-    const total = computed(
-      () => {
-        return store.getters['transactions/transactionsCount'];
-      },
-    );
-
-    const lastItemOnPage = computed(() => {
-      const isLastPage = currentPage.value === Math.ceil(total.value / pageLimit.value);
-
-      return isLastPage
-        ? total.value
-        : (pageLimit.value * currentPage.value);
+    const total = computed(() => {
+      return store.getters['transactions/transactionsCount'];
     });
 
-    getTransactions(
-      props.currentWallet.id,
-      currentPage.value,
-      pageLimit.value,
-    );
+    const lastItemOnPage = computed(() => {
+      const isLastPage =
+        currentPage.value === Math.ceil(total.value / pageLimit.value);
+
+      return isLastPage ? total.value : pageLimit.value * currentPage.value;
+    });
+
+    getTransactions(props.currentWallet.id, currentPage.value, pageLimit.value);
 
     watch(
       () => route.params,
@@ -284,9 +265,9 @@ export default {
         getTransactions(
           props.currentWallet.id,
           currentPage.value,
-          pageLimit.value,
+          pageLimit.value
         );
-      },
+      }
     );
     watch(
       () => currentKtAddress.value,
@@ -294,9 +275,9 @@ export default {
         getTransactions(
           props.currentWallet.id,
           currentPage.value,
-          pageLimit.value,
+          pageLimit.value
         );
-      },
+      }
     );
 
     // если транзакция вышла из мемпула текущего кошелька, то обновляем транзакции
@@ -305,16 +286,14 @@ export default {
         getTransactions(
           props.currentWallet.id,
           currentPage.value,
-          pageLimit.value,
+          pageLimit.value
         );
       }
     });
 
-    const transactions = computed(
-      () => {
-        return store.getters['transactions/transactions'];
-      },
-    );
+    const transactions = computed(() => {
+      return store.getters['transactions/transactions'];
+    });
 
     const showModal = ref(false);
     const showEditCommentModal = ref(false);
@@ -334,7 +313,7 @@ export default {
       showEditCommentModal.value = true;
       currentTransaction.value = transaction;
       txComment.value = transaction.note;
-      nextTick(() =>document.getElementById('prevComment').focus());
+      nextTick(() => document.getElementById('prevComment').focus());
     };
     const saveComment = async () => {
       await store.dispatch('transactions/postTransactionNote', {
@@ -345,7 +324,7 @@ export default {
       await getTransactions(
         props.currentWallet.id,
         currentPage.value,
-        pageLimit.value,
+        pageLimit.value
       );
       modalCloseHandler();
     };
@@ -354,8 +333,9 @@ export default {
       txComment.value = transaction.note;
       showModal.value = true;
       showTransactionInfoModal.value = true;
-      if(props.currentWallet.hasTransactionComment){
-        nextTick(() =>document.getElementById('comment').focus());
+
+      if (props.currentWallet.hasTransactionComment) {
+        nextTick(() => document.getElementById('comment').focus());
       }
     };
     const infoModalSubmit = async () => {
@@ -431,7 +411,7 @@ export default {
     display: none;
     font-size: 16px;
     line-height: 19px;
-    font-family: "Panton_ExtraBold";
+    font-family: 'Panton_ExtraBold';
     @include xl {
       display: initial;
     }
@@ -442,7 +422,7 @@ export default {
     padding: 15px 0;
     font-size: 16px;
     line-height: 19px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     &:first-child {
       padding-left: 24px;
       @include md {
@@ -480,7 +460,7 @@ export default {
       font-size: 16px;
       line-height: 19px;
       color: $ligth-blue;
-      font-family: "Panton_Bold";
+      font-family: 'Panton_Bold';
     }
   }
   &__pagination {
@@ -500,7 +480,7 @@ export default {
   &__total-amount {
     font-size: 16px;
     line-height: 19px;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
     color: $dark-blue;
   }
   &__total-amount {
@@ -509,7 +489,7 @@ export default {
   &__edit-comment-modal-cancel {
     font-size: 18px;
     line-height: 27px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     text-decoration-line: underline;
     color: $too-dark-blue;
     margin-top: 24px;

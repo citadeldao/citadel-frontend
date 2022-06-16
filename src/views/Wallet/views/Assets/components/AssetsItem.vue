@@ -1,7 +1,10 @@
 <template>
   <div
     class="assets-item"
-    :class="{ 'assets-item--native': isNativeToken, 'assets-item--not-linked': isNotLinked }"
+    :class="{
+      'assets-item--native': isNativeToken,
+      'assets-item--not-linked': isNotLinked,
+    }"
   >
     <div class="assets-item__cell">
       <AssetIcon
@@ -23,20 +26,29 @@
     <template v-else>
       <div class="assets-item__cell">
         <span
-          v-pretty-number="{ value: balance?.calculatedBalance, currency: item.code }"
+          v-pretty-number="{
+            value: balance?.calculatedBalance,
+            currency: item.code,
+          }"
           class="assets-item__value"
         />
-        <span class="assets-item__currency assets-item__currency--left">{{ item.code }}</span>
+        <span class="assets-item__currency assets-item__currency--left">{{
+          item.code
+        }}</span>
       </div>
       <div class="assets-item__cell">
-        <span class="assets-item__currency assets-item__currency--right">$</span>
+        <span class="assets-item__currency assets-item__currency--right"
+          >$</span
+        >
         <span
           v-pretty-number="{ value: item.balanceUSD, currency: 'USD' }"
           class="assets-item__value"
         />
       </div>
       <div class="assets-item__cell">
-        <span class="assets-item__currency assets-item__currency--right">$</span>
+        <span class="assets-item__currency assets-item__currency--right"
+          >$</span
+        >
         <span
           v-pretty-number="{ value: balance?.price?.USD, currency: 'USD' }"
           class="assets-item__value"
@@ -74,7 +86,9 @@ export default {
   },
   setup(props) {
     const showIconPlaceholder = ref(false);
-    const iconPlaceholder = computed(() => tokenIconPlaceholder(props.item.name));
+    const iconPlaceholder = computed(() =>
+      tokenIconPlaceholder(props.item.name)
+    );
 
     return { showIconPlaceholder, iconPlaceholder };
   },
@@ -105,19 +119,19 @@ export default {
 .assets-item {
   display: flex;
   width: 100%;
-  background: #F1F4FF;
+  background: #f1f4ff;
   border-radius: 8px;
   margin-bottom: 8px;
   cursor: pointer;
 
   &:hover {
-    background: #F4E9FC;
+    background: #f4e9fc;
     @include hover;
 
     .assets-item__icon {
       background: $dark-blue;
       box-shadow: 0 15px 50px rgba(26, 83, 240, 0.1),
-      0 10px 15px rgba(26, 83, 240, 0.16);
+        0 10px 15px rgba(26, 83, 240, 0.16);
     }
   }
 
@@ -189,17 +203,17 @@ export default {
   }
 
   &__name {
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
     color: $slategray;
   }
 
   &__value {
     color: $mid-blue;
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
   }
 
   &__currency {
-    font-family: "Panton_Regular";
+    font-family: 'Panton_Regular';
     color: $slategray;
 
     &--left {
@@ -217,21 +231,41 @@ export default {
   }
 
   &--native {
-    background: linear-gradient(90deg, #FAD0C466 0%, #FAD0C466 1%, #FFD1FF66 100%);
+    background: linear-gradient(
+      90deg,
+      #fad0c466 0%,
+      #fad0c466 1%,
+      #ffd1ff66 100%
+    );
     cursor: default;
     @include hover;
 
     &:hover {
-      background: linear-gradient(90deg, #FAD0C466 0%, #FAD0C466 1%, #FFD1FF66 100%);
+      background: linear-gradient(
+        90deg,
+        #fad0c466 0%,
+        #fad0c466 1%,
+        #ffd1ff66 100%
+      );
     }
   }
 
   &--not-linked {
-    background: linear-gradient(90deg, rgba($red, 0.1) 0%, rgba($red, 0.2) 1%, rgba($red, 0.1) 100%);
+    background: linear-gradient(
+      90deg,
+      rgba($red, 0.1) 0%,
+      rgba($red, 0.2) 1%,
+      rgba($red, 0.1) 100%
+    );
     cursor: pointer;
 
     &:hover {
-      background: linear-gradient(90deg, rgba($red, 0.15) 0%, rgba($red, 0.3) 1%, rgba($red, 0.15) 100%);
+      background: linear-gradient(
+        90deg,
+        rgba($red, 0.15) 0%,
+        rgba($red, 0.3) 1%,
+        rgba($red, 0.15) 100%
+      );
     }
 
     .assets-item {
@@ -241,19 +275,16 @@ export default {
 
       &__icon {
         background: $red;
-        box-shadow: 0 15px 50px rgba($red, 0.1),
-        0 10px 15px rgba($red, 0.16);
+        box-shadow: 0 15px 50px rgba($red, 0.1), 0 10px 15px rgba($red, 0.16);
       }
     }
 
     &:hover {
       .assets-item__icon {
         background: $red;
-        box-shadow: 0 15px 50px rgba($red, 0.1),
-        0 10px 15px rgba($red, 0.16);
+        box-shadow: 0 15px 50px rgba($red, 0.1), 0 10px 15px rgba($red, 0.16);
       }
     }
   }
 }
-
 </style>

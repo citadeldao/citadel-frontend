@@ -2,6 +2,7 @@
   <div class="breadcrumbs">
     <div
       class="breadcrumbs-item breadcrumbs-item--menu"
+      data-qa="breadcrumbs-menu"
       @click.self="goToOverall"
     >
       {{ currentListName }}
@@ -16,10 +17,7 @@
     >
       {{ currentWalletName }}
     </div>
-    <div
-      v-if="currentWalletToken"
-      class="breadcrumbs-item"
-    >
+    <div v-if="currentWalletToken" class="breadcrumbs-item">
       {{ currentWalletToken }}
     </div>
   </div>
@@ -53,9 +51,8 @@ export default {
     const isInWallet = computed(() => route.path.includes('wallet'));
     const currentList = computed(() => store.getters['wallets/activeList']);
     const currentListName = computed(() => {
-      const name = currentList.value === 'all'
-        ? t('overallTitle')
-        : currentList.value;
+      const name =
+        currentList.value === 'all' ? t('overallTitle') : currentList.value;
 
       return name.length > MAX_LIST_NAME_LENGTH
         ? `${name.slice(0, MAX_WALLET_NAME_LENGTH)}...`
@@ -63,11 +60,13 @@ export default {
     });
     const { currentWallet } = useWallets();
     const isCurrentWalletSelected = computed(() => {
-      return Object.keys(currentWallet?.value || {}).length
-        && route.params.address;
+      return (
+        Object.keys(currentWallet?.value || {}).length && route.params.address
+      );
     });
     const currentWalletName = computed(() => {
-      const walletName = currentWallet.value.title || currentWallet.value.address;
+      const walletName =
+        currentWallet.value.title || currentWallet.value.address;
 
       return walletName?.length > MAX_WALLET_NAME_LENGTH
         ? `
@@ -77,7 +76,9 @@ export default {
           `
         : walletName;
     });
-    const currentWalletToken = computed(() => store.getters['subtokens/currentToken']?.code);
+    const currentWalletToken = computed(
+      () => store.getters['subtokens/currentToken']?.code
+    );
 
     const goToAddress = () => {
       redirectToWallet({
@@ -116,9 +117,9 @@ export default {
   color: $too-dark-blue;
   font-size: 25px;
   line-height: 30px;
-  font-family: "Panton_Bold";
+  font-family: 'Panton_Bold';
 
-  &:not(:last-child){
+  &:not(:last-child) {
     cursor: pointer;
   }
 
@@ -143,7 +144,7 @@ export default {
   }
 
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 50%;
     right: -35px;
@@ -169,7 +170,7 @@ export default {
     color: $blue;
 
     &::before {
-      border-bottom-color: $blue
+      border-bottom-color: $blue;
     }
   }
 
@@ -189,7 +190,7 @@ export default {
     cursor: pointer;
 
     &::before {
-      content: "";
+      content: '';
       position: absolute;
       left: 0;
       right: 0;

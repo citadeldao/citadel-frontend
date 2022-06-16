@@ -1,12 +1,6 @@
 <template>
-  <div
-    class="lds-grid"
-    :class="{ small, ledger }"
-  >
-    <div
-      v-for="item in 9"
-      :key="item"
-    />
+  <div class="lds-grid" :class="{ small, ledger }">
+    <div v-for="item in 9" :key="item" />
   </div>
 </template>
 
@@ -27,7 +21,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .lds-grid {
   display: inline-block;
   position: relative;
@@ -149,7 +142,7 @@ export default {
     animation-delay: -1.6s;
   }
 }
-.ledger{
+.ledger {
   width: 12px;
   height: 12px;
   display: flex;

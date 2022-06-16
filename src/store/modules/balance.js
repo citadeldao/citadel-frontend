@@ -11,9 +11,9 @@ export default {
   }),
 
   getters: {
-    usd: state => state.usd,
-    usdWithTokens: state => state.usdWithTokens,
-    btc: state => state.btc,
+    usd: (state) => state.usd,
+    usdWithTokens: (state) => state.usdWithTokens,
+    btc: (state) => state.btc,
   },
 
   mutations: {

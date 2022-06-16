@@ -9,54 +9,18 @@
       </div>
     </div>
     <div class="menu-type-item__image">
-      <restoreIcon
-        v-if="icon === 'restore'"
-        class="initial"
-      />
-      <restoreIconHover
-        v-if="icon === 'restore'"
-        class="hover"
-      />
-      <importIcon
-        v-if="icon === 'import'"
-        class="initial"
-      />
-      <importIconHover
-        v-if="icon === 'import'"
-        class="hover"
-      />
-      <seedPhraseIcon
-        v-if="icon === 'seedphrase'"
-        class="initial"
-      />
-      <seedPhraseIconHover
-        v-if="icon === 'seedphrase'"
-        class="hover"
-      />
-      <privateKeyIcon
-        v-if="icon === 'privatekey'"
-        class="initial"
-      />
-      <privateKeyIconHover
-        v-if="icon === 'privatekey'"
-        class="hover"
-      />
-      <metamaskKeplrIcon
-        v-if="icon === 'metamaskkeplr'"
-        class="initial"
-      />
-      <metamaskKeplrIconHover
-        v-if="icon === 'metamaskkeplr'"
-        class="hover"
-      />
-      <hardwareIcon
-        v-if="icon === 'hardware'"
-        class="initial"
-      />
-      <hardwareIconHover
-        v-if="icon === 'hardware'"
-        class="hover"
-      />
+      <restoreIcon v-if="icon === 'restore'" class="initial" />
+      <restoreIconHover v-if="icon === 'restore'" class="hover" />
+      <importIcon v-if="icon === 'import'" class="initial" />
+      <importIconHover v-if="icon === 'import'" class="hover" />
+      <seedPhraseIcon v-if="icon === 'seedphrase'" class="initial" />
+      <seedPhraseIconHover v-if="icon === 'seedphrase'" class="hover" />
+      <privateKeyIcon v-if="icon === 'privatekey'" class="initial" />
+      <privateKeyIconHover v-if="icon === 'privatekey'" class="hover" />
+      <metamaskKeplrIcon v-if="icon === 'metamaskkeplr'" class="initial" />
+      <metamaskKeplrIconHover v-if="icon === 'metamaskkeplr'" class="hover" />
+      <hardwareIcon v-if="icon === 'hardware'" class="initial" />
+      <hardwareIconHover v-if="icon === 'hardware'" class="hover" />
     </div>
   </div>
 </template>
@@ -103,59 +67,60 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-  .menu-type-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 26px 31px;
-    box-sizing: border-box;
-    width: 100%;
-    height: 160px;
-    border: 1px dashed #8B9BC7;
-    border-radius: 16px;
-    background: $white;
-    position: relative;
+.menu-type-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 26px 31px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 160px;
+  border: 1px dashed #8b9bc7;
+  border-radius: 16px;
+  background: $white;
+  position: relative;
 
-    &:hover {
-      box-shadow: 0px 15px 50px rgba(80, 100, 124, 0.1), 0px 10px 15px rgba(80, 100, 124, 0.16);
-      cursor: pointer;
-    }
+  &:hover {
+    box-shadow: 0px 15px 50px rgba(80, 100, 124, 0.1),
+      0px 10px 15px rgba(80, 100, 124, 0.16);
+    cursor: pointer;
+  }
 
-    &__image {
-      position: absolute;
-      bottom: 25px;
-      right: 15px;
+  &__image {
+    position: absolute;
+    bottom: 25px;
+    right: 15px;
 
-      .hover {
-        display: none;
-      }
-    }
-
-    .title {
-      font-family: 'Panton_Bold';
-      font-weight: 700;
-      font-size: 18px;
-      color: $black;
-    }
-
-    .description {
-      font-family: 'Panton_Regular';
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 23px;
-      color: $mid-blue;
-      width: 70%;
+    .hover {
+      display: none;
     }
   }
 
-  .menu-type-item:hover {
-    .menu-type-item__image {
-      .initial {
-        display: none;
-      }
+  .title {
+    font-family: 'Panton_Bold';
+    font-weight: 700;
+    font-size: 18px;
+    color: $black;
+  }
 
-      .hover {
-        display: initial;
-      }
+  .description {
+    font-family: 'Panton_Regular';
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 23px;
+    color: $mid-blue;
+    width: 70%;
+  }
+}
+
+.menu-type-item:hover {
+  .menu-type-item__image {
+    .initial {
+      display: none;
+    }
+
+    .hover {
+      display: initial;
     }
   }
+}
 </style>

@@ -17,9 +17,7 @@
         >
           <info />
           <template #content>
-            <BalanceTooltipInfo
-              :current-wallet="currentWallet"
-            />
+            <BalanceTooltipInfo :current-wallet="currentWallet" />
           </template>
         </BalanceTooltip>
       </div>
@@ -44,10 +42,7 @@
             data-qa="wallet__balance--usd"
           />
         </div>
-        <div
-          v-if="currentWallet.net !== 'btc'"
-          class="balance__tab"
-        >
+        <div v-if="currentWallet.net !== 'btc'" class="balance__tab">
           <NetworkTab
             :id="3"
             v-model:currentTab="currentTab"
@@ -65,15 +60,14 @@
       />
       <span class="balance__currency"> {{ currentTab }}</span>
     </span>
-    <div
-      v-if="currentWallet.hasStake"
-      class="balance__info"
-    >
+    <div v-if="currentWallet.hasStake" class="balance__info">
       <div class="balance__info-line">
         <span class="balance__info-title"> {{ $t('staked') }} </span>
         <div class="balance__info-white-space" />
         <span class="balance__info-value">
-          <span v-pretty-number="{ value: balance.stake, currency: currentTab }" />
+          <span
+            v-pretty-number="{ value: balance.stake, currency: currentTab }"
+          />
           <span class="balance__info-currency">
             {{ currentTab }}
           </span>
@@ -84,7 +78,10 @@
         <div class="balance__info-white-space" />
         <span class="balance__info-value">
           <span
-            v-pretty-number="{ value: balance.mainBalance, currency: currentTab }"
+            v-pretty-number="{
+              value: balance.mainBalance,
+              currency: currentTab,
+            }"
             data-qa="available-balance-value"
           />
           <span class="balance__info-currency">
@@ -92,10 +89,7 @@
           </span>
         </span>
       </div>
-      <div
-        v-if="currentWallet.showFrozenBalance"
-        class="balance__info-line"
-      >
+      <div v-if="currentWallet.showFrozenBalance" class="balance__info-line">
         <span class="balance__info-title">
           <span class="balance__info-title__text">{{ $t('frozen') }}</span>
           <Tooltip v-if="balance.frozen?.length">
@@ -123,17 +117,19 @@
         </span>
         <div class="balance__info-white-space" />
         <span class="balance__info-value">
-          <span v-pretty-number="{ value: balance.frozenBalance, currency: currentTab }" />
+          <span
+            v-pretty-number="{
+              value: balance.frozenBalance,
+              currency: currentTab,
+            }"
+          />
           <span class="balance__info-currency">
             {{ currentTab }}
           </span>
         </span>
       </div>
     </div>
-    <div
-      v-if="currentWallet.hasPledged"
-      class="balance__pledged-balance"
-    >
+    <div v-if="currentWallet.hasPledged" class="balance__pledged-balance">
       <div
         v-if="currentWallet?.type === WALLET_TYPES.PUBLIC_KEY"
         class="balance__pledged-balance-lock"
@@ -144,10 +140,7 @@
         <span class="balance__pledged-balance-title-title">
           {{ $t('pledgedBalance') }}
         </span>
-        <BalanceTooltip
-          width="240px"
-          left="-113px"
-        >
+        <BalanceTooltip width="240px" left="-113px">
           <info />
           <template #content>
             <span class="balance__pledged-balance-tooltip-info">
@@ -158,13 +151,19 @@
               {{ $t('pledgeDescription.part3') }}
               <span class="balance__pledged-balance-tooltip-info-day">{{
                 $t('pledgeDescription.part4')
-              }}</span>{{ $t('pledgeDescription.part5') }}
+              }}</span
+              >{{ $t('pledgeDescription.part5') }}
             </span>
           </template>
         </BalanceTooltip>
       </div>
       <span class="balance__info-value">
-        <span v-pretty-number="{ value: pledgedBalance, currency: currentWallet.code }" />
+        <span
+          v-pretty-number="{
+            value: pledgedBalance,
+            currency: currentWallet.code,
+          }"
+        />
         <span class="balance__info-currency"> {{ currentWallet.code }} </span>
       </span>
       <RoundArrowButton
@@ -234,8 +233,8 @@ export default {
       const { stake, mainBalance, frozenBalance, frozen } = props.isCurrentToken
         ? props.currentWallet?.tokenBalance
         : currentKtAddress.value
-          ? currentKtAddress.value.balance
-          : props.currentWallet.balance;
+        ? currentKtAddress.value.balance
+        : props.currentWallet.balance;
 
       if (currentTab.value === props.currentWallet.code) {
         return {
@@ -247,9 +246,7 @@ export default {
       }
 
       return {
-        stake: BigNumber(currentCurrency.value)
-          .times(stake)
-          .toNumber(),
+        stake: BigNumber(currentCurrency.value).times(stake).toNumber(),
         mainBalance: BigNumber(currentCurrency.value)
           .times(mainBalance)
           .toNumber(),
@@ -257,14 +254,15 @@ export default {
           .times(frozenBalance)
           .toNumber(),
       };
-
     });
 
     const mainBalance = computed(() => {
-      const balance = props.isCurrentToken ? props.currentWallet?.tokenBalance.calculatedBalance
+      const balance = props.isCurrentToken
+        ? props.currentWallet?.tokenBalance.calculatedBalance
         : currentKtAddress.value
-          ? currentKtAddress?.value?.balance.calculatedBalance
-          : props.currentWallet.balance.calculatedBalance;
+        ? currentKtAddress?.value?.balance.calculatedBalance
+        : props.currentWallet.balance.calculatedBalance;
+
       if (balance === 0) {
         return balance;
       }
@@ -273,22 +271,21 @@ export default {
         return BigNumber(balance).toNumber();
       }
 
-      return BigNumber(currentCurrency.value)
-        .times(balance)
-        .toNumber();
-
+      return BigNumber(currentCurrency.value).times(balance).toNumber();
     });
 
     const getFrozenTime = (timestamp) => {
       const SECS_IN_DAY = 60 * 60 * 24;
       const SECS_IN_HOUR = 60 * 60;
       const SECS_IN_MINUTE = 60;
-      const frozenTime = Math.abs((new Date(timestamp)) - (new Date())) / 1000;
+      const frozenTime = Math.abs(new Date(timestamp) - new Date()) / 1000;
       const frozenDays = Math.floor(frozenTime / SECS_IN_DAY);
-      const frozenHours = Math.floor((frozenTime - (frozenDays * SECS_IN_DAY)) / SECS_IN_HOUR);
+      const frozenHours = Math.floor(
+        (frozenTime - frozenDays * SECS_IN_DAY) / SECS_IN_HOUR
+      );
       const frozenMinutes = Math.floor(
-        ((frozenTime - (frozenDays * SECS_IN_DAY)) - (frozenHours * SECS_IN_HOUR))
-        / SECS_IN_MINUTE,
+        (frozenTime - frozenDays * SECS_IN_DAY - frozenHours * SECS_IN_HOUR) /
+          SECS_IN_MINUTE
       );
 
       return `
@@ -302,7 +299,7 @@ export default {
       () => props.currentWallet,
       () => {
         currentTab.value = props.currentWallet.code;
-      },
+      }
     );
 
     return {
@@ -355,7 +352,7 @@ export default {
       font-size: 20px;
       line-height: 30px;
       margin: 0;
-      font-family: "Panton_Bold";
+      font-family: 'Panton_Bold';
       margin-right: 5px;
       text-transform: capitalize;
       @include md {
@@ -381,7 +378,7 @@ export default {
     font-size: 28px;
     line-height: 34px;
     color: $blue;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     margin-bottom: 17px;
     @include lg {
       font-size: 24px;
@@ -396,7 +393,7 @@ export default {
   }
 
   &__currency {
-    font-family: "Panton_Regular";
+    font-family: 'Panton_Regular';
     color: $black;
   }
 
@@ -423,7 +420,7 @@ export default {
   &__info-title {
     font-size: 16px;
     line-height: 19px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     white-space: nowrap;
     display: flex;
     align-items: center;
@@ -447,7 +444,7 @@ export default {
   &__info-value {
     font-size: 16px;
     line-height: 19px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     color: $ligth-blue;
     @include md {
       font-size: 14px;
@@ -456,7 +453,7 @@ export default {
   }
 
   &__info-currency {
-    font-family: "Panton_Light";
+    font-family: 'Panton_Light';
     color: $black;
   }
 
@@ -494,13 +491,13 @@ export default {
   &__pledged-balance-title-title {
     font-size: 14px;
     line-height: 17px;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
     color: $too-dark-blue;
     margin-right: 5px;
   }
 
   &__pledged-balance-tooltip-info {
-    font-family: "Panton_Light";
+    font-family: 'Panton_Light';
     font-size: 12px;
     line-height: 16px;
     color: $mid-blue;
@@ -508,12 +505,12 @@ export default {
 
   &__pledged-balance-tooltip-info-gas {
     color: $ligth-blue;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
   }
 
   &__pledged-balance-tooltip-info-day {
     color: $too-dark-blue;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
   }
 
   &__pledged-balance-lock {
@@ -539,17 +536,17 @@ export default {
   font-size: 12px;
   line-height: 1.5;
   color: $black;
-  font-family: "Panton_SemiBold";
+  font-family: 'Panton_SemiBold';
 
   &__amount {
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     color: $blue;
   }
 
   &__date {
     span {
-      font-family: "Panton_Regular";
-      color: $blue;;
+      font-family: 'Panton_Regular';
+      color: $blue;
     }
   }
 }

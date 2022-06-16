@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="isloadingBalance || waiting"
-    class="derivation-path-card"
-  >
+  <div v-if="isloadingBalance || waiting" class="derivation-path-card">
     <Loading class="derivation-path-card-loader" />
   </div>
   <div
@@ -22,10 +19,7 @@
     </div>
     <div class="derivation-path-card__wrapper1">
       <div class="derivation-path-card__section">
-        <cardChecked
-          v-if="exist"
-          class="derivation-path-card__checked-icon"
-        />
+        <cardChecked v-if="exist" class="derivation-path-card__checked-icon" />
         <div class="derivation-path-card__icon">
           <keep-alive>
             <component :is="icon" />
@@ -33,10 +27,7 @@
         </div>
         <div class="derivation-path-card__info">
           <span class="derivation-path-card__title">{{ name }}</span>
-          <div
-            v-if="type === 'custom'"
-            class="derives-items"
-          >
+          <div v-if="type === 'custom'" class="derives-items">
             <div class="prefix-derive">
               {{ prefixDerivation }}
             </div>
@@ -49,7 +40,7 @@
               type="text"
               spellcheck="false"
               @blur="setCustomPath"
-            >
+            />
             <div class="derives-separator">
               {{ separator }}
             </div>
@@ -59,11 +50,8 @@
               type="text"
               spellcheck="false"
               @blur="setCustomPath"
-            >
-            <div
-              v-if="hasInitialCustomThird"
-              class="derives-separator"
-            >
+            />
+            <div v-if="hasInitialCustomThird" class="derives-separator">
               {{ separator }}
             </div>
             <input
@@ -73,12 +61,9 @@
               type="text"
               spellcheck="false"
               @blur="setCustomPath"
-            >
+            />
           </div>
-          <span
-            v-else
-            class="derivation-path-card__path"
-          >
+          <span v-else class="derivation-path-card__path">
             {{ wallet.derivationPath }}
           </span>
         </div>
@@ -137,21 +122,53 @@ export default {
   },
   emits: ['uncheck', 'check', 'changePath'],
   setup(props, { emit }) {
-    const separator = computed(()=> props.wallet.net === 'polkadot' && props.wallet.type !== WALLET_TYPES.LEDGER ? '//' : '/');
+    const separator = computed(() =>
+      props.wallet.net === 'polkadot' &&
+      props.wallet.type !== WALLET_TYPES.LEDGER
+        ? '//'
+        : '/'
+    );
     const balance = ref(null);
     const isloadingBalance = ref(false);
     const customPath = ref(props.wallet?.derivationPath);
 
     // check [m, 44, ...] after split and shifted NDX
     const shiftIndex = props.wallet?.derivationPath.includes('m') ? 0 : 1;
-    const firstPiceIndexStart = computed(()=> props.wallet.net === 'polkadot' && props.wallet.type !== WALLET_TYPES.LEDGER ? 2 : 3);
-    const secondPiceIndexStart = computed(()=> props.wallet.net === 'polkadot' && props.wallet.type !== WALLET_TYPES.LEDGER ? 3 : 4);
-    const thirdPiceIndexStart = computed(()=> props.wallet.net === 'polkadot' && props.wallet.type !== WALLET_TYPES.LEDGER ? 4 : 5);
+    const firstPiceIndexStart = computed(() =>
+      props.wallet.net === 'polkadot' &&
+      props.wallet.type !== WALLET_TYPES.LEDGER
+        ? 2
+        : 3
+    );
+    const secondPiceIndexStart = computed(() =>
+      props.wallet.net === 'polkadot' &&
+      props.wallet.type !== WALLET_TYPES.LEDGER
+        ? 3
+        : 4
+    );
+    const thirdPiceIndexStart = computed(() =>
+      props.wallet.net === 'polkadot' &&
+      props.wallet.type !== WALLET_TYPES.LEDGER
+        ? 4
+        : 5
+    );
 
     // splited paths for change one item
-    const customFirst = ref(props.wallet?.derivationPath?.split(separator.value)[firstPiceIndexStart.value - shiftIndex]);
-    const customSecond = ref(props.wallet?.derivationPath?.split(separator.value)[secondPiceIndexStart.value - shiftIndex]);
-    const customThird = ref(props.wallet?.derivationPath?.split(separator.value)[thirdPiceIndexStart.value - shiftIndex]);
+    const customFirst = ref(
+      props.wallet?.derivationPath?.split(separator.value)[
+        firstPiceIndexStart.value - shiftIndex
+      ]
+    );
+    const customSecond = ref(
+      props.wallet?.derivationPath?.split(separator.value)[
+        secondPiceIndexStart.value - shiftIndex
+      ]
+    );
+    const customThird = ref(
+      props.wallet?.derivationPath?.split(separator.value)[
+        thirdPiceIndexStart.value - shiftIndex
+      ]
+    );
     const hasInitialCustomThird = ref(false);
 
     if (customThird.value) {
@@ -161,7 +178,10 @@ export default {
     // prefix not custom paths
     const prefixDerivation = computed(() => {
       if (props.wallet?.derivationPath) {
-        return props.wallet?.derivationPath.split(separator.value).slice(0, firstPiceIndexStart.value - shiftIndex).join(separator.value);
+        return props.wallet?.derivationPath
+          .split(separator.value)
+          .slice(0, firstPiceIndexStart.value - shiftIndex)
+          .join(separator.value);
       }
 
       return '';
@@ -169,7 +189,10 @@ export default {
 
     const loadBalance = async (wallet) => {
       isloadingBalance.value = true;
-      const { data: delegationBalance } = await CryptoCoin.getBalance({ net: wallet.net, address: wallet.address });
+      const { data: delegationBalance } = await CryptoCoin.getBalance({
+        net: wallet.net,
+        address: wallet.address,
+      });
       balance.value = delegationBalance.calculatedBalance;
       isloadingBalance.value = false;
     };
@@ -178,21 +201,39 @@ export default {
       () => props.wallet,
       (wallet, prevWallet) => {
         wallet.address !== prevWallet.address && loadBalance(wallet);
-      },
+      }
     );
 
     const setCustomPath = () => {
       // old key with custom -customPath.value
-      const thirdValue = customThird.value ? `${separator.value}${customThird.value}` : '';
+      const thirdValue = customThird.value
+        ? `${separator.value}${customThird.value}`
+        : '';
       // concated prefix + paths
       const customPath = `${prefixDerivation.value}${separator.value}${customFirst.value}${separator.value}${customSecond.value}${thirdValue}`;
       const isPath = /^m?\/?44'?[/]/gm.test(customPath);
 
-      if ((!customPath || !isPath) && (props.wallet.net !== 'polkadot' && props.wallet.type !== WALLET_TYPES.LEDGER)) {
+      if (
+        (!customPath || !isPath) &&
+        props.wallet.net !== 'polkadot' &&
+        props.wallet.type !== WALLET_TYPES.LEDGER
+      ) {
         // customPath.value = props.wallet?.derivationPath;
-        customFirst.value = ref(props.wallet?.derivationPath?.split(separator.value)[firstPiceIndexStart.value - shiftIndex]);
-        customSecond.value = ref(props.wallet?.derivationPath?.split(separator.value)[secondPiceIndexStart.value - shiftIndex]);
-        customThird.value = ref(props.wallet?.derivationPath?.split(separator.value)[thirdPiceIndexStart.value - shiftIndex]);
+        customFirst.value = ref(
+          props.wallet?.derivationPath?.split(separator.value)[
+            firstPiceIndexStart.value - shiftIndex
+          ]
+        );
+        customSecond.value = ref(
+          props.wallet?.derivationPath?.split(separator.value)[
+            secondPiceIndexStart.value - shiftIndex
+          ]
+        );
+        customThird.value = ref(
+          props.wallet?.derivationPath?.split(separator.value)[
+            thirdPiceIndexStart.value - shiftIndex
+          ]
+        );
 
         return;
       }
@@ -200,8 +241,12 @@ export default {
       const customPathSplit = customPath.split(separator.value);
       const originalSplit = props.wallet?.derivationPath.split(separator.value);
 
-      if ((customPathSplit[0] !== originalSplit[0] || customPathSplit[1] !== originalSplit[1])
-      && props.wallet.net !== 'polkadot' && props.wallet.type !== WALLET_TYPES.LEDGER) {
+      if (
+        (customPathSplit[0] !== originalSplit[0] ||
+          customPathSplit[1] !== originalSplit[1]) &&
+        props.wallet.net !== 'polkadot' &&
+        props.wallet.type !== WALLET_TYPES.LEDGER
+      ) {
         notify({
           type: 'warning',
           text: `Invalid custom path ${customPath}`,
@@ -211,7 +256,7 @@ export default {
       }
 
       props.wallet.derivationPath !== customPath &&
-      emit('changePath', customPath);
+        emit('changePath', customPath);
     };
 
     const icon = ref();
@@ -220,18 +265,21 @@ export default {
     });
 
     const toggleChecked = () => {
-      if(props.type === 'custom' || !props.exist){
+      if (props.type === 'custom' || !props.exist) {
         if (props.checked) {
           emit('uncheck', props.wallet);
         } else {
           emit('check', props.wallet);
         }
       }
-
     };
 
     const { width } = useWindowSize();
-    const name = computed(()=> width.value >= screenWidths.lg ? shortNameCrypto(props.wallet.name): props.wallet.name);
+    const name = computed(() =>
+      width.value >= screenWidths.lg
+        ? shortNameCrypto(props.wallet.name)
+        : props.wallet.name
+    );
 
     return {
       icon,
@@ -371,7 +419,7 @@ export default {
     font-size: 18px;
     line-height: 22px;
     color: $darkslategray;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
     margin-bottom: 9px;
     @include md {
       font-size: 16px;
@@ -382,7 +430,7 @@ export default {
   &__path {
     font-size: 14px;
     line-height: 17px;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
     color: $dark-blue;
   }
   &__wrapper {
@@ -409,7 +457,7 @@ export default {
       margin-bottom: 0;
     }
   }
-  &__balance-wrapper{
+  &__balance-wrapper {
     display: flex;
     align-items: baseline;
   }
@@ -418,7 +466,7 @@ export default {
     font-size: 12px;
     line-height: 14px;
     color: $ligth-blue;
-    font-family: "Panton_SemiBold" !important;
+    font-family: 'Panton_SemiBold' !important;
   }
   &__coin {
     color: $black;
@@ -445,7 +493,7 @@ export default {
   &__input-mini {
     width: 40px;
     height: 26px;
-    background: #4042E2;
+    background: #4042e2;
     border-radius: 4px;
     border: none;
     color: $white;
@@ -462,12 +510,12 @@ export default {
     align-items: center;
 
     .derives-separator {
-      color: #00A3FF;
+      color: #00a3ff;
       margin: 0 6px;
     }
 
     .prefix-derive {
-      color: #00A3FF;
+      color: #00a3ff;
     }
   }
 }
@@ -483,19 +531,19 @@ export default {
     color: $mid-gray;
   }
   @include md {
-    background-image: url("~@/assets/images/checked.png");
+    background-image: url('~@/assets/images/checked.png');
     background-repeat: no-repeat;
     background-position: 318px center;
   }
-&:hover{
-  background-color: $too-ligth-gray;
+  &:hover {
+    background-color: $too-ligth-gray;
     .derivation-path-card__address {
       color: $mid-blue;
     }
     .derivation-path-card__section {
       border-color: $too-ligth-blue;
     }
-}
+  }
 }
 
 .custom {

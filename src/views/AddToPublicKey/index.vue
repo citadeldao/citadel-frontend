@@ -29,20 +29,14 @@
             data-qa="add-address__public-key__address-field"
           />
         </div>
-        <PrimaryButton
-          data-qa="add-address__public-key__next-button"
-        >
+        <PrimaryButton data-qa="add-address__public-key__next-button">
           {{ $t('next') }}
         </PrimaryButton>
       </form>
     </div>
     <teleport to="body">
       <Modal v-if="showModal">
-        <img
-          v-if="showLoader"
-          src="@/assets/gif/loader.gif"
-          alt=""
-        >
+        <img v-if="showLoader" src="@/assets/gif/loader.gif" alt="" />
         <AddressAlreadyAdded
           v-else-if="showAlreadyAddedModal"
           v-click-away="alreadyAddedCloseHandler"
@@ -101,8 +95,9 @@ export default {
     const net = computed(() => netByTitle[search.value]);
 
     const isValidAddress = computed(() => {
-      const regTemplate = store.getters['networks/configByNet'](net.value)
-        ?.validating;
+      const regTemplate = store.getters['networks/configByNet'](
+        net.value
+      )?.validating;
 
       if (!regTemplate) {
         return false;
@@ -130,6 +125,7 @@ export default {
 
         return;
       }
+
       msgError.value = '';
 
       setAddress(address.value);
@@ -181,7 +177,7 @@ export default {
   padding: 0 44px;
   margin-bottom: 8px;
 
-   @include lg {
+  @include lg {
     padding: 0 40px;
   }
   @include md {

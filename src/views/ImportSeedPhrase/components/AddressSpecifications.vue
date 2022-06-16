@@ -21,10 +21,7 @@
           @focus="onFocus"
           @blur="onBlur"
         />
-        <div
-          v-if="mnemonicError"
-          class="textarea__error"
-        >
+        <div v-if="mnemonicError" class="textarea__error">
           <error class="textarea__error-icon" />
           <span class="textarea__error-text">{{ mnemonicError }}</span>
         </div>
@@ -58,10 +55,7 @@
         </div>
       </transition>
 
-      <PrimaryButton
-        :disabled="disabled"
-        data-qa="Next"
-      >
+      <PrimaryButton :disabled="disabled" data-qa="Next">
         {{ $t('next') }}
       </PrimaryButton>
     </form>
@@ -97,7 +91,10 @@ export default {
 
     const { networks, netByTitle } = useSelectNetwork();
 
-    const showAdvancedToggle = computed(()=> !models[netByTitle[search?.value]?.toUpperCase()]?.hasNoAdvancedSettings);
+    const showAdvancedToggle = computed(
+      () =>
+        !models[netByTitle[search?.value]?.toUpperCase()]?.hasNoAdvancedSettings
+    );
 
     const onFocus = () => {
       hasFocus.value = true;
@@ -113,7 +110,7 @@ export default {
           search.value &&
           mnemonicPhrase.value &&
           CryptoCoin.validateMnemonic(mnemonicPhrase.value)
-        ),
+        )
     );
 
     const mnemonicError = computed(() => {
@@ -123,9 +120,11 @@ export default {
       ) {
         return t('mnemonicIncorrect');
       }
+
       if (mnemonicPhrase.value && !search.value) {
         return t('pleaseSelectNetwork');
       }
+
       if (mnemonicPhrase.value && !netByTitle[search.value]) {
         return t('networkNameIncorrect');
       }
@@ -138,6 +137,7 @@ export default {
       if (!mnemonicPhrase.value.trim()) {
         return;
       }
+
       emit('createOpts', {
         net: netByTitle[search.value],
         mnemonic: mnemonicPhrase.value,
