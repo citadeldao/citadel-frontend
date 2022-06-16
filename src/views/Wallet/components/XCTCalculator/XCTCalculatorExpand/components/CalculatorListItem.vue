@@ -284,7 +284,6 @@ export default {
     font-size: 14px;
     line-height: 17px;
     color: $mid-blue;
-    margin-bottom: 5px;
     @include md {
       margin-bottom: 3px;
     }
@@ -294,6 +293,10 @@ export default {
   &__right-section-info-amount {
     display: flex;
     align-items: baseline;
+    margin-top: 5px;
+    @include md {
+      margin-top: 3px;
+    }
   }
 
   &__info-line-block-title-currency,
@@ -377,7 +380,11 @@ export default {
 
   &__input {
     width: 80px;
-    height: 33px;
+    height: 25px;
+    margin-top: 4px;
+    @include md {
+      height: 23px;
+    }
 
     & input {
       width: 100%;
