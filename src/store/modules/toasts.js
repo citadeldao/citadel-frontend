@@ -30,6 +30,10 @@ export default {
       });
 
       setTimeout(() => dispatch('removeToast', params.id), params.duration);
+      
+      if (error.response.status === 403) {
+        window.location.href = '/login';
+      }
     },
 
     removeToast({ commit }, id) {
