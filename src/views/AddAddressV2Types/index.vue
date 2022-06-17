@@ -26,7 +26,9 @@
           <AddressMenuItem
             v-if="!isUserMnemonic"
             :title="$t('walletsAdding.menuTypes.restoreOneSeed')"
-            :description="$t('walletsAdding.menuTypes.restoreOneSeedDescription')"
+            :description="
+              $t('walletsAdding.menuTypes.restoreOneSeedDescription')
+            "
             data-qa="Restore-one-seed"
             icon="restore"
             class="mb-20"
@@ -80,7 +82,9 @@
         <div class="items">
           <AddressMenuItem
             :title="$t('walletsAdding.menuTypes.metamaskKeplr')"
-            :description="$t('walletsAdding.menuTypes.metamaskKeplrDescription')"
+            :description="
+              $t('walletsAdding.menuTypes.metamaskKeplrDescription')
+            "
             data-qa="Metamask-Keplr"
             icon="metamaskkeplr"
             @click="$router.push({ name: 'MetamaskKeplr' })"
@@ -155,7 +159,7 @@ export default {
   &__description {
     font-size: 14px;
     font-family: Panton_SemiBold;
-    color: #6B93C0;
+    color: #6b93c0;
   }
 
   &__card-wrapper {

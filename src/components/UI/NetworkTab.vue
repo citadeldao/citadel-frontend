@@ -4,10 +4,7 @@
     :class="{ 'network-tab-active': active }"
     @click="clickHandler"
   >
-    <div
-      v-if="isCurrentToken"
-      class="network-tab__logo"
-    >
+    <div v-if="isCurrentToken" class="network-tab__logo">
       <div
         v-if="showIconPlaceholder"
         class="network-tab__logo-icon-placeholder"
@@ -20,7 +17,7 @@
         :src="getTokenIcon(currentToken?.code.toLowerCase())"
         alt=""
         @error="showIconPlaceholder = true"
-      >
+      />
     </div>
     <keep-alive v-if="icon && !isCurrentToken">
       <component :is="currentIcon" />
@@ -59,10 +56,10 @@ export default {
     const currentIcon = ref();
     const setIcon = (icon) => {
       props.icon &&
-      !props.isCurrentToken &&
-      import(`@/assets/icons/networks/${icon}.svg`).then((val) => {
-        currentIcon.value = markRaw(val.default);
-      });
+        !props.isCurrentToken &&
+        import(`@/assets/icons/networks/${icon}.svg`).then((val) => {
+          currentIcon.value = markRaw(val.default);
+        });
     };
 
     setIcon(props.icon);
@@ -72,7 +69,7 @@ export default {
       (newVal) => {
         showIconPlaceholder.value = false;
         setIcon(newVal);
-      },
+      }
     );
 
     const active = computed(() => props.value === props.currentTab);
@@ -82,7 +79,7 @@ export default {
 
     const showIconPlaceholder = ref(false);
     const iconPlaceholder = computed(() =>
-      tokenIconPlaceholder(props.currentToken?.name),
+      tokenIconPlaceholder(props.currentToken?.name)
     );
 
     return {
@@ -143,7 +140,7 @@ export default {
     & span {
       position: absolute;
       color: $mid-blue;
-      font-family: "Panton_Bold";
+      font-family: 'Panton_Bold';
       font-size: 10px;
       line-height: 12px;
       top: 5px;
@@ -155,7 +152,7 @@ export default {
     }
   }
   &__abbr {
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
     @include md {
       display: none;
     }

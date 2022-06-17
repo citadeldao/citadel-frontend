@@ -4,14 +4,13 @@
       v-for="item in data"
       :key="item.title"
       class="header-tooltip__line"
-      :data-qa="`header__menu__${item.title.toLowerCase().replace(' ', '')}-button`"
+      :data-qa="`header__menu__${item.title
+        .toLowerCase()
+        .replace(' ', '')}-button`"
       @click="$emit(`${item.icon}`, item.icon)"
     >
       <div class="header-tooltip__line-icon">
-        <TooltipIcon
-          :icon="item.icon"
-          :class="{ hasStroke: item.hasStroke }"
-        />
+        <TooltipIcon :icon="item.icon" :class="{ hasStroke: item.hasStroke }" />
       </div>
       <span
         class="header-tooltip__line-title"
@@ -44,7 +43,7 @@ export default {
   padding: 16px 16px 15px 16px;
   background: $white;
   box-shadow: 0 15px 50px rgba(80, 100, 124, 0.1),
-  0 10px 15px rgba(80, 100, 124, 0.16);
+    0 10px 15px rgba(80, 100, 124, 0.16);
   border-radius: 8px;
 
   &__line {
@@ -65,7 +64,6 @@ export default {
     }
 
     &:hover {
-
       .header-tooltip__line-icon {
         & svg {
           fill: $dark-blue;
@@ -74,7 +72,6 @@ export default {
             stroke: $dark-blue;
           }
         }
-
       }
 
       .header-tooltip__line-title {

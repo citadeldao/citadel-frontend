@@ -1,24 +1,15 @@
 <template>
   <div class="keplr">
-    <Header
-      :title="$t('keplr.addTitle')"
-      :info="$t('keplr.addInfo')"
-    />
+    <Header :title="$t('keplr.addTitle')" :info="$t('keplr.addInfo')" />
     <Modal v-if="loadingImport">
       <Loading />
     </Modal>
     <div class="keplr__section">
       <div class="controls">
-        <div
-          class="select"
-          @click="selectedCoins = [].concat(chains)"
-        >
+        <div class="select" @click="selectedCoins = [].concat(chains)">
           {{ $t('keplr.selectAll') }}
         </div>
-        <div
-          class="unselect"
-          @click="selectedCoins = []"
-        >
+        <div class="unselect" @click="selectedCoins = []">
           {{ $t('keplr.unselectAll') }}
         </div>
       </div>
@@ -30,23 +21,19 @@
         >
           <CoinItem
             :chain="chain"
-            :is-active="!!selectedCoins.find(coin => coin.label === chain.label)"
+            :is-active="
+              !!selectedCoins.find((coin) => coin.label === chain.label)
+            "
             @select="onSelectCoin"
           />
         </div>
       </div>
-      <PrimaryButton
-        class="confirm"
-        @click="importWallets"
-      >
+      <PrimaryButton class="confirm" @click="importWallets">
         {{ $t('keplr.confirm') }}
       </PrimaryButton>
     </div>
 
-    <teleport
-      v-if="showSuccess"
-      to="body"
-    >
+    <teleport v-if="showSuccess" to="body">
       <Modal v-if="walletLoading">
         <Loading />
       </Modal>
@@ -98,24 +85,37 @@ export default {
     const chains = ref(keplrNetworks);
 
     chains.value.sort((a, b) => {
-      if (a.label > b.label) {return 1;}
-      if (a.label < b.label) {return -1;}
+      if (a.label > b.label) {
+        return 1;
+      }
+
+      if (a.label < b.label) {
+        return -1;
+      }
 
       return 0;
     });
 
-    const privateWallets = computed(() => store.getters['wallets/wallets'].filter(w => w.type !== WALLET_TYPES.PUBLIC_KEY));
+    const privateWallets = computed(() =>
+      store.getters['wallets/wallets'].filter(
+        (w) => w.type !== WALLET_TYPES.PUBLIC_KEY
+      )
+    );
 
     const selectedCoins = ref([]);
     const importedAddresses = ref([]);
 
     const onSelectCoin = (c) => {
-      const findIndex = selectedCoins.value.findIndex(coin => coin.label === c.label);
+      const findIndex = selectedCoins.value.findIndex(
+        (coin) => coin.label === c.label
+      );
 
       if (findIndex === -1) {
         selectedCoins.value.push(c);
       } else {
-        selectedCoins.value = selectedCoins.value.filter(coin => coin.label !== c.label);
+        selectedCoins.value = selectedCoins.value.filter(
+          (coin) => coin.label !== c.label
+        );
       }
     };
 
@@ -127,7 +127,10 @@ export default {
           try {
             const accs = await new KeplrConnector().connect(c.key);
 
-            const find = privateWallets.value.find(w => w.address === accs[0].address);
+            const find = privateWallets.value.find(
+              (w) => w.address === accs[0].address
+            );
+
             if (!find) {
               importedAddresses.value.push({
                 address: accs[0].address,
@@ -137,7 +140,7 @@ export default {
             }
 
             return true;
-          } catch(err) {
+          } catch (err) {
             notify({
               type: 'warning',
               text: `${c.label} - ${err}`,
@@ -145,7 +148,8 @@ export default {
 
             return false;
           }
-        }));
+        })
+      );
 
       if (!importedAddresses.value.length) {
         loadingImport.value = false;
@@ -158,34 +162,33 @@ export default {
         return;
       }
 
-      await store.dispatch('keplr/connectToKeplr', importedAddresses.value[0].key);
+      await store.dispatch(
+        'keplr/connectToKeplr',
+        importedAddresses.value[0].key
+      );
 
       const result = await Promise.all(
-        await importedAddresses.value.map(async c => {
+        await importedAddresses.value.map(async (c) => {
           setNets([c.net]);
           setType('keplr');
           setAddress(c.address);
+
           try {
             await createWallets(WALLET_TYPES.KEPLR);
 
             return true;
-          } catch(err) {
+          } catch (err) {
             return false;
           }
-        }),
+        })
       );
 
-      if (result.every(r => r)) {
+      if (result.every((r) => r)) {
         showSuccess.value = true;
       }
     };
 
-    const {
-      setNets,
-      setType,
-      createWallets,
-      setAddress,
-    } = useCreateWallets();
+    const { setNets, setType, createWallets, setAddress } = useCreateWallets();
 
     const cancel = () => {
       router.push('/add-address');
@@ -194,10 +197,13 @@ export default {
     const modalCloseHandler = () => {
       showSuccess.value = false;
 
-      router.push({ name: 'WalletStake', params: {
-        net: importedAddresses.value[0]?.net,
-        address: importedAddresses.value[0]?.address,
-      } });
+      router.push({
+        name: 'WalletStake',
+        params: {
+          net: importedAddresses.value[0]?.net,
+          address: importedAddresses.value[0]?.address,
+        },
+      });
     };
 
     onMounted(async () => {
@@ -228,7 +234,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .keplr {
   display: flex;
   flex-direction: column;
@@ -265,14 +270,14 @@ export default {
     align-items: center;
 
     .select {
-      color: #00A3FF;
-      border-bottom: 1px dotted #00A3FF;
+      color: #00a3ff;
+      border-bottom: 1px dotted #00a3ff;
       cursor: pointer;
     }
 
     .unselect {
-      color: #FA3B33;
-      border-bottom: 1px dotted #FA3B33;
+      color: #fa3b33;
+      border-bottom: 1px dotted #fa3b33;
       cursor: pointer;
     }
   }

@@ -3,10 +3,7 @@
     <div class="network-info__header">
       <div class="network-info__title">
         <div class="network-info__title-icon">
-          <div
-            v-if="isCurrentToken"
-            class="network-info__title-logo"
-          >
+          <div v-if="isCurrentToken" class="network-info__title-logo">
             <div
               v-if="showIconPlaceholder"
               class="network-info__title-logo-icon-placeholder"
@@ -19,7 +16,7 @@
               :src="getTokenIcon(currentWallet?.code.toLowerCase())"
               alt=""
               @error="showIconPlaceholder = true"
-            >
+            />
           </div>
           <keep-alive v-else>
             <component :is="currentIcon" />
@@ -31,10 +28,7 @@
       <div class="network-info__social-toggle-wrapper">
         <!-- Ссылки на соцсети сеток для 1280 px -->
 
-        <div
-          v-if="socials"
-          class="network-info__social-lg"
-        >
+        <div v-if="socials" class="network-info__social-lg">
           <a
             v-if="socials.web"
             :title="socials.web.title"
@@ -75,10 +69,7 @@
       </div>
     </div>
     <!-- Ссылки на соцсети сеток для 1920 px -->
-    <div
-      v-if="socials"
-      class="network-info__social"
-    >
+    <div v-if="socials" class="network-info__social">
       <a
         v-if="socials.web"
         class="network-info__social-block"
@@ -128,9 +119,12 @@
             <span
               class="network-info__info-price-change-value"
               :class="{ decrease: usdDecriase }"
-            ><span
-               v-pretty-number="{value: marketcap?.priceUsdDelta24pct,currency: '%'}"
-             />
+              ><span
+                v-pretty-number="{
+                  value: marketcap?.priceUsdDelta24pct,
+                  currency: '%',
+                }"
+              />
               <span class="network-info__info-price-change-percent">%</span>
             </span>
             <priceDown v-if="usdDecriase" />
@@ -148,7 +142,12 @@
             <span
               class="network-info__info-price-change-value"
               :class="{ decrease: btcDecriase }"
-            ><span v-pretty-number="{value: marketcap?.priceBtcDelta24pct,currency: '%'}" />
+              ><span
+                v-pretty-number="{
+                  value: marketcap?.priceBtcDelta24pct,
+                  currency: '%',
+                }"
+              />
               <span class="network-info__info-price-change-percent">%</span>
             </span>
             <priceDown v-if="btcDecriase" />
@@ -159,10 +158,7 @@
     </div>
     <!-- Дополнительная информация по сетке -->
     <div class="network-info__additional">
-      <div
-        v-if="apy"
-        class="network-info__additional-info-line"
-      >
+      <div v-if="apy" class="network-info__additional-info-line">
         <span class="network-info__additional-info-title">
           APY
           <Tooltip>
@@ -178,14 +174,11 @@
         </span>
         <div class="network-info__additional-info-white-space" />
         <span class="network-info__additional-info-value">
-          <span v-pretty-number="{value: apy,currency: '%'}" />
+          <span v-pretty-number="{ value: apy, currency: '%' }" />
           <span class="network-info__additional-info-percent"> % </span>
         </span>
       </div>
-      <div
-        v-if="inflation"
-        class="network-info__additional-info-line"
-      >
+      <div v-if="inflation" class="network-info__additional-info-line">
         <span class="network-info__additional-info-title">
           {{ $t('netInfoGeneral.inflation') }}
           <Tooltip>
@@ -201,14 +194,11 @@
         </span>
         <div class="network-info__additional-info-white-space" />
         <span class="network-info__additional-info-value">
-          <span v-pretty-number="{value: inflation,currency: '%'}" />
+          <span v-pretty-number="{ value: inflation, currency: '%' }" />
           <span class="network-info__additional-info-percent"> % </span>
         </span>
       </div>
-      <div
-        v-if="stakingRatio"
-        class="network-info__additional-info-line"
-      >
+      <div v-if="stakingRatio" class="network-info__additional-info-line">
         <span class="network-info__additional-info-title">
           {{ $t('netInfoGeneral.staked') }}
           <Tooltip>
@@ -224,7 +214,7 @@
         </span>
         <div class="network-info__additional-info-white-space" />
         <span class="network-info__additional-info-value">
-          <span v-pretty-number="{value: stakingRatio,currency: '%'}" />
+          <span v-pretty-number="{ value: stakingRatio, currency: '%' }" />
           <span class="network-info__additional-info-percent"> % </span>
         </span>
       </div>
@@ -234,10 +224,7 @@
         {{ tokenDescription }}
       </p>
     </div>
-    <teleport
-      v-if="showModal"
-      to="body"
-    >
+    <teleport v-if="showModal" to="body">
       <Modal>
         <NetworkInfoExpand
           v-click-away="modalCloseHandler"
@@ -302,22 +289,23 @@ export default {
     const { t, te } = useI18n();
 
     const tokenDescription = computed(() => {
-      return props.isCurrentToken || !te(`netInfo.${props.currentWallet.net}.shortDescription`)
+      return props.isCurrentToken ||
+        !te(`netInfo.${props.currentWallet.net}.shortDescription`)
         ? ''
         : t(`netInfo.${props.currentWallet.net}.shortDescription`);
     });
 
     const showIconPlaceholder = ref(false);
     const iconPlaceholder = computed(() =>
-      tokenIconPlaceholder(props.currentWallet?.name),
+      tokenIconPlaceholder(props.currentWallet?.name)
     );
 
     const setIcon = (icon) => {
       props.currentWallet.net &&
-      !props.isCurrentToken &&
-      import(`@/assets/icons/networks/${icon}.svg`).then((val) => {
-        currentIcon.value = markRaw(val.default);
-      });
+        !props.isCurrentToken &&
+        import(`@/assets/icons/networks/${icon}.svg`).then((val) => {
+          currentIcon.value = markRaw(val.default);
+        });
     };
 
     setIcon(props.currentWallet.net);
@@ -331,10 +319,10 @@ export default {
 
     const store = useStore();
     const infoMarketcap = computed(
-      () => store.getters['profile/info'].marketcap[props.currentWallet.net],
+      () => store.getters['profile/info'].marketcap[props.currentWallet.net]
     );
     const marketcap = computed(
-      () => walletMarketcap?.value || infoMarketcap?.value,
+      () => walletMarketcap?.value || infoMarketcap?.value
     );
     const apy = computed(() => {
       const currencyYield = marketcap.value?.yield;
@@ -361,7 +349,7 @@ export default {
         setIcon(newVal);
         showIconPlaceholder.value = false;
         getWalletMarketcap();
-      },
+      }
     );
 
     const showModal = ref(false);
@@ -496,7 +484,7 @@ export default {
     & span {
       position: absolute;
       color: $white;
-      font-family: "Panton_Bold";
+      font-family: 'Panton_Bold';
       font-size: 14px;
       line-height: 17px;
       top: 8px;
@@ -589,7 +577,7 @@ export default {
       font-size: 12px;
       line-height: 14px;
       color: $mid-blue;
-      font-family: "Panton_SemiBold";
+      font-family: 'Panton_SemiBold';
     }
 
     & svg {
@@ -636,13 +624,13 @@ export default {
   &__usd-prise {
     font-size: 18px;
     line-height: 27px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     color: $blue;
   }
 
   &__usd-currency {
     color: $black;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
   }
 
   &__info-price-change {
@@ -661,7 +649,7 @@ export default {
     font-size: 14px;
     line-height: 27px;
     color: $green;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
 
     &.decrease {
       color: $red;
@@ -669,7 +657,7 @@ export default {
   }
 
   &__info-price-change-percent {
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
     color: $black;
   }
 
@@ -677,11 +665,11 @@ export default {
     font-size: 14px;
     line-height: 27px;
     color: $ligth-blue;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
   }
 
   &__btc-currency {
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
     color: $black;
   }
 
@@ -719,12 +707,12 @@ export default {
   &__additional-info-value {
     font-size: 16px;
     line-height: 19px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     color: $ligth-blue;
   }
 
   &__additional-info-percent {
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     color: $black;
   }
 
@@ -737,7 +725,7 @@ export default {
       font-size: 14px;
       line-height: 22px;
       color: $fieldName;
-      font-family: "Panton_SemiBold";
+      font-family: 'Panton_SemiBold';
 
       @include lg {
         margin-bottom: 0;

@@ -14,6 +14,7 @@ export default class CryptoCoinICON extends CryptoCoin {
     this.unstakePerioudFrom = '5';
     this.unstakePerioudTo = '20';
     this.unstakePerioudLink = 'https://icxstakr.io/';
+    this.hideCustomFee = true;
   }
 
   getPublicKeyDecoded(password) {

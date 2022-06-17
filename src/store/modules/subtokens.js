@@ -21,29 +21,37 @@ export default {
   }),
 
   getters: {
-    inflationInfoXCT: state => state.inflationInfoXCT,
-    formatedSubtokens: (state, getters, rootState, rootGetters) => (onlyLinked = false, wallet) => {
-      const { currentWallet: stateCurrentWallet } = useWallets();
-      const currentWallet = rootGetters['wallets/walletByAddress'](wallet) || stateCurrentWallet.value;
+    inflationInfoXCT: (state) => state.inflationInfoXCT,
+    formatedSubtokens:
+      (state, getters, rootState, rootGetters) =>
+      (onlyLinked = false, wallet) => {
+        const { currentWallet: stateCurrentWallet } = useWallets();
+        const currentWallet =
+          rootGetters['wallets/walletByAddress'](wallet) ||
+          stateCurrentWallet.value;
 
-      const subtokens = onlyLinked
-        ? currentWallet.subtokensList
-        : rootGetters['networks/getSubtokensByNet'](currentWallet.net)
-          .reduce((acc, token) => {
-            return acc.some(t => t.net === token.net)
-              ? acc
-              : [
-                ...acc,
-                token,
-              ];
-          }, currentWallet.subtokensList);
+        const subtokens = onlyLinked
+          ? currentWallet.subtokensList
+          : rootGetters['networks/getSubtokensByNet'](currentWallet.net).reduce(
+              (acc, token) => {
+                return acc.some((t) => t.net === token.net)
+                  ? acc
+                  : [...acc, token];
+              },
+              currentWallet.subtokensList
+            );
 
-      const formattedSubtokens = subtokens.map((item) => {
-        const { data: actions } = citadel.getTokenActions(currentWallet.id, item.net);
+        const formattedSubtokens = subtokens.map((item) => {
+          const { data: actions } = citadel.getTokenActions(
+            currentWallet.id,
+            item.net
+          );
 
-        const config = rootGetters['networks/configByNet'](currentWallet.net)?.tokens?.[item.net] || null;
-        const tokenBalance = item.tokenBalance
-          || {
+          const config =
+            rootGetters['networks/configByNet'](currentWallet.net)?.tokens?.[
+              item.net
+            ] || null;
+          const tokenBalance = item.tokenBalance || {
             adding: [],
             delegatedBalance: 0,
             frozenBalance: 0,
@@ -57,33 +65,33 @@ export default {
             claimableRewards: 0,
           };
 
-        const walletOpts = {
-          viewingKey: item.viewingKey,
-          address: currentWallet.address,
-          type: currentWallet.type,
-          derivationPath: currentWallet.derivationPath,
-          mnemonicEncoded: currentWallet.mnemonicEncoded,
-          privateKeyEncoded: currentWallet.privateKeyEncoded,
-          publicKey: currentWallet.publicKey,
-          linked: tokenBalance.linked ,
-          parentCoin:{ net: currentWallet.net, code: currentWallet.code },
-          fee_key: currentWallet.fee_key,
-          id: currentWallet.id,
-          savedViewingKey: item.savedViewingKey,
-          config,
-          actions,
-          hasXCT: currentWallet.hasXCT,
-          balanceUSD: BigNumber(tokenBalance.calculatedBalance)
-            .times(tokenBalance.price.USD)
-            .toNumber(),
-        };
-        const newInstance = new CryptoToken(walletOpts, tokenBalance);
+          const walletOpts = {
+            viewingKey: item.viewingKey,
+            address: currentWallet.address,
+            type: currentWallet.type,
+            derivationPath: currentWallet.derivationPath,
+            mnemonicEncoded: currentWallet.mnemonicEncoded,
+            privateKeyEncoded: currentWallet.privateKeyEncoded,
+            publicKey: currentWallet.publicKey,
+            linked: tokenBalance.linked,
+            parentCoin: { net: currentWallet.net, code: currentWallet.code },
+            fee_key: currentWallet.fee_key,
+            id: currentWallet.id,
+            savedViewingKey: item.savedViewingKey,
+            config,
+            actions,
+            hasXCT: currentWallet.hasXCT,
+            balanceUSD: BigNumber(tokenBalance.calculatedBalance)
+              .times(tokenBalance.price.USD)
+              .toNumber(),
+          };
+          const newInstance = new CryptoToken(walletOpts, tokenBalance);
 
-        return newInstance;
-      });
+          return newInstance;
+        });
 
-      return formattedSubtokens.sort(a => a.linked ? -1 : 1);
-    },
+        return formattedSubtokens.sort((a) => (a.linked ? -1 : 1));
+      },
 
     currentToken: (state) => state.currentToken,
   },
@@ -108,7 +116,11 @@ export default {
 
   actions: {
     async getInflationInfoXCT({ commit }, walletId) {
-      const { error, data } = await citadel.callTokenInfo(walletId, 'bsc_xct', 'inflation');
+      const { error, data } = await citadel.callTokenInfo(
+        walletId,
+        'bsc_xct',
+        'inflation'
+      );
 
       if (!error) {
         commit(types.SET_INFLATIONI_INFO_XCT, data);

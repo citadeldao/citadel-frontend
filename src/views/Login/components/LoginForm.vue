@@ -1,8 +1,5 @@
 <template>
-  <form
-    class="login-form"
-    @submit.prevent="submitHandler"
-  >
+  <form class="login-form" @submit.prevent="submitHandler">
     <span class="login-form__title">
       {{ $t('login.login') }} / {{ $t('login.signup') }}
     </span>
@@ -23,10 +20,7 @@
         @blur="blurHandler"
       />
     </div>
-    <PrimaryButton
-      :disabled="disabled"
-      data-qa="login__sign-in-button"
-    >
+    <PrimaryButton :disabled="disabled" data-qa="login__sign-in-button">
       {{ $t('login.signIn') }}
     </PrimaryButton>
 
@@ -88,6 +82,7 @@ export default {
       if (checkEmpty && !email) {
         return t('login.enterEmail');
       }
+
       if (email && !validateEmail(email)) {
         return t('login.incorrectEmail');
       }
@@ -136,7 +131,7 @@ export default {
   }
 
   &__title {
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     font-size: 35px;
     line-height: 42px;
     margin-bottom: 16px;

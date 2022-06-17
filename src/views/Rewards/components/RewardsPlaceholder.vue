@@ -2,7 +2,7 @@
   <div class="rewards-placeholder">
     <div class="rewards-placeholder__icon">
       <rewardsPlaceHolder />
-      <span>{{ $t("rewardsPage.rewardsPlaceholder") }}</span>
+      <span>{{ $t('rewardsPage.rewardsPlaceholder') }}</span>
     </div>
   </div>
 </template>

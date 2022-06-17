@@ -5,10 +5,7 @@
     @click="toggleChecked"
   >
     <div class="qr-address-item__icon">
-      <done
-        v-if="checked"
-        class="qr-address-item__done"
-      />
+      <done v-if="checked" class="qr-address-item__done" />
       <keep-alive v-else>
         <component :is="icon" />
       </keep-alive>
@@ -23,7 +20,9 @@
         </span>
         <div class="qr-address-item__address-balance">
           <span v-pretty-number="address.balance.calculatedBalance" />
-          <span class="qr-address-item__address-currency">{{ address.code }}</span>
+          <span class="qr-address-item__address-currency">{{
+            address.code
+          }}</span>
         </div>
       </div>
     </div>
@@ -40,8 +39,7 @@ export default {
   props: {
     address: {
       type: Object,
-      default: () => {
-      },
+      default: () => {},
     },
     checked: {
       type: Boolean,
@@ -109,7 +107,7 @@ export default {
     font-size: 16px;
     line-height: 19px;
     color: $mid-blue;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     margin-bottom: 8px;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -136,13 +134,13 @@ export default {
   &__address-balance {
     font-size: 14px;
     line-height: 17px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     color: $mid-blue;
   }
 
   &__address-currency {
     color: $mid-gray;
-    font-family: "Panton_Regular";
+    font-family: 'Panton_Regular';
   }
 }
 
@@ -161,5 +159,3 @@ export default {
   }
 }
 </style>
-
-

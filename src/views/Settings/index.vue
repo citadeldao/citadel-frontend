@@ -1,8 +1,6 @@
 <template>
   <div class="settings">
-    <div
-      class="settings__subscriptions"
-    >
+    <div class="settings__subscriptions">
       <Subscriptions />
     </div>
     <div class="settings__transfer-data">
@@ -14,14 +12,10 @@
     <div class="settings__change-email">
       <ChangeEmail />
     </div>
-    <div
-      class="settings__language"
-    >
+    <div class="settings__language">
       <Language />
     </div>
-    <div
-      class="settings__delete"
-    >
+    <div class="settings__delete">
       <Delete />
     </div>
     <teleport to="body">
@@ -82,9 +76,7 @@
           type="action"
           @close="modalCloseHandler"
         >
-          <ManageViewingKeysModal
-            :wallet="manageVkWallets"
-          />
+          <ManageViewingKeysModal :wallet="manageVkWallets" />
         </ModalContent>
         <ModalContent
           v-if="changeVk"
@@ -95,10 +87,7 @@
           type="action"
           @close="handleChangeVkClose"
         >
-          <ChangeVkModal
-            :vk="changeVk"
-            :wallet="manageVkWallets"
-          />
+          <ChangeVkModal :vk="changeVk" :wallet="manageVkWallets" />
         </ModalContent>
       </Modal>
       <div v-if="showCreateVkModal">
@@ -159,8 +148,7 @@ export default {
     const store = useStore();
     const { t } = i18n.global;
     const showModal = ref(false);
-    const { password, passwordError, inputError } =
-      useCheckPassword();
+    const { password, passwordError, inputError } = useCheckPassword();
     const updatePassword = (value) => {
       password.value = value;
     };
@@ -186,7 +174,8 @@ export default {
       showCreateVkModal.value = true;
       createVkWallet.value = wallet;
       createVkViewingKey.value = vk;
-      snip20TokenFee.value = (await vk.getFees(vk.id,vk.net))?.data?.low?.fee || 0.2;
+      snip20TokenFee.value =
+        (await vk.getFees(vk.id, vk.net))?.data?.low?.fee || 0.2;
     };
     provide('openCreateVkModal', openCreateVkModal);
     const closeCreateVkModal = () => {
@@ -204,7 +193,9 @@ export default {
 
     watch(
       () => manageVkWallets.value,
-      (val) => {showModal.value = !!val;},
+      (val) => {
+        showModal.value = !!val;
+      }
     );
 
     const modalCloseHandler = () => {
@@ -252,7 +243,6 @@ export default {
       }
 
       return {};
-
     });
     const exportModalData = computed(() => {
       if (currentExportMethod.value === WALLET_TYPES.PRIVATE_KEY) {
@@ -268,7 +258,6 @@ export default {
       }
 
       return {};
-
     });
     const decodedMnemonick = ref('');
     const decodedPrivateKey = ref('');
@@ -281,18 +270,20 @@ export default {
         if (!currentExportWallet.value.importedFromSeed) {
           // export main account oneSeed
           decodedMnemonick.value = store.getters['crypto/decodeUserMnemonic'](
-            password.value,
+            password.value
           );
         }
+
         // type wallet - private key (oneSeed), and export its oneSeed
         decodedMnemonick.value = store.getters['crypto/decodeUserMnemonic'](
           password.value,
-          currentExportWallet.value.importedFromSeed,
+          currentExportWallet.value.importedFromSeed
         );
       } else if (currentExportMethod.value === WALLET_TYPES.PRIVATE_KEY) {
         decodedPrivateKey.value =
           currentExportWallet.value.getPrivateKeyDecoded(password.value);
       }
+
       showApproveExportModal.value = false;
       showExportModal.value = true;
     };

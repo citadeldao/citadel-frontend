@@ -14,6 +14,8 @@ export default class CryptoCoinIOST extends CryptoCoin {
   static hasAccount = true;
 
   getPublicKeyDecoded() {
-    return typeof this.publicKey === 'string' ? this.publicKey : bs58.encode(this.publicKey.data);
+    return typeof this.publicKey === 'string'
+      ? this.publicKey
+      : bs58.encode(this.publicKey.data);
   }
 }

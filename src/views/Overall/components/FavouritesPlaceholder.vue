@@ -4,7 +4,7 @@
       <img
         src="@/assets/images/favourite-addresses.png"
         class="favourite-placeholder__image"
-      >
+      />
       <div class="favourite-placeholder__title">
         {{ $t('overallPage.favourites.placeholder.address.title') }}
       </div>
@@ -17,7 +17,7 @@
       <img
         src="@/assets/images/favourite-portfolio.png"
         class="favourite-placeholder__image"
-      >
+      />
       <div class="favourite-placeholder__title">
         {{ $t('overallPage.favourites.placeholder.portfolio.title') }}
       </div>
@@ -111,7 +111,7 @@ export default {
 
   &__title {
     margin: 48px 0 17px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     font-size: 30px;
     line-height: 1;
 

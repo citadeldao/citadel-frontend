@@ -5,9 +5,7 @@
     :style="{ top: `${top}px`, left: `${left}px`, opacity }"
   >
     <div class="tooltip-history-chart__wrap">
-      <div class="tooltip-history-chart__title">
-        Price
-      </div>
+      <div class="tooltip-history-chart__title">Price</div>
       <div class="tooltip-history-chart__date">
         {{ date }}
       </div>
@@ -16,9 +14,7 @@
           v-pretty-number="{ value: data, currency: 'USD' }"
           class="tooltip-history-chart__number"
         />
-        <div class="tooltip-history-chart__currency">
-          USD
-        </div>
+        <div class="tooltip-history-chart__currency">USD</div>
       </div>
     </div>
     <!-- <div class="tooltip-history-chart__line-top line"></div> -->
@@ -104,7 +100,7 @@ export default {
   }
 
   &__date {
-    color: #59779A;
+    color: #59779a;
     font-weight: 400;
     margin-bottom: 5px;
     font-size: 10px;

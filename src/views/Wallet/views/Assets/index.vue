@@ -1,20 +1,10 @@
 <template>
-  <div
-    v-if="subtokensIsLoading"
-    class="assets__loading"
-  >
+  <div v-if="subtokensIsLoading" class="assets__loading">
     <Loading />
   </div>
-  <div
-    v-else
-    class="assets"
-  >
+  <div v-else class="assets">
     <div class="assets__header">
-      <BalanceCard
-        type="red"
-        text="Total Assets"
-        :value="balanceUSD"
-      />
+      <BalanceCard type="red" text="Total Assets" :value="balanceUSD" />
       <BalanceCard
         type="blue"
         text="Available assets"
@@ -73,10 +63,7 @@
         @change-page-size="setPageSize"
       />
     </div>
-    <div
-      v-if="!displayData.length"
-      class="assets__placeholder"
-    >
+    <div v-if="!displayData.length" class="assets__placeholder">
       <searchError />
       <span>
         {{ $t('tokenSearchError') }}
@@ -84,10 +71,7 @@
     </div>
   </div>
 
-  <teleport
-    v-if="showCreateVkModal"
-    to="body"
-  >
+  <teleport v-if="showCreateVkModal" to="body">
     <CreateVkModal
       :address="currentWallet.address"
       :token="snip20Token"
@@ -165,7 +149,9 @@ export default {
     const filterValue = ref(filterList.value[3].value);
 
     const isNotLinkedSnip20 = (token) => {
-      const isSnip20 = computed(() => token.config.standard === TOKEN_STANDARDS.SNIP_20);
+      const isSnip20 = computed(
+        () => token.config.standard === TOKEN_STANDARDS.SNIP_20
+      );
 
       return isSnip20.value && !token.linked;
     };
@@ -173,7 +159,8 @@ export default {
     const setCurrentToken = async (token) => {
       if (isNotLinkedSnip20(token)) {
         mainIsLoading.value = true;
-        snip20TokenFee.value = (await token.getFees(token.id, token.net))?.data?.low?.fee || 0.2;
+        snip20TokenFee.value =
+          (await token.getFees(token.id, token.net))?.data?.low?.fee || 0.2;
         mainIsLoading.value = false;
         showCreateVkModal.value = true;
         snip20Token.value = token;
@@ -221,9 +208,10 @@ export default {
         return filteredTokens.value;
       }
 
-      return filteredTokens.value.filter((item) =>
-        item.name.toLowerCase().includes(keyword.value.toLowerCase()) ||
-        item.code.toLowerCase().includes(keyword.value.toLowerCase()),
+      return filteredTokens.value.filter(
+        (item) =>
+          item.name.toLowerCase().includes(keyword.value.toLowerCase()) ||
+          item.code.toLowerCase().includes(keyword.value.toLowerCase())
       );
     });
 
@@ -242,9 +230,7 @@ export default {
           .multipliedBy(token.tokenBalance.price.USD)
           .toNumber();
 
-        return BigNumber(acc)
-          .plus(availableUSD)
-          .toNumber();
+        return BigNumber(acc).plus(availableUSD).toNumber();
       }, 0);
     });
 
@@ -270,9 +256,12 @@ export default {
       setPageSize(pageSizes.value[0]);
     };
 
-    watch(() => [props.currentWallet, props.currentToken], () => {
-      clearFilters();
-    });
+    watch(
+      () => [props.currentWallet, props.currentToken],
+      () => {
+        clearFilters();
+      }
+    );
 
     return {
       setCurrentToken,
@@ -374,7 +363,7 @@ export default {
 
     div {
       padding: 12px 0;
-      font-family: "Panton_Bold";
+      font-family: 'Panton_Bold';
       font-size: 18px;
       text-align: left;
       color: $mid-blue;
@@ -410,7 +399,7 @@ export default {
 
 .drop-enter-active,
 .drop-leave-active {
-  transition: all .7s ease;
+  transition: all 0.7s ease;
 }
 
 .drop-enter-from,
@@ -438,7 +427,7 @@ export default {
 
       & > input {
         @include md {
-          padding: 25px 25px 10px 36px
+          padding: 25px 25px 10px 36px;
         }
       }
 

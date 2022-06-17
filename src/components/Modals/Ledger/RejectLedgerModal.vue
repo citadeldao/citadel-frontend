@@ -10,9 +10,7 @@
       <!-- <div class="reject__image">
       </div> -->
     </div>
-    <PrimaryButton
-      @click.stop="clickHandler"
-    >
+    <PrimaryButton @click.stop="clickHandler">
       {{ $t(`ok`) }}
     </PrimaryButton>
   </ModalContent>

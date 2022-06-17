@@ -5,10 +5,7 @@
         {{ currentWallet.name }} {{ $t('Network') }}
       </div>
       <!-- Ссылки на соцсети сеток для 1280 px -->
-      <Socials
-        :socials="socials"
-        class="socials-lg"
-      />
+      <Socials :socials="socials" class="socials-lg" />
       <div
         class="header__icon"
         data-qa="wallet__network-info-modal__expand-button"
@@ -19,29 +16,20 @@
       </div>
     </div>
 
-    <div
-      id="expand-rate-chart-wrap"
-      class="content__wrap"
-    >
+    <div id="expand-rate-chart-wrap" class="content__wrap">
       <div class="expand__content">
         <div class="left-section">
           <!-- Ссылки на соцсети сеток для 1920 px -->
-          <Socials
-            :socials="socials"
-            class="socials"
-          />
+          <Socials :socials="socials" class="socials" />
           <div class="marketcaps">
-            <div
-              v-if="marketcap.marketCap"
-              class="marketcaps__item"
-            >
+            <div v-if="marketcap.marketCap" class="marketcaps__item">
               <div class="item__text">
                 {{ $t('netInfoGeneral.marketcap') }}
               </div>
               <div class="item__info">
                 <Tooltip>
                   <template #content>
-                    <span :style="{maxWidth:'200px',display:'flex'}">
+                    <span :style="{ maxWidth: '200px', display: 'flex' }">
                       {{ $t('netInfoGeneral.marketcapTooltip') }}
                     </span>
                   </template>
@@ -53,20 +41,22 @@
               <div class="item__line" />
               <div class="item__number">
                 $
-                <span v-pretty-number="{ value: marketcap.marketCap, currency: 'USD' }" />
+                <span
+                  v-pretty-number="{
+                    value: marketcap.marketCap,
+                    currency: 'USD',
+                  }"
+                />
               </div>
             </div>
-            <div
-              v-if="marketcap.circulatingSupply"
-              class="marketcaps__item"
-            >
+            <div v-if="marketcap.circulatingSupply" class="marketcaps__item">
               <div class="item__text">
                 {{ $t('netInfoGeneral.supply') }}
               </div>
               <div class="item__info">
                 <Tooltip>
                   <template #content>
-                    <span :style="{maxWidth:'200px',display:'flex'}">
+                    <span :style="{ maxWidth: '200px', display: 'flex' }">
                       {{ $t('netInfoGeneral.supplyTooltip') }}
                     </span>
                   </template>
@@ -77,7 +67,12 @@
               </div>
               <div class="item__line" />
               <div class="item__number">
-                <span v-pretty-number="{ value: marketcap.circulatingSupply, currency: currentWallet.code }" />
+                <span
+                  v-pretty-number="{
+                    value: marketcap.circulatingSupply,
+                    currency: currentWallet.code,
+                  }"
+                />
                 {{ currentWallet.code }}
               </div>
             </div>
@@ -91,7 +86,7 @@
               <div class="item__info">
                 <Tooltip>
                   <template #content>
-                    <span :style="{maxWidth:'200px',display:'flex'}">
+                    <span :style="{ maxWidth: '200px', display: 'flex' }">
                       {{ $t('netInfoGeneral.dayTradingVolTooltip') }}
                     </span>
                   </template>
@@ -103,20 +98,22 @@
               <div class="item__line" />
               <div class="item__number">
                 $
-                <span v-pretty-number="{ value: marketcap.volumeDelta24Usd, currency: 'USD' }" />
+                <span
+                  v-pretty-number="{
+                    value: marketcap.volumeDelta24Usd,
+                    currency: 'USD',
+                  }"
+                />
               </div>
             </div>
-            <div
-              v-if="marketcap.stakingRate"
-              class="marketcaps__item"
-            >
+            <div v-if="marketcap.stakingRate" class="marketcaps__item">
               <div class="item__text">
                 {{ $t('netInfoGeneral.staked') }}
               </div>
               <div class="item__info">
                 <Tooltip>
                   <template #content>
-                    <span :style="{maxWidth:'200px',display:'flex'}">
+                    <span :style="{ maxWidth: '200px', display: 'flex' }">
                       {{ $t('netInfoGeneral.stakedTooltip') }}
                     </span>
                   </template>
@@ -127,21 +124,23 @@
               </div>
               <div class="item__line" />
               <div class="item__number">
-                <span v-pretty-number="{ value: marketcap.stakingRate, currency: '%' }" />
+                <span
+                  v-pretty-number="{
+                    value: marketcap.stakingRate,
+                    currency: '%',
+                  }"
+                />
                 %
               </div>
             </div>
-            <div
-              v-if="marketcap.inflation"
-              class="marketcaps__item"
-            >
+            <div v-if="marketcap.inflation" class="marketcaps__item">
               <div class="item__text">
                 {{ $t('netInfoGeneral.inflation') }}
               </div>
               <div class="item__info">
                 <Tooltip>
                   <template #content>
-                    <span :style="{maxWidth:'200px',display:'flex'}">
+                    <span :style="{ maxWidth: '200px', display: 'flex' }">
                       {{ $t('netInfoGeneral.inflationTooltip') }}
                     </span>
                   </template>
@@ -152,7 +151,12 @@
               </div>
               <div class="item__line" />
               <div class="item__number">
-                <span v-pretty-number="{ value: marketcap.inflation, currency: '%' }" />
+                <span
+                  v-pretty-number="{
+                    value: marketcap.inflation,
+                    currency: '%',
+                  }"
+                />
                 %
               </div>
             </div>
@@ -174,10 +178,7 @@
               data-qa="wallet__network-info-modal__period"
               @update:currentValue="currentTabChangeHandler"
             />
-            <div
-              v-if="currentTab === 'custom'"
-              class="chart__date-picker"
-            >
+            <div v-if="currentTab === 'custom'" class="chart__date-picker">
               <DatePicker
                 v-model:date="date"
                 @update:date="dateChangeHandler"
@@ -269,9 +270,11 @@ export default {
     };
     const currentTabChangeHandler = (val) => {
       let newVal = val;
+
       if (val === 'all') {
         newVal = 36;
       }
+
       if (val !== 'custom') {
         date.value = [];
         loadData(Date.now() - 86400000 * 31 * newVal, Date.now());
@@ -291,13 +294,12 @@ export default {
     };
     loadData(Date.now() - 86400000 * 31 * currentTab.value, Date.now());
 
-
     const description = computed(() => {
       return te(`netInfo.${props.currentWallet.net}.description`)
         ? t(`netInfo.${props.currentWallet.net}.description`)
         : props.isCurrentToken
-          ? ''
-          : t(`netInfo.${props.currentWallet.net}.shortDescription`);
+        ? ''
+        : t(`netInfo.${props.currentWallet.net}.shortDescription`);
     });
 
     return {

@@ -1,10 +1,7 @@
 <template>
   <div class="item">
     <div class="item__top">
-      <div
-        class="item__dot"
-        :style="{ 'background-color': gradient }"
-      />
+      <div class="item__dot" :style="{ 'background-color': gradient }" />
       <div class="item__title">
         <span>
           {{ shortNameCrypto(item.name) }}
@@ -16,20 +13,14 @@
       </div>
     </div>
     <div class="item__bottom">
-      <span
-        v-if="currentTab === 'USD'"
-        class="item__usd"
-      >$</span>
+      <span v-if="currentTab === 'USD'" class="item__usd">$</span>
       &nbsp;
       <div
         v-pretty-number="{ value: blnc, currency: currentTab }"
         class="item__num"
       />
       &nbsp;
-      <span
-        v-if="currentTab === 'BTC'"
-        class="item__code"
-      >BTC</span>
+      <span v-if="currentTab === 'BTC'" class="item__code">BTC</span>
     </div>
   </div>
 </template>
@@ -49,14 +40,15 @@ export default {
       default: '#000',
     },
     currentTab: {
-      validator: value =>
-        ['USD', 'BTC'].includes(value),
+      validator: (value) => ['USD', 'BTC'].includes(value),
       default: 'USD',
     },
   },
   setup(props) {
     const gradient = computed(() => `${props.color}`);
-    const blnc = computed( () => props.currentTab === 'BTC' ? props.item.btc : props.item.usd);
+    const blnc = computed(() =>
+      props.currentTab === 'BTC' ? props.item.btc : props.item.usd
+    );
 
     return {
       shortNameCrypto,
@@ -69,7 +61,7 @@ export default {
 <style lang="scss" scoped>
 .item {
   width: 185px;
-  border-bottom: 1px solid #D1D8E0;
+  border-bottom: 1px solid #d1d8e0;
   height: 55px;
   margin-bottom: 21px;
   display: flex;

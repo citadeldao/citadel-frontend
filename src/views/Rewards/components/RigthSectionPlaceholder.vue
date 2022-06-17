@@ -1,7 +1,7 @@
 <template>
   <div class="rigth-section-placeholder">
     <hotSale />
-    <p>{{ $t("rewardsPage.rigthSectionPlaceholder") }}</p>
+    <p>{{ $t('rewardsPage.rigthSectionPlaceholder') }}</p>
   </div>
 </template>
 

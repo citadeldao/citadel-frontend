@@ -1,8 +1,5 @@
 <template>
-  <div
-    :style="{ position, marginLeft: `${marginLeft}px` }"
-    class="modal"
-  >
+  <div :style="{ position, marginLeft: `${marginLeft}px` }" class="modal">
     <slot />
   </div>
 </template>

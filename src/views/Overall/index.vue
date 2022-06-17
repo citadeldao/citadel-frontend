@@ -10,17 +10,13 @@
             <BalanceHistoryChart />
           </div>
           <div class="overall__line" />
-          <div
-            class="overall__rewards-chart"
-          >
+          <div class="overall__rewards-chart">
             <RewardsChart />
           </div>
         </template>
       </div>
     </div>
-    <div
-      class="overall__right-section"
-    >
+    <div class="overall__right-section">
       <BalanceStructureChart :is-list-empty="isListEmpty" />
     </div>
   </div>
@@ -45,12 +41,21 @@ export default {
   setup() {
     const store = useStore();
     const activeList = computed(() => store.getters['wallets/activeList']);
-    const customWalletsList = computed(() => store.getters['wallets/customWalletsListByName'](activeList.value));
-    const isFavouriteList = computed(() => store.getters['wallets/activeList'] === 'Favourites');
-    const hasFavourites = computed(() => (
-      store.getters['wallets/customWalletsListByName']('Favourites').wallets.length
-    ));
-    const isListEmpty = computed(()=> activeList.value !== 'all' && !customWalletsList.value.wallets.length);
+    const customWalletsList = computed(() =>
+      store.getters['wallets/customWalletsListByName'](activeList.value)
+    );
+    const isFavouriteList = computed(
+      () => store.getters['wallets/activeList'] === 'Favourites'
+    );
+    const hasFavourites = computed(
+      () =>
+        store.getters['wallets/customWalletsListByName']('Favourites').wallets
+          .length
+    );
+    const isListEmpty = computed(
+      () =>
+        activeList.value !== 'all' && !customWalletsList.value.wallets.length
+    );
 
     return {
       isFavouriteList,
@@ -97,7 +102,7 @@ export default {
   &__line {
     width: 100%;
     height: 4px;
-    background: #EFF2FC;
+    background: #eff2fc;
   }
   &__rewards-chart {
     margin-top: 32px;

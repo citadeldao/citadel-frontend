@@ -1,9 +1,6 @@
 <template>
   <div class="delete-list-modal-content">
-    <div
-      v-if="isLoading"
-      class="loader"
-    >
+    <div v-if="isLoading" class="loader">
       <Loading />
     </div>
 
@@ -11,6 +8,7 @@
       {{ $t('customLists.deleteListModalTitle') }}
     </h4>
     <PrimaryButton
+      data-qa="Yes"
       color="#FFFFFF"
       bg-color="#FA3B33"
       box-shadow="0px 0px 25px rgba(219, 71, 60, 0.3)"
@@ -56,7 +54,7 @@ export default {
   margin-top: 30px;
 
   &__title {
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     font-size: 20px;
     line-height: 30px;
     margin: 0;
@@ -68,7 +66,7 @@ export default {
     line-height: 27px;
     text-decoration-line: underline;
     color: $too-dark-blue;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     margin-top: 24px;
     cursor: pointer;
 
@@ -87,7 +85,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba($black, .2);
+    background-color: rgba($black, 0.2);
   }
 }
 </style>

@@ -1,14 +1,9 @@
 <template>
   <div class="pagination">
-    <div
-      v-if="total > 0"
-      class="pagination__item-count"
-    >
-      <span
-        class="pagination__current-amount"
-      >
-        {{ ((currentPage - 1) * pageSize) + 1 }}
-      </span>&nbsp;
+    <div v-if="total > 0" class="pagination__item-count">
+      <span class="pagination__current-amount">
+        {{ (currentPage - 1) * pageSize + 1 }} </span
+      >&nbsp;
       <span class="pagination__total-amount"> - {{ lastItemOnPage }}</span>
       <span class="pagination__total-amount"> / {{ total }}</span>
     </div>
@@ -20,10 +15,7 @@
         :current-page="currentPage"
         @current-change="setCurrentPage"
       />
-      <el-select
-        v-model="pageSizeValue"
-        class="pagination__dropdown"
-      >
+      <el-select v-model="pageSizeValue" class="pagination__dropdown">
         <el-option
           v-for="item in pageSizes"
           :key="item"
@@ -62,11 +54,10 @@ export default {
   setup(props, { emit }) {
     const pageSizeValue = ref();
     const lastItemOnPage = computed(() => {
-      const isLastPage = props.currentPage === Math.ceil(props.total / props.pageSize);
+      const isLastPage =
+        props.currentPage === Math.ceil(props.total / props.pageSize);
 
-      return isLastPage
-        ? props.total
-        : (props.pageSize * props.currentPage);
+      return isLastPage ? props.total : props.pageSize * props.currentPage;
     });
 
     const setPageSize = (size) => {
@@ -78,9 +69,13 @@ export default {
     };
 
     // el-select don't wants show :value correctly
-    watch(() => props.pageSize, (value) => {
-      pageSizeValue.value = value;
-    }, { immediate: true });
+    watch(
+      () => props.pageSize,
+      (value) => {
+        pageSizeValue.value = value;
+      },
+      { immediate: true }
+    );
 
     watch(pageSizeValue, (size) => {
       emit('change-page-size', size);
@@ -115,7 +110,7 @@ export default {
   &__total-amount {
     font-size: 16px;
     line-height: 19px;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
     color: $dark-blue;
   }
 

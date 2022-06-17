@@ -1,10 +1,6 @@
 <template>
   <div class="stepper">
-    <Step
-      v-for="step in steps"
-      :key="step.id"
-      :step="step"
-    />
+    <Step v-for="step in steps" :key="step.id" :step="step" />
   </div>
 </template>
 

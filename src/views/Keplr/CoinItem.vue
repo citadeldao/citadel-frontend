@@ -1,18 +1,8 @@
 <template>
-  <div
-    class="chains__selector-item"
-    @click="select(chain)"
-  >
-    <Checkbox
-      :value="isActive"
-      :label="''"
-      @input.stop="select(chain)"
-    />
+  <div class="chains__selector-item" @click="select(chain)">
+    <Checkbox :value="isActive" :label="''" @input.stop="select(chain)" />
     <keep-alive>
-      <component
-        :is="currentIcon"
-        class="icon-item"
-      />
+      <component :is="currentIcon" class="icon-item" />
     </keep-alive>
     <div>{{ chain.label }}</div>
   </div>
@@ -53,7 +43,6 @@ export default {
 };
 </script>
 <style lang="scss">
-
 .chains__selector-item {
   user-select: none;
   display: flex;
@@ -61,7 +50,7 @@ export default {
   align-items: center;
   min-width: 390px;
   min-height: 48px;
-  border: 1px solid #F0F3FD;
+  border: 1px solid #f0f3fd;
   box-sizing: border-box;
   border-radius: 8px;
   margin-bottom: 10px;
@@ -71,8 +60,8 @@ export default {
 
   &:hover {
     .checkbox__checkmark {
-      background: #1A53F0;
-      border: 1px solid #1A53F0;;
+      background: #1a53f0;
+      border: 1px solid #1a53f0;
     }
   }
 
@@ -80,7 +69,7 @@ export default {
     margin-right: 10px;
     width: 15px;
     height: 14px;
-    fill: #603BEE;
+    fill: #603bee;
   }
   &:last-child {
     margin-bottom: 15px;
@@ -92,5 +81,4 @@ export default {
     }
   }
 }
-
 </style>

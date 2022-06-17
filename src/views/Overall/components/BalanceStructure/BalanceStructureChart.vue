@@ -1,9 +1,6 @@
 <template>
   <div class="balance-structure">
-    <div
-      v-show="isListEmpty || isEmpty "
-      class="balance-structure-placeholder"
-    >
+    <div v-show="isListEmpty || isEmpty" class="balance-structure-placeholder">
       <balanceStructurePlaceholder />
       <span class="balance-structure-placeholder__text">
         {{ $t('overallPage.noBalance') }}
@@ -47,11 +44,7 @@
       <div class="chart-container">
         <div class="chart-background">
           <div class="chart">
-            <canvas
-              id="balanceStructureChart"
-              width="180"
-              height="180"
-            />
+            <canvas id="balanceStructureChart" width="180" height="180" />
           </div>
         </div>
       </div>
@@ -122,13 +115,16 @@ export default {
         if (!isEmpty.value) {
           await renderBalanceStructChart(balanceStructure);
         }
-      },
-    );
-    watch(() => width.value, async () => {
-      if (!isEmpty.value) {
-        await renderBalanceStructChart(balanceStructure);
       }
-    });
+    );
+    watch(
+      () => width.value,
+      async () => {
+        if (!isEmpty.value) {
+          await renderBalanceStructChart(balanceStructure);
+        }
+      }
+    );
 
     return {
       balanceStructure,
@@ -147,7 +143,7 @@ export default {
 }
 
 .balance-structure-placeholder {
-  border: 1px solid #C3CEEB;
+  border: 1px solid #c3ceeb;
   border-radius: 25px;
   height: 100%;
   display: flex;
@@ -263,7 +259,13 @@ export default {
         width: 260px;
         height: 260px;
         background: #dfe3f0;
-        background: radial-gradient(circle, $white 0%, $white 59%, #b0b4c6 59.1%, #dfe3f0 70%);
+        background: radial-gradient(
+          circle,
+          $white 0%,
+          $white 59%,
+          #b0b4c6 59.1%,
+          #dfe3f0 70%
+        );
         z-index: -1;
         border-radius: 50%;
       }
@@ -277,7 +279,13 @@ export default {
           width: 180px;
           height: 180px;
           top: -10px;
-          background: radial-gradient(circle, #FFFFFF 0%, #FFFFFF 62%, #b0b4c6 62.1%, #dfe3f0 72%);
+          background: radial-gradient(
+            circle,
+            #ffffff 0%,
+            #ffffff 62%,
+            #b0b4c6 62.1%,
+            #dfe3f0 72%
+          );
         }
       }
       @include md {
@@ -289,7 +297,13 @@ export default {
           width: 160px;
           height: 160px;
           top: -10px;
-          background: radial-gradient(circle, #FFFFFF 0%, #FFFFFF 59%, #b0b4c6 59.1%, #dfe3f0 72%);
+          background: radial-gradient(
+            circle,
+            #ffffff 0%,
+            #ffffff 59%,
+            #b0b4c6 59.1%,
+            #dfe3f0 72%
+          );
         }
       }
       //padding: 20px;
@@ -329,5 +343,4 @@ export default {
     }
   }
 }
-
 </style>

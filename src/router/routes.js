@@ -2,7 +2,8 @@ export default [
   {
     path: '/',
     name: 'HomePage',
-    component: () => import(/* webpackChunkName: 'HomePage' */ '@/views/HomePage'),
+    component: () =>
+      import(/* webpackChunkName: 'HomePage' */ '@/views/HomePage'),
     meta: {
       layout: 'AddAddressLayout',
       guard: 'private',
@@ -30,34 +31,46 @@ export default [
       {
         name: 'WalletAssets',
         path: 'assets',
-        component: () => import(/* webpackChunkName: 'Assets' */ '@/views/Wallet/views/Assets'),
+        component: () =>
+          import(
+            /* webpackChunkName: 'Assets' */ '@/views/Wallet/views/Assets'
+          ),
       },
       {
         name: 'WalletStake',
         path: 'stake',
-        component: () => import(/* webpackChunkName: 'Stake' */ '@/views/Wallet/views/Stake'),
+        component: () =>
+          import(/* webpackChunkName: 'Stake' */ '@/views/Wallet/views/Stake'),
       },
       {
         name: 'WalletRewards',
         path: 'rewards',
-        component: () => import(/* webpackChunkName: 'WalletRewards' */ '@/views/Wallet/views/WalletRewards'),
+        component: () =>
+          import(
+            /* webpackChunkName: 'WalletRewards' */ '@/views/Wallet/views/WalletRewards'
+          ),
       },
       {
         name: 'WalletSend',
         path: 'send',
-        component: () => import(/* webpackChunkName: 'Send' */ '@/views/Wallet/views/Send'),
+        component: () =>
+          import(/* webpackChunkName: 'Send' */ '@/views/Wallet/views/Send'),
       },
       {
         name: 'WalletTransactions',
         path: 'transactions',
-        component: () => import(/* webpackChunkName: 'Transactions' */ '@/views/Wallet/views/Transactions'),
+        component: () =>
+          import(
+            /* webpackChunkName: 'Transactions' */ '@/views/Wallet/views/Transactions'
+          ),
       },
     ],
   },
   {
     path: '/add-address',
     name: 'AddAddress',
-    component: () => import(/* webpackChunkName: 'AddAddress' */ '@/views/AddAddressV2'),
+    component: () =>
+      import(/* webpackChunkName: 'AddAddress' */ '@/views/AddAddressV2'),
     meta: {
       layout: 'AddressFlowLayout',
       guard: 'private',
@@ -67,7 +80,8 @@ export default [
   {
     path: '/add-address/wallet-types',
     name: 'AddWalletTypes',
-    component: () => import(/* webpackChunkName: 'AddAddress' */ '@/views/AddAddressV2Types'),
+    component: () =>
+      import(/* webpackChunkName: 'AddAddress' */ '@/views/AddAddressV2Types'),
     meta: {
       layout: 'AddressFlowLayout',
       guard: 'private',
@@ -87,7 +101,8 @@ export default [
   {
     path: '/add-address/add-to-one-seed',
     name: 'AddToOneSeed',
-    component: () => import(/* webpackChunkName: 'AddToOneSeed' */ '@/views/AddToOneSeed'),
+    component: () =>
+      import(/* webpackChunkName: 'AddToOneSeed' */ '@/views/AddToOneSeed'),
     meta: {
       layout: 'AddressFlowLayout',
       guard: 'private',
@@ -96,7 +111,8 @@ export default [
   {
     path: '/add-address/add-to-public-key',
     name: 'AddToPublicKey',
-    component: () => import(/* webpackChunkName: 'AddToPublicKey' */ '@/views/AddToPublicKey'),
+    component: () =>
+      import(/* webpackChunkName: 'AddToPublicKey' */ '@/views/AddToPublicKey'),
     meta: {
       layout: 'AddAddressLayout',
       guard: 'private',
@@ -105,7 +121,10 @@ export default [
   {
     path: '/add-address/import-existing-address',
     name: 'ImportExistingAddress',
-    component: () => import(/* webpackChunkName: 'ImportExistingAddress' */ '@/views/ImportExistingAddress'),
+    component: () =>
+      import(
+        /* webpackChunkName: 'ImportExistingAddress' */ '@/views/ImportExistingAddress'
+      ),
     meta: {
       layout: 'AddressFlowLayout',
       guard: 'private',
@@ -114,7 +133,10 @@ export default [
   {
     path: '/add-address/import-existing-address/import-private-key',
     name: 'ImportPrivateKey',
-    component: () => import(/* webpackChunkName: 'ImportPrivateKey' */ '@/views/ImportPrivateKey'),
+    component: () =>
+      import(
+        /* webpackChunkName: 'ImportPrivateKey' */ '@/views/ImportPrivateKey'
+      ),
     meta: {
       layout: 'AddressFlowLayout',
       guard: 'private',
@@ -123,7 +145,10 @@ export default [
   {
     path: '/add-address/import-existing-address/import-seed-phrase',
     name: 'ImportSeedPhrase',
-    component: () => import(/* webpackChunkName: 'ImportSeedPhrase' */ '@/views/ImportSeedPhrase'),
+    component: () =>
+      import(
+        /* webpackChunkName: 'ImportSeedPhrase' */ '@/views/ImportSeedPhrase'
+      ),
     meta: {
       layout: 'AddressFlowLayout',
       guard: 'private',
@@ -132,7 +157,8 @@ export default [
   {
     path: '/add-address/import-existing-address/import-file',
     name: 'ImportFile',
-    component: () => import(/* webpackChunkName: 'ImportFile' */ '@/views/ImportFile'),
+    component: () =>
+      import(/* webpackChunkName: 'ImportFile' */ '@/views/ImportFile'),
     meta: {
       layout: 'AddressFlowLayout',
       guard: 'private',
@@ -141,7 +167,8 @@ export default [
   {
     path: '/add-address/import-existing-address/restore-one-seed',
     name: 'RestoreOneSeed',
-    component: () => import(/* webpackChunkName: 'RestoreOneSeed' */ '@/views/RestoreOneSeed'),
+    component: () =>
+      import(/* webpackChunkName: 'RestoreOneSeed' */ '@/views/RestoreOneSeed'),
     meta: {
       layout: 'AddressFlowLayout',
       guard: 'private',
@@ -150,7 +177,8 @@ export default [
   {
     path: '/add-address/import-existing-address/metamask-keplr',
     name: 'MetamaskKeplr',
-    component: () => import(/* webpackChunkName: 'MetamaskKeplr' */ '@/views/MetamaskKeplr'),
+    component: () =>
+      import(/* webpackChunkName: 'MetamaskKeplr' */ '@/views/MetamaskKeplr'),
     meta: {
       layout: 'AddressFlowLayout',
       guard: 'private',
@@ -159,7 +187,8 @@ export default [
   {
     path: '/add-address/import-existing-address/metamask',
     name: 'Metamask',
-    component: () => import(/* webpackChunkName: 'Metamask' */ '@/views/Metamask'),
+    component: () =>
+      import(/* webpackChunkName: 'Metamask' */ '@/views/Metamask'),
     meta: {
       layout: 'AddressFlowLayout',
       guard: 'private',
@@ -177,7 +206,10 @@ export default [
   {
     path: '/add-address/import-hardware-wallet',
     name: 'ImportHardwareWallet',
-    component: () => import(/* webpackChunkName: 'ImportHardwareWallet' */ '@/views/ImportHardwareWallet'),
+    component: () =>
+      import(
+        /* webpackChunkName: 'ImportHardwareWallet' */ '@/views/ImportHardwareWallet'
+      ),
     meta: {
       layout: 'AddressFlowLayout',
       guard: 'private',
@@ -186,7 +218,8 @@ export default [
   {
     path: '/add-address/import-hardware-wallet/import-ledger',
     name: 'ImportLedger',
-    component: () => import(/* webpackChunkName: 'ImportLedger' */ '@/views/ImportLedger'),
+    component: () =>
+      import(/* webpackChunkName: 'ImportLedger' */ '@/views/ImportLedger'),
     meta: {
       layout: 'AddressFlowLayout',
       guard: 'private',
@@ -195,7 +228,8 @@ export default [
   {
     path: '/add-address/import-hardware-wallet/import-trezor',
     name: 'ImportTrezor',
-    component: () => import(/* webpackChunkName: 'ImportTrezor' */ '@/views/ImportTrezor'),
+    component: () =>
+      import(/* webpackChunkName: 'ImportTrezor' */ '@/views/ImportTrezor'),
     meta: {
       layout: 'AddressFlowLayout',
       guard: 'private',
@@ -204,7 +238,8 @@ export default [
   {
     path: '/settings',
     name: 'Settings',
-    component: () => import(/* webpackChunkName: 'Settings' */ '@/views/Settings'),
+    component: () =>
+      import(/* webpackChunkName: 'Settings' */ '@/views/Settings'),
     meta: {
       layout: 'AddAddressLayout',
       guard: 'private',
@@ -214,7 +249,8 @@ export default [
   {
     path: '/extensions',
     name: 'Extensions',
-    component: () => import(/* webpackChunkName: 'Extensions' */ '@/views/Extensions'),
+    component: () =>
+      import(/* webpackChunkName: 'Extensions' */ '@/views/Extensions'),
     meta: {
       layout: 'AddAddressLayout',
       guard: 'private',
@@ -223,7 +259,8 @@ export default [
   {
     path: '/extensions/:name',
     name: 'Extension',
-    component: () => import(/* webpackChunkName: 'Extensions' */ '@/views/Extensions'),
+    component: () =>
+      import(/* webpackChunkName: 'Extensions' */ '@/views/Extensions'),
     meta: {
       layout: 'AddAddressLayout',
       guard: 'private',
@@ -242,7 +279,8 @@ export default [
   {
     path: '/rewards',
     name: 'Rewards',
-    component: () => import(/* webpackChunkName: 'Rewards' */ '@/views/Rewards'),
+    component: () =>
+      import(/* webpackChunkName: 'Rewards' */ '@/views/Rewards'),
     meta: {
       layout: 'AddAddressLayout',
       guard: 'private',
@@ -262,7 +300,8 @@ export default [
   {
     path: '/error-404',
     name: 'ErrorPage',
-    component: () => import(/* webpackChunkName: 'ErrorPage' */ '@/views/ErrorPage'),
+    component: () =>
+      import(/* webpackChunkName: 'ErrorPage' */ '@/views/ErrorPage'),
     meta: {
       layout: 'DefaultLayout',
       guard: 'private',

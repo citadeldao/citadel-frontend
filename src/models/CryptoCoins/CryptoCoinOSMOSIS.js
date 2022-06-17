@@ -12,7 +12,9 @@ export default class CryptoCoinOSMOSIS extends CryptoCoin {
     this.hasRedelegation = true;
   }
 
-  getPublicKeyDecoded(){
-    return typeof this.publicKey === 'string' ? this.publicKey : Buffer.from(this.publicKey).toString('hex');
+  getPublicKeyDecoded() {
+    return typeof this.publicKey === 'string'
+      ? this.publicKey
+      : Buffer.from(this.publicKey).toString('hex');
   }
 }

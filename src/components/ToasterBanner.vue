@@ -1,19 +1,11 @@
 <template>
-  <div
-    class="toaster-banner"
-    :class="`toaster-banner--${type}`"
-  >
+  <div class="toaster-banner" :class="`toaster-banner--${type}`">
     <div class="toaster-banner__icon">
       <component :is="type" />
     </div>
     <div class="toaster-banner__info">
-      <closeIcon
-        class="toaster-banner__close-icon"
-        @click="closeBanner"
-      />
-      <h4 class="toaster-banner__info-title">
-        Error
-      </h4>
+      <closeIcon class="toaster-banner__close-icon" @click="closeBanner" />
+      <h4 class="toaster-banner__info-title">Error</h4>
       <span class="toaster-banner__info-message">
         {{ message }}
       </span>
@@ -110,7 +102,7 @@ export default {
     font-size: 20px;
     line-height: 30px;
     margin: 0;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
   }
   &__info-message {
     font-size: 14px;

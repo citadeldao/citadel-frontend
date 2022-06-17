@@ -6,29 +6,14 @@
     :submit-button="false"
     @close="$emit('close')"
   >
-    <div
-      v-if="showConnect"
-      class="connect__wrapper connect__wrapper-animation"
-    >
-      <img
-        src="@/assets/gif/connectLedger.gif"
-        alt=""
-      >
+    <div v-if="showConnect" class="connect__wrapper connect__wrapper-animation">
+      <img src="@/assets/gif/connectLedger.gif" alt="" />
     </div>
-    <div
-      v-else
-      class="connect__wrapper"
-    >
+    <div v-else class="connect__wrapper">
       <div class="connect__image">
-        <Loading
-          small
-          class="connect__loader"
-        />
+        <Loading small class="connect__loader" />
       </div>
-      <div
-        v-if="error"
-        class="connect__section"
-      >
+      <div v-if="error" class="connect__section">
         <div class="connect__error-message">
           <warning />
           <span>{{ error }}</span>
@@ -67,7 +52,7 @@ export default {
       emit('buttonClick');
     };
     const showConnect = ref(true);
-    setTimeout(()=>{
+    setTimeout(() => {
       showConnect.value = false;
     }, 6000);
 
@@ -78,12 +63,12 @@ export default {
 
 <style lang="scss" scoped>
 .connect {
-  &__wrapper{
+  &__wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 276px;
-    &-animation{
+    &-animation {
       justify-content: center;
     }
   }

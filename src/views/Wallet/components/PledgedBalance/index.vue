@@ -1,7 +1,10 @@
 <template>
   <div
     class="pledged-balance"
-    :class="{'pledged-balance--public': currentWallet?.type === WALLET_TYPES.PUBLIC_KEY}"
+    :class="{
+      'pledged-balance--public':
+        currentWallet?.type === WALLET_TYPES.PUBLIC_KEY,
+    }"
   >
     <div
       v-if="currentWallet?.type === WALLET_TYPES.PUBLIC_KEY"
@@ -13,10 +16,7 @@
       <span class="pledged-balance__title-title">
         {{ $t('pledgedBalance') }}
       </span>
-      <Tooltip
-        width="326px"
-        left="-156px"
-      >
+      <Tooltip width="326px" left="-156px">
         <info />
         <template #content>
           <span class="pledged-balance__tooltip-info">
@@ -27,14 +27,14 @@
             {{ $t('pledgeDescription.part3') }}
             <span class="pledged-balance__tooltip-info-day">{{
               $t('pledgeDescription.part4')
-            }}</span>{{ $t('pledgeDescription.part5') }}
+            }}</span
+            >{{ $t('pledgeDescription.part5') }}
           </span>
         </template>
       </Tooltip>
     </span>
-    <span
-      class="pledged-balance__info"
-    >{{ currentWallet.code }} {{ $t('lockedForiGasGeneration') }}
+    <span class="pledged-balance__info"
+      >{{ currentWallet.code }} {{ $t('lockedForiGasGeneration') }}
     </span>
     <div class="pledged-balance__balance">
       <span
@@ -55,21 +55,12 @@
       <RoundArrowButton @click="openPledgeModal" />
     </div>
   </div>
-  <teleport
-    v-if="isLoading"
-    to="body"
-  >
+  <teleport v-if="isLoading" to="body">
     <Modal>
-      <img
-        src="@/assets/gif/loader.gif"
-        alt=""
-      >
+      <img src="@/assets/gif/loader.gif" alt="" />
     </Modal>
   </teleport>
-  <teleport
-    v-if="showModal"
-    to="body"
-  >
+  <teleport v-if="showModal" to="body">
     <Modal>
       <ModalContent
         v-if="showCooseModeModal"
@@ -224,10 +215,10 @@ export default {
   flex-direction: column;
   padding: 24px 27px 31px 24px;
   position: relative;
-  background-image: url("~@/assets/images/unpladgedBalanceBackground.jpg");
+  background-image: url('~@/assets/images/unpladgedBalanceBackground.jpg');
 
   &--public {
-    background-image: url("~@/assets/images/pledgedBalanceLock.jpg");
+    background-image: url('~@/assets/images/pledgedBalanceLock.jpg');
 
     .pledged-balance__info,
     .pledged-balance__balance-value {
@@ -261,7 +252,7 @@ export default {
   &__title-title {
     font-size: 18px;
     line-height: 22px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     margin-right: 5px;
   }
 
@@ -285,14 +276,14 @@ export default {
     font-size: 24px;
     line-height: 29px;
     color: $dark-blue;
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
   }
 
   &__balance-currency {
     font-size: 16px;
     line-height: 19px;
     color: $black;
-    font-family: "Panton_Regular";
+    font-family: 'Panton_Regular';
   }
 
   &__button {
@@ -306,7 +297,7 @@ export default {
   }
 
   &__tooltip-info {
-    font-family: "Panton_Light";
+    font-family: 'Panton_Light';
     font-size: 12px;
     line-height: 16px;
     color: $mid-blue;
@@ -314,12 +305,12 @@ export default {
 
   &__tooltip-info-gas {
     color: $ligth-blue;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
   }
 
   &__tooltip-info-day {
     color: $too-dark-blue;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
   }
 
   &__lock {
@@ -335,7 +326,7 @@ export default {
       width: 63px;
       height: 95px;
       fill: $turquoise;
-      opacity: .3;
+      opacity: 0.3;
     }
   }
 }

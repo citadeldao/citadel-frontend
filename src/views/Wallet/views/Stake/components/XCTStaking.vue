@@ -1,17 +1,21 @@
 <template>
   <StakePlaceholder
-    v-if="!currentToken.tokenBalance.stake && (currentWallet.type !== WALLET_TYPES.PUBLIC_KEY || currentWalletType === WALLET_TYPES.METAMASK)"
+    v-if="
+      !currentToken.tokenBalance.stake &&
+      (currentWallet.type !== WALLET_TYPES.PUBLIC_KEY ||
+        currentWalletType === WALLET_TYPES.METAMASK)
+    "
     :current-wallet="currentWallet"
     :current-token="currentToken"
     is-xct
     @click:placeholder="toggleShowPlaceholder"
   />
-  <div
-    v-else
-    class="xct-staking"
-  >
+  <div v-else class="xct-staking">
     <div
-      v-if="currentWallet.type === WALLET_TYPES.PUBLIC_KEY && currentWalletType !== WALLET_TYPES.METAMASK"
+      v-if="
+        currentWallet.type === WALLET_TYPES.PUBLIC_KEY &&
+        currentWalletType !== WALLET_TYPES.METAMASK
+      "
       class="xct-staking__lock-banner"
     >
       <LockBanner @showPlaceholder="$emit('showPlaceholder')" />
@@ -22,20 +26,19 @@
     >
       <StakeChart :chart-data="chartData" />
     </div>
-    <div
-      v-if="currentToken.tokenBalance.stake"
-      class="xct-staking__stake-list"
-    >
+    <div v-if="currentToken.tokenBalance.stake" class="xct-staking__stake-list">
       <div class="xct-staking__stake-list-item">
         <StakeListItem
           :index="0"
           icon="citadel"
           :item="{
-            name:'Staked balance',
-            value:currentToken.tokenBalance.stake,
-            stakeShare:shareInValue(
+            name: 'Staked balance',
+            value: currentToken.tokenBalance.stake,
+            stakeShare: shareInValue(
               currentToken.tokenBalance.stake,
-              currentToken.tokenBalance.stake)}"
+              currentToken.tokenBalance.stake
+            ),
+          }"
           type="staked"
           :current-wallet="currentToken"
           :balance="currentToken.tokenBalance"
@@ -51,7 +54,10 @@
       </div>
     </div>
     <div
-      v-if="currentWallet.type !== WALLET_TYPES.PUBLIC_KEY || currentWalletType === WALLET_TYPES.METAMASK"
+      v-if="
+        currentWallet.type !== WALLET_TYPES.PUBLIC_KEY ||
+        currentWalletType === WALLET_TYPES.METAMASK
+      "
       class="xct-staking__buttons"
     >
       <PrimaryButton
@@ -64,7 +70,7 @@
         hover-bg-color=""
         @click="toUnstake"
       >
-        {{ $t("unstake") }}
+        {{ $t('unstake') }}
       </PrimaryButton>
       <PrimaryButton @click="toStake">
         {{ $t('Stake') }}
@@ -72,7 +78,10 @@
     </div>
   </div>
   <WalletButtonsPanel
-    v-if="currentWallet.type !== WALLET_TYPES.PUBLIC_KEY || currentWalletType === WALLET_TYPES.METAMASK"
+    v-if="
+      currentWallet.type !== WALLET_TYPES.PUBLIC_KEY ||
+      currentWalletType === WALLET_TYPES.METAMASK
+    "
     :current-token="currentToken"
     :current-wallet="currentWallet"
     :button1="buttonsPannelData.button1"
@@ -83,21 +92,12 @@
     @prepareClaim="$emit('prepareClaim')"
     @prepareXctClaim="$emit('prepareXctClaim')"
   />
-  <teleport
-    v-if="isLoading"
-    to="body"
-  >
+  <teleport v-if="isLoading" to="body">
     <Modal>
-      <img
-        src="@/assets/gif/loader.gif"
-        alt=""
-      >
+      <img src="@/assets/gif/loader.gif" alt="" />
     </Modal>
   </teleport>
-  <teleport
-    v-if="showModal"
-    to="body"
-  >
+  <teleport v-if="showModal" to="body">
     <Modal>
       <ModalContent
         v-if="showSetStakingAmount"
@@ -132,7 +132,9 @@
           :wallet="currentWallet"
           :staking-amount="amount"
           :staking-fee="fee"
-          :hide-password="isHardwareWallet || currentWalletType === WALLET_TYPES.METAMASK"
+          :hide-password="
+            isHardwareWallet || currentWalletType === WALLET_TYPES.METAMASK
+          "
           @submitSend="stake"
         />
       </ModalContent>
@@ -255,7 +257,7 @@ export default {
 
     const { isHardwareWallet } = useWallets();
     const disabledConfirm = computed(
-      () => passwordIncorrect.value && !isHardwareWallet.value,
+      () => passwordIncorrect.value && !isHardwareWallet.value
     );
     const mode = ref('stake');
     provide('mode', mode);
@@ -265,15 +267,22 @@ export default {
     const showConfirmTransaction = ref(false);
     const showSuccessModal = ref(false);
 
-
-    const metamaskConnector = computed(() => store.getters['metamask/metamaskConnector']);
+    const metamaskConnector = computed(
+      () => store.getters['metamask/metamaskConnector']
+    );
 
     const currentWalletType = computed(() => {
       const metamaskNet = metamaskConnector.value.network;
-      const metamaskAddress = metamaskConnector.value.accounts[0] && metamaskConnector.value.accounts[0].toLowerCase();
+      const metamaskAddress =
+        metamaskConnector.value.accounts[0] &&
+        metamaskConnector.value.accounts[0].toLowerCase();
       const { address, net, type } = props.currentWallet;
 
-      if (address.toLowerCase() === metamaskAddress && net.includes(metamaskNet) && type === WALLET_TYPES.PUBLIC_KEY) {
+      if (
+        address.toLowerCase() === metamaskAddress &&
+        net.includes(metamaskNet) &&
+        type === WALLET_TYPES.PUBLIC_KEY
+      ) {
         return WALLET_TYPES.METAMASK;
       }
 
@@ -281,19 +290,21 @@ export default {
     });
 
     const showModal = computed(() => {
-      return showSetStakingAmount.value
-        || showConfirmTransaction.value
-        || showConnectLedgerModal.value
-        || showAppLedgerModal.value
-        || showConfirmLedgerModal.value
-        || showRejectedLedgerModal.value
-        || showSuccessModal.value;
+      return (
+        showSetStakingAmount.value ||
+        showConfirmTransaction.value ||
+        showConnectLedgerModal.value ||
+        showAppLedgerModal.value ||
+        showConfirmLedgerModal.value ||
+        showRejectedLedgerModal.value ||
+        showSuccessModal.value
+      );
     });
 
     const toggleShowPlaceholder = () => {
       showSetStakingAmount.value = true;
     };
-    const modalCloseHandler = ()=> {
+    const modalCloseHandler = () => {
       showSetStakingAmount.value = false;
       mode.value = 'stake';
       showConfirmTransaction.value = false;
@@ -304,25 +315,24 @@ export default {
       clearLedgerModals();
     };
 
-    const toStake = ()=> {
+    const toStake = () => {
       showSetStakingAmount.value = true;
     };
 
-    const setStakingAmountModalData = computed(()=>{
-      if(mode.value === 'stake'){
-        return{
+    const setStakingAmountModalData = computed(() => {
+      if (mode.value === 'stake') {
+        return {
           title: 'staking.Stake',
           desc: t('xct.setStakingAmountModalDesc'),
-          button:'staking.Stake',
+          button: 'staking.Stake',
         };
       }
 
-      return{
+      return {
         title: 'unstaking.unstake',
         desc: t('xct.setStakingAmountModalDesc1'),
-        button:'unstaking.unstake',
+        button: 'unstaking.unstake',
       };
-
     });
 
     const amount = ref('');
@@ -335,20 +345,22 @@ export default {
       if (mode.value === 'unstake') {
         return props.currentToken.tokenBalance.stake;
       }
+
       const max = props.currentToken.tokenBalance.mainBalance;
+
       if (max > 0) {
         return max;
       }
 
       return 0;
-
-
     });
     provide('maxAmount', maxAmount);
 
     const insufficientFunds = computed(
       () =>
-        !!amount.value && amount.value > maxAmount.value && t('insufficientFunds'),
+        !!amount.value &&
+        amount.value > maxAmount.value &&
+        t('insufficientFunds')
     );
     provide('insufficientFunds', insufficientFunds);
 
@@ -358,7 +370,6 @@ export default {
       }
 
       return false;
-
     });
 
     const toUnstake = () => {
@@ -366,7 +377,8 @@ export default {
       showSetStakingAmount.value = true;
     };
 
-    const { password, passwordIncorrect, passwordError, inputError } = useCheckPassword();
+    const { password, passwordIncorrect, passwordError, inputError } =
+      useCheckPassword();
     const updatePassword = (value) => {
       password.value = value;
     };
@@ -387,7 +399,6 @@ export default {
         title: t('staking.actionModalTitle'),
         desc: t('staking.actionModalDesc'),
       };
-
     });
 
     const fee = ref();
@@ -396,11 +407,14 @@ export default {
     const prepareDelegation = async () => {
       isLoading.value = true;
       const { currentWallet: parrentWallet } = useWallets();
-      const { ok, rawTxs, resFee } = await props.currentWallet.prepareDelegation({
-        walletId: props.currentWallet.id,
-        amount: amount.value,
-        type: mode.value,
-        parentWalletBalance: parrentWallet.value.balance.mainBalance });
+      const { ok, rawTxs, resFee } =
+        await props.currentWallet.prepareDelegation({
+          walletId: props.currentWallet.id,
+          amount: amount.value,
+          type: mode.value,
+          parentWalletBalance: parrentWallet.value.balance.mainBalance,
+        });
+
       if (ok) {
         fee.value = resFee;
         resRawTxs.value = rawTxs;
@@ -410,6 +424,7 @@ export default {
       } else {
         modalCloseHandler();
       }
+
       isLoading.value = false;
     };
 
@@ -450,7 +465,6 @@ export default {
         button1: 'unstake',
         button2: 'Stake',
       };
-
     });
 
     const isLoading = ref(false);
@@ -461,7 +475,7 @@ export default {
           color: '#FF5722',
           share: shareInValue(
             props.currentToken?.tokenBalance.calculatedBalance,
-            props.currentToken?.tokenBalance.stake,
+            props.currentToken?.tokenBalance.stake
           ),
         },
         {
@@ -469,15 +483,13 @@ export default {
           color: '#AFBCCB',
           share: shareInValue(
             props.currentToken?.tokenBalance.calculatedBalance,
-            props.currentToken?.tokenBalance.mainBalance,
+            props.currentToken?.tokenBalance.mainBalance
           ),
         },
       ];
 
-      return data.filter(item=>item.share>0);
+      return data.filter((item) => item.share > 0);
     });
-
-
 
     const txError = ref();
 
@@ -485,7 +497,11 @@ export default {
       // metamask, ...
       if (currentWalletType.value === WALLET_TYPES.METAMASK) {
         isLoading.value = true;
-        const metamaskResult = await metamaskConnector.value.sendMetamaskTransaction(resRawTxs.value);
+        const metamaskResult =
+          await metamaskConnector.value.sendMetamaskTransaction(
+            resRawTxs.value
+          );
+
         if (metamaskResult.error) {
           notify({
             type: 'warning',
@@ -496,6 +512,7 @@ export default {
           showSuccessModal.value = true;
           txHash.value = [metamaskResult.txHash];
         }
+
         isLoading.value = false;
 
         return;
@@ -506,6 +523,7 @@ export default {
 
         return;
       }
+
       isLoading.value = true;
 
       if (isLedgerWallet.value) {
@@ -519,16 +537,17 @@ export default {
           rawTransactions: resRawTxs.value,
           derivationPath: props.currentWallet.derivationPath,
         });
-        if(!res.error){
+
+        if (!res.error) {
           showConfirmLedgerModal.value = false;
           showSuccessModal.value = true;
           txHash.value = res.data;
-        }else{
+        } else {
           ledgerErrorHandler(res.error);
 
           return;
         }
-      }else{
+      } else {
         const res = await props.currentWallet.signAndSendMulti({
           walletId: props.currentWallet.id,
           rawTransactions: resRawTxs.value,
@@ -545,7 +564,6 @@ export default {
           isLoading.value = false;
         }
       }
-
     };
 
     // ledger modal handlers

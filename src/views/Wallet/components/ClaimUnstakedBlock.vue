@@ -1,16 +1,10 @@
 <template>
-  <div
-    class="claim-unstaked"
-    :class="{'claim-unstaked--public': isPublic}"
-  >
+  <div class="claim-unstaked" :class="{ 'claim-unstaked--public': isPublic }">
     <div class="claim-unstaked__wave">
       <blueWave v-if="isPublic" />
       <violetWave v-else />
     </div>
-    <div
-      v-if="isPublic"
-      class="claim-unstaked__lock"
-    >
+    <div v-if="isPublic" class="claim-unstaked__lock">
       <claimBlockLock fill="#4CD9ED" />
     </div>
     <div class="claim-unstaked__main">
@@ -74,7 +68,9 @@ export default {
   },
   emits: ['prepareUnstakedClaim'],
   setup(props) {
-    const isPublic = computed(() => props.walletType === WALLET_TYPES.PUBLIC_KEY);
+    const isPublic = computed(
+      () => props.walletType === WALLET_TYPES.PUBLIC_KEY
+    );
 
     return {
       isPublic,
@@ -84,82 +80,81 @@ export default {
 </script>
 <style lang="scss" scoped>
 .claim-unstaked {
-    height: 150px;
-    border-radius: 16px;
-    background-color: $violetBackground;
+  height: 150px;
+  border-radius: 16px;
+  background-color: $violetBackground;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  &--public {
+    background-color: $lightBlueBackground;
+    .claim-unstaked__sec-title {
+      color: $blue;
+    }
+    .claim-unstaked__value {
+      color: $blue;
+    }
+  }
+  &__wave {
     width: 100%;
+    opacity: 0.1;
+    position: absolute;
+    bottom: -5px;
+    z-index: 0;
+  }
+  &__lock {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    width: 60px;
+    opacity: 0.3;
+  }
+  &__main {
+    display: flex;
+    justify-content: center;
     position: relative;
-    overflow: hidden;
-    &--public {
-      background-color: $lightBlueBackground;
-      .claim-unstaked__sec-title {
-        color: $blue;
-      }
-      .claim-unstaked__value {
-        color: $blue;
-      }
+    padding: 24px 27px 24px 24px;
+    z-index: 1;
+  }
+  &__left {
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+  }
+  &__right {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    width: 48px;
+  }
+  &__title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+  &__sec-title {
+    font-size: 14px;
+    color: $dark-blue;
+    margin-bottom: 5px;
+    @include md {
+      font-size: 13px;
     }
-    &__wave {
-      width: 100%;
-      opacity: 0.1;
-      position: absolute;
-      bottom: -5px;
-      z-index: 0;
-    }
-    &__lock {
-      position: absolute;
-      right: 30px;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 1;
-      width: 60px;
-      opacity: 0.3;
-    }
-    &__main {
-      display: flex;
-      justify-content: center;
-      position: relative;
-      padding: 24px 27px 24px 24px;
-      z-index: 1;
-    }
-    &__left {
-      flex-direction: column;
-      justify-content: center;
-      flex-grow: 1;
-    }
-    &__right {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      align-items: center;
-      width: 48px;
-    }
-    &__title {
-      font-weight: bold;
-      font-size: 18px;
-      margin-bottom: 5px;
-    }
-    &__sec-title {
-      font-size: 14px;
-      color: $dark-blue;
-      margin-bottom: 5px;
-      @include md {
-        font-size: 13px;
-      }
-    }
-    &__amount {
-      display: flex;
-      align-items: baseline;
-    }
-    &__value {
-      font-weight: bold;
-      font-size: 24px;
-      color: $dark-blue;
-    }
-    &__cur {
-      margin-left: 5px;
-      font-size: 16px;
-    }
+  }
+  &__amount {
+    display: flex;
+    align-items: baseline;
+  }
+  &__value {
+    font-weight: bold;
+    font-size: 24px;
+    color: $dark-blue;
+  }
+  &__cur {
+    margin-left: 5px;
+    font-size: 16px;
+  }
 }
-
 </style>

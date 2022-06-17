@@ -15,14 +15,8 @@
       }"
     >
       <keep-alive>
-        <component
-          :is="hoveredIcon"
-          v-if="hovered"
-        />
-        <component
-          :is="staticIcon"
-          v-else
-        />
+        <component :is="hoveredIcon" v-if="hovered" />
+        <component :is="staticIcon" v-else />
       </keep-alive>
       <!-- <img
         v-if="hovered"
@@ -72,14 +66,18 @@ export default {
     const hovered = ref(false);
 
     const hoveredIcon = ref();
-    import(`@/assets/images/selectCard/${props.method.hoveredIcon}.svg`).then((val) => {
-      hoveredIcon.value = markRaw(val.default);
-    });
+    import(`@/assets/images/selectCard/${props.method.hoveredIcon}.svg`).then(
+      (val) => {
+        hoveredIcon.value = markRaw(val.default);
+      }
+    );
 
     const staticIcon = ref();
-    import(`@/assets/images/selectCard/${props.method.icon}.svg`).then((val) => {
-      staticIcon.value = markRaw(val.default);
-    });
+    import(`@/assets/images/selectCard/${props.method.icon}.svg`).then(
+      (val) => {
+        staticIcon.value = markRaw(val.default);
+      }
+    );
 
     return { hovered, hoveredIcon, staticIcon };
   },
@@ -101,13 +99,13 @@ export default {
   justify-content: space-between;
   @include lg {
     max-width: 166px;
-    height:250px;
+    height: 250px;
     margin-right: 16px;
     padding: 30px 8px 40px 8px;
   }
   @include md {
     height: 210px;
-    max-width:  137px;
+    max-width: 137px;
     margin-right: 8px;
     padding: 27px 9px 21px 9px;
   }
@@ -157,7 +155,7 @@ export default {
   &__title {
     font-size: 20px;
     line-height: 24px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     color: $mid-blue;
     text-align: center;
     @include lg {
@@ -198,9 +196,9 @@ export default {
   }
   &:hover {
     // background: $blue;
-    border: 1px dashed #1A53F0; // border: 1px solid transparent;
+    border: 1px dashed #1a53f0; // border: 1px solid transparent;
     .select-card-special__info {
-      color: #1A53F0;
+      color: #1a53f0;
     }
 
     .select-card-special__title {
@@ -241,7 +239,7 @@ export default {
   &__title {
     font-size: 20px;
     line-height: 24px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     color: $mid-blue;
     text-align: center;
     @include lg {

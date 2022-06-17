@@ -1,20 +1,14 @@
 <template>
-  <div
-    class="stake-list-item"
-    :class="type && `stake-list-item--${type}`"
-  >
+  <div class="stake-list-item" :class="type && `stake-list-item--${type}`">
     <div class="stake-list-item__left-section">
-      <div
-        v-if="icon"
-        class="stake-list-item__icon-wrapper"
-      >
+      <div v-if="icon" class="stake-list-item__icon-wrapper">
         <div class="stake-list-item__icon">
           <img
             v-show="hasLogo"
             :src="item.imageSource"
             alt=""
             @load="onLoadLogo"
-          >
+          />
           <keep-alive
             v-if="!hasLogo"
             :style="{ fill: item.color || colors[index] }"
@@ -36,7 +30,7 @@
       <div class="stake-list-item__title">
         <span
           class="stake-list-item__title-title"
-          :style="{ maxWidth:`${titleMaxWidth}px` }"
+          :style="{ maxWidth: `${titleMaxWidth}px` }"
         >
           {{ title }}
           <Tooltip>
@@ -55,18 +49,21 @@
             </template>
           </Tooltip>
         </span>
-        <div
-          v-if="!type"
-          class="stake-list-item__title-title-info"
-        >
+        <div v-if="!type" class="stake-list-item__title-title-info">
           <div class="stake-list-item__title-line">
-            <span class="stake-list-item__title-line-title">{{ $t('fee') }}:</span>
+            <span class="stake-list-item__title-line-title"
+              >{{ $t('fee') }}:</span
+            >
             <span class="stake-list-item__fee-line-value">{{ fee }}</span>
             <span class="stake-list-item__title-line-currency"> %</span>
           </div>
           <div class="stake-list-item__title-line">
-            <span class="stake-list-item__title-line-title">{{ $t('uptime') }}:</span>
-            <span class="stake-list-item__title-line-value">{{ item.uptime }}</span>
+            <span class="stake-list-item__title-line-title"
+              >{{ $t('uptime') }}:</span
+            >
+            <span class="stake-list-item__title-line-value">{{
+              item.uptime
+            }}</span>
             <span class="stake-list-item__title-line-currency">%</span>
           </div>
         </div>
@@ -74,10 +71,7 @@
     </div>
     <div class="stake-list-item__right-section">
       <div class="stake-list-item__right-section-info">
-        <div
-          v-if="showAmount"
-          class="stake-list-item__right-section-line"
-        >
+        <div v-if="showAmount" class="stake-list-item__right-section-line">
           <span
             v-pretty-number="{ value: amount, currency: currentWallet.code }"
             class="stake-list-item__right-section-amount"
@@ -86,10 +80,7 @@
             {{ currentWallet.code }}
           </span>
         </div>
-        <div
-          v-if="item.stakeShare"
-          class="stake-list-item__right-section-line"
-        >
+        <div v-if="item.stakeShare" class="stake-list-item__right-section-line">
           <span class="stake-list-item__right-section-share">Stake share</span>
           <span
             v-pretty-number="item.stakeShare"
@@ -145,7 +136,7 @@ export default {
       type: Object,
       default: () => ({}),
     },
-    balance:{
+    balance: {
       type: Object,
       default: () => ({}),
     },
@@ -184,19 +175,21 @@ export default {
       props.type === 'frozen'
         ? t('balanceTooltipInfo.frozenBalance')
         : props.type === 'avaliable'
-          ? t('balanceTooltipInfo.availableBalance')
-          : props.type === 'withoutDelegation'
-            ? t('withoutDelegation')
-            : props.item.name,
+        ? t('balanceTooltipInfo.availableBalance')
+        : props.type === 'withoutDelegation'
+        ? t('withoutDelegation')
+        : props.item.name
     );
     const amount = computed(() =>
       props.type === 'frozen'
         ? props.balance.frozenBalance
         : props.type === 'avaliable'
-          ? props.balance.mainBalance
-          : props.type === 'withoutDelegation'
-            ? BigNumber(props.balance.stake).minus(props.balance.delegatedBalance).toNumber()
-            : props.item.value,
+        ? props.balance.mainBalance
+        : props.type === 'withoutDelegation'
+        ? BigNumber(props.balance.stake)
+            .minus(props.balance.delegatedBalance)
+            .toNumber()
+        : props.item.value
     );
 
     const showAmount = computed(() => {
@@ -207,7 +200,6 @@ export default {
       }
 
       return true;
-
     });
 
     const updateSelectedNode = inject('updateSelectedNode');
@@ -223,10 +215,11 @@ export default {
 
     const clickHandler = async (item) => {
       emit('editClick');
+
       if (selectedNode.value) {
         updateShowChooseNode(false);
         updateShowNodesList(true);
-      } else if(props.type === 'withoutDelegation'){
+      } else if (props.type === 'withoutDelegation') {
         updateIsWithoutDelegation(true);
         await getDelegationFee(activeTab.value);
         updateShowModal(true);
@@ -240,16 +233,22 @@ export default {
     };
 
     const showEditButton = computed(() => {
-      if (editMode.value && !props.redelegationNodeTo ) {
+      if (editMode.value && !props.redelegationNodeTo) {
         return false;
-      } else if ((editMode.value && props.redelegationNodeTo) || props.type === 'withoutDelegation') {
+      } else if (
+        (editMode.value && props.redelegationNodeTo) ||
+        (props.type === 'withoutDelegation' &&
+          props.currentWallet.type !== WALLET_TYPES.PUBLIC_KEY)
+      ) {
         return true;
-      } else if (props.currentWallet.type !== WALLET_TYPES.PUBLIC_KEY && !props.type) {
+      } else if (
+        props.currentWallet.type !== WALLET_TYPES.PUBLIC_KEY &&
+        !props.type
+      ) {
         return true;
       }
 
       return false;
-
     });
 
     return {
@@ -375,7 +374,7 @@ export default {
     background-size: cover;
     z-index: 1;
     box-shadow: 0 15px 50px rgba(80, 100, 124, 0.1),
-    0 10px 15px rgba(80, 100, 124, 0.16);
+      0 10px 15px rgba(80, 100, 124, 0.16);
 
     @include md {
       top: 4px;
@@ -446,7 +445,7 @@ export default {
     align-items: center;
     font-size: 17px;
     line-height: 20px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     margin-bottom: 7px;
     max-width: 268px;
     white-space: nowrap;
@@ -494,7 +493,7 @@ export default {
   &__right-section-share-value {
     color: $ligth-blue;
     margin-right: 1px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
   }
 
   &__tooltip {
@@ -510,7 +509,7 @@ export default {
   &__right-section-share-value {
     color: $ligth-blue;
     margin-right: 5px;
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
   }
 
   &__title-line-currency,
@@ -566,11 +565,11 @@ export default {
 
   &__right-section-amount {
     margin-right: 5px;
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
   }
 
   &__right-section-amount-currency {
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
     color: $black;
   }
 

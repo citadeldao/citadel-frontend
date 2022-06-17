@@ -1,8 +1,5 @@
 <template>
-  <label
-    class="date-picker"
-    :class="{ disabled: disabled,expand }"
-  >
+  <label class="date-picker" :class="{ disabled: disabled, expand }">
     Select a period
     <el-date-picker
       v-model="value"
@@ -76,17 +73,17 @@ export default {
     fill: $mid-blue;
   }
 }
-.expand{
+.expand {
   width: 220px;
   height: 68px;
-  @include md{
+  @include md {
     height: 56px;
     padding: 11px 17px 0 13px;
     font-size: 12px;
     line-height: 14px;
   }
-  .date-picker__icon{
-    @include md{
+  .date-picker__icon {
+    @include md {
       left: 14px;
       bottom: 8px;
     }

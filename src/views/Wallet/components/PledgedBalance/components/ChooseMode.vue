@@ -3,10 +3,7 @@
     <span class="choose-mode__title">
       {{ chooseNodeModalData.title }}
     </span>
-    <span
-      class="choose-mode__subtitle"
-      v-html="chooseNodeModalData.subtitle"
-    />
+    <span class="choose-mode__subtitle" v-html="chooseNodeModalData.subtitle" />
     <div class="choose-mode__tabs-wrapper">
       <div class="choose-mode__tabs">
         <span
@@ -19,7 +16,7 @@
         <span
           :class="{
             'choose-mode__active-tab': activeTab === 'unpledge',
-            'disabled': !pledgedBalance
+            disabled: !pledgedBalance,
           }"
           class="choose-mode__tabs-item"
           @click="setActiveTab('unpledge')"
@@ -43,10 +40,7 @@
         @input="updateAmount"
         @keyup.enter="$emit('nextStep')"
       />
-      <span
-        v-if="!insufficientFunds"
-        class="choose-mode__available-balance"
-      >
+      <span v-if="!insufficientFunds" class="choose-mode__available-balance">
         {{ $t('balanceTooltipInfo.availableBalance') }}:
         <span
           v-pretty-number="{ value: maxAmount, currency: currentWallet.code }"
@@ -122,7 +116,7 @@ export default {
   &__title {
     font-size: 20px;
     line-height: 30px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
   }
 
   &__subtitle {
@@ -155,7 +149,7 @@ export default {
     border-bottom: 6px solid transparent;
     margin-right: 37px;
     padding-bottom: 17px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
 
     &:last-child {
       margin-right: 0;
@@ -191,7 +185,7 @@ export default {
 
   &__available-balance-balance {
     color: $ligth-blue;
-    font-family: "Panton_Bold" !important;
+    font-family: 'Panton_Bold' !important;
     margin-left: 6px;
     margin-right: 3px;
   }

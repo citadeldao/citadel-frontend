@@ -38,10 +38,10 @@
     </div>
     <div
       class="custom-list-modal-content__addresses"
-      :style="{maxHeight: mode==='create'?'290px':''}"
+      :style="{ maxHeight: mode === 'create' ? '290px' : '' }"
     >
       <AddressItem
-        v-for="(item,index) in wallets"
+        v-for="(item, index) in wallets"
         :key="`${item.address}${item.net}${index}`"
         :address="item"
         :checked="checked(item)"
@@ -90,7 +90,8 @@ export default {
     const updateCheckedWallets = inject('updateCheckedWallets');
     const listName = inject('listName');
     const updateListName = inject('updateListName');
-    const checked = (wallet) => !!findAddressWithNet(checkedItems.value, wallet);
+    const checked = (wallet) =>
+      !!findAddressWithNet(checkedItems.value, wallet);
     updateCheckedWallets(checkedItems.value);
 
     const addItem = (item) => {
@@ -100,7 +101,11 @@ export default {
 
     const removeItem = (wallet) => {
       checkedItems.value = checkedItems.value.filter(
-        ({ address, net }) => !(address.toLowerCase() === wallet.address.toLowerCase() && net === wallet.net),
+        ({ address, net }) =>
+          !(
+            address.toLowerCase() === wallet.address.toLowerCase() &&
+            net === wallet.net
+          )
       );
       updateCheckedWallets(checkedItems.value);
     };
@@ -161,7 +166,7 @@ export default {
 
   &__wallets-count-count {
     margin-right: 3px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
   }
 
   &__info-banner {
@@ -205,7 +210,7 @@ export default {
       font-size: 14px;
       line-height: 20px;
       color: $red;
-      font-family: "Panton_SemiBold";
+      font-family: 'Panton_SemiBold';
     }
   }
 }

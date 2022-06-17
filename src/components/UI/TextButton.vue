@@ -36,7 +36,7 @@ export default {
   padding: 0;
   border-bottom: 2px solid $too-dark-blue;
   color: $too-dark-blue;
-  font-family: "Panton_Bold";
+  font-family: 'Panton_Bold';
   background: transparent;
 
   &:hover {

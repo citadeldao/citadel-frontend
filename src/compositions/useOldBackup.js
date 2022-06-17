@@ -15,7 +15,9 @@ export default function useOldBackup() {
 
   const { wallets } = useWallets();
   const networksConfig = computed(() => store.getters['networks/config']);
-  const oldBackupKey = computed(() => `__wallets__${store.getters['profile/info']?.id}`);
+  const oldBackupKey = computed(
+    () => `__wallets__${store.getters['profile/info']?.id}`
+  );
 
   existOldBackup.value = JSON.parse(localStorage.getItem(oldBackupKey.value));
 
@@ -37,56 +39,63 @@ export default function useOldBackup() {
   };
 
   if (existOldBackup.value) {
-    existOldBackup.value.forEach(wallet => {
+    existOldBackup.value.forEach((wallet) => {
       // oneseed and get passwordHash
       if (wallet.type === 1 && !oldPasswordHash.value) {
         oldPasswordHash.value = wallet.passwordHash;
       }
 
-      wallet.coins = wallet.coins.filter(coin => !oldTokens.includes(coin.coin)).map(coin => {
-        let type = '';
+      wallet.coins = wallet.coins
+        .filter((coin) => !oldTokens.includes(coin.coin))
+        .map((coin) => {
+          let type = '';
 
-        /*
+          /*
           TODO - сделать объект { type: String, typeNumber: Number }
           use - type = types.find(t => t === wallet.type).number
          */
-        if (wallet.type === 1) {
-          type = 'oneSeed';
-        }
-        if (wallet.type === 2) {
-          type = 'ledger';
-        }
-        if (wallet.type === 3) {
-          type = 'Trezor';
-        }
-        if (wallet.type === 4) {
-          type = 'Trezor';
-        }
+          if (wallet.type === 1) {
+            type = 'oneSeed';
+          }
 
-        if (!coin || !coin.coin) {
-          return false;
-        }
+          if (wallet.type === 2) {
+            type = 'ledger';
+          }
 
-        const WalletConstructor = models[coin.coin.toUpperCase()];
-        const walletOpts = {
-          address: coin.address,
-          privateKeyEncoded: coin.keys?.privateKeyEncoded,
-          mnemonicEncoded: coin.keys?.mnemonicEncoded,
-          publicKey: coin.keys?.publicKey,
-          type: type === 'oneSeed' ? 'privateKey' : type,
-          config: store.getters['networks/configByNet'](coin.coin),
-        };
+          if (wallet.type === 3) {
+            type = 'Trezor';
+          }
 
-        return new WalletConstructor(walletOpts);
-      });
+          if (wallet.type === 4) {
+            type = 'Trezor';
+          }
 
-      oldWallets.value = oldWallets.value.concat(wallet.coins.filter(coin => coin));
+          if (!coin || !coin.coin) {
+            return false;
+          }
+
+          const WalletConstructor = models[coin.coin.toUpperCase()];
+          const walletOpts = {
+            address: coin.address,
+            privateKeyEncoded: coin.keys?.privateKeyEncoded,
+            mnemonicEncoded: coin.keys?.mnemonicEncoded,
+            publicKey: coin.keys?.publicKey,
+            type: type === 'oneSeed' ? 'privateKey' : type,
+            config: store.getters['networks/configByNet'](coin.coin),
+          };
+
+          return new WalletConstructor(walletOpts);
+        });
+
+      oldWallets.value = oldWallets.value.concat(
+        wallet.coins.filter((coin) => coin)
+      );
       oldWallets.value = oldWallets.value.filter((item) => item.publicKey);
     });
   }
 
   // set empty structure for groupped
-  Object.keys(networksConfig.value).forEach(net => {
+  Object.keys(networksConfig.value).forEach((net) => {
     citadel2FormatWallets.value.push({
       icon: net,
       net: networksConfig.value[net].name,
@@ -94,19 +103,31 @@ export default function useOldBackup() {
     });
   });
 
-  //remove duplicate in old backup
+  // remove duplicate in old backup
   oldWallets.value = oldWallets.value
-    .filter(w => w.address)
-    .filter((w, index, self) =>
-      index === self.findIndex(t => t.net === w.net && t.address.toLowerCase() === w.address.toLowerCase()),
+    .filter((w) => w.address)
+    .filter(
+      (w, index, self) =>
+        index ===
+        self.findIndex(
+          (t) =>
+            t.net === w.net &&
+            t.address.toLowerCase() === w.address.toLowerCase()
+        )
     );
 
   // set to new structure old wallets
-  oldWallets.value.forEach(wallet => {
-    citadel2FormatWallets.value.forEach(structItem => {
+  oldWallets.value.forEach((wallet) => {
+    citadel2FormatWallets.value.forEach((structItem) => {
       // check duplicate wallet in Wallets
-      const searchWallet = wallets.value.filter((item)=> item.type !== WALLET_TYPES.PUBLIC_KEY)
-        .find(w => w.address.toLowerCase() === wallet.address.toLowerCase() && w.net === wallet.net  );
+      const searchWallet = wallets.value
+        .filter((item) => item.type !== WALLET_TYPES.PUBLIC_KEY)
+        .find(
+          (w) =>
+            w.address.toLowerCase() === wallet.address.toLowerCase() &&
+            w.net === wallet.net
+        );
+
       if (searchWallet) {
         wallet.existWallet = true;
       }
@@ -118,7 +139,7 @@ export default function useOldBackup() {
   });
 
   citadel2FormatWallets.value = citadel2FormatWallets.value
-    .filter(struct => struct.wallets.length)
+    .filter((struct) => struct.wallets.length)
     .sort((a, b) => {
       if (a.net > b.net) {
         return 1;

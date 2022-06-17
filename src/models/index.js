@@ -34,7 +34,7 @@ import CryptoCoinTEZ from './CryptoCoins/CryptoCoinTEZ';
 import CryptoCoinAKASH from './CryptoCoins/CryptoCoinAKASH';
 import CryptoCoinKAVA from './CryptoCoins/CryptoCoinKAVA';
 import CryptoCoinBSC from './CryptoCoins/CryptoCoinBSC';
-import CryptoCoinPOLKADOT from './CryptoCoins/CryptoCoinPolkadot';
+import CryptoCoinPOLKADOT from './CryptoCoins/CryptoCoinPOLKADOT';
 import CryptoCoinEVMOS from './CryptoCoins/CryptoCoinEVMOS';
 import CryptoCoinCRESCENT from './CryptoCoins/CryptoCoinCRESCENT';
 
@@ -50,7 +50,7 @@ export default {
   ETH: CryptoCoinETH,
   SECRET: CryptoCoinSECRET,
   PERSISTENCE: CryptoCoinPERSISTENCE,
-  SENTINEL:CryptoCoinSENTINEL,
+  SENTINEL: CryptoCoinSENTINEL,
   CHIHUAHUA: CryptoCoinCHIHUAHUA,
   STARGAZE: CryptoCoinSTARGAZE,
   RIZON: CryptoCoinRIZON,
