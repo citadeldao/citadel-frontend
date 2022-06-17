@@ -18,11 +18,16 @@ export default class MetamaskConnector {
 
   async connect() {
     if (window.ethereum) {
-      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const accounts = await window.ethereum.request({
+        method: 'eth_requestAccounts',
+      });
 
       if (accounts && accounts.length) {
         this.accounts = accounts;
-        this.chainId = parseInt(await window.ethereum.request({ method: 'eth_chainId' }), 16);
+        this.chainId = parseInt(
+          await window.ethereum.request({ method: 'eth_chainId' }),
+          16
+        );
         this.network = this.networks[this.chainId];
 
         window.ethereum.on('accountsChanged', (accounts) => {
@@ -30,7 +35,10 @@ export default class MetamaskConnector {
         });
 
         window.ethereum.on('chainChanged', async () => {
-          this.chainId = parseInt(await window.ethereum.request({ method: 'eth_chainId' }), 16);
+          this.chainId = parseInt(
+            await window.ethereum.request({ method: 'eth_chainId' }),
+            16
+          );
           this.network = this.networks[this.chainId];
         });
 
@@ -50,25 +58,31 @@ export default class MetamaskConnector {
 
   async sendMetamaskTransaction(rawTx) {
     const transaction = rawTx.transaction || rawTx;
+
     if (Array.isArray(transaction)) {
-      const txs = transaction.map(tx => {
+      const txs = transaction.map((tx) => {
         return {
           data: tx.data,
           from: tx.from,
           to: tx.to,
-          nonce: `0x${ tx.nonce.toString(16)}`,
-          chainId: `0x${ tx.chainId.toString(16)}`,
-          gas: `0x${ tx.gas.toString(16)}`,
-          gasPrice: `0x${ parseInt(tx.gasPrice).toString(16)}`,
-          value: tx.value ? `0x${ parseInt(tx.value).toString(16)}` : '',
+          nonce: `0x${tx.nonce.toString(16)}`,
+          chainId: `0x${tx.chainId.toString(16)}`,
+          gas: `0x${tx.gas.toString(16)}`,
+          gasPrice: `0x${parseInt(tx.gasPrice).toString(16)}`,
+          value: tx.value ? `0x${parseInt(tx.value).toString(16)}` : '',
         };
       });
 
       try {
-        return await Promise.all(txs.map(async tx => {
-          return await window.ethereum.request({ method: 'eth_sendTransaction', params: [tx] });
-        }));
-      } catch(err) {
+        return await Promise.all(
+          txs.map(async (tx) => {
+            return await window.ethereum.request({
+              method: 'eth_sendTransaction',
+              params: [tx],
+            });
+          })
+        );
+      } catch (err) {
         return { error: 'Metamask sign txs error' };
       }
 
@@ -89,13 +103,19 @@ export default class MetamaskConnector {
       chainId: `0x${transaction.chainId.toString(16)}`,
       gas: `0x${transaction.gas.toString(16)}`,
       gasPrice: `0x${parseInt(transaction.gasPrice).toString(16)}`,
-      value: transaction.value ? `0x${parseInt(transaction.value).toString(16)}` : '',
+      value: transaction.value
+        ? `0x${parseInt(transaction.value).toString(16)}`
+        : '',
     };
+
     try {
-      const txHash = await window.ethereum.request({ method: 'eth_sendTransaction', params: [tx] });
+      const txHash = await window.ethereum.request({
+        method: 'eth_sendTransaction',
+        params: [tx],
+      });
 
       return { txHash };
-    } catch(err) {
+    } catch (err) {
       return { error: 'Metamask sign tx error' };
     }
   }

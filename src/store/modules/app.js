@@ -15,8 +15,8 @@ export default {
     routeLoader: false,
   },
   getters: {
-    showLoader: state => state.showLoader,
-    showRouteLoader: state => state.routeLoader,
+    showLoader: (state) => state.showLoader,
+    showRouteLoader: (state) => state.routeLoader,
   },
   mutations: {
     [types.SET_LOADER](state, loadingState) {
@@ -36,16 +36,18 @@ export default {
     async initDefaultState({ dispatch }) {
       dispatch('setLoader', true);
       const { error } = await dispatch('profile/getInfo', null, { root: true });
+
       if (!error) {
         await dispatch('networks/loadConfig', null, { root: true });
         initPersistedstate(store);
         SocketManager.connect();
         await dispatch('setWallets');
-        await dispatch('wallets/getNewWallets','lazy', { root: true });
-        dispatch('wallets/getNewWallets','detail', { root: true });
+        await dispatch('wallets/getNewWallets', 'lazy', { root: true });
+        dispatch('wallets/getNewWallets', 'detail', { root: true });
         dispatch('wallets/getCustomWalletsList', null, { root: true });
         dispatch('rewards/getRewards', null, { root: true });
         await dispatch('transactions/getMempool', null, { root: true });
+
         if (window.ethereum?.selectedAddress) {
           dispatch('metamask/connectToMetamask', null, { root: true });
         }
@@ -61,20 +63,26 @@ export default {
     async setWallets({ rootGetters, dispatch, commit }, options = {}) {
       const networksList = rootGetters['networks/networksList'];
       const privateWallets = rootGetters['crypto/privateWallets'];
-      if(privateWallets && privateWallets.length){
+
+      if (privateWallets && privateWallets.length) {
         await dispatch('wallets/setWallets', privateWallets, { root: true });
       }
+
       let walletsList = rootGetters['wallets/wallets'];
-      walletsList = walletsList.map((item)=>{
-        return{
-          net: item.net,
-          address: item.address,
-          type: item.type,
-          publicKey: item.publicKey,
-          privateKeyHash: item?.privateKeyHash,
-          savedViewingKeys: item?.savedViewingKeys,
-        };
-      }).filter(({ net })=> networksList.some((network)=> network.net === net));
+      walletsList = walletsList
+        .map((item) => {
+          return {
+            net: item.net,
+            address: item.address,
+            type: item.type,
+            publicKey: item.publicKey,
+            privateKeyHash: item?.privateKeyHash,
+            savedViewingKeys: item?.savedViewingKeys,
+          };
+        })
+        .filter(({ net }) =>
+          networksList.some((network) => network.net === net)
+        );
       await citadel.setWalletList(walletsList, options);
       commit('crypto/setPrivateWallets', [], { root: true });
     },

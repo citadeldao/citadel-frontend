@@ -439,7 +439,7 @@ export default function useStaking(stakeNodes, list) {
             })}`,
       };
     }
-    if (mode.value === 'unstake') {
+    if (mode.value === 'unstake' || activeTab.value === 'unstake') {
       return {
         title: 'unstaking.unstake',
         button: 'unstaking.unstake',
@@ -456,7 +456,7 @@ export default function useStaking(stakeNodes, list) {
           })}`,
       };
     }
-    if (mode.value === 'stake') {
+    if (mode.value === 'stake' || activeTab.value === 'stake') {
       return {
         title: 'staking.Stake',
         button: 'staking.Stake',

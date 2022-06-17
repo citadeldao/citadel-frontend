@@ -20,10 +20,7 @@
           v-if="isXct"
           class="stake-placeholder__card-special-icon stake-placeholder__card-special-icon--xct"
         />
-        <specialCardIcon
-          v-else
-          class="stake-placeholder__card-special-icon"
-        />
+        <specialCardIcon v-else class="stake-placeholder__card-special-icon" />
       </div>
       <div class="stake-placeholder__card">
         <div class="stake-placeholder__card-icon">
@@ -31,7 +28,13 @@
           <chooseNodes v-else />
         </div>
         <span class="stake-placeholder__card-info">
-          {{ $t(isXct ? 'xct.stakingPlaceholderCard1Info' : 'stakePlaceholder.card1Info') }}
+          {{
+            $t(
+              isXct
+                ? 'xct.stakingPlaceholderCard1Info'
+                : 'stakePlaceholder.card1Info'
+            )
+          }}
         </span>
       </div>
       <div class="stake-placeholder__card">
@@ -47,15 +50,18 @@
           <enjoy />
         </div>
         <span class="stake-placeholder__card-info">
-          {{ $t(isXct ? 'xct.stakingPlaceholderCard3Info' : 'stakePlaceholder.card3Info') }}
+          {{
+            $t(
+              isXct
+                ? 'xct.stakingPlaceholderCard3Info'
+                : 'stakePlaceholder.card3Info'
+            )
+          }}
         </span>
       </div>
     </div>
     <div class="stake-placeholder__button">
-      <PrimaryButton
-        :disabled="!canStake"
-        @click="$emit('click:placeholder')"
-      >
+      <PrimaryButton :disabled="!canStake" @click="$emit('click:placeholder')">
         {{ $t('startStaking') }}
       </PrimaryButton>
     </div>
@@ -116,7 +122,7 @@ export default {
 
   &__title {
     margin: 0;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     font-size: 30px;
     line-height: 30px;
     margin-bottom: 35px;
@@ -178,7 +184,7 @@ export default {
     }
 
     &::after {
-      content: "";
+      content: '';
       opacity: 0.1;
       top: 0;
       left: 0;
@@ -200,15 +206,15 @@ export default {
     padding: 16px 0 0 23px;
     margin-right: 24px;
     background-color: $white;
-    background-image: url("~@/assets/images/cardWave.jpg");
+    background-image: url('~@/assets/images/cardWave.jpg');
     background-repeat: no-repeat;
     background-position: center bottom;
     box-shadow: 0 15px 50px rgba(80, 100, 124, 0.1),
-    0 10px 15px rgba(80, 100, 124, 0.16);
+      0 10px 15px rgba(80, 100, 124, 0.16);
     @include lg {
       width: 140px;
       height: 180px;
-      background-image: url("~@/assets/images/cardWave-lg.jpg");
+      background-image: url('~@/assets/images/cardWave-lg.jpg');
       padding: 11px 0 0 19px;
       margin-right: 4px;
     }
@@ -218,7 +224,7 @@ export default {
       height: 80px;
       margin-right: 0;
       padding: 15px 0 0 26px;
-      background-image: url("~@/assets/images/cardWave-md.jpg");
+      background-image: url('~@/assets/images/cardWave-md.jpg');
     }
 
     & button {
@@ -237,7 +243,7 @@ export default {
   }
 
   &__card-special-title {
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     font-size: 16px;
     line-height: 30px;
     @include md {
@@ -247,7 +253,7 @@ export default {
   }
 
   &__card-special-title-staking {
-    font-family: "Panton_ExtraBold";
+    font-family: 'Panton_ExtraBold';
     font-size: 30px;
     line-height: 30px;
     @include md {
@@ -307,7 +313,7 @@ export default {
     line-height: 21px;
     text-align: center;
     color: $mid-blue;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
     @include lg {
       font-size: 14px;
       line-height: 21px;

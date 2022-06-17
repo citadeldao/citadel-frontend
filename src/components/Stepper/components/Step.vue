@@ -10,7 +10,7 @@
     @click="updateCurrentStep(step.id)"
   >
     <div class="step__info">
-      <span class="step__title">{{ step.id }} {{ $t("steps.step") }} </span>
+      <span class="step__title">{{ step.id }} {{ $t('steps.step') }} </span>
       <span class="step__desc"> {{ step.stepDesc }}</span>
     </div>
     <div class="step__icon">
@@ -77,10 +77,10 @@ export default {
 .step--next {
   .step__icon {
     background: rgb(210, 219, 231); // $too-ligth-blue;
-    opacity: .8;
+    opacity: 0.8;
     position: relative;
     &::after {
-      content: "";
+      content: '';
       // opacity: 0.5;
       top: 0;
       left: 0;
@@ -132,7 +132,7 @@ export default {
   &:last-child {
     margin-bottom: 0;
     &::after {
-      content: "";
+      content: '';
       right: -2px;
       bottom: 0;
       position: absolute;
@@ -161,7 +161,7 @@ export default {
   &__title {
     font-size: 20px;
     line-height: 24px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     @include md {
       font-size: 16px;
       line-height: 19px;

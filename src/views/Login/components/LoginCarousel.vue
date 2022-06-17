@@ -6,7 +6,7 @@
       @change="setActiveItem"
     >
       <LoginCarouselItem
-        v-for="{ name, image} of slides"
+        v-for="{ name, image } of slides"
         :key="name"
         :image="image"
         :title="$t(`login.carousel.${name}.title`)"
@@ -29,7 +29,6 @@ export default {
     const activeItem = ref(0);
     const intervalID = ref(null);
     const screenWidth = ref(window.innerWidth);
-
 
     const onScreenWidthChange = () => {
       screenWidth.value = window.innerWidth;
@@ -79,6 +78,7 @@ export default {
     carouselHeight.value = 600;
     onMounted(() => {
       window.addEventListener('resize', onScreenWidthChange);
+
       if (screenWidth.value < 1280) {
         carouselHeight.value = 400;
       } else {
@@ -88,13 +88,18 @@ export default {
       // set random item
       startCarousel();
     });
-    onUnmounted(() => window.removeEventListener('resize', onScreenWidthChange));
+    onUnmounted(() =>
+      window.removeEventListener('resize', onScreenWidthChange)
+    );
     const setRandomItem = () => {
       const randomIndex = Math.floor(Math.random() * slides.value.length);
       const isLastItem = randomIndex === activeItem.value;
-      const newActiveIndex = randomIndex !== activeItem.value
-        ? randomIndex
-        : randomIndex === isLastItem ? 0 : (randomIndex + 1);
+      const newActiveIndex =
+        randomIndex !== activeItem.value
+          ? randomIndex
+          : randomIndex === isLastItem
+          ? 0
+          : randomIndex + 1;
 
       loginCarousel.value.setActiveItem(newActiveIndex);
     };

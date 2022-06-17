@@ -5,10 +5,7 @@
     class="round-arrow-button"
     @click="$emit('click')"
   >
-    <span
-      v-if="text"
-      class="round-arrow-button__text"
-    >
+    <span v-if="text" class="round-arrow-button__text">
       {{ $t(text) }}
     </span>
     <div class="round-arrow-button__icon">
@@ -110,7 +107,7 @@ export default {
     font-size: 18px;
     line-height: 22px;
     color: var(--textColor);
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     @include md {
       font-size: 14px;
       line-height: 17px;

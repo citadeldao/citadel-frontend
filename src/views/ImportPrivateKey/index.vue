@@ -1,9 +1,6 @@
 <template>
   <div class="import-private-key">
-    <Header
-      :current-step="currentStep"
-      :steps="steps"
-    />
+    <Header :current-step="currentStep" :steps="steps" />
     <div class="import-private-key__section">
       <!-- <Stepper :steps="steps" /> -->
       <EnterPassword
@@ -21,11 +18,7 @@
     <teleport to="body">
       <transition name="fade">
         <Modal v-if="showModal">
-          <img
-            v-if="showLoader"
-            src="@/assets/gif/loader.gif"
-            alt=""
-          >
+          <img v-if="showLoader" src="@/assets/gif/loader.gif" alt="" />
           <AddressAlreadyAdded
             v-else-if="showAlreadyAddedModal"
             v-click-away="alreadyAddedCloseHandler"
@@ -57,7 +50,7 @@ import CatPage from '@/components/CatPage';
 import Modal from '@/components/Modal';
 import AddressAlreadyAdded from '@/components/Modals/AddressAlreadyAdded';
 import useCurrentStep from '@/compositions/useCurrentStep';
-import { steps as prvateKeySteps } from '@/static/importPrivateKey';
+import { getSteps } from '@/static/importPrivateKey';
 import useCreateWallets from '@/compositions/useCreateWallets';
 import { WALLET_TYPES } from '../../config/walletType';
 
@@ -73,8 +66,6 @@ export default {
     AddressAlreadyAdded,
   },
   setup() {
-    const { currentStep, steps } = useCurrentStep(2, prvateKeySteps);
-
     const {
       showLoader,
       showModal,
@@ -90,6 +81,11 @@ export default {
       showAlreadyAddedModal,
       setAccount,
     } = useCreateWallets();
+
+    const { currentStep, steps } = useCurrentStep(
+      2,
+      getSteps(isPasswordHash.value)
+    );
 
     const finalStep = ({ net, privateKey, account }) => {
       setPrivateKey(privateKey);

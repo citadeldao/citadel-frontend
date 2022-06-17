@@ -1,8 +1,5 @@
 <template>
-  <form
-    class="verification"
-    @submit.prevent="submitHandler"
-  >
+  <form class="verification" @submit.prevent="submitHandler">
     <span class="verification__title">
       {{ $t('login.verification') }}
     </span>
@@ -24,10 +21,7 @@
         data-qa="login-verification__resend-code"
         @click="sendCode"
       >
-        <span
-          v-if="timerMode"
-          class="verification__timer"
-        >
+        <span v-if="timerMode" class="verification__timer">
           {{ time }}s
           <span>{{ $t('login.resend') }}</span>
         </span>
@@ -49,10 +43,7 @@
       {{ $t('confirm') }}
     </PrimaryButton>
     <div class="verification__back-link">
-      <TextButton
-        data-qa="login-verification__back-button"
-        @click="back"
-      >
+      <TextButton data-qa="login-verification__back-button" @click="back">
         {{ $t('backBtn') }}
       </TextButton>
     </div>
@@ -120,7 +111,7 @@ export default {
         } else {
           showResendCode.value = true;
         }
-      },
+      }
     );
 
     watch(code, (value) => {
@@ -176,7 +167,7 @@ export default {
   }
 
   &__title {
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     font-size: 35px;
     line-height: 42px;
     margin-bottom: 16px;
@@ -215,7 +206,7 @@ export default {
       & span {
         font-size: 16px;
         line-height: 19px;
-        font-family: "Panton_Bold";
+        font-family: 'Panton_Bold';
       }
 
       &:disabled,

@@ -1,7 +1,7 @@
 <template>
   <div class="import-hardware-wallet">
     <span class="import-hardware-wallet__title">
-      {{ $t("importTrezor.title1") }}
+      {{ $t('importTrezor.title1') }}
     </span>
     <form @submit.prevent="submitHandler">
       <div class="import-hardware-wallet__autocomplete">
@@ -79,7 +79,7 @@ export default {
     font-size: 20px;
     line-height: 30px;
     margin-bottom: 24px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
   }
   & form {
     display: flex;

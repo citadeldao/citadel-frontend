@@ -1,9 +1,6 @@
 <template>
   <div class="matamask">
-    <teleport
-      v-if="importModal"
-      to="body"
-    >
+    <teleport v-if="importModal" to="body">
       <Modal v-if="metamaskConnector.accounts && metamaskConnector.accounts[0]">
         <ModalContent
           :submit-button="false"
@@ -17,9 +14,7 @@
         >
           <div class="import-container">
             <div class="import-container__icon">
-              <div v-if="!currentIcon">
-                ?
-              </div>
+              <div v-if="!currentIcon">?</div>
               <div v-else>
                 <component :is="currentIcon" />
               </div>
@@ -34,10 +29,7 @@
         <Loading />
       </Modal>
     </teleport>
-    <teleport
-      v-if="showModal"
-      to="body"
-    >
+    <teleport v-if="showModal" to="body">
       <Modal v-if="showAlreadyAddedModal">
         <AddressAlreadyAdded
           v-click-away="alreadyAddedCloseHandler"
@@ -118,7 +110,9 @@ export default {
       }
     }, 7000);
 
-    const metamaskConnector = computed(() => store.getters['metamask/metamaskConnector']);
+    const metamaskConnector = computed(
+      () => store.getters['metamask/metamaskConnector']
+    );
     // metamaskConnector.value.changeNetwork();
 
     const checkAccessToMetamask = () => {
@@ -133,6 +127,7 @@ export default {
 
         return;
       }
+
       if (!['bsc', 'eth'].includes(metamaskConnector.value.network)) {
         notify({
           type: 'warning',
@@ -143,32 +138,39 @@ export default {
 
     checkAccessToMetamask();
 
-    watch(() => metamaskConnector.value.accounts, () => {
-      const { network, accounts } = metamaskConnector.value;
+    watch(
+      () => metamaskConnector.value.accounts,
+      () => {
+        const { network, accounts } = metamaskConnector.value;
 
-      if (accounts && accounts[0]) {
-        showLoader.value = false;
-      }
-      if (['eth', 'bsc'].includes(network)) {
-        import(`@/assets/icons/networks/${network}.svg`).then((val) => {
-          currentIcon.value = markRaw(val.default);
-        });
-      } else {
-        currentIcon.value = '';
-      }
-    });
+        if (accounts && accounts[0]) {
+          showLoader.value = false;
+        }
 
-    watch(() => metamaskConnector.value.network, (newV) => {
-      const network = newV;
-
-      if (['eth', 'bsc'].includes(network)) {
-        import(`@/assets/icons/networks/${network}.svg`).then((val) => {
-          currentIcon.value = markRaw(val.default);
-        });
-      } else {
-        currentIcon.value = '';
+        if (['eth', 'bsc'].includes(network)) {
+          import(`@/assets/icons/networks/${network}.svg`).then((val) => {
+            currentIcon.value = markRaw(val.default);
+          });
+        } else {
+          currentIcon.value = '';
+        }
       }
-    });
+    );
+
+    watch(
+      () => metamaskConnector.value.network,
+      (newV) => {
+        const network = newV;
+
+        if (['eth', 'bsc'].includes(network)) {
+          import(`@/assets/icons/networks/${network}.svg`).then((val) => {
+            currentIcon.value = markRaw(val.default);
+          });
+        } else {
+          currentIcon.value = '';
+        }
+      }
+    );
 
     const router = useRouter();
 
@@ -208,7 +210,9 @@ export default {
       }
 
       existAddressInMetamask.value = wallets.value.find(
-        wallet => wallet.address.toLowerCase() === accounts[0].toLowerCase() && wallet.net === network,
+        (wallet) =>
+          wallet.address.toLowerCase() === accounts[0].toLowerCase() &&
+          wallet.net === network
       );
 
       if (!existAddressInMetamask.value) {

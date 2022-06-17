@@ -9,10 +9,7 @@
     @click="toggleShowList($event)"
   >
     <keep-alive>
-      <component
-        :is="icon"
-        class="wallet-filter-dropdown__value-icon"
-      />
+      <component :is="icon" class="wallet-filter-dropdown__value-icon" />
     </keep-alive>
 
     <teleport to="body">
@@ -100,19 +97,18 @@ export default {
 
       nextTick(() => {
         const tooltip = document.getElementById('tooltip');
-        const {
-          left,
-          width,
-          bottom,
-        } = event.target.getBoundingClientRect();
+        const { left, width, bottom } = event.target.getBoundingClientRect();
         tooltipX.value = left - (tooltip.offsetWidth - width) / 2;
         tooltipY.value = bottom + 7;
       });
     };
 
-    watch(() => props.value, (val) => {
-      changeValue(props.items.find(i => i.value === val));
-    });
+    watch(
+      () => props.value,
+      (val) => {
+        changeValue(props.items.find((i) => i.value === val));
+      }
+    );
 
     return {
       icon,
@@ -153,7 +149,7 @@ export default {
     flex-direction: column;
     position: absolute;
     box-shadow: 0 15px 50px rgba(80, 100, 124, 0.1),
-    0 10px 15px rgba(80, 100, 124, 0.16);
+      0 10px 15px rgba(80, 100, 124, 0.16);
     border-radius: 8px;
     background: $white;
     padding: 4px 8px 4px 8px;

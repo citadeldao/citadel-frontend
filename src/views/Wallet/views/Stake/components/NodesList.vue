@@ -15,7 +15,7 @@
       ref="nodesListRef"
       class="nodes-list__nodes"
       :class="{ 'nodes-list__nodes--scrollbar': hasScrollbar }"
-      :style="{maxHeight}"
+      :style="{ maxHeight }"
     >
       <NodesListItem
         v-for="item in displayData"
@@ -28,22 +28,13 @@
         @click="setNode(item)"
       />
     </div>
-    <div
-      v-if="errorMsg"
-      class="nodes-list__error"
-    >
+    <div v-if="errorMsg" class="nodes-list__error">
       <error />
       &nbsp;
       {{ $t(`polkadot.error.${errorMsg}`) }}
     </div>
-    <div
-      v-if="isMultipleMode"
-      class="nodes-list__next"
-    >
-      <PrimaryButton
-        :disabled="!items.length"
-        @click="setMultipleNodes()"
-      >
+    <div v-if="isMultipleMode" class="nodes-list__next">
+      <PrimaryButton :disabled="!items.length" @click="setMultipleNodes()">
         {{ $t('next') }}
       </PrimaryButton>
     </div>
@@ -84,7 +75,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    stakedNodes:{
+    stakedNodes: {
       type: Array,
       default: () => [],
     },
@@ -102,7 +93,7 @@ export default {
       }
 
       return props.nodesList.filter((data) =>
-        data.name?.toLowerCase().includes(keyword.value.toLowerCase()),
+        data.name?.toLowerCase().includes(keyword.value.toLowerCase())
       );
     });
     const mode = inject('mode');
@@ -110,7 +101,9 @@ export default {
     const updateShowChooseNode = inject('updateShowChooseNode');
     const updateShowNodesList = inject('updateShowNodesList');
     const redelegationDirection = inject('redelegationDirection');
-    const updateSelectedNodeForRedelegation = inject('updateSelectedNodeForRedelegation');
+    const updateSelectedNodeForRedelegation = inject(
+      'updateSelectedNodeForRedelegation'
+    );
     const updateAmount = inject('updateAmount');
     const resMaxAmount = inject('resMaxAmount');
 
@@ -118,11 +111,15 @@ export default {
       // if multiple mode collect items in array
       if (props.isMultipleMode) {
         errorMsg.value = '';
-        if (items.value.find(c => c.address === item.address)) {
-          items.value = items.value.filter(c => c.address !== item.address);
+
+        if (items.value.find((c) => c.address === item.address)) {
+          items.value = items.value.filter((c) => c.address !== item.address);
         } else {
-          if ((mode.value === 'stake' && items.value.length + props.stakedNodes.length  > 15) ||
-          (mode.value === 'redelegate' && items.value.length > 15)) {
+          if (
+            (mode.value === 'stake' &&
+              items.value.length + props.stakedNodes.length > 15) ||
+            (mode.value === 'redelegate' && items.value.length > 15)
+          ) {
             errorMsg.value = 'chooseNotMoreThan16Nodes';
 
             return;
@@ -132,7 +129,9 @@ export default {
 
           //   return;
           // }
-          {items.value.push(item);}
+          {
+            items.value.push(item);
+          }
         }
 
         return;
@@ -142,7 +141,6 @@ export default {
       updateShowChooseNode(true);
       updateShowNodesList(false);
 
-
       if (redelegationDirection.value === 'to') {
         await updateSelectedNodeForRedelegation(item);
       } else {
@@ -151,21 +149,26 @@ export default {
     };
 
     const isChosen = (item) => {
-      return items.value.map(c => c.address).some(addr => addr === item.address);
+      return items.value
+        .map((c) => c.address)
+        .some((addr) => addr === item.address);
     };
 
     const setMultipleNodes = async () => {
       updateShowChooseNode(true);
       updateShowNodesList(false);
-      const chosenAddresses = items.value.map(c => c.address);
-      if(mode.value === 'redelegate'){
-        await updateSelectedNodeForRedelegation(displayData.value.filter(c => chosenAddresses.includes(c.address)));
+      const chosenAddresses = items.value.map((c) => c.address);
+
+      if (mode.value === 'redelegate') {
+        await updateSelectedNodeForRedelegation(
+          displayData.value.filter((c) => chosenAddresses.includes(c.address))
+        );
         updateAmount(resMaxAmount.value);
-      }else{
-        await updateSelectedNode(displayData.value.filter(c => chosenAddresses.includes(c.address)));
+      } else {
+        await updateSelectedNode(
+          displayData.value.filter((c) => chosenAddresses.includes(c.address))
+        );
       }
-
-
     };
 
     onMounted(() => {

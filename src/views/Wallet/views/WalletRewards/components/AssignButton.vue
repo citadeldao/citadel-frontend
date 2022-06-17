@@ -1,15 +1,17 @@
 <template>
-  <button
-    class="assign-button"
-    :class="type"
-    @click="$emit('click')"
-  >
+  <button class="assign-button" :class="type" @click="$emit('click')">
     <div class="assign-button__addresses-amount">
       <span>{{ amount }}</span>
     </div>
     <span
       class="assign-button__text"
-      v-html="$t(type === 'assigned' ? 'xct.assignedAddressesBtn' : 'xct.unAssignedAddressesBtn')"
+      v-html="
+        $t(
+          type === 'assigned'
+            ? 'xct.assignedAddressesBtn'
+            : 'xct.unAssignedAddressesBtn'
+        )
+      "
     />
   </button>
 </template>
@@ -53,14 +55,14 @@ export default {
     & span {
       font-size: 20px;
       line-height: 20px;
-      font-family: "Panton_Bold";
+      font-family: 'Panton_Bold';
     }
   }
   &__text {
     font-size: 14px;
     line-height: 16px;
     text-align: left;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
   }
 }
 .assigned {

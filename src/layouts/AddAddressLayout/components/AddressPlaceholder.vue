@@ -3,10 +3,10 @@
     <walletAddress v-if="activeTab == 'all'" />
     <favoritePlaceholder v-if="activeTab == 'Favourites'" />
     <span v-if="activeTab == 'all'">
-      {{ $t("layouts.addAddressLayout.sidebarPlaceholder") }}
+      {{ $t('layouts.addAddressLayout.sidebarPlaceholder') }}
     </span>
     <span v-if="activeTab == 'Favourites'">
-      {{ $t("layouts.addAddressLayout.favoritePlaceholder") }}
+      {{ $t('layouts.addAddressLayout.favoritePlaceholder') }}
     </span>
   </div>
 </template>
@@ -44,7 +44,7 @@ export default {
     margin-bottom: 16px;
   }
   & span {
-    font-family: "Panton_Light";
+    font-family: 'Panton_Light';
     font-size: 18px;
     line-height: 24px;
     color: $too-ligth-blue;

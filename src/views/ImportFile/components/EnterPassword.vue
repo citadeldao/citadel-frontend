@@ -1,10 +1,7 @@
 <template>
   <div class="enter-password">
     <div class="enter-password__info-banner">
-      <InfoBanner
-        icon="protection"
-        :content="$t('enterPasswordBackup')"
-      />
+      <InfoBanner icon="protection" :content="$t('enterPasswordBackup')" />
     </div>
     <form @submit.prevent="submitHandler">
       <div class="enter-password__password-input">
@@ -19,9 +16,7 @@
         />
       </div>
       <PrimaryButton :disabled="!!inputError">
-        {{
-          $t('next')
-        }}
+        {{ $t('next') }}
       </PrimaryButton>
     </form>
   </div>
@@ -53,12 +48,19 @@ export default {
 
         return;
       }
+
       emit('passwordConfirmed', password.value);
-
     };
-    const { password, passwordIncorrect, passwordError, inputError } = useCheckPassword(props.passwordHash);
+    const { password, passwordIncorrect, passwordError, inputError } =
+      useCheckPassword(props.passwordHash);
 
-    return { password, submitHandler, passwordIncorrect, passwordError, inputError };
+    return {
+      password,
+      submitHandler,
+      passwordIncorrect,
+      passwordError,
+      inputError,
+    };
   },
 };
 </script>

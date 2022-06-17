@@ -16,7 +16,10 @@ export default {
       state.modals.push(name);
     },
     [types.REMOVE_MODAL](state, name) {
-      state.modals.splice(state.modals.findIndex((n) => n === name), 1);
+      state.modals.splice(
+        state.modals.findIndex((n) => n === name),
+        1
+      );
     },
   },
   actions: {

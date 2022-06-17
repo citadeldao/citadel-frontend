@@ -84,7 +84,7 @@ export default {
   }
   &__info-banner {
     width: 570px;
-    font-family: "Panton_SemiBold";
+    font-family: 'Panton_SemiBold';
     @include md {
       width: 483px;
     }

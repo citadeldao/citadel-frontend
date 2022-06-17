@@ -1,40 +1,21 @@
 <template>
-  <div
-    class="toast"
-    :class="`toast--${type}`"
-  >
+  <div class="toast" :class="`toast--${type}`">
     <div class="toast__icon">
       <component :is="currentIcon" />
     </div>
     <div class="toast__content">
-      <div
-        :class="{ hash: !!hash }"
-        class="toast__title"
-      >
+      <div :class="{ hash: !!hash }" class="toast__title">
         {{ txTitle }}
       </div>
-      <div
-        v-if="!hash"
-        class="toast__text"
-        v-html="text"
-      />
-      <div
-        v-else
-        class="hash-wrap"
-      >
-        <a
-          :href="hash"
-          target="_blank"
-        >
+      <div v-if="!hash" class="toast__text" v-html="text" />
+      <div v-else class="hash-wrap">
+        <a :href="hash" target="_blank">
           {{ $t('transactionsSocket.viewTitle') }}
           <linkIcon class="hash-link" />
         </a>
       </div>
     </div>
-    <div
-      class="toast__close"
-      @click="$emit('close')"
-    >
+    <div class="toast__close" @click="$emit('close')">
       <close-icon />
     </div>
   </div>
@@ -77,8 +58,13 @@ export default {
 
     const txTitle = computed(() => {
       if (props.hash) {
-        if (props.type === 'warning') {return t('transactionsSocket.failed');}
-        if (props.type === 'success') {return t('transactionsSocket.completed');}
+        if (props.type === 'warning') {
+          return t('transactionsSocket.failed');
+        }
+
+        if (props.type === 'success') {
+          return t('transactionsSocket.completed');
+        }
 
         return props.title;
       }
@@ -126,7 +112,8 @@ export default {
   border-radius: 10px;
   margin-bottom: 10px;
   background-color: $white;
-  box-shadow: 0 15px 50px rgba(80, 100, 124, 0.1), 0 10px 15px rgba(80, 100, 124, 0.16);
+  box-shadow: 0 15px 50px rgba(80, 100, 124, 0.1),
+    0 10px 15px rgba(80, 100, 124, 0.16);
   overflow: hidden;
   right: 15px;
   top: 15px;

@@ -1,9 +1,6 @@
 <template>
   <div class="choose-derivation-path">
-    <div
-      v-if="pathOptions.length > 1"
-      class="autocomplete-wrap"
-    >
+    <div v-if="pathOptions.length > 1" class="autocomplete-wrap">
       <div class="autocomplete">
         <Select
           v-model="currentPathDerivation"
@@ -16,10 +13,7 @@
         />
       </div>
     </div>
-    <div
-      v-if="wallets.length"
-      class="choose-derivation-path__card-wrapper"
-    >
+    <div v-if="wallets.length" class="choose-derivation-path__card-wrapper">
       <DerivationPathCard
         v-for="(wallet, key) in wallets"
         :key="key"
@@ -29,10 +23,7 @@
         @check="addSingleItem"
       />
     </div>
-    <div
-      v-if="customWallet"
-      class="choose-derivation-path__custom"
-    >
+    <div v-if="customWallet" class="choose-derivation-path__custom">
       <span>Custom</span>
       <DerivationPathCard
         :wallet="customWallet.walletInstance"
@@ -51,15 +42,9 @@
     >
       {{ $t('import') }}
     </PrimaryButton>
-    <teleport
-      v-if="showLoader"
-      to="body"
-    >
+    <teleport v-if="showLoader" to="body">
       <Modal>
-        <img
-          src="@/assets/gif/loader.gif"
-          alt=""
-        >
+        <img src="@/assets/gif/loader.gif" alt="" />
       </Modal>
     </teleport>
   </div>
@@ -94,18 +79,18 @@ export default {
   setup(props, { emit }) {
     const showModal = ref(true);
     const showLoader = ref(true);
-    const {
-      checked,
-      addSingleItem,
-      checkedItems,
-    } = useCheckItem();
+    const { checked, addSingleItem, checkedItems } = useCheckItem();
     const store = useStore();
 
     const numberOfPaths = 5;
     const wallets = ref([]);
-    const pathOptions = ref(CryptoCoin.getDerivationPathTemplates(props.net, WALLET_TYPES.LEDGER));
+    const pathOptions = ref(
+      CryptoCoin.getDerivationPathTemplates(props.net, WALLET_TYPES.LEDGER)
+    );
 
-    const currentPathDerivation = ref(pathOptions.value && pathOptions.value[0].key || '');
+    const currentPathDerivation = ref(
+      (pathOptions.value && pathOptions.value[0].key) || ''
+    );
 
     const createWalletsWithTemplatePath = async (templatePath) => {
       showModal.value = true;
@@ -113,6 +98,7 @@ export default {
       wallets.value = [];
 
       let currentPath = 0;
+
       while (currentPath < numberOfPaths) {
         const wallet = await store.dispatch('crypto/createLedgerWallet', {
           derivationPath: templatePath.replace('N', currentPath),
@@ -120,17 +106,20 @@ export default {
         });
         wallets.value.push(wallet);
         const isLastIteration = currentPath === numberOfPaths - 1;
+
         if (isLastIteration) {
           await setCustomWallet();
           showModal.value = false;
           showLoader.value = false;
         }
+
         currentPath++;
       }
     };
 
     const createWallets = async () => {
       let currentPath = 0;
+
       while (currentPath < numberOfPaths) {
         const wallet = await store.dispatch('crypto/createLedgerWallet', {
           pathIndex: currentPath,
@@ -138,11 +127,13 @@ export default {
         });
         wallets.value.push(wallet);
         const isLastIteration = currentPath === numberOfPaths - 1;
+
         if (isLastIteration) {
           await setCustomWallet();
           showModal.value = false;
           showLoader.value = false;
         }
+
         currentPath++;
       }
     };
@@ -183,8 +174,11 @@ export default {
 
     const disabled = computed(() => {
       const isChecked = checkedItems.value?.length;
-      const existingWallet = store.getters['wallets/walletByAddress'](checkedItems.value[0]);
-      const isExist = !!existingWallet && existingWallet.type !==  WALLET_TYPES.PUBLIC_KEY;
+      const existingWallet = store.getters['wallets/walletByAddress'](
+        checkedItems.value[0]
+      );
+      const isExist =
+        !!existingWallet && existingWallet.type !== WALLET_TYPES.PUBLIC_KEY;
 
       return !isChecked || isExist;
     });
@@ -243,6 +237,7 @@ export default {
     padding-top: 24px;
     padding-left: 24px;
   }
+
   &__card-wrapper {
     width: 100%;
     display: flex;
@@ -258,6 +253,7 @@ export default {
       gap: 8px;
     }
   }
+
   &__custom {
     display: flex;
     flex-direction: column;
@@ -266,6 +262,7 @@ export default {
     @include md {
       margin-bottom: 24px;
     }
+
     & span {
       font-size: 20px;
       line-height: 24px;
