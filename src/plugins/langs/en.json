@@ -1209,5 +1209,6 @@
             "hardware": "Hardware wallet",
             "hardwareDescription": "Import addresses from Ledger or Trezor device for advanced use"
         }
-    }
+    },
+    "noApyNote": "Get passive income via staking your crypto assets!"
 }
