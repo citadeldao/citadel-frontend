@@ -561,10 +561,12 @@ export default {
         const nets = currentApp.value.networks.map((net) => {
           return net.toLowerCase();
         });
+
         signerWallet.value = walletsList.value.find(
           (w) =>
             w.address.toLowerCase() === currentAddress.toLowerCase() &&
-            nets.includes(w.net.toLowerCase())
+            nets.includes(w.net.toLowerCase()) &&
+            w.type !== WALLET_TYPES.PUBLIC_KEY
         );
 
         // signerWallet.value = privateWallets.value.find(w => w.address.toLowerCase() === currentAddress.toLowerCase() && nets.includes(w.net.toLowerCase()));
@@ -681,7 +683,10 @@ export default {
     };
 
     const confirmClickHandler = async () => {
-      if (signerWallet.value.type === WALLET_TYPES.KEPLR) {
+      if (
+        signerWallet.value &&
+        signerWallet.value.type === WALLET_TYPES.KEPLR
+      ) {
         let keplrResult;
 
         try {
