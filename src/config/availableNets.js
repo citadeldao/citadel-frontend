@@ -34,6 +34,7 @@ export const ledgerNets = [
   'konstellation',
   'mantle',
   'crescent',
+  'orai',
   // 'evmos',
 ];
 
@@ -85,4 +86,5 @@ export const keplrNetworks = [
   },
   { label: 'AssetMantle: mantle-1', key: 'mantle-1', net: 'mantle' },
   { label: 'Crescent: crescent-1', key: 'crescent-1', net: 'crescent' },
+  { label: 'Orai: Oraichain', key: 'Oraichain', net: 'orai' },
 ];
