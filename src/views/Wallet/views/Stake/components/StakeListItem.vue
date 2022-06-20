@@ -237,7 +237,8 @@ export default {
         return false;
       } else if (
         (editMode.value && props.redelegationNodeTo) ||
-        props.type === 'withoutDelegation'
+        (props.type === 'withoutDelegation' &&
+          props.currentWallet.type !== WALLET_TYPES.PUBLIC_KEY)
       ) {
         return true;
       } else if (
