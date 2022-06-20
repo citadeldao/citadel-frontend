@@ -27,7 +27,7 @@ export default class keplrConnector {
     try {
       const data = rawTx.transaction || rawTx;
 
-      if (data.direct && data.json.memo.toLowerCase().includes('grant')) {
+      if (data.direct && data.json.memo.toLowerCase().includes('permissions')) {
         const res = await window.keplr.signDirect(
           data.chain_id || data.json.chain_id,
           signer,

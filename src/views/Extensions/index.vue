@@ -688,9 +688,13 @@ export default {
         signerWallet.value.type === WALLET_TYPES.KEPLR
       ) {
         let keplrResult;
-        const signType = extensionTransactionForSign.value.transaction.direct
-          ? 'direct'
-          : 'json';
+        const signType =
+          extensionTransactionForSign.value.transaction.direct &&
+          extensionTransactionForSign.value.transaction.json.memo
+            .toLowerCase()
+            .includes('permissions')
+            ? 'direct'
+            : 'json';
 
         try {
           keplrResult = await keplrConnector.value.sendKeplrTransaction(
