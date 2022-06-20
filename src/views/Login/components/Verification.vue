@@ -14,13 +14,13 @@
           :loading="false"
           :error="error"
           @paste="pasteHandler"
+          @keypress.enter="submitHandler"
         />
       </div>
       <button
         :disabled="timerMode"
         data-qa="login-verification__resend-code"
         @click="sendCode"
-        id="codeResendButton"
       >
         <span v-if="timerMode" class="verification__timer">
           {{ time }}s
@@ -40,6 +40,7 @@
     <PrimaryButton
       @click="submitHandler"
       id="codeSubmitButton"
+      formId="verificationForm"
       data-qa="login-verification__confirm-button"
       :disabled="code.length < 6"
     >
@@ -54,7 +55,7 @@
 </template>
 
 <script>
-import { ref, inject, watch, nextTick } from 'vue';
+import { ref, inject, watch, nextTick, onMounted } from 'vue';
 import TextButton from '@/components/UI/TextButton';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import VerificationInput from '@/components/UI/VerificationInput.vue';
@@ -106,18 +107,17 @@ export default {
       }
     };
     sendCode();
+    onMounted(() => {
+      nextTick(() => {
+        document.getElementById('codeSubmitButton').focus();
+      });
+    });
     watch(
       () => timerMode.value,
       (value) => {
         if (value) {
-          nextTick(() => {
-            document.getElementById('codeSubmitButton').focus();
-          });
           showResendCode.value = false;
         } else {
-          nextTick(() => {
-            document.getElementById('codeResendButton').focus();
-          });
           showResendCode.value = true;
         }
       },
@@ -134,7 +134,9 @@ export default {
     });
 
     const submitHandler = () => {
-      emit('verification', code.value);
+      if (code.value.length === 6) {
+        emit('verification', code.value);
+      }
     };
     const renderComponent = ref(true);
     const pasteHandler = async () => {
