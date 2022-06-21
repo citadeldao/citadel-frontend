@@ -10,7 +10,8 @@
           {{ $t('keplr.selectAll') }}
         </div>
         <div class="unselect" @click="selectedCoins = []">
-          {{ $t('keplr.unselectAll') }}
+          <p>{{ $t('keplr.unselectAll') }}</p>
+          <closeIcon class="close-icon" />
         </div>
       </div>
       <div class="chains__selector">
@@ -69,12 +70,21 @@ import CoinItem from './CoinItem.vue';
 import Header from '../AddAddress/components/Header';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import KeplrConnector from '@/models/Services/Keplr';
+import closeIcon from '@/assets/icons/close.svg';
 
 const { t } = i18n.global;
 
 export default {
   name: 'Metamask',
-  components: { PrimaryButton, CatPage, CoinItem, Modal, Header, Loading },
+  components: {
+    PrimaryButton,
+    CatPage,
+    CoinItem,
+    Modal,
+    Header,
+    Loading,
+    closeIcon,
+  },
   setup() {
     const router = useRouter();
     const store = useStore();
@@ -263,12 +273,13 @@ export default {
   }
 
   .controls {
-    width: 400px;
-    margin: 40px auto;
+    width: 300px;
+    margin: 40px auto 23px auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-
+    font-weight: 600;
+    font-size: 14px;
     .select {
       color: #00a3ff;
       border-bottom: 1px dotted #00a3ff;
@@ -276,8 +287,13 @@ export default {
     }
 
     .unselect {
+      display: flex;
+      align-items: center;
       color: #fa3b33;
-      border-bottom: 1px dotted #fa3b33;
+      p {
+        margin: 0 8px 0 0;
+        border-bottom: 1px dotted #fa3b33;
+      }
       cursor: pointer;
     }
   }
@@ -304,7 +320,6 @@ export default {
     height: 50px;
     border-radius: 8px;
     text-align: center;
-    // padding: 13px 0;
     padding-top: 5px;
 
     & svg {
@@ -327,10 +342,15 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 400px;
+  width: 310px;
   margin: 0 auto 30px;
   height: 300px;
   box-sizing: border-box;
   overflow-y: auto;
+}
+.close-icon {
+  svg {
+    fill: red;
+  }
 }
 </style>
