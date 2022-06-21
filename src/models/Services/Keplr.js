@@ -27,7 +27,7 @@ export default class keplrConnector {
     try {
       const data = rawTx.transaction || rawTx;
 
-      if (data.direct) {
+      if (data.direct && data.json.memo.toLowerCase().includes('permissions')) {
         const res = await window.keplr.signDirect(
           data.chain_id || data.json.chain_id,
           signer,
@@ -39,7 +39,7 @@ export default class keplrConnector {
           'base64'
         ).toString('hex');
 
-        return { signature, signedTx: res.signed, fullResponse: res };
+        return { signature, signedTx: data.json, fullResponse: res };
       }
 
       const res = await window.keplr.signAmino(
