@@ -350,7 +350,7 @@ export default {
 }
 .close-icon {
   svg {
-    fill: red;
+    fill: $red;
   }
 }
 </style>
