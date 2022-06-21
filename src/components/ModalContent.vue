@@ -78,10 +78,8 @@
             ref="primaryButton"
             :disabled="disabled"
             :data-qa="
-              dataQa &&
-              `${dataQa}__${$t(buttonText)
-                .toLowerCase()
-                .replace(' ', '-')}-button`
+              `${$t(buttonText)
+                .replace(' ', '-')}`
             "
             @click.stop="clickHandler"
           >

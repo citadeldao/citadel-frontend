@@ -60,6 +60,7 @@
     >
       <hotSale class="claim-rewards__button-shadow-icon" />
       <RoundArrowButton
+        :disabled="disabled"
         :bg-color="currentWalletInfo?.claimableRewards ? '#6A4BFF' : `white`"
         :icon-fill="currentWalletInfo?.claimableRewards ? 'white' : `#6A4BFF`"
         @click="handleButtonClick"
@@ -88,6 +89,9 @@ export default {
   name: 'ClaimRewards',
   components: { hotSale, RoundArrowButton, claimBlockLock, Modal, InfoModal },
   props: {
+    disabled: {
+      type: Boolean,
+    },
     currentWallet: {
       type: Object,
       required: true,
@@ -152,13 +156,15 @@ export default {
     };
 
     const handleButtonClick = () => {
-      if (currentWalletInfo.value?.claimableRewards) {
-        props.isCurrentToken ? emit('prepareXctClaim') : emit('prepareClaim');
-      } else {
-        router.push({
-          name: 'WalletStake',
-          params: { ...route.params },
-        });
+      if (!props.disabled) {
+        if (currentWalletInfo.value?.claimableRewards) {
+          props.isCurrentToken ? emit('prepareXctClaim') : emit('prepareClaim');
+        } else {
+          router.push({
+            name: 'WalletStake',
+            params: { ...route.params },
+          });
+        }
       }
     };
 
