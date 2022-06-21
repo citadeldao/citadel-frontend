@@ -28,9 +28,22 @@
       </div>
     </td>
     <td class="table-row__date-time">
-      <span>{{
-        transaction.date ? moment(transaction.date).fromNow() : ''
-      }}</span>
+      <Tooltip>
+        <template #content>
+          <span :style="{ maxWidth: '200px', display: 'flex' }">
+            {{
+              transaction.date
+                ? moment(transaction.date).format('DD.MM.YYYY hh:mm')
+                : ''
+            }}
+          </span>
+        </template>
+        <template #default>
+          <span>{{
+            transaction.date ? moment(transaction.date).fromNow() : ''
+          }}</span>
+        </template>
+      </Tooltip>
     </td>
     <td class="table-row__to">
       <div class="table-row__to-section">
@@ -158,10 +171,11 @@ import comment from '@/assets/icons/transactions/comment.svg';
 import inIcon from '@/assets/icons/transactions/in.svg';
 import out from '@/assets/icons/transactions/out.svg';
 import useTransaction from '@/compositions/useTransaction';
+import Tooltip from '@/components/UI/Tooltip';
 
 export default {
   name: 'TableRow',
-  components: { inIcon, out, comment, curveArrow, EditButton },
+  components: { inIcon, out, comment, curveArrow, EditButton, Tooltip },
   props: {
     transaction: {
       type: Object,
