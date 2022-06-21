@@ -473,7 +473,6 @@ export default {
         });
         const wallets = walletsList.value
 
-          // const wallets = privateWallets.value
           .filter(
             (w) =>
               nets.includes(w.net.toLowerCase()) &&

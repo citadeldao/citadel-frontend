@@ -39,8 +39,6 @@ export default class keplrConnector {
           'base64'
         ).toString('hex');
 
-        console.log(res);
-
         return { signature, signedTx: res.signed, fullResponse: res };
       }
 

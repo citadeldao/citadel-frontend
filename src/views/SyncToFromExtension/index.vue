@@ -335,8 +335,6 @@ export default {
           syncLoading.value = false;
         }
 
-        console.log('syncResult', syncResult);
-
         const result =
           syncResult &&
           (await Promise.all(
