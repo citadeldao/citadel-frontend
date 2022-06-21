@@ -77,10 +77,7 @@
             v-if="submitButton"
             ref="primaryButton"
             :disabled="disabled"
-            :data-qa="
-              `${$t(buttonText)
-                .replace(' ', '-')}`
-            "
+            :data-qa="`${$t(buttonText).replace(' ', '-')}`"
             @click.stop="clickHandler"
           >
             {{ $t(`${buttonText}`) }}

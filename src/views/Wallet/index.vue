@@ -336,9 +336,19 @@ export default {
     const keplrConnector = computed(
       () => store.getters['keplr/keplrConnector']
     );
-    const subtokens = computed(() =>
-      store.getters['subtokens/formatedSubtokens']()
-    );
+    const subtokens = computed(() => {
+      let formattedSubtokens = store.getters['subtokens/formatedSubtokens']();
+      let indexXCT = formattedSubtokens.findIndex((e) => e.code === 'XCT');
+      if (currentWallet?.value.code === 'BNB') {
+        if (indexXCT !== -1) {
+          [formattedSubtokens[0], formattedSubtokens[indexXCT]] = [
+            formattedSubtokens[indexXCT],
+            formattedSubtokens[0],
+          ];
+        }
+      }
+      return formattedSubtokens;
+    });
     const currentToken = computed(
       () => store.getters['subtokens/currentToken']
     );
