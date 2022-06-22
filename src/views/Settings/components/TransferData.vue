@@ -1,27 +1,23 @@
 <template>
-  <div class="transfer-data">
-    <div class="transfer-data__info">
-      <span class="transfer-data__title">
-        {{ $t('settings.transferData.title') }}
-      </span>
-      <div class="transfer-data__content">
-        <div class="transfer-data__icon">
-          <transferIcon />
-        </div>
-        <div class="transfer-data__desc">
-          <div class="transfer-data__desc-text">
-            {{ $t('settings.transferData.description') }}
-          </div>
-          <PrimaryButton
-            class="transfer-data__button"
-            :disabled="!hasWallets"
-            @click="openQrModal"
-          >
-            {{ $t('settings.transferData.button') }}
-          </PrimaryButton>
-        </div>
-      </div>
+  <div class="transfer-data" :class="`${Boolean(hasWallets)}`">
+    <div class="transfer-data__img">
+      <TransferIcon />
     </div>
+    <div class="transfer-data__content">
+      <h4 class="title">
+        {{ $t('settings.transferData.title') }}
+      </h4>
+      <span class="description">
+        {{ $t('settings.transferData.description') }}
+      </span>
+    </div>
+    <PrimaryButton
+      class="transfer-data__button"
+      :disabled="!hasWallets"
+      @click="openQrModal"
+    >
+      {{ $t('settings.transferData.button') }}
+    </PrimaryButton>
   </div>
   <teleport to="body">
     <Modal v-if="showQrModal">
@@ -47,7 +43,7 @@ import PrimaryButton from '@/components/UI/PrimaryButton';
 import Modal from '@/components/Modal';
 import QrInfo from './QrInfo';
 import QrCard from './QrCard';
-import transferIcon from '@/assets/icons/qr-scan.svg';
+import TransferIcon from '@/assets/icons/qr-scan.svg';
 import useCurrentStep from '@/compositions/useCurrentStep';
 import { WALLET_TYPES } from '@/config/walletType';
 import useWallets from '@/compositions/useWallets';
@@ -59,7 +55,7 @@ export default {
     Modal,
     QrInfo,
     QrCard,
-    transferIcon,
+    TransferIcon,
   },
   setup() {
     const { currentStep, nextStep, setCurrentStep } = useCurrentStep(1, null);
@@ -110,99 +106,104 @@ export default {
 
 <style lang="scss" scoped>
 .transfer-data {
-  height: 100%;
-  min-width: 150px;
-  padding: 40px 45px;
-  background: $white;
-  box-shadow: -10px 4px 27px rgba(0, 0, 0, 0.1);
-  border-radius: 25px;
-  @include lg {
-    padding: 30px 40px;
-  }
-  @include md {
-    box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
-    padding: 22px 29px 30px;
-  }
+  @include settings-card-default;
+  position: relative;
+  z-index: 1;
 
-  &__info {
-    display: flex;
+  align-items: center;
+  flex-direction: row;
+
+  overflow: hidden;
+
+  @include xs-lg {
     flex-direction: column;
   }
+  @include md {
+    cursor: pointer;
+    flex-direction: row;
+    transition: all 0.3s;
 
-  &__title {
-    font-size: 20px;
-    line-height: 30px;
-    margin-bottom: 20px;
-    font-family: 'Panton_Bold';
-    @include lg {
-      margin-bottom: 9px;
+    &.true::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      transition: all 0.4s;
+      background: $light-blue-1;
+      z-index: -1;
     }
-    @include lg {
-      margin-bottom: 17px;
+
+    &.true:hover {
+      &::after {
+        width: 100%;
+      }
+    }
+    &.false {
+      cursor: not-allowed;
+      background: $too-ligth-blue;
+      & .title {
+        color: $white;
+      }
     }
   }
 
-  &__desc {
-    font-size: 16px;
-    line-height: 27px;
-    padding-top: 8px;
-    margin-left: 50px;
-    color: $mid-blue;
-    @include lg {
-      font-size: 14px;
-      line-height: 24px;
-      margin-left: 0;
-      padding-top: 0;
-    }
-    @include md {
-      font-size: 14px;
-      line-height: 24px;
-      padding-top: 2px;
-      margin-left: 22px;
+  &__img {
+    height: 60px;
+    width: 60px;
+    svg {
+      height: 100%;
+      width: 100%;
     }
 
-    &-text {
-      margin-bottom: 21px;
-      @include lg {
-        margin-bottom: 23px;
-      }
-      @include md {
-        margin-bottom: 0;
+    @include md {
+      & {
+        width: 48px;
+        height: 48px;
       }
     }
   }
 
   &__content {
-    display: flex;
-  }
+    width: 60%;
+    margin-left: $card-margin;
+    margin-right: auto;
 
-  &__icon {
-    display: inline-block;
-
-    & svg {
-      height: 165px;
+    & > * {
+      margin: 0;
+    }
+    @include xs-lg {
+      & {
+        margin: $card-margin 0;
+        width: auto;
+      }
+    }
+    .title {
+      @include title-default;
+      @include laptop {
+        font-size: 0.75rem;
+      }
     }
 
-    @include lg {
-      display: none;
-    }
-    @include md {
-      display: inline-block;
-      & svg {
-        height: 98px;
+    .description {
+      @include text-default;
+      margin: 5px 0 0;
+      @include md {
+        & {
+          display: none;
+        }
       }
     }
   }
-
   &__button {
-    display: block;
-    margin-left: auto;
-    @include lg {
-      margin: 0 auto;
+    align-self: center;
+    @include xs-lg {
+      align-self: center;
     }
     @include md {
-      display: block;
-      margin-left: auto;
+      display: none;
     }
   }
 }

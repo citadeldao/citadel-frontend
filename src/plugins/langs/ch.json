@@ -636,7 +636,11 @@
             "rewardsDigest": "账户奖励摘要",
             "addRewardsNotification": "您已订阅奖励邮件通知",
             "removeRewardsNotification": "您已取消订阅奖励邮件通知",
-            "rewardsDigestTooltip": "您的累积奖励、可领取的代币和可质押资产每两周更新一次"
+            "rewardsDigestTooltip": "您的累积奖励、可领取的代币和可质押资产每两周更新一次",
+            "newsletter": "新闻摘要",
+            "newsletterTooltip": "-",
+            "addNewsletterNotification": "您已订阅电子邮件通讯通知",
+            "removeNewsletterNotification": "你已取消接收电邮通讯通知"
         },
         "transferData": {
             "title": "几秒内将数据从web传输至移动设备",
@@ -656,7 +660,8 @@
             "description": "您的账户邮箱",
             "inputLabel": "您的邮箱",
             "inputPlaceHolder": "邮箱",
-            "button": "切换"
+            "button": "切换",
+            "comingSoon": "即将到来"
         },
         "language": {
             "title": "语言",
@@ -670,6 +675,24 @@
             "button": "删除账户",
             "inputLabel": "输入“删除”进行确认",
             "placeholder": "delete"
+        },
+        "crossChain": {
+            "title": "Citadel.one 跨链 Web3",
+            "description": "使用全新的 Citadel.one 浏览器扩展程序访问您最喜爱的应用程序。",
+            "button": "让我们开始吧",
+            "comingSoon": "即将到来"
+        },
+        "changePassword": {
+            "title": "您的密码",
+            "description": "您可以在此处更改密码",
+            "button": "改变",
+            "comingSoon": "即将到来"
+        },
+        "extensionSettings": {
+            "title": "Extensions settings",
+            "description": "管理您的 Citadel.one 迷你应用程序的设置在一个。",
+            "button": "打开设置",
+            "comingSoon": "即将到来"
         }
     },
     "overallPage": {

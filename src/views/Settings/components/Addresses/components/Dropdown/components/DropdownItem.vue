@@ -3,52 +3,50 @@
     <div class="dropdown-item__icon">
       <component :is="currentIcon" />
     </div>
-    <div class="dropdown-item__address">
-      {{
-        hidden
-          ? Array(wallet.address.length).fill('*').join('')
-          : wallet.address
-      }}
-    </div>
-    <div
-      v-if="isSnip20"
-      class="dropdown-item__btn dropdown-item__btn--key"
-      @click="openViewingKeyManager"
-    >
-      <keyIcon />
-    </div>
-    <div
-      v-if="false"
-      class="dropdown-item__btn dropdown-item__btn--notification"
-      :class="`dropdown-item__btn--notification--${notification}`"
-      @click="toggleNotification"
-    >
-      <notificationIcon />
-    </div>
-    <div
-      v-if="hasVisibleButton"
-      class="dropdown-item__btn dropdown-item__btn--vision"
-      data-qa="settings__address__vision-button"
-      @click="$emit('toggle-hidden', wallet.address)"
-    >
-      <visionIcon />
-    </div>
-    <div
-      v-if="
-        [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(wallet.type)
-      "
-      class="dropdown-item__btn dropdown-item__btn--export"
-      data-qa="settings__address__export-button"
-      @click="exportWallet"
-    >
-      <exportIcon />
-    </div>
-    <div
-      class="dropdown-item__btn dropdown-item__btn--remove"
-      data-qa="settings__address__remove-button"
-      @click="showDeleteModal"
-    >
-      <removeIcon />
+    <div class="dropdown-item__address">{{ currentAddress }}</div>
+    <div class="dropdown-item__btn_group">
+      <div
+        v-if="isSnip20"
+        class="dropdown-item__btn dropdown-item__btn--key"
+        @click="openViewingKeyManager"
+      >
+        <keyIcon />
+      </div>
+      <div
+        v-if="false"
+        class="dropdown-item__btn dropdown-item__btn--notification"
+        :class="`dropdown-item__btn--notification--${notification}`"
+        @click="toggleNotification"
+      >
+        <notificationIcon />
+      </div>
+      <div
+        v-if="hasVisibleButton"
+        class="dropdown-item__btn dropdown-item__btn--vision"
+        data-qa="settings__address__vision-button"
+        @click="$emit('toggle-hidden', wallet.address)"
+      >
+        <visionIcon />
+      </div>
+      <div
+        v-if="
+          [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(
+            wallet.type
+          )
+        "
+        class="dropdown-item__btn dropdown-item__btn--export"
+        data-qa="settings__address__export-button"
+        @click="exportWallet"
+      >
+        <exportIcon />
+      </div>
+      <div
+        class="dropdown-item__btn dropdown-item__btn--remove"
+        data-qa="settings__address__remove-button"
+        @click="showDeleteModal"
+      >
+        <removeIcon />
+      </div>
     </div>
     <teleport to="body">
       <DeleteAddressModal
@@ -177,6 +175,26 @@ export default {
       isShowDeleteModal.value = false;
     };
 
+    const windowSize = ref(window.innerWidth);
+
+    let currentAddress = props.hidden
+      ? Array(props.wallet.address.length).fill('*').join('')
+      : props.wallet.address;
+
+    window.addEventListener('resize', () => {
+      windowSize.value = window.innerWidth;
+    });
+
+    window.removeEventListener('resize', () => {
+      windowSize.value = window.innerWidth;
+    });
+
+    if (windowSize.value <= 1280) {
+      currentAddress = `${currentAddress.slice(0, 6)}***${currentAddress.slice(
+        currentAddress.length - 6,
+        currentAddress.length
+      )}`;
+    }
     return {
       currentIcon,
       notification,
@@ -190,6 +208,7 @@ export default {
       removeWallet,
       exportWallet,
       openViewingKeyManager,
+      currentAddress,
     };
   },
 };
@@ -199,47 +218,56 @@ export default {
 .dropdown-item {
   display: flex;
   align-items: center;
-  height: 68px;
-  width: 100%;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  height: 65px;
   margin-bottom: 8px;
   border-radius: 8px;
   border: 1px solid $too-ligth-gray;
   padding: 0 10px;
-
   &__icon {
-    width: 50px;
-    height: 50px;
-    padding: 13px 0;
-    border-radius: 8px;
+    width: 36px;
+    height: 36px;
+    border-radius: 4px;
     background: $mid-gray;
-    text-align: center;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
     & svg {
       fill: white;
-      height: 24px;
+      height: 22px;
+      width: fit-content;
     }
   }
 
   &__address {
-    flex: 1 1 auto;
-    margin-left: 9px;
-    font-size: 14px;
-    font-weight: 600;
     text-align: left;
+    @include text-default;
+    width: 50%;
+    margin-left: 15px;
+    margin-right: auto;
+  }
+  &__btn_group {
+    width: 35%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
   }
 
   &__btn {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 50px;
-    height: 50px;
+    width: 32px;
+    height: 32px;
     background: $too-ligth-gray;
-    border-radius: 8px;
+    border-radius: 4px;
     text-align: center;
-    margin-left: 8px;
     cursor: pointer;
 
+    &:not(:first-child) {
+      margin-left: 3px;
+    }
     &:hover {
       background: $too-dark-blue;
 
@@ -255,7 +283,7 @@ export default {
 
       & svg {
         fill: $blue;
-        height: 23px;
+        height: 16px;
       }
     }
 
@@ -263,18 +291,20 @@ export default {
       opacity: 0.5;
 
       & svg {
-        height: 25px;
+        height: 16px;
       }
 
       &--on {
         & svg {
           fill: $orange;
+          height: 16px;
         }
       }
 
       &--off {
         & svg {
           fill: $blue;
+          height: 16px;
         }
       }
     }
@@ -282,21 +312,21 @@ export default {
     &--export {
       & svg {
         fill: $ligth-blue;
-        height: 27px;
+        height: 16px;
       }
     }
 
     &--remove {
       & svg {
         fill: $red;
-        height: 23px;
+        height: 16px;
       }
     }
 
     &--vision {
       & svg {
         fill: $ligth-blue;
-        width: 20px;
+        height: 16px;
       }
     }
   }

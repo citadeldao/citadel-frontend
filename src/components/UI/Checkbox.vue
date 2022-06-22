@@ -152,7 +152,7 @@ input[type='checkbox'] {
 
   &__label {
     display: flex;
-    padding-right: 8px;
+    @include text-default;
   }
 
   &__tooltip {

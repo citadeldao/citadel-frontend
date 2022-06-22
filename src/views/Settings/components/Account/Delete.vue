@@ -1,13 +1,11 @@
 <template>
   <div class="delete">
-    <div class="delete__info">
-      <span class="delete__title">
-        {{ $t('settings.delete.title') }}
-      </span>
-      <span class="delete__desc">
-        {{ $t('settings.delete.description') }}
-      </span>
-    </div>
+    <h5 class="delete__title">
+      {{ $t('settings.delete.title') }}
+    </h5>
+    <span class="delete__description">
+      {{ $t('settings.delete.description') }}
+    </span>
     <PrimaryButton
       bg-color="#FA3B33"
       hover-bg-color="#fc0800"
@@ -92,7 +90,7 @@ import { removeStorage } from '@/utils/storage';
 import useWallets from '@/compositions/useWallets';
 
 export default {
-  name: 'Delete',
+  name: 'DeleteAccount',
   components: {
     PrimaryButton,
     TextButton,
@@ -153,64 +151,33 @@ export default {
 
 <style lang="scss" scoped>
 .delete {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
+  @include settings-card-default;
+  background: $white url('~@/assets/images/settings/delete-account-bg.png');
+  background-repeat: no-repeat;
+  background-position: 15%;
+  background-size: 25%;
+
   min-width: 150px;
-  height: 100%;
-  padding: 40px 45px;
-  background: $white;
-  box-shadow: -10px 4px 27px rgba(0, 0, 0, 0.1);
-  border-radius: 25px;
+  height: auto;
 
-  @include md {
-    box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
-    padding: 22px 29px 22px;
+  @include laptop {
+    align-items: center;
   }
-
-  @include lg {
-    padding: 30px 40px;
-  }
-
-  &__info {
-    display: flex;
-    flex-direction: column;
-  }
-
   &__title {
-    font-size: 20px;
-    line-height: 30px;
     color: $red;
-    font-family: 'Panton_Bold';
-    @include md {
-      margin-bottom: 4px;
-    }
-  }
-
-  &__desc {
-    margin-bottom: 70px;
-    font-size: 16px;
-    line-height: 27px;
-    color: $mid-blue;
-
-    @include lg {
-      font-size: 14px;
-      line-height: 24px;
-    }
-
-    @include md {
-      font-size: 14px;
-      line-height: 24px;
-    }
-
-    &-text {
-      margin-bottom: 27px;
-    }
   }
 
   &__button {
-    align-self: center;
+    align-self: flex-end;
+    margin-top: 15px;
+    box-shadow: 0px 0px 25px rgba(219, 71, 60, 0.3);
+    @include laptop {
+      margin-top: 8px;
+      align-self: center;
+    }
+  }
+  @include laptop {
+    text-align: center;
   }
 }
 

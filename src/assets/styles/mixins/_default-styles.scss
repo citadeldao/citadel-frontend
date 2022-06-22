@@ -1,0 +1,139 @@
+// ** Button ** //
+@mixin btn-default {
+  width: fit-content!important;
+
+  min-height: $btn-min-height;
+  min-width: $btn-min-width!important;
+  max-width: $btn-max-width!important;
+
+  border-radius: $btn-border-radius;
+  font-size: $btn-font-size;
+  &:hover {
+    transform: scale(1.05);
+  }
+  &:disabled,
+  &[disabled] {
+    pointer-events: all;
+    cursor: not-allowed;
+    transform: scale(1);
+  }
+
+  @include xs-lg {
+    font-size: $btn-font-size-md;
+    min-height: $btn-min-height-md;
+    min-width: $btn-min-width-md!important;
+  }
+
+  @include md {
+    font-size: $btn-font-size-md;
+    min-height: $btn-min-height-md;
+    min-width: $btn-min-width-md!important;
+  }
+}
+
+// ** Card ** //
+@mixin card-default {
+  box-shadow: $card-box-shadow;
+  border-radius: $card-border-radius;
+  padding: $card-padding;
+  background: $white;
+
+  @include md {
+    padding: $card-padding-md;
+  }
+}
+
+// ** Text Title ** //
+@mixin title-default {
+  font-size: $title-font-size;
+  font-family: 'Panton_Bold'!important;
+
+  @include xs-lg {
+    font-size: $title-font-size-md;
+  }
+
+  @include md {
+    font-size: $title-font-size-md;
+  }
+
+  @include laptop {
+    font-size: $title-font-size-laptop;
+  }
+}
+
+// ** Text ** //
+@mixin text-default {
+  font-size: $text-font-size;
+  color: $mid-blue;
+  display: block;
+
+  @include xs-lg {
+    font-size: $text-font-size-md;
+  }
+
+  @include md {
+    font-size: $text-font-size-md;
+  }
+}
+
+// ** Settings Card ** //
+@mixin settings-card-default {
+  @include card-default;
+  line-height: 1.5 !important;
+
+  display: flex;
+  flex-direction: column;
+
+
+  & > * {
+    margin: 0;
+  }
+
+  &__title {
+    @include title-default
+  }
+  &__description {
+    @include text-default;
+    margin: 5px 0 10px;
+    @include xs-lg {
+      & {
+        width: auto;
+      }
+    }
+    @include md {
+      & {
+        width: auto;
+      }
+    }
+  }
+
+  &__button {
+    @include btn-default;
+    align-self: flex-end;
+    box-shadow: 0px 0px 25px rgba(106, 75, 255, 0.3);
+  }
+
+  &.comingSoon {
+    opacity: 0.65;
+  }
+
+
+  &.comingSoon .description{
+    @include title-default;
+    color: $mid-blue;
+  }
+
+  &.comingSoon &__description {
+    @include title-default;
+    color: $mid-blue;
+  }
+
+  @include laptop {
+    .change-email__button, .change-password-card__button {
+      background: rgba(255, 87, 34, 0.2);
+      min-height: 30px;
+      border-radius: 4px;
+      color: $orange;
+    }
+  }
+}

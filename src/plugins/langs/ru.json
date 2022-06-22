@@ -636,7 +636,11 @@
             "rewardsDigest": "Дайджест вознаграждений",
             "addRewardsNotification": "Вы подписались на мейл-рассылку о ваших вознаграждениях за стейкинг",
             "removeRewardsNotification": "Вы отписались от мейл-рассылки о ваших вознаграждениях за стейкинг",
-            "rewardsDigestTooltip": "Двухнедельные отчеты о ваших вознаграждениях и активах, которые вы еще не застейкали"
+            "rewardsDigestTooltip": "Двухнедельные отчеты о ваших вознаграждениях и активах, которые вы еще не застейкали",
+            "newsletter": "Новостная рассылка",
+            "newsletterTooltip": "-",
+            "addNewsletterNotification": "Вы подписались на рассылку уведомлений по электронной почте",
+            "removeNewsletterNotification": "Вы отказались от подписки на отправку уведомлений по электронной почте"
         },
         "transferData": {
             "title": "Перенесите данные из веб-версии в мобильную в считанные минуты",
@@ -656,7 +660,8 @@
             "description": "E-mail вашего аккаунта",
             "inputLabel": "Ваш e-mail",
             "inputPlaceHolder": "e-mail",
-            "button": "Изменить"
+            "button": "Редактировать",
+            "comingSoon": "СКОРО"
         },
         "language": {
             "title": "Язык",
@@ -670,6 +675,24 @@
             "button": "Удалить аккаунт",
             "inputLabel": "Нажмите \"Удалить\" чтобы подтвердить действие",
             "placeholder": "Введите 'delete'"
+        },
+        "crossChain": {
+            "title": "Citadel.one cross-chain Web3",
+            "description": "Получите доступ к своим любимым приложениям с помощью совершенно нового расширения для браузера Citadel.one.",
+            "button": "Начать",
+            "comingSoon": "СКОРО"
+        },
+        "changePassword": {
+            "title": "Ваш пароль",
+            "description": "Вы можете изменить свой пароль здесь",
+            "button": "Редактировать",
+            "comingSoon": "СКОРО"
+        },
+        "extensionSettings": {
+            "title": "Настройки расширения",
+            "description": "Управляйте настройками мини-приложений Citadel.one \"all-in-one\".",
+            "button": "Открыть настройки",
+            "comingSoon": "СКОРО"
         }
     },
     "overallPage": {

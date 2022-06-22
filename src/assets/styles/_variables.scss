@@ -1,3 +1,43 @@
 $round:50%;
 
+//* Default Variables *//
+
+//* Card *//
+$card-border-radius: 16px;
+$card-padding: 30px;
+$card-margin: 25px;
+$card-box-shadow: -10px 4px 27px rgba(0, 0, 0, 0.1);
+
+//* Text *//
+$title-font-size: 1.25rem;
+$text-font-size: 1.125rem;
+
+//* Button *//
+$btn-font-size: 1.125rem;
+$btn-min-height: 50px;
+$btn-min-width: 180px;
+$btn-max-width: 250px;
+$btn-border-radius: 50px;
+
+
+//* Variables for "md" size *//
+
+$card-padding-md: 20px 25px;
+$card-margin-md: 15px;
+
+$title-font-size-md: 1rem;
+$text-font-size-md: 0.875rem;
+
+$btn-font-size-md: 1rem;
+
+
+//* Button *//
+$btn-font-size-md: 0.875rem;
+$btn-min-height-md: 40px;
+$btn-min-width-md: 120px;
+
+//* Variables for "1024px" size *//
+$title-font-size-laptop: 0.875rem;
+
+//* Variables for "768px" size *//
 
