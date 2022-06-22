@@ -2,7 +2,10 @@
   <div class="main-header">
     <div class="main-header__tabs">
       <router-link
-        v-if="!currentToken && currentWallet.hasSubtoken"
+        v-if="
+          (!currentToken && currentWallet.hasSubtoken) ||
+          !currentWallet.balance.mainBalance
+        "
         active-class="main-header__active"
         class="main-header__tabs-item"
         :to="{
@@ -77,7 +80,12 @@ export default {
       default: null,
     },
   },
-  setup() {
+  setup(props) {
+    console.log(
+      props.currentToken,
+      props.currentWallet.balance.mainBalance,
+      'yes'
+    );
     return { OUR_TOKEN };
   },
 };

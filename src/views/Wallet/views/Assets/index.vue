@@ -3,72 +3,104 @@
     <Loading />
   </div>
   <div v-else class="assets">
-    <div class="assets__header">
-      <BalanceCard type="red" text="Total Assets" :value="balanceUSD" />
-      <BalanceCard
-        type="blue"
-        text="Available assets"
-        :value="balanceAvailableUSD"
-      />
+    <template v-if="currentWallet.balance.mainBalance">
+      <div class="assets__header">
+        <BalanceCard type="red" text="Total Assets" :value="balanceUSD" />
+        <BalanceCard
+          type="blue"
+          text="Available assets"
+          :value="balanceAvailableUSD"
+        />
 
-      <div class="assets__search">
-        <Input
-          id="assetsSearch"
-          v-model="keyword"
-          :label="$t('searchToken')"
-          type="text"
-          icon="loop"
-          :placeholder="$t('inputToken')"
-          clearable
+        <div class="assets__search">
+          <Input
+            id="assetsSearch"
+            v-model="keyword"
+            :label="$t('searchToken')"
+            type="text"
+            icon="loop"
+            :placeholder="$t('inputToken')"
+            clearable
+          />
+        </div>
+        <div class="assets__sort">
+          <WalletFilterDropdown
+            v-model:value="filterValue"
+            relative-component="body"
+            :items="filterList"
+            input-style
+          />
+        </div>
+      </div>
+
+      <div class="assets-table">
+        <div class="assets-table__thead">
+          <div>Asset</div>
+          <div>Balance</div>
+          <div>USD Balance</div>
+          <div>Price</div>
+        </div>
+
+        <AssetsItem
+          :item="currentWallet"
+          :balance="currentWallet.balance"
+          is-native-token
+        />
+        <AssetsItem
+          v-for="(item, index) in displayData"
+          :key="`${item.name}-${index}`"
+          :balance="item.tokenBalance"
+          :item="item"
+          :is-not-linked="isNotLinkedSnip20(item)"
+          @click="setCurrentToken(item)"
+        />
+
+        <Pagination
+          :total="total"
+          :current-page="currentPage"
+          :page-size="pageSize"
+          :page-sizes="pageSizes"
+          @change-page="setCurrentPage"
+          @change-page-size="setPageSize"
         />
       </div>
-      <div class="assets__sort">
-        <WalletFilterDropdown
-          v-model:value="filterValue"
-          relative-component="body"
-          :items="filterList"
-          input-style
-        />
+      <div v-if="!displayData.length" class="assets__placeholder">
+        <searchError />
+        <span>
+          {{ $t('tokenSearchError') }}
+        </span>
       </div>
-    </div>
-
-    <div class="assets-table">
-      <div class="assets-table__thead">
-        <div>Asset</div>
-        <div>Balance</div>
-        <div>USD Balance</div>
-        <div>Price</div>
+    </template>
+    <template v-else>
+      <div class="empty__balance">
+        <h2>You don't have any assets yet</h2>
+        <h3>
+          You can swap it directly via Citadel.one or deposit from an external
+          exchange
+        </h3>
+        <div class="cards__container">
+          <Card class="card-special">
+            <template #default>
+              <span class="card-special-title"> Swap via Citadel.one </span>
+              <span class="card-special-title-staking"> extensions </span>
+              <RoundArrowButton data-qa="stake__start-staking-button" />
+              <appSystem key="selected1" class="card-special-icon"></appSystem>
+            </template>
+          </Card>
+          <Card class="card-special">
+            <template #default>
+              <span class="card-special-title"> Deposit from </span>
+              <span class="card-special-title-staking"> exchanges </span>
+              <RoundArrowButton data-qa="stake__start-staking-button" />
+              <appSystemCoin
+                key="selected"
+                class="card-special-icon"
+              ></appSystemCoin>
+            </template>
+          </Card>
+        </div>
       </div>
-
-      <AssetsItem
-        :item="currentWallet"
-        :balance="currentWallet.balance"
-        is-native-token
-      />
-      <AssetsItem
-        v-for="(item, index) in displayData"
-        :key="`${item.name}-${index}`"
-        :balance="item.tokenBalance"
-        :item="item"
-        :is-not-linked="isNotLinkedSnip20(item)"
-        @click="setCurrentToken(item)"
-      />
-
-      <Pagination
-        :total="total"
-        :current-page="currentPage"
-        :page-size="pageSize"
-        :page-sizes="pageSizes"
-        @change-page="setCurrentPage"
-        @change-page-size="setPageSize"
-      />
-    </div>
-    <div v-if="!displayData.length" class="assets__placeholder">
-      <searchError />
-      <span>
-        {{ $t('tokenSearchError') }}
-      </span>
-    </div>
+    </template>
   </div>
 
   <teleport v-if="showCreateVkModal" to="body">
@@ -99,6 +131,10 @@ import redirectToWallet from '@/router/helpers/redirectToWallet';
 import { TOKEN_STANDARDS } from '@/config/walletType';
 import usePaginationWithSearch from '@/compositions/usePaginationWithSearch';
 import Pagination from '@/components/Pagination.vue';
+import RoundArrowButton from '@/components/UI/RoundArrowButton';
+import Card from '@/components/UI/Card';
+import appSystem from '@/assets/icons/app-system.svg';
+import appSystemCoin from '@/assets/icons/app-system-coin.svg';
 
 export default {
   name: 'AssetsBlock',
@@ -111,6 +147,10 @@ export default {
     BalanceCard,
     CreateVkModal,
     Pagination,
+    RoundArrowButton,
+    Card,
+    appSystem,
+    appSystemCoin,
   },
   props: {
     currentWallet: {
@@ -289,6 +329,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.cards__container {
+  display: flex;
+  & .card {
+    position: relative;
+    width: 359px;
+    height: 300px;
+    background: linear-gradient(90deg, #f1f0ff 0%, #e3f6ff 100%);
+    svg {
+      right: 0;
+      left: 0;
+      bottom: 0;
+      border-radius: 16px;
+    }
+  }
+}
 .assets {
   width: 100%;
   display: flex;
@@ -466,6 +521,39 @@ export default {
         height: 56px;
       }
     }
+  }
+}
+.empty__balance {
+  padding: 55px 0 97px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  h2,
+  h3 {
+    margin: 0 auto;
+  }
+  h2 {
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 30px;
+  }
+  h3 {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 30px;
+    text-align: center;
+    color: $mid-blue;
+    margin: 11px auto 42px auto;
+  }
+}
+.card-special {
+  padding: 33px 0 0 33px;
+  &-title {
+    font-size: 18px;
+  }
+  button {
+    top: 64px;
+    right: 75px;
   }
 }
 </style>
