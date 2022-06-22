@@ -7,7 +7,6 @@ export default class CryptoCoinKICHAIN extends CryptoCoin {
     this.showFrozenBalance = true;
     this.unstakeingPerioud = '28';
     this.hasRedelegation = true;
-    this.isStub = true;
   }
 
   getPublicKeyDecoded() {
