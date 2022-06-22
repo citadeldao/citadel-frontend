@@ -187,6 +187,11 @@
             "block1Info": "This is a view-only address, because you've added it with a public key or you were logged out.",
             "block2Title": "Need some guidance on address import?",
             "block2Info": "Check the step-by-step guide on how to import an address with your private key or a seed phrase."
+        },
+        "stubs": {
+            "chain": "Ki-chain is temporarily unavailable",
+            "description": "We’ll be back shortly! Please take into account that your funds are safe!",
+            "subdescription": "Note: you will be still receiving XCT rewards if you assigned your address."
         }
     },
     "balanceTooltipInfo": {
@@ -1212,7 +1217,9 @@
             "metamaskKeplr": "Metamask, Keplr",
             "metamaskKeplrDescription": "Connect your Web3 Wallet to add an address",
             "hardware": "Hardware wallet",
-            "hardwareDescription": "Import addresses from Ledger or Trezor device for advanced use"
+            "hardwareDescription": "Import addresses from Ledger or Trezor device for advanced use",
+            "sourceAddress": "Source Address",
+            "destinationAddress": "Destination Address"
         }
     },
     "noApyNote": "Get passive income via staking your crypto assets!"

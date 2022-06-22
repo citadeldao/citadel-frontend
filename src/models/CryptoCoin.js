@@ -14,7 +14,7 @@ export default class CryptoCoin {
     this.type = opts?.type;
     this.title = opts?.title || '';
     this.balance = opts?.balance || { calculatedBalance: 0 };
-    this.id = opts.id || null;
+    this.id = opts?.id || null;
     this.net = opts?.config?.net;
     this.name = opts?.config?.name;
     this.code = opts?.config?.code;
@@ -25,12 +25,11 @@ export default class CryptoCoin {
     this.derivationPath = opts?.derivationPath;
     this.fee_key = opts?.config?.fee_key;
     this.config = { ...opts?.config, tokens: {} };
-    this.subtokensList = opts.subtokensList || [];
-    this.subtokenBalanceUSD = opts.subtokenBalanceUSD || 0;
-    this.balanceUSD = opts.balanceUSD;
+    this.subtokensList = opts?.subtokensList || [];
+    this.subtokenBalanceUSD = opts?.subtokenBalanceUSD || 0;
+    this.balanceUSD = opts?.balanceUSD;
     this.hasTransactionComment = true;
     this.hasSubtoken = !!opts?.config.tokens;
-    this.id = opts.id;
     this.hasBuy = opts?.config?.methods?.buy || false;
     this.hasExchange = opts?.config?.methods?.exchange || false;
     this.hasStake = opts?.config?.methods?.stake || false;
@@ -211,10 +210,9 @@ export default class CryptoCoin {
 
     if (walletId) {
       res = await citadel.getBalanceById(walletId, token);
-
-      if (token) {
-        await store.dispatch('wallets/getNewWallets', 'lazy');
-      }
+      // if(token){
+      //   await store.dispatch('wallets/getNewWallets','lazy');
+      // }
     } else {
       res = await citadel.getBalanceByAddress(net, address);
     }

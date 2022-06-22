@@ -25,9 +25,10 @@
       <div class="assets__sort">
         <WalletFilterDropdown
           v-model:value="filterValue"
-          relative-component="body"
+          relative-component=".assets__sort"
           :items="filterList"
           input-style
+          id="assetsFilter"
         />
       </div>
     </div>
@@ -324,6 +325,7 @@ export default {
 
   &__sort {
     flex-grow: initial;
+    position: relative;
   }
 
   &__loading {

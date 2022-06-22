@@ -26,22 +26,25 @@
         <KtAddresses :current-wallet="currentWallet" />
       </div>
       <div class="wallet__main">
-        <MainHeader
-          :current-wallet="currentWallet"
-          :current-token="currentToken"
-        />
-        <div v-if="$route.name === 'Wallet'" class="wallet__loading">
-          <Loading />
-        </div>
-        <router-view
-          v-else
-          :subtokens-is-loading="subtokensIsLoading"
-          :current-wallet="currentToken || currentWallet"
-          :token-list="subtokens"
-          :current-token="currentToken"
-          @prepareClaim="prepareClaim"
-          @prepareXctClaim="prepareXctClaim"
-        />
+        <template v-if="!currentWallet.isStub">
+          <MainHeader
+            :current-wallet="currentWallet"
+            :current-token="currentToken"
+          />
+          <div v-if="$route.name === 'Wallet'" class="wallet__loading">
+            <Loading />
+          </div>
+          <router-view
+            v-else
+            :subtokens-is-loading="subtokensIsLoading"
+            :current-wallet="currentToken || currentWallet"
+            :token-list="subtokens"
+            :current-token="currentToken"
+            @prepareClaim="prepareClaim"
+            @prepareXctClaim="prepareXctClaim"
+          />
+        </template>
+        <KiChainStub v-else></KiChainStub>
       </div>
     </div>
     <div class="wallet__right-section">
@@ -51,6 +54,7 @@
           class="wallet__claim-rewards-lg"
         >
           <ClaimRewards
+            :disabled="currentWallet.isStub"
             :is-current-token="!!currentToken"
             :current-wallet="currentToken || currentWallet"
             @prepareClaim="prepareClaim"
@@ -258,7 +262,7 @@ import ModalContent from '@/components/ModalContent';
 import AliasQrCard from './components/AliasQrCard';
 import Modal from '@/components/Modal';
 import Loading from '@/components/Loading';
-// eslint-disable-next-line no-unused-vars
+import KiChainStub from '@/views/Wallet/components/KiChainStub.vue';
 import NetworkInfo from './components/NetworkInfo';
 import ClaimRewards from './components/ClaimRewards';
 import ClaimUnstakedBlock from './components/ClaimUnstakedBlock';
@@ -284,7 +288,6 @@ import notify from '@/plugins/notify';
 import { useI18n } from 'vue-i18n';
 import useApi from '@/api/useApi';
 import { keplrNetworksProtobufFormat } from '@/config/availableNets';
-
 export default {
   name: 'Wallet',
   components: {
@@ -308,15 +311,16 @@ export default {
     KtAddressesMd,
     Loading,
     ClaimUnstakedBlock,
+    KiChainStub,
   },
   setup() {
     const { t } = useI18n();
     const store = useStore();
     const route = useRoute();
-    const { currency, currentWallet, isHardwareWallet } = useWallets();
+    const { currency, currentWallet, isHardwareWallet, currentToken } =
+      useWallets();
     const subtokensIsLoading = ref(false);
     const { loadKtAddresses, ktAddresses } = useKtAddresses();
-
     const showClaimModal = computed(() => {
       return (
         showConfirmClaim.value ||
@@ -336,9 +340,7 @@ export default {
     const subtokens = computed(() =>
       store.getters['subtokens/formatedSubtokens']()
     );
-    const currentToken = computed(
-      () => store.getters['subtokens/currentToken']
-    );
+    // const currentToken = computed(()=> store.getters['subtokens/currentToken']);
     onMounted(async () => {
       await loadKtAddresses(currentWallet?.value?.id);
       await loadXCTInfo();

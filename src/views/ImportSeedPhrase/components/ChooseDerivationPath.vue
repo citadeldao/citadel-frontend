@@ -47,7 +47,7 @@ import Select from '@/components/UI/Select';
 import DerivationPathCard from '@/components/DerivationPathCard';
 import useCheckItem from '@/compositions/useCheckItem';
 import { useStore } from 'vuex';
-import { ref, computed, watch } from 'vue';
+import { ref, computed } from 'vue';
 import { WALLET_TYPES } from '@/config/walletType';
 import CryptoCoin from '@/models/CryptoCoin';
 
@@ -69,7 +69,6 @@ export default {
     const { checked, addSingleItem, removeItem, checkedItems } = useCheckItem();
     const store = useStore();
 
-    const allWallets = ref([]);
     const currentPath = ref('');
     const pathOptions = ref(
       CryptoCoin.getDerivationPathTemplates(props.walletOpts.nets[0], 'seed')
@@ -78,44 +77,7 @@ export default {
     const wallets = ref([]);
     const isInvalid = ref(false);
 
-    watch(allWallets, () => {
-      Promise.all(
-        allWallets.value.map(async (item, ndx) => {
-          const balance = await CryptoCoin.getBalance({
-            net: props.walletOpts.nets[0],
-            address: item.walletInstance.address,
-          });
-
-          if (balance.data.mainBalance && !currentPath.value) {
-            currentPath.value = item.templatePath;
-            selectCustomPathFormat(currentPath.value);
-          }
-
-          // if 0 and end
-          if (allWallets.value.length - 1 === ndx && !currentPath.value) {
-            currentPath.value = pathOptions.value[0].key;
-            selectCustomPathFormat(currentPath.value);
-          }
-
-          return balance;
-        })
-      );
-    });
-
-    const createDefaultWallets = () => {
-      Promise.all(
-        [...Array(numberOfPaths)].map((_, pathIndex) => {
-          return store.dispatch('crypto/createWalletByMnemonic', {
-            walletOpts: {
-              pathIndex,
-              net: props.walletOpts.nets[0],
-              ...props.walletOpts,
-            },
-            password: props.walletOpts.password,
-          });
-        })
-      ).then((createdWallets) => (wallets.value = createdWallets));
-    };
+    currentPath.value = pathOptions.value[0].key;
 
     const selectCustomPathFormat = (pathFormat) => {
       Promise.all(
@@ -132,34 +94,7 @@ export default {
       ).then((createdWallets) => (wallets.value = createdWallets));
     };
 
-    // when coins has walletTemplatesDerivation
-    if (pathOptions.value.length > 1) {
-      pathOptions.value.forEach((path) => {
-        Promise.all(
-          [...Array(numberOfPaths)].map(async (_, pathIndex) => {
-            const wallet = await store.dispatch(
-              'crypto/createWalletByMnemonic',
-              {
-                walletOpts: {
-                  derivationPath: path.key.replace('N', pathIndex),
-                  net: props.walletOpts.nets[0],
-                  ...props.walletOpts,
-                },
-                password: props.walletOpts.password,
-              }
-            );
-            wallet.templatePath = path.key;
-
-            return wallet;
-          })
-        ).then((createdWallets) => {
-          allWallets.value = allWallets.value.concat(createdWallets);
-        });
-      });
-    } else {
-      // generate default wallets in all networks
-      createDefaultWallets();
-    }
+    selectCustomPathFormat(currentPath.value);
 
     const customWallet = ref(false);
     const setCustomWallet = (customPath) => {

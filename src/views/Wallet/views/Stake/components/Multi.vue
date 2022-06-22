@@ -105,6 +105,7 @@
           hover-border="1px solid #1A53F0"
           hover-color="#1A53F0"
           hover-bg-color=""
+          data-qa="Redelegate"
           @click="toRedelegate"
         >
           {{ $t('redelegation.redelegate') }}
@@ -122,12 +123,13 @@
               hover-border="1px solid #1A53F0"
               hover-color="#1A53F0"
               hover-bg-color=""
+              data-qa="Unstake"
               @click="toUnstake"
             >
               {{ $t('unstake') }}
             </PrimaryButton>
           </div>
-          <PrimaryButton @click="toStake">
+          <PrimaryButton data-qa="Stake" @click="toStake">
             {{ $t('Stake') }}
           </PrimaryButton>
         </div>

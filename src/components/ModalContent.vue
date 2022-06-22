@@ -77,12 +77,7 @@
             v-if="submitButton"
             ref="primaryButton"
             :disabled="disabled"
-            :data-qa="
-              dataQa &&
-              `${dataQa}__${$t(buttonText)
-                .toLowerCase()
-                .replace(' ', '-')}-button`
-            "
+            :data-qa="`${$t(buttonText).replace(' ', '-')}`"
             @click.stop="clickHandler"
           >
             {{ $t(`${buttonText}`) }}

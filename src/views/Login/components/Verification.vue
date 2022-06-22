@@ -1,5 +1,5 @@
 <template>
-  <form class="verification" @submit.prevent="submitHandler">
+  <div class="verification">
     <span class="verification__title">
       {{ $t('login.verification') }}
     </span>
@@ -14,6 +14,7 @@
           :loading="false"
           :error="error"
           @paste="pasteHandler"
+          @keypress.enter="submitHandler"
         />
       </div>
       <button
@@ -37,6 +38,9 @@
       {{ $t('login.verificationNote') }}
     </span>
     <PrimaryButton
+      @click="submitHandler"
+      id="codeSubmitButton"
+      formId="verificationForm"
       data-qa="login-verification__confirm-button"
       :disabled="code.length < 6"
     >
@@ -47,11 +51,11 @@
         {{ $t('backBtn') }}
       </TextButton>
     </div>
-  </form>
+  </div>
 </template>
 
 <script>
-import { ref, inject, watch, nextTick } from 'vue';
+import { ref, inject, watch, nextTick, onMounted } from 'vue';
 import TextButton from '@/components/UI/TextButton';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import VerificationInput from '@/components/UI/VerificationInput.vue';
@@ -103,6 +107,11 @@ export default {
       }
     };
     sendCode();
+    onMounted(() => {
+      nextTick(() => {
+        document.getElementById('codeSubmitButton').focus();
+      });
+    });
     watch(
       () => timerMode.value,
       (value) => {
@@ -111,15 +120,23 @@ export default {
         } else {
           showResendCode.value = true;
         }
-      }
+      },
+      { immediate: true }
     );
 
     watch(code, (value) => {
       emit('change', value);
+      if (value.length === 6 && timerMode.value) {
+        nextTick(() => {
+          document.getElementById('codeSubmitButton').focus();
+        });
+      }
     });
 
     const submitHandler = () => {
-      emit('verification', code.value);
+      if (code.value.length === 6) {
+        emit('verification', code.value);
+      }
     };
     const renderComponent = ref(true);
     const pasteHandler = async () => {

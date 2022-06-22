@@ -39,9 +39,8 @@
             <WalletFilterDropdown
               v-model:value="filterValue"
               relative-component="body"
-              :top="width < 1280 ? '206' : '378'"
-              :left="width < 1280 ? '158' : '210'"
               :items="filterList"
+              id="sidebarFilter"
             />
           </div>
         </div>
