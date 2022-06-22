@@ -96,22 +96,24 @@
         @input="updateAmount"
         @keyup.enter="$emit('nextStep')"
       />
-      <span v-if="showAmount" class="choose-staking-node__available-balance">
-        {{ $t('balanceTooltipInfo.availableBalance') }}:
-        <span
-          v-pretty-number="{ value: maxAmount, currency: currentWallet.code }"
-          class="choose-staking-node__available-balance-balance"
-        />
-        <span class="choose-staking-node__available-balance-currency">
-          {{ currentWallet.code }}
+      <div class="choose-staking-node__info-wrapper">
+        <span v-if="showAmount" class="choose-staking-node__available-balance">
+          {{ $t('balanceTooltipInfo.availableBalance') }}:
+          <span
+            v-pretty-number="{ value: maxAmount, currency: currentWallet.code }"
+            class="choose-staking-node__available-balance-balance"
+          />
+          <span class="choose-staking-node__available-balance-currency">
+            {{ currentWallet.code }}
+          </span>
         </span>
-      </span>
-      <span
-        v-if="!insufficientFunds && currentWallet.hasPledged"
-        class="choose-staking-node__input-note"
-      >
-        {{ $t('staking.inputNote') }}
-      </span>
+        <span
+          v-if="!insufficientFunds && currentWallet.hasPledged"
+          class="choose-staking-node__input-note"
+        >
+          {{ $t('staking.inputNote') }}
+        </span>
+      </div>
     </div>
   </div>
 </template>
@@ -298,6 +300,11 @@ export default {
     color: $mid-blue;
     margin-bottom: 22px;
   }
+  &__info-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
   &__available-balance,
   &__available-balance-balance,
   &__available-balance-currency {
@@ -306,7 +313,6 @@ export default {
     color: $mid-blue;
   }
   &__available-balance {
-    position: absolute;
     display: flex;
     align-items: center;
     margin-top: 8px;
@@ -320,12 +326,10 @@ export default {
   &__available-balance-currency {
   }
   &__input-note {
-    position: absolute;
     font-size: 14px;
     line-height: 17px;
     color: $blue;
-    right: 0;
-    margin-top: 6px;
+    margin-top: 8px;
   }
 }
 </style>
