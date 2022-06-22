@@ -1,18 +1,19 @@
 <template>
   <div
     class="wallet-filter-dropdown"
+    :id="id"
     :class="{
       'wallet-filter-dropdown--active': showList,
       'wallet-filter-dropdown--input': inputStyle,
     }"
     data-qa="sidebar__sort-button"
-    @click="toggleShowList($event)"
+    @click.stop="toggleShowList($event)"
   >
     <keep-alive>
       <component :is="icon" class="wallet-filter-dropdown__value-icon" />
     </keep-alive>
 
-    <teleport to="body">
+    <teleport v-if="isRendered" :to="relativeComponent">
       <transition name="fade">
         <div
           v-if="showList"
@@ -20,6 +21,7 @@
           v-click-away="clickAwayHandler"
           :style="{ top: `${tooltipY}px`, left: `${tooltipX}px` }"
           class="wallet-filter-dropdown__list"
+          :class="{ 'wallet-filter-dropdown__list--input': inputStyle }"
         >
           <ListItem
             v-for="item in items"
@@ -56,15 +58,18 @@ export default {
     },
     top: {
       type: String,
-      default: '',
+      default: '0',
     },
     left: {
       type: String,
-      default: '',
+      default: '0',
     },
     inputStyle: {
       type: Boolean,
       default: false,
+    },
+    id: {
+      type: String,
     },
   },
   emits: ['update:value'],
@@ -76,6 +81,11 @@ export default {
 
     import(`@/assets/icons/${props.value}.svg`).then((val) => {
       icon.value = markRaw(val.default);
+    });
+
+    const isRendered = ref(false);
+    nextTick(() => {
+      isRendered.value = true;
     });
 
     const changeValue = (item) => {
@@ -92,15 +102,23 @@ export default {
       showList.value = false;
     };
 
-    const toggleShowList = (event) => {
-      showList.value = true;
-
-      nextTick(() => {
-        const tooltip = document.getElementById('tooltip');
-        const { left, width, bottom } = event.target.getBoundingClientRect();
-        tooltipX.value = left - (tooltip.offsetWidth - width) / 2;
-        tooltipY.value = bottom + 7;
-      });
+    const toggleShowList = () => {
+      if (showList.value) {
+        showList.value = false;
+      } else {
+        showList.value = true;
+        nextTick(() => {
+          const tooltip = document.getElementById('tooltip');
+          const element = document.getElementById(props.id);
+          const { left, width, height, top } = element.getBoundingClientRect();
+          if (props.relativeComponent === 'body') {
+            tooltipX.value = left - (tooltip.offsetWidth - width) / 2;
+            tooltipY.value = top + height + 4;
+          } else {
+            tooltipY.value = height;
+          }
+        });
+      }
     };
 
     watch(
@@ -118,6 +136,7 @@ export default {
       tooltipX,
       tooltipY,
       toggleShowList,
+      isRendered,
     };
   },
 };
@@ -145,6 +164,7 @@ export default {
   }
 
   &__list {
+    z-index: 1;
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -153,6 +173,16 @@ export default {
     border-radius: 8px;
     background: $white;
     padding: 4px 8px 4px 8px;
+    &--input {
+      width: 68px;
+      @include lg {
+        width: 60px;
+      }
+
+      @include md {
+        width: 56px;
+      }
+    }
   }
 
   &--active {

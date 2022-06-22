@@ -1,11 +1,17 @@
 <template>
   <div class="asset-icon" :style="cssVars">
-    <div v-if="showIconPlaceholder" class="asset-icon__placeholder">
+    <keep-alive v-if="isNativeToken">
+      <component :is="icon" />
+    </keep-alive>
+    <div
+      v-if="showIconPlaceholder && !isNativeToken"
+      class="asset-icon__placeholder"
+    >
       <span>{{ iconPlaceholder[0] }}</span>
       <span>{{ iconPlaceholder[1] }}</span>
     </div>
     <img
-      v-show="!showIconPlaceholder"
+      v-show="!showIconPlaceholder && !isNativeToken"
       :key="code"
       :src="getTokenIcon(code?.toLowerCase())"
       alt=""
@@ -17,7 +23,7 @@
 
 <script>
 import { getTokenIcon, tokenIconPlaceholder } from '@/helpers';
-import { computed, ref } from 'vue';
+import { computed, markRaw, ref, watch } from 'vue';
 
 export default {
   name: 'AssetIcon',
@@ -34,20 +40,47 @@ export default {
       type: String,
       default: '#6B93C0',
     },
+    isNativeToken: {
+      type: Boolean,
+      default: false,
+    },
+    net: {
+      type: String,
+    },
   },
   setup(props) {
     const showIconPlaceholder = ref(false);
     const iconPlaceholder = computed(() => tokenIconPlaceholder(props.name));
+    const icon = ref();
 
     const cssVars = computed(() => ({
       '--color': props.color,
     }));
+
+    if (props.isNativeToken) {
+      import(`@/assets/icons/networks/${props.net}.svg`).then((val) => {
+        icon.value = markRaw(val.default);
+      });
+    }
+
+    watch(
+      () => props.net,
+      (newVal) => {
+        if (props.isNativeToken) {
+          import(`@/assets/icons/networks/${newVal}.svg`).then((val) => {
+            icon.value = markRaw(val.default);
+          });
+        }
+      },
+      { deep: true }
+    );
 
     return {
       cssVars,
       showIconPlaceholder,
       iconPlaceholder,
       getTokenIcon,
+      icon,
     };
   },
 };
@@ -65,7 +98,11 @@ export default {
     0 10px 15px rgba(80, 100, 124, 0.16);
   border-radius: 4px;
   flex-shrink: 0;
-
+  & svg {
+    max-width: 18px;
+    max-height: 18px;
+    fill: $white;
+  }
   & img {
     max-width: 18px;
     max-height: 18px;
