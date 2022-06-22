@@ -154,9 +154,8 @@ export default {
       if (success) {
         showModal.value = true;
       }
-
-      await store.dispatch('wallets/getNewWallets', 'lazy');
-      store.dispatch('wallets/getNewWallets', 'detail');
+      // await store.dispatch('wallets/getNewWallets','lazy');
+      // store.dispatch('wallets/getNewWallets','detail');
     };
 
     const redirectToNewWallet = () => {

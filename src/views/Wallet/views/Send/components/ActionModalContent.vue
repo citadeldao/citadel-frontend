@@ -103,6 +103,7 @@
     <div v-if="!hidePassword" class="action-modal-content__password-input">
       <Input
         id="password"
+        data-qa="password"
         :value="password"
         :label="$t('enterSendPassword')"
         type="password"
