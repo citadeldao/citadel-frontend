@@ -364,9 +364,7 @@ export default {
         display: flex;
         margin-bottom: $card-margin;
         @include md {
-          & {
-            margin-bottom: $card-margin;
-          }
+          margin-bottom: $card-margin;
         }
       }
     }
@@ -421,9 +419,7 @@ export default {
       flex: 0 0 48%;
       margin-bottom: $card-margin;
       @include md {
-        & {
-          flex: 0 0 100%;
-        }
+        flex: 0 0 100%;
       }
     }
   }

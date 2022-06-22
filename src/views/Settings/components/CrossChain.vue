@@ -70,6 +70,8 @@ export default {
 
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
 
   &.comingSoon::before {
     background: none;
@@ -88,18 +90,21 @@ export default {
     background-repeat: no-repeat, no-repeat;
     background-position: left, bottom right;
     background-size: auto;
-    @include md {
-      background-size: 230%;
+    @include lg {
+      background-size: 180%, 100%;
     }
   }
 
   &__img {
-    height: 60px;
-    width: 60px;
-
     img {
-      width: 100%;
-      height: 100%;
+      width: 60px;
+      height: 60px;
+    }
+    @include laptop-l {
+      align-self: flex-start;
+    }
+    @include xs-lg {
+      align-self: flex-start;
     }
   }
 
@@ -108,12 +113,11 @@ export default {
     line-height: 1.5;
     margin-left: 25px;
     margin-right: auto;
-    @include xs-lg {
-      & {
-        width: auto;
-        margin: 10px 0;
-      }
+    @include lg {
+      width: 75%;
+      margin: 0 auto 20px 20px;
     }
+
     & > * {
       margin: 0;
     }
@@ -126,28 +130,20 @@ export default {
       color: #0a2778;
       margin: 5px 0 0;
       display: block;
+      @include laptop-l {
+        width: 75%;
+      }
     }
   }
 
   &__button {
     @include btn-default;
     align-self: center;
-  }
-
-  @include xs-lg {
-    & {
-      flex-direction: column;
-    }
-
-    &::before {
-      background-size: 250%, 100%;
-    }
+    margin: auto;
   }
 
   @include md {
-    & {
-      padding: $card-padding-md;
-    }
+    flex-wrap: nowrap;
     &::before {
       background-size: auto;
     }

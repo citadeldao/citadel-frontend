@@ -96,14 +96,10 @@
     @include text-default;
     margin: 5px 0 10px;
     @include xs-lg {
-      & {
         width: auto;
-      }
     }
     @include md {
-      & {
         width: auto;
-      }
     }
   }
 

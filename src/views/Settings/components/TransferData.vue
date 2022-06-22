@@ -1,5 +1,9 @@
 <template>
-  <div class="transfer-data" :class="`${Boolean(hasWallets)}`">
+  <div
+    class="transfer-data"
+    :class="`${Boolean(hasWallets)}`"
+    v-on="Boolean(hasWallets) ? { click: openQrModal } : {}"
+  >
     <div class="transfer-data__img">
       <TransferIcon />
     </div>
@@ -112,15 +116,14 @@ export default {
 
   align-items: center;
   flex-direction: row;
-
+  justify-content: space-between;
   overflow: hidden;
+  flex-wrap: wrap;
 
-  @include xs-lg {
-    flex-direction: column;
-  }
   @include md {
     cursor: pointer;
     flex-direction: row;
+    flex-wrap: nowrap;
     transition: all 0.3s;
 
     &.true::after {
@@ -158,11 +161,12 @@ export default {
       width: 100%;
     }
 
+    @include xs-lg {
+      align-self: flex-start;
+    }
     @include md {
-      & {
-        width: 48px;
-        height: 48px;
-      }
+      width: 48px;
+      height: 48px;
     }
   }
 
@@ -174,11 +178,9 @@ export default {
     & > * {
       margin: 0;
     }
-    @include xs-lg {
-      & {
-        margin: $card-margin 0;
-        width: auto;
-      }
+    @include lg {
+      width: 75%;
+      margin: 0 auto 20px 20px;
     }
     .title {
       @include title-default;
@@ -191,16 +193,17 @@ export default {
       @include text-default;
       margin: 5px 0 0;
       @include md {
-        & {
-          display: none;
-        }
+        display: none;
       }
     }
   }
   &__button {
     align-self: center;
+    @include laptop-l {
+      margin: auto;
+    }
     @include xs-lg {
-      align-self: center;
+      margin: auto;
     }
     @include md {
       display: none;
