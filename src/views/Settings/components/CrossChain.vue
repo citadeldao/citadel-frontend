@@ -139,7 +139,7 @@ export default {
   &__button {
     @include btn-default;
     align-self: center;
-    margin: auto;
+    margin-left: auto;
   }
 
   @include md {

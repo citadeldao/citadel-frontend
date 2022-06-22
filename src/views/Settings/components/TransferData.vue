@@ -199,12 +199,7 @@ export default {
   }
   &__button {
     align-self: center;
-    @include laptop-l {
-      margin: auto;
-    }
-    @include xs-lg {
-      margin: auto;
-    }
+    margin-left: auto;
     @include md {
       display: none;
     }

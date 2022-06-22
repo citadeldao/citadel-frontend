@@ -48,8 +48,9 @@ export default {
   }
   &__button {
     box-shadow: 0px 0px 25px rgba(106, 75, 255, 0.3);
+    margin: auto 0 0 auto;
     @include laptop {
-      margin-top: 8px;
+      margin: 10px auto 0;
       align-self: center;
     }
   }
