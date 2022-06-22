@@ -25,11 +25,13 @@
         </template>
       </Card>
       <Card>
-        <template #default>
+        <template #icon>
           <div class="card-icon">
             <chooseNode v-if="isXct" />
             <chooseNodes v-else />
           </div>
+        </template>
+        <template #info>
           <span class="card-info">
             {{
               $t(
@@ -116,6 +118,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.card-special {
+  padding: 16px 0 0 23px;
+  &-title {
+    font-size: 16px;
+  }
+  button {
+    top: 39px;
+    right: 61px;
+  }
+}
 .stake-placeholder {
   display: flex;
   flex-direction: column;
