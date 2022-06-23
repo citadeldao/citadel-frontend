@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar">
+  <div class="sidebar" :class="showClass">
     <div class="sidebar__logo">
       <div
         data-qa="main-logo"
@@ -7,6 +7,7 @@
         @click="setActiveTab('all')"
       >
         <citadelLogo class="sidebar__logo-citadel" />
+        <onlyLogo class="sidebar__compact-logo-citadel" />
       </div>
     </div>
 
@@ -16,9 +17,13 @@
       :title="activeTab"
       @click="setActiveTab(activeTab)"
     />
-
     <div v-if="walletsList?.length > 0" class="sidebar__overall">
       <div class="sidebar__addresses">
+        <div class="sidebar__addresses-header-compact">
+          <h4 class="sidebar__addresses-header-title">
+            {{ $t('layouts.addAddressLayout.wallets') }}
+          </h4>
+        </div>
         <div class="sidebar__addresses-header">
           <h4 class="sidebar__addresses-header-title">
             {{
@@ -62,8 +67,12 @@
             />
           </div>
         </transition>
+
         <div v-if="!displayData.length" class="sidebar__addresses-addresses">
-          <SerchPlaceholder />
+          <h4 class="sidebar__addresses-header-title">
+            {{ $t('layouts.addAddressLayout.addresses') }}
+          </h4>
+          <SearchPlaceholder />
         </div>
         <div v-else class="sidebar__addresses-addresses">
           <transition-group name="drop">
@@ -84,8 +93,17 @@
       data-qa="sidebar__add-address-button"
       @click="toAddAddress"
     >
-      {{ $t('addAddressExp') }}
+      <span class="sidebar__add-address-button-text">
+        {{ $t('addAddressExp') }}
+      </span>
       <div>+</div>
+    </button>
+    <button
+      class="sidebar__compact-view-button"
+      @click="sideBarView"
+      :class="`${showClass}`"
+    >
+      <ArrowRight />
     </button>
   </div>
 </template>
@@ -102,11 +120,14 @@ import { sortByAlphabet } from '@/helpers';
 
 import WalletFilterDropdown from '@/components/UI/WalletFilterDropdown';
 import Input from '@/components/UI/Input';
-import SerchPlaceholder from './SerchPlaceholder.vue';
+import SearchPlaceholder from './SearchPlaceholder.vue';
 import AddressItem from './AddressItem';
 import OverallCard from './OverallCard';
 import AddressPlaceholder from './AddressPlaceholder';
 import citadelLogo from '@/assets/icons/citadelLogo.svg';
+import onlyLogo from '@/assets/icons/only-logo.svg';
+import ArrowRight from '@/assets/icons/arrow-rigth.svg';
+
 import loop from '@/assets/icons/input/loop.svg';
 
 export default {
@@ -118,8 +139,10 @@ export default {
     AddressItem,
     loop,
     Input,
-    SerchPlaceholder,
+    SearchPlaceholder,
     WalletFilterDropdown,
+    onlyLogo,
+    ArrowRight,
   },
 
   emits: ['editList', 'createList'],
@@ -136,6 +159,7 @@ export default {
     const { width } = useWindowSize();
     const store = useStore();
     const router = useRouter();
+    const showClass = ref('');
     const toAddAddress = () => {
       router.push({ name: 'AddAddress' });
     };
@@ -280,6 +304,12 @@ export default {
       }, 200);
     };
 
+    showClass.value = window.innerWidth <= 1024 ? 'compact' : '';
+
+    const sideBarView = () => {
+      showClass.value = showClass.value == '' ? 'compact' : '';
+    };
+
     return {
       activeTab,
       toAddAddress,
@@ -301,6 +331,8 @@ export default {
       filteredWallets,
       toggleShowSearchInput,
       blurHandrer,
+      showClass,
+      sideBarView,
     };
   },
 };
@@ -312,61 +344,144 @@ export default {
   box-shadow: 0 10px 15px 0 #50647c29, 0 15px 50px 0 #50647c1a;
 }
 .sidebar {
-  padding: 42px 0 0 24px;
-  min-width: 246px;
+  max-width: $sidebar-max-width;
+  width: 100%;
   height: 100vh;
   display: flex;
   flex-direction: column;
-  @include lg {
-    padding: 42px 0 0 25px;
-  }
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  padding: $sidebar-padding;
+  transition: all 0.25s;
+
   @include md {
-    padding: 26px 0 0 25px;
-    min-width: 194px;
+    padding: $sidebar-padding-md;
+    max-width: $sidebar-max-width-md;
   }
+
+  @include laptop {
+    padding: $sidebar-padding-laptop;
+    @include sidebar-compact-view;
+  }
+
+  &:hover {
+    background-color: #fff;
+    .sidebar__compact-view-button {
+      opacity: 1;
+    }
+    .sidebar__add-address-button {
+      border-style: solid;
+      border-color: $too-ligth-blue;
+    }
+  }
+
+  &__compact-view-button {
+    background: $too-ligth-blue;
+    width: 24px;
+    height: 24px;
+    border: none;
+    border-radius: 4px;
+
+    position: absolute;
+    top: 20%;
+    right: -12px;
+
+    opacity: 0;
+    transition: 0.15s;
+    & svg {
+      height: 10px;
+      width: 5px;
+      margin: auto;
+      transform: rotate(180deg);
+    }
+    &:hover {
+      background-color: $light-blue-1;
+    }
+  }
+
+  &.compact {
+    max-width: 80px;
+    background: $white;
+  }
+
+  &__compact-logo-citadel {
+    display: none;
+  }
+
+  &.compact &__logo-citadel {
+    display: none;
+  }
+
+  &.compact &__compact-logo-citadel {
+    display: block;
+
+    svg {
+      height: 24px;
+    }
+  }
+
   &__logo {
     display: flex;
     align-items: center;
     margin-bottom: 43px;
+
     @include md {
       margin-bottom: 28px;
     }
   }
+
   &__logo-inner-wrapper {
     display: flex;
     align-items: center;
     cursor: pointer;
   }
+
   &__overall {
     flex: 1;
     display: flex;
     flex-direction: column;
     overflow: hidden;
   }
+
   &__addresses {
+    max-width: calc(#{$sidebar-max-width} - 50px);
+    width: 100%;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
     overflow: hidden;
+    @include md {
+      max-width: calc(#{$sidebar-max-width-md} - 50px);
+    }
   }
+
   &__addresses-wrapper {
     display: flex;
     flex-direction: column;
     height: 100%;
     overflow: auto;
   }
+
   &__addresses-header {
     margin-bottom: 21px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     @include lg {
       margin-bottom: 27px;
     }
+
     @include md {
       margin-bottom: 8px;
     }
+    &-compact {
+      display: none;
+      justify-content: center;
+    }
   }
+
   &__addresses-header-title {
     font-size: 20px;
     line-height: 30px;
@@ -376,19 +491,23 @@ export default {
     text-overflow: ellipsis;
     overflow: hidden;
     max-width: 135px;
+
     @include lg {
       line-height: 24px;
     }
+
     @include md {
       max-width: 95px;
       font-size: 14px;
       line-height: 17px;
     }
   }
+
   &__addresses-header-controls {
     display: flex;
     align-items: center;
   }
+
   &__addresses-header-controls-serach-icon {
     & svg {
       width: 20px;
@@ -396,31 +515,38 @@ export default {
       fill: $mid-blue;
       margin-right: 19px;
       cursor: pointer;
+
       @include md {
         width: 18px;
         height: 18px;
       }
+
       &:hover {
         fill: $blue;
       }
     }
   }
+
   &__active-icon {
     & svg {
       fill: $too-dark-blue;
+
       &:hover {
         fill: $too-dark-blue;
       }
     }
   }
+
   &__addresses-serach-input {
     min-height: 68px;
     width: 221px;
     margin-bottom: 16px;
+
     @include md {
       width: 169px;
     }
   }
+
   &__addresses-addresses {
     display: flex;
     flex-direction: column;
@@ -428,37 +554,43 @@ export default {
     overflow-x: hidden;
     flex-grow: 1;
   }
+
   &__address-placeholder {
-    flex-grow: 1;
+    margin: 0 auto;
   }
+
   &__add-address-button {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    width: 221px;
+    max-width: calc(#{$sidebar-max-width} - 50px);
+    width: 100%;
     height: 80px;
     border-radius: 16px;
     background: $white;
-    font-family: 'Panton_Bold';
-    font-size: 18px;
-    line-height: 22px;
-    margin-top: 10px;
+    @include title-default;
+    font-size: $add-btn-font-size !important;
+    margin-top: 15px;
     margin-bottom: 8px;
+    border: 1px solid transparent;
+    transition: 0.2s;
     @include md {
-      width: 165px;
+      max-width: calc(#{$sidebar-max-width-md} - 50px);
       height: 60px;
-      font-size: 14px;
-      line-height: 17px;
       border-radius: 8px;
     }
+
     &:hover {
       background: $dark-blue;
       color: $white;
+      border-color: $too-ligth-blue;
       & div {
         background: $white;
         color: $dark-blue;
+        box-shadow: 0px 4px 20px rgba(105, 95, 225, 0.7);
       }
     }
+
     & div {
       width: 48px;
       height: 48px;
@@ -469,7 +601,7 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      box-shadow: 0px 4px 20px rgba(105, 95, 225, 0.7);
+
       @include md {
         width: 32px;
         height: 32px;
@@ -478,6 +610,8 @@ export default {
     }
   }
 }
+
+@include sidebar-compact-view;
 
 .drop-enter-active,
 .drop-leave-active {

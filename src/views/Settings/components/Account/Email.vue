@@ -8,7 +8,7 @@
     </span>
 
     <PrimaryButton
-      disabled="true"
+      :disabled="true"
       class="change-email__button"
       data-qa="settings__email-button"
       @click="clickHandler"

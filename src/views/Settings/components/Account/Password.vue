@@ -2,7 +2,7 @@
   <div class="change-password-card" :class="visibleClass">
     <h5 class="change-password-card__title">
       {{ $t('settings.changePassword.title') }}
-      <Tooltip :text="'hello'">
+      <Tooltip :text="$t('settings.changePassword.tooltip')">
         <Info></Info>
       </Tooltip>
     </h5>
@@ -11,7 +11,7 @@
     </span>
 
     <PrimaryButton
-      disabled="true"
+      :disabled="true"
       class="change-password-card__button"
       data-qa="settings__email-button"
     >

@@ -77,14 +77,17 @@ export default {
 
 <style lang="scss" scoped>
 .overall-card {
-  width: 218px;
+  max-width: calc(#{$sidebar-max-width} - 50px);
+  width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 20px 0 21px 22px;
+  align-items: flex-start;
   border: 1px solid $ligthgray;
   border-radius: 8px;
-  margin-bottom: 24px;
+  margin: 0 auto 24px;
+  padding: 24px;
   cursor: pointer;
+  position: relative;
 
   &:hover:not(.active) {
     background: $blue;
@@ -104,14 +107,6 @@ export default {
     border: none;
   }
 
-  @include md {
-    margin-bottom: 18px;
-    width: 165px;
-    padding: 13px 10px 13px 13px;
-    background: $white;
-    border: none;
-    position: relative;
-  }
   &__tabs {
     display: none;
     position: absolute;
@@ -128,7 +123,6 @@ export default {
   }
   &__title {
     font-size: 16px;
-    line-height: 19px;
     margin-bottom: 10px;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -137,7 +131,6 @@ export default {
     @include md {
       max-width: 73px;
       font-size: 14px;
-      line-height: 30px;
       font-family: 'Panton_Bold';
       margin-bottom: 3px;
     }
@@ -146,9 +139,9 @@ export default {
   &__balance-md {
     font-family: 'Panton_Bold';
     color: $dark-blue;
-    font-size: 28px;
-    line-height: 34px;
+    font-size: $balance-font-size;
     margin-bottom: 7px;
+    transition: 0.2s;
     @include md {
       display: none;
       margin-bottom: 0;
@@ -159,7 +152,6 @@ export default {
   }
   &__cryptobalance {
     font-size: 16px;
-    line-height: 19px;
     color: $blue;
     transition: 0s all;
     @include md {
@@ -170,15 +162,61 @@ export default {
   &__currency-md,
   &__currency {
     color: $black;
-    font-family: 'Panton_Bold';
+    font-family: 'Panton_Regular';
   }
   &__balance-md {
-    font-size: 18px;
-    line-height: 22px;
+    font-size: $balance-font-size;
     display: none;
     @include md {
       display: initial;
+      font-size: $balance-font-size-md;
     }
+    @include laptop {
+      font-size: $balance-font-size-laptop;
+    }
+  }
+
+  @include md {
+    max-width: calc(#{$sidebar-max-width-md} - 50px);
+  }
+}
+
+.compact .overall-card {
+  background: $dark-blue;
+  border-radius: 0;
+  color: $white;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  border-color: transparent;
+  padding: 5px 0;
+
+  @include laptop {
+    height: 50px;
+  }
+
+  &__cryptobalance,
+  &__tabs {
+    display: none;
+  }
+
+  &__balance,
+  &__balance-md {
+    margin: 0;
+    color: $white;
+    font-size: $balance-font-size-md;
+
+    & > span {
+      color: $white;
+    }
+    @include laptop-l {
+      font-size: $balance-font-size-laptop;
+    }
+  }
+
+  &__title {
+    width: fit-content;
+    margin: 0 auto 3px;
   }
 }
 </style>

@@ -27,31 +27,39 @@ export default {
 
 <style lang="scss" scoped>
 .addressPlaceholder {
-  width: 221px;
+  max-width: calc(#{$sidebar-max-width} - 50px);
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border: 1px solid #c3ceeb;
-  border-radius: 25px;
-  padding: 58px 19px 52px 19px;
-  @include md {
-    width: 167px;
-    padding: 28px 8px 41px 8px;
-    border-radius: 8px;
-  }
+  border-radius: 16px;
+  padding: 35px 5px;
+  margin: 0 auto;
   & svg {
     margin-bottom: 16px;
   }
   & span {
     font-family: 'Panton_Light';
     font-size: 18px;
-    line-height: 24px;
     color: $too-ligth-blue;
     text-align: center;
+    line-height: 1.5;
     @include md {
       font-size: 16px;
+      max-width: calc(#{$sidebar-max-width-md} - 50px);
     }
+  }
+}
+.compact .addressPlaceholder {
+  display: none;
+
+  & svg {
+    display: none;
+  }
+  & span {
+    display: none;
   }
 }
 </style>

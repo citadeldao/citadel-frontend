@@ -11,7 +11,7 @@
 }
 
 @mixin laptop-l {
-  @media (min-width: 1440.98px) and (max-width: 1920.98px) {
+  @media (min-width: 1439.98px) and (max-width: 1920.98px) {
     @content;
   }
 }

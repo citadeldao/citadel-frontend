@@ -7,7 +7,7 @@
       {{ $t(`settings.extensionSettings.${currentDescKey}`) }}
     </span>
 
-    <PrimaryButton disabled="true" class="extension-settings-card__button">
+    <PrimaryButton :disabled="true" class="extension-settings-card__button">
       {{ $t('settings.extensionSettings.button') }}
     </PrimaryButton>
   </div>

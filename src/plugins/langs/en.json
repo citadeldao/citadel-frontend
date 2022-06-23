@@ -585,7 +585,8 @@
             "sidebarPlaceholder": "Your addresses will be displayed here",
             "favoritePlaceholder": "Your favourite wallets will be diplayed here. Press star button near public key to add to favourites",
             "overall": "Overall",
-            "addresses": "Addresses"
+            "addresses": "Addresses",
+            "wallets": "Wallets"
         }
     },
     "backBtn": "Back",
@@ -702,7 +703,8 @@
             "title": "Your password",
             "description": "You can change your password here",
             "button": "Change",
-            "comingSoon": "COMING SOON"
+            "comingSoon": "COMING SOON",
+            "tooltip": "As Citadel.one is a non-custodial platform, we do not store your password — it is kept in your browser’s local storage. If you clear your cookies, your password will be deleted — you will have to create a new one."
         },
         "extensionSettings": {
             "title": "Extensions settings",

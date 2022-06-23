@@ -571,7 +571,8 @@
             "sidebarPlaceholder": "您的地址将展示在这里",
             "favoritePlaceholder": "您最常用的钱包将展示在此处。点击公钥旁边的星标添加收藏。",
             "overall": "全部",
-            "addresses": "地址"
+            "addresses": "地址",
+            "wallets": "地址"
         }
     },
     "backBtn": "返回",

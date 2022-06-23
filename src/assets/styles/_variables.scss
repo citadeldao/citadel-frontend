@@ -1,6 +1,13 @@
+//*** ---- Default ---- ***//
 $round:50%;
 
-//* Default Variables *//
+//* Sidebar *//
+$sidebar-padding: 42px 0 0;
+$sidebar-max-width: 280px;
+
+//* Sidebar -> Overall *//
+$balance-font-size: 1.75rem;
+$add-btn-font-size: 1.125rem;
 
 //* Card *//
 $card-border-radius: 16px;
@@ -20,8 +27,16 @@ $btn-max-width: 250px;
 $btn-border-radius: 50px;
 
 
-//* Variables for "md" size *//
+//*** ---- Variables for "md" size ---- ***//
 
+//* Sidebar *//
+$sidebar-padding-md: 36px 0 0;
+$sidebar-max-width-md: 230px;
+
+//* Sidebar -> Overall *//
+$balance-font-size-md: 1.125rem;
+
+//* Card *//
 $card-padding-md: 20px 25px;
 $card-margin-md: 15px;
 
@@ -36,8 +51,12 @@ $btn-font-size-md: 0.875rem;
 $btn-min-height-md: 40px;
 $btn-min-width-md: 120px;
 
-//* Variables for "1024px" size *//
+//*** ---- Variables for "1024px" size ---- ***//
+
 $title-font-size-laptop: 0.875rem;
 
-//* Variables for "768px" size *//
+//* Sidebar *//
+$sidebar-padding-laptop: 26px 0 0;
 
+//* Sidebar -> Overall *//
+$balance-font-size-laptop: 0.875rem;
