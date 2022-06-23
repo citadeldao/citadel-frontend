@@ -152,6 +152,19 @@
       }
     }
 
+    .address-item {
+      margin-bottom: 25px;
+      justify-content: center;
+    }
+
+    .address-item__icon {
+      margin: 0;
+    }
+
+    .address-item__info {
+      display: none;
+    }
+
     &__addresses-addresses {
       align-items: center;
       justify-content: center;

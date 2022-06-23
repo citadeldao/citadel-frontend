@@ -228,17 +228,6 @@ export default {
     color: $slategray;
   }
 }
-.compact.address-item {
-  margin-bottom: 25px;
-  justify-content: center;
-  &__icon {
-    margin: 0;
-  }
-  &__info {
-    display: none;
-  }
-}
-
 .active-link {
   &:hover {
     .address-item__icon {
