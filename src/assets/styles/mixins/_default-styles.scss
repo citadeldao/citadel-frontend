@@ -151,16 +151,6 @@
         display: flex;
       }
     }
-    .address-item {
-      margin-bottom: 25px;
-      justify-content: center;
-      &__icon {
-        margin: 0;
-      }
-      &__info {
-        display: none;
-      }
-    }
 
     &__addresses-addresses {
       align-items: center;
