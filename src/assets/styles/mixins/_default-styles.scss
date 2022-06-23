@@ -33,7 +33,8 @@
 
 // ** Card ** //
 @mixin card-default {
-  box-shadow: $card-box-shadow;
+  filter: $card-shadow;
+  box-shadow: $card-shadow;
   border-radius: $card-border-radius;
   padding: $card-padding;
   background: $white;

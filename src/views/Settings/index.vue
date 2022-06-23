@@ -389,6 +389,7 @@ export default {
         border-radius: 0;
         padding: 0;
         box-shadow: none;
+        filter: none;
       }
       & > div:not(:last-child) {
         margin-bottom: calc(#{$card-margin} - 10px);

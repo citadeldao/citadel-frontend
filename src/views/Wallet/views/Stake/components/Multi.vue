@@ -129,9 +129,7 @@
               {{ $t('unstake') }}
             </PrimaryButton>
           </div>
-          <PrimaryButton
-            data-qa="Stake"
-            @click="toStake">
+          <PrimaryButton data-qa="Stake" @click="toStake">
             {{ $t('Stake') }}
           </PrimaryButton>
         </div>

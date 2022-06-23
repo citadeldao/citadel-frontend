@@ -8,7 +8,6 @@
     </span>
     <Select
       v-model="currentLanguage"
-      :label="$t('settings.language.inputLabel')"
       icon="lang"
       :options="languages"
       value-key="key"

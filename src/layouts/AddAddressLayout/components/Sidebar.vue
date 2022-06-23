@@ -401,7 +401,7 @@ export default {
   }
 
   &.compact {
-    max-width: 80px;
+    max-width: $sidebar-compact-max-width;
     background: $white;
   }
 
@@ -441,7 +441,9 @@ export default {
     flex: 1;
     display: flex;
     flex-direction: column;
+    align-items: center;
     overflow: hidden;
+    width: 100%;
   }
 
   &__addresses {

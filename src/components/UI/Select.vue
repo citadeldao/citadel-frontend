@@ -19,16 +19,16 @@
           />
         </keep-alive>
 
-        {{ selected.label }}
-      </div>
+        <span class="select__value-text">{{ selected.label }}</span>
 
-      <div
-        v-if="!disabled"
-        :class="`${isOptionsVisible}`"
-        class="select__arrow"
-        @click.stop="toggleVisibleOptions"
-      >
-        <arrow-down />
+        <div
+          v-if="!disabled"
+          :class="`${isOptionsVisible}`"
+          class="select__arrow"
+          @click.stop="toggleVisibleOptions"
+        >
+          <arrow-down />
+        </div>
       </div>
     </div>
     <transition name="slide-from-top">
@@ -174,18 +174,19 @@ export default {
   &__value {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     font-family: 'Panton_SemiBold';
     font-size: 14px;
-    padding-right: 20px;
+    &-text {
+      margin-right: auto;
+    }
   }
 
   &__arrow {
-    position: absolute;
-    right: 20px;
-    top: 35px;
     width: 14px;
     fill: $too-ligth-blue;
     transition: 0.2s;
+    align-self: flex-end;
     &.true {
       transform: rotate(-180deg);
     }
@@ -203,7 +204,7 @@ export default {
 
   &__options {
     position: absolute;
-    top: calc(100% - 8px);
+    transform: translateY(-10%);
     left: 0;
     right: 0;
     padding: 23px 15px 15px;

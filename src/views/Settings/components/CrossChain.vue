@@ -56,7 +56,7 @@ export default {
 .cross-chain-card {
   @include settings-card-default;
   &.comingSoon {
-    background: linear-gradient(255.4deg, #f0f2fc 0%, #edf2fc 100%);
+    background: $white;
   }
 
   background: linear-gradient(90deg, #ebd7ff 0%, #c6e2ff 100%);
