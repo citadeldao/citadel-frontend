@@ -217,6 +217,7 @@ export default {
       switch (mode.value) {
         case 'create':
           if (existInList(customLists.value, listName.value)) {
+            inputError.value = t('customLists.duplicateName');
             showWarningModal.value = false;
 
             return;
@@ -278,9 +279,16 @@ export default {
     };
 
     watch(
+      () => listName.value,
+      () => {
+        if (isLoading.value) isLoading.value = false;
+      }
+    );
+    watch(
       () => checkedWallets.value,
       () => {
         showWarningBanner.value = false;
+        if (isLoading.value) isLoading.value = false;
       },
       { deep: true }
     );
