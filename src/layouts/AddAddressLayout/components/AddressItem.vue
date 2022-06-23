@@ -252,4 +252,15 @@ export default {
     color: $dark-blue;
   }
 }
+
+.compact .address-item {
+  margin-bottom: 25px;
+  justify-content: center;
+  &__icon {
+    margin: 0;
+  }
+  &__info {
+    display: none;
+  }
+}
 </style>

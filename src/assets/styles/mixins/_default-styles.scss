@@ -195,6 +195,7 @@
     }
 
     .sidebar__compact-view-button.compact {
+      opacity: 1;
       & svg {
         transform: rotate(0);
       }

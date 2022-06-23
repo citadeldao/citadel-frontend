@@ -19,7 +19,7 @@
 
         <Checkbox
           id="newsletter"
-          :value="profileInfo.subscribe_newsletter"
+          :value="false"
           :label="$t('settings.subscriptions.newsletter')"
           :info="$t('settings.subscriptions.newsletterTooltip')"
           :disabled="true"
