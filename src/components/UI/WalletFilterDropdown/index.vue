@@ -151,8 +151,12 @@ export default {
     box-shadow: 0 15px 50px rgba(80, 100, 124, 0.1),
       0 10px 15px rgba(80, 100, 124, 0.16);
     border-radius: 8px;
-    background: $white;
     padding: 4px 8px 4px 8px;
+    background-color: $mid-blue;
+    z-index: 1;
+    & svg {
+      fill: $white;
+    }
   }
 
   &--active {

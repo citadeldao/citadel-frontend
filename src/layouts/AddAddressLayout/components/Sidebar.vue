@@ -623,11 +623,4 @@ export default {
   opacity: 0;
   transform: translateY(30px);
 }
-.wallet-filter-dropdown__list {
-  background-color: $mid-blue;
-  z-index: 1;
-  & svg {
-    fill: $white;
-  }
-}
 </style>

@@ -54,6 +54,7 @@ export default {
     border-bottom: none;
   }
   &__icon {
+    fill: $white;
     @include md {
       max-width: 16px;
       max-height: 16px;
