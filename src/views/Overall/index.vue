@@ -28,7 +28,8 @@ import RewardsChart from './components/RewardsChart/RewardsChart';
 import BalanceStructureChart from './components/BalanceStructure/BalanceStructureChart';
 import FavouritesPlaceholder from './components/FavouritesPlaceholder';
 import { useStore } from 'vuex';
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 export default {
   name: 'Overall',
   components: {
@@ -39,6 +40,7 @@ export default {
   },
   emits: ['create-list'],
   setup() {
+    const route = useRoute();
     const store = useStore();
     const activeList = computed(() => store.getters['wallets/activeList']);
     const customWalletsList = computed(() =>
@@ -56,7 +58,11 @@ export default {
       () =>
         activeList.value !== 'all' && !customWalletsList.value.wallets.length
     );
-
+    onMounted(() => {
+      if (route.name === 'Favourites') {
+        store.commit('wallets/SET_ACTIVE_LIST', 'Favourites');
+      }
+    });
     return {
       isFavouriteList,
       hasFavourites,

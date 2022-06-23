@@ -52,7 +52,9 @@ export default {
     const currentList = computed(() => store.getters['wallets/activeList']);
     const currentListName = computed(() => {
       const name =
-        currentList.value === 'all' ? t('overallTitle') : currentList.value;
+        currentList.value === 'all'
+          ? t('overallTitle')
+          : t(currentList.value.toLowerCase());
 
       return name.length > MAX_LIST_NAME_LENGTH
         ? `${name.slice(0, MAX_WALLET_NAME_LENGTH)}...`

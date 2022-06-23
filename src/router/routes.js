@@ -298,6 +298,16 @@ export default [
     },
   },
   {
+    path: '/favourites',
+    name: 'Favourites',
+    component: () => import('@/views/Overall'),
+    meta: {
+      layout: 'AddAddressLayout',
+      guard: 'private',
+      title: 'Favourites',
+    },
+  },
+  {
     path: '/error-404',
     name: 'ErrorPage',
     component: () =>
