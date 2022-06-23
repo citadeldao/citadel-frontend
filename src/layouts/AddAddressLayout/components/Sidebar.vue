@@ -47,7 +47,6 @@
               :top="width < 1280 ? '206' : '378'"
               :left="width < 1280 ? '158' : '210'"
               :items="filterList"
-              class="sidebar-filter"
             />
           </div>
         </div>
@@ -432,13 +431,6 @@ export default {
     }
   }
 
-  &-filter {
-    background: $mid-gray;
-    z-index: 1;
-    & svg {
-      fill: $white;
-    }
-  }
   &__logo-inner-wrapper {
     display: flex;
     align-items: center;
@@ -630,5 +622,12 @@ export default {
 .drop-leave-to {
   opacity: 0;
   transform: translateY(30px);
+}
+.wallet-filter-dropdown__list {
+  background-color: $mid-blue;
+  z-index: 1;
+  & svg {
+    fill: $white;
+  }
 }
 </style>
