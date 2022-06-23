@@ -92,14 +92,14 @@ export default {
   },
   methods: {
     inputRefs(node) {
-      this.iRefs.push(node);
+      if (node) this.iRefs.push(node);
     },
     onFocus(e) {
       e.target.select(e);
     },
     onValueChange(e) {
       const index = parseInt(e.target.dataset.id);
-      const { type, fields } = this;
+      const { type } = this;
 
       if (type === 'number') {
         e.target.value = e.target.value.replace(/[^\d]/gi, '');
@@ -109,34 +109,14 @@ export default {
       const { value } = e.target;
       let { values } = this;
       values = Object.assign([], values);
-
       if (value.length > 1) {
-        let nextIndex = value.length + index - 1;
-
-        if (nextIndex >= fields) {
-          nextIndex = fields - 1;
-        }
-
-        next = this.iRefs[nextIndex];
-        const split = value.split('');
-        split.forEach((item, i) => {
-          const cursor = index + i;
-
-          if (cursor < fields) {
-            values[cursor] = item;
-          }
-        });
-
-        for (let i = 0; i < 6; i++) {
-          values[i] = value[i];
-        }
-
-        this.values = values;
+        if (index !== 5) next = this.iRefs[index + 1];
+        values[index] = value.charAt(value.length - 1);
       } else {
         next = this.iRefs[index + 1];
         values[index] = value;
-        this.values = values;
       }
+      this.values = values;
 
       if (next) {
         const element = next;
