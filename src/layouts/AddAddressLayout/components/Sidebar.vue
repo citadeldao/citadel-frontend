@@ -588,7 +588,9 @@ export default {
       &:before {
         visibility: visible;
       }
-      &.bottom:after,
+      &.bottom:after {
+        visibility: hidden;
+      }
       &.top:before {
         visibility: hidden;
       }
