@@ -148,9 +148,10 @@ export default {
 .address-item {
   display: flex;
   margin-left: 15px;
-  margin-bottom: 33px;
   text-decoration: none;
   user-select: text;
+  margin-top: 20px;
+
   &:hover {
     .address-item__icon {
       background: $blue;
@@ -168,7 +169,7 @@ export default {
     margin-bottom: 0;
   }
   @include md {
-    margin-bottom: 17px;
+    margin-top: 15px;
   }
   &__icon {
     border-radius: $round;

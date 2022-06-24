@@ -316,7 +316,7 @@ export default {
 
     const onScrollContent = (e) => {
       const { scrollTop, offsetHeight, scrollHeight } = e.target;
-      if (scrollTop <= 15 || scrollTop == 0) {
+      if (scrollTop <= 10 || scrollTop == 0) {
         e.target.classList.add('top');
       } else if (scrollTop + offsetHeight >= scrollHeight) {
         e.target.classList.add('bottom');
@@ -465,6 +465,9 @@ export default {
     width: 100%;
     margin: 0 auto 15px;
     position: relative;
+    @include md {
+      max-width: calc(#{$sidebar-max-width-md} - 50px);
+    }
   }
 
   &__addresses {
@@ -574,26 +577,21 @@ export default {
     overflow: hidden;
     flex-grow: 1;
     position: relative;
-    // padding: 0 15px;
     list-style-type: none;
     border: 1px solid $light-gray-1;
     border-radius: $card-border-radius;
+    background-color: $white;
     height: 100%;
-    // box-shadow: 0 22px 22px -22px rgba(0, 0, 0, 0.8) inset,
-    //   0 -22px 22px -22px rgba(0, 0, 0, 0.8) inset;
     &:hover {
       overflow-y: overlay;
+    }
 
-      &::after,
-      &::before {
-        visibility: visible;
-      }
-      &.bottom::after {
-        visibility: hidden;
-      }
-      &.top::before {
-        visibility: hidden;
-      }
+    &.bottom::after {
+      visibility: hidden;
+    }
+
+    &.top::before {
+      visibility: hidden;
     }
 
     &::after,
@@ -605,7 +603,7 @@ export default {
       margin-top: 0;
       padding: 0;
       display: list-item;
-      visibility: hidden;
+      visibility: visible;
     }
 
     &::after {
@@ -613,6 +611,7 @@ export default {
       margin-top: auto;
       margin-bottom: -100%;
       background: linear-gradient(to top, rgba(0, 0, 0, 0.2) 40%, transparent);
+      z-index: 1;
     }
 
     &::before {
@@ -623,7 +622,7 @@ export default {
 
         transparent
       );
-      z-index: -1;
+      z-index: 1;
     }
   }
 
