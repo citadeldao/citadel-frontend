@@ -30,17 +30,9 @@
     <!-- CHANGE SUCCESS PASSWORD -->
     <Modal v-if="showChangePasswordSuccessModal">
       <ModalContent
-        v-click-away="
-          () => {
-            showChangePasswordSuccessModal = false;
-          }
-        "
+        v-click-away="closeSuccessModal"
         type="success"
-        @close="
-          () => {
-            showChangePasswordSuccessModal = false;
-          }
-        "
+        @close="closeSuccessModal"
       >
         <div class="success-modal">
           <successIcon width="100" height="100" class="success-icon" />
@@ -194,6 +186,8 @@ import { removeStorage } from '@/utils/storage';
 import useWallets from '@/compositions/useWallets';
 import { sha3_256 } from 'js-sha3';
 import successIcon from '@/assets/icons/success.svg';
+import { WALLET_TYPES } from '../../../config/walletType';
+import CryptoCoin from '@/models/CryptoCoin';
 
 export default {
   name: 'Delete',
@@ -226,6 +220,11 @@ export default {
     const startUpdate = ref(false);
     const showChangePasswordSuccessModal = ref(false);
 
+    const closeSuccessModal = () => {
+      showChangePasswordSuccessModal.value = false;
+      window.location.reload();
+    };
+
     const showChangePasswordModal = ref(false);
     const oldPasswordHash = computed(
       () => store.getters['crypto/passwordHash']
@@ -235,11 +234,46 @@ export default {
     });
 
     const updatePassword = () => {
+      const walletsToUpdate = [];
+
       startUpdate.value = true;
 
       if (incorrectOldPassword.value || newPassword.value.length < 8) {
         return;
       }
+
+      wallets.value.forEach((w) => {
+        if (
+          [WALLET_TYPES.PRIVATE_KEY, WALLET_TYPES.ONE_SEED].includes(w.type)
+        ) {
+          const privateKey = w.getPrivateKeyDecoded(oldPassword.value);
+          const privateKeyEncoded = citadel.encodePrivateKeyByPassword(
+            w.net,
+            privateKey,
+            newPassword.value
+          );
+
+          w.privateKeyEncoded = privateKeyEncoded.data;
+
+          if (w.importedFromSeed) {
+            const mnemonic = store.getters['crypto/decodeUserMnemonic'](
+              oldPassword.value,
+              w.importedFromSeed
+            );
+            const encodeMnemonic = CryptoCoin.encodeMnemonic(
+              mnemonic,
+              newPassword.value
+            );
+            w.importedFromSeed = encodeMnemonic;
+          }
+          walletsToUpdate.push(w);
+        }
+      });
+
+      store.dispatch('wallets/pushWallets', {
+        wallets: walletsToUpdate,
+        root: true,
+      });
 
       const mnemonic = store.getters['crypto/decodeUserMnemonic'](
         oldPassword.value
@@ -309,6 +343,7 @@ export default {
       updatePassword,
       startUpdate,
       showChangePasswordSuccessModal,
+      closeSuccessModal,
     };
   },
 };
