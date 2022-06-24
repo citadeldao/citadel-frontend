@@ -119,6 +119,9 @@ export default {
     @include md {
       display: flex;
     }
+    @include laptop {
+      display: none;
+    }
   }
   &__tab {
     &:first-child {
@@ -137,6 +140,9 @@ export default {
       font-size: 14px;
       font-family: 'Panton_Bold';
       margin-bottom: 3px;
+    }
+    @include laptop {
+      margin-left: 10px;
     }
   }
   &__balance,
@@ -182,6 +188,18 @@ export default {
 
   @include md {
     max-width: calc(#{$sidebar-max-width-md} - 50px);
+  }
+  @include laptop {
+    max-width: calc(#{$sidebar-max-width-md} - 30px);
+    height: 50px;
+    border-radius: 0;
+    margin-bottom: 0;
+    flex-direction: row;
+    background-color: $dark-blue;
+    justify-content: space-between;
+    & span {
+      color: $white;
+    }
   }
 }
 

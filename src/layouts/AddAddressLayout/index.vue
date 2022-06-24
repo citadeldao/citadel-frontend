@@ -59,6 +59,9 @@ export default {
       padding-left: 24px;
       padding-right: 25px;
     }
+    @include laptop {
+      margin-left: 80px;
+    }
     @include mobile {
       overflow: auto;
     }

@@ -613,6 +613,9 @@ export default {
     @include lg {
       margin-bottom: 12px;
     }
+    @include laptop {
+      margin-bottom: 0;
+    }
   }
 
   &__info-usd-price,
@@ -729,6 +732,9 @@ export default {
 
       @include lg {
         margin-bottom: 0;
+      }
+      @include laptop {
+        display: none;
       }
     }
 

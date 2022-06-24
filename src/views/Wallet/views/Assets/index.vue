@@ -369,7 +369,7 @@ export default {
       color: $mid-blue;
 
       @include lg {
-        font-size: 16px;
+        font-size: x;
       }
 
       @include md {
@@ -464,6 +464,12 @@ export default {
       @include md {
         width: 56px;
         height: 56px;
+      }
+      @include laptop {
+        & svg {
+          width: 22px;
+          height: 22px;
+        }
       }
     }
   }

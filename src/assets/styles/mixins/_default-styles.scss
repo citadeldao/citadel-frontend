@@ -140,9 +140,13 @@
   .compact.sidebar {
     border-color: $too-ligth-blue;
     background-color: #fff;
+    .overall-card {
+      flex-direction: column;
+    }
     .sidebar__addresses-top {
       padding: 0;
-      margin: 0 0 15px;
+      margin: 15px 0;
+      border-color: transparent;
     }
     .sidebar__addresses-header-compact {
       display: flex;
@@ -164,8 +168,8 @@
     }
 
     .address-item {
-      margin-bottom: 25px;
-      margin-left: 0;
+      margin: 0;
+      margin-top: 15px;
       justify-content: center;
     }
 
@@ -207,10 +211,11 @@
     }
 
     .sidebar__compact-view-button.compact {
-      opacity: 1;
       & svg {
+        fill: $black;
         transform: rotate(0);
       }
+      background-color: $ligth-gray;
     }
 
     &:hover {
@@ -218,6 +223,9 @@
         border-color: transparent;
         border-top-color: $too-ligth-blue;
         background-color: transparent;
+      }
+      .sidebar__addresses-top {
+        border-color: transparent;
       }
     }
 

@@ -1,5 +1,10 @@
 <template>
-  <div class="sidebar" :class="showClass">
+  <div
+    class="sidebar"
+    :class="showClass"
+    @mouseout="compactViewON"
+    @mousemove="compactViewOFF"
+  >
     <div class="sidebar__logo">
       <div
         data-qa="main-logo"
@@ -34,7 +39,7 @@
           </h4>
           <div class="sidebar__addresses-header-controls">
             <div
-              class="sidebar__addresses-header-controls-serach-icon"
+              class="sidebar__addresses-header-controls-search-icon"
               :class="{ 'sidebar__active-icon': showSearchInput }"
               data-qa="sidebar__search-button"
               @click="toggleShowSearchInput(!showSearchInput)"
@@ -80,13 +85,15 @@
         class="sidebar__addresses-addresses"
         @scroll="onScrollContent"
       >
-        <transition-group name="drop">
-          <AddressItem
-            v-for="wallet in displayData"
-            :key="`${wallet.net}${wallet.address}`"
-            :wallet="wallet"
-          />
-        </transition-group>
+        <div class="sidebar__addresses-addresses-full-list">
+          <transition-group name="drop">
+            <AddressItem
+              v-for="wallet in displayData"
+              :key="`${wallet.net}${wallet.address}`"
+              :wallet="wallet"
+            />
+          </transition-group>
+        </div>
       </div>
     </div>
     <div v-if="walletsList?.length === 0" class="sidebar__address-placeholder">
@@ -324,6 +331,19 @@ export default {
         e.target.classList.remove('top', 'bottom');
       }
     };
+
+    const compactViewOFF = () => {
+      if (window.innerWidth <= 1024) {
+        showClass.value = '';
+      }
+    };
+
+    const compactViewON = () => {
+      if (window.innerWidth <= 1024) {
+        showClass.value = 'compact';
+      }
+    };
+
     return {
       activeTab,
       toAddAddress,
@@ -348,6 +368,8 @@ export default {
       showClass,
       sideBarView,
       onScrollContent,
+      compactViewOFF,
+      compactViewON,
     };
   },
 };
@@ -368,8 +390,10 @@ export default {
   position: relative;
   z-index: 1;
   padding: $sidebar-padding;
-  transition: all 0.25s;
+  transition: all 0.4s;
   border-right: 1px solid transparent;
+  background-color: $white;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04), 4px 0px 8px rgba(0, 0, 0, 0.06);
 
   @include md {
     padding: $sidebar-padding-md;
@@ -382,40 +406,49 @@ export default {
   }
 
   &:hover {
-    background-color: #fff;
-    .sidebar__compact-view-button {
-      opacity: 1;
-    }
     .sidebar__add-address-button {
       border-style: solid;
       border-color: $too-ligth-blue;
     }
-  }
 
-  &__compact-view-button {
-    background: $too-ligth-blue;
-    width: 24px;
-    height: 24px;
-    border: none;
-    border-radius: 4px;
-
-    position: absolute;
-    top: 20%;
-    right: -12px;
-
-    opacity: 0;
-    transition: 0.15s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    & svg {
-      height: 10px;
-      width: 5px;
-      transform: rotate(180deg);
+    .sidebar__addresses-top {
+      border-color: $too-ligth-blue;
+      @include laptop {
+        border-color: transparent;
+      }
     }
-    &:hover {
-      background-color: $light-blue-1;
+  }
+  @include laptop {
+    max-width: calc(#{$sidebar-max-width-md} - 30px);
+  }
+  @include laptop {
+    position: fixed;
+    z-index: 3;
+    &__compact-view-button {
+      background: $too-ligth-blue;
+      width: 24px;
+      height: 24px;
+      border: none;
+      border-radius: 4px;
+
+      position: absolute;
+      top: 140px;
+      right: -12px;
+
+      transition: 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #00a3ff;
+      & svg {
+        fill: $white;
+        height: 10px;
+        width: 5px;
+        transform: rotate(180deg);
+      }
+      &:hover {
+        background-color: $too-ligth-blue;
+      }
     }
   }
 
@@ -483,8 +516,15 @@ export default {
     &-top {
       background-color: $white;
       padding: 15px;
-      border-radius: $card-border-radius;
+      border-radius: 8px;
       margin-bottom: 15px;
+      border: 1px solid $too-ligth-blue;
+
+      @include laptop {
+        margin-top: 0;
+        margin-bottom: 0;
+        border-color: transparent;
+      }
     }
   }
 
@@ -574,16 +614,24 @@ export default {
   &__addresses-addresses {
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    flex-grow: 1;
     position: relative;
-    list-style-type: none;
     border: 1px solid $light-gray-1;
     border-radius: $card-border-radius;
-    background-color: $white;
+    background: $gray-gradient;
+    overflow: hidden;
     height: 100%;
     &:hover {
-      overflow-y: overlay;
+      &-full-list {
+        overflow-y: overlay;
+      }
+    }
+    &-full-list {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      &:hover {
+        overflow-y: overlay;
+      }
     }
 
     &.bottom::after {
@@ -598,24 +646,26 @@ export default {
     &::before {
       content: '';
       height: 15px;
-      width: 100%;
-      position: sticky;
-      margin-top: 0;
+      width: calc(#{$sidebar-max-width} - 50px);
+      position: absolute;
       padding: 0;
-      display: list-item;
       visibility: visible;
+      @include md {
+        width: calc(#{$sidebar-max-width-md} - 50px);
+      }
     }
 
     &::after {
       bottom: 0;
       margin-top: auto;
-      margin-bottom: -100%;
       background: linear-gradient(to top, rgba(0, 0, 0, 0.2) 40%, transparent);
       z-index: 1;
     }
 
     &::before {
       top: 0;
+      margin-bottom: auto;
+
       background: linear-gradient(
         to bottom,
         rgba(0, 0, 0, 0.2) 40%,
@@ -644,7 +694,7 @@ export default {
     font-size: $add-btn-font-size !important;
     margin-top: 15px;
     margin-bottom: 8px;
-    border: 1px solid transparent;
+    border: 1px solid $too-ligth-blue;
     transition: 0.2s;
     @include md {
       max-width: calc(#{$sidebar-max-width-md} - 50px);
@@ -655,7 +705,6 @@ export default {
     &:hover {
       background: $dark-blue;
       color: $white;
-      border-color: $too-ligth-blue;
       & div {
         background: $white;
         color: $dark-blue;
