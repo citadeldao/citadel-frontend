@@ -147,6 +147,7 @@ export default {
 <style lang="scss" scoped>
 .address-item {
   display: flex;
+  margin-left: 15px;
   margin-bottom: 33px;
   text-decoration: none;
   user-select: text;
@@ -160,6 +161,7 @@ export default {
     }
     .address-item__balance {
       color: $blue;
+      display: flex;
     }
   }
   &:last-child {
@@ -169,14 +171,14 @@ export default {
     margin-bottom: 17px;
   }
   &__icon {
+    border-radius: $round;
+    background: #8496c0;
     width: 40px;
     height: 40px;
-    background: #8496c0;
-    border-radius: $round;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 16px;
+    margin-right: 10px;
     position: relative;
     & svg {
       fill: $white;
@@ -184,7 +186,7 @@ export default {
     @include md {
       width: 32px;
       height: 32px;
-      margin-right: 7px;
+      margin-right: 5px;
     }
   }
   &__badge {
@@ -199,31 +201,30 @@ export default {
   &__info {
     display: flex;
     flex-direction: column;
-    max-width: 145px;
+    max-width: 135px;
     @include md {
       max-width: 110px;
     }
   }
   &__name {
-    font-size: 14px;
-    line-height: 17px;
+    font-size: $sidebar-text-font-size;
     color: $slategray;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
   }
   &__balance {
-    font-size: 18px;
-    line-height: 22px;
+    font-size: $sidebar-balance-font-size;
     font-family: 'Panton_Bold';
     margin-top: 5px;
     color: $mid-blue;
+    display: flex;
     @include md {
-      font-size: 14px;
-      line-height: 17px;
+      font-size: $sidebar-balance-font-size-md;
     }
   }
   &__currency {
+    margin-left: 5px;
     font-family: 'Panton_Regular';
     color: $slategray;
   }

@@ -138,10 +138,20 @@
 
 @mixin sidebar-compact-view {
   .compact.sidebar {
+    border-color: $too-ligth-blue;
     background-color: #fff;
+    .sidebar__addresses-top {
+      padding: 0;
+      margin: 0 0 15px;
+    }
     .sidebar__addresses-header-compact {
       display: flex;
-      margin: 0 0 20px;
+      margin: 0;
+      overflow: visible;
+      padding: 0;
+    }
+    .sidebar__addresses-header-title {
+      overflow: visible;
     }
     .sidebar__addresses-header {
       display: none;
@@ -155,6 +165,7 @@
 
     .address-item {
       margin-bottom: 25px;
+      margin-left: 0;
       justify-content: center;
     }
 

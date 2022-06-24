@@ -18,7 +18,7 @@
       @click="setActiveTab(activeTab)"
     />
     <div v-if="walletsList?.length > 0" class="sidebar__overall">
-      <div class="sidebar__addresses">
+      <div class="sidebar__addresses-top">
         <div class="sidebar__addresses-header-compact">
           <h4 class="sidebar__addresses-header-title">
             {{ $t('layouts.addAddressLayout.wallets') }}
@@ -50,39 +50,43 @@
             />
           </div>
         </div>
-        <transition name="fade">
-          <div v-if="showSearchInput" class="sidebar__addresses-serach-input">
-            <Input
-              id="walletSearch"
-              v-model="keyword"
-              :label="$t('searchToken')"
-              type="text"
-              icon="loop"
-              autofocus
-              :placeholder="$t('inputToken')"
-              background="#edf2fc"
-              clearable
-              data-qa="sidebar__search-field"
-              @blur="blurHandrer(false)"
-            />
-          </div>
-        </transition>
+      </div>
+      <transition name="fade">
+        <div v-if="showSearchInput" class="sidebar__addresses-search-input">
+          <Input
+            id="walletSearch"
+            v-model="keyword"
+            :label="$t('searchToken')"
+            type="text"
+            icon="loop"
+            autofocus
+            :placeholder="$t('inputToken')"
+            background="#edf2fc"
+            clearable
+            data-qa="sidebar__search-field"
+            @blur="blurHandrer(false)"
+          />
+        </div>
+      </transition>
 
-        <div v-if="!displayData.length" class="sidebar__addresses-addresses">
-          <h4 class="sidebar__addresses-header-title">
-            {{ $t('layouts.addAddressLayout.addresses') }}
-          </h4>
-          <SearchPlaceholder />
-        </div>
-        <div v-else class="sidebar__addresses-addresses">
-          <transition-group name="drop">
-            <AddressItem
-              v-for="wallet in displayData"
-              :key="`${wallet.net}${wallet.address}`"
-              :wallet="wallet"
-            />
-          </transition-group>
-        </div>
+      <div v-if="!displayData.length" class="sidebar__addresses-addresses">
+        <h4 class="sidebar__addresses-header-title">
+          {{ $t('layouts.addAddressLayout.addresses') }}
+        </h4>
+        <SearchPlaceholder />
+      </div>
+      <div
+        v-else
+        class="sidebar__addresses-addresses"
+        @scroll="onScrollContent"
+      >
+        <transition-group name="drop">
+          <AddressItem
+            v-for="wallet in displayData"
+            :key="`${wallet.net}${wallet.address}`"
+            :wallet="wallet"
+          />
+        </transition-group>
       </div>
     </div>
     <div v-if="walletsList?.length === 0" class="sidebar__address-placeholder">
@@ -310,6 +314,16 @@ export default {
       showClass.value = showClass.value == '' ? 'compact' : '';
     };
 
+    const onScrollContent = (e) => {
+      const { scrollTop, offsetHeight, scrollHeight } = e.target;
+      if (scrollTop <= 15 || scrollTop == 0) {
+        e.target.classList.add('top');
+      } else if (scrollTop + offsetHeight >= scrollHeight) {
+        e.target.classList.add('bottom');
+      } else {
+        e.target.classList.remove('top', 'bottom');
+      }
+    };
     return {
       activeTab,
       toAddAddress,
@@ -333,6 +347,7 @@ export default {
       blurHandrer,
       showClass,
       sideBarView,
+      onScrollContent,
     };
   },
 };
@@ -354,6 +369,7 @@ export default {
   z-index: 1;
   padding: $sidebar-padding;
   transition: all 0.25s;
+  border-right: 1px solid transparent;
 
   @include md {
     padding: $sidebar-padding-md;
@@ -389,10 +405,13 @@ export default {
 
     opacity: 0;
     transition: 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     & svg {
       height: 10px;
       width: 5px;
-      margin: auto;
       transform: rotate(180deg);
     }
     &:hover {
@@ -438,12 +457,14 @@ export default {
   }
 
   &__overall {
-    flex: 1;
+    max-width: calc(#{$sidebar-max-width} - 50px);
     display: flex;
     flex-direction: column;
-    align-items: center;
+    justify-content: flex-start;
     overflow: hidden;
     width: 100%;
+    margin: 0 auto 15px;
+    position: relative;
   }
 
   &__addresses {
@@ -451,10 +472,16 @@ export default {
     width: 100%;
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
     overflow: hidden;
+    position: relative;
     @include md {
       max-width: calc(#{$sidebar-max-width-md} - 50px);
+    }
+    &-top {
+      background-color: $white;
+      padding: 15px;
+      border-radius: $card-border-radius;
+      margin-bottom: 15px;
     }
   }
 
@@ -466,18 +493,10 @@ export default {
   }
 
   &__addresses-header {
-    margin-bottom: 21px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    @include lg {
-      margin-bottom: 27px;
-    }
-
-    @include md {
-      margin-bottom: 8px;
-    }
     &-compact {
       display: none;
       justify-content: center;
@@ -510,7 +529,7 @@ export default {
     align-items: center;
   }
 
-  &__addresses-header-controls-serach-icon {
+  &__addresses-header-controls-search-icon {
     & svg {
       width: 20px;
       height: 20px;
@@ -539,7 +558,7 @@ export default {
     }
   }
 
-  &__addresses-serach-input {
+  &__addresses-search-input {
     min-height: 68px;
     width: 221px;
     margin-bottom: 16px;
@@ -552,9 +571,58 @@ export default {
   &__addresses-addresses {
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: hidden;
     flex-grow: 1;
+    position: relative;
+    // padding: 0 15px;
+    list-style-type: none;
+    border: 1px solid $light-gray-1;
+    border-radius: $card-border-radius;
+    height: 100%;
+    // box-shadow: 0 22px 22px -22px rgba(0, 0, 0, 0.8) inset,
+    //   0 -22px 22px -22px rgba(0, 0, 0, 0.8) inset;
+    &:hover {
+      overflow-y: overlay;
+
+      &:after,
+      &:before {
+        visibility: visible;
+      }
+      &.bottom:after,
+      &.top:before {
+        visibility: hidden;
+      }
+    }
+
+    &:after,
+    &:before {
+      content: '';
+      height: 15px;
+      width: 100%;
+      position: sticky;
+      margin-top: 0;
+      padding: 0;
+      display: list-item;
+      visibility: hidden;
+    }
+
+    &:after {
+      bottom: 0;
+      margin-top: auto;
+      margin-bottom: -100%;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.2) 40%, transparent);
+    }
+
+    &:before {
+      top: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.2) 40%,
+
+        transparent
+      );
+      z-index: -1;
+    }
   }
 
   &__address-placeholder {
@@ -566,8 +634,9 @@ export default {
     align-items: center;
     justify-content: space-around;
     max-width: calc(#{$sidebar-max-width} - 50px);
+    max-height: 80px;
     width: 100%;
-    height: 80px;
+    height: 100%;
     border-radius: 16px;
     background: $white;
     @include title-default;

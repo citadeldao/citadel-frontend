@@ -84,8 +84,8 @@ export default {
   align-items: flex-start;
   border: 1px solid $ligthgray;
   border-radius: 8px;
-  margin: 0 auto 24px;
-  padding: 24px;
+  margin: 0 auto 15px;
+  padding: 15px;
   cursor: pointer;
   position: relative;
 
@@ -103,8 +103,12 @@ export default {
   }
 
   &.active {
-    background: $white;
-    border: none;
+    background: $dark-blue;
+    border-color: transparent;
+    box-shadow: none;
+    & span {
+      color: $white;
+    }
   }
 
   &__tabs {
