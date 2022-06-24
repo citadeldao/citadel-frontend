@@ -584,20 +584,20 @@ export default {
     &:hover {
       overflow-y: overlay;
 
-      &:after,
-      &:before {
+      &::after,
+      &::before {
         visibility: visible;
       }
-      &.bottom:after {
+      &.bottom::after {
         visibility: hidden;
       }
-      &.top:before {
+      &.top::before {
         visibility: hidden;
       }
     }
 
-    &:after,
-    &:before {
+    &::after,
+    &::before {
       content: '';
       height: 15px;
       width: 100%;
@@ -608,14 +608,14 @@ export default {
       visibility: hidden;
     }
 
-    &:after {
+    &::after {
       bottom: 0;
       margin-top: auto;
       margin-bottom: -100%;
       background: linear-gradient(to top, rgba(0, 0, 0, 0.2) 40%, transparent);
     }
 
-    &:before {
+    &::before {
       top: 0;
       background: linear-gradient(
         to bottom,
