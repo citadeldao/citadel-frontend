@@ -202,6 +202,7 @@ export default {
         if (newVal) {
           inputError.value = '';
         }
+        if (isLoading.value) isLoading.value = false;
       }
     );
 
@@ -278,12 +279,6 @@ export default {
       checkedWallets.value = value;
     };
 
-    watch(
-      () => listName.value,
-      () => {
-        if (isLoading.value) isLoading.value = false;
-      }
-    );
     watch(
       () => checkedWallets.value,
       () => {
