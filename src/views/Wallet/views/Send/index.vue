@@ -1309,7 +1309,7 @@ export default {
     padding: 21px 0 17px 0;
   }
   @include md {
-    padding: 19px 0 0 0;
+    padding: 19px 0 63px;
   }
 
   &__switch {

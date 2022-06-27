@@ -187,13 +187,7 @@
     }
 
     .sidebar__add-address-button {
-      margin-top: auto;
-      border-color: transparent;
-      border-top-style: dashed;
-      border-top-color: $too-ligth-blue;
-      padding: 0 10%;
       width: fit-content;
-      border-radius: 0;
 
       &-text {
         display: none;
@@ -218,17 +212,16 @@
       background-color: $ligth-gray;
     }
 
-    &:hover {
-      .sidebar__add-address-button {
-        border-color: transparent;
-        border-top-color: $too-ligth-blue;
-        background-color: transparent;
-      }
-      .sidebar__addresses-top {
-        border-color: transparent;
-      }
-    }
-
+    // &:hover {
+    //   .sidebar__add-address-button {
+    //     border-color: transparent;
+    //     border-top-color: $too-ligth-blue;
+    //     background-color: transparent;
+    //   }
+    //   .sidebar__addresses-top {
+    //     border-color: transparent;
+    //   }
+    // }
   }
 
 }

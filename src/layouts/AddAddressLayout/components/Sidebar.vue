@@ -1,9 +1,9 @@
 <template>
   <div
     class="sidebar"
-    :class="showClass"
-    @mouseout="compactViewON"
-    @mousemove="compactViewOFF"
+    :class="sidebarClass"
+    @mouseover="onMouseOver"
+    @mouseleave="onMouseLeave"
   >
     <div class="sidebar__logo">
       <div
@@ -17,7 +17,7 @@
     </div>
 
     <OverallCard
-      :balance="totalBalanceWithSubtokensUSD"
+      :balance="totalBalanceWithSubTokensUSD"
       :cryptobalance="totalBTCBalance"
       :title="activeTab"
       @click="setActiveTab(activeTab)"
@@ -69,12 +69,17 @@
             background="#edf2fc"
             clearable
             data-qa="sidebar__search-field"
-            @blur="blurHandrer(false)"
+            @blur="blurHandler(false)"
           />
         </div>
       </transition>
 
-      <div v-if="!displayData.length" class="sidebar__addresses-addresses">
+      <div
+        v-if="!displayData.length"
+        class="sidebar__addresses-addresses"
+        :class="scrollClass"
+        @change="isOverflown($event)"
+      >
         <h4 class="sidebar__addresses-header-title">
           {{ $t('layouts.addAddressLayout.addresses') }}
         </h4>
@@ -112,7 +117,7 @@
     <button
       class="sidebar__compact-view-button"
       @click="sideBarView"
-      :class="`${showClass}`"
+      :class="`${sidebarClass}`"
     >
       <ArrowRight />
     </button>
@@ -170,7 +175,7 @@ export default {
     const { width } = useWindowSize();
     const store = useStore();
     const router = useRouter();
-    const showClass = ref('');
+
     const toAddAddress = () => {
       router.push({ name: 'AddAddress' });
     };
@@ -198,7 +203,7 @@ export default {
       return value;
     });
 
-    const subtokensBalanceUSD = computed(() => {
+    const subTokensBalanceUSD = computed(() => {
       return walletsList.value.reduce((total, currentValue) => {
         return BigNumber(total)
           .plus(currentValue.subtokenBalanceUSD || 0)
@@ -206,8 +211,8 @@ export default {
       }, 0);
     });
 
-    const totalBalanceWithSubtokensUSD = computed(() => {
-      const value = BigNumber(subtokensBalanceUSD.value)
+    const totalBalanceWithSubTokensUSD = computed(() => {
+      const value = BigNumber(subTokensBalanceUSD.value)
         .plus(totalUSDBalance.value)
         .toNumber();
 
@@ -216,7 +221,7 @@ export default {
       return value;
     });
     const totalBTCBalance = computed(() => {
-      const value = BigNumber(totalBalanceWithSubtokensUSD.value)
+      const value = BigNumber(totalBalanceWithSubTokensUSD.value)
         .dividedBy(currency.value?.btc.USD)
         .toNumber();
 
@@ -308,40 +313,11 @@ export default {
       showSearchInput.value = value;
       keyword.value = '';
     };
-    const blurHandrer = async (value) => {
+    const blurHandler = async (value) => {
       setTimeout(() => {
         showSearchInput.value = value;
         keyword.value = '';
       }, 200);
-    };
-
-    showClass.value = window.innerWidth <= 1024 ? 'compact' : '';
-
-    const sideBarView = () => {
-      showClass.value = showClass.value == '' ? 'compact' : '';
-    };
-
-    const onScrollContent = (e) => {
-      const { scrollTop, offsetHeight, scrollHeight } = e.target;
-      if (scrollTop <= 10 || scrollTop == 0) {
-        e.target.classList.add('top');
-      } else if (scrollTop + offsetHeight >= scrollHeight) {
-        e.target.classList.add('bottom');
-      } else {
-        e.target.classList.remove('top', 'bottom');
-      }
-    };
-
-    const compactViewOFF = () => {
-      if (window.innerWidth <= 1024) {
-        showClass.value = '';
-      }
-    };
-
-    const compactViewON = () => {
-      if (window.innerWidth <= 1024) {
-        showClass.value = 'compact';
-      }
     };
 
     return {
@@ -349,7 +325,7 @@ export default {
       toAddAddress,
       walletsList,
       totalBTCBalance,
-      totalBalanceWithSubtokensUSD,
+      totalBalanceWithSubTokensUSD,
       setActiveTab,
       showCustomLists,
       width,
@@ -364,13 +340,85 @@ export default {
       filterList,
       filteredWallets,
       toggleShowSearchInput,
-      blurHandrer,
-      showClass,
-      sideBarView,
-      onScrollContent,
-      compactViewOFF,
-      compactViewON,
+      blurHandler,
     };
+  },
+  data() {
+    return {
+      windowWidth: window.innerWidth,
+      sidebarClass: '',
+      viewBtnClicked: false,
+      timeout: null,
+      scrollClass: '',
+    };
+  },
+  created() {
+    window.addEventListener('resize', this.onResize);
+    this.sidebarClass = window.innerWidth <= 1024 ? 'compact' : '';
+  },
+  mounted() {
+    this.isOverflown();
+  },
+  unmounted() {
+    window.removeEventListener('resize', this.onResize);
+  },
+  methods: {
+    onResize() {
+      this.sidebarClass = window.innerWidth <= 1024 ? 'compact' : '';
+    },
+
+    isOverflown() {
+      const sidebarAddresses = document.querySelector(
+        '.sidebar__addresses-addresses'
+      );
+      const { scrollHeight, clientHeight, scrollWidth, clientWidth } =
+        sidebarAddresses;
+      const condition =
+        scrollHeight > clientHeight || scrollWidth > clientWidth;
+      if (condition) {
+        sidebarAddresses.classList.add('active');
+      }
+    },
+
+    onScrollContent(e) {
+      const { scrollTop, offsetHeight, scrollHeight } = e.target;
+
+      e.target.classList.add('active');
+      if (scrollTop <= 10 || scrollTop == 0) {
+        e.target.classList.add('top');
+      } else if (scrollTop + offsetHeight >= scrollHeight) {
+        e.target.classList.add('bottom');
+      } else {
+        e.target.classList.remove('top', 'bottom');
+      }
+    },
+
+    sideBarView() {
+      if (window.innerWidth <= 1024 && this.sidebarClass == '') {
+        this.sidebarClass = this.viewBtnClicked ? '' : 'compact';
+        this.viewBtnClicked = !!this.viewBtnClicked;
+      }
+    },
+
+    onMouseOver() {
+      if (window.innerWidth <= 1024 && this.sidebarClass == 'compact') {
+        this.timeout =
+          this.viewBtnClicked == false
+            ? setTimeout(() => (this.sidebarClass = ''), 400)
+            : null;
+      }
+    },
+
+    onMouseLeave() {
+      if (window.innerWidth <= 1024) {
+        clearTimeout(this.timeout);
+
+        setTimeout(() => {
+          this.sidebarClass = 'compact';
+          this.viewBtnClicked = false;
+        }, 400);
+      }
+    },
   },
 };
 </script>
@@ -400,15 +448,14 @@ export default {
     max-width: $sidebar-max-width-md;
   }
 
-  @include laptop {
-    padding: $sidebar-padding-laptop;
-    @include sidebar-compact-view;
-  }
-
   &:hover {
     .sidebar__add-address-button {
       border-style: solid;
-      border-color: $too-ligth-blue;
+      @include laptop {
+        border-style: dashed;
+        border-color: transparent;
+        border-top-color: $too-ligth-blue;
+      }
     }
 
     .sidebar__addresses-top {
@@ -418,10 +465,15 @@ export default {
       }
     }
   }
-  @include laptop {
-    max-width: calc(#{$sidebar-max-width-md} - 30px);
+
+  &__compact-view-button {
+    display: none;
   }
+
   @include laptop {
+    padding: $sidebar-padding-laptop;
+    @include sidebar-compact-view;
+    max-width: calc(#{$sidebar-max-width-md} - 30px);
     position: fixed;
     z-index: 3;
     &__compact-view-button {
@@ -443,7 +495,6 @@ export default {
       & svg {
         fill: $white;
         height: 10px;
-        width: 5px;
         transform: rotate(180deg);
       }
       &:hover {
@@ -523,6 +574,7 @@ export default {
       @include laptop {
         margin-top: 0;
         margin-bottom: 0;
+        padding: 15px 0;
         border-color: transparent;
       }
     }
@@ -570,6 +622,9 @@ export default {
   &__addresses-header-controls {
     display: flex;
     align-items: center;
+    @include laptop {
+      margin-right: 15px;
+    }
   }
 
   &__addresses-header-controls-search-icon {
@@ -605,9 +660,9 @@ export default {
     min-height: 68px;
     width: 221px;
     margin-bottom: 16px;
-
+    max-width: calc(#{$sidebar-max-width} - 50px);
     @include md {
-      width: 169px;
+      max-width: calc(#{$sidebar-max-width-md} - 50px);
     }
   }
 
@@ -620,6 +675,7 @@ export default {
     background: $gray-gradient;
     overflow: hidden;
     height: 100%;
+    box-shadow: none;
     &:hover {
       &-full-list {
         overflow-y: overlay;
@@ -628,10 +684,8 @@ export default {
     &-full-list {
       display: flex;
       flex-direction: column;
-      overflow: hidden;
-      &:hover {
-        overflow-y: overlay;
-      }
+      overflow: overlay;
+      padding-bottom: 15px;
     }
 
     &.bottom::after {
@@ -642,6 +696,11 @@ export default {
       visibility: hidden;
     }
 
+    &.active::after,
+    &.active::before {
+      visibility: visible;
+    }
+
     &::after,
     &::before {
       content: '';
@@ -649,7 +708,7 @@ export default {
       width: calc(#{$sidebar-max-width} - 50px);
       position: absolute;
       padding: 0;
-      visibility: visible;
+      visibility: hidden;
       @include md {
         width: calc(#{$sidebar-max-width-md} - 50px);
       }
@@ -696,11 +755,6 @@ export default {
     margin-bottom: 8px;
     border: 1px solid $too-ligth-blue;
     transition: 0.2s;
-    @include md {
-      max-width: calc(#{$sidebar-max-width-md} - 50px);
-      height: 60px;
-      border-radius: 8px;
-    }
 
     &:hover {
       background: $dark-blue;
@@ -728,6 +782,22 @@ export default {
         height: 32px;
         font-size: 18px;
       }
+    }
+
+    @include md {
+      max-width: calc(#{$sidebar-max-width-md} - 50px);
+      height: 60px;
+      border-radius: 8px;
+    }
+
+    @include laptop {
+      height: 60px;
+      margin-top: auto;
+      border-color: transparent;
+      border-top-style: dashed;
+      border-top-color: $too-ligth-blue;
+      padding: 0 10%;
+      border-radius: 0 0 8px 8px;
     }
   }
 }

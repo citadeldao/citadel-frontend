@@ -1264,6 +1264,7 @@ export default {
   }
 
   &__main {
+    position: relative;
     display: flex;
     flex-direction: column;
     background: $white;

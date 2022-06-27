@@ -165,6 +165,9 @@ export default {
       display: flex;
     }
   }
+  &:not(:last-child) {
+    margin-top: 15px;
+  }
   &:last-child {
     margin-bottom: 0;
   }

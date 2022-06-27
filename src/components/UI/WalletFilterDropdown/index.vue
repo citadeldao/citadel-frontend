@@ -131,7 +131,7 @@ export default {
 
   &:hover {
     .wallet-filter-dropdown__value-icon {
-      fill: #f1f4ff;
+      fill: $blue;
     }
   }
 
@@ -152,10 +152,10 @@ export default {
       0 10px 15px rgba(80, 100, 124, 0.16);
     border-radius: 8px;
     padding: 4px 8px 4px 8px;
-    background-color: $dark-blue;
+    background: $gray-gradient;
     z-index: 4;
     & svg {
-      fill: $white;
+      fill: $too-dark-blue;
     }
   }
 
