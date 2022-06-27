@@ -265,8 +265,8 @@ export default {
     watch(
       () => props.currentWallet,
       (wallet, oldWallet) => {
-        if (wallet?.net !== oldWallet?.value?.net && wallet?.hasSubtoken) {
-          copyWallet.value = JSON.parse(JSON.stringify(props.currentWallet));
+        if (wallet?.net !== oldWallet?.net && !wallet?.parentCoin?.net) {
+          copyWallet.value = { ...props.currentWallet };
         }
       }
     );

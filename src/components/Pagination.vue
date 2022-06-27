@@ -1,5 +1,5 @@
 <template>
-  <div v-show="total > 9" class="pagination">
+  <div v-show="total > pageSize - 1" class="pagination">
     <div v-if="total > 0" class="pagination__item-count">
       <span class="pagination__current-amount">
         {{ (currentPage - 1) * pageSize + 1 }} </span
