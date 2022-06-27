@@ -135,6 +135,7 @@ export default {
       { rootGetters, dispatch },
       { walletOpts, password }
     ) {
+      console.log('test', walletOpts);
       try {
         const derivationPath = walletOpts.pathIndex
           ? models[walletOpts.net.toUpperCase()].getDerivationPath(
