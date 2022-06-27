@@ -10,7 +10,7 @@
     </div>
     <PrimaryButton
       :disabled="!oldPasswordHash"
-      class="delete__button"
+      class="delete__button mb15"
       data-qa="settings__delete-account__confirm-button"
       @click="changePassword"
     >
@@ -234,6 +234,7 @@ export default {
     });
 
     const updatePassword = () => {
+      if (!oldPasswordHash.value) return;
       const walletsToUpdate = [];
 
       startUpdate.value = true;
@@ -252,8 +253,12 @@ export default {
             privateKey,
             newPassword.value
           );
-
-          w.privateKeyEncoded = privateKeyEncoded.data;
+          if (w.privateKeyEncoded) {
+            w.privateKeyEncoded = privateKeyEncoded.data;
+          } else {
+            //polkadot,if imported from private key
+            w.mnemonicEncoded = privateKeyEncoded.data;
+          }
 
           if (w.importedFromSeed) {
             const mnemonic = store.getters['crypto/decodeUserMnemonic'](
@@ -279,11 +284,14 @@ export default {
         oldPassword.value
       );
 
-      // rewrite encode mnemonic/passwordHash
-      store.dispatch('crypto/setAndEncodeUserMnemonic', {
-        mnemonic,
-        password: newPassword.value,
-      });
+      if (mnemonic) {
+        // rewrite encode mnemonic/passwordHash
+        store.dispatch('crypto/setAndEncodeUserMnemonic', {
+          mnemonic,
+          password: newPassword.value,
+        });
+      }
+
       store.dispatch('crypto/setPassword', newPassword.value);
 
       // reset flags
@@ -467,5 +475,8 @@ export default {
   &__checkbox {
     margin-bottom: 24px;
   }
+}
+.mb15 {
+  margin-bottom: 15px;
 }
 </style>
