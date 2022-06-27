@@ -40,9 +40,8 @@
         <div>USD Balance</div>
         <div>Price</div>
       </div>
-
       <AssetsItem
-        :item="currentWallet"
+        :item="copyWallet"
         :balance="currentWallet.balance"
         is-native-token
       />
@@ -136,6 +135,7 @@ export default {
     const store = useStore();
     const route = useRoute();
 
+    let copyWallet = ref(props.currentWallet);
     const keyword = ref('');
     const showCreateVkModal = ref(false);
     const snip20TokenFee = ref(null);
@@ -167,7 +167,6 @@ export default {
         snip20Token.value = token;
       } else {
         store.dispatch('subtokens/setCurrentToken', token);
-
         redirectToWallet({
           wallet: store.getters['wallets/walletByAddress'](route.params),
           token,
@@ -263,12 +262,20 @@ export default {
         clearFilters();
       }
     );
-
+    watch(
+      () => props.currentWallet,
+      (wallet, oldWallet) => {
+        if (wallet?.net !== oldWallet?.value?.net && wallet?.hasSubtoken) {
+          copyWallet.value = JSON.parse(JSON.stringify(props.currentWallet));
+        }
+      }
+    );
     return {
       setCurrentToken,
       setMainToken,
       isNotLinkedSnip20,
       closeCreateVkModal,
+      copyWallet,
       keyword,
       filterValue,
       filterList,

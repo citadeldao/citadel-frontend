@@ -23,7 +23,7 @@ export default ({ wallet, token, root = false }) => {
         ? 'WalletAssets'
         : context.hasStake
         ? 'WalletStake'
-        : 'WalletSend'
+        : 'WalletAssets'
       : currentRoute.name;
 
   router.push({

@@ -108,22 +108,8 @@ export default {
     });
 
     const to = computed(() => {
-      if (props.wallet.hasSubtoken) {
-        return {
-          name: 'WalletAssets',
-          params: { net: props.wallet.net, address: props.wallet.address },
-        };
-      }
-
-      if (props.wallet.hasStake) {
-        return {
-          name: 'WalletStake',
-          params: { net: props.wallet.net, address: props.wallet.address },
-        };
-      }
-
       return {
-        name: 'WalletSend',
+        name: 'WalletAssets',
         params: { net: props.wallet.net, address: props.wallet.address },
       };
     });
