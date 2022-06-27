@@ -141,7 +141,7 @@ export default {
 
     const { wallets } = useWallets();
 
-    const currency = computed(() => store.getters['profile/info'].rates);
+    const currency = computed(() => store.getters['profile/rates']);
 
     const activeTab = computed(() => store.getters['wallets/activeList']);
     const customWalletsList = computed(

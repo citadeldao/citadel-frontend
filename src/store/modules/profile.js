@@ -5,6 +5,8 @@ import citadel from '@citadeldao/lib-citadel';
 const types = {
   SET_INFO: 'SET_INFO',
   SET_SUBSCRIBE_REWARDS: 'SET_SUBSCRIBE_REWARDS',
+  SET_MARKETCAPS: 'SET_MARKETCAPS',
+  SET_RATES: 'SET_RATES',
 };
 
 export default {
@@ -12,12 +14,16 @@ export default {
   state: {
     info: {
       info: null,
+      marketcaps: {},
+      rates: {},
     },
   },
   getters: {
     info: (state) => state.info,
     formatYeldByNet: (state) => (net) =>
-      prettyNumber(state.info?.marketcap?.[net]?.yield),
+      prettyNumber(state.marketcaps?.[net]?.yield),
+    marketcaps: (state) => state.marketcaps,
+    rates: (state) => state.rates,
   },
   mutations: {
     [types.SET_INFO](state, info) {
@@ -25,6 +31,12 @@ export default {
     },
     [types.SET_SUBSCRIBE_REWARDS](state, value) {
       state.info.subscribe_rewards = value;
+    },
+    [types.SET_MARKETCAPS](state, value) {
+      state.marketcaps = value;
+    },
+    [types.SET_RATES](state, value) {
+      state.rates = value;
     },
   },
   actions: {
@@ -35,13 +47,11 @@ export default {
       });
 
       if (!error) {
-        const { data: marketcap } = await citadel.getAllMarketcaps();
-        const { data: rates } = await citadel.getAllRates();
+        await dispatch('getMarketcaps');
+        await dispatch('getRates');
         dispatch('auth/setIsAuthenticated', true, { root: true });
         const info = {
           ...data.user,
-          marketcap,
-          rates,
         };
         commit(types.SET_INFO, info);
 
@@ -52,6 +62,26 @@ export default {
       router.push({ name: 'Login' });
 
       return { error };
+    },
+
+    async getMarketcaps({ commit }) {
+      const { data, error } = await citadel.getAllMarketcaps();
+      if (!error) {
+        commit(types.SET_MARKETCAPS, data);
+      }
+    },
+
+    async getRates({ commit }) {
+      const { data, error } = await citadel.getAllRates();
+      if (!error) {
+        commit(types.SET_RATES, data);
+      }
+    },
+
+    // eslint-disable-next-line no-unused-vars
+    async updateMarketcap({ commit }, data) {
+      const ifSubtoken = data.net.includes('_');
+      console.log('test', ifSubtoken, data.net);
     },
 
     async changeSubscribeRewards({ commit }, newValue) {

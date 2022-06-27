@@ -319,7 +319,7 @@ export default {
 
     const store = useStore();
     const infoMarketcap = computed(
-      () => store.getters['profile/info'].marketcap[props.currentWallet.net]
+      () => store.getters['profile/marketcaps'][props.currentWallet.net]
     );
     const marketcap = computed(
       () => walletMarketcap?.value || infoMarketcap?.value
