@@ -338,8 +338,8 @@ export default {
     );
     const subtokens = computed(() => {
       const formattedSubtokens = store.getters['subtokens/formatedSubtokens']();
-      const indexXCT = formattedSubtokens.findIndex((e) => e.code === 'XCT');
-      if (currentWallet?.value.code === 'BNB') {
+      const indexXCT = formattedSubtokens.findIndex((e) => e.net === OUR_TOKEN);
+      if (currentWallet?.value?.hasXCT) {
         if (indexXCT !== -1) {
           [formattedSubtokens[0], formattedSubtokens[indexXCT]] = [
             formattedSubtokens[indexXCT],
