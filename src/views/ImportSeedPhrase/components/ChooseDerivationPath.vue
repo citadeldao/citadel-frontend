@@ -73,6 +73,7 @@ export default {
     const pathOptions = ref(
       CryptoCoin.getDerivationPathTemplates(props.walletOpts.nets[0], 'seed')
     );
+    const hasPathOptions = computed(() => pathOptions.value.length > 1);
     const numberOfPaths = 5;
     const wallets = ref([]);
     const isInvalid = ref(false);
@@ -84,7 +85,12 @@ export default {
         [...Array(numberOfPaths)].map((_, pathIndex) => {
           return store.dispatch('crypto/createWalletByMnemonic', {
             walletOpts: {
-              derivationPath: pathFormat.replace('N', pathIndex),
+              //for polkadot
+              derivationPath: hasPathOptions.value
+                ? pathFormat.replace('N', pathIndex)
+                : undefined,
+              //for polkadot
+              pathIndex: !hasPathOptions.value ? pathIndex : undefined,
               net: props.walletOpts.nets[0],
               ...props.walletOpts,
             },
