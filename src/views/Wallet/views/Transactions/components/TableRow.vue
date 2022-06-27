@@ -30,13 +30,7 @@
     <td class="table-row__date-time">
       <Tooltip>
         <template #content>
-          <span :style="{ maxWidth: '200px', display: 'flex' }">
-            {{
-              transaction.date
-                ? moment(transaction.date).format('DD.MM.YYYY hh:mm')
-                : ''
-            }}
-          </span>
+          <span> {{ defaultDate(transaction.date) }} </span>
         </template>
         <template #default>
           <span>{{
@@ -172,7 +166,7 @@ import inIcon from '@/assets/icons/transactions/in.svg';
 import out from '@/assets/icons/transactions/out.svg';
 import useTransaction from '@/compositions/useTransaction';
 import Tooltip from '@/components/UI/Tooltip';
-
+import defaultDate from '@/helpers/date.js';
 export default {
   name: 'TableRow',
   components: { inIcon, out, comment, curveArrow, EditButton, Tooltip },
@@ -267,6 +261,7 @@ export default {
     });
 
     return {
+      defaultDate,
       icon,
       type,
       status,
