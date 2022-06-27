@@ -11,7 +11,7 @@
     <PrimaryButton
       :disabled="!oldPasswordHash"
       class="delete__button mb15"
-      data-qa="settings__delete-account__confirm-button"
+      data-qa="Change-password"
       @click="changePassword"
     >
       {{ $t('settings.changePassword.btnTitle') }}
@@ -21,7 +21,7 @@
       hover-bg-color="#fc0800"
       box-shadow="0 0 25px 0 rgba(219, 71, 60, 0.3)"
       class="delete__button"
-      data-qa="settings__delete-account-button"
+      data-qa="Delete-account"
       @click="openDeleteAccountModal"
     >
       {{ $t('settings.delete.button') }}
@@ -105,7 +105,7 @@
         </div>
         <PrimaryButton
           class="delete-modal__button"
-          data-qa="settings__delete-account__confirm-button"
+          data-qa="Update"
           @click="updatePassword"
         >
           {{ $t('settings.changePassword.btnUpdate') }}
@@ -153,7 +153,7 @@
               bg-color="#FA3B33"
               hover-bg-color="#fc0800"
               class="delete-modal__button"
-              data-qa="settings__delete-account__confirm-button"
+              data-qa="Delete-account_modal"
               @click="deleteAccount"
             >
               {{ $t('settings.delete.button') }}

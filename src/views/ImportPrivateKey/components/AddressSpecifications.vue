@@ -39,7 +39,7 @@
       </div>
       <PrimaryButton
         :disabled="disabled"
-        data-qa="add-address__existing__private-key__import-button"
+        data-qa="Import"
       >
         {{ $t('import') }}
       </PrimaryButton>
