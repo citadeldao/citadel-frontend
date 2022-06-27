@@ -48,7 +48,7 @@
         </template>
       </div>
       <PrimaryButton
-        :data-qa="dataQa && `${dataQa}__cat-modal__ok-button`"
+        data-qa="Ok"
         @click="clickHandler"
       >
         {{ $t('ok') }}
