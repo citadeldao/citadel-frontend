@@ -1,6 +1,9 @@
 <template>
   <router-link
-    :to="to"
+    :to="{
+      name: 'WalletAssets',
+      params: { net: wallet.net, address: wallet.address },
+    }"
     class="address-item"
     :class="{ 'active-link': isActive }"
     draggable="false"
@@ -107,12 +110,26 @@ export default {
       );
     });
 
-    const to = computed(() => {
-      return {
-        name: 'WalletAssets',
-        params: { net: props.wallet.net, address: props.wallet.address },
-      };
-    });
+    // const to = computed(() => {
+    //   if (props.wallet.hasSubtoken) {
+    //     return {
+    //       name: 'WalletAssets',
+    //       params: { net: props.wallet.net, address: props.wallet.address },
+    //     };
+    //   }
+
+    //   if (props.wallet.hasStake) {
+    //     return {
+    //       name: 'WalletStake',
+    //       params: { net: props.wallet.net, address: props.wallet.address },
+    //     };
+    //   }
+
+    //   return {
+    //     name: 'WalletSend',
+    //     params: { net: props.wallet.net, address: props.wallet.address },
+    //   };
+    // });
     const isActive = computed(
       () =>
         route.params.address?.toLowerCase() ===
@@ -125,7 +142,13 @@ export default {
       isActive.value && instance.proxy.$el.scrollIntoView();
     });
 
-    return { icon, type, to, walletName, isActive };
+    return {
+      icon,
+      type,
+      // to,
+      walletName,
+      isActive,
+    };
   },
 };
 </script>

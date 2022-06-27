@@ -99,6 +99,7 @@ import redirectToWallet from '@/router/helpers/redirectToWallet';
 import { TOKEN_STANDARDS } from '@/config/walletType';
 import usePaginationWithSearch from '@/compositions/usePaginationWithSearch';
 import Pagination from '@/components/Pagination.vue';
+import useWallets from '@/compositions/useWallets';
 
 export default {
   name: 'AssetsBlock',
@@ -134,8 +135,7 @@ export default {
   setup(props) {
     const store = useStore();
     const route = useRoute();
-
-    let copyWallet = ref(props.currentWallet);
+    const { currentWallet: copyWallet } = useWallets();
     const keyword = ref('');
     const showCreateVkModal = ref(false);
     const snip20TokenFee = ref(null);
@@ -260,14 +260,6 @@ export default {
       () => [props.currentWallet, props.currentToken],
       () => {
         clearFilters();
-      }
-    );
-    watch(
-      () => props.currentWallet,
-      (wallet, oldWallet) => {
-        if (wallet?.net !== oldWallet?.net && !wallet?.parentCoin?.net) {
-          copyWallet.value = { ...props.currentWallet };
-        }
       }
     );
     return {
