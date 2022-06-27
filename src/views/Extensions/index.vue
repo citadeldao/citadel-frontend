@@ -473,7 +473,6 @@ export default {
         });
         const wallets = walletsList.value
 
-          // const wallets = privateWallets.value
           .filter(
             (w) =>
               nets.includes(w.net.toLowerCase()) &&
@@ -688,6 +687,13 @@ export default {
         signerWallet.value.type === WALLET_TYPES.KEPLR
       ) {
         let keplrResult;
+        const signType =
+          extensionTransactionForSign.value.transaction.direct &&
+          extensionTransactionForSign.value.transaction.json.memo
+            .toLowerCase()
+            .includes('permissions')
+            ? 'direct'
+            : 'json';
 
         try {
           keplrResult = await keplrConnector.value.sendKeplrTransaction(
@@ -715,11 +721,13 @@ export default {
 
         const defaultTx = {
           ...keplrResult.signedTx,
+          signType,
           publicKey: signerWallet.value.getPublicKeyDecoded(),
           signature: keplrResult.signature,
         };
         const defaultSendTx = extensionTransactionForSign.value.transaction;
         const protobufTx = {
+          signType,
           mode: 'sync',
           tx: {
             memo: defaultSendTx.json.memo || '',
@@ -735,6 +743,8 @@ export default {
             ],
           },
         };
+
+        // https://core-fix-cosmos-grant.3ahtim54r.ru/api
 
         const data = await useApi('wallet').sendSignedTransaction({
           hash: keplrNetworksProtobufFormat.includes(signerWallet.value.net)

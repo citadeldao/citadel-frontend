@@ -146,7 +146,7 @@ export default {
         walletId: props.wallet.id,
       });
 
-      await store.dispatch('wallets/getNewWallets', 'lazy');
+      // await store.dispatch('wallets/getNewWallets','lazy');
       await store.dispatch('wallets/getCustomWalletsList');
 
       isLoading.value = false;

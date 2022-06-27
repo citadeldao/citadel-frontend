@@ -176,6 +176,7 @@ import { sha3_256 } from 'js-sha3';
 import notify from '@/plugins/notify';
 import CatPage from '@/components/CatPage';
 import citadel from '@citadeldao/lib-citadel';
+import models from '@/models';
 
 export default {
   components: {
@@ -335,16 +336,24 @@ export default {
           syncLoading.value = false;
         }
 
-        console.log('syncResult', syncResult);
-
         const result =
           syncResult &&
           (await Promise.all(
             syncResult.map(async (wallet) => {
-              const privateKey = CryptoJS.AES.decrypt(
-                wallet.privateKeyEncoded,
+              const WalletConstructor = models[wallet.net.toUpperCase()];
+              const walletOpts = {
+                address: wallet.address,
+                privateKeyEncoded: wallet.privateKeyEncoded,
+                publicKey: wallet.publicKey,
+                type: WALLET_TYPES.PRIVATE_KEY,
+                config: store.getters['networks/configByNet'](wallet.net),
+              };
+              const newInstance = new WalletConstructor(walletOpts);
+
+              const privateKey = newInstance.getPrivateKeyDecoded(
                 password.value
-              ).toString(CryptoJS.enc.Utf8);
+              );
+
               const res = await citadel.addWalletByPrivateKey({
                 net: wallet.net,
                 privateKey,

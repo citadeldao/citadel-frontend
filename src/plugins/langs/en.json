@@ -685,6 +685,23 @@
             "description": "Chosen platform language",
             "inputLabel": "Language"
         },
+        "changePassword": {
+            "btnTitle": "Change password",
+            "btnUpdate": "Update",
+            "modalTitle": "Password change",
+            "oldPassword": "Old password",
+            "newPassword": "New password",
+            "modalDescription": "This is the password you will use to confirm transaction signatures",
+            "incorrectOldPassword": "The old password is incorrect",
+            "minLen": "Min length 8 characters",
+            "successTitle": "Your password was successfully changed",
+            "successDescription": "Use your new password to confirm transactions",
+            "title": "Your password",
+            "description": "You can change your password here",
+            "button": "Change",
+            "comingSoon": "COMING SOON",
+            "tooltip": "As Citadel.one is a non-custodial platform, we do not store your password — it is kept in your browser’s local storage. If you clear your cookies, your password will be deleted — you will have to create a new one."
+        },
         "delete": {
             "title": "Delete your account",
             "description": "This operation cannot be reversed",
@@ -698,13 +715,6 @@
             "description": "Access your favorite applications with a brand new Citadel.one browser extension.",
             "button": "Get Started",
             "comingSoon": "COMING SOON"
-        },
-        "changePassword": {
-            "title": "Your password",
-            "description": "You can change your password here",
-            "button": "Change",
-            "comingSoon": "COMING SOON",
-            "tooltip": "As Citadel.one is a non-custodial platform, we do not store your password — it is kept in your browser’s local storage. If you clear your cookies, your password will be deleted — you will have to create a new one."
         },
         "extensionSettings": {
             "title": "Extensions settings",
@@ -1237,7 +1247,10 @@
             "metamaskKeplr": "Metamask, Keplr",
             "metamaskKeplrDescription": "Connect your Web3 Wallet to add an address",
             "hardware": "Hardware wallet",
-            "hardwareDescription": "Import addresses from Ledger or Trezor device for advanced use"
+            "hardwareDescription": "Import addresses from Ledger or Trezor device for advanced use",
+            "sourceAddress": "Source Address",
+            "destinationAddress": "Destination Address"
         }
-    }
+    },
+    "noApyNote": "Get passive income via staking your crypto assets!"
 }

@@ -6,12 +6,20 @@ import BigNumber from 'bignumber.js';
 import { WALLET_TYPES } from '@/config/walletType';
 
 export default function useWallets(wallet = null, showCount = undefined) {
+  const sunbtokensList = computed(store.getters['subtokens/formatedSubtokens']);
   const currentWallet = computed(
     () =>
       store.getters['wallets/currentWallet'] &&
       findWalletInArray(wallets.value, store.getters['wallets/currentWallet'])
   );
-
+  const currentToken = computed(
+    () =>
+      store.getters['subtokens/currentToken'] &&
+      findWalletInArray(
+        sunbtokensList.value,
+        store.getters['subtokens/currentToken']
+      )
+  );
   // instance of given wallet
   const walletByAddress = (walletInfo) =>
     store.getters['wallets/walletByAddress'](walletInfo);
@@ -281,5 +289,6 @@ export default function useWallets(wallet = null, showCount = undefined) {
     currentWallet,
     balanceStructure: finalStructure,
     isHardwareWallet,
+    currentToken,
   };
 }
