@@ -2,6 +2,32 @@ import { i18n } from '@/plugins/i18n';
 const { t } = i18n.global;
 
 export default {
+  // new
+  Received: {
+    icon: 'income',
+    title: t('receive'),
+  },
+  Claim: {
+    icon: 'reward',
+    title: 'Rewards',
+  },
+  Sent: {
+    icon: 'outcome',
+    title: t('send'),
+  },
+  Vote: {
+    icon: 'vote',
+    title: 'Vote',
+  },
+  'IBC send': {
+    icon: 'IBC',
+    title: 'IBC',
+  },
+  'Custom - Update Client': {
+    icon: 'IBC',
+    title: 'Custom',
+  },
+  // old
   income: {
     icon: 'income',
     title: t('receive'),

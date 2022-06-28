@@ -91,10 +91,12 @@
             <span v-if="!isNaN(fee)" class="table-row__amount-fee">
               <span class="table-row__amount-fee-fee">{{ $t('fee') }}:</span>
               <span
-                v-pretty-number="{ value: fee, currency: 'USD' }"
+                v-pretty-number="{ value: fee, currency: 'ATOM' }"
                 class="table-row__amount-fee-value"
               />
-              <span class="table-row__amount-fee-currency"> $ </span>
+              <span class="table-row__amount-fee-currency">{{
+                transaction.fee.symbol
+              }}</span>
             </span>
           </div>
         </div>
@@ -118,10 +120,12 @@
           <span v-if="!isNaN(fee)" class="table-row__amount-fee">
             <span class="table-row__amount-fee-fee">{{ $t('fee') }}:</span>
             <span
-              v-pretty-number="{ value: fee, currency: 'USD' }"
+              v-pretty-number="{ value: fee }"
               class="table-row__amount-fee-value"
             />
-            <span class="table-row__amount-fee-currency"> $ </span>
+            <span class="table-row__amount-fee-currency">{{
+              transaction.fee.symbol
+            }}</span>
           </span>
         </div>
         <comment v-if="transaction.note" class="table-row__comment-icon" />
@@ -179,7 +183,9 @@ export default {
   emits: ['editComment', 'showTransactionInfo'],
 
   setup(props) {
-    const { type } = useTransaction(props.transaction);
+    const { type } = useTransaction(props.transaction.view[0]);
+    console.log('type', props.transaction.view[0].type);
+
     const icon = ref();
     import(`@/assets/icons/transactions/${type.value.icon}.svg`).then((val) => {
       icon.value = markRaw(val.default);
@@ -217,17 +223,13 @@ export default {
     );
 
     const fee = computed(() => {
-      if (props.transaction.fee === 0) {
+      if (+props.transaction.fee.text === 0) {
         return 0;
       }
 
       return props.fromMempool
-        ? props.transaction.fee
-        : BigNumber(
-            props.transaction.price?.USD || props.transaction.price?.usd
-          )
-            .times(props.transaction.fee)
-            .toNumber();
+        ? props.transaction.fee.text
+        : +props.transaction.fee.text;
     });
     const formatedValue = computed(() => {
       return BigNumber(props.transaction.value).toNumber();
