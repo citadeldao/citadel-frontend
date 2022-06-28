@@ -31,4 +31,5 @@ export const cosmosNetworks = [
   'mantle',
   'evmos',
   'crescent',
+  'orai',
 ];
