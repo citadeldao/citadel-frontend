@@ -79,23 +79,23 @@
           exchange
         </h3>
         <div class="cards__container">
-          <Card class="card-special">
+          <Card class="card-special" iconName="app-system">
             <template #default>
               <span class="card-special-title"> Swap via Citadel.one </span>
               <span class="card-special-title-staking"> extensions </span>
               <RoundArrowButton data-qa="stake__start-staking-button" />
-              <appSystem key="selected1" class="card-special-icon"></appSystem>
+              <!-- <appSystem key="selected1" class="card-special-icon"></appSystem> -->
             </template>
           </Card>
-          <Card class="card-special">
+          <Card class="card-special" iconName="app-system-coin">
             <template #default>
               <span class="card-special-title"> Deposit from </span>
               <span class="card-special-title-staking"> exchanges </span>
               <RoundArrowButton data-qa="stake__start-staking-button" />
-              <appSystemCoin
+              <!-- <appSystemCoin
                 key="selected"
                 class="card-special-icon"
-              ></appSystemCoin>
+              ></appSystemCoin> -->
             </template>
           </Card>
         </div>
@@ -133,8 +133,6 @@ import usePaginationWithSearch from '@/compositions/usePaginationWithSearch';
 import Pagination from '@/components/Pagination.vue';
 import RoundArrowButton from '@/components/UI/RoundArrowButton';
 import Card from '@/components/UI/Card';
-import appSystem from '@/assets/icons/app-system.svg';
-import appSystemCoin from '@/assets/icons/app-system-coin.svg';
 
 export default {
   name: 'AssetsBlock',
@@ -149,8 +147,6 @@ export default {
     Pagination,
     RoundArrowButton,
     Card,
-    appSystem,
-    appSystemCoin,
   },
   props: {
     currentWallet: {
