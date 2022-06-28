@@ -62,9 +62,16 @@
         <div class="table-row__amount-block">
           <div class="table-row__amount-block-line">
             <div class="table-row__amount-block-date-time">
-              <span>{{
-                transaction.date ? moment(transaction.date).fromNow() : ''
-              }}</span>
+              <Tooltip>
+                <template #content>
+                  <span> {{ defaultDate(transaction.date) }} </span>
+                </template>
+                <template #default>
+                  <span>{{
+                    transaction.date ? moment(transaction.date).fromNow() : ''
+                  }}</span>
+                </template>
+              </Tooltip>
             </div>
             <div class="table-row__amount-value">
               <span
