@@ -318,9 +318,10 @@ export default {
     getWalletMarketcap();
 
     const store = useStore();
-    const infoMarketcap = computed(
-      () => store.getters['profile/marketcaps'][props.currentWallet.net]
-    );
+    const infoMarketcap = computed(() => {
+      console.log('exav1');
+      return store.getters['profile/marketcaps'][props.currentWallet.net];
+    });
     const marketcap = computed(
       () => walletMarketcap?.value || infoMarketcap?.value
     );

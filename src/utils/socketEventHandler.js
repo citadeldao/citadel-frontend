@@ -185,6 +185,8 @@ export async function socketEventHandler({ eventName, data }) {
       //update marketcap
       console.log(888);
       await store.dispatch('profile/updateMarketcap', data);
+      await store.dispatch('profile/updateRates', data);
+
       break;
   }
 }

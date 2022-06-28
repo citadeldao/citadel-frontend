@@ -33,9 +33,11 @@ export default {
       state.info.subscribe_rewards = value;
     },
     [types.SET_MARKETCAPS](state, value) {
+      // console.log('mutation', value);
       state.marketcaps = value;
     },
     [types.SET_RATES](state, value) {
+      console.log('mutation', value);
       state.rates = value;
     },
   },
@@ -78,10 +80,30 @@ export default {
       }
     },
 
-    // eslint-disable-next-line no-unused-vars
-    async updateMarketcap({ commit }, data) {
-      const ifSubtoken = data.net.includes('_');
-      console.log('test', ifSubtoken, data.net);
+    async updateMarketcap({ commit, state }, data) {
+      //console.log('test', { ...state.marketcaps }, data);
+      const isSubtoken = data.net.includes('_');
+      if (!isSubtoken) {
+        const formatedData = {
+          ...state.marketcaps,
+          [data.net]: data.marketCap.marketCapInfo,
+        };
+        commit(types.SET_MARKETCAPS, formatedData);
+        //console.log('test1', state.marketcaps);
+      }
+    },
+
+    async updateRates({ commit, state }, data) {
+      console.log('test', { ...state.rates }, data);
+      const isSubtoken = data.net.includes('_');
+      if (!isSubtoken) {
+        const formatedData = {
+          ...state.rates,
+          [data.net]: data.marketCap.rates,
+        };
+        commit(types.SET_RATES, formatedData);
+        console.log('test1', state.rates);
+      }
     },
 
     async changeSubscribeRewards({ commit }, newValue) {
