@@ -123,7 +123,7 @@ export default {
       if (isNotLinkedSnip20(asset)) {
         mainIsLoading.value = true;
         snip20TokenFee.value =
-          (await asset.getFees(asset.id, asset.net))?.data?.low?.fee || 0.2;
+          (await asset.getFees(asset.id, asset.net))?.data?.high?.fee || 0.2;
         mainIsLoading.value = false;
         showCreateVkModal.value = true;
         snip20Token.value = asset;
