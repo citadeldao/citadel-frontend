@@ -3,30 +3,19 @@
     <slot name="icon" class="card-icon"></slot>
     <slot name="info" class="card-info"></slot>
     <slot name="default"> </slot>
-    <keep-alive>
-      <component class="card-special-icon" :is="icon" />
-    </keep-alive>
+    <img
+      class="card-special-icon"
+      :src="require('@/assets/images/' + iconName + '.png')"
+    />
   </div>
 </template>
 <script>
-import { ref, markRaw } from 'vue';
 export default {
   name: 'Card',
   props: {
     iconName: {
       type: String,
     },
-  },
-  setup(props) {
-    const icon = ref('');
-
-    import(`@/assets/icons/${props.iconName}.svg`).then((val) => {
-      console.log(val, 'val.default');
-      icon.value = markRaw(val.default);
-    });
-    return {
-      icon,
-    };
   },
 };
 </script>
@@ -187,11 +176,10 @@ export default {
       }
     }
     &-icon {
-      display: none;
       position: absolute;
-      bottom: 11px;
-      right: 11px;
-
+      bottom: 0px;
+      left: 0px;
+      width: 100%;
       &--xct {
         bottom: 0;
         right: 14px;
