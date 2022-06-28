@@ -117,7 +117,7 @@ export default {
 
   &__value {
     display: flex;
-    font-size: 22px;
+    font-size: 24px;
     line-height: 1.1;
 
     @include lg {

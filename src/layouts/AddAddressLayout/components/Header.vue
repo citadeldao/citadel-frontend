@@ -384,9 +384,9 @@ export default {
     position: absolute;
     z-index: 1001;
     right: 0;
-    top: 46px;
+    top: 45px;
     @include md {
-      top: 33px;
+      top: 32px;
     }
   }
 }

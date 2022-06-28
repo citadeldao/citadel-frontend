@@ -660,14 +660,20 @@ export default {
 
     watch(
       () => props.currentWallet,
-      () => {
-        setCosmosNetworkBridgeToken();
+      (newVal, oldVal) => {
+        if (
+          newVal.net !== oldVal.net ||
+          newVal.address.toLowerCase() !== oldVal.address.toLowerCase()
+        ) {
+          setCosmosNetworkBridgeToken();
+        }
       }
     );
 
     watch(
       () => route.params,
       (newParams) => {
+        console.log('es1');
         if (newParams.net && newParams.address) {
           clearState();
           loadData();
