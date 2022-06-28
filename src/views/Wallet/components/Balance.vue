@@ -24,7 +24,18 @@
           </template>
         </BalanceTooltip>
       </div>
-      <div class="balance__tabs">
+      <div class="balance__tab-current" @click="showTabs">
+        <NetworkTab
+          v-model:currentTab="currentTab"
+          :is-current-token="isCurrentToken"
+          :current-token="currentWallet"
+          :value="balanceTabs[currentTab].value"
+          :icon="balanceTabs[currentTab].icon"
+          :data-qa="balanceTabs[currentTab].dataQA"
+        />
+        <ArrowDown :class="`${isOpened}`" />
+      </div>
+      <div class="balance__tabs" :class="dropdownClass">
         <div class="balance__tab">
           <NetworkTab
             :id="1"
@@ -34,6 +45,7 @@
             :value="currentWallet.code"
             :icon="currentWallet.net"
             :data-qa="`wallet__balance--${currentWallet.code.toLowerCase()}`"
+            @click="onClickNetworkTab"
           />
         </div>
         <div class="balance__tab">
@@ -43,6 +55,7 @@
             value="USD"
             icon="USD"
             data-qa="wallet__balance--usd"
+            @click="onClickNetworkTab"
           />
         </div>
         <div v-if="currentWallet.net !== 'btc'" class="balance__tab">
@@ -52,6 +65,7 @@
             value="BTC"
             icon="btc"
             data-qa="wallet__balance--btc"
+            @click="onClickNetworkTab"
           />
         </div>
       </div>
@@ -191,6 +205,7 @@ import { WALLET_TYPES } from '@/config/walletType';
 import info from '@/assets/icons/info.svg';
 import clock from '@/assets/icons/clock2.svg';
 import claimBlockLock from '@/assets/icons/claim-block-lock.svg';
+import ArrowDown from '@/assets/icons/arrow-down.svg';
 
 export default {
   name: 'Balance',
@@ -204,6 +219,7 @@ export default {
     RoundArrowButton,
     claimBlockLock,
     CurrentAsset,
+    ArrowDown,
   },
   props: {
     currentWallet: {
@@ -302,8 +318,44 @@ export default {
       () => props.currentWallet,
       () => {
         currentTab.value = props.currentWallet.code;
+        balanceTabs[props.currentWallet.code] = {
+          icon: props.currentWallet.net,
+          value: props.currentWallet.code,
+          dataQA: `wallet__balance--${props.currentWallet.code.toLowerCase()}`,
+        };
       }
     );
+
+    const balanceTabs = {
+      BTC: {
+        value: 'BTC',
+        icon: 'btc',
+        dataQA: 'wallet__balance--btc',
+      },
+      USD: {
+        value: 'USD',
+        icon: 'USD',
+        dataQA: 'wallet__balance--usd',
+      },
+    };
+
+    balanceTabs[props.currentWallet.code] = {
+      icon: props.currentWallet.net,
+      value: props.currentWallet.code,
+      dataQA: `wallet__balance--${props.currentWallet.code.toLowerCase()}`,
+    };
+
+    const dropdownClass = ref('');
+    const isOpened = ref(false);
+    const showTabs = () => {
+      dropdownClass.value = dropdownClass.value == '' ? 'active' : '';
+      isOpened.value = !isOpened.value;
+    };
+
+    const onClickNetworkTab = () => {
+      dropdownClass.value = '';
+      isOpened.value = false;
+    };
 
     return {
       currentTab,
@@ -312,6 +364,11 @@ export default {
       getFrozenTime,
       openPledgeModal,
       WALLET_TYPES,
+      balanceTabs,
+      dropdownClass,
+      showTabs,
+      isOpened,
+      onClickNetworkTab,
     };
   },
 };
@@ -330,6 +387,11 @@ export default {
   }
   @include md {
     padding: 16px 16px 23px 17px;
+  }
+
+  @include laptop {
+    padding: 20px;
+    border-radius: 8px;
   }
 
   &__header {
@@ -530,6 +592,9 @@ export default {
 
   &__current-asset {
     margin-bottom: 16px;
+    @include laptop {
+      display: none;
+    }
   }
 }
 </style>
@@ -550,6 +615,124 @@ export default {
     span {
       font-family: 'Panton_Regular';
       color: $blue;
+    }
+  }
+}
+
+.balance {
+  &__header {
+    position: relative;
+  }
+
+  &__tabs {
+    @include laptop {
+      flex-direction: column;
+      align-items: center;
+
+      position: absolute;
+      right: 0;
+      top: 30px;
+      width: 48px;
+      background-color: $white;
+      border: 1px solid $too-ligth-blue;
+      border-radius: 2px;
+      opacity: 0;
+      z-index: -5;
+      transform: translateY(-10%);
+
+      &.active {
+        opacity: 1;
+        z-index: 3;
+        transform: translateY(0);
+      }
+
+      .network-tab {
+        width: 100%;
+        background-color: transparent;
+        &:hover {
+          background: transparent !important;
+        }
+        img {
+          filter: invert(56%) sepia(52%) saturate(311%) hue-rotate(171deg)
+            brightness(91%) contrast(95%) !important;
+        }
+        & span {
+          color: $mid-blue !important;
+        }
+      }
+      & svg {
+        height: 14px;
+        fill: $mid-blue !important;
+      }
+
+      .balance__tab {
+        margin: 0;
+        transition: 0.2s;
+        width: 48px;
+        cursor: pointer;
+        &:hover {
+          background-color: $too-dark-blue;
+          svg {
+            fill: $white !important;
+          }
+
+          img {
+            filter: brightness(0) invert(1) !important;
+          }
+
+          span {
+            color: $white !important;
+          }
+        }
+        &-active {
+          background-color: $dark-blue;
+          & svg {
+            fill: $white;
+          }
+        }
+        .network-tab__logo-icon-placeholder span {
+          left: 16px;
+        }
+        .network-tab__logo-icon-placeholder span:last-child {
+          left: 24px;
+        }
+      }
+    }
+  }
+
+  &__tab-current {
+    display: none;
+    align-items: center;
+    justify-content: space-around;
+    border: 1px solid $too-ligth-blue;
+    border-radius: 2px;
+    width: 48px;
+    cursor: pointer;
+    & > svg {
+      height: 8px;
+      fill: $too-ligth-blue;
+      &.true {
+        transform: rotate(180deg);
+      }
+    }
+
+    .network-tab-active,
+    .network-tab-active:hover {
+      background: transparent;
+      svg {
+        fill: $dark-blue;
+      }
+      img {
+        filter: invert(56%) sepia(52%) saturate(311%) hue-rotate(171deg)
+          brightness(91%) contrast(95%) !important;
+      }
+      & span {
+        color: $dark-blue !important;
+      }
+    }
+
+    @include laptop {
+      display: flex;
     }
   }
 }

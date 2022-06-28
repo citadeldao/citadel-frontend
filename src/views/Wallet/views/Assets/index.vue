@@ -371,11 +371,11 @@ export default {
       color: $mid-blue;
 
       @include lg {
-        font-size: x;
+        font-size: $wallet-assets-heading-font-size;
       }
 
       @include md {
-        font-size: 14px;
+        font-size: $wallet-assets-heading-font-size-md;
       }
 
       &:nth-child(1) {
@@ -393,6 +393,9 @@ export default {
 
         @include md {
           width: 22%;
+        }
+        @include laptop {
+          width: 18%;
         }
       }
     }

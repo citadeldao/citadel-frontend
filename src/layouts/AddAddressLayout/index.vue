@@ -44,8 +44,7 @@ export default {
   @include md {
   }
   &__main {
-    padding-right: 23px;
-    padding-left: 32px;
+    padding: $main-padding;
     flex-direction: column;
     display: flex;
     flex-grow: 1;
@@ -61,6 +60,7 @@ export default {
     }
     @include laptop {
       margin-left: 80px;
+      padding: $main-padding-laptop;
     }
     @include mobile {
       overflow: auto;

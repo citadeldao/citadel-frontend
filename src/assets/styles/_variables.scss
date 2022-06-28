@@ -1,11 +1,15 @@
 //*** ---- Default ---- ***//
 $round:50%;
 
+//* Main Layout *//
+$main-padding: 30px 25px;
+$main-margin-bottom: 40px;
+
 //* Sidebar *//
 $sidebar-padding: 42px 0 0;
 $sidebar-max-width: 280px;
 $sidebar-compact-max-width: 80px;
-
+$sidebar-shadow: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.04)) drop-shadow(4px 0px 8px rgba(0, 0, 0, 0.06));
 
 //* Sidebar -> Overall *//
 $balance-font-size: 1.75rem;
@@ -30,6 +34,14 @@ $btn-min-height: 50px;
 $btn-min-width: 180px;
 $btn-max-width: 250px;
 $btn-border-radius: 50px;
+
+$wallet-assets-heading-font-size: 1.125rem;
+
+
+
+
+
+
 
 //*** ---- Variables for "md" size ---- ***//
 
@@ -57,7 +69,15 @@ $btn-font-size-md: 0.875rem;
 $btn-min-height-md: 40px;
 $btn-min-width-md: 120px;
 
+$wallet-assets-heading-font-size-md: 1rem;
+
+
+
 //*** ---- Variables for "1024px" size ---- ***//
+
+//* Main Layout *//
+$main-padding-laptop: 20px 15px;
+$main-margin-bottom-laptop: 20px;
 
 $title-font-size-laptop: 0.875rem;
 

@@ -38,9 +38,11 @@ import { screenWidths } from '@/config/sreenWidthThresholds';
 import { useRoute } from 'vue-router';
 import { WALLET_TYPES } from '@/config/walletType';
 import { useStore } from 'vuex';
+import Tooltip from '@/components/UI/Tooltip';
 
 export default {
   name: 'AddressItem',
+  component: { Tooltip },
   props: {
     wallet: {
       type: Object,
@@ -147,11 +149,9 @@ export default {
 <style lang="scss" scoped>
 .address-item {
   display: flex;
-  margin-left: 15px;
   text-decoration: none;
   user-select: text;
-  margin-top: 20px;
-
+  margin-bottom: 20px;
   &:hover {
     .address-item__icon {
       background: $blue;
@@ -165,15 +165,6 @@ export default {
       display: flex;
     }
   }
-  &:not(:last-child) {
-    margin-top: 15px;
-  }
-  &:last-child {
-    margin-bottom: 0;
-  }
-  @include md {
-    margin-top: 15px;
-  }
   &__icon {
     border-radius: $round;
     background: #8496c0;
@@ -182,7 +173,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 10px;
+    margin-right: 15px;
     position: relative;
     & svg {
       fill: $white;
@@ -191,6 +182,9 @@ export default {
       width: 32px;
       height: 32px;
       margin-right: 5px;
+    }
+    &-info {
+      display: none;
     }
   }
   &__badge {
@@ -261,11 +255,31 @@ export default {
 .compact .address-item {
   margin-bottom: 25px;
   justify-content: center;
+  position: relative;
   &__icon {
     margin: 0;
   }
   &__info {
-    display: none;
+    opacity: 0;
+    position: absolute;
+    top: -20px;
+    right: -7px;
+    z-index: -999;
+    & > div {
+      position: fixed;
+      background-color: $white;
+      padding: 0 10px;
+      height: 48px;
+      width: 110px;
+      box-shadow: 0px 4px 25px rgba(63, 54, 137, 0.25);
+      border-radius: 6px;
+    }
   }
+
+  // &:hover {
+  //   .address-item__info {
+  //     opacity: 1;
+  //   }
+  // }
 }
 </style>

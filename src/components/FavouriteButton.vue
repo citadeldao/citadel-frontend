@@ -71,7 +71,6 @@ export default {
   margin-right: 16px;
   cursor: pointer;
   transition: none;
-  margin-bottom: 5px;
   flex-shrink: 0;
 
   svg {

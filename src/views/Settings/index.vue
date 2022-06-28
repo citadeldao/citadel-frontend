@@ -21,7 +21,7 @@
 
         <div class="column">
           <ChangeEmail :visibleClass="'comingSoon'" />
-          <ChangePassword :visibleClass="'comingSoon'" />
+          <ChangePassword />
         </div>
 
         <ExtensionSettings :visibleClass="'comingSoon'" />

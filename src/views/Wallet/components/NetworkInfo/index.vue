@@ -393,7 +393,10 @@ export default {
   @include md {
     padding: 16px;
   }
-
+  @include laptop {
+    padding: 20px;
+    border-radius: 8px;
+  }
   &__header {
     display: flex;
     justify-content: space-between;

@@ -247,14 +247,14 @@ export default {
 
 <style lang="scss" scoped>
 .header {
-  min-height: 114px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-left: 30px;
+  margin-bottom: $main-margin-bottom;
 
-  @include md {
-    min-height: 82px;
+  @include laptop {
+    margin-bottom: $main-margin-bottom-laptop;
   }
 
   &__title {

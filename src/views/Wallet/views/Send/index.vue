@@ -1370,6 +1370,9 @@ export default {
       flex-direction: column;
       margin-bottom: 0;
     }
+    @include laptop {
+      flex-direction: row;
+    }
   }
 
   &__autocomplete {
@@ -1391,6 +1394,9 @@ export default {
     @include md {
       width: 100%;
       margin-bottom: 23px;
+    }
+    @include laptop {
+      width: 48%;
     }
   }
 

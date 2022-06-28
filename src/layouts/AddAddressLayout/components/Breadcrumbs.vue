@@ -175,20 +175,23 @@ export default {
   }
 
   &__menu {
-    display: none;
-
     position: absolute;
     left: 0;
     top: 100%;
     padding-top: 10px;
     transform: translateX(-15%);
+    z-index: -999;
+    opacity: 0;
+    transition: 0.3s;
   }
 
   &--menu {
-    z-index: 2;
+    &:first-child {
+      cursor: pointer;
+    }
     text-decoration: none;
     cursor: pointer;
-
+    transition: 0.3s;
     &::before {
       content: '';
       position: absolute;
@@ -198,10 +201,10 @@ export default {
       height: 1px;
       border-bottom: 1px dashed $too-dark-blue;
     }
-
     &:hover {
       .breadcrumbs-item__menu {
-        display: block;
+        opacity: 1;
+        z-index: 2;
       }
     }
   }

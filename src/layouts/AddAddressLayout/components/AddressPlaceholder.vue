@@ -36,7 +36,7 @@ export default {
   border: 1px solid #c3ceeb;
   border-radius: 16px;
   padding: 35px 5px;
-  margin: 0 auto;
+  margin: 25px auto;
   & svg {
     margin-bottom: 16px;
   }

@@ -126,6 +126,10 @@ export default {
   margin-bottom: 8px;
   cursor: pointer;
 
+  @include laptop {
+    height: 48px;
+  }
+
   &:hover {
     background: #f4e9fc;
     @include hover;
@@ -168,6 +172,10 @@ export default {
 
       @include md {
         width: 22%;
+      }
+
+      @include laptop {
+        width: 18%;
       }
     }
 

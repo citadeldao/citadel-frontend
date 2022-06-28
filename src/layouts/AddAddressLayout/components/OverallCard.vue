@@ -84,7 +84,7 @@ export default {
   align-items: flex-start;
   border: 1px solid $ligthgray;
   border-radius: 8px;
-  margin: 0 auto 15px;
+  margin: 0 auto;
   padding: 15px;
   cursor: pointer;
   position: relative;
@@ -105,9 +105,13 @@ export default {
   &.active {
     background: $dark-blue;
     border-color: transparent;
-    box-shadow: none;
+    box-shadow: 0px 15px 50px rgba(80, 100, 124, 0.1),
+      0px 10px 15px rgba(80, 100, 124, 0.16);
     & span {
       color: $white;
+    }
+    @include laptop {
+      box-shadow: none;
     }
   }
 
@@ -161,18 +165,17 @@ export default {
     transition: 0s all;
   }
   &__cryptobalance {
-    font-size: 16px;
     color: $blue;
     transition: 0s all;
     @include md {
       display: none;
     }
   }
+
   &__cryptocurrency,
   &__currency-md,
   &__currency {
     color: $black;
-    font-family: 'Panton_Regular';
   }
   &__balance-md {
     font-size: $balance-font-size;
