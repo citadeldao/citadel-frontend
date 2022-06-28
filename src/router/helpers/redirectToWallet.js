@@ -16,16 +16,9 @@ export default ({ wallet, token, root = false }) => {
     router.push({ name: 'AddAddress' });
   }
 
-  const context = token || wallet;
   const routeName =
-    (root && hasContext) || !hasContext
-      ? context.hasSubtoken
-        ? 'WalletAssets'
-        : context.hasStake
-        ? 'WalletStake'
-        : 'WalletAssets'
-      : currentRoute.name;
-
+    (root && hasContext) || !hasContext ? 'WalletAssets' : currentRoute.name;
+  console.log(routeName);
   router.push({
     name: routeName,
     params: {
