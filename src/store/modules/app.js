@@ -1,6 +1,7 @@
 import store from '../../store';
 import initPersistedstate from '@/plugins/persistedstate';
-import { SocketManager } from '@/utils/socket';
+// import { SocketManager } from '@/utils/socket';
+import { socketEventHandler } from '@/utils/socketEventHandler';
 import citadel from '@citadeldao/lib-citadel';
 
 const types = {
@@ -40,10 +41,14 @@ export default {
       if (!error) {
         await dispatch('networks/loadConfig', null, { root: true });
         initPersistedstate(store);
-        SocketManager.connect();
+        // SocketManager.connect();
+        citadel.addEventListener('socketEvent', socketEventHandler);
+        citadel.addEventListener('walletListUpdated', async () => {
+          await dispatch('wallets/getNewWallets', 'lazy', { root: true });
+        });
         await dispatch('setWallets');
-        await dispatch('wallets/getNewWallets', 'lazy', { root: true });
-        dispatch('wallets/getNewWallets', 'detail', { root: true });
+        // await dispatch('wallets/getNewWallets','lazy', { root: true });
+        // dispatch('wallets/getNewWallets','detail', { root: true });
         dispatch('wallets/getCustomWalletsList', null, { root: true });
         dispatch('rewards/getRewards', null, { root: true });
         await dispatch('transactions/getMempool', null, { root: true });

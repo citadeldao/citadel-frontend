@@ -14,7 +14,7 @@
         hover-bg-color="#fc0800"
         box-shadow="0 0 25px rgba(219, 71, 60, 0.3)"
         class="delete-address-modal__primary-button"
-        data-qa="delete-address-Yes-button"
+        data-qa="Yes"
         @click="$emit('confirm')"
       >
         {{ $t('yes') }}

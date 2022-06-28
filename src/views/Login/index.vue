@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { ref, computed, inject } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import Modal from '@/components/Modal';
@@ -66,7 +66,8 @@ import SyncCarousel from './components/SyncCarousel';
 import SyncStart from './components/SyncStart';
 import citadelLogo from '@/assets/icons/citadelLogo.svg';
 import initPersistedstate from '@/plugins/persistedstate';
-import { SocketManager } from '@/utils/socket';
+// import { SocketManager } from '@/utils/socket';
+import { socketEventHandler } from '@/utils/socketEventHandler';
 import notify from '@/plugins/notify';
 import WhyCitadel from './components/WhyCitadel';
 import redirectToWallet from '@/router/helpers/redirectToWallet';
@@ -95,6 +96,8 @@ export default {
     const isLoading = ref(false);
     const formDisabled = ref(false);
     const showEmailModal = ref(false);
+    const citadel = inject('citadel');
+
     const localHashInfo = localStorage.getItem('hashInfo');
     const syncMode = ref(!!localHashInfo);
     const showSyncBlock = ref(false);
@@ -187,13 +190,18 @@ export default {
         if (!error) {
           await store.dispatch('networks/loadConfig');
           initPersistedstate(store);
-          SocketManager.connect();
+          // SocketManager.connect();
+          citadel.addEventListener('socketEvent', socketEventHandler);
+          citadel.addEventListener('walletListUpdated', async () => {
+            await store.dispatch('wallets/getNewWallets', 'lazy');
+          });
+          //citadel.addEventListener('walletListUpdated', async ()=> await store.dispatch('wallets/getNewWallets'));
           await store.dispatch('app/setWallets');
-          await store.dispatch('wallets/getNewWallets', 'lazy');
-          store.dispatch('wallets/getNewWallets', 'detail');
+          // await store.dispatch('wallets/getNewWallets','lazy');
+          // store.dispatch('wallets/getNewWallets','detail');
           store.dispatch('wallets/getCustomWalletsList');
           store.dispatch('rewards/getRewards');
-          await store.dispatch('transactions/getMempool');
+          /* await */ store.dispatch('transactions/getMempool');
           const { wallets } = useWallets();
 
           redirectToWallet({
@@ -226,7 +234,11 @@ export default {
       if (!error) {
         await store.dispatch('networks/loadConfig');
         initPersistedstate(store);
-        SocketManager.connect();
+        // SocketManager.connect();
+        citadel.addEventListener('socketEvent', socketEventHandler);
+        citadel.addEventListener('walletListUpdated', async () => {
+          await store.dispatch('wallets/getNewWallets', 'lazy');
+        });
         await store.dispatch('app/setWallets');
         await store.dispatch('wallets/getNewWallets', 'lazy');
         store.dispatch('wallets/getNewWallets', 'detail');

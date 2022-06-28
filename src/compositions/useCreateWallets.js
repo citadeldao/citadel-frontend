@@ -169,8 +169,8 @@ export default function useCreateWallets() {
         }
       }
 
-      await store.dispatch('wallets/getNewWallets', 'lazy');
-      store.dispatch('wallets/getNewWallets', 'detail');
+      // await store.dispatch('wallets/getNewWallets', 'lazy');
+      // store.dispatch('wallets/getNewWallets', 'detail');
       if (!newWallets.value.length && (newWalletType === WALLET_TYPES.PUBLIC_KEY || newWalletType === WALLET_TYPES.KEPLR)) {
         newWallets.value = newWalletsOptsList.map((item) =>
           findWalletInArray(wallets.value, { address: item.address, net: item.net })

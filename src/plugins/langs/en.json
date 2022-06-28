@@ -679,6 +679,18 @@
             "description": "Chosen platform language",
             "inputLabel": "Language"
         },
+        "changePassword": {
+            "btnTitle": "Change password",
+            "btnUpdate": "Update",
+            "modalTitle": "Password change",
+            "oldPassword": "Old password",
+            "newPassword": "New password",
+            "modalDescription": "This is the password you will use to confirm transaction signatures",
+            "incorrectOldPassword": "The old password is incorrect",
+            "minLen": "Min length 8 characters",
+            "successTitle": "Your password was successfully changed",
+            "successDescription": "Use your new password to confirm transactions"
+        },
         "delete": {
             "title": "Delete your account",
             "description": "This operation cannot be reversed",
@@ -1212,7 +1224,10 @@
             "metamaskKeplr": "Metamask, Keplr",
             "metamaskKeplrDescription": "Connect your Web3 Wallet to add an address",
             "hardware": "Hardware wallet",
-            "hardwareDescription": "Import addresses from Ledger or Trezor device for advanced use"
+            "hardwareDescription": "Import addresses from Ledger or Trezor device for advanced use",
+            "sourceAddress": "Source Address",
+            "destinationAddress": "Destination Address"
         }
-    }
+    },
+    "noApyNote": "Get passive income via staking your crypto assets!"
 }

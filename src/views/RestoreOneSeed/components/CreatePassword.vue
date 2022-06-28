@@ -29,7 +29,7 @@
       </div>
       <PrimaryButton
         :disabled="!!inputError"
-        data-qa="enter-password__create-button__restore-one-seed"
+        data-qa="Create"
       >
         {{ $t('create') }}
       </PrimaryButton>

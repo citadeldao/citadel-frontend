@@ -18,7 +18,7 @@
       </div>
       <PrimaryButton
         :disabled="!!inputError"
-        data-qa="add-address__existing__seed-phrase__next-button"
+        data-qa="Next"
       >
         {{ $t('next') }}
       </PrimaryButton>

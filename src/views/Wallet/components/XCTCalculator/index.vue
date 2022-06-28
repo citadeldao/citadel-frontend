@@ -29,13 +29,7 @@
       </div>
     </div>
     <div class="xct-calculator__slider">
-      <el-slider
-        v-model="value"
-        :min="0"
-        :max="max"
-        :show-tooltip="false"
-        @change="sliderChangeHandler"
-      />
+      <el-slider v-model="value" :min="0" :max="max" :show-tooltip="false" />
     </div>
     <div class="xct-calculator__footer">
       <div class="xct-calculator__footer-you-have">
@@ -46,10 +40,12 @@
           <input
             ref="valueInput"
             :value="value"
-            type="number"
+            type="text"
+            maxlength="7"
             @input="inputHandler"
             @blur="showInput = false"
             @keyup.enter="showInput = false"
+            @keypress="keypressHandler"
           />
           <span>{{ currentToken.code }}</span>
         </div>
@@ -124,7 +120,7 @@ export default {
   setup(props) {
     const modalCloseHandler = () => (showModal.value = false);
     const showModal = ref(false);
-    const max = ref(100000);
+    const max = ref(1000000);
     const value = ref(10000);
     const yearlyReward = computed(
       () => (props.info.yieldPct / 100) * value.value
@@ -137,15 +133,38 @@ export default {
     };
 
     const inputHandler = (e) => {
-      if (+e.target.value > 100000) {
-        max.value = +e.target.value;
+      const formatedValue = e.target.value
+        .toString()
+        // remove spaces
+        .replace(/\s+/g, '')
+        .replace(/[БбЮю]/, '.')
+        .replace(',', '.')
+        // only number
+        .replace(/[^.\d]+/g, '')
+        // remove extra 0 before decimal
+        .replace(/^0+/, '0')
+        // remove extra dots
+        // eslint-disable-next-line no-useless-escape
+        .replace(/^([^\.]*\.)|\./g, '$1');
+      if (+formatedValue > max.value) {
+        value.value = max.value;
+      } else {
+        if (!isNaN(+formatedValue)) {
+          value.value = +formatedValue;
+        }
       }
+    };
 
-      value.value = +e.target.value;
+    const keypressHandler = (e) => {
+      // eslint-disable-next-line
+      if(!/^[0-9\.\-\/]+$/.test(e.key)){
+
+        e.preventDefault();
+      }
     };
 
     const sliderChangeHandler = () => {
-      max.value = 100000;
+      max.value = 1000000;
     };
 
     return {
@@ -159,6 +178,7 @@ export default {
       modalCloseHandler,
       max,
       sliderChangeHandler,
+      keypressHandler,
     };
   },
 };
@@ -457,14 +477,6 @@ export default {
       }
       @include md {
         font-size: 14px;
-      }
-      &[type='number']::-webkit-outer-spin-button,
-      &[type='number']::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-      }
-      &[type='number'] {
-        -moz-appearance: textfield;
       }
       &:focus {
         border: 1px solid $blue;
