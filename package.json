@@ -11,7 +11,7 @@
     "lint:style": "stylelint 'src/**/*.vue' --fix"
   },
   "dependencies": {
-    "@citadeldao/lib-citadel": "^1.6.6",
+    "@citadeldao/lib-citadel": "^1.6.7",
     "@highlightjs/vue-plugin": "^2.1.0",
     "@ledgerhq/hw-app-btc": "^5.23.1",
     "@ledgerhq/hw-app-eth": "^6.5.0",
