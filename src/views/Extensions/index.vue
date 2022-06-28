@@ -1131,14 +1131,25 @@ export default {
     .extensions {
       &__apps {
         .app-block.app {
-          width: 31%;
+          width: 30%;
           margin-right: 22px;
         }
       }
     }
   }
 
-  @media screen and (max-width: 1270px) {
+  @media screen and (max-width: 1280px) {
+    .extensions {
+      &__apps {
+        .app-block.app {
+          width: 32%;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 1124px) {
     .extensions {
       &__apps {
         .app-block.app {

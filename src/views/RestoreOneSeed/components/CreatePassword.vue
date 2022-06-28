@@ -27,10 +27,7 @@
           :error="inputError"
         />
       </div>
-      <PrimaryButton
-        :disabled="!!inputError"
-        data-qa="enter-password__create-button__restore-one-seed"
-      >
+      <PrimaryButton :disabled="!!inputError" data-qa="Create">
         {{ $t('create') }}
       </PrimaryButton>
     </form>

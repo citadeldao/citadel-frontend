@@ -37,6 +37,7 @@
         </keep-alive>
         <input
           v-model="searchAppStr"
+          :placeholder="$t('extensions.searchPlaceholder')"
           class="filter-input"
           @input="$emit('search', searchAppStr)"
         />
@@ -128,7 +129,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(90deg, #f3e7ff 0%, #cde6ff 100%);
+    background: $white;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 8px;
     width: 48px;
@@ -171,7 +172,7 @@ export default {
   }
 
   .filter-input {
-    color: #c3ceeb;
+    color: $white;
     padding-left: 32px;
     padding-right: 12px;
     margin-right: 12px;
@@ -183,6 +184,19 @@ export default {
     box-sizing: border-box;
     border-radius: 8px;
     outline: none;
+  }
+
+  ::-webkit-input-placeholder {
+    color: #c3ceeb;
+  }
+  ::-moz-placeholder {
+    color: #c3ceeb;
+  }
+  :-moz-placeholder {
+    color: #c3ceeb;
+  }
+  :-ms-input-placeholder {
+    color: #c3ceeb;
   }
 
   .filter {

@@ -142,9 +142,9 @@ export default {
   &__head {
     display: flex;
     align-items: center;
+    positions: relative;
 
     .app {
-      padding-top: 5px;
       box-sizing: border-box;
       min-width: 48px;
       height: 48px;
@@ -153,14 +153,17 @@ export default {
       justify-content: center;
       align-items: center;
       background: linear-gradient(90deg, #f3e7ff 0%, #cde6ff 100%);
+      position: absolute;
+      top: 10px;
+      left: 10px;
     }
 
     .titles {
-      margin-left: 12px;
+      margin-left: 50px;
 
       .title {
         color: $black;
-        font-family: 'Panton_SemiBold';
+        font-family: 'Panton_Bold';
         font-size: 18px;
 
         svg {
@@ -209,6 +212,16 @@ export default {
     svg {
       margin-left: 10px;
     }
+  }
+}
+
+.app-block:hover {
+  box-shadow: -10px 4px 50px rgba(0, 0, 0, 0.1);
+  transform: scale(1.1);
+  z-index: 100;
+
+  .app-block__readmore {
+    color: #1a53f0;
   }
 }
 </style>

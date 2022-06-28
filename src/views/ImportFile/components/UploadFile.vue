@@ -47,7 +47,7 @@
         </div>
       </div>
     </div>
-    <PrimaryButton :disabled="!file" @click="clickHandler">
+    <PrimaryButton :disabled="!file" @click="clickHandler" data-qa="Import">
       {{ $t('import') }}
     </PrimaryButton>
   </div>

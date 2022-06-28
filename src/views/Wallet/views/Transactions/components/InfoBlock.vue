@@ -56,7 +56,9 @@
     <div v-if="info.hash" class="info-block__line" target="_blank">
       <div class="info-block__line-title">
         {{ $t('viewTranscasction')
-        }}<a :href="txUrl"><linkIcon class="info-block__link-icon" /></a>
+        }}<a target="_blank" :href="txUrl"
+          ><linkIcon class="info-block__link-icon"
+        /></a>
       </div>
     </div>
   </div>
