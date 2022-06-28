@@ -20,8 +20,15 @@ export default function useStaking(stakeNodes, list) {
     showModal.value = value;
   };
 
-  const canStake = computed(() => currentToken.value ? currentToken.value.tokenBalance.mainBalance > 0 && currentWallet.value.balance.mainBalance > 0
-    : currentWallet.value.balance.mainBalance > 0)
+  const isWithoutDelegation = ref(false)
+  provide('isWithoutDelegation', isWithoutDelegation)
+  const updateIsWithoutDelegation = (value)=> {
+    isWithoutDelegation.value = value
+  }
+  provide('updateIsWithoutDelegation', updateIsWithoutDelegation)
+
+  const canStake = computed(()=> currentToken.value ? currentToken.value.tokenBalance.mainBalance > 0 && currentWallet.value.balance.mainBalance > 0
+  : currentWallet.value.balance.mainBalance > 0 )
   provide('canStake', canStake);
 
   const mode = ref('stake');
@@ -37,6 +44,7 @@ export default function useStaking(stakeNodes, list) {
     updateRewardDestinationOption(0);
     updateSelectedNodeForRedelegation('');
     updateRedelegationDirection('');
+    updateIsWithoutDelegation(false)
     updateShowChooseNode(false);
     updateShowNodesList(false);
     updateShowConfirmTransaction(false);
@@ -95,14 +103,15 @@ export default function useStaking(stakeNodes, list) {
     isLoading.value = true;
 
     //if there is multiple validators
-    const srcNodeAddress = Array.isArray(validatorSrcAddr) ? validatorSrcAddr[0].address : validatorSrcAddr.address
-    const destNodeAddress = Array.isArray(validatorAddr) ? validatorAddr[0].address : validatorAddr.address
+    const srcNodeAddress = Array.isArray(validatorSrcAddr) ? validatorSrcAddr[0].address : validatorSrcAddr?.address
+    const destNodeAddress = Array.isArray(validatorAddr) ? validatorAddr[0].address : validatorAddr?.address
     const { ok, resFee, maxAmount, resAdding, enough } = await currentWallet.value.getDelegationFee({
       walletId: currentWallet.value.id,
       transactionType: txType,
-      nodeAddress: destNodeAddress,
+      nodeAddress: isWithoutDelegation.value ? null : destNodeAddress,
       sourceNodeAddress: srcNodeAddress,
       kt: currentKtAddress.value ? currentKtAddress.value.address : undefined,
+      isWithoutDelegation: isWithoutDelegation.value
     });
     if (ok) {
       fee.value = resFee;
@@ -296,7 +305,7 @@ export default function useStaking(stakeNodes, list) {
 
   const disabled = computed(() => {
     if (((activeTab.value === 'redelegate' || mode.value === 'redelegate') && (!selectedNode.value || !selectedNodeForRedelegation.value))
-      || !selectedNode.value || insufficientFunds.value || amount.value <= 0 || !resEnough.value || insufficientAdditionalFee.value) {
+      || (!isWithoutDelegation.value && !selectedNode.value) || insufficientFunds.value || amount.value <= 0 || !resEnough.value || insufficientAdditionalFee.value) {
       return true;
     }
 
@@ -317,6 +326,7 @@ export default function useStaking(stakeNodes, list) {
     updateShowModal(false);
     updateSelectedNode('');
     updateSelectedNodeForRedelegation('');
+    updateIsWithoutDelegation(false)
     updateRedelegationDirection('');
     updateShowChooseNode(false);
     updateShowNodesList(false);
@@ -429,7 +439,7 @@ export default function useStaking(stakeNodes, list) {
             })}`,
       };
     }
-    if (mode.value === 'unstake') {
+    if (mode.value === 'unstake' || activeTab.value === 'unstake') {
       return {
         title: 'unstaking.unstake',
         button: 'unstaking.unstake',
@@ -446,7 +456,7 @@ export default function useStaking(stakeNodes, list) {
           })}`,
       };
     }
-    if (mode.value === 'stake') {
+    if (mode.value === 'stake' || activeTab.value === 'stake') {
       return {
         title: 'staking.Stake',
         button: 'staking.Stake',
@@ -536,6 +546,7 @@ export default function useStaking(stakeNodes, list) {
     isMultiple,
     resMaxAmount,
     updateAmount,
-    disabledPolkadot
+    disabledPolkadot,
+    isWithoutDelegation
   };
 }

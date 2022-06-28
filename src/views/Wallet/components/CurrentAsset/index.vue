@@ -11,6 +11,8 @@
     />
 
     <AssetIcon
+      :is-native-token="isNativeToken"
+      :net="currentWallet.net"
       :name="currentWallet.name"
       :code="currentWallet.code"
       color="#6A4BFF"
@@ -81,6 +83,10 @@ export default {
     currentWallet: {
       type: Object,
       required: true,
+    },
+    isNativeToken: {
+      type: Boolean,
+      default: false,
     },
   },
   setup() {
@@ -285,7 +291,7 @@ export default {
 
   &__text {
     display: flex;
-    font-size: 22px;
+    font-size: 20px;
     line-height: 1.1;
     font-family: 'Panton_SemiBold';
 

@@ -54,4 +54,8 @@ export default {
     icon: 'IBC',
     title: 'IBC',
   },
+  redelegation: {
+    icon: 'redelegation',
+    title: 'Redelegation',
+  },
 };

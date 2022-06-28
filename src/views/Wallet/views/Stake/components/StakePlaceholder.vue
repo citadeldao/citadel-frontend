@@ -254,7 +254,7 @@ export default {
 
   &__card-special-title-staking {
     font-family: 'Panton_ExtraBold';
-    font-size: 30px;
+    font-size: 27px;
     line-height: 30px;
     @include md {
       font-size: 25px;
@@ -287,6 +287,7 @@ export default {
     align-items: center;
     justify-content: center;
     margin-bottom: 29px;
+    flex-shrink: 0;
 
     & svg {
       width: 36px;
