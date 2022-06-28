@@ -890,7 +890,8 @@
         "appTooltip": "This application is integrated by Citadel.one team.",
         "transactionData": "Transaction data",
         "transactionFee": "Transaction fee",
-        "signMessage": "Sign message"
+        "signMessage": "Sign message",
+        "searchPlaceholder": "Start typing the app name"
     },
     "tokenDescriptionComdex": "Comdex is a decentralized synthetic assets protocol built on the Cosmos. ",
     "tokenDescriptionJuno": "Juno is a Cosmos-based chain that provides an environment for the deployment of interoperable smart contracts.",
