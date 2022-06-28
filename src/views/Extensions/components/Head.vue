@@ -1,5 +1,5 @@
 <template>
-  <div class="extensions__head">
+  <div :class="{ isFullScreen }" class="extensions__head">
     <div class="extensions__head-logo">
       <template v-if="showFilter || !showAppLogo">
         <div class="logo">
@@ -28,6 +28,13 @@
             {{ app.short_description }}
           </div>
         </div>
+        <div
+          v-if="isFullScreen"
+          class="extensions__close"
+          @click="$emit('close')"
+        >
+          <closeIcon />
+        </div>
       </template>
     </div>
     <div v-if="showFilter" class="extensions__head-filter">
@@ -52,9 +59,11 @@
 </template>
 <script>
 import { ref, markRaw, watch } from 'vue';
+import closeIcon from '@/assets/icons/addAddressV2/close.svg';
 
 export default {
   name: 'ExtensionsHead',
+  components: { closeIcon },
   props: {
     appLogo: {
       type: String,
@@ -63,6 +72,10 @@ export default {
       required: true,
     },
     showFilter: {
+      type: Boolean,
+      default: false,
+    },
+    isFullScreen: {
       type: Boolean,
       default: false,
     },
@@ -118,6 +131,31 @@ export default {
   background: linear-gradient(90deg, #4776e6 0%, #8e54e9 100%);
   border-radius: 16px 16px 0px 0px;
   min-height: 80px;
+
+  .extensions__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    background: #6b93c0;
+    position: absolute;
+    right: 40px;
+    top: 25px;
+    z-index: 100;
+
+    &:hover {
+      background: #6a4bff;
+      cursor: pointer;
+    }
+  }
+
+  &.isFullScreen {
+    background: transparent;
+  }
 }
 
 .extensions__head-logo {
@@ -211,6 +249,18 @@ export default {
     &:hover {
       cursor: pointer;
       opacity: 0.7;
+    }
+  }
+}
+
+.extensions__head.isFullScreen {
+  .descriptions {
+    .label {
+      color: $black;
+    }
+
+    .description {
+      color: #59779a;
     }
   }
 }
