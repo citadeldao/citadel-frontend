@@ -187,7 +187,7 @@ export default {
 
     const filteredTokens = computed(() => {
       const data = [...props.tokenList];
-      const byAlphabet = sortByAlphabet(data, 'name');
+      const byAlphabet = sortByAlphabet(data, 'code');
       const byValue = data.sort((a, b) => a.balanceUSD - b.balanceUSD);
 
       switch (filterValue.value) {

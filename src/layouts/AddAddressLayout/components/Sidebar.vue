@@ -221,7 +221,7 @@ export default {
     });
     const filteredWallets = computed(() => {
       const data = walletsList.value;
-      const byAlphabet = sortByAlphabet(data, 'title', 'address');
+      const byAlphabet = sortByAlphabet(data, 'code', 'address');
       const byValue = data.sort((a, b) => a.balanceUSD - b.balanceUSD);
 
       switch (filterValue.value) {
