@@ -16,10 +16,7 @@
           data-qa="add-address__existing__private-key__password-field"
         />
       </div>
-      <PrimaryButton
-        :disabled="!!inputError"
-        data-qa="add-address__existing__private-key__next-button"
-      >
+      <PrimaryButton :disabled="!!inputError" data-qa="Next">
         {{ $t('next') }}
       </PrimaryButton>
     </form>

@@ -1,11 +1,11 @@
 import CryptoCoin from '../CryptoCoin';
-export default class CryptoCoinKICHAIN extends CryptoCoin {
+export default class CryptoCoinOrai extends CryptoCoin {
   constructor(opts) {
     super(opts);
-    this.privateKeyEncoded = opts?.privateKeyEncoded || null;
-    this.publicKey = opts?.publicKey || null;
+    this.privateKeyEncoded = opts.privateKeyEncoded || null;
+    this.publicKey = opts.publicKey || null;
     this.showFrozenBalance = true;
-    this.unstakeingPerioud = '28';
+    this.unstakeingPerioud = '21';
     this.hasRedelegation = true;
   }
 
