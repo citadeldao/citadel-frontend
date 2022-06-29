@@ -53,9 +53,11 @@
       </Modal>
     </teleport>
     <Head
+      :is-full-screen="showFullScreen"
       :app-logo="currentApp?.logo"
       :show-filter="!currentApp && !loading"
       :app="selectedApp"
+      @close="closeApp()"
       @search="onSearchHandler"
     />
     <div v-if="!currentApp && !loading" class="extensions__apps">
@@ -76,13 +78,13 @@
       <Loading />
     </div>
     <div v-if="currentApp" class="extensions__app-wrap">
-      <keep-alive>
+      <keep-alive v-if="!showFullScreen">
         <component :is="closeIcon" class="close-icon" @click="closeApp()" />
       </keep-alive>
       <iframe
         :src="currentApp.url"
         frameBorder="0"
-        width="550"
+        :width="showFullScreen ? 1280 : 550"
         height="710"
         align="left"
         name="target"
@@ -274,6 +276,10 @@
   </div>
 </template>
 <script>
+import {
+  hideArtefactsForFullScreen,
+  showArtefactsForNormalScreen,
+} from '@/helpers/fullScreen';
 import Loading from '@/components/Loading';
 import { ref, markRaw, computed, watch } from 'vue';
 import Modal from '@/components/Modal';
@@ -315,6 +321,7 @@ export default {
     Input,
   },
   setup() {
+    const showFullScreen = ref(false);
     const assetsDomain = ref('https://extensions-admin-test.3ahtim54r.ru/api/');
     const store = useStore();
     const router = useRouter();
@@ -338,6 +345,7 @@ export default {
     const showLedgerConnect = ref(false);
     const ledgerError = ref('');
     const msgSuccessSignature = ref('');
+    const fullScreenAppIds = ref([12, 15]);
 
     const { wallets: walletsList } = useWallets();
 
@@ -413,6 +421,8 @@ export default {
       selectedApp.value = null;
 
       if (!stopRedirect) {
+        showFullScreen.value = false;
+        showArtefactsForNormalScreen();
         router.push({ name: 'Extensions' });
       }
     };
@@ -442,6 +452,11 @@ export default {
     const selectApp = async () => {
       showAppInfoModal.value = false;
       currentApp.value = null;
+
+      if (fullScreenAppIds.value.includes(selectedApp.value.id)) {
+        showFullScreen.value = true;
+        hideArtefactsForFullScreen();
+      }
 
       await store.dispatch('extensions/fetchExtensionInfo', {
         appId: selectedApp.value.id,
@@ -865,6 +880,7 @@ export default {
     };
 /* eslint-disable */
     return {
+      showFullScreen,
       showTx,
       router,
       assetsDomain,
