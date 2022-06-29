@@ -7,6 +7,7 @@ const types = {
   SET_SUBSCRIBE_REWARDS: 'SET_SUBSCRIBE_REWARDS',
   SET_MARKETCAPS: 'SET_MARKETCAPS',
   SET_RATES: 'SET_RATES',
+  SET_CURRENT_WALLET_MARKETCAP: 'SET_CURRENT_WALLET_MARKETCAP',
 };
 
 export default {
@@ -16,6 +17,7 @@ export default {
       info: null,
       marketcaps: {},
       rates: {},
+      currentWalletMarketcap: {},
     },
   },
   getters: {
@@ -24,6 +26,7 @@ export default {
       prettyNumber(state.marketcaps?.[net]?.yield),
     marketcaps: (state) => state.marketcaps,
     rates: (state) => state.rates,
+    currentWalletMarketcap: (state) => state.currentWalletMarketcap,
   },
   mutations: {
     [types.SET_INFO](state, info) {
@@ -33,12 +36,13 @@ export default {
       state.info.subscribe_rewards = value;
     },
     [types.SET_MARKETCAPS](state, value) {
-      // console.log('mutation', value);
       state.marketcaps = value;
     },
     [types.SET_RATES](state, value) {
-      console.log('mutation', value);
       state.rates = value;
+    },
+    [types.SET_CURRENT_WALLET_MARKETCAP](state, value) {
+      state.currentWalletMarketcap = value;
     },
   },
   actions: {
@@ -81,7 +85,6 @@ export default {
     },
 
     async updateMarketcap({ commit, state }, data) {
-      //console.log('test', { ...state.marketcaps }, data);
       const isSubtoken = data.net.includes('_');
       if (!isSubtoken) {
         const formatedData = {
@@ -89,12 +92,10 @@ export default {
           [data.net]: data.marketCap.marketCapInfo,
         };
         commit(types.SET_MARKETCAPS, formatedData);
-        //console.log('test1', state.marketcaps);
       }
     },
 
     async updateRates({ commit, state }, data) {
-      console.log('test', { ...state.rates }, data);
       const isSubtoken = data.net.includes('_');
       if (!isSubtoken) {
         const formatedData = {
@@ -102,7 +103,22 @@ export default {
           [data.net]: data.marketCap.rates,
         };
         commit(types.SET_RATES, formatedData);
-        console.log('test1', state.rates);
+      }
+    },
+
+    async setCurrentWalletMarketcap({ commit }, data) {
+      commit(types.SET_CURRENT_WALLET_MARKETCAP, data);
+    },
+
+    async updateCurrentWalletMarketcap({ commit, state }, data) {
+      if (
+        data.net.toLowerCase() ===
+        state.currentWalletMarketcap.net.toLowerCase()
+      ) {
+        commit(types.SET_CURRENT_WALLET_MARKETCAP, {
+          ...data.marketCap.marketCapInfo,
+          net: data.net,
+        });
       }
     },
 

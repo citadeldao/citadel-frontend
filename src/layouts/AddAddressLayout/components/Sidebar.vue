@@ -153,9 +153,7 @@ export default {
     };
 
     const totalUSDBalance = computed(() => {
-      console.log('hashvec');
       const value = walletsList.value.reduce((total, currentValue) => {
-        console.log('hashvec1', currency.value[currentValue.net].USD);
         const balanceUSD = BigNumber(currentValue.balance.calculatedBalance)
           .times(currency.value[currentValue.net].USD)
           .toNumber();

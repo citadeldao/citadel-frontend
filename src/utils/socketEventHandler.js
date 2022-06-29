@@ -109,7 +109,6 @@ export async function socketEventHandler({ eventName, data }) {
       break;
 
     case 'mempool-add-tx-client':
-      console.log(888, data, eventName);
       store.commit('transactions/ADD_TO_MEMPOOL', data);
 
       break;
@@ -141,7 +140,6 @@ export async function socketEventHandler({ eventName, data }) {
     // });
     case 'mempool-remove-tx-client':
       // show notify when tx success
-      console.log(999, data, eventName);
       {
         const { wallets } = useWallets();
         const wallet = wallets.value.find(
@@ -183,9 +181,9 @@ export async function socketEventHandler({ eventName, data }) {
       break;
     case 'marketCap-update-client':
       //update marketcap
-      console.log(888);
       await store.dispatch('profile/updateMarketcap', data);
       await store.dispatch('profile/updateRates', data);
+      await store.dispatch('profile/updateCurrentWalletMarketcap', data);
 
       break;
   }

@@ -38,10 +38,12 @@ export default function useWallets(wallet = null, showCount = undefined) {
     return data;
   });
 
-  const marketcap = computed(() => {
-    console.log('exav');
-    return store.getters['profile/marketcaps'];
-  });
+  const marketcap = computed(
+    () =>
+      store.getters['profile/marketcaps']?.[
+        wallet?.net || currentWallet.value?.net
+      ]
+  );
 
   const currency = computed(
     () =>
