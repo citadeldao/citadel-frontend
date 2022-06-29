@@ -47,10 +47,7 @@
           </div>
         </template>
       </div>
-      <PrimaryButton
-        :data-qa="dataQa && `${dataQa}__cat-modal__ok-button`"
-        @click="clickHandler"
-      >
+      <PrimaryButton data-qa="Ok" @click="clickHandler">
         {{ $t('ok') }}
       </PrimaryButton>
     </div>
@@ -102,7 +99,7 @@ export default {
     });
 
     const clickHandler = async () => {
-      const renamed = await Promise.all(
+      await Promise.all(
         props.data.map(async (wallet) => {
           if (!aliases[`${wallet.net}_${wallet.address}`]?.length) {
             return false;
@@ -116,9 +113,9 @@ export default {
           return true;
         }),
       );
-      if (renamed.filter((w) => w).length) {
-        store.dispatch('wallets/getNewWallets','lazy');
-      }
+      // if (renamed.filter((w) => w).length) {
+      //   store.dispatch('wallets/getNewWallets','lazy');
+      // }
       emit('buttonClick');
     };
 

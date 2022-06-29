@@ -25,9 +25,10 @@
       <div class="assets__sort">
         <WalletFilterDropdown
           v-model:value="filterValue"
-          relative-component="body"
+          relative-component=".assets__sort"
           :items="filterList"
           input-style
+          id="assetsFilter"
         />
       </div>
     </div>
@@ -160,7 +161,7 @@ export default {
       if (isNotLinkedSnip20(token)) {
         mainIsLoading.value = true;
         snip20TokenFee.value =
-          (await token.getFees(token.id, token.net))?.data?.low?.fee || 0.2;
+          (await token.getFees(token.id, token.net))?.data?.high?.fee || 0.2;
         mainIsLoading.value = false;
         showCreateVkModal.value = true;
         snip20Token.value = token;
@@ -186,7 +187,7 @@ export default {
 
     const filteredTokens = computed(() => {
       const data = [...props.tokenList];
-      const byAlphabet = sortByAlphabet(data, 'name');
+      const byAlphabet = sortByAlphabet(data, 'code');
       const byValue = data.sort((a, b) => a.balanceUSD - b.balanceUSD);
 
       switch (filterValue.value) {
@@ -324,6 +325,7 @@ export default {
 
   &__sort {
     flex-grow: initial;
+    position: relative;
   }
 
   &__loading {

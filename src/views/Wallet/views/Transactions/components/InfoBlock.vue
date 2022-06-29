@@ -15,10 +15,24 @@
         {{ info.date }}
       </span>
     </div>
-    <div class="info-block__line">
+    <div v-if="type !== 'redelegation'" class="info-block__line">
       <span class="info-block__line-title"> {{ $t('sendTo') }}: </span>
       <span class="info-block__line-to">
         {{ info.to }}
+      </span>
+    </div>
+    <div v-if="type === 'redelegation'" class="info-block__line">
+      <span class="info-block__line-title"> {{ $t('sourceAddress') }}: </span>
+      <span class="info-block__line-to">
+        {{ info.validator_src_address }}
+      </span>
+    </div>
+    <div v-if="type === 'redelegation'" class="info-block__line">
+      <span class="info-block__line-title">
+        {{ $t('destinationAddress') }}:
+      </span>
+      <span class="info-block__line-to">
+        {{ info.validator_dst_address }}
       </span>
     </div>
     <div class="info-block__line">
@@ -39,11 +53,14 @@
         {{ info.comment }}
       </span>
     </div>
-    <a v-if="info.hash" :href="txUrl" class="info-block__line" target="_blank">
-      <span class="info-block__line-title">
+    <div v-if="info.hash" class="info-block__line" target="_blank">
+      <div class="info-block__line-title">
         {{ $t('viewTranscasction')
-        }}<linkIcon class="info-block__link-icon" /> </span
-    ></a>
+        }}<a target="_blank" :href="txUrl"
+          ><linkIcon class="info-block__link-icon"
+        /></a>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -66,6 +83,7 @@ export default {
   },
 
   setup(props) {
+    console.log(props.info);
     const txUrl = computed(() =>
       props.currentWallet?.getTxUrl(props.currentWallet.id, props.info.hash)
     );

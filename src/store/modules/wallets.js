@@ -48,7 +48,7 @@ export default {
     currentWallet: (state) => state.currentWallet,
     loaded: (state) => state.loaded,
     customWalletsList: (state) =>
-      sortByAlphabet(state.customWalletsList, 'name'),
+      sortByAlphabet(state.customWalletsList, 'code'),
     customWalletsListByName: (state) => (listName) =>
       state.customWalletsList.find((list) => list.name === listName) || {
         wallets: [],

@@ -11,6 +11,8 @@
     />
 
     <AssetIcon
+      :is-native-token="isNativeToken"
+      :net="currentWallet.net"
       :name="currentWallet.name"
       :code="currentWallet.code"
       color="#6A4BFF"
@@ -82,6 +84,10 @@ export default {
       type: Object,
       required: true,
     },
+    isNativeToken: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup() {
     const store = useStore();
@@ -117,7 +123,7 @@ export default {
       if (isNotLinkedSnip20(asset)) {
         mainIsLoading.value = true;
         snip20TokenFee.value =
-          (await asset.getFees(asset.id, asset.net))?.data?.low?.fee || 0.2;
+          (await asset.getFees(asset.id, asset.net))?.data?.high?.fee || 0.2;
         mainIsLoading.value = false;
         showCreateVkModal.value = true;
         snip20Token.value = asset;
@@ -285,7 +291,7 @@ export default {
 
   &__text {
     display: flex;
-    font-size: 22px;
+    font-size: 20px;
     line-height: 1.1;
     font-family: 'Panton_SemiBold';
 

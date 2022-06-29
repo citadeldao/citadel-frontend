@@ -37,6 +37,7 @@ import CryptoCoinBSC from './CryptoCoins/CryptoCoinBSC';
 import CryptoCoinPOLKADOT from './CryptoCoins/CryptoCoinPOLKADOT';
 import CryptoCoinEVMOS from './CryptoCoins/CryptoCoinEVMOS';
 import CryptoCoinCRESCENT from './CryptoCoins/CryptoCoinCRESCENT';
+import CryptoCoinORAI from './CryptoCoins/CryptoCoinORAI';
 
 export default {
   // nets
@@ -79,4 +80,5 @@ export default {
   MANTLE: CryptoCoinMANTLE,
   EVMOS: CryptoCoinEVMOS,
   CRESCENT: CryptoCoinCRESCENT,
+  ORAI: CryptoCoinORAI,
 };

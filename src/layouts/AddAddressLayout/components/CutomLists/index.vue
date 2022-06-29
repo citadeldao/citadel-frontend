@@ -27,7 +27,7 @@
         type="action"
         :has-slot="mode === 'edit'"
         data-qa="create-list"
-        :disabled="isLoading"
+        :disabled="isLoading || !!inputError"
         @close="modalCloseHandler"
         @buttonClick="saveList"
       >
@@ -112,7 +112,7 @@ export default {
     const isLoading = ref(false);
     const showWarningModal = ref(false);
     const showWarningBanner = ref(false);
-    const inputError = ref();
+    const inputError = ref('');
     const listName = ref('');
 
     const customLists = computed(
@@ -217,7 +217,9 @@ export default {
       switch (mode.value) {
         case 'create':
           if (existInList(customLists.value, listName.value)) {
+            inputError.value = t('customLists.duplicateName');
             showWarningModal.value = false;
+            isLoading.value = false;
 
             return;
           }
@@ -248,6 +250,7 @@ export default {
             )
           ) {
             showWarningModal.value = true;
+            isLoading.value = false;
 
             return;
           }

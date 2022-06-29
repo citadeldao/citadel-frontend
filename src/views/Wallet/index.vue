@@ -317,7 +317,8 @@ export default {
     const { t } = useI18n();
     const store = useStore();
     const route = useRoute();
-    const { currency, currentWallet, isHardwareWallet } = useWallets();
+    const { currency, currentWallet, isHardwareWallet, currentToken } =
+      useWallets();
     const subtokensIsLoading = ref(false);
     const { loadKtAddresses, ktAddresses } = useKtAddresses();
     const showClaimModal = computed(() => {
@@ -339,9 +340,7 @@ export default {
     const subtokens = computed(() =>
       store.getters['subtokens/formatedSubtokens']()
     );
-    const currentToken = computed(
-      () => store.getters['subtokens/currentToken']
-    );
+    // const currentToken = computed(()=> store.getters['subtokens/currentToken']);
     onMounted(async () => {
       await loadKtAddresses(currentWallet?.value?.id);
       await loadXCTInfo();
@@ -590,19 +589,19 @@ export default {
           showConfirmClaim.value = false;
           clearLedgerModals();
           showConfirmLedgerModal.value = true;
-
-          try {
-            res = await currentWallet.value.signAndSendMulti({
-              walletId: currentWallet.value.id,
-              rawTransactions: resRawTxs.value,
-              derivationPath: currentWallet.value.derivationPath,
-            });
+          res = await currentWallet.value.signAndSendMulti({
+            walletId: currentWallet.value.id,
+            rawTransactions: resRawTxs.value,
+            derivationPath: currentWallet.value.derivationPath,
+          });
+          if (res.ok) {
             txHash.value = res.data;
             showConfirmClaim.value = false;
             showConfirmLedgerModal.value = false;
+            showConfirmUnstakedClaim.value = false;
             showClaimSuccessModal.value = true;
-          } catch (e) {
-            ledgerErrorHandler(e);
+          } else {
+            ledgerErrorHandler(res.error);
           }
         }
         // if not hardware
@@ -618,6 +617,7 @@ export default {
           if (res.ok) {
             txHash.value = res.data;
             showConfirmClaim.value = false;
+            showConfirmUnstakedClaim.value = false;
             showClaimSuccessModal.value = true;
             isLoading.value = false;
           } else {
