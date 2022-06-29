@@ -28,8 +28,11 @@ export default {
       commit(types.ADD_TOAST, {
         ...params,
       });
-
       setTimeout(() => dispatch('removeToast', params.id), params.duration);
+
+      if (params.text.status === 403) {
+        window.location.href = '/login';
+      }
     },
 
     removeToast({ commit }, id) {

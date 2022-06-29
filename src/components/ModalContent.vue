@@ -77,10 +77,7 @@
             v-if="submitButton"
             ref="primaryButton"
             :disabled="disabled"
-            :data-qa="
-              `${$t(buttonText)
-                .replace(' ', '-')}`
-            "
+            :data-qa="`${$t(buttonText).replace(' ', '-')}`"
             @click.stop="clickHandler"
           >
             {{ $t(`${buttonText}`) }}
@@ -304,7 +301,7 @@ export default {
 
   &__block-header-internal-icon {
     margin-top: 2px;
-    background: linear-gradient(90deg, #f3e7ff 0%, #cde6ff 100%);
+    background: $white; // linear-gradient(90deg, #f3e7ff 0%, #cde6ff 100%);
     border-radius: 12px;
     display: flex;
     align-items: center;

@@ -395,7 +395,7 @@ export default {
       }
 
       await store.dispatch('app/setWallets', { addNotAddedWallets: true });
-      await store.dispatch('wallets/getNewWallets', 'lazy');
+      // await store.dispatch('wallets/getNewWallets','lazy');
 
       if (props.privateWalletsMode) {
         migrationProcess.value = false;

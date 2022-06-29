@@ -34,12 +34,13 @@ export const ledgerNets = [
   'konstellation',
   'mantle',
   'crescent',
+  'orai',
   // 'evmos',
 ];
 
 export const trezorNets = ['btc', 'eth', 'bsc', 'tez'];
 
-export const keplrNetworksProtobufFormat = ['starname', 'kichain', 'emoney'];
+export const keplrNetworksProtobufFormat = ['starname', 'emoney', 'orai'];
 export const keplrNetworks = [
   { label: 'Cosmos Hub', key: 'cosmoshub-4', net: 'cosmos' },
   { label: 'Akash', key: 'akashnet-2', net: 'akash' },

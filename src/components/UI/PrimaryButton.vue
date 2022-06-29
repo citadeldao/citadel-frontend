@@ -1,5 +1,6 @@
 <template>
   <button
+    :id="id"
     :style="cssVars"
     :disabled="disabled"
     class="primary-button"
@@ -54,6 +55,9 @@ export default {
     dataQa: {
       type: [String, null],
       default: null,
+    },
+    id: {
+      type: String,
     },
   },
   emits: ['click'],

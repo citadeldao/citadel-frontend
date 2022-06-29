@@ -41,7 +41,7 @@ import trashCan from '@/assets/icons/trash-can.svg';
 import notify from '@/plugins/notify';
 import { getTokenIcon, tokenIconPlaceholder } from '@/helpers';
 import { computed, ref, inject } from 'vue';
-import { useStore } from 'vuex';
+// import { useStore } from 'vuex';
 
 export default {
   name: 'ChangeVkModal',
@@ -61,7 +61,7 @@ export default {
   },
   setup(props) {
     const citadel = inject('citadel');
-    const store = useStore();
+    // const store = useStore();
     const changeVk = inject('changeVk');
     const openCreateVkModal = inject('openCreateVkModal');
     const createNewVk = async () => {
@@ -69,7 +69,7 @@ export default {
     };
     const deleteVk = async () => {
       await citadel.deleteViewingKey(props.vk.id, props.vk.net);
-      await store.dispatch('wallets/getNewWallets', 'lazy');
+      // await store.dispatch('wallets/getNewWallets','lazy');
 
       changeVk.value = null;
       notify({
