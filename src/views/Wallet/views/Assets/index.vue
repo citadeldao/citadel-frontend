@@ -44,6 +44,7 @@
         :item="copyWallet"
         :balance="currentWallet.balance"
         is-native-token
+        @click="setCurrentToken(copyWallet)"
       />
       <AssetsItem
         v-for="(item, index) in displayData"

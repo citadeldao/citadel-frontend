@@ -239,7 +239,7 @@ export default {
       #fad0c466 1%,
       #ffd1ff66 100%
     );
-    cursor: default;
+    cursor: pointer;
     @include hover;
 
     &:hover {
