@@ -126,6 +126,8 @@ export default {
   background: $white;
   border-radius: 8px;
   overflow: hidden;
+  transition: transform 0.2s;
+  will-change: transform;
 
   .tooltip {
     width: 200px;
