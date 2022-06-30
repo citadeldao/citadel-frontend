@@ -12,7 +12,6 @@ export default function useAxios() {
     if (error.response.status === 403) {
       window.location.href = '/login';
     }
-
     return error.response.data;
   };
 
