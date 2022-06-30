@@ -218,6 +218,8 @@ export default {
 .app-block:hover {
   box-shadow: -10px 4px 50px rgba(0, 0, 0, 0.1);
   transform: scale(1.1);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   z-index: 100;
 
   .app-block__readmore {
