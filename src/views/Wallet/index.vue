@@ -337,17 +337,7 @@ export default {
       () => store.getters['keplr/keplrConnector']
     );
     const subtokens = computed(() => {
-      const formattedSubtokens = store.getters['subtokens/formatedSubtokens']();
-      const indexXCT = formattedSubtokens.findIndex((e) => e.net === OUR_TOKEN);
-      if (currentWallet?.value?.hasXCT) {
-        if (indexXCT !== -1) {
-          [formattedSubtokens[0], formattedSubtokens[indexXCT]] = [
-            formattedSubtokens[indexXCT],
-            formattedSubtokens[0],
-          ];
-        }
-      }
-      return formattedSubtokens;
+      return store.getters['subtokens/formatedSubtokens']();
     });
     const currentToken = computed(
       () => store.getters['subtokens/currentToken']

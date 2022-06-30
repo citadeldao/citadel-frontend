@@ -47,7 +47,15 @@
         is-native-token
       />
       <AssetsItem
-        v-for="(item, index) in displayData"
+        v-if="currentWallet?.hasXCT"
+        :item="displayData[OUR_TOKEN_INDEX]"
+        :balance="displayData[OUR_TOKEN_INDEX].balance"
+        @click="setCurrentToken(displayData[OUR_TOKEN_INDEX])"
+      />
+      <AssetsItem
+        v-for="(item, index) in displayData.filter(
+          (e, i) => i !== OUR_TOKEN_INDEX
+        )"
         :key="`${item.name}-${index}`"
         :balance="item.tokenBalance"
         :item="item"
@@ -100,6 +108,7 @@ import redirectToWallet from '@/router/helpers/redirectToWallet';
 import { TOKEN_STANDARDS } from '@/config/walletType';
 import usePaginationWithSearch from '@/compositions/usePaginationWithSearch';
 import Pagination from '@/components/Pagination.vue';
+import { OUR_TOKEN } from '@/config/walletType';
 
 export default {
   name: 'AssetsBlock',
@@ -189,7 +198,6 @@ export default {
       const data = [...props.tokenList];
       const byAlphabet = sortByAlphabet(data, 'code');
       const byValue = data.sort((a, b) => a.balanceUSD - b.balanceUSD);
-
       switch (filterValue.value) {
         case 'byAlphabet':
           return byAlphabet;
@@ -256,6 +264,9 @@ export default {
       setCurrentPage(1);
       setPageSize(pageSizes.value[0]);
     };
+    const OUR_TOKEN_INDEX = computed(() =>
+      displayData.value.findIndex((e) => e.net === OUR_TOKEN)
+    );
 
     watch(
       () => [props.currentWallet, props.currentToken],
@@ -265,12 +276,15 @@ export default {
     );
 
     return {
+      OUR_TOKEN,
+      OUR_TOKEN_INDEX,
       setCurrentToken,
       setMainToken,
       isNotLinkedSnip20,
       closeCreateVkModal,
       keyword,
       filterValue,
+      filteredTokens,
       filterList,
       displayData,
       currentPage,
