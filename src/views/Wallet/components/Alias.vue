@@ -275,7 +275,7 @@ export default {
       }
 
       await store.dispatch('wallets/getCustomWalletsList');
-      if (!customWalletsList.value[0].wallets.length) {
+      if (!customWalletsList.value[0]?.wallets?.length) {
         router.push({ name: 'Overall' });
       }
     };
@@ -293,6 +293,7 @@ export default {
         ),
         needSetActiveList: false,
       });
+      router.push({ name: 'Favourites' });
     };
     const addToFavorite = async () => {
       if (!favouritesList.value) {
