@@ -32,8 +32,10 @@
       </div>
 
       <div class="asset-item__line">
-        <span class="asset-item__description">
-          {{ asset.config?.standard?.toUpperCase() }}
+        <span
+          class="asset-item__description"
+          v-html="asset.config?.standard?.toUpperCase() || '<b>Native</b>'"
+        >
         </span>
         <div class="asset-item__balance asset-item__balance--usd">
           <span class="asset-item__currency">$</span>
