@@ -20,7 +20,7 @@
         <span class="asset-item__balance">
           <span
             v-pretty-number="{
-              value: asset.tokenBalance.mainBalance,
+              value: asset?.tokenBalance?.mainBalance || asset.balanceUSD,
               currency: asset.code,
             }"
             class="asset-item__amount"
@@ -33,7 +33,7 @@
 
       <div class="asset-item__line">
         <span class="asset-item__description">
-          {{ asset.config.standard.toUpperCase() }}
+          {{ asset.config?.standard?.toUpperCase() }}
         </span>
         <div class="asset-item__balance asset-item__balance--usd">
           <span class="asset-item__currency">$</span>

@@ -12,6 +12,7 @@
       />
     </div>
     <div class="assets-list-modal-content__addresses">
+      <AssetItem :asset="currentWallet" @click="$emit('click', asset)" />
       <AssetItem
         v-for="(asset, index) of filteredAssets"
         :key="`${asset.net}${asset.address}${index}`"
