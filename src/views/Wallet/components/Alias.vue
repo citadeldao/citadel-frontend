@@ -293,7 +293,9 @@ export default {
         ),
         needSetActiveList: false,
       });
-      router.push({ name: 'Favourites' });
+      if (!customWalletsList.value[0]?.wallets?.length) {
+        router.push({ name: 'Favourites' });
+      }
     };
     const addToFavorite = async () => {
       if (!favouritesList.value) {
