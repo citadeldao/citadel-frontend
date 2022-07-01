@@ -19,6 +19,9 @@
               <div class="value-amount">{{ component.value.text }}</div>
               <div class="value-symbol">{{ component.value.symbol }}</div>
             </div>
+            <div v-if="component.type === 'text'" class="value">
+              <div class="value-amount">{{ component.value }}</div>
+            </div>
             <div v-if="component.type === 'textWithURL'" class="value">
               <a target="_blank" :href="component.value.url">{{
                 component.value.text
