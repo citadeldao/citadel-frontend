@@ -107,14 +107,37 @@ export default {
 
       let next;
       const { value } = e.target;
-      let { values } = this;
+      let { values, fields } = this;
       values = Object.assign([], values);
       if (value.length > 1) {
-        if (index !== 5) next = this.iRefs[index + 1];
-        values[index] = value.charAt(value.length - 1);
+        if (value.length === 6) {
+          let nextIndex = value.length + index - 1;
+
+          if (nextIndex >= fields) {
+            nextIndex = fields - 1;
+          }
+
+          next = this.iRefs[nextIndex];
+          const split = value.split('');
+          split.forEach((item, i) => {
+            const cursor = index + i;
+
+            if (cursor < fields) {
+              values[cursor] = item;
+            }
+          });
+
+          for (let i = 0; i < 6; i++) {
+            values[i] = value[i];
+          }
+        } else {
+          if (index !== 5) next = this.iRefs[index + 1];
+          values[index] = value.charAt(value.length - 1);
+        }
       } else {
         next = this.iRefs[index + 1];
-        values[index] = value;
+        values[index] =
+          value.length > 1 ? undefined : value.charAt(value.length - 1);
       }
       this.values = values;
 
