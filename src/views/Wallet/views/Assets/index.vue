@@ -83,9 +83,9 @@
             <template #default>
               <span class="card-special-title"> Swap via Citadel.one </span>
               <span class="card-special-title-staking"> extensions </span>
-              <a href="https://app.citadel.one/extensions">
+              <router-link to="/extensions">
                 <RoundArrowButton data-qa="stake__start-staking-button" />
-              </a>
+              </router-link>
             </template>
           </Card>
           <Card class="card-special" iconName="zeroBalanceStub1">
@@ -93,6 +93,7 @@
               <span class="card-special-title"> Deposit from </span>
               <span class="card-special-title-staking"> exchanges </span>
               <a
+                target="_blank"
                 href="https://medium.com/citadel-one/how-to-withdraw-cryptocurrency-from-cex-to-citadel-one-71886d084f08"
               >
                 <RoundArrowButton data-qa="stake__start-staking-button" />

@@ -5,7 +5,7 @@
     <slot name="default"> </slot>
     <img
       class="card-special-icon"
-      :src="require('@/assets/images/' + iconName + '.png')"
+      :src="require(`@/assets/images/${iconName}.png`)"
     />
   </div>
 </template>
