@@ -73,16 +73,19 @@
     </template>
     <template v-else>
       <div class="empty__balance">
-        <h2>You don't have any assets yet</h2>
+        <h2>{{ assetsStubs.card1.title }}</h2>
         <h3>
-          You can swap it directly via Citadel.one or deposit from an external
-          exchange
+          {{ assetsStubs.card1.subtitle }}
         </h3>
         <div class="cards__container">
           <Card class="card-special" iconName="zeroBalanceStub">
             <template #default>
-              <span class="card-special-title"> Swap via Citadel.one </span>
-              <span class="card-special-title-staking"> extensions </span>
+              <span class="card-special-title">
+                {{ t(assetsStubs.card1.title) }}
+              </span>
+              <span class="card-special-title-staking">
+                {{ t(assetsStubs.card1.action) }}
+              </span>
               <router-link to="/extensions">
                 <RoundArrowButton data-qa="stake__start-staking-button" />
               </router-link>
@@ -90,8 +93,12 @@
           </Card>
           <Card class="card-special" iconName="zeroBalanceStub1">
             <template #default>
-              <span class="card-special-title"> Deposit from </span>
-              <span class="card-special-title-staking"> exchanges </span>
+              <span class="card-special-title">
+                {{ t(assetsStubs.card2.title) }}
+              </span>
+              <span class="card-special-title-staking">
+                {{ t(assetsStubs.card2.action) }}
+              </span>
               <a
                 target="_blank"
                 href="https://medium.com/citadel-one/how-to-withdraw-cryptocurrency-from-cex-to-citadel-one-71886d084f08"
