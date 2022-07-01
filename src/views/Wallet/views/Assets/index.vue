@@ -209,10 +209,12 @@ export default {
       const indexXCT = filteredTokens.value.findIndex(
         (e) => e.net === OUR_TOKEN
       );
-      [filteredTokens.value[0], filteredTokens.value[indexXCT]] = [
-        filteredTokens.value[indexXCT],
-        filteredTokens.value[0],
-      ];
+      if (indexXCT !== -1) {
+        [filteredTokens.value[0], filteredTokens.value[indexXCT]] = [
+          filteredTokens.value[indexXCT],
+          filteredTokens.value[0],
+        ];
+      }
       if (!keyword.value) {
         return filteredTokens.value;
       }
