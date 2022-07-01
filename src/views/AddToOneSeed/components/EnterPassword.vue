@@ -16,10 +16,7 @@
           :error="inputError"
         />
       </div>
-      <PrimaryButton
-        :disabled="!!inputError"
-        data-qa="add-address__one-seed__next-button"
-      >
+      <PrimaryButton :disabled="!!inputError" data-qa="Next">
         {{ $t('next') }}
       </PrimaryButton>
     </form>

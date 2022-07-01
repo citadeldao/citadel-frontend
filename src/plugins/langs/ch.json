@@ -347,7 +347,8 @@
         "walletsCountTitle": "列表中地址",
         "eneterListName": "请输入列表名称",
         "warningModalDesc": "列表名称已存在，请尝试新名称。",
-        "infoBanner": "您还未添加地址至当前列表。请选择至少一个地址以创建列表。"
+        "infoBanner": "您还未添加地址至当前列表。请选择至少一个地址以创建列表。",
+        "duplicateName": ""
     },
     "calculator": {
         "title": "{coin} 质押计算器",

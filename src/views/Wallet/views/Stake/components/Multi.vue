@@ -449,6 +449,7 @@ export default {
       nodesListModalCloseHandler,
       isMultiple,
       disabledPolkadot,
+      isWithoutDelegation,
     } = useStaking(props.stakeNodes, props.list);
 
     const keplrConnector = computed(
@@ -569,7 +570,7 @@ export default {
         walletId: props.currentWallet.id,
         nodeAddress: isMultiple.value
           ? selectedNode.value || props.list
-          : selectedNode.value.address,
+          : selectedNode.value?.address,
         amount: amount.value,
         type: activeTab.value || mode.value,
         redelegateNodeAddress: isMultiple.value
@@ -578,6 +579,7 @@ export default {
         additionalFee: isMultiple.value ? additionalFee.value : '',
         rewardsAddress: rewardDestinationAddress.value,
         rewardsRestake: rewardDestinationOption.value === 0,
+        isWithoutDelegation: isWithoutDelegation.value,
       });
 
       if (ok) {

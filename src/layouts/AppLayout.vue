@@ -76,9 +76,7 @@ export default {
     store
       .dispatch('app/initDefaultState')
       .then(async () => {
-        intervalId.value = setInterval(() => {
-          store.dispatch('wallets/getNewWallets', 'lazy');
-        }, 10000);
+        //intervalId.value = setInterval(()=> { store.dispatch('wallets/getNewWallets','lazy'); }, 10000);
         const { address, net, token } = route.params;
 
         await setCurrentWallet({ address, net });

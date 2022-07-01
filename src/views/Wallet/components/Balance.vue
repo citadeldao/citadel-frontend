@@ -4,7 +4,10 @@
       v-if="$store.getters['wallets/currentWallet'].hasSubtoken"
       class="balance__current-asset"
     >
-      <CurrentAsset :current-wallet="currentWallet" />
+      <CurrentAsset
+        :current-wallet="currentWallet"
+        :isNativeToken="!isCurrentToken"
+      />
     </div>
 
     <div class="balance__header">
