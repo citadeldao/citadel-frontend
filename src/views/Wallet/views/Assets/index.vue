@@ -46,16 +46,9 @@
         :balance="currentWallet.balance"
         is-native-token
       />
+
       <AssetsItem
-        v-if="currentWallet?.hasXCT"
-        :item="displayData[OUR_TOKEN_INDEX]"
-        :balance="displayData[OUR_TOKEN_INDEX].balance"
-        @click="setCurrentToken(displayData[OUR_TOKEN_INDEX])"
-      />
-      <AssetsItem
-        v-for="(item, index) in displayData.filter(
-          (e, i) => i !== OUR_TOKEN_INDEX
-        )"
+        v-for="(item, index) in displayData"
         :key="`${item.name}-${index}`"
         :balance="item.tokenBalance"
         :item="item"
@@ -213,6 +206,13 @@ export default {
     });
 
     const filteredItems = computed(() => {
+      const indexXCT = filteredTokens.value.findIndex(
+        (e) => e.net === OUR_TOKEN
+      );
+      [filteredTokens.value[0], filteredTokens.value[indexXCT]] = [
+        filteredTokens.value[indexXCT],
+        filteredTokens.value[0],
+      ];
       if (!keyword.value) {
         return filteredTokens.value;
       }
