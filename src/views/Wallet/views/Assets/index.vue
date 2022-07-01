@@ -64,7 +64,10 @@
         @change-page-size="setPageSize"
       />
     </div>
-    <div v-if="!displayData.length" class="assets__placeholder">
+    <div
+      v-if="!displayData.length && !currentWallet?.code"
+      class="assets__placeholder"
+    >
       <searchError />
       <span>
         {{ $t('tokenSearchError') }}
