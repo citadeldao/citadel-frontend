@@ -80,12 +80,7 @@ export default {
       default: null,
     },
   },
-  setup(props) {
-    console.log(
-      props.currentToken,
-      props.currentWallet.balance.mainBalance,
-      'yes'
-    );
+  setup() {
     return { OUR_TOKEN };
   },
 };
