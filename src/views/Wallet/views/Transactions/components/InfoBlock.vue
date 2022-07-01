@@ -15,13 +15,13 @@
         {{ info.date }}
       </span>
     </div>
-    <div class="info-block__line">
+    <div v-if="info.to" class="info-block__line">
       <span class="info-block__line-title"> {{ $t('sendTo') }}: </span>
       <span class="info-block__line-to">
         {{ info.to }}
       </span>
     </div>
-    <div class="info-block__line">
+    <div v-if="info.value" class="info-block__line">
       <span class="info-block__line-title"> {{ $t('amount') }}: </span>
       <div>
         <span

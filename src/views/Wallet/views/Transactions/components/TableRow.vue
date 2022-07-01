@@ -9,6 +9,14 @@
         <keep-alive>
           <component :is="icon" :width="32" :height="32" />
         </keep-alive>
+        <keep-alive>
+          <component
+            v-if="transaction.view && transaction.view.length"
+            :is="'messages'"
+            :width="32"
+            :height="32"
+          />
+        </keep-alive>
         <span class="table-row__type-block-type">
           {{ type.title }}
         </span>
@@ -25,6 +33,16 @@
         >
           {{ $t(status.title) }}
         </span>
+        <div class="table-row__type-block">
+          <keep-alive>
+            <component
+              v-if="transaction.view && transaction.view.length"
+              :is="'messages'"
+              :width="32"
+              :height="32"
+            />
+          </keep-alive>
+        </div>
       </div>
     </td>
     <td class="table-row__date-time">
@@ -41,7 +59,10 @@
     </td>
     <td class="table-row__amount">
       <div class="table-row__amount-content-wrapper">
-        <div class="table-row__status-info">
+        <div
+          :class="{ hasMsgs: !transaction.view || !transaction.view.length }"
+          class="table-row__status-info"
+        >
           <span class="table-row__status-info-type">
             {{ type.title }}
           </span>
@@ -59,7 +80,7 @@
                 transaction.date ? moment(transaction.date).fromNow() : ''
               }}</span>
             </div>
-            <div class="table-row__amount-value">
+            <div v-if="transaction.value" class="table-row__amount-value">
               <span
                 v-pretty-number="{
                   value: formatedValue,
@@ -91,7 +112,7 @@
             <span v-if="!isNaN(fee)" class="table-row__amount-fee">
               <span class="table-row__amount-fee-fee">{{ $t('fee') }}:</span>
               <span
-                v-pretty-number="{ value: fee, currency: 'ATOM' }"
+                v-pretty-number="{ value: fee, currency: currentWallet.code }"
                 class="table-row__amount-fee-value"
               />
               <span class="table-row__amount-fee-currency">{{
@@ -159,13 +180,23 @@ import BigNumber from 'bignumber.js';
 import EditButton from '@/components/UI/EditButton';
 import curveArrow from '@/assets/icons/transactions/curve-arrow.svg';
 import comment from '@/assets/icons/transactions/comment.svg';
+import messages from '@/assets/icons/transactions/messages.svg';
 import inIcon from '@/assets/icons/transactions/in.svg';
 import out from '@/assets/icons/transactions/out.svg';
 import useTransaction from '@/compositions/useTransaction';
+import Loading from '@/components/Loading.vue';
 
 export default {
   name: 'TableRow',
-  components: { inIcon, out, comment, curveArrow, EditButton },
+  components: {
+    inIcon,
+    out,
+    comment,
+    curveArrow,
+    EditButton,
+    messages,
+    Loading,
+  },
   props: {
     transaction: {
       type: Object,
@@ -183,8 +214,16 @@ export default {
   emits: ['editComment', 'showTransactionInfo'],
 
   setup(props) {
-    const { type } = useTransaction(props.transaction.view[0]);
-    console.log('type', props.transaction.view[0].type);
+    let type;
+
+    if (props.transaction.type) {
+      const data = useTransaction(props.transaction);
+      type = data.type;
+    } else {
+      const data = useTransaction(props.transaction.view[0]);
+      type = data.type;
+    }
+    console.log(type.value, props.transaction);
 
     const icon = ref();
     import(`@/assets/icons/transactions/${type.value.icon}.svg`).then((val) => {
@@ -337,6 +376,12 @@ export default {
     font-family: 'Panton_Bold';
     font-size: 16px;
     line-height: 19px;
+  }
+
+  &__status-info {
+    &.hasMsgs {
+      margin-left: -45px;
+    }
   }
 
   &__status-info-status {

@@ -7,6 +7,10 @@ export default {
     icon: 'income',
     title: t('receive'),
   },
+  Stake: {
+    icon: 'stake',
+    title: t('Stake'),
+  },
   Claim: {
     icon: 'reward',
     title: 'Rewards',

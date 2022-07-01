@@ -1,6 +1,33 @@
 <template>
   <div class="transaction-info-modal-content">
     <InfoBlock :current-wallet="currentWallet" :info="info" />
+    <div v-if="info.view" class="inner-tx">
+      <div
+        v-for="(item, ndx) in info.view"
+        :key="ndx"
+        :class="{ empty: !item.components?.length }"
+        class="inner-tx__view-item"
+      >
+        <template v-if="item.components && item.components.length">
+          <div
+            v-for="(component, n) in item.components"
+            :key="n"
+            class="inner-tx__view-item-component"
+          >
+            <div class="title">{{ component.title }}</div>
+            <div v-if="component.type === 'amount'" class="value">
+              <div class="value-amount">{{ component.value.text }}</div>
+              <div class="value-symbol">{{ component.value.symbol }}</div>
+            </div>
+            <div v-if="component.type === 'textWithURL'" class="value">
+              <a target="_blank" :href="component.value.url">{{
+                component.value.text
+              }}</a>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
     <div
       v-if="currentWallet.hasTransactionComment"
       class="transaction-info-modal-content__textarea"
@@ -56,6 +83,7 @@ export default {
     },
   },
   setup(props) {
+    console.log(111, props.info);
     const showPlaceholder = ref(!props.info.note);
     const togleShowPlaceholder = () => {
       showPlaceholder.value = false;
@@ -73,6 +101,66 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
+
+  .inner-tx {
+    margin-top: 20px;
+
+    &__view {
+      margin-top: 10px;
+    }
+
+    &__view-item {
+      margin-bottom: 15px;
+      border: 1px dotted #ccc;
+      border-radius: 10px;
+      padding: 7px;
+      box-sizing: border-box;
+
+      &.empty {
+        border: none;
+        padding: 0;
+      }
+
+      .title {
+        min-width: 130px;
+        color: #6b93c0;
+      }
+
+      .value {
+        display: flex;
+        align-items: center;
+        margin-bottom: 7px;
+
+        .value-amount {
+          font-size: 13px;
+          margin-right: 5px;
+        }
+
+        .value-symbol {
+          font-size: 13px;
+        }
+
+        a {
+          text-decoration: none;
+          font-size: 13px;
+
+          &:hover {
+            color: #1a53f0;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+
+    &__view-item-component {
+      display: flex;
+
+      .title {
+        font-size: 13px;
+      }
+    }
+  }
+
   &__textarea {
     padding-top: 17px;
   }
