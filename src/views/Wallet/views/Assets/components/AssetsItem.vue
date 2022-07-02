@@ -2,7 +2,7 @@
   <div
     class="assets-item"
     :class="{
-      'assets-item--native': isNativeToken,
+      'assets-item--native': isNativeToken || isChoosenToken,
       'assets-item--not-linked': isNotLinked,
     }"
   >
@@ -78,6 +78,10 @@ export default {
       default: () => ({}),
     },
     isNativeToken: {
+      type: Boolean,
+      default: false,
+    },
+    isChoosenToken: {
       type: Boolean,
       default: false,
     },

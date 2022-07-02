@@ -53,6 +53,7 @@
         :item="item"
         :is-not-linked="isNotLinkedSnip20(item)"
         @click="setCurrentToken(item)"
+        :is-choosen-token="currentToken?.code === item.code"
       />
 
       <Pagination
