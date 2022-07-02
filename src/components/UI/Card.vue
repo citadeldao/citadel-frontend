@@ -201,6 +201,9 @@ export default {
       @include xl {
         display: initial;
       }
+      @include md {
+        border-radius: 8px;
+      }
     }
     &::after {
       display: none;

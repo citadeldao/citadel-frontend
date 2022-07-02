@@ -124,8 +124,18 @@ export default {
     font-size: 16px;
   }
   button {
-    top: 39px;
-    right: 61px;
+    @include xl {
+      top: 39px;
+      right: 61px;
+    }
+    @include lg {
+      top: 91px;
+      right: 73px;
+    }
+    @include md {
+      top: 23px;
+      right: 16px;
+    }
   }
 }
 .stake-placeholder {
