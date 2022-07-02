@@ -4,7 +4,8 @@
     <slot name="info" class="card-info"></slot>
     <slot name="default"> </slot>
     <img
-      class="card-special-icon"
+      v-if="iconName"
+      class="card-special-icon--special"
       :src="require(`@/assets/images/${iconName}.png`)"
     />
   </div>
@@ -176,14 +177,26 @@ export default {
       }
     }
     &-icon {
+      display: none;
       position: absolute;
-      bottom: 0px;
-      left: 0px;
-      width: 100%;
+      bottom: 11px;
+      right: 11px;
+
       &--xct {
         bottom: 0;
         right: 14px;
       }
+
+      @include xl {
+        display: initial;
+      }
+    }
+    &-icon--special {
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
+      width: 100%;
+      border-radius: 16px;
 
       @include xl {
         display: initial;
