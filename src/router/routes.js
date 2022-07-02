@@ -288,23 +288,13 @@ export default [
     },
   },
   {
-    path: '/overall',
+    path: '/overall/:favourites?',
     name: 'Overall',
     component: () => import('@/views/Overall'),
     meta: {
       layout: 'AddAddressLayout',
       guard: 'private',
       title: 'overallTitle',
-    },
-  },
-  {
-    path: '/favourites',
-    name: 'Favourites',
-    component: () => import('@/views/Overall'),
-    meta: {
-      layout: 'AddAddressLayout',
-      guard: 'private',
-      title: 'Favourites',
     },
   },
   {

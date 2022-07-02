@@ -106,7 +106,6 @@ import { useWindowSize } from 'vue-window-size';
 import { screenWidths } from '@/config/sreenWidthThresholds';
 import { WALLET_TYPES } from '@/config/walletType';
 import { useRouter } from 'vue-router';
-
 export default {
   name: 'Alias',
   components: {
@@ -293,8 +292,12 @@ export default {
         ),
         needSetActiveList: false,
       });
-      if (!customWalletsList.value[0]?.wallets?.length) {
-        router.push({ name: 'Favourites' });
+
+      if (
+        !favouritesList.value.wallets?.length &&
+        store.getters['wallets/activeList'] === 'Favourites'
+      ) {
+        router.push('/overall/favourites');
       }
     };
     const addToFavorite = async () => {
