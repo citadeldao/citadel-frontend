@@ -297,7 +297,7 @@ export default {
         !favouritesList.value.wallets?.length &&
         store.getters['wallets/activeList'] === 'Favourites'
       ) {
-        router.push('/overall/favourites');
+        router.push({ name: 'Overall' });
       }
     };
     const addToFavorite = async () => {

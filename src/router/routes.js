@@ -288,7 +288,7 @@ export default [
     },
   },
   {
-    path: '/overall/:favourites?',
+    path: '/overall',
     name: 'Overall',
     component: () => import('@/views/Overall'),
     meta: {
