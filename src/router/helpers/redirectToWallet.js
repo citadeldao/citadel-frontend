@@ -18,7 +18,6 @@ export default ({ wallet, token, root = false }) => {
 
   const routeName =
     (root && hasContext) || !hasContext ? 'WalletAssets' : currentRoute.name;
-  console.log(routeName);
   router.push({
     name: routeName,
     params: {
