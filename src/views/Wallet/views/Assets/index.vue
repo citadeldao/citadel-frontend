@@ -73,18 +73,18 @@
     </template>
     <template v-else>
       <div class="empty__balance">
-        <h2>{{ $t(assetsStubs.title) }}</h2>
+        <h2>{{ $t('assetsStubs.title') }}</h2>
         <h3>
-          {{ $t(assetsStubs.subtitle) }}
+          {{ $t('assetsStubs.subtitle') }}
         </h3>
         <div class="cards__container">
           <Card class="card-special" iconName="zeroBalanceStub">
             <template #default>
               <span class="card-special-title">
-                {{ $t(assetsStubs.card1.title) }}
+                {{ $t('assetsStubs.card1.title') }}
               </span>
               <span class="card-special-title-staking">
-                {{ $t(assetsStubs.card1.action) }}
+                {{ $t('assetsStubs.card1.action') }}
               </span>
               <router-link to="/extensions">
                 <RoundArrowButton data-qa="stake__start-staking-button" />
@@ -94,10 +94,10 @@
           <Card class="card-special" iconName="zeroBalanceStub1">
             <template #default>
               <span class="card-special-title">
-                {{ $t(assetsStubs.card2.title) }}
+                {{ $t('assetsStubs.card2.title') }}
               </span>
               <span class="card-special-title-staking">
-                {{ $t(assetsStubs.card2.action) }}
+                {{ $t('assetsStubs.card2.action') }}
               </span>
               <a
                 target="_blank"
@@ -249,11 +249,11 @@ export default {
     });
 
     const filteredItems = computed(() => {
-      if (!keyword.value) {
+      if (!keyword?.value) {
         return filteredTokens.value;
       }
 
-      return filteredTokens.value.filter(
+      return filteredTokens?.value.filter(
         (item) =>
           item.name.toLowerCase().includes(keyword.value.toLowerCase()) ||
           item.code.toLowerCase().includes(keyword.value.toLowerCase())
