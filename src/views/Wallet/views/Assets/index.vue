@@ -249,11 +249,11 @@ export default {
     });
 
     const filteredItems = computed(() => {
-      if (!keyword?.value) {
+      if (!keyword.value) {
         return filteredTokens.value;
       }
 
-      return filteredTokens?.value.filter(
+      return filteredTokens.value.filter(
         (item) =>
           item.name.toLowerCase().includes(keyword.value.toLowerCase()) ||
           item.code.toLowerCase().includes(keyword.value.toLowerCase())
