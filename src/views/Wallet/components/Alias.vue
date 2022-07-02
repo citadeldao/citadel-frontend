@@ -274,9 +274,6 @@ export default {
       }
 
       await store.dispatch('wallets/getCustomWalletsList');
-      if (!customWalletsList.value[0]?.wallets?.length) {
-        router.push({ name: 'Overall' });
-      }
     };
     const removeFromFavorite = async () => {
       await store.dispatch('wallets/editCustomWalletsList', {
