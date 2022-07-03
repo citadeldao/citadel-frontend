@@ -10,6 +10,7 @@ const types = {
   SET_CURRENT_TOKEN_BALANCE: 'SET_CURRENT_TOKEN_BALANCE',
   SET_CURRENT_TOKEN: 'SET_CURRENT_TOKEN',
   SET_TOKEN_BALANCE: 'SET_TOKEN_BALANCE',
+  SET_ASSETS_NON_ZERO_VALUES: 'SET_ASSETS_NON_ZERO_VALUES',
 };
 
 export default {
@@ -18,6 +19,7 @@ export default {
     inflationInfoXCT: {},
     formatedSubtokens: [],
     currentToken: null,
+    isShowAssetsNonZeroValues: true,
   }),
 
   getters: {
@@ -89,8 +91,14 @@ export default {
 
           return newInstance;
         });
-
-        return formattedSubtokens.sort((a) => (a.linked ? -1 : 1));
+        let returnableValue = formattedSubtokens.sort((a) =>
+          a.linked ? -1 : 1
+        );
+        if (state.isShowAssetsNonZeroValues) {
+          return returnableValue.filter((e) => e.balanceUSD);
+        } else {
+          return returnableValue;
+        }
       },
 
     currentToken: (state) => state.currentToken,
@@ -111,6 +119,9 @@ export default {
         ...state.subtokenBalances[token],
         ...balance,
       };
+    },
+    [types.SET_ASSETS_NON_ZERO_VALUES](state, value) {
+      state.isShowAssetsNonZeroValues = value;
     },
   },
 

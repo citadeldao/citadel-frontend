@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import { computed, ref, inject, watch } from 'vue';
+import { computed, ref, inject, watch, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
 import BigNumber from 'bignumber.js';
@@ -133,6 +133,9 @@ export default {
   },
   emits: ['prepareClaim', 'prepareXctClaim'],
   setup(props) {
+    onMounted(() => {
+      store.commit('subtokens/SET_ASSETS_NON_ZERO_VALUES', true);
+    });
     const store = useStore();
     const route = useRoute();
 
@@ -174,6 +177,7 @@ export default {
           root: true,
         });
       }
+      store.commit('subtokens/SET_ASSETS_NON_ZERO_VALUES', false);
     };
 
     const setMainToken = async () => {
@@ -203,7 +207,6 @@ export default {
           return data;
       }
     });
-
     const filteredItems = computed(() => {
       if (!keyword.value) {
         return filteredTokens.value;
@@ -263,7 +266,12 @@ export default {
         clearFilters();
       }
     );
-
+    watch(
+      () => [filterValue.value, keyword.value],
+      () => {
+        store.commit('subtokens/SET_ASSETS_NON_ZERO_VALUES', false);
+      }
+    );
     return {
       setCurrentToken,
       setMainToken,
