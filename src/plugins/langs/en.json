@@ -361,7 +361,8 @@
         "walletsCountTitle": "Addresses in the list",
         "eneterListName": "Please, enter the list name.",
         "warningModalDesc": "This list name already exists, please try another one",
-        "infoBanner": " You didn't add addresses to this list. Please, choose at least one address to create a list."
+        "infoBanner": " You didn't add addresses to this list. Please, choose at least one address to create a list.",
+        "duplicateName": "A list with this name already exists. Please, choose another name"
     },
     "calculator": {
         "title": "{coin} Staking Calculator",
@@ -473,7 +474,7 @@
     "fee": "Fee",
     "comment": "Comment",
     "export": "Export",
-    "timeDate": "Time & Data",
+    "timeDate": "Time & Date",
     "type": "Type",
     "status": "Status",
     "viewOnly": "View only",
@@ -913,7 +914,8 @@
         "appTooltip": "This application is integrated by Citadel.one team.",
         "transactionData": "Transaction data",
         "transactionFee": "Transaction fee",
-        "signMessage": "Sign message"
+        "signMessage": "Sign message",
+        "searchPlaceholder": "Start typing the app name"
     },
     "tokenDescriptionComdex": "Comdex is a decentralized synthetic assets protocol built on the Cosmos. ",
     "tokenDescriptionJuno": "Juno is a Cosmos-based chain that provides an environment for the deployment of interoperable smart contracts.",

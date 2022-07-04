@@ -161,7 +161,7 @@ export default {
       if (isNotLinkedSnip20(token)) {
         mainIsLoading.value = true;
         snip20TokenFee.value =
-          (await token.getFees(token.id, token.net))?.data?.low?.fee || 0.2;
+          (await token.getFees(token.id, token.net))?.data?.high?.fee || 0.2;
         mainIsLoading.value = false;
         showCreateVkModal.value = true;
         snip20Token.value = token;
