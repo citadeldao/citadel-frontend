@@ -16,7 +16,7 @@
         v-for="(asset, index) of filteredAssets"
         :key="`${asset.net}${asset.address}${index}`"
         :asset="asset"
-        :is-choosen-token="currentWallet?.code === asset?.code"
+        :is-choosen-token="currentWallet?.net === asset?.net"
         @click="$emit('click', asset)"
       />
     </div>
