@@ -43,7 +43,7 @@
       <AssetsItem
         :item="copyWallet"
         :balance="currentWallet.balance"
-        is-native-token
+        :is-native-token="!currentToken"
         @click="setCurrentToken(copyWallet)"
       />
       <AssetsItem
