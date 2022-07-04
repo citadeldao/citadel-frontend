@@ -1122,6 +1122,11 @@
             "title": "Polkadot network",
             "description": "Polkadot is a network protocol that allows arbitrary data—not just tokens—to be transferred across blockchains.This means Polkadot is a true multi-chain application environment where things like cross-chain registries and cross-chain computation are possible.Polkadot can transfer this data across public, open, permissionless blockchains as well as private, permissioned blockchains.",
             "shortDescription": "Polkadot is a network protocol that allows arbitrary data—not just tokens—to be transferred across blockchains. This means Polkadot is a true multi-chain application environment where things like cross-chain registries and cross-chain computation are possible."
+        },
+        "orai": {
+            "title": "Oraichain",
+            "description": "As the world’s first AI-powered oracle and ecosystem for blockchains, Oraichain now transforms itself to become an advanced AI Layer 1 for Data Economy and Oracle services that serves as a foundational layer for the creation of a new generation of smart contracts and Dapps and create a complete AI Ecosystem on blockchain.",
+            "shortDescription": "Oraichain is the world's first intelligent and secure solution for emerging Web3, scalable Dapps, and decentralized AI."
         }
     },
     "uptime": "Uptime",

@@ -15,7 +15,7 @@
           :error="inputError"
         />
       </div>
-      <PrimaryButton :disabled="!!inputError">
+      <PrimaryButton :disabled="!!inputError" data-qa="Next">
         {{ $t('next') }}
       </PrimaryButton>
     </form>
