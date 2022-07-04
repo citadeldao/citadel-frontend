@@ -59,7 +59,6 @@ export const addressTextWidth = (text, fontFamily, fontSize) => {
   span.innerHTML = text;
   const width = Math.ceil(span.clientWidth);
   document.body.removeChild(span);
-
   return width;
 };
 
@@ -82,7 +81,7 @@ export const formattedWalletAddress = (
 
     return `${addressStart}${addressEnd}`;
   }
-
+  console.log(address, 'address');
   return address;
 };
 

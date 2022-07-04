@@ -153,15 +153,14 @@ export default {
       )
     );
     const maxNameWidth = computed(() => {
-      return props.currentWallet.title
-        ? {}
-        : {
-            maxWidth: `${addressTextWidth(
-              props.currentWallet?.address,
-              'Panton_Bold',
-              fontSizes.value.name
-            )}px`,
-          };
+      return {
+        maxWidth: `${addressTextWidth(
+          props.currentWallet?.title || props.currentWallet?.address,
+          'Panton_Bold',
+          fontSizes.value.name,
+          'chehol'
+        )}px`,
+      };
     });
 
     const metamaskConnector = computed(
