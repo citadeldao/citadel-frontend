@@ -120,6 +120,9 @@ export default {
   overflow: hidden;
   flex-wrap: wrap;
 
+  @include laptop {
+    height: 80px;
+  }
   @include md {
     cursor: pointer;
     flex-direction: row;

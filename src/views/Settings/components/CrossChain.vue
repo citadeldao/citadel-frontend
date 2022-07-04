@@ -73,6 +73,9 @@ export default {
   justify-content: space-between;
   flex-wrap: wrap;
 
+  @include md {
+    height: 80px;
+  }
   &.comingSoon::before {
     background: none;
   }
@@ -96,9 +99,12 @@ export default {
   }
 
   &__img {
-    img {
-      width: 60px;
-      height: 60px;
+    width: 60px;
+    height: 60px;
+    @include laptop {
+      svg {
+        transform: scale(0.85);
+      }
     }
     @include laptop-l {
       align-self: flex-start;

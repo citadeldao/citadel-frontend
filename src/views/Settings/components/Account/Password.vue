@@ -13,7 +13,7 @@
     <PrimaryButton
       :disabled="!oldPasswordHash"
       class="change-password-card__button"
-      data-qa="settings__email-button"
+      data-qa="settings__password-button"
       @click="changePassword"
     >
       {{ $t('settings.changePassword.button') }}
@@ -98,7 +98,7 @@
       </div>
       <PrimaryButton
         class="delete-modal__button"
-        data-qa="settings__delete-account__confirm-button"
+        data-qa="Update"
         @click="updatePassword"
       >
         {{ $t('settings.changePassword.btnUpdate') }}
@@ -178,7 +178,12 @@ export default {
             newPassword.value
           );
 
-          w.privateKeyEncoded = privateKeyEncoded.data;
+          if (w.privateKeyEncoded) {
+            w.privateKeyEncoded = privateKeyEncoded.data;
+          } else {
+            //polkadot,if imported from private key
+            w.mnemonicEncoded = privateKeyEncoded.data;
+          }
 
           if (w.importedFromSeed) {
             const mnemonic = store.getters['crypto/decodeUserMnemonic'](
@@ -204,6 +209,13 @@ export default {
         oldPassword.value
       );
 
+      if (mnemonic) {
+        // rewrite encode mnemonic/passwordHash
+        store.dispatch('crypto/setAndEncodeUserMnemonic', {
+          mnemonic,
+          password: newPassword.value,
+        });
+      }
       // rewrite encode mnemonic/passwordHash
       store.dispatch('crypto/setAndEncodeUserMnemonic', {
         mnemonic,
