@@ -100,10 +100,10 @@ export default {
 
     const isNotLinkedSnip20 = (token) => {
       const isSnip20 = computed(
-        () => token.config.standard === TOKEN_STANDARDS.SNIP_20
+        () => token?.config?.standard === TOKEN_STANDARDS.SNIP_20
       );
 
-      return isSnip20.value && !token.linked;
+      return isSnip20?.value && !token.linked;
     };
 
     const openSelectAssetModal = () => {
