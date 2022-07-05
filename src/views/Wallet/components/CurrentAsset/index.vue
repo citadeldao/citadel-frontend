@@ -131,12 +131,12 @@ export default {
         await store.dispatch('subtokens/setCurrentToken', asset);
 
         closeSelectAssetModal();
-
-        redirectToWallet({
-          wallet: wallet.value,
-          token: asset,
-          root: true,
-        });
+        if (asset)
+          redirectToWallet({
+            wallet: wallet.value,
+            token: asset,
+            root: true,
+          });
       }
     };
 
