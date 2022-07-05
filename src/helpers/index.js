@@ -81,7 +81,6 @@ export const formattedWalletAddress = (
 
     return `${addressStart}${addressEnd}`;
   }
-  console.log(address, 'address');
   return address;
 };
 

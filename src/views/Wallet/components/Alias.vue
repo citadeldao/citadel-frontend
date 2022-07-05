@@ -157,8 +157,7 @@ export default {
         maxWidth: `${addressTextWidth(
           props.currentWallet?.title || props.currentWallet?.address,
           'Panton_Bold',
-          fontSizes.value.name,
-          'chehol'
+          fontSizes.value.name
         )}px`,
       };
     });
