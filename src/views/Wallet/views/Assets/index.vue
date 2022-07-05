@@ -78,35 +78,35 @@
           {{ $t('assetsStubs.subtitle') }}
         </h3>
         <div class="cards__container">
-          <Card class="card-special" iconName="zeroBalanceStub">
-            <template #default>
-              <span class="card-special-title">
-                {{ $t('assetsStubs.card1.title') }}
-              </span>
-              <span class="card-special-title-staking">
-                {{ $t('assetsStubs.card1.action') }}
-              </span>
-              <router-link to="/extensions">
+          <router-link to="/extensions">
+            <Card class="card-special" iconName="zeroBalanceStub">
+              <template #default>
+                <span class="card-special-title">
+                  {{ $t('assetsStubs.card1.title') }}
+                </span>
+                <span class="card-special-title-staking">
+                  {{ $t('assetsStubs.card1.action') }}
+                </span>
                 <RoundArrowButton data-qa="stake__start-staking-button" />
-              </router-link>
-            </template>
-          </Card>
-          <Card class="card-special" iconName="zeroBalanceStub1">
-            <template #default>
-              <span class="card-special-title">
-                {{ $t('assetsStubs.card2.title') }}
-              </span>
-              <span class="card-special-title-staking">
-                {{ $t('assetsStubs.card2.action') }}
-              </span>
-              <a
-                target="_blank"
-                href="https://medium.com/citadel-one/how-to-withdraw-cryptocurrency-from-cex-to-citadel-one-71886d084f08"
-              >
+              </template>
+            </Card>
+          </router-link>
+          <a
+            target="_blank"
+            href="https://medium.com/citadel-one/how-to-withdraw-cryptocurrency-from-cex-to-citadel-one-71886d084f08"
+          >
+            <Card class="card-special" iconName="zeroBalanceStub1">
+              <template #default>
+                <span class="card-special-title">
+                  {{ $t('assetsStubs.card2.title') }}
+                </span>
+                <span class="card-special-title-staking">
+                  {{ $t('assetsStubs.card2.action') }}
+                </span>
                 <RoundArrowButton data-qa="stake__start-staking-button" />
-              </a>
-            </template>
-          </Card>
+              </template>
+            </Card>
+          </a>
         </div>
       </div>
     </template>
@@ -338,18 +338,27 @@ export default {
   display: flex;
   width: 100%;
   justify-content: center;
-  & .card {
-    position: relative;
+  a {
+    text-decoration: none;
     max-width: 359px;
     width: 100%;
-    height: 300px;
-    background: linear-gradient(90deg, #f1f0ff 0%, #e3f6ff 100%);
     &:first-child {
       margin-right: 3%;
     }
     &:last-child {
       margin-left: 3%;
     }
+    @media (max-width: 1400px) {
+      max-width: 260px;
+    }
+  }
+  & .card {
+    position: relative;
+    max-width: 359px;
+    width: 100%;
+    height: 300px;
+    background: linear-gradient(90deg, #f1f0ff 0%, #e3f6ff 100%);
+    color: initial;
     img {
       right: 0;
       left: 0;
