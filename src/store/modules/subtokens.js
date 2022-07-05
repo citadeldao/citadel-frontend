@@ -3,6 +3,7 @@ import notify from '@/plugins/notify';
 import BigNumber from 'bignumber.js';
 import citadel from '@citadeldao/lib-citadel';
 import CryptoToken from '@/models/CryptoCoins/CryptoToken';
+import { OUR_TOKEN } from '@/config/walletType';
 
 const types = {
   SET_INFLATIONI_INFO_XCT: 'SET_INFLATIONI_INFO_XCT',
@@ -95,7 +96,9 @@ export default {
           a.linked ? -1 : 1
         );
         if (state.isShowAssetsNonZeroValues) {
-          return returnableValue.filter((e) => e.balanceUSD);
+          return returnableValue.filter(
+            (e) => e.balanceUSD || e.net === OUR_TOKEN
+          );
         } else {
           return returnableValue;
         }
