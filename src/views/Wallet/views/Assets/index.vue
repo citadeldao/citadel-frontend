@@ -66,7 +66,7 @@
       />
     </div>
     <div
-      v-if="!currentWallet?.code || !displayData.length"
+      v-if="!currentWallet?.code || (keyword && !total)"
       class="assets__placeholder"
     >
       <searchError />
