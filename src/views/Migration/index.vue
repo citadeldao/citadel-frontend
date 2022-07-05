@@ -150,6 +150,7 @@
             :disabled="migrationProcess"
             :style="{ marginTop: '30px' }"
             @click="importOldWallets"
+            data-qa="Agree"
           >
             {{ $t('migration.agree') }}
           </PrimaryButton>
