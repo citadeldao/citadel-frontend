@@ -357,7 +357,10 @@ export default {
     max-width: 359px;
     width: 100%;
     height: 300px;
-    background: linear-gradient(90deg, #f1f0ff 0%, #e3f6ff 100%);
+    transition: none;
+    &:hover {
+      background: linear-gradient(90deg, #f1f0ff 0%, #e3f6ff 100%);
+    }
     color: initial;
     img {
       right: 0;
@@ -372,7 +375,11 @@ export default {
       &-special {
         padding: 22px 0 0 22px;
       }
-      &round-arrow-button__icon {
+      & .round-arrow-button {
+        top: 46px !important;
+        right: 37px !important;
+      }
+      & .round-arrow-button__icon {
         margin-right: -41px;
         margin-top: -19px;
         top: -16px;
