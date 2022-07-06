@@ -8,6 +8,7 @@
         <textarea
           v-show="!showPlaceholder"
           ref="textArea"
+          data-qa="enter-one-seed"
           v-model="mnemonic"
           :label="$t('enterPassword')"
           autofocus
@@ -33,7 +34,7 @@
           </div>
         </div>
       </transition>
-      <PrimaryButton :disabled="disabled">
+      <PrimaryButton :disabled="disabled" data-qa="Import">
         {{ $t('import') }}
       </PrimaryButton>
     </form>

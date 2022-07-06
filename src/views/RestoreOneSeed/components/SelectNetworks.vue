@@ -7,7 +7,7 @@
         :network="network"
         :checked="checked(network.id)"
         icons-path="token"
-        data-qa="add-address__restore-one-seed"
+        data-qa="add-address__one-seed"
         @check="addItem"
         @uncheck="removeItem"
       />
@@ -26,7 +26,7 @@
         @click="showAllNetworks"
       >
         <div>{{ $t('addToOneSeed.moreNetworks') }}</div>
-        <BackButton :is-down="true" />
+        <BackButton :is-down="true" data-qa="More networks"/>
       </div>
       <div class="title">
         {{ $t('addToOneSeed.walletCreated') }}
@@ -34,7 +34,7 @@
       <div class="desc">
         {{ $t('addToOneSeed.walletCreatedDescription') }}
       </div>
-      <PrimaryButton :disabled="!checkedItems.length" @click="clickHandler">
+      <PrimaryButton :disabled="!checkedItems.length" @click="clickHandler" data-qa="Get-started">
         {{ $t('addToOneSeed.getStartedBtn') }}
       </PrimaryButton>
     </div>

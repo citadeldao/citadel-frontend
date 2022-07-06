@@ -44,7 +44,7 @@
             :app="selectedApp"
             @launchApp="
               router.push({
-                name: 'Extension',
+                name: 'Extensions',
                 params: { name: selectedApp.name },
               })
             "
@@ -537,7 +537,7 @@ export default {
         extensionsList.value.find((a) => +a.id === +app)
       );
       router.push({
-        name: 'Extension',
+        name: 'Extensions',
         params: { name: selectedApp.value.name },
       });
     };
