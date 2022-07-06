@@ -12,6 +12,7 @@
       >
         <input
           v-if="!file"
+          data-qa="file-input"
           type="file"
           name="file-input"
           accept=".citadel"

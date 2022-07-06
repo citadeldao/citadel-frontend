@@ -247,18 +247,8 @@ export default [
     },
   },
   {
-    path: '/extensions',
+    path: '/extensions/:name?',
     name: 'Extensions',
-    component: () =>
-      import(/* webpackChunkName: 'Extensions' */ '@/views/Extensions'),
-    meta: {
-      layout: 'AddAddressLayout',
-      guard: 'private',
-    },
-  },
-  {
-    path: '/extensions/:name',
-    name: 'Extension',
     component: () =>
       import(/* webpackChunkName: 'Extensions' */ '@/views/Extensions'),
     meta: {

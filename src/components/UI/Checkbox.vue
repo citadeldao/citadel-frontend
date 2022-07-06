@@ -102,6 +102,10 @@ input[type='checkbox'] {
         transition: all 0.3s ease-in-out;
         background: $too-dark-blue;
         border: none;
+        &:hover,
+        &__label {
+          background: $blue;
+        }
       }
 
       &__label {
