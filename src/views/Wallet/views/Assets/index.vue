@@ -138,7 +138,6 @@ export default {
   },
   emits: ['prepareClaim', 'prepareXctClaim'],
   setup(props) {
-    console.log('test');
     const store = useStore();
     const route = useRoute();
     const { currentWallet: stateCurrentWallet } = useWallets();
