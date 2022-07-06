@@ -38,7 +38,7 @@
           <Badge v-if="false" :content="12" background-color="#00A3FF" />
         </button>
         <router-link
-          :to="{ name: 'Dao' }"
+          :to="{ name: 'Extensions', params: { name: XCT_GOVERNANCE_APP } }"
           class="header__menu-button"
           active-class="header__menu-button--active"
           data-qa="header__dao-button"
@@ -122,6 +122,7 @@ import terms from '@/assets/icons/terms.svg';
 import exportPrivateKeys from '@/helpers/exportPrivateKeys';
 import PrivacyModal from '@/components/Modals/Privacy';
 import TermsModal from '@/components/Modals/Terms';
+import { XCT_GOVERNANCE_APP } from '@/config/walletType';
 
 export default {
   name: 'Header',
@@ -240,6 +241,7 @@ export default {
       hasWallets,
       showPrivacy,
       showTerms,
+      XCT_GOVERNANCE_APP,
     };
   },
 };

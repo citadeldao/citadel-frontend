@@ -47,6 +47,20 @@ export default {
       href: 'https://www.coingecko.com/en/coins/axelar-network',
     },
   },
+  orai: {
+    web: {
+      title: 'orai.io',
+      href: 'https://orai.io/',
+    },
+    twitter: {
+      title: '@oraichain',
+      href: 'oraichain',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/oraichain-token',
+    },
+  },
   umee: {
     web: {
       title: 'umee.cc',

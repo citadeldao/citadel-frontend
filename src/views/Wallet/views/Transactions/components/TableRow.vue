@@ -28,9 +28,16 @@
       </div>
     </td>
     <td class="table-row__date-time">
-      <span>{{
-        transaction.date ? moment(transaction.date).fromNow() : ''
-      }}</span>
+      <Tooltip>
+        <template #content>
+          <span> {{ defaultDate(transaction.date) }} </span>
+        </template>
+        <template #default>
+          <span>{{
+            transaction.date ? moment(transaction.date).fromNow() : ''
+          }}</span>
+        </template>
+      </Tooltip>
     </td>
     <td class="table-row__to">
       <div class="table-row__to-section">
@@ -55,9 +62,16 @@
         <div class="table-row__amount-block">
           <div class="table-row__amount-block-line">
             <div class="table-row__amount-block-date-time">
-              <span>{{
-                transaction.date ? moment(transaction.date).fromNow() : ''
-              }}</span>
+              <Tooltip>
+                <template #content>
+                  <span> {{ defaultDate(transaction.date) }} </span>
+                </template>
+                <template #default>
+                  <span>{{
+                    transaction.date ? moment(transaction.date).fromNow() : ''
+                  }}</span>
+                </template>
+              </Tooltip>
             </div>
             <div class="table-row__amount-value">
               <span
@@ -158,10 +172,11 @@ import comment from '@/assets/icons/transactions/comment.svg';
 import inIcon from '@/assets/icons/transactions/in.svg';
 import out from '@/assets/icons/transactions/out.svg';
 import useTransaction from '@/compositions/useTransaction';
-
+import Tooltip from '@/components/UI/Tooltip';
+import defaultDate from '@/helpers/date.js';
 export default {
   name: 'TableRow',
-  components: { inIcon, out, comment, curveArrow, EditButton },
+  components: { inIcon, out, comment, curveArrow, EditButton, Tooltip },
   props: {
     transaction: {
       type: Object,
@@ -253,6 +268,7 @@ export default {
     });
 
     return {
+      defaultDate,
       icon,
       type,
       status,

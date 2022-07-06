@@ -22,17 +22,15 @@ const app = createApp(App);
 if (process.env.NODE_ENV === 'production') {
   Sentry.init({
     Vue,
-    dsn: 'https://44fcbe6018f6401183379ecc807128bc@o510489.ingest.sentry.io/6142796',
+    dsn: process.env.VUE_APP_SENTRY_DSN,
+    tunnel: new URL(process.env.VUE_APP_SENTRY_DSN).origin + '/tunnel',
     integrations: [
       new Integrations.BrowserTracing({
         routingInstrumentation: Sentry.vueRouterInstrumentation(router),
       }),
     ],
-    environment:
-      process.env.VUE_APP_HOST === 'app.citadel.one'
-        ? 'production'
-        : 'development',
-    tracesSampleRate: 1.0,
+    environment: process.env.NODE_ENV,
+    tracesSampleRate: 0.3,
   });
 }
 
