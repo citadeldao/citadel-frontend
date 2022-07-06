@@ -114,6 +114,36 @@
         </div>
       </div>
     </template>
+
+    <AssetsItem
+      :item="currentWallet"
+      :balance="currentWallet.balance"
+      is-native-token
+    />
+
+    <AssetsItem
+      v-for="(item, index) in displayData"
+      :key="`${item.name}-${index}`"
+      :balance="item.tokenBalance"
+      :item="item"
+      :is-not-linked="isNotLinkedSnip20(item)"
+      @click="setCurrentToken(item)"
+    />
+
+    <Pagination
+      :total="total"
+      :current-page="currentPage"
+      :page-size="pageSize"
+      :page-sizes="pageSizes"
+      @change-page="setCurrentPage"
+      @change-page-size="setPageSize"
+    />
+  </div>
+  <div v-if="!displayData.length" class="assets__placeholder">
+    <searchError />
+    <span>
+      {{ $t('tokenSearchError') }}
+    </span>
   </div>
 
   <teleport v-if="showCreateVkModal" to="body">
@@ -146,6 +176,7 @@ import usePaginationWithSearch from '@/compositions/usePaginationWithSearch';
 import Pagination from '@/components/Pagination.vue';
 import RoundArrowButton from '@/components/UI/RoundArrowButton';
 import Card from '@/components/UI/Card';
+import { OUR_TOKEN } from '@/config/walletType';
 
 export default {
   name: 'AssetsBlock',
@@ -209,7 +240,7 @@ export default {
       if (isNotLinkedSnip20(token)) {
         mainIsLoading.value = true;
         snip20TokenFee.value =
-          (await token.getFees(token.id, token.net))?.data?.low?.fee || 0.2;
+          (await token.getFees(token.id, token.net))?.data?.high?.fee || 0.2;
         mainIsLoading.value = false;
         showCreateVkModal.value = true;
         snip20Token.value = token;
@@ -237,7 +268,6 @@ export default {
       const data = [...props.tokenList];
       const byAlphabet = sortByAlphabet(data, 'code');
       const byValue = data.sort((a, b) => a.balanceUSD - b.balanceUSD);
-
       switch (filterValue.value) {
         case 'byAlphabet':
           return byAlphabet;
@@ -253,6 +283,15 @@ export default {
     });
 
     const filteredItems = computed(() => {
+      const indexXCT = filteredTokens.value.findIndex(
+        (e) => e.net === OUR_TOKEN
+      );
+      if (indexXCT !== -1) {
+        [filteredTokens.value[0], filteredTokens.value[indexXCT]] = [
+          filteredTokens.value[indexXCT],
+          filteredTokens.value[0],
+        ];
+      }
       if (!keyword.value) {
         return filteredTokens.value;
       }
@@ -304,6 +343,9 @@ export default {
       setCurrentPage(1);
       setPageSize(pageSizes.value[0]);
     };
+    const OUR_TOKEN_INDEX = computed(() =>
+      displayData.value.findIndex((e) => e.net === OUR_TOKEN)
+    );
 
     watch(
       () => [props.currentWallet, props.currentToken],
@@ -313,12 +355,15 @@ export default {
     );
 
     return {
+      OUR_TOKEN,
+      OUR_TOKEN_INDEX,
       setCurrentToken,
       setMainToken,
       isNotLinkedSnip20,
       closeCreateVkModal,
       keyword,
       filterValue,
+      filteredTokens,
       filterList,
       displayData,
       currentPage,

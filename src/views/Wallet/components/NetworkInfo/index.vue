@@ -287,6 +287,7 @@ export default {
   setup(props) {
     const currentIcon = ref();
     const { t, te } = useI18n();
+    const store = useStore();
 
     const tokenDescription = computed(() => {
       return props.isCurrentToken ||
@@ -310,19 +311,17 @@ export default {
 
     setIcon(props.currentWallet.net);
 
-    const walletMarketcap = ref(null);
     const getWalletMarketcap = async () => {
       const { data } = await props.currentWallet.getMarketcap();
-      walletMarketcap.value = data;
+      store.dispatch('profile/setCurrentWalletMarketcap', {
+        ...data,
+        net: props.currentWallet.net,
+      });
     };
     getWalletMarketcap();
 
-    const store = useStore();
-    const infoMarketcap = computed(
-      () => store.getters['profile/info'].marketcap[props.currentWallet.net]
-    );
     const marketcap = computed(
-      () => walletMarketcap?.value || infoMarketcap?.value
+      () => store.getters['profile/currentWalletMarketcap']
     );
     const apy = computed(() => {
       const currencyYield = marketcap.value?.yield;

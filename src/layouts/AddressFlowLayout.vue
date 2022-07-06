@@ -43,7 +43,7 @@ export default {
         return;
       }
 
-      router.push({ name: 'HomePage' });
+      router.go(-1);
     };
 
     return {
