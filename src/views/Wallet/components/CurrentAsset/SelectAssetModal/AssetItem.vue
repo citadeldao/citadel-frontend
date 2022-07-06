@@ -199,9 +199,6 @@ export default {
         &__amount {
           color: $darkgray;
         }
-
-        &__currency {
-        }
       }
     }
   }
