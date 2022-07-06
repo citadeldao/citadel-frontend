@@ -37,10 +37,7 @@
           data-qa="add-address__existing__private-key__key-field"
         />
       </div>
-      <PrimaryButton
-        :disabled="disabled"
-        data-qa="Import"
-      >
+      <PrimaryButton :disabled="disabled" data-qa="Import">
         {{ $t('import') }}
       </PrimaryButton>
     </form>
