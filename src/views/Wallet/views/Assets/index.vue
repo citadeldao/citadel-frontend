@@ -114,38 +114,7 @@
         </div>
       </div>
     </template>
-
-    <AssetsItem
-      :item="currentWallet"
-      :balance="currentWallet.balance"
-      is-native-token
-    />
-
-    <AssetsItem
-      v-for="(item, index) in displayData"
-      :key="`${item.name}-${index}`"
-      :balance="item.tokenBalance"
-      :item="item"
-      :is-not-linked="isNotLinkedSnip20(item)"
-      @click="setCurrentToken(item)"
-    />
-
-    <Pagination
-      :total="total"
-      :current-page="currentPage"
-      :page-size="pageSize"
-      :page-sizes="pageSizes"
-      @change-page="setCurrentPage"
-      @change-page-size="setPageSize"
-    />
   </div>
-  <div v-if="!displayData.length" class="assets__placeholder">
-    <searchError />
-    <span>
-      {{ $t('tokenSearchError') }}
-    </span>
-  </div>
-
   <teleport v-if="showCreateVkModal" to="body">
     <CreateVkModal
       :address="currentWallet.address"
