@@ -12,6 +12,7 @@
       >
         <input
           v-if="!file"
+          data-qa="file-input"
           type="file"
           name="file-input"
           accept=".citadel"
@@ -47,7 +48,7 @@
         </div>
       </div>
     </div>
-    <PrimaryButton :disabled="!file" @click="clickHandler">
+    <PrimaryButton :disabled="!file" @click="clickHandler" data-qa="Import">
       {{ $t('import') }}
     </PrimaryButton>
   </div>

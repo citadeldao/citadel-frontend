@@ -147,7 +147,7 @@ export default {
         .sort((item, nextItem) => (item.name > nextItem.name ? 1 : -1));
     });
 
-    const currency = computed(() => store.getters['profile/info']?.rates);
+    const currency = computed(() => store.getters['profile/rates']);
     const total = computed(() => {
       return listData.value.reduce((total, currentValue) => {
         const totalForNet = currentValue.rewards.reduce(

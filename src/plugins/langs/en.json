@@ -361,7 +361,8 @@
         "walletsCountTitle": "Addresses in the list",
         "eneterListName": "Please, enter the list name.",
         "warningModalDesc": "This list name already exists, please try another one",
-        "infoBanner": " You didn't add addresses to this list. Please, choose at least one address to create a list."
+        "infoBanner": " You didn't add addresses to this list. Please, choose at least one address to create a list.",
+        "duplicateName": "A list with this name already exists. Please, choose another name"
     },
     "calculator": {
         "title": "{coin} Staking Calculator",
@@ -473,7 +474,7 @@
     "fee": "Fee",
     "comment": "Comment",
     "export": "Export",
-    "timeDate": "Time & Data",
+    "timeDate": "Time & Date",
     "type": "Type",
     "status": "Status",
     "viewOnly": "View only",
@@ -679,6 +680,18 @@
             "description": "Chosen platform language",
             "inputLabel": "Language"
         },
+        "changePassword": {
+            "btnTitle": "Change password",
+            "btnUpdate": "Update",
+            "modalTitle": "Password change",
+            "oldPassword": "Old password",
+            "newPassword": "New password",
+            "modalDescription": "This is the password you will use to confirm transaction signatures",
+            "incorrectOldPassword": "The old password is incorrect",
+            "minLen": "Min length 8 characters",
+            "successTitle": "Your password was successfully changed",
+            "successDescription": "Use your new password to confirm transactions"
+        },
         "delete": {
             "title": "Delete your account",
             "description": "This operation cannot be reversed",
@@ -878,7 +891,8 @@
         "appTooltip": "This application is integrated by Citadel.one team.",
         "transactionData": "Transaction data",
         "transactionFee": "Transaction fee",
-        "signMessage": "Sign message"
+        "signMessage": "Sign message",
+        "searchPlaceholder": "Start typing the app name"
     },
     "tokenDescriptionComdex": "Comdex is a decentralized synthetic assets protocol built on the Cosmos. ",
     "tokenDescriptionJuno": "Juno is a Cosmos-based chain that provides an environment for the deployment of interoperable smart contracts.",
@@ -1087,6 +1101,11 @@
             "title": "Polkadot network",
             "description": "Polkadot is a network protocol that allows arbitrary data—not just tokens—to be transferred across blockchains.This means Polkadot is a true multi-chain application environment where things like cross-chain registries and cross-chain computation are possible.Polkadot can transfer this data across public, open, permissionless blockchains as well as private, permissioned blockchains.",
             "shortDescription": "Polkadot is a network protocol that allows arbitrary data—not just tokens—to be transferred across blockchains. This means Polkadot is a true multi-chain application environment where things like cross-chain registries and cross-chain computation are possible."
+        },
+        "orai": {
+            "title": "Oraichain",
+            "description": "As the world’s first AI-powered oracle and ecosystem for blockchains, Oraichain now transforms itself to become an advanced AI Layer 1 for Data Economy and Oracle services that serves as a foundational layer for the creation of a new generation of smart contracts and Dapps and create a complete AI Ecosystem on blockchain.",
+            "shortDescription": "Oraichain is the world's first intelligent and secure solution for emerging Web3, scalable Dapps, and decentralized AI."
         }
     },
     "uptime": "Uptime",

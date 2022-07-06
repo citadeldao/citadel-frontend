@@ -47,6 +47,7 @@
         :is-choosen-token="!currentToken"
         @click="setCurrentToken(stateCurrentWallet)"
       />
+
       <AssetsItem
         v-for="(item, index) in displayData"
         :key="`${item.name}-${index}`"
@@ -103,6 +104,7 @@ import { TOKEN_STANDARDS } from '@/config/walletType';
 import usePaginationWithSearch from '@/compositions/usePaginationWithSearch';
 import Pagination from '@/components/Pagination.vue';
 import useWallets from '@/compositions/useWallets';
+import { OUR_TOKEN } from '@/config/walletType';
 
 export default {
   name: 'AssetsBlock',
@@ -164,7 +166,7 @@ export default {
       if (isNotLinkedSnip20(token)) {
         mainIsLoading.value = true;
         snip20TokenFee.value =
-          (await token.getFees(token.id, token.net))?.data?.low?.fee || 0.2;
+          (await token.getFees(token.id, token.net))?.data?.high?.fee || 0.2;
         mainIsLoading.value = false;
         showCreateVkModal.value = true;
         snip20Token.value = token;
@@ -189,9 +191,8 @@ export default {
 
     const filteredTokens = computed(() => {
       const data = [...props.tokenList];
-      const byAlphabet = sortByAlphabet(data, 'name');
+      const byAlphabet = sortByAlphabet(data, 'code');
       const byValue = data.sort((a, b) => a.balanceUSD - b.balanceUSD);
-
       switch (filterValue.value) {
         case 'byAlphabet':
           return byAlphabet;
@@ -207,6 +208,15 @@ export default {
     });
 
     const filteredItems = computed(() => {
+      const indexXCT = filteredTokens.value.findIndex(
+        (e) => e.net === OUR_TOKEN
+      );
+      if (indexXCT !== -1) {
+        [filteredTokens.value[0], filteredTokens.value[indexXCT]] = [
+          filteredTokens.value[indexXCT],
+          filteredTokens.value[0],
+        ];
+      }
       if (!keyword.value) {
         return filteredTokens.value;
       }
@@ -258,6 +268,9 @@ export default {
       setCurrentPage(1);
       setPageSize(pageSizes.value[0]);
     };
+    const OUR_TOKEN_INDEX = computed(() =>
+      displayData.value.findIndex((e) => e.net === OUR_TOKEN)
+    );
 
     watch(
       () => [props.currentWallet, props.currentToken],
@@ -266,6 +279,8 @@ export default {
       }
     );
     return {
+      OUR_TOKEN,
+      OUR_TOKEN_INDEX,
       setCurrentToken,
       setMainToken,
       isNotLinkedSnip20,
@@ -273,6 +288,7 @@ export default {
       stateCurrentWallet,
       keyword,
       filterValue,
+      filteredTokens,
       filterList,
       displayData,
       currentPage,
