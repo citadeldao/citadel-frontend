@@ -41,11 +41,11 @@
         <div>Price</div>
       </div>
       <AssetsItem
-        :item="copyWallet"
-        :balance="copyWallet.balance"
+        :item="stateCurrentWallet"
+        :balance="stateCurrentWallet.balance"
         is-native-token
         :is-choosen-token="!currentToken"
-        @click="setCurrentToken(copyWallet)"
+        @click="setCurrentToken(stateCurrentWallet)"
       />
       <AssetsItem
         v-for="(item, index) in displayData"
@@ -138,7 +138,7 @@ export default {
   setup(props) {
     const store = useStore();
     const route = useRoute();
-    const { currentWallet: copyWallet } = useWallets();
+    const { currentWallet: stateCurrentWallet } = useWallets();
     const keyword = ref('');
     const showCreateVkModal = ref(false);
     const snip20TokenFee = ref(null);
@@ -219,7 +219,7 @@ export default {
     });
 
     const balanceUSD = computed(() => {
-      const nativeTokenBalance = copyWallet.value.balanceUSD;
+      const nativeTokenBalance = stateCurrentWallet.value.balanceUSD;
       const totalTokenBalance = props.tokenList.reduce((acc, token) => {
         return BigNumber(acc).plus(token.balanceUSD).toNumber();
       }, 0);
@@ -270,7 +270,7 @@ export default {
       setMainToken,
       isNotLinkedSnip20,
       closeCreateVkModal,
-      copyWallet,
+      stateCurrentWallet,
       keyword,
       filterValue,
       filterList,
