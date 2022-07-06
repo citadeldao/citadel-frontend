@@ -26,7 +26,7 @@
         @click="showAllNetworks"
       >
         <div>{{ $t('addToOneSeed.moreNetworks') }}</div>
-        <BackButton :is-down="true" data-qa="More networks"/>
+        <BackButton :is-down="true" data-qa="More networks" />
       </div>
       <div class="title">
         {{ $t('addToOneSeed.walletCreated') }}
@@ -34,7 +34,11 @@
       <div class="desc">
         {{ $t('addToOneSeed.walletCreatedDescription') }}
       </div>
-      <PrimaryButton :disabled="!checkedItems.length" @click="clickHandler" data-qa="Get-started">
+      <PrimaryButton
+        :disabled="!checkedItems.length"
+        @click="clickHandler"
+        data-qa="Get-started"
+      >
         {{ $t('addToOneSeed.getStartedBtn') }}
       </PrimaryButton>
     </div>
