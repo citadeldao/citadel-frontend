@@ -219,7 +219,7 @@ export default {
     });
 
     const balanceUSD = computed(() => {
-      const nativeTokenBalance = props.currentWallet.balanceUSD;
+      const nativeTokenBalance = copyWallet.value.balanceUSD;
       const totalTokenBalance = props.tokenList.reduce((acc, token) => {
         return BigNumber(acc).plus(token.balanceUSD).toNumber();
       }, 0);
