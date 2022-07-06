@@ -2,7 +2,7 @@
   <div
     class="assets-item"
     :class="{
-      'assets-item--native': isNativeToken || isChoosenToken,
+      'assets-item--native': isChoosenToken,
       'assets-item--not-linked': isNotLinked,
     }"
   >

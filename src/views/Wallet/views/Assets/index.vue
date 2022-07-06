@@ -42,8 +42,9 @@
       </div>
       <AssetsItem
         :item="copyWallet"
-        :balance="currentWallet.balance"
-        :is-native-token="!currentToken"
+        :balance="copyWallet.balance"
+        is-native-token
+        :is-choosen-token="!currentToken"
         @click="setCurrentToken(copyWallet)"
       />
       <AssetsItem
@@ -65,10 +66,7 @@
         @change-page-size="setPageSize"
       />
     </div>
-    <div
-      v-if="!currentWallet?.code || (keyword && !total)"
-      class="assets__placeholder"
-    >
+    <div v-if="keyword && !total" class="assets__placeholder">
       <searchError />
       <span>
         {{ $t('tokenSearchError') }}
