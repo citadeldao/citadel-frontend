@@ -673,7 +673,6 @@ export default {
     watch(
       () => route.params,
       (newParams) => {
-        console.log('es1');
         if (newParams.net && newParams.address) {
           clearState();
           loadData();
