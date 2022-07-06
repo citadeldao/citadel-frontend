@@ -179,9 +179,12 @@ export async function socketEventHandler({ eventName, data }) {
       }
 
       break;
-    // case 'marketCap-update-client':
-    //  //update marketcap
+    case 'marketCap-update-client':
+      //update marketcap
+      await store.dispatch('profile/updateMarketcap', data);
+      await store.dispatch('profile/updateRates', data);
+      await store.dispatch('profile/updateCurrentWalletMarketcap', data);
 
-    //   break;
+      break;
   }
 }
