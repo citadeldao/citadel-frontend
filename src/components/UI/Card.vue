@@ -171,8 +171,8 @@ export default {
         font-size: 30px;
         line-height: 30px;
         @include md {
-          font-size: 25px;
-          line-height: 25px;
+          font-size: 24px;
+          line-height: 24px;
         }
       }
     }
