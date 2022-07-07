@@ -2,7 +2,6 @@
   <div class="main-header">
     <div class="main-header__tabs">
       <router-link
-        v-if="!currentToken && currentWallet.hasSubtoken"
         active-class="main-header__active"
         class="main-header__tabs-item"
         :to="{

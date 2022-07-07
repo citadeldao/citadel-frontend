@@ -10,7 +10,7 @@ import { useStore } from 'vuex';
 export default function useStaking(stakeNodes, list) {
   const { t } = useI18n();
   const { currentWallet } = useWallets();
-  const currentToken = computed(()=> store.getters['subtokens/currentToken']);
+  const currentToken = computed(() => store.getters['subtokens/currentToken']);
   const isMultiple = computed(() => currentWallet.value.net === 'polkadot');
   provide('isMultiple', isMultiple)
   const isLoading = ref(false);
@@ -118,7 +118,7 @@ export default function useStaking(stakeNodes, list) {
       adding.value = resAdding;
       resMaxAmount.value = maxAmount;
       resEnough.value = enough;
-      if(!enough) {
+      if (!enough) {
         !(editMode.value || isMultiple.value) && modalCloseHandler();
       }
     } else {
@@ -130,11 +130,11 @@ export default function useStaking(stakeNodes, list) {
   const selectedNode = ref();
   const updateSelectedNode = async (value) => {
     amount.value = '';
-      selectedNode.value = value;
-      if ((activeTab.value === 'redelegate' || mode.value === 'redelegate') && value && selectedNodeForRedelegation.value) {
-        await getDelegationFee('redelegate', selectedNodeForRedelegation.value, value);
-      } else if (!(activeTab.value === 'redelegate' || mode.value === 'redelegate') && value) {
-        await getDelegationFee(mode.value, value);
+    selectedNode.value = value;
+    if ((activeTab.value === 'redelegate' || mode.value === 'redelegate') && value && selectedNodeForRedelegation.value) {
+      await getDelegationFee('redelegate', selectedNodeForRedelegation.value, value);
+    } else if (!(activeTab.value === 'redelegate' || mode.value === 'redelegate') && value) {
+      await getDelegationFee(mode.value, value);
     }
   };
   provide('selectedNode', selectedNode);
@@ -190,14 +190,14 @@ export default function useStaking(stakeNodes, list) {
     showSuccessModal.value = value;
   };
   const toStake = async () => {
-    if(isMultiple.value && list.length){
-       await getDelegationFee('stake', list);
-     }
-    if (initialStakingNode && currentWallet.value.isCosmosNetwork) {
+    if (isMultiple.value && list.length) {
+      await getDelegationFee('stake', list);
+    }
+    if (initialStakingNode) {
       await updateSelectedNode(initialStakingNode.value);
-      }
-      updateShowModal(true);
-      updateShowChooseNode(true);
+    }
+    updateShowModal(true);
+    updateShowChooseNode(true);
   };
 
   const initialStakingNode = computed(() => {
@@ -218,7 +218,7 @@ export default function useStaking(stakeNodes, list) {
     updateShowNodesList(true);
   };
   const initialSelectedNodeRedelegateFrom = computed(() => {
-    if(isMultiple.value){
+    if (isMultiple.value) {
       return list
     }
     const filteredList = list.filter(({ name }) => name !== OUR_NODE);
@@ -269,21 +269,21 @@ export default function useStaking(stakeNodes, list) {
   });
 
   const maxAmount = computed(() => {
-      let max = resMaxAmount.value || currentWallet.value.balance.mainBalance;
+    let max = resMaxAmount.value || currentWallet.value.balance.mainBalance;
 
-      if (max > 0) {
-        return max;
-      } else {
-        return 0;
-      }
+    if (max > 0) {
+      return max;
+    } else {
+      return 0;
     }
+  }
   );
   provide('maxAmount', maxAmount);
 
   const maxAdditionalFee = computed(() => {
-    if(mode.value === 'stake'){
+    if (mode.value === 'stake') {
       return BigNumber(Number(maxAmount.value)).minus(Number(amount.value)).toNumber()
-    }else{
+    } else {
       return BigNumber(Number(currentWallet.value.balance.mainBalance)).minus(Number(fee.value)).toNumber()
     }
 
@@ -349,12 +349,12 @@ export default function useStaking(stakeNodes, list) {
         title: t('redelegation.chooseNodeTitle'),
         desc: t('redelegation.redelegationDesc'),
         list: isMultiple.value ? stakeNodesWithValue.value.filter(n => n.isActive)
-        : redelegationDirection.value === 'to'
-          ? stakeNodesWithValue.value
-            .filter(({ address }) => address.toLowerCase() !== selectedNode?.value?.address?.toLowerCase())
-          : redelegationDirection.value === 'from'
-            ? list.filter(({ address }) => address.toLowerCase() !== selectedNodeForRedelegation?.value?.address?.toLowerCase())
-            : list,
+          : redelegationDirection.value === 'to'
+            ? stakeNodesWithValue.value
+              .filter(({ address }) => address.toLowerCase() !== selectedNode?.value?.address?.toLowerCase())
+            : redelegationDirection.value === 'from'
+              ? list.filter(({ address }) => address.toLowerCase() !== selectedNodeForRedelegation?.value?.address?.toLowerCase())
+              : list,
       };
     } else if (mode.value === 'stake') {
       return {

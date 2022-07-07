@@ -6,10 +6,14 @@ import store from '@/store';
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
-  scrollBehavior() {
+  scrollBehavior(to, from) {
     const scrollableLayout = document.getElementById('main');
 
-    if (scrollableLayout) {
+    if (
+      scrollableLayout &&
+      to.name !== 'WalletAssets' &&
+      from.name !== 'WalletAssets'
+    ) {
       scrollableLayout.scrollTop = 0;
     }
   },

@@ -40,11 +40,12 @@
         <div>USD Balance</div>
         <div>Price</div>
       </div>
-
       <AssetsItem
-        :item="currentWallet"
-        :balance="currentWallet.balance"
+        :item="stateCurrentWallet"
+        :balance="stateCurrentWallet.balance"
         is-native-token
+        :is-choosen-token="!currentToken"
+        @click="setCurrentToken(stateCurrentWallet)"
       />
 
       <AssetsItem
@@ -54,6 +55,7 @@
         :item="item"
         :is-not-linked="isNotLinkedSnip20(item)"
         @click="setCurrentToken(item)"
+        :is-choosen-token="currentToken?.net === item?.net"
       />
 
       <Pagination
@@ -65,7 +67,7 @@
         @change-page-size="setPageSize"
       />
     </div>
-    <div v-if="!displayData.length" class="assets__placeholder">
+    <div v-if="keyword && !total" class="assets__placeholder">
       <searchError />
       <span>
         {{ $t('tokenSearchError') }}
@@ -101,6 +103,7 @@ import redirectToWallet from '@/router/helpers/redirectToWallet';
 import { TOKEN_STANDARDS } from '@/config/walletType';
 import usePaginationWithSearch from '@/compositions/usePaginationWithSearch';
 import Pagination from '@/components/Pagination.vue';
+import useWallets from '@/compositions/useWallets';
 import { OUR_TOKEN } from '@/config/walletType';
 
 export default {
@@ -137,7 +140,7 @@ export default {
   setup(props) {
     const store = useStore();
     const route = useRoute();
-
+    const { currentWallet: stateCurrentWallet } = useWallets();
     const keyword = ref('');
     const showCreateVkModal = ref(false);
     const snip20TokenFee = ref(null);
@@ -169,7 +172,6 @@ export default {
         snip20Token.value = token;
       } else {
         store.dispatch('subtokens/setCurrentToken', token);
-
         redirectToWallet({
           wallet: store.getters['wallets/walletByAddress'](route.params),
           token,
@@ -227,7 +229,7 @@ export default {
     });
 
     const balanceUSD = computed(() => {
-      const nativeTokenBalance = props.currentWallet.balanceUSD;
+      const nativeTokenBalance = stateCurrentWallet.value.balanceUSD;
       const totalTokenBalance = props.tokenList.reduce((acc, token) => {
         return BigNumber(acc).plus(token.balanceUSD).toNumber();
       }, 0);
@@ -276,7 +278,6 @@ export default {
         clearFilters();
       }
     );
-
     return {
       OUR_TOKEN,
       OUR_TOKEN_INDEX,
@@ -284,6 +285,7 @@ export default {
       setMainToken,
       isNotLinkedSnip20,
       closeCreateVkModal,
+      stateCurrentWallet,
       keyword,
       filterValue,
       filteredTokens,
