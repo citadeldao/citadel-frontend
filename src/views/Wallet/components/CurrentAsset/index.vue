@@ -37,7 +37,7 @@
         >
           <template #default>
             <AssetsListModal
-              :current-wallet="currentWallet"
+              :current-wallet="stateCurrentWallet"
               @click="goToAsset"
             />
           </template>
@@ -90,6 +90,7 @@ export default {
     },
   },
   setup() {
+    const { currentWallet: stateCurrentWallet } = useWallets();
     const store = useStore();
     const isSelectAssetModalOpened = ref(false);
     const showCreateVkModal = ref(false);
@@ -141,6 +142,7 @@ export default {
     };
 
     return {
+      stateCurrentWallet,
       isSelectAssetModalOpened,
       showCreateVkModal,
       snip20TokenFee,
