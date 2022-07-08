@@ -83,7 +83,6 @@ export default {
   },
 
   setup(props) {
-    console.log(props.info);
     const txUrl = computed(() =>
       props.currentWallet?.getTxUrl(props.currentWallet.id, props.info.hash)
     );
