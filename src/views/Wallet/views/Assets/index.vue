@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import { computed, ref, inject, watch, onMounted } from 'vue';
+import { computed, ref, inject, watch } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
 import BigNumber from 'bignumber.js';
@@ -100,6 +100,7 @@ import redirectToWallet from '@/router/helpers/redirectToWallet';
 import { TOKEN_STANDARDS } from '@/config/walletType';
 import usePaginationWithSearch from '@/compositions/usePaginationWithSearch';
 import Pagination from '@/components/Pagination.vue';
+import { OUR_TOKEN } from '@/config/walletType';
 
 export default {
   name: 'AssetsBlock',
@@ -133,9 +134,6 @@ export default {
   },
   emits: ['prepareClaim', 'prepareXctClaim'],
   setup(props) {
-    onMounted(() => {
-      store.commit('subtokens/SET_ASSETS_NON_ZERO_VALUES', true);
-    });
     const store = useStore();
     const route = useRoute();
 
@@ -177,7 +175,6 @@ export default {
           root: true,
         });
       }
-      store.commit('subtokens/SET_ASSETS_NON_ZERO_VALUES', false);
     };
 
     const setMainToken = async () => {
@@ -190,7 +187,7 @@ export default {
     };
 
     const filteredTokens = computed(() => {
-      const data = [...props.tokenList];
+      const data = [...filteredTokensList.value];
       const byAlphabet = sortByAlphabet(data, 'code');
       const byValue = data.sort((a, b) => a.balanceUSD - b.balanceUSD);
 
@@ -237,7 +234,14 @@ export default {
         return BigNumber(acc).plus(availableUSD).toNumber();
       }, 0);
     });
-
+    const filteredTokensList = computed(() => {
+      if (!keyword.value) {
+        return props.tokenList.filter(
+          (e) => e.balanceUSD || e.net === OUR_TOKEN
+        );
+      }
+      return props.tokenList;
+    });
     const {
       displayData,
       currentPage,
@@ -266,13 +270,8 @@ export default {
         clearFilters();
       }
     );
-    watch(
-      () => [filterValue.value, keyword.value],
-      () => {
-        store.commit('subtokens/SET_ASSETS_NON_ZERO_VALUES', false);
-      }
-    );
     return {
+      filteredTokensList,
       setCurrentToken,
       setMainToken,
       isNotLinkedSnip20,

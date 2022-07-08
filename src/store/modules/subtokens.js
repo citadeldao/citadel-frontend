@@ -3,7 +3,6 @@ import notify from '@/plugins/notify';
 import BigNumber from 'bignumber.js';
 import citadel from '@citadeldao/lib-citadel';
 import CryptoToken from '@/models/CryptoCoins/CryptoToken';
-import { OUR_TOKEN } from '@/config/walletType';
 
 const types = {
   SET_INFLATIONI_INFO_XCT: 'SET_INFLATIONI_INFO_XCT',
@@ -11,7 +10,6 @@ const types = {
   SET_CURRENT_TOKEN_BALANCE: 'SET_CURRENT_TOKEN_BALANCE',
   SET_CURRENT_TOKEN: 'SET_CURRENT_TOKEN',
   SET_TOKEN_BALANCE: 'SET_TOKEN_BALANCE',
-  SET_ASSETS_NON_ZERO_VALUES: 'SET_ASSETS_NON_ZERO_VALUES',
 };
 
 export default {
@@ -20,7 +18,6 @@ export default {
     inflationInfoXCT: {},
     formatedSubtokens: [],
     currentToken: null,
-    isShowAssetsNonZeroValues: true,
   }),
 
   getters: {
@@ -95,13 +92,7 @@ export default {
         let returnableValue = formattedSubtokens.sort((a) =>
           a.linked ? -1 : 1
         );
-        if (state.isShowAssetsNonZeroValues) {
-          return returnableValue.filter(
-            (e) => e.balanceUSD || e.net === OUR_TOKEN
-          );
-        } else {
-          return returnableValue;
-        }
+        return returnableValue;
       },
 
     currentToken: (state) => state.currentToken,
@@ -122,9 +113,6 @@ export default {
         ...state.subtokenBalances[token],
         ...balance,
       };
-    },
-    [types.SET_ASSETS_NON_ZERO_VALUES](state, value) {
-      state.isShowAssetsNonZeroValues = value;
     },
   },
 

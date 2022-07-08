@@ -27,10 +27,7 @@
           :error="inputError"
         />
       </div>
-      <PrimaryButton
-        :disabled="!!inputError"
-        data-qa="Create"
-      >
+      <PrimaryButton :disabled="!!inputError" data-qa="Create">
         {{ $t('create') }}
       </PrimaryButton>
     </form>
