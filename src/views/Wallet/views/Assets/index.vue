@@ -103,6 +103,7 @@ import redirectToWallet from '@/router/helpers/redirectToWallet';
 import { TOKEN_STANDARDS } from '@/config/walletType';
 import usePaginationWithSearch from '@/compositions/usePaginationWithSearch';
 import Pagination from '@/components/Pagination.vue';
+import useWallets from '@/compositions/useWallets';
 import { OUR_TOKEN } from '@/config/walletType';
 
 export default {
@@ -273,10 +274,6 @@ export default {
       setCurrentPage(1);
       setPageSize(pageSizes.value[0]);
     };
-    const OUR_TOKEN_INDEX = computed(() =>
-      displayData.value.findIndex((e) => e.net === OUR_TOKEN)
-    );
-
     watch(
       () => [props.currentWallet, props.currentToken],
       () => {
