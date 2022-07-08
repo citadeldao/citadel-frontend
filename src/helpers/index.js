@@ -24,7 +24,6 @@ export const findWalletInArray = (arr = [], { address, net } = {}) => {
   return arr.find((w) => {
     const isAddress = w.address?.toLowerCase() === address?.toLowerCase();
     const isNet = w.net?.toLowerCase() === net?.toLowerCase();
-
     return net ? isAddress && isNet : isAddress;
   });
 };

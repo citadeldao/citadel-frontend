@@ -141,7 +141,7 @@ export default {
 
     const { wallets } = useWallets();
 
-    const currency = computed(() => store.getters['profile/info'].rates);
+    const currency = computed(() => store.getters['profile/rates']);
 
     const activeTab = computed(() => store.getters['wallets/activeList']);
     const customWalletsList = computed(
@@ -154,7 +154,10 @@ export default {
 
     const totalUSDBalance = computed(() => {
       const value = walletsList.value.reduce((total, currentValue) => {
-        return BigNumber(total).plus(currentValue?.balanceUSD).toNumber();
+        const balanceUSD = BigNumber(currentValue.balance.calculatedBalance)
+          .times(currency.value[currentValue.net].USD)
+          .toNumber();
+        return BigNumber(total).plus(balanceUSD).toNumber();
       }, 0);
 
       store.dispatch('balance/setBalance', { type: 'usd', value });

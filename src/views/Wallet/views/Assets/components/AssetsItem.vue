@@ -2,7 +2,7 @@
   <div
     class="assets-item"
     :class="{
-      'assets-item--native': isNativeToken,
+      'assets-item--native': isChoosenToken,
       'assets-item--not-linked': isNotLinked,
     }"
   >
@@ -78,6 +78,10 @@ export default {
       default: () => ({}),
     },
     isNativeToken: {
+      type: Boolean,
+      default: false,
+    },
+    isChoosenToken: {
       type: Boolean,
       default: false,
     },
@@ -239,7 +243,7 @@ export default {
       #fad0c466 1%,
       #ffd1ff66 100%
     );
-    cursor: default;
+    cursor: pointer;
     @include hover;
 
     &:hover {

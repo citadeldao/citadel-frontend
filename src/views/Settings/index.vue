@@ -175,7 +175,7 @@ export default {
       createVkWallet.value = wallet;
       createVkViewingKey.value = vk;
       snip20TokenFee.value =
-        (await vk.getFees(vk.id, vk.net))?.data?.low?.fee || 0.2;
+        (await vk.getFees(vk.id, vk.net))?.data?.high?.fee || 0.2;
     };
     provide('openCreateVkModal', openCreateVkModal);
     const closeCreateVkModal = () => {

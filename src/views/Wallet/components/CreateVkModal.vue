@@ -368,7 +368,7 @@ export default {
         const { error: resError, data } = await citadel.setViewingKey(
           props.currentWallet.id,
           props.token.net,
-          props.vkType,
+          'random',
           {
             derivationPath: props.currentWallet.derivationPath,
             fee: props.tokenFee,
