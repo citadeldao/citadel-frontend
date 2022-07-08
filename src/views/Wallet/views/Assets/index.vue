@@ -268,9 +268,6 @@ export default {
       setCurrentPage(1);
       setPageSize(pageSizes.value[0]);
     };
-    const OUR_TOKEN_INDEX = computed(() =>
-      displayData.value.findIndex((e) => e.net === OUR_TOKEN)
-    );
 
     watch(
       () => [props.currentWallet, props.currentToken],
@@ -280,7 +277,6 @@ export default {
     );
     return {
       OUR_TOKEN,
-      OUR_TOKEN_INDEX,
       setCurrentToken,
       setMainToken,
       isNotLinkedSnip20,
