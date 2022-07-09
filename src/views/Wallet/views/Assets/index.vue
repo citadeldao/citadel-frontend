@@ -270,9 +270,13 @@ export default {
     };
 
     watch(
-      () => [props.currentWallet, props.currentToken],
-      () => {
-        clearFilters();
+      () => stateCurrentWallet.value,
+      (newVal, oldVal) => {
+        if (
+          newVal?.net.toLowerCase() !== oldVal?.net.toLowerCase() ||
+          newVal?.address.toLowerCase() !== oldVal?.address.toLowerCase()
+        )
+          clearFilters();
       }
     );
     return {

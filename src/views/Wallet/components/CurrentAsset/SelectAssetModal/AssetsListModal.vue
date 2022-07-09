@@ -12,8 +12,14 @@
       />
     </div>
     <div class="assets-list-modal-content__addresses">
-      <AssetItem :asset="currentWallet" @click="$emit('click', asset)" />
-      <AssetItem
+      <AssetItemModal
+        :is-choosen-token="currentWallet?.net === stateCurrentWallet?.net"
+        is-native-token
+        :state-current-wallet="stateCurrentWallet"
+        :asset="stateCurrentWallet"
+        @click="$emit('click', asset)"
+      />
+      <AssetItemModal
         v-for="(asset, index) of filteredAssets"
         :key="`${asset.net}${asset.address}${index}`"
         :asset="asset"
@@ -28,13 +34,17 @@
 import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
 import Input from '@/components/UI/Input';
-import AssetItem from './AssetItem.vue';
+import AssetItemModal from './AssetItemModal.vue';
 
 export default {
   name: 'CustomListModalContent',
-  components: { AssetItem, Input },
+  components: { AssetItemModal, Input },
   props: {
     currentWallet: {
+      type: Object,
+      required: true,
+    },
+    stateCurrentWallet: {
       type: Object,
       required: true,
     },

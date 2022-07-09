@@ -3,20 +3,17 @@
     class="asset-item"
     :class="{
       'asset-item--choosen': isChoosenToken,
+      'asset-item--native': isNativeToken,
     }"
   >
-    <div class="asset-item__icon">
-      <div v-if="showIconPlaceholder" class="asset-item__placeholder">
-        <span>{{ iconPlaceholder[0] }}</span>
-        <span>{{ iconPlaceholder[1] }}</span>
-      </div>
-      <img
-        v-else
-        :src="getTokenIcon(asset.code.toLowerCase())"
-        alt=""
-        @error="showIconPlaceholder = true"
-      />
-    </div>
+    <AssetIcon
+      :is-native-token="isNativeToken"
+      :net="asset.net"
+      :name="asset.name"
+      :code="asset.code"
+      class="asset-item__icon"
+    />
+
     <div class="asset-item__info">
       <div class="asset-item__line">
         <span class="asset-item__title">
@@ -25,7 +22,9 @@
         <span class="asset-item__balance">
           <span
             v-pretty-number="{
-              value: asset?.tokenBalance?.mainBalance || asset.balanceUSD,
+              value:
+                asset?.tokenBalance?.mainBalance ||
+                asset?.balance?.calculatedBalance,
               currency: asset.code,
             }"
             class="asset-item__amount"
@@ -55,29 +54,48 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { ref, computed, markRaw } from 'vue';
 import { tokenIconPlaceholder, getTokenIcon } from '@/helpers';
+import AssetIcon from '@/components/UI/AssetIcon.vue';
 
 export default {
-  name: 'AddressItem',
+  name: 'AssetItemModal',
   props: {
     asset: {
       type: Object,
       required: true,
     },
+    stateCurrentWallet: {
+      type: Object,
+      required: false,
+    },
     isChoosenToken: {
       type: Boolean,
       default: false,
     },
+    isNativeToken: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  components: {
+    AssetIcon,
   },
   setup(props) {
     const showIconPlaceholder = ref(false);
-
+    const icon = ref();
+    // console.log(props.asset.code.toLowerCase(), 'hui');
+    import(
+      `@/assets/icons/networks/${props.asset.code.toLowerCase()}.svg`
+    ).then((val) => {
+      icon.value = markRaw(val.default);
+    });
     const iconPlaceholder = computed(() =>
       tokenIconPlaceholder(props.asset.code)
     );
 
     return {
+      // icon,
       getTokenIcon,
       showIconPlaceholder,
       iconPlaceholder,
@@ -110,6 +128,12 @@ export default {
         color: $ligth-blue;
       }
     }
+  }
+}
+.asset-item__icon:deep .asset-icon {
+  &__placeholder {
+    max-width: 36px !important;
+    max-height: 36px !important;
   }
 }
 .asset-item {

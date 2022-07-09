@@ -37,7 +37,8 @@
         >
           <template #default>
             <AssetsListModal
-              :current-wallet="stateCurrentWallet"
+              :state-current-wallet="stateCurrentWallet"
+              :current-wallet="currentWallet"
               @click="goToAsset"
             />
           </template>
@@ -121,6 +122,7 @@ export default {
     };
 
     const goToAsset = async (asset) => {
+      console.log(asset, 'asset');
       if (isNotLinkedSnip20(asset)) {
         mainIsLoading.value = true;
         snip20TokenFee.value =
