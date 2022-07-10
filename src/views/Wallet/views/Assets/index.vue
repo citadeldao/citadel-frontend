@@ -56,6 +56,7 @@
         :is-not-linked="isNotLinkedSnip20(item)"
         @click="setCurrentToken(item)"
         :is-choosen-token="currentToken?.net === item?.net"
+        :is-disabled="!item?.tokenBalance?.calculatedBalance"
       />
 
       <Pagination
@@ -163,20 +164,22 @@ export default {
     };
 
     const setCurrentToken = async (token) => {
-      if (isNotLinkedSnip20(token)) {
-        mainIsLoading.value = true;
-        snip20TokenFee.value =
-          (await token.getFees(token.id, token.net))?.data?.high?.fee || 0.2;
-        mainIsLoading.value = false;
-        showCreateVkModal.value = true;
-        snip20Token.value = token;
-      } else {
-        store.dispatch('subtokens/setCurrentToken', token);
-        redirectToWallet({
-          wallet: store.getters['wallets/walletByAddress'](route.params),
-          token,
-          root: true,
-        });
+      if (token?.tokenBalance?.calculatedBalance) {
+        if (isNotLinkedSnip20(token)) {
+          mainIsLoading.value = true;
+          snip20TokenFee.value =
+            (await token.getFees(token.id, token.net))?.data?.high?.fee || 0.2;
+          mainIsLoading.value = false;
+          showCreateVkModal.value = true;
+          snip20Token.value = token;
+        } else {
+          store.dispatch('subtokens/setCurrentToken', token);
+          redirectToWallet({
+            wallet: store.getters['wallets/walletByAddress'](route.params),
+            token,
+            root: true,
+          });
+        }
       }
     };
 
@@ -248,7 +251,7 @@ export default {
     const filteredTokensList = computed(() => {
       if (!keyword.value) {
         return props.tokenList.filter(
-          (e) => e.balanceUSD || e.net === OUR_TOKEN
+          (e) => e.tokenBalance.calculatedBalance || e.net === OUR_TOKEN
         );
       }
       return props.tokenList;

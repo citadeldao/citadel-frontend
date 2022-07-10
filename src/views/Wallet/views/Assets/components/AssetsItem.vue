@@ -4,6 +4,7 @@
     :class="{
       'assets-item--native': isChoosenToken,
       'assets-item--not-linked': isNotLinked,
+      'assets-item--disabled': isDisabled,
     }"
   >
     <div class="assets-item__cell">
@@ -89,6 +90,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    isDisabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props) {
     const showIconPlaceholder = ref(false);
@@ -103,7 +108,7 @@ export default {
 
 <style lang="scss" scoped>
 @mixin hover {
-  .assets-item {
+  .assets-item:not(.assets-item--disabled) {
     &__icon {
       background: $dark-blue;
     }
@@ -255,7 +260,26 @@ export default {
       );
     }
   }
+  &--disabled {
+    background-color: #e2e8ef;
+    cursor: not-allowed;
 
+    &:deep * {
+      color: #9e9e9e;
+    }
+    &:deep .assets-item__icon {
+      background-color: $mid-gray;
+    }
+    &:hover {
+      background-color: #e2e8ef;
+      &:deep .assets-item__icon {
+        background-color: $mid-gray;
+      }
+      &:deep * {
+        color: #9e9e9e;
+      }
+    }
+  }
   &--not-linked {
     background: linear-gradient(
       90deg,
