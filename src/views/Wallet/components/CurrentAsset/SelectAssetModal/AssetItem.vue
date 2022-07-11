@@ -1,5 +1,10 @@
 <template>
-  <div class="asset-item">
+  <div
+    class="asset-item"
+    :class="{
+      'asset-item--choosen': isChoosenToken,
+    }"
+  >
     <div class="asset-item__icon">
       <div v-if="showIconPlaceholder" class="asset-item__placeholder">
         <span>{{ iconPlaceholder[0] }}</span>
@@ -58,6 +63,10 @@ export default {
       type: Object,
       required: true,
     },
+    isChoosenToken: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props) {
     const showIconPlaceholder = ref(false);
@@ -76,6 +85,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@mixin hover {
+  .asset-item {
+    &__icon {
+      background: $dark-blue;
+    }
+
+    &__title {
+      color: $black;
+    }
+
+    &__description {
+      color: $dark-blue;
+    }
+
+    &__amount {
+      color: $dark-blue;
+    }
+
+    &__balance--usd {
+      .asset-item__amount {
+        color: $ligth-blue;
+      }
+    }
+  }
+}
 .asset-item {
   width: 100%;
   display: flex;
@@ -89,31 +123,11 @@ export default {
   }
 
   &:hover {
-    .asset-item {
-      &__icon {
-        background: $dark-blue;
-      }
-
-      &__title {
-        color: $black;
-      }
-
-      &__description {
-        color: $dark-blue;
-      }
-
-      &__amount {
-        color: $dark-blue;
-      }
-
-      &__balance--usd {
-        .asset-item__amount {
-          color: $ligth-blue;
-        }
-      }
-    }
+    @include hover;
   }
-
+  &--choosen {
+    @include hover;
+  }
   &__icon {
     width: 40px;
     height: 40px;
@@ -184,9 +198,6 @@ export default {
       .asset-item {
         &__amount {
           color: $darkgray;
-        }
-
-        &__currency {
         }
       }
     }

@@ -145,6 +145,7 @@ import usePaginationWithSearch from '@/compositions/usePaginationWithSearch';
 import Pagination from '@/components/Pagination.vue';
 import RoundArrowButton from '@/components/UI/RoundArrowButton';
 import Card from '@/components/UI/Card';
+import useWallets from '@/compositions/useWallets';
 import { OUR_TOKEN } from '@/config/walletType';
 
 export default {
@@ -183,7 +184,7 @@ export default {
   setup(props) {
     const store = useStore();
     const route = useRoute();
-
+    const { currentWallet: stateCurrentWallet } = useWallets();
     const keyword = ref('');
     const showCreateVkModal = ref(false);
     const snip20TokenFee = ref(null);
@@ -215,7 +216,6 @@ export default {
         snip20Token.value = token;
       } else {
         store.dispatch('subtokens/setCurrentToken', token);
-
         redirectToWallet({
           wallet: store.getters['wallets/walletByAddress'](route.params),
           token,
@@ -273,7 +273,7 @@ export default {
     });
 
     const balanceUSD = computed(() => {
-      const nativeTokenBalance = props.currentWallet.balanceUSD;
+      const nativeTokenBalance = stateCurrentWallet.value.balanceUSD;
       const totalTokenBalance = props.tokenList.reduce((acc, token) => {
         return BigNumber(acc).plus(token.balanceUSD).toNumber();
       }, 0);
@@ -322,7 +322,6 @@ export default {
         clearFilters();
       }
     );
-
     return {
       OUR_TOKEN,
       OUR_TOKEN_INDEX,
@@ -330,6 +329,7 @@ export default {
       setMainToken,
       isNotLinkedSnip20,
       closeCreateVkModal,
+      stateCurrentWallet,
       keyword,
       filterValue,
       filteredTokens,
