@@ -115,14 +115,10 @@ export default {
   }
 
   &__content {
-    width: 60%;
+    width: 50%;
     line-height: 1.5;
     margin-left: 25px;
     margin-right: auto;
-    @include lg {
-      width: 75%;
-      margin: 0 auto 20px 20px;
-    }
 
     & > * {
       margin: 0;
@@ -136,9 +132,6 @@ export default {
       color: #0a2778;
       margin: 5px 0 0;
       display: block;
-      @include laptop-l {
-        width: 75%;
-      }
     }
   }
 

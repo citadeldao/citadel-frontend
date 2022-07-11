@@ -181,15 +181,11 @@ export default {
     & > * {
       margin: 0;
     }
-    @include lg {
-      width: 75%;
-      margin: 0 auto 20px 20px;
+    @include md {
+      width: 70%;
     }
     .title {
       @include title-default;
-      @include laptop {
-        font-size: 0.75rem;
-      }
     }
 
     .description {

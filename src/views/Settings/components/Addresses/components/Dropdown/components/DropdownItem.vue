@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import { ref, markRaw, computed, inject } from 'vue';
+import { ref, markRaw, computed, inject, watch } from 'vue';
 import { useStore } from 'vuex';
 import useWallets from '@/compositions/useWallets';
 import { WALLET_TYPES, SNIP20_PARENT_NET } from '@/config/walletType';
@@ -176,8 +176,9 @@ export default {
     };
 
     const windowSize = ref(window.innerWidth);
+    let currentAddress = ref(props.wallet.address);
 
-    let currentAddress = props.hidden
+    currentAddress.value = props.hidden
       ? Array(props.wallet.address.length).fill('*').join('')
       : props.wallet.address;
 
@@ -189,12 +190,19 @@ export default {
       windowSize.value = window.innerWidth;
     });
 
-    if (windowSize.value <= 1280) {
-      currentAddress = `${currentAddress.slice(0, 6)}***${currentAddress.slice(
-        currentAddress.length - 6,
-        currentAddress.length
-      )}`;
-    }
+    watch(() => {
+      console.log(windowSize.value);
+      if (windowSize.value <= 1440) {
+        currentAddress.value = `${currentAddress.value.slice(
+          0,
+          6
+        )}***${currentAddress.value.slice(
+          currentAddress.value.length - 6,
+          currentAddress.value.length
+        )}`;
+        console.log(currentAddress);
+      }
+    });
     return {
       currentIcon,
       notification,

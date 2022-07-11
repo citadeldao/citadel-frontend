@@ -156,7 +156,6 @@ export default {
   background-repeat: no-repeat;
   background-position: 15%;
   background-size: 25%;
-  background: $white;
 
   @include md {
     padding: 22px 29px 22px;
@@ -167,6 +166,7 @@ export default {
 
   @include laptop {
     align-items: center;
+    background: $white;
   }
   &__title {
     color: $red;

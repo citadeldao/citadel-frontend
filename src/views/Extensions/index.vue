@@ -938,16 +938,14 @@ export default {
     justify-content: flex-start;
     align-items: center;
     position: relative;
-    // min-height: 100%;
-    // min-height: calc(100% - 123px);
     background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     border-radius: 16px;
-    padding-bottom: 35px;
 
     &__app-wrap {
       margin-top: 35px;
       position: relative;
-      box-shadow: 0px 15px 50px rgba(80, 100, 124, 0.1), 0px 10px 15px rgba(80, 100, 124, 0.16);
       border-radius: 20px;
 
       .close-icon {
@@ -973,13 +971,8 @@ export default {
       box-sizing: border-box;
       z-index: 0;
       float: left;
-
-      .app {
-        width: 23%;
-        margin-right: 20px;
-        margin-bottom: 15px;
-        cursor: pointer;
-      }
+      background: $white;
+      border-radius: 0 0 16px 16px;
     }
 
     .label.description {
@@ -1122,68 +1115,5 @@ export default {
       }
     }
   }
-  @media screen and (max-width: 1440px) {
-    .extensions {
-      &__apps {
-        .app-block.app {
-          width: 23%;
-          // margin-right: 10px;
-        }
-      }
-    }
-  }
-  @media screen and (max-width: 1600px) {
-    .extensions {
-      &__apps {
-        .app-block.app {
-          width: 23%;
-          margin-right: 20px;
-        }
-      }
-    }
-  }
 
-  @media screen and (max-width: 1357px) {
-    .extensions {
-      &__apps {
-        .app-block.app {
-          width: 30%;
-          margin-right: 22px;
-        }
-      }
-    }
-  }
-
-  @media screen and (max-width: 1280px) {
-    .extensions {
-      &__apps {
-        .app-block.app {
-          width: 32%;
-          margin-right: 10px;
-        }
-      }
-    }
-  }
-
-  @media screen and (max-width: 1124px) {
-    .extensions {
-      &__apps {
-        .app-block.app {
-          width: 48%;
-          margin-right: 10px;
-        }
-      }
-    }
-  }
-
-  @media screen and (max-width: 870px) {
-    .extensions {
-      &__apps {
-        .app-block.app {
-          width: 100%;
-          margin: 20px 0;
-        }
-      }
-    }
-  }
 </style>

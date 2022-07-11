@@ -665,6 +665,7 @@ export default {
     font-size: $add-btn-font-size !important;
     margin-bottom: 8px;
     transition: background 0.2s;
+    margin-top: auto;
 
     &:hover {
       background: $dark-blue;

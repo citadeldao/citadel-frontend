@@ -385,6 +385,7 @@ export default {
 
     .two_in_one {
       @include card-default;
+
       & > div {
         border-radius: 0;
         padding: 0;

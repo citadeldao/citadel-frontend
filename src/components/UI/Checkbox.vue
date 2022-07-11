@@ -157,6 +157,13 @@ input[type='checkbox'] {
   &__label {
     display: flex;
     @include text-default;
+    font-size: 1rem !important;
+    @include xs-lg {
+      width: 120px;
+    }
+    @include laptop {
+      font-size: 0.875rem !important;
+    }
   }
 
   &__tooltip {
