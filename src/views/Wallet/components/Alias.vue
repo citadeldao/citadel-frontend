@@ -154,15 +154,26 @@ export default {
       )
     );
     const maxNameWidth = computed(() => {
-      return props.currentWallet.title
-        ? {}
-        : {
-            maxWidth: `${addressTextWidth(
-              props.currentWallet?.address,
-              'Panton_Bold',
-              fontSizes.value.name
-            )}px`,
-          };
+      let textArg;
+      if (props.currentWallet.title.length) {
+        if (
+          props.currentWallet.title.length >= props.currentWallet.address.length
+        ) {
+          textArg = props.currentWallet.address;
+        } else {
+          textArg = props.currentWallet.title;
+        }
+      } else {
+        textArg = props.currentWallet.address;
+      }
+
+      return {
+        maxWidth: `${addressTextWidth(
+          textArg,
+          'Panton_Bold',
+          fontSizes.value.name
+        )}px`,
+      };
     });
 
     const metamaskConnector = computed(
