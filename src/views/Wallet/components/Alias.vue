@@ -153,9 +153,22 @@ export default {
       )
     );
     const maxNameWidth = computed(() => {
+      let textArg;
+      if (props.currentWallet.title.length) {
+        if (
+          props.currentWallet.title.length >= props.currentWallet.address.length
+        ) {
+          textArg = props.currentWallet.address;
+        } else {
+          textArg = props.currentWallet.title;
+        }
+      } else {
+        textArg = props.currentWallet.address;
+      }
+
       return {
         maxWidth: `${addressTextWidth(
-          props.currentWallet?.title || props.currentWallet?.address,
+          textArg,
           'Panton_Bold',
           fontSizes.value.name
         )}px`,
