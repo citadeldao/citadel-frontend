@@ -23,7 +23,7 @@
           <span
             v-pretty-number="{
               value:
-                asset?.tokenBalance?.mainBalance ||
+                asset?.tokenBalance?.calculatedBalance ||
                 asset?.balance?.calculatedBalance,
               currency: asset.code,
             }"
@@ -65,10 +65,6 @@ export default {
       type: Object,
       required: true,
     },
-    stateCurrentWallet: {
-      type: Object,
-      required: false,
-    },
     isChoosenToken: {
       type: Boolean,
       default: false,
@@ -84,7 +80,6 @@ export default {
   setup(props) {
     const showIconPlaceholder = ref(false);
     const icon = ref();
-    // console.log(props.asset.code.toLowerCase(), 'hui');
     import(
       `@/assets/icons/networks/${props.asset.code.toLowerCase()}.svg`
     ).then((val) => {
