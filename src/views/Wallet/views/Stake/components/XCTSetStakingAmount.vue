@@ -24,6 +24,7 @@
     <div class="xct-set-staking-amount__amount-input">
       <Input
         id="amount"
+        data-qa="staking__amount-field"
         :value="amount"
         :label="$t('amount')"
         type="currency"

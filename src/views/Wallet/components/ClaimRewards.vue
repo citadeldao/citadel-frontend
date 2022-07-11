@@ -63,6 +63,7 @@
         :disabled="disabled"
         :bg-color="currentWalletInfo?.claimableRewards ? '#6A4BFF' : `white`"
         :icon-fill="currentWalletInfo?.claimableRewards ? 'white' : `#6A4BFF`"
+        data-qa="Claim-rewards"
         @click="handleButtonClick"
       />
     </div>
