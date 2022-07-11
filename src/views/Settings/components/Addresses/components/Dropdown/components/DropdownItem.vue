@@ -3,7 +3,13 @@
     <div class="dropdown-item__icon">
       <component :is="currentIcon" />
     </div>
-    <div class="dropdown-item__address">{{ currentAddress }}</div>
+    <div class="dropdown-item__address">
+      {{
+        hidden
+          ? Array(wallet.address.length).fill('*').join('')
+          : currentAddress
+      }}
+    </div>
     <div class="dropdown-item__btn_group">
       <div
         v-if="isSnip20"
@@ -61,7 +67,7 @@
 </template>
 
 <script>
-import { ref, markRaw, computed, inject, watch } from 'vue';
+import { ref, markRaw, computed, inject, watchEffect } from 'vue';
 import { useStore } from 'vuex';
 import useWallets from '@/compositions/useWallets';
 import { WALLET_TYPES, SNIP20_PARENT_NET } from '@/config/walletType';
@@ -178,10 +184,6 @@ export default {
     const windowSize = ref(window.innerWidth);
     let currentAddress = ref(props.wallet.address);
 
-    currentAddress.value = props.hidden
-      ? Array(props.wallet.address.length).fill('*').join('')
-      : props.wallet.address;
-
     window.addEventListener('resize', () => {
       windowSize.value = window.innerWidth;
     });
@@ -190,8 +192,7 @@ export default {
       windowSize.value = window.innerWidth;
     });
 
-    watch(() => {
-      console.log(windowSize.value);
+    watchEffect(() => {
       if (windowSize.value <= 1440) {
         currentAddress.value = `${currentAddress.value.slice(
           0,
@@ -200,7 +201,6 @@ export default {
           currentAddress.value.length - 6,
           currentAddress.value.length
         )}`;
-        console.log(currentAddress);
       }
     });
     return {

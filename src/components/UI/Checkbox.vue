@@ -158,9 +158,16 @@ input[type='checkbox'] {
     display: flex;
     @include text-default;
     font-size: 1rem !important;
-    @include xs-lg {
+    width: fit-content;
+
+    @include lg {
       width: 120px;
     }
+
+    @include md {
+      width: 140px;
+    }
+
     @include laptop {
       font-size: 0.875rem !important;
     }
