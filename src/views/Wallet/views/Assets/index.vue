@@ -590,6 +590,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-size: 18px;
   h2,
   h3 {
     margin: 0 auto;
