@@ -596,16 +596,22 @@ export default {
   }
   h2 {
     font-weight: 700;
-    font-size: 30px;
-    line-height: 30px;
+    font-size: 1.833333em;
+    line-height: 1.833333em;
   }
   h3 {
     font-weight: 400;
-    font-size: 18px;
-    line-height: 30px;
+    font-size: 0.889em;
+    line-height: 0.889em;
     text-align: center;
     color: $mid-blue;
     margin: 11px auto 42px auto;
+  }
+  @include lg {
+    font-size: 18px;
+  }
+  @include md {
+    font-size: 16px;
   }
 }
 .card-special {
