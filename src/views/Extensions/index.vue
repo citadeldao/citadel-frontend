@@ -706,7 +706,7 @@ export default {
           extensionTransactionForSign.value.transaction.direct &&
           extensionTransactionForSign.value.transaction.json.memo
             .toLowerCase()
-            .includes('permissions')
+            .includes('permission')
             ? 'direct'
             : 'json';
 
