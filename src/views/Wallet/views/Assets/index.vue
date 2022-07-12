@@ -251,7 +251,10 @@ export default {
     const filteredTokensList = computed(() => {
       if (!keyword.value) {
         return props.tokenList.filter(
-          (e) => e.tokenBalance.calculatedBalance || e.net === OUR_TOKEN
+          (e) =>
+            e.tokenBalance.calculatedBalance ||
+            e.net === OUR_TOKEN ||
+            isNotLinkedSnip20(e)
         );
       }
       return props.tokenList;
