@@ -100,6 +100,7 @@
     <div v-if="!hidePassword" class="xct-confirm-claim-modal__password-input">
       <Input
         id="password"
+        data-qa="password"
         v-model="password"
         :label="$t('enterSendPassword')"
         type="password"
