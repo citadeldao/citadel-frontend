@@ -48,7 +48,21 @@
         "whyEmailMarker1": "它可以帮助您方便地在 Web 平台和移动 APP 之间切换。",
         "whyEmailMarker2": "如果有必要，我们可以随时与您保持联系。加密领域 APP 普遍缺乏通信，因此用户无法获得解锁后冻结期结束、关闭验证节点或即将进行贷款清算等信息。我们还将通知您何时可以将您累积的奖励进行质押，以便将您的利益最大化。",
         "whyEmailDescription3": "如果您希望匿名注册，请使用我们的",
-        "guide": "教程"
+        "guide": "教程",
+        "sync": {
+            "chooseValidator": {
+                "title": "1. 选择一个节点",
+                "text": "您可以从可用节点完整列表中选择任何一个验证节点"
+            },
+            "setAmount": {
+                "title": "2. 设置质押金额",
+                "text": "资产将委托给选定的验证节点"
+            },
+            "claimRewards": {
+                "title": "3. 享受质押收益！",
+                "text": "只需简单点击几下鼠标，即可领取奖励"
+            }
+        }
     },
     "logout": {
         "modal": {
@@ -175,9 +189,9 @@
             "block2Info": "查看如何使用私钥或助记词短语导入地址的分步骤指导。"
         },
         "stubs": {
-            "chain": "",
-            "description": "",
-            "subdescription": ""
+            "chain": "Ki 链暂时不可用",
+            "description": "我们将很快恢复服务！请放心，您的资金安全！",
+            "subdescription": "注意：如果您分配了地址，您仍将获得XCT奖励。"
         }
     },
     "balanceTooltipInfo": {
@@ -348,7 +362,7 @@
         "eneterListName": "请输入列表名称",
         "warningModalDesc": "列表名称已存在，请尝试新名称。",
         "infoBanner": "您还未添加地址至当前列表。请选择至少一个地址以创建列表。",
-        "duplicateName": ""
+        "duplicateName": "该名称列表已存在，请更换列表名称"
     },
     "calculator": {
         "title": "{coin} 质押计算器",
@@ -628,7 +642,9 @@
             "step3HeaderInfo": "输入Citadel.one平台内创建的助记词",
             "step3StepDesc": "输入助记词",
             "step4HeaderInfo": "该网络的地址可通过您的助记词恢复"
-        }
+        },
+        "enterPasswordForAllInSeed": "向现有的通用助记词钱包添加新网络",
+        "enterPasswordForAllInPrivate": "使用私钥添加网络"
     },
     "settings": {
         "subscriptions": {
@@ -671,6 +687,18 @@
             "button": "删除账户",
             "inputLabel": "输入“删除”进行确认",
             "placeholder": "delete"
+        },
+        "changePassword": {
+            "btnTitle": "更改密码",
+            "btnUpdate": "更新",
+            "modalTitle": "密码更改",
+            "oldPassword": "旧密码",
+            "newPassword": "新密码",
+            "modalDescription": "这是您将用以确认交易签名的密码",
+            "incorrectOldPassword": "旧密码错误",
+            "minLen": "至少 8 位",
+            "successTitle": "您的密码已成功更改",
+            "successDescription": "使用新密码确认交易"
         }
     },
     "overallPage": {
@@ -863,7 +891,8 @@
         "appTooltip": "此应用程序已由 Citadel.one 团队集成",
         "transactionData": "交易数据",
         "transactionFee": "交易手续费",
-        "signMessage": "签名消息"
+        "signMessage": "签名消息",
+        "searchPlaceholder": "开始输入 APP 名称"
     },
     "tokenDescriptionComdex": "Comdex 是搭建在 Cosmos 上的去中心化合成资产协议",
     "tokenDescriptionJuno": "Juno 是基于 Cosmos  搭建的区块链，为部署可交互操作的智能合约提供环境。",
@@ -1072,6 +1101,11 @@
             "title": "波卡网络 Polkadot",
             "description": "波卡是一种允许跨链传输任意数据——而不仅仅是代币——的区块链网络协议。这意味着波卡是一个真正的多链应用程序环境，支持实现跨链注册和计算。波卡支持跨链传输数据，无论是公共、开源、无许可的区块链，还是私有、需许可的区块链。",
             "shortDescription": "波卡是一种允许跨链传输任意数据——而不仅仅是代币——的区块链网络协议。这意味着波卡是一个真正的多链应用程序环境，支持实现跨链注册和计算。"
+        },
+        "orai": {
+            "title": "Oraichain",
+            "description": "作为全球首个人工智能驱动的区块链预言机和生态系统，Oraichain 现在转型为数据经济和预言机服务的高级 AI Layer 1，作为创建新一代智能合约和 Dapps 的基础层，并致力于创建一个完整的区块链人工智能生态系统。",
+            "shortDescription": "Oraichain 是全球首个专注于 web3.0、规模化 dapp、去中心化 AI 的智能安全解决方案。"
         }
     },
     "uptime": "运行时间",
@@ -1169,7 +1203,38 @@
             "metamaskKeplr": "Metamask, Keplr 钱包\n",
             "metamaskKeplrDescription": "连接您的 Web3 钱包以添加新地址",
             "hardware": "硬件钱包",
-            "hardwareDescription": "导入 Ledger 或 Tezor 钱包地址以开启更多功能"
+            "hardwareDescription": "导入 Ledger 或 Tezor 钱包地址以开启更多功能",
+            "sourceAddress": "源地址",
+            "destinationAddress": "目标地址"
         }
-    }
+    },
+    "tokenDescriptionPersistence": "Persistence 是一个多链 DeFi 产品的生态系统，旨在刺激全球流动性并实现无缝价值交换。Persistence 通过其产品——股权证明资产（pSTAKE）、农业商品资产（Comdex）和贸易融资债务资产（ShipFi），将不同的资产类别引入 DeFi。",
+    "tokenDescriptionSENTINEL": "Sentinel 是共享带宽的节点网络，可在其网络上构建去中心化的 VPN 和相关服务。Sentinel 生态系统的目标是以可信和可证明的方式实现互联网的普遍接入。Sentinel 基于 Cosmos 的区块链允许世界各地的组织和个人在其上构建经济高效、可扩展、分布式和去中心化的网络解决方案。",
+    "tokenDescriptionChihuahua": "Chihuahua 是一种 meme 币，旨在成为一个社区驱动的项目，社区池有100亿个HUAHUA 代币，可用于资助通过 Chihuahua 链治理机制提议和投票的链上项目。Chihuahua 使用 Cosmos SDK 和 Tendermint 共识构建。",
+    "tokenDescriptionUmee": "Umee 是一个跨链 DeFi 中心，可实现跨链互连。作为底层区块链，应用程序和代币乐高原型可以构建在 Umee 之上，以实现跨链杠杆和流动性。Umee 区块链促进了 Cosmos 生态系统、以太坊网络、侧链体系结构、Layer 2 扩展解决方案和备选基本层协议之间的交互性。",
+    "tokenDescriptionStargaze": "Stargaze 是 Cosmos 生态系统中由社区拥有的跨链 NFT 市场。",
+    "tokenDescriptionRizon": "RIZON 区块链的使命是提供一个平台，让世界各地的法币可以安全地发行，并使企业能够通过 Cosmos IBC 进行交互。",
+    "tokenDescriptionSifchain": "Sifchain 是DEX 的全链解决方案，它以更高的性能、更强大的交易和安全的加密经济学、更灵活的交易能力、可扩展的全链路线图以最终实现真正的 DAO 治理。Sifchain 灵感来源于北欧掌管大地、农业、生育、家庭和婚姻的女神 Sif。Sif 代表了区块链行业的协作性质，以及在跨链联系中可见的丰厚回报。",
+    "tokenDescriptionLum": "Lum 网络是基于 Tendermint 及 Cosmos SDK 的开源区块链协议（layer 1），该SDK 是最先进、最安全的委托权益证明算法。它由其原生加密资产 LUM 提供支持。",
+    "tokenDescriptionCheqd": "Cheqd 团队正在构建一个安全的网络，使个人和组织能够完全控制个人数据。cheqd 帮助企业创建创新的商业模式，确保自我主权身份是向客户提供的可行且有回报的服务。",
+    "tokenDescriptionInjective": "Injective 是可交互的 layer 1 协议，旨在构建并优化跨链 Web3 DeFi 应用程序。",
+    "syncExtensions": {
+        "modalMenuTitle": "选择地址",
+        "modalMenuDescription": "选择需要与扩展程序同步的地址",
+        "syncTo": "导出地址",
+        "syncFrom": "导入地址",
+        "syncDescription": "选择您希望添加至 Citadel.one 浏览器扩展程序的地址",
+        "notFound": "未找到 Citadel 浏览器扩展",
+        "walletsNotFound": "未找到与浏览器扩展同步的钱包",
+        "emptyWallets": "同步前必须设置浏览器扩展",
+        "syncWithExtension": "将地址导出到浏览器扩展",
+        "syncingFromTitle": "从浏览器扩展导入地址",
+        "syncingFromDescription": "使用密码确认此操作",
+        "incorrectPasswordExtension": "扩展程序密码不正确",
+        "enterPassword": "输入扩展程序密码",
+        "syncMainTitle": "同步地址",
+        "syncMainDescription": "即刻同步您的地址至 Citadel.one 浏览器扩展",
+        "syncMainSync": "同步"
+    },
+    "noApyNote": "通过质押加密资产获得被动收入！"
 }
