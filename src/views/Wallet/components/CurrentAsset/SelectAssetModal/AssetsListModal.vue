@@ -15,7 +15,6 @@
       <AssetItemModal
         :is-choosen-token="currentWallet?.net === stateCurrentWallet?.net"
         is-native-token
-        :state-current-wallet="stateCurrentWallet"
         :asset="stateCurrentWallet"
         @click="$emit('click', asset)"
       />
