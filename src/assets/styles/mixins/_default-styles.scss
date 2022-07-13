@@ -38,16 +38,16 @@
   padding: $card-padding;
   background: $white;
 
-  @include laptop-l {
-    padding: 20px;
-  }
-
   @include xs-lg {
     padding: $card-padding-xs-lg;
   }
 
   @include md {
     padding: $card-padding-md;
+  }
+
+  @include laptop {
+    padding: 20px;
   }
 }
 

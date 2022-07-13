@@ -121,10 +121,7 @@ export default {
   overflow: hidden;
   flex-wrap: wrap;
 
-  @include laptop {
-    height: 80px;
-  }
-  @include md {
+  @include laptop-l {
     cursor: pointer;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -168,7 +165,7 @@ export default {
     @include xs-lg {
       align-self: flex-start;
     }
-    @include md {
+    @include laptop-l {
       width: 48px;
       height: 48px;
     }
@@ -182,7 +179,7 @@ export default {
     & > * {
       margin: 0;
     }
-    @include md {
+    @include laptop-l {
       width: 70%;
     }
     .title {
@@ -192,7 +189,10 @@ export default {
     .description {
       @include text-default;
       margin: 5px 0 0;
-      @include md {
+      @include laptop-l {
+        display: none;
+      }
+      @include laptop {
         display: none;
       }
     }
@@ -201,6 +201,9 @@ export default {
     align-self: center;
     margin-left: auto;
     @include md {
+      display: none;
+    }
+    @include laptop-l {
       display: none;
     }
   }

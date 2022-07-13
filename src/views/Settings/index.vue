@@ -345,13 +345,17 @@ export default {
   flex-wrap: wrap;
 
   & > div {
-    flex: 0 0 49%;
-    @include md {
-      &:first-child {
-        flex: 0 0 63%;
-      }
+    &:first-child {
+      flex: 0 0 63%;
+    }
+    &:nth-child(2) {
+      flex: 0 0 35%;
+    }
+
+    @include laptop-xl {
+      &:first-child,
       &:nth-child(2) {
-        flex: 0 0 35%;
+        flex: 0 0 49%;
       }
     }
   }
@@ -359,7 +363,13 @@ export default {
     & .cross-chain-card {
       display: none;
     }
-    @include md {
+    @include laptop-l {
+      & .cross-chain-card {
+        display: flex;
+        margin-bottom: $card-margin;
+      }
+    }
+    @include laptop {
       & .cross-chain-card {
         display: flex;
         margin-bottom: $card-margin;
@@ -372,7 +382,13 @@ export default {
       margin-bottom: $card-margin;
     }
 
-    @include md {
+    @include laptop-l {
+      & .settings__cross-chain {
+        display: none;
+      }
+    }
+
+    @include laptop {
       & .settings__cross-chain {
         display: none;
       }
@@ -399,7 +415,7 @@ export default {
         margin-bottom: $card-margin;
       }
     }
-    @include md {
+    @include laptop-l {
       & .cross-chain-card {
         display: none;
       }
@@ -415,7 +431,10 @@ export default {
     & > div {
       flex: 0 0 49%;
       margin-bottom: $card-margin;
-      @include md {
+      @include laptop-l {
+        flex: 0 0 100%;
+      }
+      @include laptop {
         flex: 0 0 100%;
       }
     }

@@ -74,7 +74,7 @@ export default {
   justify-content: space-between;
   flex-wrap: wrap;
 
-  @include md {
+  @include laptop-l {
     // height: 100px;
   }
   &.comingSoon::before {
@@ -102,7 +102,7 @@ export default {
   &__img {
     width: 60px;
     height: 60px;
-    @include md {
+    @include laptop-l {
       width: 48px;
       height: 48px;
       svg {
@@ -144,7 +144,7 @@ export default {
     margin-left: auto;
   }
 
-  @include md {
+  @include laptop-l {
     flex-wrap: nowrap;
     &::before {
       background-size: auto;
