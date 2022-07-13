@@ -351,7 +351,7 @@ export default {
         flex: 0 0 63%;
       }
       &:nth-child(2) {
-        flex: 0 0 33%;
+        flex: 0 0 35%;
       }
     }
   }
@@ -363,23 +363,18 @@ export default {
       & .cross-chain-card {
         display: flex;
         margin-bottom: $card-margin;
-        @include md {
-          margin-bottom: $card-margin;
-        }
       }
     }
   }
 
   &__right-side {
-    & > div:not(:last-child) {
+    & > div {
       margin-bottom: $card-margin;
     }
+
     @include md {
       & .settings__cross-chain {
         display: none;
-      }
-      & > div:not(:last-child):not(:first-child) {
-        margin-bottom: calc(#{$card-margin} - 10px);
       }
     }
 
@@ -393,7 +388,7 @@ export default {
         filter: none;
       }
       & > div:not(:last-child) {
-        margin-bottom: calc(#{$card-margin} - 10px);
+        margin-bottom: $card-margin;
       }
     }
 
@@ -418,7 +413,7 @@ export default {
     align-items: stretch;
 
     & > div {
-      flex: 0 0 48%;
+      flex: 0 0 49%;
       margin-bottom: $card-margin;
       @include md {
         flex: 0 0 100%;

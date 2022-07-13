@@ -98,7 +98,7 @@
 // ** Settings Card ** //
 @mixin settings-card-default {
   @include card-default;
-  line-height: 1.5 !important;
+  line-height: 1.4 !important;
 
   display: flex;
   flex-direction: column;
@@ -126,8 +126,10 @@
     @include btn-default;
     align-self: flex-end;
     box-shadow: 0px 0px 25px rgba(106, 75, 255, 0.3);
-    &.change-password-card__button {
-      box-shadow: none;
+    @include laptop {
+      &.change-password-card__button {
+        box-shadow: none;
+      }
     }
   }
 

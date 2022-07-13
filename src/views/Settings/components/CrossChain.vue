@@ -55,6 +55,7 @@ export default {
 <style lang="scss" scoped>
 .cross-chain-card {
   @include settings-card-default;
+
   &.comingSoon {
     background: $white;
   }
@@ -74,7 +75,7 @@ export default {
   flex-wrap: wrap;
 
   @include md {
-    height: 80px;
+    // height: 100px;
   }
   &.comingSoon::before {
     background: none;
@@ -101,7 +102,9 @@ export default {
   &__img {
     width: 60px;
     height: 60px;
-    @include laptop {
+    @include md {
+      width: 48px;
+      height: 48px;
       svg {
         transform: scale(0.85);
       }

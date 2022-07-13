@@ -113,6 +113,7 @@ export default {
   @include settings-card-default;
   position: relative;
   z-index: 1;
+  line-height: 1.4 !important;
 
   align-items: center;
   flex-direction: row;
