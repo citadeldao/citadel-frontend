@@ -597,8 +597,8 @@ export default {
   }
   h2 {
     font-weight: 700;
-    font-size: 1.833333em;
-    line-height: 1.833333em;
+    font-size: 1.6666667em;
+    line-height: 1.6666667em;
   }
   h3 {
     font-weight: 400;
