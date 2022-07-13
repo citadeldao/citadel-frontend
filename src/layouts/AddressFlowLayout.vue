@@ -42,8 +42,9 @@ export default {
 
         return;
       }
-
-      router.push({ name: 'HomePage' });
+      window.history.state.back
+        ? router.go(-1)
+        : router.push({ name: 'Settings' });
     };
 
     return {

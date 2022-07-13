@@ -142,11 +142,17 @@ export async function socketEventHandler({ eventName, data }) {
       // show notify when tx success
       {
         const { wallets } = useWallets();
-        const wallet = wallets.value.find(
-          (w) =>
-            w.net === data.net &&
-            data.from.toLowerCase() === w.address.toLowerCase()
-        );
+        const isSubtoken = data.net.includes('_');
+        const wallet = wallets.value.find((w) => {
+          if (isSubtoken) {
+            return data.from.toLowerCase() === w.address.toLowerCase();
+          } else {
+            return (
+              w.net === data.net &&
+              data.from.toLowerCase() === w.address.toLowerCase()
+            );
+          }
+        });
 
         if (wallet) {
           notify({
@@ -179,9 +185,12 @@ export async function socketEventHandler({ eventName, data }) {
       }
 
       break;
-    // case 'marketCap-update-client':
-    //  //update marketcap
+    case 'marketCap-update-client':
+      //update marketcap
+      await store.dispatch('profile/updateMarketcap', data);
+      await store.dispatch('profile/updateRates', data);
+      await store.dispatch('profile/updateCurrentWalletMarketcap', data);
 
-    //   break;
+      break;
   }
 }

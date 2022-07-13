@@ -52,6 +52,7 @@
         <div
           v-if="currentToken ? currentToken?.hasClaim : currentWallet.hasClaim"
           class="wallet__claim-rewards-lg"
+          data-qa="Claim-rewards-block"
         >
           <ClaimRewards
             :disabled="currentWallet.isStub"
@@ -340,7 +341,6 @@ export default {
     const subtokens = computed(() =>
       store.getters['subtokens/formatedSubtokens']()
     );
-    // const currentToken = computed(()=> store.getters['subtokens/currentToken']);
     onMounted(async () => {
       await loadKtAddresses(currentWallet?.value?.id);
       await loadXCTInfo();

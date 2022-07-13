@@ -56,7 +56,6 @@ export default {
       () =>
         activeList.value !== 'all' && !customWalletsList.value.wallets.length
     );
-
     return {
       isFavouriteList,
       hasFavourites,

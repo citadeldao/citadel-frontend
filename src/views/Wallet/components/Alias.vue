@@ -105,7 +105,7 @@ import { findAddressWithNet } from '@/helpers';
 import { useWindowSize } from 'vue-window-size';
 import { screenWidths } from '@/config/sreenWidthThresholds';
 import { WALLET_TYPES } from '@/config/walletType';
-
+import { useRouter } from 'vue-router';
 export default {
   name: 'Alias',
   components: {
@@ -124,6 +124,7 @@ export default {
   },
   emits: ['qrClick'],
   setup(props) {
+    const router = useRouter();
     const { width } = useWindowSize();
     const addressRef = ref(null);
     const nameRef = ref(null);
@@ -153,15 +154,26 @@ export default {
       )
     );
     const maxNameWidth = computed(() => {
-      return props.currentWallet.title
-        ? {}
-        : {
-            maxWidth: `${addressTextWidth(
-              props.currentWallet?.address,
-              'Panton_Bold',
-              fontSizes.value.name
-            )}px`,
-          };
+      let textArg;
+      if (props.currentWallet.title.length) {
+        if (
+          props.currentWallet.title.length >= props.currentWallet.address.length
+        ) {
+          textArg = props.currentWallet.address;
+        } else {
+          textArg = props.currentWallet.title;
+        }
+      } else {
+        textArg = props.currentWallet.address;
+      }
+
+      return {
+        maxWidth: `${addressTextWidth(
+          textArg,
+          'Panton_Bold',
+          fontSizes.value.name
+        )}px`,
+      };
     });
 
     const metamaskConnector = computed(
@@ -288,6 +300,13 @@ export default {
         ),
         needSetActiveList: false,
       });
+
+      if (
+        !favouritesList.value.wallets?.length &&
+        store.getters['wallets/activeList'] === 'Favourites'
+      ) {
+        router.push({ name: 'Overall' });
+      }
     };
     const addToFavorite = async () => {
       if (!favouritesList.value) {
