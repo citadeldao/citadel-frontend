@@ -7,7 +7,7 @@
       <BalanceCard type="red" text="Total Assets" :value="balanceUSD" />
       <BalanceCard
         type="blue"
-        text="Available assets"
+        text="Available Assets"
         :value="balanceAvailableUSD"
       />
 
