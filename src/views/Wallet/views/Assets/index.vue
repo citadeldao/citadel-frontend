@@ -602,8 +602,8 @@ export default {
   }
   h3 {
     font-weight: 400;
-    font-size: 0.889em;
-    line-height: 0.889em;
+    font-size: 1em;
+    line-height: 1em;
     text-align: center;
     color: $mid-blue;
     margin: 11px auto 42px auto;
@@ -612,7 +612,7 @@ export default {
     font-size: 18px;
   }
   @include md {
-    font-size: 16px;
+    font-size: 15px;
   }
 }
 .card-special {

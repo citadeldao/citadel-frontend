@@ -168,8 +168,8 @@ export default {
       }
       &-staking {
         font-family: 'Panton_ExtraBold';
-        font-size: 30px;
-        line-height: 30px;
+        font-size: 33px;
+        line-height: 33px;
         @include md {
           font-size: 24px;
           line-height: 24px;
