@@ -248,6 +248,9 @@ export default {
       background-image: url('~@/assets/images/cardWave-lg.jpg');
       padding: 11px 0 0 19px;
       margin-right: 4px;
+      svg {
+        display: none;
+      }
     }
     @include md {
       border-radius: 8px;
@@ -256,6 +259,9 @@ export default {
       margin-right: 0;
       padding: 15px 0 0 26px;
       background-image: url('~@/assets/images/cardWave-md.jpg');
+      svg {
+        display: none;
+      }
     }
 
     & button {
