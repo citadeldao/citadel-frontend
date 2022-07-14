@@ -11,7 +11,13 @@
 }
 
 @mixin lg {
-  @media (min-width: 1280.98px) and (max-width: 1920.98px) {
+  @media (min-width: 1280px) and (max-width: 1919.98px) {
+    @content;
+  }
+}
+
+@mixin xs-lg {
+  @media (min-width: 1279.98px) and (max-width: 1440.98px) {
     @content;
   }
 }
@@ -22,20 +28,16 @@
   }
 }
 
-@mixin xs-lg {
-  @media (min-width: 1280.98px) and (max-width: 1440.98px) {
-    @content;
-  }
-}
+
 
 @mixin md {
-  @media (max-width: 1280.98px) {
+  @media (max-width: 1278.98px) {
     @content;
   }
 }
 
 @mixin laptop {
-  @media (max-width: 1024.98px)  {
+  @media (max-width: 1024.98px) {
     @content;
   }
 }
