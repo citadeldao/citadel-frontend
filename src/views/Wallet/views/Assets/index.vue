@@ -395,12 +395,17 @@ export default {
       }
       & .round-arrow-button {
         top: 46px !important;
-        right: 37px !important;
+        right: 20px !important;
       }
       & .round-arrow-button__icon {
         margin-right: -41px;
         margin-top: -19px;
         top: -16px;
+      }
+    }
+    @media (max-width: 1280px) {
+      & .round-arrow-button {
+        right: 35px !important;
       }
     }
   }
