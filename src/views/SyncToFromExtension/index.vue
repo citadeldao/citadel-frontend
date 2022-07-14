@@ -445,7 +445,7 @@ export default {
             emit('close');
           }
         } catch (err) {
-          console.log(err);
+          console.log(err, 'error');
           syncLoading.value = false;
         }
       }
