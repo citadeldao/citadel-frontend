@@ -1,5 +1,10 @@
 <template>
-  <div class="sidebar" :class="sidebarClass">
+  <div
+    class="sidebar"
+    :class="sidebarClass"
+    @mouseenter="onMouseEnter"
+    @mouseleave="onMouseLeave"
+  >
     <div class="sidebar__logo">
       <div
         data-qa="main-logo"
@@ -344,7 +349,15 @@ export default {
     return {
       windowWidth: window.innerWidth,
       sidebarClass: '',
+      timer: null,
     };
+  },
+  mounted() {
+    if (window.innerWidth <= 1024) {
+      document
+        .querySelector('#main')
+        .addEventListener('click', this.onClickMain);
+    }
   },
   created() {
     window.addEventListener('resize', this.onResize);
@@ -358,15 +371,31 @@ export default {
           .querySelector('#main')
           .addEventListener('click', this.onClickMain);
       } else {
-        document.querySelector('#main').removeEventListener('click');
+        document
+          .querySelector('#main')
+          .removeEventListener('click', this.onClickMain);
       }
     },
     onClickMain() {
-      this.sidebarClass = 'compact';
+      if (window.innerWidth <= 1024) {
+        this.sidebarClass = 'compact';
+      }
     },
     sideBarView() {
       if (window.innerWidth <= 1024) {
         this.sidebarClass = !this.sidebarClass ? 'compact' : '';
+      }
+    },
+    onMouseEnter() {
+      if (window.innerWidth <= 1024) {
+        this.timer = setTimeout(() => {
+          this.sidebarClass = '';
+        }, 500);
+      }
+    },
+    onMouseLeave() {
+      if (window.innerWidth <= 1024) {
+        clearTimeout(this.timer);
       }
     },
   },
