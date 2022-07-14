@@ -486,11 +486,11 @@ export default {
       color: $mid-blue;
 
       @include lg {
-        font-size: 16px;
+        font-size: $wallet-assets-heading-font-size;
       }
 
       @include md {
-        font-size: 14px;
+        font-size: $wallet-assets-heading-font-size-md;
       }
 
       &:nth-child(1) {
@@ -508,6 +508,9 @@ export default {
 
         @include md {
           width: 22%;
+        }
+        @include laptop {
+          width: 18%;
         }
       }
     }
@@ -581,6 +584,12 @@ export default {
       @include md {
         width: 56px;
         height: 56px;
+      }
+      @include laptop {
+        & svg {
+          width: 22px;
+          height: 22px;
+        }
       }
     }
   }

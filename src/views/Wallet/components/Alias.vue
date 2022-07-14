@@ -386,7 +386,7 @@ export default {
   justify-content: space-between;
   display: flex;
   background: $white;
-  box-shadow: -10px 4px 27px rgba(0, 0, 0, 0.1);
+  box-shadow: $card-shadow;
   border-radius: 25px;
   position: relative;
   @include lg {
@@ -399,7 +399,11 @@ export default {
     height: 98px;
     padding: 0 24px;
     border-radius: 16px;
-    box-shadow: -10px 4px 27px rgba(0, 0, 0, 0.1);
+  }
+
+  @include laptop {
+    border-radius: 8px;
+    padding: 0 20px;
   }
 
   &__info {

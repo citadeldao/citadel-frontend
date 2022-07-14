@@ -43,9 +43,11 @@ export default {
   justify-content: center;
   min-width: 32px;
   padding: 8px 0;
-  border-bottom: 1px solid $too-ligth-gray;
+  border-bottom: 1px solid $too-dark-blue;
+  opacity: 0.7;
   cursor: pointer;
   &:hover {
+    opacity: 1;
     .list-item__icon {
       fill: $blue;
     }
@@ -54,6 +56,7 @@ export default {
     border-bottom: none;
   }
   &__icon {
+    fill: $too-dark-blue;
     @include md {
       max-width: 16px;
       max-height: 16px;
