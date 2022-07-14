@@ -16,20 +16,6 @@
         "inputPlaceholder": "input e-mail",
         "enterEmail": "Enter email",
         "incorrectEmail": "Incorrect email",
-        "sync": {
-            "chooseValidator": {
-                "title": "1. Choose a validator",
-                "text": "You can select any validator from a full list of available nodes"
-            },
-            "setAmount": {
-                "title": "2. Set the amount to stake",
-                "text": "Assets will be delegated to the chosen validator"
-            },
-            "claimRewards": {
-                "title": "3. Enjoy your staking rewards!",
-                "text": "You can claim your rewards in a couple of clicks"
-            }
-        },
         "carousel": {
             "stake": {
                 "title": "Stake & Maximize your rewards ",
@@ -62,7 +48,21 @@
         "whyEmailMarker1": "It helps you conveniently switch between web platform and mobile application.",
         "whyEmailMarker2": "We can always stay in touch with you in case it’s necessary. There is lack of communication in crypto applications so people cannot get info about the end of lockup period after unstaking, shutdown of their validator, or when a loan liquidation is approaching. We will also notify you when it’s time to stake the rewards you accumulated so that you earn more.",
         "whyEmailDescription3": "If you want to register anonymously, use our",
-        "guide": "guide"
+        "guide": "guide",
+        "sync": {
+            "chooseValidator": {
+                "title": "1. Choose a validator",
+                "text": "You can select any validator from a full list of available nodes"
+            },
+            "setAmount": {
+                "title": "2. Set the amount to stake",
+                "text": "Assets will be delegated to the chosen validator"
+            },
+            "claimRewards": {
+                "title": "3. Enjoy your staking rewards!",
+                "text": "You can claim your rewards in a couple of clicks"
+            }
+        }
     },
     "logout": {
         "modal": {
@@ -474,7 +474,7 @@
     "fee": "Fee",
     "comment": "Comment",
     "export": "Export",
-    "timeDate": "Time & Date",
+    "timeDate": "Time & Data",
     "type": "Type",
     "status": "Status",
     "viewOnly": "View only",
@@ -586,7 +586,8 @@
             "sidebarPlaceholder": "Your addresses will be displayed here",
             "favoritePlaceholder": "Your favourite wallets will be diplayed here. Press star button near public key to add to favourites",
             "overall": "Overall",
-            "addresses": "Addresses"
+            "addresses": "Addresses",
+            "wallets": "Wallets"
         }
     },
     "backBtn": "Back",
@@ -601,8 +602,6 @@
         "addNewAddress": "Add a new address",
         "derivationPathInfo": "Derivation path specifies which private key (and thus which address) is used.",
         "setPasswordForAllIn": "Set the password for all in-platform operations",
-        "enterPasswordForAllInSeed": "Add new networks to the existing Seed-phrase",
-        "enterPasswordForAllInPrivate": "Add a network using your private key",
         "addAddressSpecifications": "Add address specifications",
         "enterPaymentPassword": "Enter a payment password",
         "importFileExp": "Import file",
@@ -644,7 +643,9 @@
             "step3HeaderInfo": "Enter the mnemonic phrase created within Citadel.one",
             "step3StepDesc": "Enter a seed phrase",
             "step4HeaderInfo": "Addresses for this networks will be restored with your One-seed"
-        }
+        },
+        "enterPasswordForAllInSeed": "Add new networks to the existing Seed-phrase",
+        "enterPasswordForAllInPrivate": "Add a network using your private key"
     },
     "settings": {
         "subscriptions": {
@@ -653,11 +654,15 @@
             "rewardsDigest": "Account rewards digest",
             "addRewardsNotification": "You have subscribed to email rewards notifications",
             "removeRewardsNotification": "You have unsubscribed to email rewards notifications",
-            "rewardsDigestTooltip": "Biweekly updates on your accrued rewards, claimable tokens and assets to stake"
+            "rewardsDigestTooltip": "Biweekly updates on your accrued rewards, claimable tokens and assets to stake",
+            "newsletter": "Newsletter",
+            "newsletterTooltip": "-",
+            "addNewsletterNotification": "You have subscribed to email newsletter notifications",
+            "removeNewsletterNotification": "You have unsubscribed to email newsletter notifications"
         },
         "transferData": {
             "title": "Transfer data from web to mobile in seconds",
-            "description": "For your convenience, we've added a QR-code that allows you to effortlessly transfer your data from the Citadel.one web platform to the mobile app in just a couple of clicks.",
+            "description": "Transfer your data from the Citadel.one web platform to the mobile app via QR-code in just a couple of clicks.",
             "button": "Open QR code"
         },
         "addresses": {
@@ -670,15 +675,24 @@
         },
         "changeEmail": {
             "title": "Your email",
-            "description": "Your account email",
+            "description": "You can change your account email here",
             "inputLabel": "Your e-mail",
             "inputPlaceHolder": "e-mail",
-            "button": "Change"
+            "button": "Change",
+            "comingSoon": "COMING SOON"
         },
         "language": {
             "title": "Language",
             "description": "Chosen platform language",
             "inputLabel": "Language"
+        },
+        "delete": {
+            "title": "Delete your account",
+            "description": "This operation cannot be reversed",
+            "modalDescription": "Please note that this action cannot be reversed. Your assets are safe - you only delete the Citadel.one account",
+            "button": "Delete account",
+            "inputLabel": "Type \"delete account\" to confirm",
+            "placeholder": "Type 'delete'"
         },
         "changePassword": {
             "btnTitle": "Change password",
@@ -690,15 +704,25 @@
             "incorrectOldPassword": "The old password is incorrect",
             "minLen": "Min length 8 characters",
             "successTitle": "Your password was successfully changed",
-            "successDescription": "Use your new password to confirm transactions"
+            "successDescription": "Use your new password to confirm transactions",
+            "title": "Your password",
+            "description": "You can change your password here",
+            "button": "Change",
+            "comingSoon": "COMING SOON",
+            "tooltip": "As Citadel.one is a non-custodial platform, we do not store your password — it is kept in your browser’s local storage. If you clear your cookies, your password will be deleted — you will have to create a new one."
         },
-        "delete": {
-            "title": "Delete your account",
-            "description": "This operation cannot be reversed",
-            "modalDescription": "Please note that this action cannot be reversed. Your assets are safe - you only delete the Citadel.one account",
-            "button": "Delete account",
-            "inputLabel": "Type \"delete\" to confirm",
-            "placeholder": "Type 'delete'"
+        "crossChain": {
+            "title": "Citadel.one cross-chain Web3",
+            "description": "Access your favorite applications with a brand new Citadel.one browser extension.",
+            "button": "Get Started",
+            "comingSoon": "COMING SOON"
+        },
+        "extensionSettings": {
+            "title": "Extensions settings",
+            "description": "Manage your Citadel.one mini-applications' settings all-in-one. ",
+            "button": "Open Settings",
+            "comingSoon": "COMING SOON",
+            "successDescription": "Use your new password to confirm transactions"
         }
     },
     "overallPage": {
@@ -1111,35 +1135,7 @@
     "uptime": "Uptime",
     "active": "Active",
     "noactive": "inactive",
-    "tokenDescriptionPersistence": "Persistence is an ecosystem of multi-chain DeFi products designed to stimulate global liquidity and enable seamless value exchange. Persistence is bringing different asset classes into DeFi through its products - Proof-of-Stake assets (pSTAKE), Agri Commodity assets (Comdex) and Trade Finance Debt assets (ShipFi).",
-    "tokenDescriptionSENTINEL": "Sentinel is a network of nodes that share their bandwidth, on which Decentralized VPNs and other such services are built. The purpose of the Sentinel ecosystem is to empower universal access to the internet in a trusted and provable manner. This will be done by allowing organizations and individuals around the world to construct cost-effective, scalable, distributed and decentralized networking solutions on Sentinel’s Cosmos-based blockchain.",
-    "tokenDescriptionChihuahua": "Chihuahua is a meme coin and aims to be a community-driven project with a Community Pool of 10B HUAHUA that can be used to fund projects on top of the chain proposed and voted via the Governance built-in in the Chihuahua chain. The project is built using the Cosmos SDK and Tendermint consensus.",
-    "tokenDescriptionUmee": "Umee is a cross chain DeFi hub that interconnects between blockchains. As a base layer blockchain, applications and money lego primitives can be built on top of Umee to access cross chain leverage and liquidity. The Umee Blockchain facilitates interoperability between the Cosmos ecosystem, Ethereum network, side chain architectures, layer two scaling solutions, and alternative base layer protocols.",
-    "tokenDescriptionStargaze": "Stargaze is a community-owned Interchain NFT marketplace in the Cosmos ecosystem.",
-    "tokenDescriptionRizon": "The mission of RIZON Blockchain is to provide a platform where fiat currencies around the world can be securely issued on and enable businesses to interoperate with each other through the Cosmos IBC.",
-    "tokenDescriptionSifchain": "Sifchain is the omni-chain solution for DEXs. More performant, more robust cryptoeconomics for trading and security, more flexible trading capabilities, an extensible omni-chain roadmap and eventual true DAO governance. Sifchain is the brainchild of Sif, the Norse goddess of earth, agriculture, fertility, family, and marriage. Sif represents the collaborative nature of the blockchain industry and the lush rewards that can be found in cultivating connections between multiple other chains.",
-    "tokenDescriptionLum": "The Lum Network is an open source blockchain protocol (layer 1) based on the Tendermint & Cosmos SDK, the most advanced and secure Delegated Proof-Of-Stake algorithm. It is powered by the LUM, its native crypto-asset.",
-    "tokenDescriptionCheqd": "Cheqd team is building a secure network that enables individuals and organizations to fully control their personal data. cheqd helps companies create new and innovative business models, ensuring self-sovereign identity is a viable and rewarding service to offer to customers.",
-    "tokenDescriptionInjective": "Injective is the interoperable layer 1 protocol optimized for building cross-chain Web3 DeFi apps.",
     "jailed": "JAILED",
-    "syncExtensions": {
-        "modalMenuTitle": "Select addresses",
-        "modalMenuDescription": "Select addresses to sync with the extension",
-        "syncTo": "Export adresses",
-        "syncFrom": "Import adresses",
-        "syncDescription": "Choose addresses you want to add to your Citadel.one browser extension",
-        "notFound": "Citadel browser extension not found",
-        "walletsNotFound": "Not wallets found to sync with browser extension",
-        "emptyWallets": "You must setup browser extension before syncing",
-        "syncWithExtension": "Exporting addresses to browser extension",
-        "syncingFromTitle": "Importing addresses from  browser extension",
-        "syncingFromDescription": "Confirm this operation with a password",
-        "incorrectPasswordExtension": "Incorrect extension password",
-        "enterPassword": "Enter extension password",
-        "syncMainTitle": "Synchronize addresses",
-        "syncMainDescription": "Synchronize your addresses with Citadel.one Browser Extension in seconds",
-        "syncMainSync": "Sync"
-    },
     "sendAssetsDestination": "Destination network",
     "keplr": {
         "notFound": "Keplr not found in your browser",
@@ -1247,6 +1243,34 @@
             "sourceAddress": "Source Address",
             "destinationAddress": "Destination Address"
         }
+    },
+    "tokenDescriptionPersistence": "Persistence is an ecosystem of multi-chain DeFi products designed to stimulate global liquidity and enable seamless value exchange. Persistence is bringing different asset classes into DeFi through its products - Proof-of-Stake assets (pSTAKE), Agri Commodity assets (Comdex) and Trade Finance Debt assets (ShipFi).",
+    "tokenDescriptionSENTINEL": "Sentinel is a network of nodes that share their bandwidth, on which Decentralized VPNs and other such services are built. The purpose of the Sentinel ecosystem is to empower universal access to the internet in a trusted and provable manner. This will be done by allowing organizations and individuals around the world to construct cost-effective, scalable, distributed and decentralized networking solutions on Sentinel’s Cosmos-based blockchain.",
+    "tokenDescriptionChihuahua": "Chihuahua is a meme coin and aims to be a community-driven project with a Community Pool of 10B HUAHUA that can be used to fund projects on top of the chain proposed and voted via the Governance built-in in the Chihuahua chain. The project is built using the Cosmos SDK and Tendermint consensus.",
+    "tokenDescriptionUmee": "Umee is a cross chain DeFi hub that interconnects between blockchains. As a base layer blockchain, applications and money lego primitives can be built on top of Umee to access cross chain leverage and liquidity. The Umee Blockchain facilitates interoperability between the Cosmos ecosystem, Ethereum network, side chain architectures, layer two scaling solutions, and alternative base layer protocols.",
+    "tokenDescriptionStargaze": "Stargaze is a community-owned Interchain NFT marketplace in the Cosmos ecosystem.",
+    "tokenDescriptionRizon": "The mission of RIZON Blockchain is to provide a platform where fiat currencies around the world can be securely issued on and enable businesses to interoperate with each other through the Cosmos IBC.",
+    "tokenDescriptionSifchain": "Sifchain is the omni-chain solution for DEXs. More performant, more robust cryptoeconomics for trading and security, more flexible trading capabilities, an extensible omni-chain roadmap and eventual true DAO governance. Sifchain is the brainchild of Sif, the Norse goddess of earth, agriculture, fertility, family, and marriage. Sif represents the collaborative nature of the blockchain industry and the lush rewards that can be found in cultivating connections between multiple other chains.",
+    "tokenDescriptionLum": "The Lum Network is an open source blockchain protocol (layer 1) based on the Tendermint & Cosmos SDK, the most advanced and secure Delegated Proof-Of-Stake algorithm. It is powered by the LUM, its native crypto-asset.",
+    "tokenDescriptionCheqd": "Cheqd team is building a secure network that enables individuals and organizations to fully control their personal data. cheqd helps companies create new and innovative business models, ensuring self-sovereign identity is a viable and rewarding service to offer to customers.",
+    "tokenDescriptionInjective": "Injective is the interoperable layer 1 protocol optimized for building cross-chain Web3 DeFi apps.",
+    "syncExtensions": {
+        "modalMenuTitle": "Select addresses",
+        "modalMenuDescription": "Select addresses to sync with the extension",
+        "syncTo": "Export adresses",
+        "syncFrom": "Import adresses",
+        "syncDescription": "Choose addresses you want to add to your Citadel.one browser extension",
+        "notFound": "Citadel browser extension not found",
+        "walletsNotFound": "Not wallets found to sync with browser extension",
+        "emptyWallets": "You must setup browser extension before syncing",
+        "syncWithExtension": "Exporting addresses to browser extension",
+        "syncingFromTitle": "Importing addresses from  browser extension",
+        "syncingFromDescription": "Confirm this operation with a password",
+        "incorrectPasswordExtension": "Incorrect extension password",
+        "enterPassword": "Enter extension password",
+        "syncMainTitle": "Synchronize addresses",
+        "syncMainDescription": "Synchronize your addresses with Citadel.one Browser Extension in seconds",
+        "syncMainSync": "Sync"
     },
     "noApyNote": "Get passive income via staking your crypto assets!"
 }

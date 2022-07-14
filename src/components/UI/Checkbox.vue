@@ -134,6 +134,7 @@ input[type='checkbox'] {
 
 .checkbox {
   display: inline-flex;
+  justify-content: space-between;
   align-items: center;
   cursor: pointer;
 
@@ -155,8 +156,15 @@ input[type='checkbox'] {
   }
 
   &__label {
+    @include text-default;
     display: flex;
-    padding-right: 8px;
+    font-size: 1rem !important;
+    width: fit-content;
+    flex: 1 0 60%;
+
+    @include laptop {
+      font-size: 0.875rem !important;
+    }
   }
 
   &__tooltip {

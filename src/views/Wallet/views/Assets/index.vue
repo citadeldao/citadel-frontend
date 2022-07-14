@@ -312,19 +312,19 @@ export default {
       setCurrentPage(1);
       setPageSize(pageSizes.value[0]);
     };
-    const OUR_TOKEN_INDEX = computed(() =>
-      displayData.value.findIndex((e) => e.net === OUR_TOKEN)
-    );
 
     watch(
-      () => [props.currentWallet, props.currentToken],
-      () => {
-        clearFilters();
+      () => stateCurrentWallet.value,
+      (newVal, oldVal) => {
+        if (
+          newVal?.net.toLowerCase() !== oldVal?.net.toLowerCase() ||
+          newVal?.address.toLowerCase() !== oldVal?.address.toLowerCase()
+        )
+          clearFilters();
       }
     );
     return {
       OUR_TOKEN,
-      OUR_TOKEN_INDEX,
       setCurrentToken,
       setMainToken,
       isNotLinkedSnip20,
@@ -491,11 +491,11 @@ export default {
       color: $mid-blue;
 
       @include lg {
-        font-size: 16px;
+        font-size: $wallet-assets-heading-font-size;
       }
 
       @include md {
-        font-size: 14px;
+        font-size: $wallet-assets-heading-font-size-md;
       }
 
       &:nth-child(1) {
@@ -513,6 +513,9 @@ export default {
 
         @include md {
           width: 22%;
+        }
+        @include laptop {
+          width: 18%;
         }
       }
     }
@@ -586,6 +589,12 @@ export default {
       @include md {
         width: 56px;
         height: 56px;
+      }
+      @include laptop {
+        & svg {
+          width: 22px;
+          height: 22px;
+        }
       }
     }
   }

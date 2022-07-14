@@ -159,6 +159,10 @@ export default {
       width: 16px;
       height: 16px;
     }
+    @include laptop {
+      width: 14px;
+      height: 14px;
+    }
     width: 20px;
     height: 20px;
   }
@@ -171,8 +175,12 @@ export default {
     box-shadow: 0 15px 50px rgba(80, 100, 124, 0.1),
       0 10px 15px rgba(80, 100, 124, 0.16);
     border-radius: 8px;
-    background: $white;
     padding: 4px 8px 4px 8px;
+    background: $gray-gradient;
+    z-index: 4;
+    & svg {
+      fill: $too-dark-blue;
+    }
     &--input {
       width: 68px;
       @include lg {

@@ -37,6 +37,7 @@
         >
           <template #default>
             <AssetsListModal
+              :state-current-wallet="stateCurrentWallet"
               :current-wallet="currentWallet"
               @click="goToAsset"
             />
@@ -90,6 +91,7 @@ export default {
     },
   },
   setup() {
+    const { currentWallet: stateCurrentWallet } = useWallets();
     const store = useStore();
     const isSelectAssetModalOpened = ref(false);
     const showCreateVkModal = ref(false);
@@ -100,10 +102,10 @@ export default {
 
     const isNotLinkedSnip20 = (token) => {
       const isSnip20 = computed(
-        () => token.config.standard === TOKEN_STANDARDS.SNIP_20
+        () => token?.config?.standard === TOKEN_STANDARDS.SNIP_20
       );
 
-      return isSnip20.value && !token.linked;
+      return isSnip20?.value && !token.linked;
     };
 
     const openSelectAssetModal = () => {
@@ -120,6 +122,7 @@ export default {
     };
 
     const goToAsset = async (asset) => {
+      console.log(asset, 'asset');
       if (isNotLinkedSnip20(asset)) {
         mainIsLoading.value = true;
         snip20TokenFee.value =
@@ -131,16 +134,17 @@ export default {
         await store.dispatch('subtokens/setCurrentToken', asset);
 
         closeSelectAssetModal();
-
-        redirectToWallet({
-          wallet: wallet.value,
-          token: asset,
-          root: true,
-        });
+        if (asset)
+          redirectToWallet({
+            wallet: wallet.value,
+            token: asset,
+            root: true,
+          });
       }
     };
 
     return {
+      stateCurrentWallet,
       isSelectAssetModalOpened,
       showCreateVkModal,
       snip20TokenFee,

@@ -30,7 +30,7 @@ export default {
       });
       setTimeout(() => dispatch('removeToast', params.id), params.duration);
 
-      if (params.text.status === 403) {
+      if (params?.text?.status === 403) {
         window.location.href = '/login';
       }
     },
