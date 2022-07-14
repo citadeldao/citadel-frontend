@@ -1159,6 +1159,18 @@
     "changeValidators": "Change validators",
     "redelegateNote": "You must choose another validator to redelegate",
     "assets": "Assets",
+    "assetsStubs": {
+        "title": "You don't have any assets yet",
+        "subtitle": "You can swap it directly via Citadel.one or deposit from an external exchange",
+        "card1": {
+            "title": "Swap via Citadel.one ",
+            "action": "extensions "
+        },
+        "card2": {
+            "title": "Deposit from ",
+            "action": "exchanges"
+        }
+    },
     "menu": {
         "settings": "Settings",
         "logOut": "Log Out"

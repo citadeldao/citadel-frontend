@@ -1159,6 +1159,18 @@
     "changeValidators": "Изменить валидатора",
     "redelegateNote": "Для ределегирования вы должны выбрать другого валидатора",
     "assets": "Активы\n",
+    "assetsStubs": {
+        "title": "",
+        "subtitle": "",
+        "card1": {
+            "title": "",
+            "action": ""
+        },
+        "card2": {
+            "title": "",
+            "action": ""
+        }
+    },
     "menu": {
         "settings": "Настройки",
         "logOut": "Выйти"
