@@ -3,13 +3,15 @@
     <h5 class="extension-settings-card__title">
       {{ $t('settings.extensionSettings.title') }}
     </h5>
-    <span class="extension-settings-card__description">
-      {{ $t(`settings.extensionSettings.${currentDescKey}`) }}
-    </span>
+    <div class="settings-wrap">
+      <span class="extension-settings-card__description">
+        {{ $t(`settings.extensionSettings.${currentDescKey}`) }}
+      </span>
 
-    <PrimaryButton :disabled="true" class="extension-settings-card__button">
-      {{ $t('settings.extensionSettings.button') }}
-    </PrimaryButton>
+      <PrimaryButton :disabled="true" class="extension-settings-card__button">
+        {{ $t('settings.extensionSettings.button') }}
+      </PrimaryButton>
+    </div>
   </div>
 </template>
 
@@ -45,6 +47,14 @@ export default {
   z-index: 1;
   @include laptop {
     align-items: center;
+    .settings-wrap {
+      flex-direction: column;
+      span {
+        width: 100%;
+        text-align: center;
+        margin: 5px 0 10px;
+      }
+    }
   }
   &__button {
     box-shadow: 0px 0px 25px rgba(106, 75, 255, 0.3);

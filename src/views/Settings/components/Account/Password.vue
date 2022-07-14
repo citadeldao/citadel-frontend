@@ -6,18 +6,20 @@
         <Info></Info>
       </Tooltip>
     </h5>
-    <span class="change-password-card__description">
-      {{ $t('settings.changePassword.description') }}
-    </span>
+    <div class="settings-wrap">
+      <span class="change-password-card__description">
+        {{ $t('settings.changePassword.description') }}
+      </span>
 
-    <PrimaryButton
-      :disabled="!oldPasswordHash"
-      class="change-password-card__button"
-      data-qa="settings__password-button"
-      @click="changePassword"
-    >
-      {{ $t('settings.changePassword.button') }}
-    </PrimaryButton>
+      <PrimaryButton
+        :disabled="!oldPasswordHash"
+        class="change-password-card__button"
+        data-qa="settings__password-button"
+        @click="changePassword"
+      >
+        {{ $t('settings.changePassword.button') }}
+      </PrimaryButton>
+    </div>
   </div>
 
   <!-- CHANGE SUCCESS PASSWORD -->

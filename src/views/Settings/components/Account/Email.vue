@@ -3,18 +3,20 @@
     <h5 class="change-email__title">
       {{ $t('settings.changeEmail.title') }}
     </h5>
-    <span class="change-email__description">
-      {{ $t(`settings.changeEmail.${currentDescKey}`) }}
-    </span>
+    <div class="settings-wrap">
+      <span class="change-email__description">
+        {{ $t(`settings.changeEmail.${currentDescKey}`) }}
+      </span>
 
-    <PrimaryButton
-      :disabled="true"
-      class="change-email__button"
-      data-qa="settings__email-button"
-      @click="clickHandler"
-    >
-      {{ $t('settings.changeEmail.button') }}
-    </PrimaryButton>
+      <PrimaryButton
+        :disabled="true"
+        class="change-email__button"
+        data-qa="settings__email-button"
+        @click="clickHandler"
+      >
+        {{ $t('settings.changeEmail.button') }}
+      </PrimaryButton>
+    </div>
 
     <!-- <div class="change-email__input"> -->
     <!-- <Input
