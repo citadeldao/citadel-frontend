@@ -313,6 +313,12 @@ export default {
     @include xl {
       display: initial;
     }
+    @include lg {
+      display: none;
+    }
+    @include md {
+      display: none;
+    }
   }
 
   &__card-icon {
