@@ -113,7 +113,7 @@ export default {
     async updateCurrentWalletMarketcap({ commit, state }, data) {
       if (
         data.net.toLowerCase() ===
-        state.currentWalletMarketcap.net.toLowerCase()
+        state.currentWalletMarketcap?.net?.toLowerCase()
       ) {
         commit(types.SET_CURRENT_WALLET_MARKETCAP, {
           ...data.marketCap.marketCapInfo,
