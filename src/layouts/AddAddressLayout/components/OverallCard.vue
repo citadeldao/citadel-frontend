@@ -5,24 +5,23 @@
     </span>
     <span class="overall-card__balance-md">
       <span class="overall-card__currency-md">
-        {{ currentTab === 'USD' ? `$` : `BTC` }}
+        {{ balanceValue[currentTab].currency }}
       </span>
+      <span v-pretty-number="{ ...balanceValue[currentTab] }" />
       <span
-        v-pretty-number="{
-          value: currentTab === 'USD' ? balance : cryptobalance,
-          currency: currentTab,
-        }"
+        v-pretty-number="{ ...balanceValue[laptopTab] }"
+        class="overall-card__balance-laptop"
       />
     </span>
     <span class="overall-card__balance">
       <span class="overall-card__currency">$</span>
       <span
-        v-pretty-number="{ value: balance, currency: 'USD' }"
+        v-pretty-number="{ ...balanceValue['USD'] }"
         class="overall-card__balance-value"
       />
     </span>
     <span class="overall-card__cryptobalance">
-      <span v-pretty-number="{ value: cryptobalance, currency: 'BTC' }" />
+      <span v-pretty-number="{ ...balanceValue['BTC'] }" />
       <span class="overall-card__cryptocurrency"> BTC </span>
     </span>
     <div class="overall-card__tabs">
@@ -66,11 +65,29 @@ export default {
       type: String,
     },
   },
-  setup() {
-    const currentTab = ref('USD');
+  setup(props) {
     const route = useRoute();
+    const balanceValue = ref({});
 
-    return { currentTab, prettyNumber, route };
+    balanceValue.value = {
+      USD: {
+        currency: '$',
+        value: props.balance,
+      },
+      BTC: {
+        currency: 'BTC',
+        value: props.cryptobalance,
+      },
+    };
+
+    return { prettyNumber, route, balanceValue };
+  },
+  data() {
+    return {
+      currentTab: 'USD',
+      laptopTab: 'BTC',
+      windowSize: window.innerWidth,
+    };
   },
 };
 </script>
@@ -146,7 +163,7 @@ export default {
       margin-bottom: 3px;
     }
     @include laptop {
-      margin-left: 10px;
+      margin-left: 0;
     }
   }
   &__balance,
@@ -172,10 +189,19 @@ export default {
     }
   }
 
+  &__balance-laptop {
+    display: none;
+  }
+
   &__cryptocurrency,
   &__currency-md,
   &__currency {
     color: $black;
+    @include laptop {
+      color: $too-ligth-blue !important;
+      font-weight: 400 !important;
+      font-family: 'Panton_Regular';
+    }
   }
   &__balance-md {
     font-size: $balance-font-size;
@@ -200,8 +226,16 @@ export default {
     flex-direction: row;
     background-color: $dark-blue;
     justify-content: space-between;
+    border-color: transparent;
     & span {
       color: $white;
+    }
+    &__balance-laptop {
+      display: initial;
+      position: absolute;
+      right: 15px;
+      color: transparent !important;
+      z-index: 1;
     }
   }
 }
@@ -229,11 +263,8 @@ export default {
   &__balance-md {
     margin: 0;
     color: $white;
-    font-size: $balance-font-size-md;
+    font-size: $sidebar-title-font-size-laptop;
 
-    & > span {
-      color: $white;
-    }
     @include laptop-l {
       font-size: $balance-font-size-laptop;
     }

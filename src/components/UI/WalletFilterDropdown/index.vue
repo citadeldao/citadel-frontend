@@ -159,6 +159,10 @@ export default {
       width: 16px;
       height: 16px;
     }
+    @include laptop {
+      width: 14px;
+      height: 14px;
+    }
     width: 20px;
     height: 20px;
   }

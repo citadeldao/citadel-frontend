@@ -173,7 +173,6 @@
     }
     .sidebar__addresses-top {
       padding: 0;
-      margin: 0;
       border-color: transparent;
     }
     .sidebar__addresses-header-compact {
@@ -184,7 +183,7 @@
     }
     .sidebar__addresses-header-title {
       overflow: visible;
-      font-size: $title-font-size-laptop;
+      font-size: $sidebar-title-font-size-laptop;
       margin-right: 10px;
     }
     .sidebar__addresses-header {
@@ -198,8 +197,6 @@
     }
 
     .address-item {
-      margin: 0;
-      margin-top: 15px;
       justify-content: center;
       &:hover {
         .address-item__info {
@@ -244,7 +241,7 @@
         fill: $black;
         transform: rotate(0);
       }
-      background-color: $ligth-gray;
+      background-color: $too-ligth-gray;
     }
 
     // &:hover {

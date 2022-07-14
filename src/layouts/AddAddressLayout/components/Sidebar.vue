@@ -1,10 +1,5 @@
 <template>
-  <div
-    class="sidebar"
-    :class="sidebarClass"
-    @mouseover="onMouseOver"
-    @mouseleave="onMouseLeave"
-  >
+  <div class="sidebar" :class="sidebarClass">
     <div class="sidebar__logo">
       <div
         data-qa="main-logo"
@@ -359,10 +354,17 @@ export default {
     onResize() {
       this.sidebarClass = window.innerWidth <= 1024 ? 'compact' : '';
     },
-
+    onClickMain() {
+      this.sidebarClass = 'compact';
+    },
     sideBarView() {
       if (window.innerWidth <= 1024) {
         this.sidebarClass = !this.sidebarClass ? 'compact' : '';
+        document
+          .querySelector('#main')
+          .addEventListener('click', this.onClickMain);
+      } else {
+        document.querySelector('#main').removeEventListener('click');
       }
     },
   },
@@ -391,7 +393,12 @@ export default {
     padding: $sidebar-padding-md;
     max-width: $sidebar-max-width-md;
   }
-
+  &__addresses-top {
+    @include laptop {
+      border-color: transparent;
+      margin-bottom: 15px;
+    }
+  }
   &:hover {
     .sidebar__addresses-top {
       @include laptop {
@@ -414,13 +421,13 @@ export default {
     z-index: 3;
     &__compact-view-button {
       background: $too-ligth-blue;
-      width: 24px;
-      height: 24px;
+      width: 22px;
+      height: 22px;
       border: none;
       border-radius: 4px;
 
       position: absolute;
-      top: 143px;
+      top: 138px;
       right: -12px;
 
       transition: 0.15s;
@@ -456,7 +463,7 @@ export default {
     display: block;
 
     svg {
-      height: 24px;
+      height: 22px;
     }
   }
 
@@ -468,6 +475,9 @@ export default {
     @include md {
       max-width: calc(#{$sidebar-max-width-md} - 50px);
       margin: 0 auto 20px;
+    }
+    @include laptop {
+      max-width: calc(#{$sidebar-max-width-laptop} - 50px);
     }
   }
   &__overall {
@@ -483,6 +493,11 @@ export default {
       max-width: calc(#{$sidebar-max-width-md} - 50px);
       margin: 20px auto;
     }
+
+    @include laptop {
+      max-width: calc(#{$sidebar-max-width-laptop} - 50px);
+      margin: 10px auto;
+    }
   }
 
   &__addresses {
@@ -495,11 +510,17 @@ export default {
     @include md {
       max-width: calc(#{$sidebar-max-width-md} - 50px);
     }
+    @include laptop {
+      max-width: calc(#{$sidebar-max-width-laptop} - 50px);
+    }
     &-top {
       border-radius: 8px;
       margin-bottom: 25px;
       @include md {
-        margin-bottom: 15px;
+        margin-bottom: 20px;
+      }
+      @include laptop {
+        margin-bottom: 10px;
       }
     }
   }
@@ -535,7 +556,8 @@ export default {
     @include lg {
     }
 
-    @include md {
+    @include laptop {
+      font-size: $sidebar-title-font-size-laptop;
     }
   }
 
@@ -558,6 +580,10 @@ export default {
       @include md {
         width: 18px;
         height: 18px;
+      }
+      @include laptop {
+        width: 14px;
+        height: 14px;
       }
 
       &:hover {
@@ -601,6 +627,10 @@ export default {
       overflow-y: overlay;
       overflow-x: hidden;
       padding-bottom: 15px;
+      @include laptop {
+        width: 90%;
+        margin: 0 auto;
+      }
     }
 
     // &.bottom::after {
@@ -676,7 +706,6 @@ export default {
       & div {
         background: $white;
         color: $dark-blue;
-        box-shadow: 0px 4px 20px rgba(105, 95, 225, 0.7);
       }
     }
 
@@ -690,6 +719,7 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
+      box-shadow: 0px 4px 20px rgba(105, 95, 225, 0.7);
 
       @include md {
         width: 32px;
@@ -700,17 +730,20 @@ export default {
 
     @include md {
       max-width: calc(#{$sidebar-max-width-md} - 50px);
-      height: 60px;
+      height: 95px;
     }
 
     @include laptop {
-      height: 60px;
+      max-width: $sidebar-add-btn-width-laptop;
+      justify-content: space-between;
+      height: 80px;
       margin-top: auto;
       border-color: transparent;
       border-top-style: dashed;
       border-top-color: $too-ligth-blue;
       padding: 0 10%;
       border-radius: 0 0 8px 8px;
+      font-size: $sidebar-add-btn-font-size-laptop;
     }
   }
 }

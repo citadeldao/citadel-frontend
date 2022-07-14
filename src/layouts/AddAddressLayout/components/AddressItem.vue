@@ -17,6 +17,20 @@
         class="address-item__badge"
         :style="{ backgroundColor: type.color }"
       />
+      <span
+        v-pretty-number="{
+          value: wallet.balance.calculatedBalance,
+          currency: wallet.code,
+          title: walletName,
+        }"
+        style="
+          position: absolute;
+          color: transparent;
+          height: 32px;
+          width: 32px;
+        "
+        class="address-item__laptop-tooltip"
+      />
     </div>
     <div class="address-item__info">
       <span class="address-item__name">{{ walletName }}</span>
@@ -190,7 +204,7 @@ export default {
     @include md {
       width: 32px;
       height: 32px;
-      margin-right: 5px;
+      margin-right: 10px;
     }
     &-info {
       display: none;
@@ -229,11 +243,25 @@ export default {
     @include md {
       font-size: $sidebar-balance-font-size-md;
     }
+    @include laptop {
+      font-size: $sidebar-text-font-size-laptop;
+    }
   }
   &__currency {
     margin-left: 5px;
     font-family: 'Panton_Regular';
     color: $slategray;
+  }
+  &__laptop-tooltip {
+    display: none;
+  }
+  @include laptop {
+    margin: 0;
+    margin-bottom: 15px;
+
+    &__laptop-tooltip {
+      display: initial;
+    }
   }
 }
 .active-link {
@@ -283,6 +311,10 @@ export default {
       box-shadow: 0px 4px 25px rgba(63, 54, 137, 0.25);
       border-radius: 6px;
     }
+  }
+  @include laptop {
+    margin: 0;
+    margin-bottom: 15px;
   }
 
   // &:hover {
