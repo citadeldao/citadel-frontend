@@ -836,7 +836,7 @@ export default {
       }
 
       let result;
-
+      console.log('test', extensionTransactionForSign.value);
       try {
         result = await signerWallet.value.signAndSendTransfer({
           walletId: signerWallet.value.id,
