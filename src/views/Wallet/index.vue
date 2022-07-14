@@ -52,6 +52,7 @@
         <div
           v-if="currentToken ? currentToken?.hasClaim : currentWallet.hasClaim"
           class="wallet__claim-rewards-lg"
+          data-qa="Claim-rewards-block"
         >
           <ClaimRewards
             :disabled="currentWallet.isStub"
