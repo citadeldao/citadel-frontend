@@ -353,6 +353,13 @@ export default {
   methods: {
     onResize() {
       this.sidebarClass = window.innerWidth <= 1024 ? 'compact' : '';
+      if (window.innerWidth <= 1024) {
+        document
+          .querySelector('#main')
+          .addEventListener('click', this.onClickMain);
+      } else {
+        document.querySelector('#main').removeEventListener('click');
+      }
     },
     onClickMain() {
       this.sidebarClass = 'compact';
@@ -360,11 +367,6 @@ export default {
     sideBarView() {
       if (window.innerWidth <= 1024) {
         this.sidebarClass = !this.sidebarClass ? 'compact' : '';
-        document
-          .querySelector('#main')
-          .addEventListener('click', this.onClickMain);
-      } else {
-        document.querySelector('#main').removeEventListener('click');
       }
     },
   },
