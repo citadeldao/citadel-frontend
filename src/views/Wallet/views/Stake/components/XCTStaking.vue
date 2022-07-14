@@ -68,11 +68,12 @@
         hover-border="1px solid #1A53F0"
         hover-color="#1A53F0"
         hover-bg-color=""
+        data-qa="Unstake"
         @click="toUnstake"
       >
         {{ $t('unstake') }}
       </PrimaryButton>
-      <PrimaryButton @click="toStake">
+      <PrimaryButton @click="toStake" data-qa="Stake">
         {{ $t('Stake') }}
       </PrimaryButton>
     </div>
