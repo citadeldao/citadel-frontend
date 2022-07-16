@@ -9,7 +9,7 @@
       </span>
       <span v-pretty-number="{ ...balanceValue[currentTab] }" />
       <span
-        v-pretty-number="{ ...balanceValue[laptopTab] }"
+        v-pretty-number="{ ...balanceValue['BTC'] }"
         class="overall-card__balance-laptop"
       />
     </span>
@@ -50,6 +50,7 @@ import NetworkTab from '@/components/UI/NetworkTab';
 import { ref } from '@vue/reactivity';
 import { prettyNumber } from '@/helpers/prettyNumber';
 import { useRoute } from 'vue-router';
+import { computed } from '@vue/runtime-core';
 
 export default {
   name: 'OverallCard',
@@ -67,9 +68,8 @@ export default {
   },
   setup(props) {
     const route = useRoute();
-    const balanceValue = ref({});
-
-    balanceValue.value = {
+    const currentTab = ref('USD');
+    const balanceValue = computed(() => ({
       USD: {
         currency: '$',
         value: props.balance,
@@ -78,16 +78,9 @@ export default {
         currency: 'BTC',
         value: props.cryptobalance,
       },
-    };
+    }));
 
-    return { prettyNumber, route, balanceValue };
-  },
-  data() {
-    return {
-      currentTab: 'USD',
-      laptopTab: 'BTC',
-      windowSize: window.innerWidth,
-    };
+    return { prettyNumber, route, balanceValue, currentTab };
   },
 };
 </script>
