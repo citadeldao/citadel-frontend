@@ -156,6 +156,7 @@ input[type='checkbox'] {
   }
 
   &__label {
+    @include text-default;
     display: flex;
     font-size: 1rem !important;
     width: fit-content;
