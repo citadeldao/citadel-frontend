@@ -1,24 +1,22 @@
 <template>
   <div class="addresses">
-    <div class="addresses__info">
-      <span class="addresses__title">
-        {{ $t('settings.addresses.title') }}
-      </span>
-      <span class="addresses__desc">
-        {{ $t('settings.addresses.description') }}
-      </span>
-      <div class="addresses__content">
-        <Dropdown
-          v-for="group in groupWalletsByNet"
-          :key="group.net"
-          :data="group"
-          :hidden-wallets="hiddenWallets"
-          :has-visible-button="hasVisibleButton(group)"
-          @deleteSeedModal="onDeleteSeed"
-          @toggle-hidden="toggleWalletHidden"
-          @exportWallet="exportWallet"
-        />
-      </div>
+    <h5 class="addresses__title">
+      {{ $t('settings.addresses.title') }}
+    </h5>
+    <span class="addresses__description">
+      {{ $t('settings.addresses.description') }}
+    </span>
+    <div class="addresses__content">
+      <Dropdown
+        v-for="group in groupWalletsByNet"
+        :key="group.net"
+        :data="group"
+        :hidden-wallets="hiddenWallets"
+        :has-visible-button="hasVisibleButton(group)"
+        @deleteSeedModal="onDeleteSeed"
+        @toggle-hidden="toggleWalletHidden"
+        @exportWallet="exportWallet"
+      />
     </div>
     <DeleteSeedModal
       v-if="showSeedModal"
@@ -112,52 +110,12 @@ export default {
 
 <style lang="scss" scoped>
 .addresses {
-  flex: 1;
+  @include settings-card-default;
   min-height: 200px;
   min-width: 150px;
-  padding: 40px 45px;
-  background: $white;
-  box-shadow: -10px 4px 27px rgba(0, 0, 0, 0.1);
-  border-radius: 25px;
-  @include lg {
-    padding: 30px 40px;
-  }
-  @include md {
-    box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
-  }
 
-  &__info {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
-
-  &__title {
-    font-size: 20px;
-    line-height: 30px;
-    font-family: 'Panton_Bold';
-    @include md {
-      margin-bottom: 4px;
-    }
-  }
-
-  &__desc {
-    font-size: 16px;
-    line-height: 27px;
-    margin-bottom: 14px;
-    color: $mid-blue;
-    @include lg {
-      font-size: 14px;
-      line-height: 24px;
-    }
-    @include md {
-      font-size: 14px;
-      line-height: 24px;
-    }
-
-    &-text {
-      margin-bottom: 27px;
-    }
+  &__content {
+    overflow-y: auto;
   }
 }
 </style>

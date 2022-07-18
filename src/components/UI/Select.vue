@@ -19,19 +19,19 @@
           />
         </keep-alive>
 
-        {{ selected.label }}
-      </div>
+        <span class="select__value-text">{{ selected.label }}</span>
 
-      <div
-        v-if="!disabled"
-        class="select__arrow"
-        @click.stop="toggleVisibleOptions"
-      >
-        <arrow-up v-if="isOptionsVisible" />
-        <arrow-down v-else />
+        <div
+          v-if="!disabled"
+          :class="`${isOptionsVisible}`"
+          class="select__arrow"
+          @click.stop="toggleVisibleOptions"
+        >
+          <arrow-down />
+        </div>
       </div>
     </div>
-    <transition name="fade">
+    <transition name="slide-from-top">
       <div v-show="isOptionsVisible" class="select__options">
         <div
           v-for="(option, index) of options"
@@ -52,12 +52,11 @@
 
 <script>
 import { computed, markRaw, ref } from 'vue';
-import arrowUp from '@/assets/icons/arrow-up.svg';
 import arrowDown from '@/assets/icons/arrow-down.svg';
 
 export default {
   name: 'Select',
-  components: { arrowUp, arrowDown },
+  components: { arrowDown },
   props: {
     label: {
       type: String,
@@ -175,17 +174,22 @@ export default {
   &__value {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     font-family: 'Panton_SemiBold';
     font-size: 14px;
-    padding-right: 20px;
+    &-text {
+      margin-right: auto;
+    }
   }
 
   &__arrow {
-    position: absolute;
-    right: 20px;
-    top: 35px;
     width: 14px;
     fill: $too-ligth-blue;
+    transition: 0.2s;
+    align-self: flex-end;
+    &.true {
+      transform: rotate(-180deg);
+    }
   }
 
   &__icon {
@@ -200,14 +204,13 @@ export default {
 
   &__options {
     position: absolute;
-    top: calc(100% - 8px);
+    transform: translateY(-10%);
     left: 0;
     right: 0;
     padding: 23px 15px 15px;
     border: 1px solid $too-ligth-blue;
     border-top: 0;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+    border-radius: 0 0 8px 8px;
     background-color: $white;
     max-height: 200px;
     overflow: auto;

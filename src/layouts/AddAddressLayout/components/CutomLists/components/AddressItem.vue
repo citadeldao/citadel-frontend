@@ -111,6 +111,9 @@ export default {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    @include laptop {
+      width: 80%;
+    }
   }
   &__title {
     font-size: 16px;

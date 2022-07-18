@@ -17,6 +17,20 @@
         class="address-item__badge"
         :style="{ backgroundColor: type.color }"
       />
+      <span
+        v-pretty-number="{
+          value: wallet.balance.calculatedBalance,
+          currency: wallet.code,
+          title: walletName,
+        }"
+        style="
+          position: absolute;
+          color: transparent;
+          height: 32px;
+          width: 32px;
+        "
+        class="address-item__laptop-tooltip"
+      />
     </div>
     <div class="address-item__info">
       <span class="address-item__name">{{ walletName }}</span>
@@ -41,9 +55,11 @@ import { screenWidths } from '@/config/sreenWidthThresholds';
 import { useRoute } from 'vue-router';
 import { WALLET_TYPES } from '@/config/walletType';
 import { useStore } from 'vuex';
+import Tooltip from '@/components/UI/Tooltip';
 
 export default {
   name: 'AddressItem',
+  component: { Tooltip },
   props: {
     wallet: {
       type: Object,
@@ -156,9 +172,9 @@ export default {
 <style lang="scss" scoped>
 .address-item {
   display: flex;
-  margin-bottom: 33px;
   text-decoration: none;
   user-select: text;
+  margin-bottom: 20px;
   &:hover {
     .address-item__icon {
       background: $blue;
@@ -169,23 +185,18 @@ export default {
     }
     .address-item__balance {
       color: $blue;
+      display: flex;
     }
   }
-  &:last-child {
-    margin-bottom: 0;
-  }
-  @include md {
-    margin-bottom: 17px;
-  }
   &__icon {
+    border-radius: $round;
+    background: #8496c0;
     width: 40px;
     height: 40px;
-    background: #8496c0;
-    border-radius: $round;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 16px;
+    margin-right: 15px;
     position: relative;
     & svg {
       fill: $white;
@@ -193,7 +204,10 @@ export default {
     @include md {
       width: 32px;
       height: 32px;
-      margin-right: 7px;
+      margin-right: 10px;
+    }
+    &-info {
+      display: none;
     }
   }
   &__badge {
@@ -208,33 +222,46 @@ export default {
   &__info {
     display: flex;
     flex-direction: column;
-    max-width: 145px;
+    max-width: 135px;
     @include md {
       max-width: 110px;
     }
   }
   &__name {
-    font-size: 14px;
-    line-height: 17px;
+    font-size: $sidebar-text-font-size;
     color: $slategray;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
   }
   &__balance {
-    font-size: 18px;
-    line-height: 22px;
+    font-size: $sidebar-balance-font-size;
     font-family: 'Panton_Bold';
     margin-top: 5px;
     color: $mid-blue;
+    display: flex;
     @include md {
-      font-size: 14px;
-      line-height: 17px;
+      font-size: $sidebar-balance-font-size-md;
+    }
+    @include laptop {
+      font-size: $sidebar-text-font-size-laptop;
     }
   }
   &__currency {
+    margin-left: 5px;
     font-family: 'Panton_Regular';
     color: $slategray;
+  }
+  &__laptop-tooltip {
+    display: none;
+  }
+  @include laptop {
+    margin: 0;
+    margin-bottom: 15px;
+
+    &__laptop-tooltip {
+      display: initial;
+    }
   }
 }
 .active-link {
@@ -260,5 +287,40 @@ export default {
   .address-item__balance {
     color: $dark-blue;
   }
+}
+
+.compact .address-item {
+  margin-bottom: 25px;
+  justify-content: center;
+  position: relative;
+  &__icon {
+    margin: 0;
+  }
+  &__info {
+    opacity: 0;
+    position: absolute;
+    top: -20px;
+    right: -7px;
+    z-index: -999;
+    & > div {
+      position: fixed;
+      background-color: $white;
+      padding: 0 10px;
+      height: 48px;
+      width: 110px;
+      box-shadow: 0px 4px 25px rgba(63, 54, 137, 0.25);
+      border-radius: 6px;
+    }
+  }
+  @include laptop {
+    margin: 0;
+    margin-bottom: 15px;
+  }
+
+  // &:hover {
+  //   .address-item__info {
+  //     opacity: 1;
+  //   }
+  // }
 }
 </style>
