@@ -286,7 +286,8 @@
         "actionModalDesc": "Ваши токены будут анстейканы и заморожены на определенное время",
         "unstakeTo": "Анстейкать на",
         "unstakeFrom": "Анстейкать с",
-        "amountToUnstake": "Сумма анстейка"
+        "amountToUnstake": "Сумма анстейка",
+        "unstakeNote": ""
     },
     "singleStake": {
         "chooseNodeModalDesc": "Чтобы застейкать активы, выберите валидатора и укажите сумму. Примите во внимание, что <strong style='color:#0a2778;'>no unstaking period</strong> периода заморозки токенов при анстейкинге нет. ",

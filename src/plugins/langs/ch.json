@@ -286,7 +286,8 @@
         "actionModalDesc": "您的代币将解除质押并锁定一段时间",
         "unstakeTo": "解锁至",
         "unstakeFrom": "解锁自",
-        "amountToUnstake": "可解除质押金额"
+        "amountToUnstake": "可解除质押金额",
+        "unstakeNote": ""
     },
     "singleStake": {
         "chooseNodeModalDesc": "如需质押您的资产，选择节点并设置质押金额。请注意此处 <strong style='color:#0a2778;'> 可立即解锁 </strong> ",

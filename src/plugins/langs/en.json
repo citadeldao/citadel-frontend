@@ -286,7 +286,8 @@
         "actionModalDesc": "Your tokens will be unstaked and frozen for some time",
         "unstakeTo": "Unstake to",
         "unstakeFrom": "Unstake from",
-        "amountToUnstake": "Amount to unstake"
+        "amountToUnstake": "Amount to unstake",
+        "unstakeNote": "After the confirmation of unstaking transaction, your assets will be locked for {unstakeingPerioud} days.Unstaked assets will be depicted in the frozen balance section."
     },
     "singleStake": {
         "chooseNodeModalDesc": "To stake your assets, choose node and set the amount for delegation. Take into account that there is <strong style='color:#0a2778;'>no unstaking period</strong> for",
