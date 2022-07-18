@@ -238,15 +238,14 @@ export default {
     });
 
     const balanceAvailableUSD = computed(() => {
-      return props.tokenList.reduce((acc, token) => {
-        const availableUSD = BigNumber(token.tokenBalance.mainBalance)
-          .multipliedBy(token.tokenBalance.price.USD)
-          .toNumber();
-        return BigNumber(acc)
-          .plus(availableUSD)
-          .plus(stateCurrentWallet.value.balance.mainBalance)
-          .toNumber();
-      }, 0);
+      return (
+        props.tokenList.reduce((acc, token) => {
+          const availableUSD = BigNumber(token.tokenBalance.mainBalance)
+            .multipliedBy(token.tokenBalance.price.USD)
+            .toNumber();
+          return BigNumber(acc).plus(availableUSD).toNumber();
+        }, 0) + stateCurrentWallet.value.balanceUSD
+      );
     });
 
     const {
