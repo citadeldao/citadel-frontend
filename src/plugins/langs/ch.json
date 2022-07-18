@@ -186,7 +186,9 @@
             "block1Title": "为什么我需要导入地址？",
             "block1Info": "这是一个仅可查看的地址，因为您使用公钥添加该账户，或者您已注销。",
             "block2Title": "想知道如何导入地址？",
-            "block2Info": "查看如何使用私钥或助记词短语导入地址的分步骤指导。"
+            "block2Info": "查看如何使用私钥或助记词短语导入地址的分步骤指导。",
+            "availableAssets": "",
+            "totalAssets": ""
         },
         "stubs": {
             "chain": "Ki 链暂时不可用",

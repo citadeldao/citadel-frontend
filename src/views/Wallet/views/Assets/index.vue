@@ -4,10 +4,14 @@
   </div>
   <div v-else class="assets">
     <div class="assets__header">
-      <BalanceCard type="red" text="Total Assets" :value="balanceUSD" />
+      <BalanceCard
+        type="red"
+        :text="$t(wallet.info.totalAssets)"
+        :value="balanceUSD"
+      />
       <BalanceCard
         type="blue"
-        text="Available Assets"
+        :text="$t(wallet.info.availableAssets)"
         :value="balanceAvailableUSD"
       />
 
@@ -320,7 +324,7 @@ export default {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
-
+    text-transform: capitalize;
     & > * {
       flex-grow: 1;
     }
