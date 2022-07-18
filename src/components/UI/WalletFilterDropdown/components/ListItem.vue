@@ -43,7 +43,7 @@ export default {
   justify-content: center;
   min-width: 32px;
   padding: 8px 0;
-  border-bottom: 1px solid $too-dark-blue;
+  border-bottom: 1px solid $too-ligth-gray;
   opacity: 0.7;
   cursor: pointer;
   &:hover {
@@ -56,7 +56,6 @@ export default {
     border-bottom: none;
   }
   &__icon {
-    fill: $too-dark-blue;
     @include md {
       max-width: 16px;
       max-height: 16px;
