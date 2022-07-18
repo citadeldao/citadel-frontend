@@ -6,12 +6,12 @@
     <div class="assets__header">
       <BalanceCard
         type="red"
-        :text="$t(wallet.info.totalAssets)"
+        :text="$t('wallet.info.totalAssets')"
         :value="balanceUSD"
       />
       <BalanceCard
         type="blue"
-        :text="$t(wallet.info.availableAssets)"
+        :text="$t('wallet.info.availableAssets')"
         :value="balanceAvailableUSD"
       />
 
