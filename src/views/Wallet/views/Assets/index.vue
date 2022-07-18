@@ -5,7 +5,9 @@
   <div v-else class="assets">
     <template
       v-if="
-        currentWallet.balance.mainBalance || currentWallet.subtokenBalanceUSD
+        currentWallet.balance.mainBalance ||
+        currentWallet.subtokenBalanceUSD ||
+        tokenList.length
       "
     >
       <div class="assets__header">
