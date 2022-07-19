@@ -57,6 +57,9 @@
           :balance="item.tokenBalance"
           :item="item"
           :is-not-linked="isNotLinkedSnip20(item)"
+          :is-disabled="
+            item.config.standard !== TOKEN_STANDARDS.SNIP_20 && !item.linked
+          "
           @click="setCurrentToken(item)"
         />
 
@@ -208,7 +211,7 @@ export default {
     };
 
     const setCurrentToken = async (token) => {
-      // if (token.config.standard !== 'snip20') return;
+      if (token.config.standard !== TOKEN_STANDARDS.SNIP_20) return;
       if (isNotLinkedSnip20(token) && !token.linked) {
         mainIsLoading.value = true;
         snip20TokenFee.value =
@@ -216,7 +219,7 @@ export default {
         mainIsLoading.value = false;
         showCreateVkModal.value = true;
         snip20Token.value = token;
-      } else {
+      } else if (!isNotLinkedSnip20(token) && token.linked) {
         store.dispatch('subtokens/setCurrentToken', token);
         redirectToWallet({
           wallet: store.getters['wallets/walletByAddress'](route.params),
@@ -330,6 +333,7 @@ export default {
       }
     );
     return {
+      TOKEN_STANDARDS,
       filteredTokensList,
       OUR_TOKEN,
       setCurrentToken,
