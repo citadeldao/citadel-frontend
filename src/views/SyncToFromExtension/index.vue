@@ -351,7 +351,6 @@ export default {
               });
 
               if (res.data) {
-                console.log('RES DATA', res.data, wallet);
                 const newInstance = await store.dispatch(
                   'crypto/createNewWalletInstance',
                   { walletOpts: wallet }
