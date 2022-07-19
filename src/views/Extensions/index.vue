@@ -973,8 +973,6 @@ export default {
       float: left;
       background: $white;
       border-radius: 0 0 16px 16px;
-      overflow-y: auto;
-      height: calc(100vh - 200px);
     }
 
     .label.description {
