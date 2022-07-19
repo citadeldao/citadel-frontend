@@ -30,8 +30,10 @@
           </h4>
         </div>
         <div class="sidebar__addresses-header">
-          <h4 class="sidebar__addresses-header-title"
-              data-qa="Current-wallets-list-name">
+          <h4
+            class="sidebar__addresses-header-title"
+            data-qa="Current-wallets-list-name"
+          >
             {{
               activeTab === 'all'
                 ? $t('layouts.addAddressLayout.addresses')

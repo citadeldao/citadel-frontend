@@ -293,12 +293,7 @@ export default {
     });
     const filteredTokensList = computed(() => {
       if (!keyword.value) {
-        return props.tokenList.filter(
-          (e) =>
-            e.tokenBalance.calculatedBalance ||
-            e.net === OUR_TOKEN ||
-            isNotLinkedSnip20(e)
-        );
+        return props.tokenList.filter((e) => isNotLinkedSnip20(e) || e.linked);
       }
       return props.tokenList;
     });
