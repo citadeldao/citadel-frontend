@@ -207,22 +207,21 @@ export default {
     };
 
     const setCurrentToken = async (token) => {
-      if (token?.tokenBalance?.calculatedBalance) {
-        if (isNotLinkedSnip20(token)) {
-          mainIsLoading.value = true;
-          snip20TokenFee.value =
-            (await token.getFees(token.id, token.net))?.data?.high?.fee || 0.2;
-          mainIsLoading.value = false;
-          showCreateVkModal.value = true;
-          snip20Token.value = token;
-        } else {
-          store.dispatch('subtokens/setCurrentToken', token);
-          redirectToWallet({
-            wallet: store.getters['wallets/walletByAddress'](route.params),
-            token,
-            root: true,
-          });
-        }
+      // if (token.config.standard !== 'snip20') return;
+      if (isNotLinkedSnip20(token) && !token.linked) {
+        mainIsLoading.value = true;
+        snip20TokenFee.value =
+          (await token.getFees(token.id, token.net))?.data?.high?.fee || 0.2;
+        mainIsLoading.value = false;
+        showCreateVkModal.value = true;
+        snip20Token.value = token;
+      } else {
+        store.dispatch('subtokens/setCurrentToken', token);
+        redirectToWallet({
+          wallet: store.getters['wallets/walletByAddress'](route.params),
+          token,
+          root: true,
+        });
       }
     };
 
