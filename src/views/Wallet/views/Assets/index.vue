@@ -3,27 +3,13 @@
     <Loading />
   </div>
   <div v-else class="assets">
-    <div class="assets__header">
-      <BalanceCard
-        type="red"
-        :text="$t('wallet.info.totalAssets')"
-        :value="balanceUSD"
-      />
-      <BalanceCard
-        type="blue"
-        :text="$t('wallet.info.availableAssets')"
-        :value="balanceAvailableUSD"
-      />
-
-      <div class="assets__search">
-        <Input
-          id="assetsSearch"
-          v-model="keyword"
-          :label="$t('searchToken')"
-          type="text"
-          icon="loop"
-          :placeholder="$t('inputToken')"
-          clearable
+    <template v-if="currentWallet.subtokenBalanceUSD">
+      <div class="assets__header">
+        <BalanceCard type="red" text="Total Assets" :value="balanceUSD" />
+        <BalanceCard
+          type="blue"
+          text="Available assets"
+          :value="balanceAvailableUSD"
         />
 
         <div class="assets__search">
@@ -433,7 +419,7 @@ export default {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
-    text-transform: capitalize;
+
     & > * {
       flex-grow: 1;
     }
