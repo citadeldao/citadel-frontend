@@ -43,6 +43,7 @@
             relative-component="body"
             :items="filterList"
             input-style
+            id="assetsFilter"
           />
         </div>
       </div>

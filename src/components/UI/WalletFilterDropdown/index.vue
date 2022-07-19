@@ -176,7 +176,7 @@ export default {
       0 10px 15px rgba(80, 100, 124, 0.16);
     border-radius: 8px;
     padding: 4px 8px 4px 8px;
-    background: $gray-gradient;
+    background: $white;
     z-index: 4;
     & svg {
       fill: $too-dark-blue;
