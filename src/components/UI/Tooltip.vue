@@ -101,6 +101,7 @@ export default {
   &__target {
     display: inline-flex;
     align-items: center;
+    margin-left: 5px;
     cursor: pointer;
 
     & svg {

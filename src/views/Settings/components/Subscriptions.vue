@@ -16,6 +16,15 @@
           :disabled="isRewardDisabled"
           @change="changeSubscriptionState"
         />
+
+        <Checkbox
+          id="newsletter"
+          :value="false"
+          :label="$t('settings.subscriptions.newsletter')"
+          :info="$t('settings.subscriptions.newsletterTooltip')"
+          :disabled="true"
+          @change="changeSubscriptionState"
+        />
       </div>
       <SyncExtension
         v-if="global.citadel && isPasswordHash"
@@ -82,27 +91,14 @@ export default {
 
 <style lang="scss" scoped>
 .subscriptions {
-  height: 100%;
   min-width: 150px;
-  padding: 40px 45px;
+  padding: $card-padding;
   background: $white;
   box-shadow: -10px 4px 27px rgba(0, 0, 0, 0.1);
-  border-radius: 25px;
-  @include lg {
-    padding: 30px 40px;
-  }
-  @include md {
-    box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
-    padding: 22px 29px 30px;
-  }
+  border-radius: $card-border-radius;
 
   &__title {
-    font-size: 20px;
-    line-height: 30px;
-    font-family: 'Panton_Bold';
-    @include md {
-      margin-bottom: 4px;
-    }
+    @include title-default;
   }
 
   &__sync {
@@ -110,17 +106,14 @@ export default {
   }
 
   &__desc {
-    font-size: 16px;
-    line-height: 27px;
-    color: $mid-blue;
+    @include text-default;
     margin-bottom: 16px;
-    @include lg {
-      font-size: 14px;
-      line-height: 24px;
-    }
-    @include md {
-      font-size: 14px;
-      line-height: 24px;
+  }
+  &__select {
+    display: flex;
+    flex-direction: column;
+    & > div:not(:last-child) {
+      margin-bottom: 15px;
     }
   }
 }

@@ -264,4 +264,12 @@ export default {
     }
   }
 }
+
+@media (max-width: 1024px) {
+  .extensions__head-filter {
+    .wrap-input {
+      display: none;
+    }
+  }
+}
 </style>

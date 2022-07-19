@@ -586,7 +586,8 @@
             "sidebarPlaceholder": "Your addresses will be displayed here",
             "favoritePlaceholder": "Your favourite wallets will be diplayed here. Press star button near public key to add to favourites",
             "overall": "Overall",
-            "addresses": "Addresses"
+            "addresses": "Addresses",
+            "wallets": "Wallets"
         }
     },
     "backBtn": "Back",
@@ -653,11 +654,15 @@
             "rewardsDigest": "Account rewards digest",
             "addRewardsNotification": "You have subscribed to email rewards notifications",
             "removeRewardsNotification": "You have unsubscribed to email rewards notifications",
-            "rewardsDigestTooltip": "Biweekly updates on your accrued rewards, claimable tokens and assets to stake"
+            "rewardsDigestTooltip": "Biweekly updates on your accrued rewards, claimable tokens and assets to stake",
+            "newsletter": "Newsletter",
+            "newsletterTooltip": "-",
+            "addNewsletterNotification": "You have subscribed to email newsletter notifications",
+            "removeNewsletterNotification": "You have unsubscribed to email newsletter notifications"
         },
         "transferData": {
             "title": "Transfer data from web to mobile in seconds",
-            "description": "For your convenience, we've added a QR-code that allows you to effortlessly transfer your data from the Citadel.one web platform to the mobile app in just a couple of clicks.",
+            "description": "Transfer your data from the Citadel.one web platform to the mobile app via QR-code in just a couple of clicks.",
             "button": "Open QR code"
         },
         "addresses": {
@@ -670,10 +675,11 @@
         },
         "changeEmail": {
             "title": "Your email",
-            "description": "Your account email",
+            "description": "You can change your account email here",
             "inputLabel": "Your e-mail",
             "inputPlaceHolder": "e-mail",
-            "button": "Change"
+            "button": "Change",
+            "comingSoon": "COMING SOON"
         },
         "language": {
             "title": "Language",
@@ -698,6 +704,24 @@
             "incorrectOldPassword": "The old password is incorrect",
             "minLen": "Min length 8 characters",
             "successTitle": "Your password was successfully changed",
+            "successDescription": "Use your new password to confirm transactions",
+            "title": "Your password",
+            "description": "You can change your password here",
+            "button": "Change",
+            "comingSoon": "COMING SOON",
+            "tooltip": "As Citadel.one is a non-custodial platform, we do not store your password — it is kept in your browser’s local storage. If you clear your cookies, your password will be deleted — you will have to create a new one."
+        },
+        "crossChain": {
+            "title": "Citadel.one cross-chain Web3",
+            "description": "Access your favorite applications with a brand new Citadel.one browser extension.",
+            "button": "Get Started",
+            "comingSoon": "COMING SOON"
+        },
+        "extensionSettings": {
+            "title": "Extensions settings",
+            "description": "Manage your Citadel.one mini-applications' settings all-in-one. ",
+            "button": "Open Settings",
+            "comingSoon": "COMING SOON",
             "successDescription": "Use your new password to confirm transactions"
         }
     },

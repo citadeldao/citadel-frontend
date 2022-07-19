@@ -209,5 +209,8 @@ export default {
     justify-content: center;
     height: 300px;
   }
+  @include md {
+    padding-bottom: 63px;
+  }
 }
 </style>

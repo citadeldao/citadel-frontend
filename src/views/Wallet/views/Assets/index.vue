@@ -33,6 +33,7 @@
             relative-component="body"
             :items="filterList"
             input-style
+            id="assetsFilter"
           />
         </div>
       </div>
@@ -68,7 +69,7 @@
           @change-page-size="setPageSize"
         />
       </div>
-      <div v-if="!displayData.length" class="assets__placeholder">
+      <div v-if="!displayData.length && keyword" class="assets__placeholder">
         <searchError />
         <span>
           {{ $t('tokenSearchError') }}
@@ -406,12 +407,17 @@ export default {
       }
       & .round-arrow-button {
         top: 46px !important;
-        right: 37px !important;
+        right: 20px !important;
       }
       & .round-arrow-button__icon {
         margin-right: -41px;
         margin-top: -19px;
         top: -16px;
+      }
+    }
+    @media (max-width: 1280px) {
+      & .round-arrow-button {
+        right: 35px !important;
       }
     }
   }
@@ -497,11 +503,11 @@ export default {
       color: $mid-blue;
 
       @include lg {
-        font-size: 16px;
+        font-size: $wallet-assets-heading-font-size;
       }
 
       @include md {
-        font-size: 14px;
+        font-size: $wallet-assets-heading-font-size-md;
       }
 
       &:nth-child(1) {
@@ -519,6 +525,9 @@ export default {
 
         @include md {
           width: 22%;
+        }
+        @include laptop {
+          width: 18%;
         }
       }
     }
@@ -592,6 +601,12 @@ export default {
       @include md {
         width: 56px;
         height: 56px;
+      }
+      @include laptop {
+        & svg {
+          width: 22px;
+          height: 22px;
+        }
       }
     }
   }
