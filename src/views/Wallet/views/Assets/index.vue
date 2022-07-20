@@ -244,7 +244,7 @@ export default {
             .multipliedBy(token.tokenBalance.price.USD)
             .toNumber();
           return BigNumber(acc).plus(availableUSD).toNumber();
-        }, 0) + stateCurrentWallet.value.balanceUSD
+        }, 0) + stateCurrentWallet.value.balance.mainBalance
       );
     });
 
