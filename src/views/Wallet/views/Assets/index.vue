@@ -229,16 +229,19 @@ export default {
     });
 
     const balanceUSD = computed(() => {
-      const nativeTokenBalance =
-        stateCurrentWallet.value.balance.calculatedBalance;
-      const totalTokenBalance = props.tokenList.reduce((acc, token) => {
-        return BigNumber(acc).plus(token.balanceUSD).toNumber();
-      }, 0);
-
-      return BigNumber(nativeTokenBalance).plus(totalTokenBalance).toNumber();
+      return BigNumber(stateCurrentWallet.value.balanceUSD)
+        .plus(stateCurrentWallet.value.subtokenBalanceUSD)
+        .toNumber();
     });
 
     const balanceAvailableUSD = computed(() => {
+      const nativeTokenBalance = BigNumber(
+        stateCurrentWallet.value.balance.mainBalance
+      )
+        .multipliedBy(
+          store.getters['profile/rates'][stateCurrentWallet.value.net].USD
+        )
+        .toNumber();
       return BigNumber(
         props.tokenList.reduce((acc, token) => {
           const availableUSD = BigNumber(token.tokenBalance.mainBalance)
@@ -247,7 +250,7 @@ export default {
           return BigNumber(acc).plus(availableUSD).toNumber();
         }, 0)
       )
-        .plus(stateCurrentWallet.value.balance.mainBalance)
+        .plus(nativeTokenBalance)
         .toNumber();
     });
 
