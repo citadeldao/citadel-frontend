@@ -3,7 +3,7 @@
     <Loading />
   </div>
   <div v-else class="assets">
-    <template v-if="currentWallet.subtokenBalanceUSD">
+    <template v-if="currentWallet.balance.mainBalance || tokenList.length">
       <div class="assets__header">
         <BalanceCard type="red" text="Total Assets" :value="balanceUSD" />
         <BalanceCard
