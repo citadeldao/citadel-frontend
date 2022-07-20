@@ -211,7 +211,6 @@ export default {
     };
 
     const setCurrentToken = async (token) => {
-      if (token.config.standard !== TOKEN_STANDARDS.SNIP_20) return;
       if (isNotLinkedSnip20(token) && !token.linked) {
         mainIsLoading.value = true;
         snip20TokenFee.value =
