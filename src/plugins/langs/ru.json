@@ -1157,7 +1157,8 @@
         "privacyPolicy": "Политика конфиденциальности",
         "termsOfService": "Условия обслуживания"
     },
-    "dontHaveEnoughFounds": "У вас недостаточно средств для оплаты комиссии за транзакцию.",
+    "dontHaveEnoughFoundsForFee": "У вас недостаточно средств для оплаты комиссии за транзакцию.",
+    "dontHaveEnoughFounds": "",
     "transactionsSocket": {
         "failed": "Транзакция не выполнена",
         "completed": "Транзакция выполнена",

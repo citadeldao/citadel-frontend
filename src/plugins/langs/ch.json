@@ -1157,7 +1157,8 @@
         "privacyPolicy": "隐私条款",
         "termsOfService": "服务条款"
     },
-    "dontHaveEnoughFounds": "您的余额不足，无法支付交易手续费",
+    "dontHaveEnoughFoundsForFee": "您的余额不足，无法支付交易手续费",
+    "dontHaveEnoughFounds": "",
     "transactionsSocket": {
         "failed": "交易失败",
         "completed": "交易完成",
