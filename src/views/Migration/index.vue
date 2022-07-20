@@ -206,6 +206,7 @@ import router from '@/router';
 import { sha3_256 } from 'js-sha3';
 import { useStore } from 'vuex';
 import { computed, provide, ref, markRaw } from '@vue/runtime-core';
+import useWallets from '@/compositions/useWallets';
 
 export default {
   name: 'MigrationLayout',
@@ -383,7 +384,7 @@ export default {
 
       for (const wallet of oldWallets.value) {
         if (wallet.net && !wallet.existWallet) {
-          // add import wallet to priateWallets
+          // add import wallet to privateWallets
           const newInstance = await store.dispatch(
             'crypto/createNewWalletInstance',
             { walletOpts: wallet }
@@ -402,7 +403,17 @@ export default {
         migrationProcess.value = false;
         backupModalFlag.value = false;
         localStorage.removeItem(oldBackupKey.value);
-        window.location.reload();
+        const { wallets } = useWallets();
+        //window.location.reload();
+        if (wallets.value[0]) {
+          router.push({
+            name: 'WalletAssets',
+            params: {
+              net: wallets.value[0].net,
+              address: wallets.value[0].address,
+            },
+          });
+        }
 
         return;
       }

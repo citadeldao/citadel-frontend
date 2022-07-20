@@ -122,7 +122,6 @@ export default {
     };
 
     const goToAsset = async (asset) => {
-      console.log(asset, 'asset');
       if (isNotLinkedSnip20(asset)) {
         mainIsLoading.value = true;
         snip20TokenFee.value =
