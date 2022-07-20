@@ -4,61 +4,71 @@
       {{ $t('stakePlaceholder.title') }}
     </h2>
     <div class="stake-placeholder__section">
-      <div class="stake-placeholder__card-special">
-        <span class="stake-placeholder__card-special-title">
-          {{ $t('stakePlaceholder.whatIs') }}
-        </span>
-        <span class="stake-placeholder__card-special-title-staking">
-          {{ isXct ? 'XCT' : $t('staking.staking') }}
-        </span>
-        <RoundArrowButton
-          data-qa="stake__start-staking-button"
-          :disabled="!canStake"
-          @click="$emit('click:placeholder')"
-        />
-        <xctStakePlaceholderIcon
-          v-if="isXct"
-          class="stake-placeholder__card-special-icon stake-placeholder__card-special-icon--xct"
-        />
-        <specialCardIcon v-else class="stake-placeholder__card-special-icon" />
-      </div>
-      <div class="stake-placeholder__card">
-        <div class="stake-placeholder__card-icon">
-          <chooseNode v-if="isXct" />
-          <chooseNodes v-else />
-        </div>
-        <span class="stake-placeholder__card-info">
-          {{
-            $t(
-              isXct
-                ? 'xct.stakingPlaceholderCard1Info'
-                : 'stakePlaceholder.card1Info'
-            )
-          }}
-        </span>
-      </div>
-      <div class="stake-placeholder__card">
-        <div class="stake-placeholder__card-icon">
-          <stakeAmount />
-        </div>
-        <span class="stake-placeholder__card-info">
-          {{ $t('stakePlaceholder.card2Info') }}
-        </span>
-      </div>
-      <div class="stake-placeholder__card">
-        <div class="stake-placeholder__card-icon">
-          <enjoy />
-        </div>
-        <span class="stake-placeholder__card-info">
-          {{
-            $t(
-              isXct
-                ? 'xct.stakingPlaceholderCard3Info'
-                : 'stakePlaceholder.card3Info'
-            )
-          }}
-        </span>
-      </div>
+      <Card class="card-special">
+        <template #default>
+          <span class="card-special-title">
+            {{ $t('stakePlaceholder.whatIs') }}
+          </span>
+          <span class="card-special-title-staking">
+            {{ isXct ? 'XCT' : $t('staking.staking') }}
+          </span>
+          <RoundArrowButton
+            data-qa="stake__start-staking-button"
+            :disabled="!canStake"
+            @click="$emit('click:placeholder')"
+          />
+          <xctStakePlaceholderIcon
+            v-if="isXct"
+            class="card-special-icon card-special-icon--xct"
+          />
+          <specialCardIcon v-else class="card-special-icon" />
+        </template>
+      </Card>
+      <Card>
+        <template #icon>
+          <div class="card-icon">
+            <chooseNode v-if="isXct" />
+            <chooseNodes v-else />
+          </div>
+        </template>
+        <template #info>
+          <span class="card-info">
+            {{
+              $t(
+                isXct
+                  ? 'xct.stakingPlaceholderCard1Info'
+                  : 'stakePlaceholder.card1Info'
+              )
+            }}
+          </span>
+        </template>
+      </Card>
+      <Card>
+        <template #default>
+          <div class="card-icon">
+            <stakeAmount />
+          </div>
+          <span class="card-info">
+            {{ $t('stakePlaceholder.card2Info') }}
+          </span>
+        </template>
+      </Card>
+      <Card>
+        <template #default>
+          <div class="card-icon">
+            <enjoy />
+          </div>
+          <span class="card-info">
+            {{
+              $t(
+                isXct
+                  ? 'xct.stakingPlaceholderCard3Info'
+                  : 'stakePlaceholder.card3Info'
+              )
+            }}
+          </span>
+        </template>
+      </Card>
     </div>
     <div class="stake-placeholder__button">
       <PrimaryButton :disabled="!canStake" @click="$emit('click:placeholder')">
@@ -78,7 +88,7 @@ import chooseNodes from '@/assets/icons/choose-nodes.svg';
 import chooseNode from '@/assets/icons/choose-node.svg';
 import stakeAmount from '@/assets/icons/stake-amount.svg';
 import PrimaryButton from '@/components/UI/PrimaryButton';
-
+import Card from '@/components/UI/Card';
 export default {
   name: 'StakePlaceholder',
   components: {
@@ -90,6 +100,7 @@ export default {
     RoundArrowButton,
     xctStakePlaceholderIcon,
     chooseNode,
+    Card,
   },
   props: {
     isXct: {
@@ -107,6 +118,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.card-special {
+  padding: 16px 0 0 23px;
+  &-title {
+    font-size: 16px;
+  }
+  button {
+    @include xl {
+      top: 39px;
+      right: 61px;
+    }
+    @include lg {
+      top: 91px;
+      right: 73px;
+    }
+    @include md {
+      top: 23px;
+      right: 16px;
+    }
+  }
+}
 .stake-placeholder {
   display: flex;
   flex-direction: column;
@@ -217,6 +248,9 @@ export default {
       background-image: url('~@/assets/images/cardWave-lg.jpg');
       padding: 11px 0 0 19px;
       margin-right: 4px;
+      svg {
+        display: none;
+      }
     }
     @include md {
       border-radius: 8px;
@@ -225,6 +259,9 @@ export default {
       margin-right: 0;
       padding: 15px 0 0 26px;
       background-image: url('~@/assets/images/cardWave-md.jpg');
+      svg {
+        display: none;
+      }
     }
 
     & button {
@@ -275,6 +312,12 @@ export default {
 
     @include xl {
       display: initial;
+    }
+    @include lg {
+      display: none;
+    }
+    @include md {
+      display: none;
     }
   }
 

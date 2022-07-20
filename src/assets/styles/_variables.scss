@@ -1,3 +1,99 @@
+//*** ---- Default ---- ***//
 $round:50%;
 
+//* Main Layout *//
+$main-padding: 30px 25px;
+$main-margin-bottom: 40px;
 
+//* Sidebar *//
+$sidebar-padding: 42px 0 0;
+$sidebar-max-width: 280px;
+$sidebar-compact-max-width: 80px;
+$sidebar-shadow: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.04)) drop-shadow(4px 0px 8px rgba(0, 0, 0, 0.06));
+
+//* Sidebar -> Overall *//
+$balance-font-size: 1.75rem;
+$add-btn-font-size: 1.125rem;
+$sidebar-text-font-size: 0.875rem;
+$sidebar-balance-font-size: 1.125rem;
+
+//* Card *//
+$card-border-radius: 16px;
+$card-padding: 30px;
+$card-margin: 20px;
+$card-box-shadow: -10px 4px 27px rgba(0, 0, 0, 0.1);
+$card-shadow: 0px 0px 4px #EFF2FC, 0px 8px 16px #E8EEFD;
+
+//* Text *//
+$title-font-size: 1.25rem;
+$text-font-size: 1.125rem;
+
+$title-font-size-laptop-l: 1.25rem;
+$text-font-size-laptop-l: 0.875rem;
+
+//* Button *//
+$btn-font-size: 0.875rem;
+$btn-min-height: 50px;
+$btn-min-width: 180px;
+$btn-max-width: 250px;
+$btn-border-radius: 50px;
+
+$wallet-assets-heading-font-size: 1.125rem;
+
+
+
+
+
+
+
+//*** ---- Variables for "md" size ---- ***//
+
+//* Sidebar *//
+$sidebar-padding-md: 36px 0 0;
+$sidebar-max-width-md: 230px;
+
+//* Sidebar -> Overall *//
+$balance-font-size-md: 1.125rem;
+$sidebar-text-font-size-md: 0.875rem;
+$sidebar-balance-font-size-md: 0.875rem;
+
+//* Card *//
+$card-padding-xs-lg: 20px 25px;
+
+$card-padding-md: 20px 25px;
+$card-margin-md: 15px;
+
+$title-font-size-md: 1.125rem;
+$text-font-size-md: 0.875rem;
+
+$btn-font-size-md: 1rem;
+
+
+//* Button *//
+$btn-font-size-md: 0.875rem;
+$btn-min-height-md: 40px;
+$btn-min-width-md: 120px;
+
+$wallet-assets-heading-font-size-md: 1rem;
+
+
+
+//*** ---- Variables for "1024px" size ---- ***//
+
+//* Main Layout *//
+$main-padding-laptop: 20px 15px;
+$main-margin-bottom-laptop: 20px;
+
+$title-font-size-laptop: 1rem;
+
+//* Sidebar *//
+$sidebar-max-width-laptop: 220px;
+
+$sidebar-padding-laptop: 26px 0 0;
+$sidebar-add-btn-width-laptop: 180px;
+$sidebar-add-btn-font-size-laptop: 1.063rem;
+$sidebar-title-font-size-laptop: 0.875rem;
+
+//* Sidebar -> Overall *//
+$sidebar-text-font-size-laptop: 0.875rem;
+$balance-font-size-laptop: 0.875rem;

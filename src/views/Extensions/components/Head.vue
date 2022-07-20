@@ -38,16 +38,32 @@
       </template>
     </div>
     <div v-if="showFilter" class="extensions__head-filter">
-      <div class="wrap-input">
+      <div :class="{ mobile: showMobileSearch }" class="wrap-input">
         <keep-alive class="icon">
           <component :is="searchIcon" />
         </keep-alive>
         <input
           v-model="searchAppStr"
           :placeholder="$t('extensions.searchPlaceholder')"
+          @blur="
+            () => {
+              showMobileSearch = false;
+              searchAppStr = '';
+              $emit('search', '');
+            }
+          "
           class="filter-input"
           @input="$emit('search', searchAppStr)"
         />
+      </div>
+      <div
+        v-if="!showMobileSearch"
+        class="wrap-input-mini"
+        @click="showMobileSearch = true"
+      >
+        <keep-alive>
+          <component :is="searchIcon" />
+        </keep-alive>
       </div>
       <div v-if="false" class="filter">
         <keep-alive>
@@ -86,6 +102,7 @@ export default {
     const searchIcon = ref();
     const searchAppStr = ref('');
     const showAppLogo = ref(false);
+    const showMobileSearch = ref(false);
 
     watch(
       () => props.appLogo,
@@ -116,6 +133,7 @@ export default {
       appsIcon,
       filterIcon,
       showAppLogo,
+      showMobileSearch,
     };
   },
 };
@@ -209,6 +227,21 @@ export default {
     }
   }
 
+  .wrap-input-mini {
+    cursor: pointer;
+    display: none;
+    width: 48px;
+    height: 48px;
+    border: 1px dashed #c3ceeb;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+
+    svg {
+      transform: scale(1.3);
+    }
+  }
+
   .filter-input {
     color: $white;
     padding-left: 32px;
@@ -261,6 +294,25 @@ export default {
 
     .description {
       color: #59779a;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .extensions__head-filter {
+    .wrap-input {
+      display: none;
+
+      &.mobile {
+        display: flex;
+      }
+    }
+  }
+
+  .extensions__head-filter {
+    .wrap-input-mini {
+      margin-right: 10px;
+      display: flex;
     }
   }
 }
