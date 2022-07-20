@@ -24,7 +24,8 @@
         </div>
 
         <span data-qa="current-wallet-name">
-          {{ currentWallet.shortName || currentWallet.name }}</span>
+          {{ currentWallet.shortName || currentWallet.name }}</span
+        >
       </div>
       <div class="network-info__social-toggle-wrapper">
         <!-- Ссылки на соцсети сеток для 1280 px -->
