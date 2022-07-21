@@ -29,6 +29,7 @@
             relative-component="body"
             :items="filterList"
             input-style
+            id="assetsFilter"
           />
         </div>
       </div>
@@ -230,9 +231,15 @@ export default {
     };
 
     const filteredTokens = computed(() => {
-      const data = [...props.tokenList];
-      const byAlphabet = sortByAlphabet(data, 'code');
-      const byValue = data.sort((a, b) => a.balanceUSD - b.balanceUSD);
+      const data = [...props.tokenList].sort(
+        (a, b) => isNotLinkedSnip20(b) - isNotLinkedSnip20(a)
+      );
+      const byAlphabet = sortByAlphabet(data, 'code').sort(
+        (a, b) => isNotLinkedSnip20(b) - isNotLinkedSnip20(a)
+      );
+      const byValue = data
+        .sort((a, b) => a.balanceUSD - b.balanceUSD)
+        .sort((a, b) => isNotLinkedSnip20(b) - isNotLinkedSnip20(a));
       switch (filterValue.value) {
         case 'byAlphabet':
           return byAlphabet;
