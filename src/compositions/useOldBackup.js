@@ -80,6 +80,7 @@ export default function useOldBackup() {
             privateKeyEncoded: coin.keys?.privateKeyEncoded,
             mnemonicEncoded: coin.keys?.mnemonicEncoded,
             publicKey: coin.keys?.publicKey,
+            privateKeyHash: coin.keys?.privateKeyHash,
             type: type === 'oneSeed' ? 'privateKey' : type,
             config: store.getters['networks/configByNet'](coin.coin),
           };
