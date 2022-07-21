@@ -916,7 +916,8 @@
         "transactionData": "Данные транзакции",
         "transactionFee": "Комиссия",
         "signMessage": "Подписать сообщение",
-        "searchPlaceholder": "Введите название приложения"
+        "searchPlaceholder": "Введите название приложения",
+        "typeOperation": "Тип операции"
     },
     "tokenDescriptionComdex": "Comdex — это децентрализованный протокол синтетических активов, являющийся частью экосистемы Cosmos.",
     "tokenDescriptionJuno": "Juno — проект из Cosmos-экосистемы, который обеспечивает среду для создания интероперабельных смарт-контрактов.",

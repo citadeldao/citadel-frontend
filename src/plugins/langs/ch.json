@@ -916,7 +916,8 @@
         "transactionData": "交易数据",
         "transactionFee": "交易手续费",
         "signMessage": "签名消息",
-        "searchPlaceholder": "开始输入 APP 名称"
+        "searchPlaceholder": "开始输入 APP 名称",
+        "typeOperation": ""
     },
     "tokenDescriptionComdex": "Comdex 是搭建在 Cosmos 上的去中心化合成资产协议",
     "tokenDescriptionJuno": "Juno 是基于 Cosmos  搭建的区块链，为部署可交互操作的智能合约提供环境。",
