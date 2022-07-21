@@ -445,6 +445,7 @@ export default {
     const metamaskConnector = computed(
       () => store.getters['metamask/metamaskConnector']
     );
+
     const keplrConnector = computed(
       () => store.getters['keplr/keplrConnector']
     );
@@ -501,18 +502,17 @@ export default {
           }));
 
         if (mergeWallet) {
-          wallets.push({ address: mergeWallet.address, net: mergeWallet.net });
+          wallets.push({
+            address: mergeWallet.address,
+            net: mergeWallet.net,
+            from: 'metamask',
+          });
         }
 
         selectedApp.value.url += `?token=${
           currentAppInfo.value.token
         }&wallets=${JSON.stringify(wallets)}`;
         currentApp.value = selectedApp.value;
-
-        /* setTimeout(() => {
-          const win = window.frames.target;
-          win.postMessage('Message from citadel', selectedApp.value.url);
-        }, 5000); */
       }
     };
 
@@ -567,6 +567,34 @@ export default {
         signerWallet.value = privateWallets.value.find(w => w.address.toLowerCase() === currentAddress.toLowerCase() && nets.includes(w.net.toLowerCase()));
       }
     }); */
+
+    watch(metamaskConnector.value, (newV) => {
+      if (selectedApp.value && [6, 7].includes(selectedApp.value.id)) {
+        const metamaskNet = newV.chainId === 56 ? 'bsc' : 'eth';
+        const metamaskAddress =
+          newV.accounts[0] && newV.accounts[0].toLowerCase();
+
+        const findWallet = walletsList.value.find(
+          (w) =>
+            w.type === WALLET_TYPES.PUBLIC_KEY &&
+            metamaskNet === w.net &&
+            metamaskAddress === w.address.toLowerCase()
+        );
+
+        if (findWallet) {
+          const win = window.frames.target;
+          win &&
+            win.postMessage(
+              {
+                from: 'metamask',
+                address: findWallet.address,
+                net: findWallet.net,
+              },
+              selectedApp.value.url
+            );
+        }
+      }
+    });
 
     watch(extensionTransactionForSign, () => {
       if (extensionTransactionForSign?.value?.transaction) {
