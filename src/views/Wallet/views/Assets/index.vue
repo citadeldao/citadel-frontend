@@ -3,16 +3,16 @@
     <Loading />
   </div>
   <div v-else class="assets">
-    <template
-      v-if="
-        currentWallet.balance.mainBalance || currentWallet.subtokenBalanceUSD
-      "
-    >
+    <template v-if="currentWallet.subtokenBalanceUSD">
       <div class="assets__header">
-        <BalanceCard type="red" text="Total Assets" :value="balanceUSD" />
+        <BalanceCard
+          type="red"
+          :text="$t('wallet.info.totalAssets')"
+          :value="balanceUSD"
+        />
         <BalanceCard
           type="blue"
-          text="Available assets"
+          :text="$t('wallet.info.availableAssets')"
           :value="balanceAvailableUSD"
         />
 
@@ -238,9 +238,15 @@ export default {
     };
 
     const filteredTokens = computed(() => {
-      const data = [...filteredTokensList.value];
-      const byAlphabet = sortByAlphabet(data, 'code');
-      const byValue = data.sort((a, b) => a.balanceUSD - b.balanceUSD);
+      const data = [...props.tokenList].sort(
+        (a, b) => isNotLinkedSnip20(b) - isNotLinkedSnip20(a)
+      );
+      const byAlphabet = sortByAlphabet(data, 'code').sort(
+        (a, b) => isNotLinkedSnip20(b) - isNotLinkedSnip20(a)
+      );
+      const byValue = data
+        .sort((a, b) => a.balanceUSD - b.balanceUSD)
+        .sort((a, b) => isNotLinkedSnip20(b) - isNotLinkedSnip20(a));
       switch (filterValue.value) {
         case 'byAlphabet':
           return byAlphabet;
@@ -432,6 +438,7 @@ export default {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    text-transform: capitalize;
 
     & > * {
       flex-grow: 1;
