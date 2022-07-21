@@ -47,9 +47,10 @@
         </div>
 
         <AssetsItem
-          :item="currentWallet"
-          :balance="currentWallet.balance"
+          :item="stateCurrentWallet"
+          :balance="stateCurrentWallet.balance"
           is-native-token
+          @click="setCurrentToken(stateCurrentWallet)"
         />
         <AssetsItem
           v-for="(item, index) in displayData"
