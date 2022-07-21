@@ -238,7 +238,7 @@ export default {
     };
 
     const filteredTokens = computed(() => {
-      const data = [...props.tokenList].sort(
+      const data = [...filteredTokensList.value].sort(
         (a, b) => isNotLinkedSnip20(b) - isNotLinkedSnip20(a)
       );
       const byAlphabet = sortByAlphabet(data, 'code').sort(
