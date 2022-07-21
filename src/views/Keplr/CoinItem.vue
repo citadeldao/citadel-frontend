@@ -2,7 +2,11 @@
   <div class="chains__selector-item" @click="select(chain)">
     <div class="chains__selector-wrapper">
       <keep-alive>
-        <component :is="currentIcon" class="icon-item" />
+        <component
+          :id="chain.label === 'Osmosis' ? 'osmosis' : ''"
+          :is="currentIcon"
+          class="icon-item"
+        />
       </keep-alive>
       <div class="chains__selector-info">
         <div class="chains__selector-title">{{ chain.label }}</div>
@@ -106,6 +110,15 @@ export default {
     color: $mid-blue;
     font-size: 14px;
     line-height: 17px;
+  }
+}
+.chains__selector-item #osmosis {
+  &,
+  &:hover {
+    path:nth-child(10),
+    path:nth-child(11) {
+      fill: white !important;
+    }
   }
 }
 </style>
