@@ -26,7 +26,11 @@
         {{ currentWallet.name }}
       </div>
     </div>
-    <span class="current-asset__arrow" />
+    <span class="current-asset__arrow">
+      <keep-alive>
+        <component :is="icon" />
+      </keep-alive>
+    </span>
 
     <teleport to="body">
       <Modal v-if="isSelectAssetModalOpened">
@@ -60,7 +64,7 @@
 </template>
 
 <script>
-import { ref, computed, inject } from 'vue';
+import { ref, computed, inject, markRaw } from 'vue';
 import { useStore } from 'vuex';
 import useWallets from '@/compositions/useWallets';
 import Modal from '@/components/Modal';
@@ -91,6 +95,10 @@ export default {
     },
   },
   setup() {
+    const icon = ref();
+    import(`@/assets/icons/arrow.svg`).then((val) => {
+      icon.value = markRaw(val.default);
+    });
     const { currentWallet: stateCurrentWallet } = useWallets();
     const store = useStore();
     const isSelectAssetModalOpened = ref(false);
@@ -143,6 +151,7 @@ export default {
     };
 
     return {
+      icon,
       stateCurrentWallet,
       isSelectAssetModalOpened,
       showCreateVkModal,
@@ -244,15 +253,10 @@ export default {
       #fad0c47f 99%,
       #fad0c47f 100%
     );
-
-    &:before {
-      content: '⭢';
+    svg {
+      top: 14px;
+      left: 17px;
       position: absolute;
-      top: 1px;
-      left: 14px;
-      font-size: 24px;
-      font-family: 'Panton_Bold';
-      color: $dark-blue;
     }
   }
 
