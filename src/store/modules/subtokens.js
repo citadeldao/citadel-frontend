@@ -89,8 +89,10 @@ export default {
 
           return newInstance;
         });
-
-        return formattedSubtokens.sort((a) => (a.linked ? -1 : 1));
+        let returnableValue = formattedSubtokens.sort((a) =>
+          a.linked ? -1 : 1
+        );
+        return returnableValue;
       },
 
     currentToken: (state) => state.currentToken,

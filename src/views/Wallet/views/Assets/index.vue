@@ -58,6 +58,9 @@
           :balance="item.tokenBalance"
           :item="item"
           :is-not-linked="isNotLinkedSnip20(item)"
+          :is-disabled="
+            item.config.standard !== TOKEN_STANDARDS.SNIP_20 && !item.linked
+          "
           @click="setCurrentToken(item)"
         />
 
@@ -209,14 +212,14 @@ export default {
     };
 
     const setCurrentToken = async (token) => {
-      if (isNotLinkedSnip20(token)) {
+      if (isNotLinkedSnip20(token) && !token.linked) {
         mainIsLoading.value = true;
         snip20TokenFee.value =
           (await token.getFees(token.id, token.net))?.data?.high?.fee || 0.2;
         mainIsLoading.value = false;
         showCreateVkModal.value = true;
         snip20Token.value = token;
-      } else {
+      } else if (!isNotLinkedSnip20(token) && token.linked) {
         store.dispatch('subtokens/setCurrentToken', token);
         redirectToWallet({
           wallet: store.getters['wallets/walletByAddress'](route.params),
@@ -236,7 +239,7 @@ export default {
     };
 
     const filteredTokens = computed(() => {
-      const data = [...props.tokenList].sort(
+      const data = [...filteredTokensList.value].sort(
         (a, b) => isNotLinkedSnip20(b) - isNotLinkedSnip20(a)
       );
       const byAlphabet = sortByAlphabet(data, 'code').sort(
@@ -258,7 +261,6 @@ export default {
           return data;
       }
     });
-
     const filteredItems = computed(() => {
       const indexXCT = filteredTokens.value.findIndex(
         (e) => e.net === OUR_TOKEN
@@ -298,7 +300,12 @@ export default {
         return BigNumber(acc).plus(availableUSD).toNumber();
       }, 0);
     });
-
+    const filteredTokensList = computed(() => {
+      if (!keyword.value) {
+        return props.tokenList.filter((e) => isNotLinkedSnip20(e) || e.linked);
+      }
+      return props.tokenList;
+    });
     const {
       displayData,
       currentPage,
@@ -332,6 +339,8 @@ export default {
       }
     );
     return {
+      TOKEN_STANDARDS,
+      filteredTokensList,
       OUR_TOKEN,
       setCurrentToken,
       setMainToken,
