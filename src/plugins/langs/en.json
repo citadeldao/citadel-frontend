@@ -662,7 +662,7 @@
         },
         "transferData": {
             "title": "Transfer data from web to mobile in seconds",
-            "description": "Transfer your data from the Citadel.one web platform to the mobile app via QR-code in just a couple of clicks.",
+            "description": "For your convenience, we've added a QR-code that allows you to effortlessly transfer your data from the Citadel.one web platform to the mobile app in just a couple of clicks.",
             "button": "Open QR code"
         },
         "addresses": {
@@ -675,7 +675,7 @@
         },
         "changeEmail": {
             "title": "Your email",
-            "description": "You can change your account email here",
+            "description": "Your account email",
             "inputLabel": "Your e-mail",
             "inputPlaceHolder": "e-mail",
             "button": "Change",
@@ -691,7 +691,7 @@
             "description": "This operation cannot be reversed",
             "modalDescription": "Please note that this action cannot be reversed. Your assets are safe - you only delete the Citadel.one account",
             "button": "Delete account",
-            "inputLabel": "Type \"delete account\" to confirm",
+            "inputLabel": "Type \"Delete account\" to confirm",
             "placeholder": "Type 'delete'"
         },
         "changePassword": {
@@ -1157,7 +1157,8 @@
         "privacyPolicy": "Privacy policy",
         "termsOfService": "Terms of service"
     },
-    "dontHaveEnoughFounds": "You do not have enough funds to pay the transaction fee.",
+    "dontHaveEnoughFoundsForFee": "You do not have enough funds to pay the transaction fee.",
+    "dontHaveEnoughFounds": "You do not have enough funds to do the {type} transaction",
     "transactionsSocket": {
         "failed": "Transaction failed",
         "completed": "Transaction completed",
@@ -1183,18 +1184,6 @@
     "changeValidators": "Change validators",
     "redelegateNote": "You must choose another validator to redelegate",
     "assets": "Assets",
-    "assetsStubs": {
-        "title": "You don't have any assets yet",
-        "subtitle": "You can swap it directly via Citadel.one or deposit from an external exchange",
-        "card1": {
-            "title": "Swap via Citadel.one ",
-            "action": "extensions "
-        },
-        "card2": {
-            "title": "Deposit from ",
-            "action": "exchanges"
-        }
-    },
     "menu": {
         "settings": "Settings",
         "logOut": "Log Out"
@@ -1272,5 +1261,17 @@
         "syncMainDescription": "Synchronize your addresses with Citadel.one Browser Extension in seconds",
         "syncMainSync": "Sync"
     },
-    "noApyNote": "Get passive income via staking your crypto assets!"
+    "noApyNote": "Get passive income via staking your crypto assets!",
+    "assetsStubs": {
+        "title": "You don't have any assets yet",
+        "subtitle": "You can swap it directly via Citadel.one or deposit from an external exchange",
+        "card1": {
+            "title": "Swap via Citadel.one ",
+            "action": "extensions "
+        },
+        "card2": {
+            "title": "Deposit from ",
+            "action": "exchanges"
+        }
+    }
 }

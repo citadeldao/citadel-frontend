@@ -37,7 +37,7 @@
           <div class="cat-page__input">
             <Input
               :id="`name-${index}`"
-              v-model="aliases[`${wallet.net}_${wallet.address}`]"
+              v-model.trim="aliases[`${wallet.net}_${wallet.address}`]"
               :label="$t('catPage.inputLabel')"
               type="text"
               :icon="inputTypeIcon"

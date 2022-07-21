@@ -103,6 +103,7 @@ export default {
                       publicKey: w.publicKey,
                       privateKeyEncoded: w.privateKeyEncoded,
                       mnemonicEncoded: w.mnemonicEncoded,
+                      privateKeyHash: w?.privateKeyHash,
                     },
                   })),
                 passwordHash: backup.value.passwordHash,

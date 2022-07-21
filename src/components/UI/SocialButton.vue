@@ -2,6 +2,7 @@
   <button
     :disabled="disabled"
     class="social-button"
+    :class="{ 'social-button--disabled': disabled }"
     @click.prevent="$emit('click')"
   >
     <keep-alive>
@@ -51,6 +52,17 @@ export default {
       0px 10px 15px rgba(80, 100, 124, 0.16);
     & svg {
       fill: $black;
+    }
+  }
+  &--disabled {
+    cursor: not-allowed;
+    background: #e2e8ef;
+    &:hover {
+      border-color: $too-ligth-blue;
+      box-shadow: none;
+      & svg {
+        fill: rgb(26, 83, 240);
+      }
     }
   }
 }
