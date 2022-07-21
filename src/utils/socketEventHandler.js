@@ -156,7 +156,7 @@ export async function socketEventHandler({ eventName, data }) {
 
         if (wallet) {
           notify({
-            type: data.status === 'success' ? data.status : 'warning',
+            type: data && data.status === 'success' ? data.status : 'warning',
             text: '',
             hash: wallet.getTxUrl(wallet.id, data.hash),
             duration: 10000,
