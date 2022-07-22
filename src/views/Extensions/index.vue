@@ -428,7 +428,9 @@ export default {
     };
 
     const appBackground = computed(() =>
-      currentApp.value ? currentApp.value.background : null
+      currentApp.value && !fullScreenAppIds.value.includes(selectedApp.value.id)
+        ? currentApp.value.background
+        : null
     );
     const currentAppInfo = computed(
       () => store.getters['extensions/currentAppInfo']
