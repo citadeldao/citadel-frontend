@@ -345,7 +345,7 @@ export default {
     const showLedgerConnect = ref(false);
     const ledgerError = ref('');
     const msgSuccessSignature = ref('');
-    const fullScreenAppIds = ref([12, 15]);
+    const fullScreenAppIds = ref([6, 10, 12, 14, 15]);
 
     const { wallets: walletsList } = useWallets();
 
