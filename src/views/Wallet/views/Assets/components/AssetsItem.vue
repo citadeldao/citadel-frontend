@@ -325,7 +325,13 @@ export default {
     }
   }
   &--active {
-    background: #f4e9fc;
+    background: linear-gradient(
+      90deg,
+      #fad0c466 0%,
+      #fad0c466 1%,
+      #ffd1ff66 100%
+    );
+    cursor: pointer;
     .assets-item__icon {
       background: $dark-blue;
       box-shadow: 0 15px 50px rgba(26, 83, 240, 0.1),
