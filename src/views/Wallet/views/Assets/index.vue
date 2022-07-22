@@ -4,7 +4,7 @@
   </div>
   <div v-else class="assets">
     <template
-      v-if="currentWallet.balance.mainBalance || currentWallet.code === 'SCRT'"
+      v-if="currentWallet.balance.mainBalance || currentWallet.net === 'secret'"
     >
       <div class="assets__header">
         <BalanceCard
