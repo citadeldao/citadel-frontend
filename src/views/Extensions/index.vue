@@ -126,7 +126,7 @@
         @buttonClick="confirmClickHandler"
       >
         <div class="item mt30">
-          <div class="label">Type operation</div>
+          <div class="label">{{ $t('extensions.typeOperation') }}</div>
           <span class="red">{{ extensionTransactionForSign?.type }}</span>
         </div>
         <div
