@@ -570,7 +570,7 @@ export default {
       }
     }); */
 
-    watch(metamaskConnector.value, (newV) => {
+    /* watch(metamaskConnector.value && metamaskConnector.value, (newV) => {
       if (selectedApp.value && [6, 7].includes(selectedApp.value.id)) {
         const metamaskNet = newV.chainId === 56 ? 'bsc' : 'eth';
         const metamaskAddress =
@@ -594,7 +594,7 @@ export default {
             selectedApp.value.url
           );
       }
-    });
+    }); */
 
     watch(extensionTransactionForSign, () => {
       if (extensionTransactionForSign?.value?.transaction) {
