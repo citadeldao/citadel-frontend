@@ -57,9 +57,15 @@
           :key="`${item.name}-${index}`"
           :balance="item.tokenBalance"
           :item="item"
-          :is-not-linked="isNotLinkedSnip20(item)"
+          :is-not-linked="
+            isNotLinkedSnip20(item) &&
+            stateCurrentWallet.type !== WALLET_TYPES.KEPLR
+          "
           :is-disabled="
-            item.config.standard !== TOKEN_STANDARDS.SNIP_20 && !item.linked
+            (item.config.standard === TOKEN_STANDARDS.SNIP_20 &&
+              stateCurrentWallet.type === WALLET_TYPES.KEPLR &&
+              !item.linked) ||
+            (item.config.standard !== TOKEN_STANDARDS.SNIP_20 && !item.linked)
           "
           @click="setCurrentToken(item)"
         />
@@ -151,7 +157,7 @@ import Pagination from '@/components/Pagination.vue';
 import RoundArrowButton from '@/components/UI/RoundArrowButton';
 import Card from '@/components/UI/Card';
 import useWallets from '@/compositions/useWallets';
-import { OUR_TOKEN } from '@/config/walletType';
+import { OUR_TOKEN, WALLET_TYPES } from '@/config/walletType';
 
 export default {
   name: 'AssetsBlock',
@@ -212,14 +218,26 @@ export default {
     };
 
     const setCurrentToken = async (token) => {
-      if (isNotLinkedSnip20(token) && !token.linked) {
+      if (
+        token.net.toLowerCase() === stateCurrentWallet.value.net.toLowerCase()
+      ) {
+        store.dispatch('subtokens/setCurrentToken', null);
+        redirectToWallet({
+          wallet: store.getters['wallets/walletByAddress'](route.params),
+          root: true,
+        });
+      } else if (
+        isNotLinkedSnip20(token) &&
+        !token.linked &&
+        stateCurrentWallet.value.type !== WALLET_TYPES.KEPLR
+      ) {
         mainIsLoading.value = true;
         snip20TokenFee.value =
           (await token.getFees(token.id, token.net))?.data?.high?.fee || 0.2;
         mainIsLoading.value = false;
         showCreateVkModal.value = true;
         snip20Token.value = token;
-      } else {
+      } else if (!isNotLinkedSnip20(token) && token.linked) {
         store.dispatch('subtokens/setCurrentToken', token);
         redirectToWallet({
           wallet: store.getters['wallets/walletByAddress'](route.params),
@@ -363,6 +381,7 @@ export default {
       snip20Token,
       balanceUSD,
       balanceAvailableUSD,
+      WALLET_TYPES,
     };
   },
 };
