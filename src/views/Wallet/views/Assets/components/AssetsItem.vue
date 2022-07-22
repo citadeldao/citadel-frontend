@@ -331,6 +331,7 @@ export default {
       #fad0c466 1%,
       #ffd1ff66 100%
     );
+    transition: none;
     cursor: pointer;
     .assets-item__icon {
       background: $dark-blue;
