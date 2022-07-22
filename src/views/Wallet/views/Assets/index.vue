@@ -219,7 +219,7 @@ export default {
         mainIsLoading.value = false;
         showCreateVkModal.value = true;
         snip20Token.value = token;
-      } else if (!isNotLinkedSnip20(token) && token.linked) {
+      } else {
         store.dispatch('subtokens/setCurrentToken', token);
         redirectToWallet({
           wallet: store.getters['wallets/walletByAddress'](route.params),
