@@ -301,22 +301,29 @@ export default {
     });
 
     const balanceUSD = computed(() => {
-      const nativeTokenBalance = stateCurrentWallet.value.balanceUSD;
-      const totalTokenBalance = props.tokenList.reduce((acc, token) => {
-        return BigNumber(acc).plus(token.balanceUSD).toNumber();
-      }, 0);
-
-      return BigNumber(nativeTokenBalance).plus(totalTokenBalance).toNumber();
+      return BigNumber(stateCurrentWallet.value.balanceUSD)
+        .plus(stateCurrentWallet.value.subtokenBalanceUSD)
+        .toNumber();
     });
 
     const balanceAvailableUSD = computed(() => {
-      return props.tokenList.reduce((acc, token) => {
-        const availableUSD = BigNumber(token.tokenBalance.mainBalance)
-          .multipliedBy(token.tokenBalance.price.USD)
-          .toNumber();
-
-        return BigNumber(acc).plus(availableUSD).toNumber();
-      }, 0);
+      const nativeTokenBalance = BigNumber(
+        stateCurrentWallet.value.balance.mainBalance
+      )
+        .multipliedBy(
+          store.getters['profile/rates'][stateCurrentWallet.value.net].USD
+        )
+        .toNumber();
+      return BigNumber(
+        props.tokenList.reduce((acc, token) => {
+          const availableUSD = BigNumber(token.tokenBalance.mainBalance)
+            .multipliedBy(token.tokenBalance.price.USD)
+            .toNumber();
+          return BigNumber(acc).plus(availableUSD).toNumber();
+        }, 0)
+      )
+        .plus(nativeTokenBalance)
+        .toNumber();
     });
     const filteredTokensList = computed(() => {
       if (!keyword.value) {
