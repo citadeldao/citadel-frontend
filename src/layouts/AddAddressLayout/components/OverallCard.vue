@@ -5,24 +5,23 @@
     </span>
     <span class="overall-card__balance-md">
       <span class="overall-card__currency-md">
-        {{ currentTab === 'USD' ? `$` : `BTC` }}
+        {{ balanceValue[currentTab].currency }}
       </span>
+      <span v-pretty-number="{ ...balanceValue[currentTab] }" />
       <span
-        v-pretty-number="{
-          value: currentTab === 'USD' ? balance : cryptobalance,
-          currency: currentTab,
-        }"
+        v-pretty-number="{ ...balanceValue['BTC'] }"
+        class="overall-card__balance-laptop"
       />
     </span>
     <span class="overall-card__balance">
       <span class="overall-card__currency">$</span>
       <span
-        v-pretty-number="{ value: balance, currency: 'USD' }"
+        v-pretty-number="{ ...balanceValue['USD'] }"
         class="overall-card__balance-value"
       />
     </span>
     <span class="overall-card__cryptobalance">
-      <span v-pretty-number="{ value: cryptobalance, currency: 'BTC' }" />
+      <span v-pretty-number="{ ...balanceValue['BTC'] }" />
       <span class="overall-card__cryptocurrency"> BTC </span>
     </span>
     <div class="overall-card__tabs">
@@ -51,6 +50,7 @@ import NetworkTab from '@/components/UI/NetworkTab';
 import { ref } from '@vue/reactivity';
 import { prettyNumber } from '@/helpers/prettyNumber';
 import { useRoute } from 'vue-router';
+import { computed } from '@vue/runtime-core';
 
 export default {
   name: 'OverallCard',
@@ -66,25 +66,38 @@ export default {
       type: String,
     },
   },
-  setup() {
-    const currentTab = ref('USD');
+  setup(props) {
     const route = useRoute();
+    const currentTab = ref('USD');
+    const balanceValue = computed(() => ({
+      USD: {
+        currency: '$',
+        value: props.balance,
+      },
+      BTC: {
+        currency: 'BTC',
+        value: props.cryptobalance,
+      },
+    }));
 
-    return { currentTab, prettyNumber, route };
+    return { prettyNumber, route, balanceValue, currentTab };
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .overall-card {
-  width: 218px;
+  max-width: calc(#{$sidebar-max-width} - 50px);
+  width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 20px 0 21px 22px;
+  align-items: flex-start;
   border: 1px solid $ligthgray;
   border-radius: 8px;
-  margin-bottom: 24px;
+  margin: 0 auto;
+  padding: 15px;
   cursor: pointer;
+  position: relative;
 
   &:hover:not(.active) {
     background: $blue;
@@ -100,18 +113,18 @@ export default {
   }
 
   &.active {
-    background: $white;
-    border: none;
+    background: $dark-blue;
+    border-color: transparent;
+    box-shadow: 0px 15px 50px rgba(80, 100, 124, 0.1),
+      0px 10px 15px rgba(80, 100, 124, 0.16);
+    & span {
+      color: $white;
+    }
+    @include laptop {
+      box-shadow: none;
+    }
   }
 
-  @include md {
-    margin-bottom: 18px;
-    width: 165px;
-    padding: 13px 10px 13px 13px;
-    background: $white;
-    border: none;
-    position: relative;
-  }
   &__tabs {
     display: none;
     position: absolute;
@@ -119,6 +132,9 @@ export default {
     right: 10px;
     @include md {
       display: flex;
+    }
+    @include laptop {
+      display: none;
     }
   }
   &__tab {
@@ -128,7 +144,6 @@ export default {
   }
   &__title {
     font-size: 16px;
-    line-height: 19px;
     margin-bottom: 10px;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -137,18 +152,20 @@ export default {
     @include md {
       max-width: 73px;
       font-size: 14px;
-      line-height: 30px;
       font-family: 'Panton_Bold';
       margin-bottom: 3px;
+    }
+    @include laptop {
+      margin-left: 0;
     }
   }
   &__balance,
   &__balance-md {
     font-family: 'Panton_Bold';
     color: $dark-blue;
-    font-size: 28px;
-    line-height: 34px;
+    font-size: $balance-font-size;
     margin-bottom: 7px;
+    transition: 0.2s;
     @include md {
       display: none;
       margin-bottom: 0;
@@ -158,27 +175,97 @@ export default {
     transition: 0s all;
   }
   &__cryptobalance {
-    font-size: 16px;
-    line-height: 19px;
     color: $blue;
     transition: 0s all;
     @include md {
       display: none;
     }
   }
+
+  &__balance-laptop {
+    display: none;
+  }
+
   &__cryptocurrency,
   &__currency-md,
   &__currency {
     color: $black;
-    font-family: 'Panton_Bold';
+    @include laptop {
+      color: $too-ligth-blue !important;
+      font-weight: 400 !important;
+      font-family: 'Panton_Regular';
+    }
   }
   &__balance-md {
-    font-size: 18px;
-    line-height: 22px;
+    font-size: $balance-font-size;
     display: none;
     @include md {
       display: initial;
+      font-size: $balance-font-size-md;
     }
+    @include laptop {
+      font-size: $balance-font-size-laptop;
+    }
+  }
+
+  @include md {
+    max-width: calc(#{$sidebar-max-width-md} - 50px);
+  }
+  @include laptop {
+    max-width: calc(#{$sidebar-max-width-md} - 30px);
+    height: 50px;
+    border-radius: 0;
+    margin-bottom: 0;
+    flex-direction: row;
+    background-color: $dark-blue;
+    justify-content: space-between;
+    border-color: transparent;
+    & span {
+      color: $white;
+    }
+    &__balance-laptop {
+      display: initial;
+      position: absolute;
+      right: 15px;
+      color: transparent !important;
+      z-index: 1;
+    }
+  }
+}
+
+.compact .overall-card {
+  background: $dark-blue;
+  border-radius: 0;
+  color: $white;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  border-color: transparent;
+  padding: 5px 0;
+
+  @include laptop {
+    height: 50px;
+  }
+
+  &__cryptobalance,
+  &__tabs {
+    display: none;
+  }
+
+  &__balance,
+  &__balance-md {
+    margin: 0;
+    color: $white;
+    font-size: $sidebar-title-font-size-laptop;
+
+    @include laptop-l {
+      font-size: $balance-font-size-laptop;
+    }
+  }
+
+  &__title {
+    width: fit-content;
+    margin: 0 auto 3px;
   }
 }
 </style>

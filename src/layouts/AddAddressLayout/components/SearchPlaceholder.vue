@@ -1,5 +1,5 @@
 <template>
-  <div class="serch-placeholder">
+  <div class="search-placeholder">
     <searchError />
     <span>{{ $t('searchErrorText') }}</span>
   </div>
@@ -8,14 +8,14 @@
 <script>
 import searchError from '@/assets/icons/search-error.svg';
 export default {
-  name: 'SerchPlaceholder',
+  name: 'SearchPlaceholder',
   components: { searchError },
   setup() {},
 };
 </script>
 
 <style lang="scss" scoped>
-.serch-placeholder {
+.search-placeholder {
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -289,9 +289,14 @@ export default class CryptoCoin {
 
     if (!error) {
       if (!data.enough && options.transactionType !== 'transfer') {
+        const availableBalance =
+          this?.tokenBalance?.mainBalance || this?.balance?.mainBalance;
         notify({
           type: 'warning',
-          text: t('dontHaveEnoughFounds'),
+          text:
+            availableBalance < +data.fee
+              ? t('dontHaveEnoughFoundsForFee')
+              : t('dontHaveEnoughFounds', { type: options.transactionType }),
         });
       }
 

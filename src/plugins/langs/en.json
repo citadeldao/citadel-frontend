@@ -186,7 +186,9 @@
             "block1Title": "Why do I need to import my address?",
             "block1Info": "This is a view-only address, because you've added it with a public key or you were logged out.",
             "block2Title": "Need some guidance on address import?",
-            "block2Info": "Check the step-by-step guide on how to import an address with your private key or a seed phrase."
+            "block2Info": "Check the step-by-step guide on how to import an address with your private key or a seed phrase.",
+            "availableAssets": "Available assets",
+            "totalAssets": "Total assets"
         },
         "stubs": {
             "chain": "Ki-chain is temporarily unavailable",
@@ -586,7 +588,8 @@
             "sidebarPlaceholder": "Your addresses will be displayed here",
             "favoritePlaceholder": "Your favourite wallets will be diplayed here. Press star button near public key to add to favourites",
             "overall": "Overall",
-            "addresses": "Addresses"
+            "addresses": "Addresses",
+            "wallets": "Wallets"
         }
     },
     "backBtn": "Back",
@@ -653,7 +656,11 @@
             "rewardsDigest": "Account rewards digest",
             "addRewardsNotification": "You have subscribed to email rewards notifications",
             "removeRewardsNotification": "You have unsubscribed to email rewards notifications",
-            "rewardsDigestTooltip": "Biweekly updates on your accrued rewards, claimable tokens and assets to stake"
+            "rewardsDigestTooltip": "Biweekly updates on your accrued rewards, claimable tokens and assets to stake",
+            "newsletter": "Newsletter",
+            "newsletterTooltip": "-",
+            "addNewsletterNotification": "You have subscribed to email newsletter notifications",
+            "removeNewsletterNotification": "You have unsubscribed to email newsletter notifications"
         },
         "transferData": {
             "title": "Transfer data from web to mobile in seconds",
@@ -673,7 +680,8 @@
             "description": "Your account email",
             "inputLabel": "Your e-mail",
             "inputPlaceHolder": "e-mail",
-            "button": "Change"
+            "button": "Change",
+            "comingSoon": "COMING SOON"
         },
         "language": {
             "title": "Language",
@@ -685,7 +693,7 @@
             "description": "This operation cannot be reversed",
             "modalDescription": "Please note that this action cannot be reversed. Your assets are safe - you only delete the Citadel.one account",
             "button": "Delete account",
-            "inputLabel": "Type \"delete account\" to confirm",
+            "inputLabel": "Type \"Delete account\" to confirm",
             "placeholder": "Type 'delete'"
         },
         "changePassword": {
@@ -698,6 +706,24 @@
             "incorrectOldPassword": "The old password is incorrect",
             "minLen": "Min length 8 characters",
             "successTitle": "Your password was successfully changed",
+            "successDescription": "Use your new password to confirm transactions",
+            "title": "Your password",
+            "description": "You can change your password here",
+            "button": "Change",
+            "comingSoon": "COMING SOON",
+            "tooltip": "As Citadel.one is a non-custodial platform, we do not store your password — it is kept in your browser’s local storage. If you clear your cookies, your password will be deleted — you will have to create a new one."
+        },
+        "crossChain": {
+            "title": "Citadel.one cross-chain Web3",
+            "description": "Access your favorite applications with a brand new Citadel.one browser extension.",
+            "button": "Get Started",
+            "comingSoon": "COMING SOON"
+        },
+        "extensionSettings": {
+            "title": "Extensions settings",
+            "description": "Manage your Citadel.one mini-applications' settings all-in-one. ",
+            "button": "Open Settings",
+            "comingSoon": "COMING SOON",
             "successDescription": "Use your new password to confirm transactions"
         }
     },
@@ -1133,7 +1159,8 @@
         "privacyPolicy": "Privacy policy",
         "termsOfService": "Terms of service"
     },
-    "dontHaveEnoughFounds": "You do not have enough funds to pay the transaction fee.",
+    "dontHaveEnoughFoundsForFee": "You do not have enough funds to pay the transaction fee.",
+    "dontHaveEnoughFounds": "You do not have enough funds to do the {type} transaction",
     "transactionsSocket": {
         "failed": "Transaction failed",
         "completed": "Transaction completed",
@@ -1236,5 +1263,17 @@
         "syncMainDescription": "Synchronize your addresses with Citadel.one Browser Extension in seconds",
         "syncMainSync": "Sync"
     },
-    "noApyNote": "Get passive income via staking your crypto assets!"
+    "noApyNote": "Get passive income via staking your crypto assets!",
+    "assetsStubs": {
+        "title": "You don't have any assets yet",
+        "subtitle": "You can swap it directly via Citadel.one or deposit from an external exchange",
+        "card1": {
+            "title": "Swap via Citadel.one ",
+            "action": "extensions "
+        },
+        "card2": {
+            "title": "Deposit from ",
+            "action": "exchanges"
+        }
+    }
 }
