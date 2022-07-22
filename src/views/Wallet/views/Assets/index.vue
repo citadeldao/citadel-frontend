@@ -50,6 +50,7 @@
           :item="stateCurrentWallet"
           :balance="stateCurrentWallet.balance"
           is-native-token
+          :is-active="currentWallet.name === stateCurrentWallet.name"
           @click="setCurrentToken(stateCurrentWallet)"
         />
         <AssetsItem
@@ -61,6 +62,7 @@
           :is-disabled="
             item.config.standard !== TOKEN_STANDARDS.SNIP_20 && !item.linked
           "
+          :is-active="item.name === currentWallet.name"
           @click="setCurrentToken(item)"
         />
 
