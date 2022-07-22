@@ -3,7 +3,13 @@
     <Loading />
   </div>
   <div v-else class="assets">
-    <template v-if="currentWallet.balance.mainBalance || tokenList.length">
+    <template
+      v-if="
+        currentWallet.balance.mainBalance ||
+        currentWallet.subtokenBalanceUSD ||
+        currentWallet.net === 'secret'
+      "
+    >
       <div class="assets__header">
         <BalanceCard
           type="red"
@@ -50,6 +56,7 @@
           :item="stateCurrentWallet"
           :balance="stateCurrentWallet.balance"
           is-native-token
+          :is-active="currentWallet.net === stateCurrentWallet.net"
           @click="setCurrentToken(stateCurrentWallet)"
         />
         <AssetsItem
@@ -67,6 +74,7 @@
               !item.linked) ||
             (item.config.standard !== TOKEN_STANDARDS.SNIP_20 && !item.linked)
           "
+          :is-active="item.net === currentWallet.net"
           @click="setCurrentToken(item)"
         />
 
@@ -208,7 +216,6 @@ export default {
       { icon: 'byValueReverse', value: 'byValueReverse' },
     ]);
     const filterValue = ref(filterList.value[3].value);
-
     const isNotLinkedSnip20 = (token) => {
       const isSnip20 = computed(
         () => token.config.standard === TOKEN_STANDARDS.SNIP_20

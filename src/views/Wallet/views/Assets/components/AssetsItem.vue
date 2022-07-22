@@ -2,9 +2,9 @@
   <div
     class="assets-item"
     :class="{
-      'assets-item--native': isChoosenToken,
       'assets-item--not-linked': isNotLinked,
       'assets-item--disabled': isDisabled,
+      'assets-item--active': isActive,
     }"
   >
     <div class="assets-item__cell">
@@ -82,15 +82,15 @@ export default {
       type: Boolean,
       default: false,
     },
-    isChoosenToken: {
-      type: Boolean,
-      default: false,
-    },
     isNotLinked: {
       type: Boolean,
       default: false,
     },
     isDisabled: {
+      type: Boolean,
+      default: false,
+    },
+    isActive: {
       type: Boolean,
       default: false,
     },
@@ -322,6 +322,21 @@ export default {
         background: $red;
         box-shadow: 0 15px 50px rgba($red, 0.1), 0 10px 15px rgba($red, 0.16);
       }
+    }
+  }
+  &--active {
+    background: linear-gradient(
+      90deg,
+      #fad0c466 0%,
+      #fad0c466 1%,
+      #ffd1ff66 100%
+    );
+    transition: none;
+    cursor: pointer;
+    .assets-item__icon {
+      background: $dark-blue;
+      box-shadow: 0 15px 50px rgba(26, 83, 240, 0.1),
+        0 10px 15px rgba(26, 83, 240, 0.16);
     }
   }
 }
