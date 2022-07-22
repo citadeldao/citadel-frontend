@@ -4,10 +4,7 @@
   </div>
   <div v-else class="assets">
     <template
-      v-if="
-        currentWallet.balance.mainBalance ||
-        stubTokens.findIndex((e) => e === currentWallet.code) === -1
-      "
+      v-if="currentWallet.balance.mainBalance || currentWallet.code === 'SCRT'"
     >
       <div class="assets__header">
         <BalanceCard
@@ -215,7 +212,6 @@ export default {
       { icon: 'byValueReverse', value: 'byValueReverse' },
     ]);
     const filterValue = ref(filterList.value[3].value);
-    const stubTokens = ['BTC', 'DOT', 'ICX', 'IOST', 'XTZ'];
     const isNotLinkedSnip20 = (token) => {
       const isSnip20 = computed(
         () => token.config.standard === TOKEN_STANDARDS.SNIP_20
@@ -364,7 +360,6 @@ export default {
       }
     );
     return {
-      stubTokens,
       TOKEN_STANDARDS,
       filteredTokensList,
       OUR_TOKEN,
