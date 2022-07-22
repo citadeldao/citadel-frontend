@@ -4,7 +4,11 @@
   </div>
   <div v-else class="assets">
     <template
-      v-if="currentWallet.balance.mainBalance || currentWallet.net === 'secret'"
+      v-if="
+        currentWallet.balance.mainBalance ||
+        currentWallet.subtokenBalanceUSD ||
+        currentWallet.net === 'secret'
+      "
     >
       <div class="assets__header">
         <BalanceCard
