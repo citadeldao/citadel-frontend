@@ -581,18 +581,16 @@ export default {
             metamaskAddress === w.address.toLowerCase()
         );
 
-        if (findWallet) {
-          const win = window.frames.target;
-          win &&
-            win.postMessage(
-              {
-                from: 'metamask',
-                address: findWallet.address,
-                net: findWallet.net,
-              },
-              selectedApp.value.url
-            );
-        }
+        const win = window.frames.target;
+        win &&
+          win.postMessage(
+            {
+              from: 'metamask',
+              address: findWallet ? findWallet.address : null,
+              net: findWallet ? findWallet.net : null,
+            },
+            selectedApp.value.url
+          );
       }
     });
 
