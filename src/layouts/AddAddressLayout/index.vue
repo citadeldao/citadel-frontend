@@ -48,7 +48,7 @@ export default {
     flex-direction: column;
     display: flex;
     flex-grow: 1;
-    overflow-y: auto;
+    overflow-y: overlay;
     overflow-x: hidden;
     position: relative;
     @include lg {
