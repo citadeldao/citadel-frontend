@@ -362,7 +362,7 @@
           :amount="amount"
           :fee="fee.fee"
           type="transfer"
-          :tx-hash="[txHash]"
+          :tx-hash="txHash"
         />
       </ModalContent>
     </Modal>
@@ -1001,7 +1001,7 @@ export default {
         } else {
           showConfirmModal.value = false;
           showSuccessModal.value = true;
-          txHash.value = metamaskResult.txHash;
+          txHash.value = [metamaskResult.txHash];
         }
 
         isLoading.value = false;
@@ -1081,7 +1081,7 @@ export default {
           isLoading.value = false;
           showConfirmModal.value = false;
           showSuccessModal.value = true;
-          txHash.value = data.data.txhash;
+          txHash.value = [data.data.txhash];
         } else {
           notify({
             type: 'warning',
@@ -1149,7 +1149,7 @@ export default {
       customFee.value = 0;
       showSuccessModal.value = false;
 
-      if (txHash.value) {
+      if (txHash?.value?.[0]) {
         amount.value = '';
         txComment.value = '';
       }
@@ -1203,7 +1203,7 @@ export default {
       txComment.value &&
         (await store.dispatch('transactions/postTransactionNote', {
           network: props.currentWallet.net,
-          hash: txHash.value,
+          hash: txHash.value[0],
           text: txComment.value,
         }));
       successCloseHandler();
