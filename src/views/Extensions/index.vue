@@ -579,7 +579,6 @@ export default {
           selectedApp.value &&
           [6, 7].includes(selectedApp.value.id)
         ) {
-          console.log('WATCH!!!', newV);
           const metamaskNet =
             metamaskConnector.value.chainId === 56 ? 'bsc' : 'eth';
           const metamaskAddress = newV[0] && newV[0].toLowerCase();
@@ -873,7 +872,7 @@ export default {
       }
 
       let result;
-      console.log('test', extensionTransactionForSign.value);
+
       try {
         result = await signerWallet.value.signAndSendTransfer({
           walletId: signerWallet.value.id,
