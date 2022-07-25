@@ -1346,6 +1346,34 @@ export default {
   }
 
   &__kt-addresses {
+    overflow: auto;
+    position: relative;
+    transform: rotateX(180deg);
+
+    //transform: rotate(-90deg);
+    // transform-origin: right top;
+    &::-webkit-scrollbar {
+      max-width: 368px !important;
+      height: 4px; /* width of the entire scrollbar */
+      border-radius: 20px;
+      scrollbar-width: thin;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #c3ceeb; /* color of the tracking area */
+      border-radius: 20px;
+      max-width: 368px !important;
+      margin-left: 110px;
+      margin-right: 0px;
+      margin-top: 100px;
+      position: absolute;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #6b758e; /* color of the scroll thumb */
+      border-radius: 20px; /* roundness of the scroll thumb */
+      //border: 3px solid orange; /* creates padding around scroll thumb */
+    }
     @include md {
       display: none;
     }

@@ -68,10 +68,10 @@ export default {
 
 <style lang="scss" scoped>
 .kt-address-item {
-  width: 308px;
-  height: 80px;
+  width: 290px;
+  height: 64px;
   border-radius: 8px;
-  padding: 21px 29px 0 24px;
+  padding: 12px 16.71px 12px 16px;
   display: flex;
   flex-direction: column;
   background: $info-block-bg-with-op;
@@ -95,6 +95,8 @@ export default {
   }
   &__address {
     display: flex;
+    // max-width: 115px ;
+    // width: 100%;
     font-size: 15px;
     line-height: 19px;
     position: relative;
@@ -114,7 +116,7 @@ export default {
   &__balance-currency {
     font-size: 14px;
     line-height: 17px;
-    color: $dark-blue;
+    color: #1a53f0;
   }
   &__balance-value {
     font-family: 'Panton_Bold' !important;
@@ -123,9 +125,12 @@ export default {
   }
 }
 .main {
-  background: $dark-blue-with-op;
+  background: rgba(106, 75, 255, 0.15) !important;
   .kt-address-item__address {
-    color: $dark-blue;
+    color: #6a4bff !important;
+  }
+  .kt-address-item__balance-currency {
+    color: #6a4bff !important;
   }
 }
 .isChecked {
@@ -135,13 +140,13 @@ export default {
     background: $blue;
     box-shadow: none;
     .kt-address-item__address {
-      color: $white;
+      color: #1a53f0;
     }
   }
   .kt-address-item__address,
   .kt-address-item__balance-value,
   .kt-address-item__balance-currency {
-    color: $white;
+    color: inherit;
   }
 }
 </style>
