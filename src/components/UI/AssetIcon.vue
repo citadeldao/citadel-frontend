@@ -117,7 +117,7 @@ export default {
     & span {
       font-size: 14px;
       line-height: 17px;
-      color: $white;
+      color: $white !important;
       font-family: 'Panton_Bold';
       position: absolute;
       top: 7px;

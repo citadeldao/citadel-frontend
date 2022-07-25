@@ -23,7 +23,9 @@
           </keep-alive>
         </div>
 
-        <span>{{ currentWallet.shortName || currentWallet.name }}</span>
+        <span data-qa="current-wallet-name">
+          {{ currentWallet.shortName || currentWallet.name }}</span
+        >
       </div>
       <div class="network-info__social-toggle-wrapper">
         <!-- Ссылки на соцсети сеток для 1280 px -->
@@ -287,6 +289,7 @@ export default {
   setup(props) {
     const currentIcon = ref();
     const { t, te } = useI18n();
+    const store = useStore();
 
     const tokenDescription = computed(() => {
       return props.isCurrentToken ||
@@ -310,19 +313,17 @@ export default {
 
     setIcon(props.currentWallet.net);
 
-    const walletMarketcap = ref(null);
     const getWalletMarketcap = async () => {
       const { data } = await props.currentWallet.getMarketcap();
-      walletMarketcap.value = data;
+      store.dispatch('profile/setCurrentWalletMarketcap', {
+        ...data,
+        net: props.currentWallet.net,
+      });
     };
     getWalletMarketcap();
 
-    const store = useStore();
-    const infoMarketcap = computed(
-      () => store.getters['profile/info'].marketcap[props.currentWallet.net]
-    );
     const marketcap = computed(
-      () => walletMarketcap?.value || infoMarketcap?.value
+      () => store.getters['profile/currentWalletMarketcap']
     );
     const apy = computed(() => {
       const currencyYield = marketcap.value?.yield;
@@ -393,7 +394,10 @@ export default {
   @include md {
     padding: 16px;
   }
-
+  @include laptop {
+    padding: 20px;
+    border-radius: 8px;
+  }
   &__header {
     display: flex;
     justify-content: space-between;
@@ -613,6 +617,9 @@ export default {
     @include lg {
       margin-bottom: 12px;
     }
+    @include laptop {
+      margin-bottom: 0;
+    }
   }
 
   &__info-usd-price,
@@ -729,6 +736,9 @@ export default {
 
       @include lg {
         margin-bottom: 0;
+      }
+      @include laptop {
+        display: none;
       }
     }
 

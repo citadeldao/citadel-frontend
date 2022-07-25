@@ -1,5 +1,10 @@
 <template>
-  <div class="sidebar">
+  <div
+    class="sidebar"
+    :class="sidebarClass"
+    @mouseenter="onMouseEnter"
+    @mouseleave="onMouseLeave"
+  >
     <div class="sidebar__logo">
       <div
         data-qa="main-logo"
@@ -7,20 +12,28 @@
         @click="setActiveTab('all')"
       >
         <citadelLogo class="sidebar__logo-citadel" />
+        <onlyLogo class="sidebar__compact-logo-citadel" />
       </div>
     </div>
 
     <OverallCard
-      :balance="totalBalanceWithSubtokensUSD"
+      :balance="totalBalanceWithSubTokensUSD"
       :cryptobalance="totalBTCBalance"
       :title="activeTab"
       @click="setActiveTab(activeTab)"
     />
-
     <div v-if="walletsList?.length > 0" class="sidebar__overall">
-      <div class="sidebar__addresses">
-        <div class="sidebar__addresses-header">
+      <div class="sidebar__addresses-top">
+        <div class="sidebar__addresses-header-compact">
           <h4 class="sidebar__addresses-header-title">
+            {{ $t('layouts.addAddressLayout.wallets') }}
+          </h4>
+        </div>
+        <div class="sidebar__addresses-header">
+          <h4
+            class="sidebar__addresses-header-title"
+            data-qa="Current-wallets-list-name"
+          >
             {{
               activeTab === 'all'
                 ? $t('layouts.addAddressLayout.addresses')
@@ -29,7 +42,7 @@
           </h4>
           <div class="sidebar__addresses-header-controls">
             <div
-              class="sidebar__addresses-header-controls-serach-icon"
+              class="sidebar__addresses-header-controls-search-icon"
               :class="{ 'sidebar__active-icon': showSearchInput }"
               data-qa="sidebar__search-button"
               @click="toggleShowSearchInput(!showSearchInput)"
@@ -44,27 +57,42 @@
             />
           </div>
         </div>
-        <transition name="fade">
-          <div v-if="showSearchInput" class="sidebar__addresses-serach-input">
-            <Input
-              id="walletSearch"
-              v-model="keyword"
-              :label="$t('searchToken')"
-              type="text"
-              icon="loop"
-              autofocus
-              :placeholder="$t('inputToken')"
-              background="#edf2fc"
-              clearable
-              data-qa="sidebar__search-field"
-              @blur="blurHandrer(false)"
-            />
-          </div>
-        </transition>
-        <div v-if="!displayData.length" class="sidebar__addresses-addresses">
-          <SerchPlaceholder />
+      </div>
+      <transition name="fade">
+        <div v-if="showSearchInput" class="sidebar__addresses-search-input">
+          <Input
+            id="walletSearch"
+            v-model="keyword"
+            :label="$t('searchToken')"
+            type="text"
+            icon="loop"
+            autofocus
+            :placeholder="$t('inputToken')"
+            background="#edf2fc"
+            clearable
+            data-qa="sidebar__search-field"
+            @blur="blurHandler(false)"
+          />
         </div>
-        <div v-else class="sidebar__addresses-addresses">
+      </transition>
+
+      <div
+        v-if="!displayData.length"
+        class="sidebar__addresses-addresses"
+        :class="scrollClass"
+        @change="isOverflown($event)"
+      >
+        <h4 class="sidebar__addresses-header-title">
+          {{ $t('layouts.addAddressLayout.addresses') }}
+        </h4>
+        <SearchPlaceholder />
+      </div>
+      <div
+        v-else
+        class="sidebar__addresses-addresses"
+        @scroll="onScrollContent"
+      >
+        <div class="sidebar__addresses-addresses-full-list">
           <transition-group name="drop">
             <AddressItem
               v-for="wallet in displayData"
@@ -83,8 +111,17 @@
       data-qa="sidebar__add-address-button"
       @click="toAddAddress"
     >
-      {{ $t('addAddressExp') }}
+      <span class="sidebar__add-address-button-text">
+        {{ $t('addAddressExp') }}
+      </span>
       <div>+</div>
+    </button>
+    <button
+      class="sidebar__compact-view-button"
+      @click="sideBarView"
+      :class="`${sidebarClass}`"
+    >
+      <ArrowRight />
     </button>
   </div>
 </template>
@@ -101,11 +138,14 @@ import { sortByAlphabet } from '@/helpers';
 
 import WalletFilterDropdown from '@/components/UI/WalletFilterDropdown';
 import Input from '@/components/UI/Input';
-import SerchPlaceholder from './SerchPlaceholder.vue';
+import SearchPlaceholder from './SearchPlaceholder.vue';
 import AddressItem from './AddressItem';
 import OverallCard from './OverallCard';
 import AddressPlaceholder from './AddressPlaceholder';
 import citadelLogo from '@/assets/icons/citadelLogo.svg';
+import onlyLogo from '@/assets/icons/only-logo.svg';
+import ArrowRight from '@/assets/icons/arrow-rigth.svg';
+
 import loop from '@/assets/icons/input/loop.svg';
 
 export default {
@@ -117,8 +157,10 @@ export default {
     AddressItem,
     loop,
     Input,
-    SerchPlaceholder,
+    SearchPlaceholder,
     WalletFilterDropdown,
+    onlyLogo,
+    ArrowRight,
   },
 
   emits: ['editList', 'createList'],
@@ -135,13 +177,14 @@ export default {
     const { width } = useWindowSize();
     const store = useStore();
     const router = useRouter();
+
     const toAddAddress = () => {
       router.push({ name: 'AddAddress' });
     };
 
     const { wallets } = useWallets();
 
-    const currency = computed(() => store.getters['profile/info'].rates);
+    const currency = computed(() => store.getters['profile/rates']);
 
     const activeTab = computed(() => store.getters['wallets/activeList']);
     const customWalletsList = computed(
@@ -154,7 +197,10 @@ export default {
 
     const totalUSDBalance = computed(() => {
       const value = walletsList.value.reduce((total, currentValue) => {
-        return BigNumber(total).plus(currentValue?.balanceUSD).toNumber();
+        const balanceUSD = BigNumber(currentValue.balance.calculatedBalance)
+          .times(currency.value[currentValue.net].USD)
+          .toNumber();
+        return BigNumber(total).plus(balanceUSD).toNumber();
       }, 0);
 
       store.dispatch('balance/setBalance', { type: 'usd', value });
@@ -162,7 +208,7 @@ export default {
       return value;
     });
 
-    const subtokensBalanceUSD = computed(() => {
+    const subTokensBalanceUSD = computed(() => {
       return walletsList.value.reduce((total, currentValue) => {
         return BigNumber(total)
           .plus(currentValue.subtokenBalanceUSD || 0)
@@ -170,8 +216,8 @@ export default {
       }, 0);
     });
 
-    const totalBalanceWithSubtokensUSD = computed(() => {
-      const value = BigNumber(subtokensBalanceUSD.value)
+    const totalBalanceWithSubTokensUSD = computed(() => {
+      const value = BigNumber(subTokensBalanceUSD.value)
         .plus(totalUSDBalance.value)
         .toNumber();
 
@@ -180,7 +226,7 @@ export default {
       return value;
     });
     const totalBTCBalance = computed(() => {
-      const value = BigNumber(totalBalanceWithSubtokensUSD.value)
+      const value = BigNumber(totalBalanceWithSubTokensUSD.value)
         .dividedBy(currency.value?.btc.USD)
         .toNumber();
 
@@ -272,7 +318,7 @@ export default {
       showSearchInput.value = value;
       keyword.value = '';
     };
-    const blurHandrer = async (value) => {
+    const blurHandler = async (value) => {
       setTimeout(() => {
         showSearchInput.value = value;
         keyword.value = '';
@@ -284,7 +330,7 @@ export default {
       toAddAddress,
       walletsList,
       totalBTCBalance,
-      totalBalanceWithSubtokensUSD,
+      totalBalanceWithSubTokensUSD,
       setActiveTab,
       showCustomLists,
       width,
@@ -299,8 +345,62 @@ export default {
       filterList,
       filteredWallets,
       toggleShowSearchInput,
-      blurHandrer,
+      blurHandler,
     };
+  },
+  data() {
+    return {
+      windowWidth: window.innerWidth,
+      sidebarClass: '',
+      timer: null,
+    };
+  },
+  mounted() {
+    if (window.innerWidth <= 1024) {
+      document
+        .querySelector('#main')
+        .addEventListener('click', this.onClickMain);
+    }
+  },
+  created() {
+    window.addEventListener('resize', this.onResize);
+    this.sidebarClass = window.innerWidth <= 1024 ? 'compact' : '';
+  },
+  methods: {
+    onResize() {
+      this.sidebarClass = window.innerWidth <= 1024 ? 'compact' : '';
+      if (window.innerWidth <= 1024) {
+        document
+          .querySelector('#main')
+          .addEventListener('click', this.onClickMain);
+      } else {
+        document
+          .querySelector('#main')
+          .removeEventListener('click', this.onClickMain);
+      }
+    },
+    onClickMain() {
+      if (window.innerWidth <= 1024) {
+        this.sidebarClass = 'compact';
+      }
+    },
+    sideBarView() {
+      if (window.innerWidth <= 1024) {
+        this.sidebarClass = !this.sidebarClass ? 'compact' : '';
+      }
+    },
+    onMouseEnter() {
+      if (window.innerWidth <= 1024) {
+        this.timer = setTimeout(() => {
+          this.sidebarClass = '';
+        }, 500);
+      }
+    },
+    onMouseLeave() {
+      if (window.innerWidth <= 1024) {
+        clearTimeout(this.timer);
+      }
+    },
   },
 };
 </script>
@@ -311,61 +411,172 @@ export default {
   box-shadow: 0 10px 15px 0 #50647c29, 0 15px 50px 0 #50647c1a;
 }
 .sidebar {
-  padding: 42px 0 0 24px;
-  min-width: 246px;
+  max-width: $sidebar-max-width;
+  width: 100%;
   height: 100vh;
   display: flex;
   flex-direction: column;
-  @include lg {
-    padding: 42px 0 0 25px;
-  }
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  padding: $sidebar-padding;
+  transition: all 0.4s;
+  background-color: trasparent;
+
   @include md {
-    padding: 26px 0 0 25px;
-    min-width: 194px;
+    padding: $sidebar-padding-md;
+    max-width: $sidebar-max-width-md;
   }
-  &__logo {
-    display: flex;
-    align-items: center;
-    margin-bottom: 43px;
-    @include md {
-      margin-bottom: 28px;
+  &__addresses-top {
+    @include laptop {
+      border-color: transparent;
+      margin-bottom: 15px;
     }
   }
-  &__logo-inner-wrapper {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
+  &:hover {
+    .sidebar__addresses-top {
+      @include laptop {
+        border-color: transparent;
+      }
+    }
+  }
+
+  &__compact-view-button {
+    display: none;
+  }
+
+  @include laptop {
+    filter: $sidebar-shadow;
+    background-color: $white;
+    padding: $sidebar-padding-laptop;
+    @include sidebar-compact-view;
+    max-width: calc(#{$sidebar-max-width-md} - 30px);
+    position: fixed;
+    z-index: 3;
+    &__compact-view-button {
+      background: $too-ligth-blue;
+      width: 22px;
+      height: 22px;
+      border: none;
+      border-radius: 4px;
+
+      position: absolute;
+      top: 138px;
+      right: -12px;
+
+      transition: 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #00a3ff;
+      & svg {
+        fill: $white;
+        height: 10px;
+        transform: rotate(180deg);
+      }
+      &:hover {
+        background-color: $too-ligth-blue;
+      }
+    }
+  }
+
+  &.compact {
+    max-width: $sidebar-compact-max-width;
+    background: $white;
+  }
+
+  &__compact-logo-citadel {
+    display: none;
+  }
+
+  &.compact &__logo-citadel {
+    display: none;
+  }
+
+  &.compact &__compact-logo-citadel {
+    display: block;
+
+    svg {
+      height: 22px;
+    }
+  }
+
+  &__logo {
+    margin: 0 auto 40px;
+    max-width: calc(#{$sidebar-max-width} - 50px);
+    width: 100%;
+    text-align: left;
+    @include md {
+      max-width: calc(#{$sidebar-max-width-md} - 50px);
+      margin: 0 auto 20px;
+    }
+    @include laptop {
+      max-width: calc(#{$sidebar-max-width-laptop} - 50px);
+    }
   }
   &__overall {
-    flex: 1;
+    max-width: calc(#{$sidebar-max-width} - 50px);
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     overflow: hidden;
+    width: 100%;
+    margin: 25px auto;
+    position: relative;
+    @include md {
+      max-width: calc(#{$sidebar-max-width-md} - 50px);
+      margin: 20px auto;
+    }
+
+    @include laptop {
+      max-width: calc(#{$sidebar-max-width-laptop} - 50px);
+      margin: 10px auto;
+    }
   }
+
   &__addresses {
+    max-width: calc(#{$sidebar-max-width} - 50px);
+    width: 100%;
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
     overflow: hidden;
+    position: relative;
+    @include md {
+      max-width: calc(#{$sidebar-max-width-md} - 50px);
+    }
+    @include laptop {
+      max-width: calc(#{$sidebar-max-width-laptop} - 50px);
+    }
+    &-top {
+      border-radius: 8px;
+      margin-bottom: 25px;
+      @include md {
+        margin-bottom: 20px;
+      }
+      @include laptop {
+        margin-bottom: 10px;
+      }
+    }
   }
+
   &__addresses-wrapper {
     display: flex;
     flex-direction: column;
     height: 100%;
     overflow: auto;
   }
+
   &__addresses-header {
-    margin-bottom: 21px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    @include lg {
-      margin-bottom: 27px;
-    }
-    @include md {
-      margin-bottom: 8px;
+
+    &-compact {
+      display: none;
+      justify-content: center;
     }
   }
+
   &__addresses-header-title {
     font-size: 20px;
     line-height: 30px;
@@ -375,81 +586,154 @@ export default {
     text-overflow: ellipsis;
     overflow: hidden;
     max-width: 135px;
+
     @include lg {
-      line-height: 24px;
     }
-    @include md {
-      max-width: 95px;
-      font-size: 14px;
-      line-height: 17px;
+
+    @include laptop {
+      font-size: $sidebar-title-font-size-laptop;
     }
   }
+
   &__addresses-header-controls {
     display: flex;
     align-items: center;
+    @include laptop {
+      margin-right: 15px;
+    }
   }
-  &__addresses-header-controls-serach-icon {
+
+  &__addresses-header-controls-search-icon {
     & svg {
       width: 20px;
       height: 20px;
       fill: $mid-blue;
       margin-right: 19px;
       cursor: pointer;
+
       @include md {
         width: 18px;
         height: 18px;
       }
+      @include laptop {
+        width: 14px;
+        height: 14px;
+      }
+
       &:hover {
         fill: $blue;
       }
     }
   }
+
   &__active-icon {
     & svg {
       fill: $too-dark-blue;
+
       &:hover {
         fill: $too-dark-blue;
       }
     }
   }
-  &__addresses-serach-input {
+
+  &__addresses-search-input {
     min-height: 68px;
     width: 221px;
     margin-bottom: 16px;
+    max-width: calc(#{$sidebar-max-width} - 50px);
     @include md {
-      width: 169px;
+      max-width: calc(#{$sidebar-max-width-md} - 50px);
     }
   }
+
   &__addresses-addresses {
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
-    overflow-x: hidden;
-    flex-grow: 1;
+    position: relative;
+    border: 1px solid transparent;
+    background: transparent;
+    overflow: hidden;
+    height: 100%;
+    box-shadow: none;
+    &-full-list {
+      display: flex;
+      flex-direction: column;
+      overflow-y: overlay;
+      overflow-x: hidden;
+      padding-bottom: 15px;
+      @include laptop {
+        width: 90%;
+        margin: 0 auto;
+      }
+    }
+
+    // &.bottom::after {
+    //   visibility: hidden;
+    // }
+
+    // &.top::before {
+    //   visibility: hidden;
+    // }
+
+    // &.active::after,
+    // &.active::before {
+    //   visibility: visible;
+    // }
+
+    // &::after,
+    // &::before {
+    //   content: '';
+    //   height: 15px;
+    //   width: calc(#{$sidebar-max-width} - 50px);
+    //   position: absolute;
+    //   padding: 0;
+    //   visibility: hidden;
+    //   @include md {
+    //     width: calc(#{$sidebar-max-width-md} - 50px);
+    //   }
+    // }
+
+    // &::after {
+    //   bottom: 0;
+    //   margin-top: auto;
+    //   background: linear-gradient(to top, rgba(0, 0, 0, 0.2) 40%, transparent);
+    //   z-index: 1;
+    // }
+
+    // &::before {
+    //   top: 0;
+    //   margin-bottom: auto;
+
+    //   background: linear-gradient(
+    //     to bottom,
+    //     rgba(0, 0, 0, 0.2) 40%,
+
+    //     transparent
+    //   );
+    //   z-index: 1;
+    // }
   }
+
   &__address-placeholder {
-    flex-grow: 1;
+    margin: 0 auto;
   }
+
   &__add-address-button {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    width: 221px;
-    height: 80px;
+    max-width: calc(#{$sidebar-max-width} - 50px);
+    max-height: 80px;
+    width: 100%;
+    height: 100%;
     border-radius: 16px;
     background: $white;
-    font-family: 'Panton_Bold';
-    font-size: 18px;
-    line-height: 22px;
-    margin-top: 10px;
+    @include title-default;
+    font-size: $add-btn-font-size !important;
     margin-bottom: 8px;
-    @include md {
-      width: 165px;
-      height: 60px;
-      font-size: 14px;
-      line-height: 17px;
-      border-radius: 8px;
-    }
+    transition: background 0.2s;
+    margin-top: auto;
+
     &:hover {
       background: $dark-blue;
       color: $white;
@@ -458,6 +742,7 @@ export default {
         color: $dark-blue;
       }
     }
+
     & div {
       width: 48px;
       height: 48px;
@@ -469,14 +754,35 @@ export default {
       justify-content: center;
       align-items: center;
       box-shadow: 0px 4px 20px rgba(105, 95, 225, 0.7);
+
       @include md {
         width: 32px;
         height: 32px;
         font-size: 18px;
       }
     }
+
+    @include md {
+      max-width: calc(#{$sidebar-max-width-md} - 50px);
+      height: 95px;
+    }
+
+    @include laptop {
+      max-width: $sidebar-add-btn-width-laptop;
+      justify-content: space-between;
+      height: 80px;
+      margin-top: auto;
+      border-color: transparent;
+      border-top-style: dashed;
+      border-top-color: $too-ligth-blue;
+      padding: 0 10%;
+      border-radius: 0 0 8px 8px;
+      font-size: $sidebar-add-btn-font-size-laptop;
+    }
   }
 }
+
+@include sidebar-compact-view;
 
 .drop-enter-active,
 .drop-leave-active {

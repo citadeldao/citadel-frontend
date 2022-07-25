@@ -26,7 +26,11 @@
         {{ currentWallet.name }}
       </div>
     </div>
-    <span class="current-asset__arrow" />
+    <span class="current-asset__arrow">
+      <keep-alive>
+        <component :is="icon" />
+      </keep-alive>
+    </span>
 
     <teleport to="body">
       <Modal v-if="isSelectAssetModalOpened">
@@ -37,6 +41,7 @@
         >
           <template #default>
             <AssetsListModal
+              :state-current-wallet="stateCurrentWallet"
               :current-wallet="currentWallet"
               @click="goToAsset"
             />
@@ -59,7 +64,7 @@
 </template>
 
 <script>
-import { ref, computed, inject } from 'vue';
+import { ref, computed, inject, markRaw } from 'vue';
 import { useStore } from 'vuex';
 import useWallets from '@/compositions/useWallets';
 import Modal from '@/components/Modal';
@@ -90,6 +95,11 @@ export default {
     },
   },
   setup() {
+    const icon = ref();
+    import(`@/assets/icons/arrow.svg`).then((val) => {
+      icon.value = markRaw(val.default);
+    });
+    const { currentWallet: stateCurrentWallet } = useWallets();
     const store = useStore();
     const isSelectAssetModalOpened = ref(false);
     const showCreateVkModal = ref(false);
@@ -100,10 +110,10 @@ export default {
 
     const isNotLinkedSnip20 = (token) => {
       const isSnip20 = computed(
-        () => token.config.standard === TOKEN_STANDARDS.SNIP_20
+        () => token?.config?.standard === TOKEN_STANDARDS.SNIP_20
       );
 
-      return isSnip20.value && !token.linked;
+      return isSnip20?.value && !token.linked;
     };
 
     const openSelectAssetModal = () => {
@@ -131,16 +141,18 @@ export default {
         await store.dispatch('subtokens/setCurrentToken', asset);
 
         closeSelectAssetModal();
-
-        redirectToWallet({
-          wallet: wallet.value,
-          token: asset,
-          root: true,
-        });
+        if (asset)
+          redirectToWallet({
+            wallet: wallet.value,
+            token: asset,
+            root: true,
+          });
       }
     };
 
     return {
+      icon,
+      stateCurrentWallet,
       isSelectAssetModalOpened,
       showCreateVkModal,
       snip20TokenFee,
@@ -241,15 +253,10 @@ export default {
       #fad0c47f 99%,
       #fad0c47f 100%
     );
-
-    &:before {
-      content: '⭢';
+    svg {
+      top: 14px;
+      left: 17px;
       position: absolute;
-      top: 1px;
-      left: 14px;
-      font-size: 24px;
-      font-family: 'Panton_Bold';
-      color: $dark-blue;
     }
   }
 

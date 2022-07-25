@@ -80,14 +80,18 @@ export default {
       width: 35px;
       height: 35px;
       fill: #603bee;
+      path {
+        fill: #603bee;
+      }
     }
     &:last-child {
       margin-bottom: 15px;
     }
     &:hover {
       color: $blue;
-      & svg {
-        fill: $blue;
+      svg,
+      path {
+        fill: $blue !important;
       }
     }
   }

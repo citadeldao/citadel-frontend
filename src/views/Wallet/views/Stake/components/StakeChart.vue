@@ -55,6 +55,9 @@ export default {
   border-radius: 4px;
   height: 20px;
   display: flex;
+  @include laptop {
+    height: 10px;
+  }
   &__part-wrapper {
     display: flex;
     &:first-child {

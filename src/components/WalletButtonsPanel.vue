@@ -179,6 +179,10 @@ export default {
 
 <style lang="scss" scoped>
 .wallet-buttons-panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: none;
   padding: 12px 0 12px 0;
   height: 48px;
