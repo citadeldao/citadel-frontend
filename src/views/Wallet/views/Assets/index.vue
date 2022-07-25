@@ -6,8 +6,8 @@
     <template
       v-if="
         currentWallet.balance.mainBalance ||
-        currentWallet.subtokenBalanceUSD ||
-        currentWallet.net === 'secret'
+        currentWallet.net === 'secret' ||
+        currentToken?.balanceUSD
       "
     >
       <div class="assets__header">
