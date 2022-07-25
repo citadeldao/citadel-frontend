@@ -379,12 +379,6 @@ export default {
         }));
       txComment.value = '';
 
-      store.dispatch('extensions/sendCustomMsg', {
-        token: currentAppInfo.value.token,
-        message: extensionsSocketTypes.messages.success,
-        type: extensionsSocketTypes.types.transaction,
-      });
-
       confirmPassword.value = false;
       showSuccessModal.value = false;
       successTx.value = '';
@@ -654,6 +648,14 @@ export default {
       }
     });
 
+    const sendSuccessMSG = () => {
+      store.dispatch('extensions/sendCustomMsg', {
+        token: currentAppInfo.value.token,
+        message: extensionsSocketTypes.messages.success,
+        type: extensionsSocketTypes.types.transaction,
+      });
+    };
+
     const confirmModalCloseHandlerWithRequest = () => {
       password.value = '';
       store.commit('extensions/SET_TRANSACTION_FOR_SIGN', null, { root: true });
@@ -815,6 +817,7 @@ export default {
           confirmModalDisabled.value = false;
           confirmModalCloseHandler();
           showSuccessModal.value = true;
+          sendSuccessMSG();
         } else {
           notify({
             type: 'warning',
@@ -834,6 +837,7 @@ export default {
             extensionTransactionForSign.value.transaction
           );
 
+        console.log('metamaskResult', metamaskResult);
         if (metamaskResult.error) {
           notify({
             type: 'warning',
@@ -851,6 +855,7 @@ export default {
           confirmModalDisabled.value = false;
           confirmModalCloseHandler();
           showSuccessModal.value = true;
+          sendSuccessMSG();
         }
 
         return;
@@ -894,6 +899,7 @@ export default {
           confirmModalDisabled.value = false;
           confirmModalCloseHandler();
           showSuccessModal.value = true;
+          sendSuccessMSG();
         } else {
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;
