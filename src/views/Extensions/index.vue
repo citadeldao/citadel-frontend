@@ -837,7 +837,6 @@ export default {
             extensionTransactionForSign.value.transaction
           );
 
-        console.log('metamaskResult', metamaskResult);
         if (metamaskResult.error) {
           notify({
             type: 'warning',
