@@ -570,31 +570,40 @@ export default {
       }
     }); */
 
-    /* watch(metamaskConnector.value && metamaskConnector.value, (newV) => {
-      if (selectedApp.value && [6, 7].includes(selectedApp.value.id)) {
-        const metamaskNet = newV.chainId === 56 ? 'bsc' : 'eth';
-        const metamaskAddress =
-          newV.accounts[0] && newV.accounts[0].toLowerCase();
+    watch(
+      () => metamaskConnector.value.accounts,
+      (newV) => {
+        if (
+          newV &&
+          newV[0] &&
+          selectedApp.value &&
+          [6, 7].includes(selectedApp.value.id)
+        ) {
+          console.log('WATCH!!!', newV);
+          const metamaskNet =
+            metamaskConnector.value.chainId === 56 ? 'bsc' : 'eth';
+          const metamaskAddress = newV[0] && newV[0].toLowerCase();
 
-        const findWallet = walletsList.value.find(
-          (w) =>
-            w.type === WALLET_TYPES.PUBLIC_KEY &&
-            metamaskNet === w.net &&
-            metamaskAddress === w.address.toLowerCase()
-        );
-
-        const win = window.frames.target;
-        win &&
-          win.postMessage(
-            {
-              from: 'metamask',
-              address: findWallet ? findWallet.address : null,
-              net: findWallet ? findWallet.net : null,
-            },
-            selectedApp.value.url
+          const findWallet = walletsList.value.find(
+            (w) =>
+              w.type === WALLET_TYPES.PUBLIC_KEY &&
+              metamaskNet === w.net &&
+              metamaskAddress === w.address.toLowerCase()
           );
+
+          const win = window.frames.target;
+          win &&
+            win.postMessage(
+              {
+                from: 'metamask',
+                address: findWallet ? findWallet.address : null,
+                net: findWallet ? findWallet.net : null,
+              },
+              selectedApp.value.url
+            );
+        }
       }
-    }); */
+    );
 
     watch(extensionTransactionForSign, () => {
       if (extensionTransactionForSign?.value?.transaction) {
