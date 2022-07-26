@@ -990,11 +990,13 @@ export default {
 
     &__app-wrap {
       margin-top: 35px;
-      position: relative;
+      position: relative;      
       border-radius: 20px;
 
       &.fullScreen {
         width: 100%;
+        box-sizing: border-box;
+        padding: 0 35px;
       }
 
       .close-icon {
