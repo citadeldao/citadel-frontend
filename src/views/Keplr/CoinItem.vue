@@ -83,19 +83,21 @@ export default {
       margin-right: 10px;
       width: 35px;
       height: 35px;
-      fill: #603bee;
+      fill: #1a53f0;
       path {
-        fill: #603bee;
+        fill: #1a53f0;
       }
     }
     &:last-child {
       margin-bottom: 15px;
     }
     &:hover {
-      color: $blue;
-      svg,
-      path {
-        fill: $blue !important;
+      & svg.icon-item {
+        color: #c3ceeb;
+        svg,
+        path {
+          fill: #c3ceeb !important;
+        }
       }
     }
   }
