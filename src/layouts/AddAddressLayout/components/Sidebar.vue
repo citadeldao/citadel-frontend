@@ -724,6 +724,7 @@ export default {
     justify-content: space-around;
     max-width: calc(#{$sidebar-max-width} - 50px);
     min-height: 80px;
+    max-height: 80px;
     width: 100%;
     height: 100%;
     border-radius: 16px;
