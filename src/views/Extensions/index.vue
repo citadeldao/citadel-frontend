@@ -77,14 +77,18 @@
     <div v-if="loading" class="extensions__loading">
       <Loading />
     </div>
-    <div v-if="currentApp" class="extensions__app-wrap">
+    <div
+      v-if="currentApp"
+      :class="{ fullScreen: showFullScreen }"
+      class="extensions__app-wrap"
+    >
       <keep-alive v-if="!showFullScreen">
         <component :is="closeIcon" class="close-icon" @click="closeApp()" />
       </keep-alive>
       <iframe
         :src="currentApp.url"
         frameBorder="0"
-        :width="showFullScreen ? 1280 : 550"
+        :width="showFullScreen ? '100%' : 550"
         height="710"
         align="left"
         name="target"
@@ -988,6 +992,10 @@ export default {
       margin-top: 35px;
       position: relative;
       border-radius: 20px;
+
+      &.fullScreen {
+        width: 100%;
+      }
 
       .close-icon {
         position: absolute;
