@@ -93,10 +93,10 @@ export default {
     }
     &:hover {
       & svg.icon-item {
-        color: #c3ceeb;
+        color: #6b93c0;
         svg,
         path {
-          fill: #c3ceeb !important;
+          fill: #6b93c0 !important;
         }
       }
     }
