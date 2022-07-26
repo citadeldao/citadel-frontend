@@ -1,20 +1,48 @@
 <template>
   <div class="kt-address-item" :class="{ main: type === 'main', isChecked }">
-    <span ref="address" class="kt-address-item__address">
-      <resize-observer :show-trigger="true" @notify="handleResize" />
-      {{ formatedAddress }}
-    </span>
-    <div class="kt-address-item__balance">
-      <span
-        v-pretty-number="{
-          value: item.balance.calculatedBalance,
-          currency: currentWallet.code,
-        }"
-        class="kt-address-item__balance-value"
-      />
-      <span class="kt-address-item__balance-currency">
-        {{ currentWallet.code }}
+    <div>
+      <span ref="address" class="kt-address-item__address">
+        <resize-observer :show-trigger="true" @notify="handleResize" />
+        {{ formatedAddress }}
       </span>
+      <div class="kt-address-item__balance">
+        <span
+          v-pretty-number="{
+            value: item.balance.calculatedBalance,
+            currency: currentWallet.code,
+          }"
+          class="kt-address-item__balance-value"
+        />
+        <span class="kt-address-item__balance-currency">
+          {{ currentWallet.code }}
+        </span>
+      </div>
+    </div>
+    <div class="kt-address--copy">
+      <svg
+        width="1"
+        height="32"
+        viewBox="0 0 1 32"
+        :fill="type === 'main' ? '#6a4bff' : '#1a53f0'"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <line
+          x1="0.5"
+          y1="-2.18557e-08"
+          x2="0.500001"
+          y2="32"
+          stroke="#4F70CF"
+          stroke-dasharray="2 2"
+        />
+      </svg>
+      <div class="input__copy">
+        <copy @click.stop="copyValue" />
+        <transition name="fade1">
+          <span v-if="isCopied" class="input__tooltip">
+            {{ $t('copiedToClipboard') }}
+          </span>
+        </transition>
+      </div>
     </div>
   </div>
 </template>
@@ -24,8 +52,11 @@ import { computed, ref } from '@vue/reactivity';
 import { formattedWalletAddress } from '@/helpers';
 import { useWindowSize } from 'vue-window-size';
 import { screenWidths } from '@/config/sreenWidthThresholds';
+import copy from '@/assets/icons/copy.svg';
+import copyToClipboard from '@/helpers/copyToClipboard';
 export default {
   name: 'KtAddressItem',
+  components: { copy },
   props: {
     item: {
       type: Object,
@@ -51,7 +82,8 @@ export default {
     const handleResize = ({ width }) => {
       wrapperWidth.value = width;
     };
-    const maxWidth = computed(() => (width.value < screenWidths.xl ? 97 : 255));
+    const isCopied = ref(false);
+    const maxWidth = computed(() => (width.value < screenWidths.xl ? 97 : 115));
     const formatedAddress = computed(() =>
       formattedWalletAddress(
         props.item.address,
@@ -60,52 +92,116 @@ export default {
         16
       )
     );
+    const copyValue = () => {
+      console.log(formatedAddress.value, 'formatedAddress.value');
+      copyToClipboard(props.item.address);
+      isCopied.value = true;
 
-    return { address, wrapperWidth, handleResize, formatedAddress };
+      setTimeout(() => {
+        isCopied.value = false;
+      }, 1500);
+    };
+    return {
+      copyValue,
+      isCopied,
+      address,
+      wrapperWidth,
+      handleResize,
+      formatedAddress,
+    };
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.input {
+  &__copy {
+    display: flex;
+    align-items: center;
+    position: relative;
+    & svg {
+      width: 22.9px;
+      margin-left: 17px;
+      fill: #1a53f0;
+    }
+  }
+  &__tooltip {
+    background-color: $too-ligth-gray;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 9px;
+    position: absolute;
+    white-space: nowrap;
+    z-index: 1;
+    top: 30px;
+    left: 69%;
+    transform: translate(-50%, 7px);
+    box-shadow: 0 4px 25px rgba(63, 54, 137, 0.25);
+    font-size: 12px;
+    line-height: 16px;
+    color: $too-dark-blue;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 98%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-radius: 2px;
+      border-style: solid;
+      border-color: transparent transparent $too-ligth-gray transparent;
+    }
+  }
+}
+.kt-address {
+  &--copy {
+    display: flex;
+  }
+}
 .kt-address-item {
-  width: 290px;
+  width: 100%;
+  max-width: 290px;
   height: 64px;
   border-radius: 8px;
   padding: 12px 16.71px 12px 16px;
   display: flex;
-  flex-direction: column;
   background: $info-block-bg-with-op;
-  margin-right: 14px;
+  margin-right: 10px;
+  align-items: center;
   &:last-child {
     margin-right: 0;
   }
   &:hover {
     cursor: pointer;
     background: $white;
-    box-shadow: 0px 15px 50px rgba(80, 100, 124, 0.1),
-      0px 10px 15px rgba(80, 100, 124, 0.16);
+    box-shadow: 8px 9px 15px rgba(80, 100, 124, 0.16%);
+    border-radius: 8px;
     .kt-address-item__address {
       color: $blue;
     }
   }
-  @include lg {
-    width: 151px;
-    padding: 18px 38px 0 16px;
-    margin-right: 8px;
+
+  @include md {
+    max-width: 228px;
   }
   &__address {
     display: flex;
-    // max-width: 115px ;
-    // width: 100%;
     font-size: 15px;
     line-height: 19px;
     position: relative;
-    max-width: 255px;
     margin-bottom: 6px;
     color: $blue;
+    max-width: 115px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 100px;
     @include lg {
       margin-bottom: 9px;
       max-width: 97px;
+    }
+    @include md {
+      margin-right: 54px;
     }
   }
   &__balance {
@@ -134,19 +230,8 @@ export default {
   }
 }
 .isChecked {
-  background: $blue;
   &:hover {
-    cursor: pointer;
-    background: $blue;
-    box-shadow: none;
-    .kt-address-item__address {
-      color: #1a53f0;
-    }
-  }
-  .kt-address-item__address,
-  .kt-address-item__balance-value,
-  .kt-address-item__balance-currency {
-    color: inherit;
+    background: $white;
   }
 }
 </style>

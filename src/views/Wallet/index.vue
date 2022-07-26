@@ -19,11 +19,14 @@
           </div>
         </transition>
       </div>
-      <div
-        v-if="currentWallet.hasKtAddresses && ktAddresses.length"
-        class="wallet__kt-addresses"
-      >
-        <KtAddresses :current-wallet="currentWallet" />
+      <div class="wallet__kt-addresses-wrapper">
+        <div class="kt-addresses__title">KT {{ $t('address') }}</div>
+        <div
+          v-if="currentWallet.hasKtAddresses && ktAddresses.length"
+          class="wallet__kt-addresses"
+        >
+          <KtAddresses :current-wallet="currentWallet" />
+        </div>
       </div>
       <div class="wallet__main">
         <template v-if="!currentWallet.isStub">
@@ -1163,6 +1166,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.kt-addresses {
+  &__title {
+    position: absolute;
+    top: -12px;
+    font-size: 22px;
+    line-height: 26px;
+    font-family: 'Panton_Bold';
+    margin-bottom: 18px;
+    margin-bottom: 0;
+  }
+}
 .wallet {
   display: flex;
   flex-grow: 1;
@@ -1349,9 +1363,12 @@ export default {
     overflow: auto;
     position: relative;
     transform: rotateX(180deg);
-
-    //transform: rotate(-90deg);
-    // transform-origin: right top;
+    perspective: 1px;
+    &-wrapper {
+      max-width: 100%;
+      position: relative;
+      margin: 1rem auto 0rem auto;
+    }
     &::-webkit-scrollbar {
       max-width: 368px !important;
       height: 4px; /* width of the entire scrollbar */
@@ -1363,9 +1380,8 @@ export default {
       background: #c3ceeb; /* color of the tracking area */
       border-radius: 20px;
       max-width: 368px !important;
-      margin-left: 110px;
+      margin-left: 120px;
       margin-right: 0px;
-      margin-top: 100px;
       position: absolute;
     }
 
@@ -1373,9 +1389,6 @@ export default {
       background-color: #6b758e; /* color of the scroll thumb */
       border-radius: 20px; /* roundness of the scroll thumb */
       //border: 3px solid orange; /* creates padding around scroll thumb */
-    }
-    @include md {
-      display: none;
     }
   }
 

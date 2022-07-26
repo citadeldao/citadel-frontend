@@ -1,11 +1,5 @@
 <template>
   <div class="kt-addresses">
-    <div class="kt-addresses__title">
-      KT <span>{{ $t('address') }}</span>
-      <!-- <div class="scroll"></div> -->
-      <!-- <input type="range" @input="onInputRange" /> -->
-      <!-- <div class="custom-range__scroll"></div> -->
-    </div>
     <div id="list" class="kt-addresses__list">
       <resize-observer :show-trigger="true" @notify="handleResize" />
       <KtAddressItem
@@ -23,18 +17,6 @@
         :is-checked="isChecked(item)"
         @click="updateCurrentKtAddress(item)"
       />
-      <!-- <div
-        v-if="hiddenData.length"
-        class="kt-addresses__hidden-items"
-        @click="showModal = true"
-      >
-        <span class="kt-addresses__hidden-items-title">
-          {{ $t('all') }} KT <span>{{ $t('address') }}</span>
-        </span>
-        <span class="kt-addresses__hidden-items-count">
-          + {{ hiddenData.length }}
-        </span>
-      </div> -->
     </div>
   </div>
   <teleport v-if="showModal" to="body">
@@ -150,6 +132,7 @@ export default {
   flex-direction: column;
   margin-bottom: 30px;
   transform: rotateX(180deg);
+  padding-top: 0.1rem;
   @include lg {
     margin-bottom: 16px;
   }
@@ -167,6 +150,7 @@ export default {
   &__list {
     position: relative;
     display: flex;
+    padding-bottom: 2rem;
   }
   &__hidden-items {
     width: 225px;
@@ -221,7 +205,6 @@ export default {
   }
 }
 .scroll {
-  display: none;
   width: 100%;
   position: absolute;
   top: 50%;
@@ -248,70 +231,4 @@ export default {
     //border: 3px solid orange; /* creates padding around scroll thumb */
   }
 }
-
-/********** Range Input Styles **********/
-/*Range Reset*/
-input[type='range'] {
-  -webkit-appearance: none;
-  appearance: none;
-  background: transparent;
-  cursor: pointer;
-  width: 100%;
-}
-
-/* Removes default focus */
-input[type='range']:focus {
-  outline: none;
-}
-
-/***** Chrome, Safari, Opera and Edge Chromium styles *****/
-/* slider track */
-input[type='range']::-webkit-slider-runnable-track {
-  background-color: #c3ceeb;
-  border-radius: 0.5rem;
-  height: 4px;
-}
-
-/* slider thumb */
-input[type='range']::-webkit-slider-thumb {
-  -webkit-appearance: none; /* Override default look */
-  appearance: none;
-  // margin-top: -12px; /* Centers thumb on the track */
-
-  /*custom styles*/
-  background-color: #6b758e;
-  height: 4px;
-  width: 1rem; // todo dynamic js
-}
-
-/*input[type='range']:focus::-webkit-slider-thumb {
-  border: 1px solid #053a5f;
-  outline: 3px solid #053a5f;
-  outline-offset: 0.125rem;
-}
-*/
-/******** Firefox styles ********/
-/* slider track */
-input[type='range']::-moz-range-track {
-  background-color: #053a5f;
-  border-radius: 0.5rem;
-  height: 0.5rem;
-}
-
-/* slider thumb */
-input[type='range']::-moz-range-thumb {
-  border: none; /*Removes extra border that FF applies*/
-  border-radius: 0; /*Removes default border-radius that FF applies*/
-
-  /*custom styles*/
-  background-color: #6b758e;
-  height: 2rem;
-  width: 1rem;
-}
-
-/*input[type='range']:focus::-moz-range-thumb {
-  border: 1px solid #053a5f;
-  outline: 3px solid #053a5f;
-  outline-offset: 0.125rem;
-}*/
 </style>
