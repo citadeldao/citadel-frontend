@@ -44,7 +44,7 @@
           :is-metamask="true"
           input-type-icon="keplr-dot"
           :wallet-type-placeholder="'Citadel Keplr'"
-          :data="importedAddresses"
+          :data="newWallets"
           @close="modalCloseHandler"
           @buttonClick="modalCloseHandler"
         />
@@ -71,6 +71,7 @@ import Header from '../AddAddress/components/Header';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import KeplrConnector from '@/models/Services/Keplr';
 import closeIcon from '@/assets/icons/close.svg';
+import redirectToWallet from '@/router/helpers/redirectToWallet';
 
 const { t } = i18n.global;
 
@@ -176,7 +177,6 @@ export default {
         'keplr/connectToKeplr',
         importedAddresses.value[0].key
       );
-
       const result = await Promise.all(
         await importedAddresses.value.map(async (c) => {
           setNets([c.net]);
@@ -185,7 +185,6 @@ export default {
 
           try {
             await createWallets(WALLET_TYPES.KEPLR);
-
             return true;
           } catch (err) {
             return false;
@@ -198,7 +197,8 @@ export default {
       }
     };
 
-    const { setNets, setType, createWallets, setAddress } = useCreateWallets();
+    const { setNets, setType, createWallets, setAddress, newWallets } =
+      useCreateWallets();
 
     const cancel = () => {
       router.push('/add-address');
@@ -207,12 +207,9 @@ export default {
     const modalCloseHandler = () => {
       showSuccess.value = false;
 
-      router.push({
-        name: 'WalletStake',
-        params: {
-          net: importedAddresses.value[0]?.net,
-          address: importedAddresses.value[0]?.address,
-        },
+      redirectToWallet({
+        wallet: newWallets.value[0],
+        root: true,
       });
     };
 
@@ -231,13 +228,13 @@ export default {
       walletLoading,
       modalCloseHandler,
       cancel,
-
       onSelectCoin,
       selectedCoins,
       importWallets,
       loadingImport,
       importedAddresses,
       privateWallets,
+      newWallets,
     };
   },
 };
