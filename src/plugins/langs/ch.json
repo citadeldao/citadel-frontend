@@ -187,8 +187,8 @@
             "block1Info": "这是一个仅可查看的地址，因为您使用公钥添加该账户，或者您已注销。",
             "block2Title": "想知道如何导入地址？",
             "block2Info": "查看如何使用私钥或助记词短语导入地址的分步骤指导。",
-            "availableAssets": "",
-            "totalAssets": ""
+            "availableAssets": "可用资产",
+            "totalAssets": "总资产"
         },
         "stubs": {
             "chain": "Ki 链暂时不可用",
@@ -918,7 +918,8 @@
         "transactionData": "交易数据",
         "transactionFee": "交易手续费",
         "signMessage": "签名消息",
-        "searchPlaceholder": "开始输入 APP 名称"
+        "searchPlaceholder": "开始输入 APP 名称",
+        "typeOperation": ""
     },
     "tokenDescriptionComdex": "Comdex 是搭建在 Cosmos 上的去中心化合成资产协议",
     "tokenDescriptionJuno": "Juno 是基于 Cosmos  搭建的区块链，为部署可交互操作的智能合约提供环境。",
@@ -1159,8 +1160,7 @@
         "privacyPolicy": "隐私条款",
         "termsOfService": "服务条款"
     },
-    "dontHaveEnoughFoundsForFee": "您的余额不足，无法支付交易手续费",
-    "dontHaveEnoughFounds": "",
+    "dontHaveEnoughFounds": "您的余额不足，无法支付交易手续费",
     "transactionsSocket": {
         "failed": "交易失败",
         "completed": "交易完成",
@@ -1275,5 +1275,6 @@
             "title": "充值自",
             "action": "交易所"
         }
-    }
+    },
+    "dontHaveEnoughFoundsForFee": "您的余额不足，无法支付交易手续费"
 }

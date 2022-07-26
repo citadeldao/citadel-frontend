@@ -40,7 +40,6 @@ export default {
   height: 100vh;
   display: flex;
   background: $gray-gradient;
-
   @include md {
   }
   &__main {
@@ -48,8 +47,9 @@ export default {
     flex-direction: column;
     display: flex;
     flex-grow: 1;
-    overflow-y: auto;
+    overflow-y: overlay;
     overflow-x: hidden;
+    width: 100%;
     position: relative;
     @include lg {
       padding-right: 25px;

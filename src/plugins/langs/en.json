@@ -918,7 +918,8 @@
         "transactionData": "Transaction data",
         "transactionFee": "Transaction fee",
         "signMessage": "Sign message",
-        "searchPlaceholder": "Start typing the app name"
+        "searchPlaceholder": "Start typing the app name",
+        "typeOperation": "Type operation"
     },
     "tokenDescriptionComdex": "Comdex is a decentralized synthetic assets protocol built on the Cosmos. ",
     "tokenDescriptionJuno": "Juno is a Cosmos-based chain that provides an environment for the deployment of interoperable smart contracts.",
@@ -1159,8 +1160,7 @@
         "privacyPolicy": "Privacy policy",
         "termsOfService": "Terms of service"
     },
-    "dontHaveEnoughFoundsForFee": "You do not have enough funds to pay the transaction fee.",
-    "dontHaveEnoughFounds": "You do not have enough funds to do the {type} transaction",
+    "dontHaveEnoughFounds": "You do not have enough funds to pay the transaction fee.",
     "transactionsSocket": {
         "failed": "Transaction failed",
         "completed": "Transaction completed",
@@ -1275,5 +1275,6 @@
             "title": "Deposit from ",
             "action": "exchanges"
         }
-    }
+    },
+    "dontHaveEnoughFoundsForFee": "You do not have enough funds to pay the transaction fee."
 }
