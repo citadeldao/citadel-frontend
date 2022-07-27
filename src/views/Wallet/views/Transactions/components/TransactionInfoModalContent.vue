@@ -1,5 +1,6 @@
 <template>
   <div class="transaction-info-modal-content">
+    <TxStatuses :info="info" :current-wallet="currentWallet" />
     <InfoBlock :current-wallet="currentWallet" :info="info" />
     <div v-if="info.view" class="inner-tx">
       <div
@@ -69,9 +70,11 @@ import { ref, nextTick } from 'vue';
 import Textarea from '@/components/UI/Textarea';
 import comment from '@/assets/icons/comment.svg';
 import InfoBlock from './InfoBlock.vue';
+import TxStatuses from './TxStatuses';
+
 export default {
   namae: 'TransactionInfoModalContent',
-  components: { InfoBlock, comment, Textarea },
+  components: { InfoBlock, comment, Textarea, TxStatuses },
   props: {
     info: {
       type: Object,
@@ -99,6 +102,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$blue-dark: #262b61;
+
 .transaction-info-modal-content {
   padding-top: 15px;
   width: 100%;
@@ -114,9 +119,9 @@ export default {
 
     &__view-item {
       margin-bottom: 15px;
-      border: 1px dotted #ccc;
-      border-radius: 10px;
-      padding: 7px;
+      background: #f0f3fd;
+      border-radius: 8px;
+      padding: 16px;
       box-sizing: border-box;
 
       &.empty {
@@ -137,18 +142,22 @@ export default {
         .value-amount {
           font-size: 13px;
           margin-right: 5px;
+          color: $dark-blue;
+          font-family: 'Panton_Bold';
         }
 
         .value-symbol {
           font-size: 13px;
+          color: $blue-dark;
         }
 
         a {
+          color: $blue-dark;
           text-decoration: none;
           font-size: 13px;
 
           &:hover {
-            color: #1a53f0;
+            color: $blue-dark;
             cursor: pointer;
           }
         }
@@ -157,6 +166,7 @@ export default {
 
     &__view-item-component {
       display: flex;
+      margin-top: 5px;
 
       .title {
         font-size: 13px;

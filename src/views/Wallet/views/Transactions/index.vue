@@ -398,8 +398,10 @@ export default {
     }
   }
   &__table {
-    border-collapse: collapse;
-    margin-bottom: 30px;
+    border-collapse: separate;
+    border-spacing: 0 0.5em;
+    // border-collapse: collapse;
+    // margin-bottom: 30px;
     @include lg {
       margin-bottom: 24px;
     }
@@ -422,7 +424,8 @@ export default {
     padding: 15px 0;
     font-size: 16px;
     line-height: 19px;
-    font-family: 'Panton_Bold';
+    font-style: normal;
+    font-family: 'Panton_Regular';
     &:first-child {
       padding-left: 24px;
       @include md {

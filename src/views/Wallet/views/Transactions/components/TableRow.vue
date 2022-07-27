@@ -328,19 +328,25 @@ export default {
 <style lang="scss" scoped>
 .table-row {
   cursor: pointer;
-  border-bottom: 1px solid $too-ligth-blue;
+  box-sizing: border-box;
+  // border-bottom: 1px solid $too-ligth-blue;
 
   & td {
-    padding: 16px 0 30px 0;
+    background: rgba(239, 249, 254, 0.7);
+    height: 64px;
+    // padding: 16px 0 30px 0;
     @include lg {
-      padding: 16px 0 16px 0;
+      // padding: 16px 0 16px 0;
     }
     @include md {
-      padding: 16px 0 16px 0;
+      // padding: 16px 0 16px 0;
     }
 
     &:first-child {
       padding-left: 24px;
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+
       @include md {
         padding-right: 16px;
       }
@@ -352,6 +358,9 @@ export default {
     &:last-child {
       text-align: right;
       padding-right: 20px;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+
       @include lg {
         padding-right: 0px;
       }
@@ -363,7 +372,7 @@ export default {
 
   &__type {
     @include lg {
-      padding-bottom: 36px !important;
+      // padding-bottom: 36px !important;
     }
   }
 
