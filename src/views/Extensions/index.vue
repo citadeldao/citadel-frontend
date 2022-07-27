@@ -77,14 +77,18 @@
     <div v-if="loading" class="extensions__loading">
       <Loading />
     </div>
-    <div v-if="currentApp" class="extensions__app-wrap">
+    <div
+      v-if="currentApp"
+      :class="{ fullScreen: showFullScreen }"
+      class="extensions__app-wrap"
+    >
       <keep-alive v-if="!showFullScreen">
         <component :is="closeIcon" class="close-icon" @click="closeApp()" />
       </keep-alive>
       <iframe
         :src="currentApp.url"
         frameBorder="0"
-        :width="showFullScreen ? 1280 : 550"
+        :width="showFullScreen ? '100%' : 550"
         height="710"
         align="left"
         name="target"
@@ -379,12 +383,6 @@ export default {
         }));
       txComment.value = '';
 
-      store.dispatch('extensions/sendCustomMsg', {
-        token: currentAppInfo.value.token,
-        message: extensionsSocketTypes.messages.success,
-        type: extensionsSocketTypes.types.transaction,
-      });
-
       confirmPassword.value = false;
       showSuccessModal.value = false;
       successTx.value = '';
@@ -570,31 +568,39 @@ export default {
       }
     }); */
 
-    /* watch(metamaskConnector.value && metamaskConnector.value, (newV) => {
-      if (selectedApp.value && [6, 7].includes(selectedApp.value.id)) {
-        const metamaskNet = newV.chainId === 56 ? 'bsc' : 'eth';
-        const metamaskAddress =
-          newV.accounts[0] && newV.accounts[0].toLowerCase();
+    watch(
+      () => metamaskConnector.value.accounts,
+      (newV) => {
+        if (
+          newV &&
+          newV[0] &&
+          selectedApp.value &&
+          [6, 7].includes(selectedApp.value.id)
+        ) {
+          const metamaskNet =
+            metamaskConnector.value.chainId === 56 ? 'bsc' : 'eth';
+          const metamaskAddress = newV[0] && newV[0].toLowerCase();
 
-        const findWallet = walletsList.value.find(
-          (w) =>
-            w.type === WALLET_TYPES.PUBLIC_KEY &&
-            metamaskNet === w.net &&
-            metamaskAddress === w.address.toLowerCase()
-        );
-
-        const win = window.frames.target;
-        win &&
-          win.postMessage(
-            {
-              from: 'metamask',
-              address: findWallet ? findWallet.address : null,
-              net: findWallet ? findWallet.net : null,
-            },
-            selectedApp.value.url
+          const findWallet = walletsList.value.find(
+            (w) =>
+              w.type === WALLET_TYPES.PUBLIC_KEY &&
+              metamaskNet === w.net &&
+              metamaskAddress === w.address.toLowerCase()
           );
+
+          const win = window.frames.target;
+          win &&
+            win.postMessage(
+              {
+                from: 'metamask',
+                address: findWallet ? findWallet.address : null,
+                net: findWallet ? findWallet.net : null,
+              },
+              selectedApp.value.url
+            );
+        }
       }
-    }); */
+    );
 
     watch(extensionTransactionForSign, () => {
       if (extensionTransactionForSign?.value?.transaction) {
@@ -645,6 +651,14 @@ export default {
         }
       }
     });
+
+    const sendSuccessMSG = () => {
+      store.dispatch('extensions/sendCustomMsg', {
+        token: currentAppInfo.value.token,
+        message: extensionsSocketTypes.messages.success,
+        type: extensionsSocketTypes.types.transaction,
+      });
+    };
 
     const confirmModalCloseHandlerWithRequest = () => {
       password.value = '';
@@ -807,6 +821,7 @@ export default {
           confirmModalDisabled.value = false;
           confirmModalCloseHandler();
           showSuccessModal.value = true;
+          sendSuccessMSG();
         } else {
           notify({
             type: 'warning',
@@ -843,6 +858,7 @@ export default {
           confirmModalDisabled.value = false;
           confirmModalCloseHandler();
           showSuccessModal.value = true;
+          sendSuccessMSG();
         }
 
         return;
@@ -864,7 +880,7 @@ export default {
       }
 
       let result;
-      console.log('test', extensionTransactionForSign.value);
+
       try {
         result = await signerWallet.value.signAndSendTransfer({
           walletId: signerWallet.value.id,
@@ -886,6 +902,7 @@ export default {
           confirmModalDisabled.value = false;
           confirmModalCloseHandler();
           showSuccessModal.value = true;
+          sendSuccessMSG();
         } else {
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;
@@ -973,8 +990,14 @@ export default {
 
     &__app-wrap {
       margin-top: 35px;
-      position: relative;
+      position: relative;      
       border-radius: 20px;
+
+      &.fullScreen {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0 35px;
+      }
 
       .close-icon {
         position: absolute;

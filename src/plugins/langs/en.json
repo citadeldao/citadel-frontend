@@ -1160,8 +1160,7 @@
         "privacyPolicy": "Privacy policy",
         "termsOfService": "Terms of service"
     },
-    "dontHaveEnoughFoundsForFee": "You do not have enough funds to pay the transaction fee.",
-    "dontHaveEnoughFounds": "You do not have enough funds to do the {type} transaction",
+    "dontHaveEnoughFounds": "You do not have enough funds to pay the transaction fee.",
     "transactionsSocket": {
         "failed": "Transaction failed",
         "completed": "Transaction completed",
@@ -1276,5 +1275,6 @@
             "title": "Deposit from ",
             "action": "exchanges"
         }
-    }
+    },
+    "dontHaveEnoughFoundsForFee": "You do not have enough funds to pay the transaction fee."
 }
