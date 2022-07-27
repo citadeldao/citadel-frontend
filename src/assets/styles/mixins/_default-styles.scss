@@ -1,0 +1,282 @@
+// ** Button ** //
+@mixin btn-default {
+  width: fit-content !important;
+
+  min-height: $btn-min-height;
+  min-width: $btn-min-width !important;
+  max-width: $btn-max-width !important;
+
+  border-radius: $btn-border-radius;
+  font-size: $btn-font-size;
+  &:hover {
+    transform: scale(1.05);
+  }
+  &:disabled,
+  &[disabled] {
+    pointer-events: all;
+    cursor: not-allowed;
+    transform: scale(1);
+  }
+
+  @include xs-lg {
+    min-height: $btn-min-height-md;
+    min-width: $btn-min-width-md !important;
+  }
+
+  @include md {
+    font-size: $btn-font-size-md;
+    min-height: $btn-min-height-md;
+    min-width: $btn-min-width-md !important;
+  }
+}
+
+// ** Card ** //
+@mixin card-default {
+  filter: $card-shadow;
+  box-shadow: $card-shadow;
+  border-radius: $card-border-radius;
+  padding: $card-padding;
+  background: $white;
+
+  @include xs-lg {
+    padding: $card-padding-xs-lg;
+  }
+
+  @include md {
+    padding: $card-padding-md;
+  }
+
+  @include laptop {
+    padding: 20px;
+  }
+}
+
+// ** Text Title ** //
+@mixin title-default {
+  font-size: $title-font-size;
+  font-family: "Panton_Bold" !important;
+
+  @include laptop-l {
+    font-size: $title-font-size-laptop-l;
+  }
+
+  @include xs-lg {
+    font-size: $title-font-size-md;
+  }
+
+  @include md {
+    font-size: $title-font-size-md;
+  }
+
+  @include laptop {
+    font-size: $title-font-size-laptop;
+  }
+}
+
+// ** Text ** //
+@mixin text-default {
+  font-size: $text-font-size;
+  color: $mid-blue;
+  display: block;
+
+  @include laptop-l {
+    font-size: $text-font-size-laptop-l;
+  }
+
+  @include xs-lg {
+    font-size: $text-font-size-md;
+    .checkbox__label {
+      font-size: 1rem;
+    }
+  }
+
+  @include md {
+    font-size: $text-font-size-md;
+  }
+}
+
+// ** Settings Card ** //
+@mixin settings-card-default {
+  @include card-default;
+  line-height: 1.4 !important;
+
+  display: flex;
+  flex-direction: column;
+
+  & > * {
+    margin: 0;
+  }
+
+  &__title {
+    @include title-default;
+  }
+  &__description {
+    @include text-default;
+    margin: 5px 0 10px;
+    @include xs-lg {
+      width: auto;
+    }
+    @include md {
+      width: auto;
+    }
+  }
+
+  &__button {
+    @include btn-default;
+    align-self: flex-end;
+    box-shadow: 0px 0px 25px rgba(106, 75, 255, 0.3);
+    @include laptop {
+      &.change-password-card__button {
+        box-shadow: none;
+      }
+    }
+  }
+
+  &.comingSoon {
+    opacity: 0.65;
+  }
+
+  &.comingSoon .description {
+    @include title-default;
+    color: $mid-blue;
+  }
+
+  &.comingSoon &__description {
+    @include title-default;
+    color: $mid-blue;
+  }
+
+  .settings-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px 0;
+    width: 100%;
+
+    span {
+      width: 50%;
+      margin: 0;
+    }
+    button {
+      margin: 0;
+    }
+
+    @include laptop-xl {
+      align-items: flex-start;
+      flex-direction: column;
+      span {
+        width: 70%;
+        height: 60px;
+        margin: 5px 0 10px;
+      }
+    }
+  }
+
+  @include laptop {
+    .change-email__button,
+    .change-password-card__button {
+      background: rgba(255, 87, 34, 0.2);
+      min-height: 30px;
+      border-radius: 4px;
+      color: $orange;
+    }
+  }
+}
+
+@mixin sidebar-compact-view {
+  .compact.sidebar {
+    border-color: $too-ligth-blue;
+    background-color: #fff;
+    .sidebar__logo {
+      svg {
+        margin: 0 auto;
+      }
+    }
+    .overall-card {
+      flex-direction: column;
+    }
+    .sidebar__addresses-top {
+      padding: 0;
+      border-color: transparent;
+    }
+    .sidebar__addresses-header-compact {
+      display: flex;
+      margin: 0;
+      overflow: visible;
+      padding: 0;
+    }
+    .sidebar__addresses-header-title {
+      overflow: visible;
+      font-size: $sidebar-title-font-size-laptop;
+      margin-right: 10px;
+    }
+    .sidebar__addresses-header {
+      display: none;
+    }
+    .sidebar__addresses-header {
+      display: none;
+      &-compact {
+        display: flex;
+      }
+    }
+
+    .address-item {
+      justify-content: center;
+      &:hover {
+        .address-item__info {
+          display: flex;
+        }
+      }
+    }
+
+    .address-item__icon {
+      margin: 0;
+    }
+
+    .address-item__info {
+      display: none;
+    }
+
+    &__addresses-addresses {
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sidebar__add-address-button {
+      width: fit-content;
+
+      &-text {
+        display: none;
+      }
+      &:hover {
+        background-color: transparent;
+        background: transparent;
+        color: $white;
+
+        & div {
+          background: $white;
+          color: $dark-blue;
+        }
+      }
+    }
+
+    .sidebar__compact-view-button.compact {
+      & svg {
+        fill: $black;
+        transform: rotate(0);
+      }
+      background-color: $too-ligth-gray;
+    }
+
+    // &:hover {
+    //   .sidebar__add-address-button {
+    //     border-color: transparent;
+    //     border-top-color: $too-ligth-blue;
+    //     background-color: transparent;
+    //   }
+    //   .sidebar__addresses-top {
+    //     border-color: transparent;
+    //   }
+    // }
+  }
+}

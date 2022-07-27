@@ -44,7 +44,7 @@
             :app="selectedApp"
             @launchApp="
               router.push({
-                name: 'Extension',
+                name: 'Extensions',
                 params: { name: selectedApp.name },
               })
             "
@@ -53,9 +53,11 @@
       </Modal>
     </teleport>
     <Head
+      :is-full-screen="showFullScreen"
       :app-logo="currentApp?.logo"
       :show-filter="!currentApp && !loading"
       :app="selectedApp"
+      @close="closeApp()"
       @search="onSearchHandler"
     />
     <div v-if="!currentApp && !loading" class="extensions__apps">
@@ -75,14 +77,18 @@
     <div v-if="loading" class="extensions__loading">
       <Loading />
     </div>
-    <div v-if="currentApp" class="extensions__app-wrap">
-      <keep-alive>
+    <div
+      v-if="currentApp"
+      :class="{ fullScreen: showFullScreen }"
+      class="extensions__app-wrap"
+    >
+      <keep-alive v-if="!showFullScreen">
         <component :is="closeIcon" class="close-icon" @click="closeApp()" />
       </keep-alive>
       <iframe
         :src="currentApp.url"
         frameBorder="0"
-        width="550"
+        :width="showFullScreen ? '100%' : 550"
         height="710"
         align="left"
         name="target"
@@ -124,7 +130,7 @@
         @buttonClick="confirmClickHandler"
       >
         <div class="item mt30">
-          <div class="label">Type operation</div>
+          <div class="label">{{ $t('extensions.typeOperation') }}</div>
           <span class="red">{{ extensionTransactionForSign?.type }}</span>
         </div>
         <div
@@ -274,6 +280,10 @@
   </div>
 </template>
 <script>
+import {
+  hideArtefactsForFullScreen,
+  showArtefactsForNormalScreen,
+} from '@/helpers/fullScreen';
 import Loading from '@/components/Loading';
 import { ref, markRaw, computed, watch } from 'vue';
 import Modal from '@/components/Modal';
@@ -315,6 +325,7 @@ export default {
     Input,
   },
   setup() {
+    const showFullScreen = ref(false);
     const assetsDomain = ref('https://extensions-admin-test.3ahtim54r.ru/api/');
     const store = useStore();
     const router = useRouter();
@@ -338,6 +349,7 @@ export default {
     const showLedgerConnect = ref(false);
     const ledgerError = ref('');
     const msgSuccessSignature = ref('');
+    const fullScreenAppIds = ref([6, 10, 12, 14, 15]);
 
     const { wallets: walletsList } = useWallets();
 
@@ -370,12 +382,6 @@ export default {
           text: txComment.value,
         }));
       txComment.value = '';
-
-      store.dispatch('extensions/sendCustomMsg', {
-        token: currentAppInfo.value.token,
-        message: extensionsSocketTypes.messages.success,
-        type: extensionsSocketTypes.types.transaction,
-      });
 
       confirmPassword.value = false;
       showSuccessModal.value = false;
@@ -413,12 +419,16 @@ export default {
       selectedApp.value = null;
 
       if (!stopRedirect) {
+        showFullScreen.value = false;
+        showArtefactsForNormalScreen();
         router.push({ name: 'Extensions' });
       }
     };
 
     const appBackground = computed(() =>
-      currentApp.value ? currentApp.value.background : null
+      currentApp.value && !fullScreenAppIds.value.includes(selectedApp.value.id)
+        ? currentApp.value.background
+        : null
     );
     const currentAppInfo = computed(
       () => store.getters['extensions/currentAppInfo']
@@ -435,6 +445,7 @@ export default {
     const metamaskConnector = computed(
       () => store.getters['metamask/metamaskConnector']
     );
+
     const keplrConnector = computed(
       () => store.getters['keplr/keplrConnector']
     );
@@ -442,6 +453,11 @@ export default {
     const selectApp = async () => {
       showAppInfoModal.value = false;
       currentApp.value = null;
+
+      if (fullScreenAppIds.value.includes(selectedApp.value.id)) {
+        showFullScreen.value = true;
+        hideArtefactsForFullScreen();
+      }
 
       await store.dispatch('extensions/fetchExtensionInfo', {
         appId: selectedApp.value.id,
@@ -486,18 +502,17 @@ export default {
           }));
 
         if (mergeWallet) {
-          wallets.push({ address: mergeWallet.address, net: mergeWallet.net });
+          wallets.push({
+            address: mergeWallet.address,
+            net: mergeWallet.net,
+            from: 'metamask',
+          });
         }
 
         selectedApp.value.url += `?token=${
           currentAppInfo.value.token
         }&wallets=${JSON.stringify(wallets)}`;
         currentApp.value = selectedApp.value;
-
-        /* setTimeout(() => {
-          const win = window.frames.target;
-          win.postMessage('Message from citadel', selectedApp.value.url);
-        }, 5000); */
       }
     };
 
@@ -522,7 +537,7 @@ export default {
         extensionsList.value.find((a) => +a.id === +app)
       );
       router.push({
-        name: 'Extension',
+        name: 'Extensions',
         params: { name: selectedApp.value.name },
       });
     };
@@ -552,6 +567,40 @@ export default {
         signerWallet.value = privateWallets.value.find(w => w.address.toLowerCase() === currentAddress.toLowerCase() && nets.includes(w.net.toLowerCase()));
       }
     }); */
+
+    watch(
+      () => metamaskConnector.value.accounts,
+      (newV) => {
+        if (
+          newV &&
+          newV[0] &&
+          selectedApp.value &&
+          [6, 7].includes(selectedApp.value.id)
+        ) {
+          const metamaskNet =
+            metamaskConnector.value.chainId === 56 ? 'bsc' : 'eth';
+          const metamaskAddress = newV[0] && newV[0].toLowerCase();
+
+          const findWallet = walletsList.value.find(
+            (w) =>
+              w.type === WALLET_TYPES.PUBLIC_KEY &&
+              metamaskNet === w.net &&
+              metamaskAddress === w.address.toLowerCase()
+          );
+
+          const win = window.frames.target;
+          win &&
+            win.postMessage(
+              {
+                from: 'metamask',
+                address: findWallet ? findWallet.address : null,
+                net: findWallet ? findWallet.net : null,
+              },
+              selectedApp.value.url
+            );
+        }
+      }
+    );
 
     watch(extensionTransactionForSign, () => {
       if (extensionTransactionForSign?.value?.transaction) {
@@ -602,6 +651,14 @@ export default {
         }
       }
     });
+
+    const sendSuccessMSG = () => {
+      store.dispatch('extensions/sendCustomMsg', {
+        token: currentAppInfo.value.token,
+        message: extensionsSocketTypes.messages.success,
+        type: extensionsSocketTypes.types.transaction,
+      });
+    };
 
     const confirmModalCloseHandlerWithRequest = () => {
       password.value = '';
@@ -691,7 +748,7 @@ export default {
           extensionTransactionForSign.value.transaction.direct &&
           extensionTransactionForSign.value.transaction.json.memo
             .toLowerCase()
-            .includes('permissions')
+            .includes('permission')
             ? 'direct'
             : 'json';
 
@@ -764,6 +821,7 @@ export default {
           confirmModalDisabled.value = false;
           confirmModalCloseHandler();
           showSuccessModal.value = true;
+          sendSuccessMSG();
         } else {
           notify({
             type: 'warning',
@@ -800,6 +858,7 @@ export default {
           confirmModalDisabled.value = false;
           confirmModalCloseHandler();
           showSuccessModal.value = true;
+          sendSuccessMSG();
         }
 
         return;
@@ -843,6 +902,7 @@ export default {
           confirmModalDisabled.value = false;
           confirmModalCloseHandler();
           showSuccessModal.value = true;
+          sendSuccessMSG();
         } else {
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;
@@ -865,6 +925,7 @@ export default {
     };
 /* eslint-disable */
     return {
+      showFullScreen,
       showTx,
       router,
       assetsDomain,
@@ -922,17 +983,21 @@ export default {
     justify-content: flex-start;
     align-items: center;
     position: relative;
-    // min-height: 100%;
-    // min-height: calc(100% - 123px);
     background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     border-radius: 16px;
-    padding-bottom: 35px;
 
     &__app-wrap {
       margin-top: 35px;
-      position: relative;
-      box-shadow: 0px 15px 50px rgba(80, 100, 124, 0.1), 0px 10px 15px rgba(80, 100, 124, 0.16);
+      position: relative;      
       border-radius: 20px;
+
+      &.fullScreen {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0 35px;
+      }
 
       .close-icon {
         position: absolute;
@@ -957,13 +1022,8 @@ export default {
       box-sizing: border-box;
       z-index: 0;
       float: left;
-
-      .app {
-        width: 23%;
-        margin-right: 20px;
-        margin-bottom: 15px;
-        cursor: pointer;
-      }
+      background: $white;
+      border-radius: 0 0 16px 16px;
     }
 
     .label.description {
@@ -1106,57 +1166,5 @@ export default {
       }
     }
   }
-  @media screen and (max-width: 1440px) {
-    .extensions {
-      &__apps {
-        .app-block.app {
-          width: 23%;
-          // margin-right: 10px;
-        }
-      }
-    }
-  }
-  @media screen and (max-width: 1600px) {
-    .extensions {
-      &__apps {
-        .app-block.app {
-          width: 23%;
-          margin-right: 20px;
-        }
-      }
-    }
-  }
 
-  @media screen and (max-width: 1357px) {
-    .extensions {
-      &__apps {
-        .app-block.app {
-          width: 31%;
-          margin-right: 22px;
-        }
-      }
-    }
-  }
-
-  @media screen and (max-width: 1270px) {
-    .extensions {
-      &__apps {
-        .app-block.app {
-          width: 48%;
-          margin-right: 10px;
-        }
-      }
-    }
-  }
-
-  @media screen and (max-width: 870px) {
-    .extensions {
-      &__apps {
-        .app-block.app {
-          width: 100%;
-          margin: 20px 0;
-        }
-      }
-    }
-  }
 </style>

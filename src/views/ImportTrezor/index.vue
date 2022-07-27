@@ -89,8 +89,8 @@ export default {
         const newWallet = newWalletInstance;
 
         await store.dispatch('wallets/pushWallets', { wallets: [newWallet] });
-        await store.dispatch('wallets/getNewWallets', 'lazy');
-        store.dispatch('wallets/getNewWallets', 'detail');
+        // await store.dispatch('wallets/getNewWallets','lazy');
+        // store.dispatch('wallets/getNewWallets','detail');
       } else {
         router.push({ name: 'AddAddress' });
       }

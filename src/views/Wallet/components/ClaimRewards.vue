@@ -18,14 +18,19 @@
       }}</span>
       <span class="claim-rewards__note"
         >{{
-          currentWalletInfo?.claimableRewards
+          !apy
+            ? $t('noApyNote')
+            : currentWalletInfo?.claimableRewards
             ? currentWallet?.net === 'osmosis'
               ? $t('accruedDaily')
               : $t('youHave')
             : `Stake your ${currentWallet.code} not to miss`
         }}
       </span>
-      <span class="claim-rewards__info">
+      <span
+        v-if="apy || currentWalletInfo?.claimableRewards"
+        class="claim-rewards__info"
+      >
         <span v-pretty-number="{ value: reward, currency }" />
         <span class="claim-rewards__currency">
           {{ currency }}
@@ -58,6 +63,7 @@
         :disabled="disabled"
         :bg-color="currentWalletInfo?.claimableRewards ? '#6A4BFF' : `white`"
         :icon-fill="currentWalletInfo?.claimableRewards ? 'white' : `#6A4BFF`"
+        data-qa="Claim-rewards"
         @click="handleButtonClick"
       />
     </div>

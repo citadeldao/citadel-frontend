@@ -210,10 +210,9 @@ export default class CryptoCoin {
 
     if (walletId) {
       res = await citadel.getBalanceById(walletId, token);
-
-      if (token) {
-        await store.dispatch('wallets/getNewWallets', 'lazy');
-      }
+      // if(token){
+      //   await store.dispatch('wallets/getNewWallets','lazy');
+      // }
     } else {
       res = await citadel.getBalanceByAddress(net, address);
     }
@@ -290,9 +289,14 @@ export default class CryptoCoin {
 
     if (!error) {
       if (!data.enough && options.transactionType !== 'transfer') {
+        const availableBalance =
+          this?.tokenBalance?.mainBalance || this?.balance?.mainBalance;
         notify({
           type: 'warning',
-          text: t('dontHaveEnoughFounds'),
+          text:
+            availableBalance < +data.fee
+              ? t('dontHaveEnoughFoundsForFee')
+              : t('dontHaveEnoughFounds', { type: options.transactionType }),
         });
       }
 

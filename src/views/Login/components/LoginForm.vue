@@ -35,6 +35,7 @@
           v-for="item in socialButtons"
           :key="item.icon"
           :icon="item.icon"
+          :disabled="item.disabled"
           @click="$emit('socialClick', item.icon)"
         />
       </div>
@@ -53,6 +54,7 @@ import { validateEmail } from '@/helpers/validators';
 const socialButtons = [
   {
     icon: 'facebook',
+    disabled: true,
   },
   {
     icon: 'apple',

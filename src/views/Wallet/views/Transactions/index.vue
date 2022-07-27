@@ -389,7 +389,7 @@ export default {
     margin: 34px 0 38px 0;
   }
   @include md {
-    margin: 23px 0 16px 0;
+    margin: 23px 0 63px 0;
   }
   &__table-xl {
     display: none;

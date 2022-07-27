@@ -1,17 +1,19 @@
 <template>
-  <div class="asset-item">
-    <div class="asset-item__icon">
-      <div v-if="showIconPlaceholder" class="asset-item__placeholder">
-        <span>{{ iconPlaceholder[0] }}</span>
-        <span>{{ iconPlaceholder[1] }}</span>
-      </div>
-      <img
-        v-else
-        :src="getTokenIcon(asset.code.toLowerCase())"
-        alt=""
-        @error="showIconPlaceholder = true"
-      />
-    </div>
+  <div
+    class="asset-item"
+    :class="{
+      'asset-item--choosen': isChoosenToken,
+      'asset-item--native': isNativeToken,
+    }"
+  >
+    <AssetIcon
+      :is-native-token="isNativeToken"
+      :net="asset.net"
+      :name="asset.name"
+      :code="asset.code"
+      class="asset-item__icon"
+    />
+
     <div class="asset-item__info">
       <div class="asset-item__line">
         <span class="asset-item__title">
@@ -20,7 +22,9 @@
         <span class="asset-item__balance">
           <span
             v-pretty-number="{
-              value: asset.tokenBalance.mainBalance,
+              value:
+                asset?.tokenBalance?.calculatedBalance ||
+                asset?.balance?.calculatedBalance,
               currency: asset.code,
             }"
             class="asset-item__amount"
@@ -32,8 +36,10 @@
       </div>
 
       <div class="asset-item__line">
-        <span class="asset-item__description">
-          {{ asset.config.standard.toUpperCase() }}
+        <span
+          class="asset-item__description"
+          v-html="asset.config?.standard?.toUpperCase() || '<b>Native</b>'"
+        >
         </span>
         <div class="asset-item__balance asset-item__balance--usd">
           <span class="asset-item__currency">$</span>
@@ -48,25 +54,43 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { ref, computed, markRaw } from 'vue';
 import { tokenIconPlaceholder, getTokenIcon } from '@/helpers';
+import AssetIcon from '@/components/UI/AssetIcon.vue';
 
 export default {
-  name: 'AddressItem',
+  name: 'AssetItemModal',
   props: {
     asset: {
       type: Object,
       required: true,
     },
+    isChoosenToken: {
+      type: Boolean,
+      default: false,
+    },
+    isNativeToken: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  components: {
+    AssetIcon,
   },
   setup(props) {
     const showIconPlaceholder = ref(false);
-
+    const icon = ref();
+    import(
+      `@/assets/icons/networks/${props.asset.code.toLowerCase()}.svg`
+    ).then((val) => {
+      icon.value = markRaw(val.default);
+    });
     const iconPlaceholder = computed(() =>
       tokenIconPlaceholder(props.asset.code)
     );
 
     return {
+      // icon,
       getTokenIcon,
       showIconPlaceholder,
       iconPlaceholder,
@@ -76,6 +100,37 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@mixin hover {
+  .asset-item {
+    &__icon {
+      background: $dark-blue;
+    }
+
+    &__title {
+      color: $black;
+    }
+
+    &__description {
+      color: $dark-blue;
+    }
+
+    &__amount {
+      color: $dark-blue;
+    }
+
+    &__balance--usd {
+      .asset-item__amount {
+        color: $ligth-blue;
+      }
+    }
+  }
+}
+.asset-item__icon:deep .asset-icon {
+  &__placeholder {
+    max-width: 36px !important;
+    max-height: 36px !important;
+  }
+}
 .asset-item {
   width: 100%;
   display: flex;
@@ -89,31 +144,11 @@ export default {
   }
 
   &:hover {
-    .asset-item {
-      &__icon {
-        background: $dark-blue;
-      }
-
-      &__title {
-        color: $black;
-      }
-
-      &__description {
-        color: $dark-blue;
-      }
-
-      &__amount {
-        color: $dark-blue;
-      }
-
-      &__balance--usd {
-        .asset-item__amount {
-          color: $ligth-blue;
-        }
-      }
-    }
+    @include hover;
   }
-
+  &--choosen {
+    @include hover;
+  }
   &__icon {
     width: 40px;
     height: 40px;
@@ -184,9 +219,6 @@ export default {
       .asset-item {
         &__amount {
           color: $darkgray;
-        }
-
-        &__currency {
         }
       }
     }

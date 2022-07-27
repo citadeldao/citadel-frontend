@@ -39,11 +39,14 @@
         {{ info.comment }}
       </span>
     </div>
-    <a v-if="info.hash" :href="txUrl" class="info-block__line" target="_blank">
-      <span class="info-block__line-title">
+    <div v-if="info.hash" class="info-block__line" target="_blank">
+      <div class="info-block__line-title">
         {{ $t('viewTranscasction')
-        }}<linkIcon class="info-block__link-icon" /> </span
-    ></a>
+        }}<a target="_blank" :href="txUrl"
+          ><linkIcon class="info-block__link-icon"
+        /></a>
+      </div>
+    </div>
   </div>
 </template>
 

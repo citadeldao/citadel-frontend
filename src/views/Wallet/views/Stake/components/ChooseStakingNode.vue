@@ -1,7 +1,7 @@
 <template>
   <div class="choose-staking-node">
     <div
-      v-if="!selectedNode"
+      v-if="!selectedNode && !isWithoutDelegation"
       class="choose-staking-node__placeholder"
       data-qa="staking__node-list-button"
       @click="showNodesList"
@@ -9,7 +9,10 @@
       <pointer />
       <span>{{ $t('stakePlaceholder.choseNodePlaceholderNote') }} </span>
     </div>
-    <div v-else class="choose-staking-node__selected-node">
+    <div
+      v-if="selectedNode && !isWithoutDelegation"
+      class="choose-staking-node__selected-node"
+    >
       <StakeListItem
         title-max-width="230"
         :icon="currentWallet.net"
@@ -20,7 +23,10 @@
         @editClick="updateRedelegationDirection('from')"
       />
     </div>
-    <div v-if="editMode" class="choose-staking-node__tabs-wrapper">
+    <div
+      v-if="editMode || isWithoutDelegation"
+      class="choose-staking-node__tabs-wrapper"
+    >
       <div class="choose-staking-node__tabs">
         <span
           :class="{ 'choose-staking-node__active-tab': activeTab === 'stake' }"
@@ -39,7 +45,7 @@
           {{ $t('unstake') }}
         </span>
         <span
-          v-if="currentWallet.hasRedelegation"
+          v-if="currentWallet.hasRedelegation && !isWithoutDelegation"
           :class="{
             'choose-staking-node__active-tab': activeTab === 'redelegate',
           }"
@@ -96,22 +102,24 @@
         @input="updateAmount"
         @keyup.enter="$emit('nextStep')"
       />
-      <span v-if="showAmount" class="choose-staking-node__available-balance">
-        {{ $t('balanceTooltipInfo.availableBalance') }}:
-        <span
-          v-pretty-number="{ value: maxAmount, currency: currentWallet.code }"
-          class="choose-staking-node__available-balance-balance"
-        />
-        <span class="choose-staking-node__available-balance-currency">
-          {{ currentWallet.code }}
+      <div class="choose-staking-node__info-wrapper">
+        <span v-if="showAmount" class="choose-staking-node__available-balance">
+          {{ $t('balanceTooltipInfo.availableBalance') }}:
+          <span
+            v-pretty-number="{ value: maxAmount, currency: currentWallet.code }"
+            class="choose-staking-node__available-balance-balance"
+          />
+          <span class="choose-staking-node__available-balance-currency">
+            {{ currentWallet.code }}
+          </span>
         </span>
-      </span>
-      <span
-        v-if="!insufficientFunds && currentWallet.hasPledged"
-        class="choose-staking-node__input-note"
-      >
-        {{ $t('staking.inputNote') }}
-      </span>
+        <span
+          v-if="!insufficientFunds && currentWallet.hasPledged"
+          class="choose-staking-node__input-note"
+        >
+          {{ $t('staking.inputNote') }}
+        </span>
+      </div>
     </div>
   </div>
 </template>
@@ -143,6 +151,7 @@ export default {
     const updateAmount = inject('updateAmount');
     const getDelegationFee = inject('getDelegationFee');
     const editMode = inject('editMode');
+    const isWithoutDelegation = inject('isWithoutDelegation');
     const selectedNode = inject('selectedNode');
     const updateShowChooseNode = inject('updateShowChooseNode');
     const updateShowNodesList = inject('updateShowNodesList');
@@ -158,7 +167,10 @@ export default {
       emit('update:activeTab', value);
       updateAmount('');
       value !== 'redelegate' &&
-        (await getDelegationFee(value, selectedNode.value));
+        (await getDelegationFee(
+          value,
+          isWithoutDelegation.value ? '' : selectedNode.value
+        ));
     };
     const maxAmount = inject('maxAmount');
     const insufficientFunds = inject('insufficientFunds');
@@ -197,6 +209,7 @@ export default {
       mode,
       selectedNodeForRedelegation,
       updateRedelegationDirection,
+      isWithoutDelegation,
     };
   },
 };
@@ -298,6 +311,11 @@ export default {
     color: $mid-blue;
     margin-bottom: 22px;
   }
+  &__info-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
   &__available-balance,
   &__available-balance-balance,
   &__available-balance-currency {
@@ -306,7 +324,6 @@ export default {
     color: $mid-blue;
   }
   &__available-balance {
-    position: absolute;
     display: flex;
     align-items: center;
     margin-top: 8px;
@@ -320,12 +337,10 @@ export default {
   &__available-balance-currency {
   }
   &__input-note {
-    position: absolute;
     font-size: 14px;
     line-height: 17px;
     color: $blue;
-    right: 0;
-    margin-top: 6px;
+    margin-top: 8px;
   }
 }
 </style>

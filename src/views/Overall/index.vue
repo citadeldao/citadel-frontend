@@ -56,7 +56,6 @@ export default {
       () =>
         activeList.value !== 'all' && !customWalletsList.value.wallets.length
     );
-
     return {
       isFavouriteList,
       hasFavourites,
@@ -93,6 +92,11 @@ export default {
     }
     @include md {
       box-shadow: 0 4px 28px rgba(0, 0, 0, 0.1);
+    }
+    @include laptop {
+      box-shadow: $card-shadow;
+      padding: 20px 15px;
+      border-radius: 8px;
     }
   }
   &__balance-history-chart {

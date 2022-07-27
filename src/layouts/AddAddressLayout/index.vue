@@ -40,17 +40,16 @@ export default {
   height: 100vh;
   display: flex;
   background: $gray-gradient;
-
   @include md {
   }
   &__main {
-    padding-right: 23px;
-    padding-left: 32px;
+    padding: $main-padding;
     flex-direction: column;
     display: flex;
     flex-grow: 1;
-    overflow-y: auto;
+    overflow-y: overlay;
     overflow-x: hidden;
+    width: 100%;
     position: relative;
     @include lg {
       padding-right: 25px;
@@ -58,6 +57,10 @@ export default {
     @include md {
       padding-left: 24px;
       padding-right: 25px;
+    }
+    @include laptop {
+      margin-left: 80px;
+      padding: $main-padding-laptop;
     }
     @include mobile {
       overflow: auto;

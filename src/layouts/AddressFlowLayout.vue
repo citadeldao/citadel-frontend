@@ -42,7 +42,6 @@ export default {
 
         return;
       }
-
       router.push({ name: 'HomePage' });
     };
 

@@ -9,10 +9,9 @@ export default function useAxios() {
 
   const errorHandler = (error) => {
     console.error(error);
-    if (error.response.status === 403) {
+    if (error?.response?.status === 403) {
       window.location.href = '/login';
     }
-
     return error.response.data;
   };
 

@@ -3,19 +3,27 @@ import { prettyNumber, prettyNumberTooltip } from '@/helpers/prettyNumber';
 const insertHtml = (el, args, tooltipStyle) => {
   const value = typeof args === 'object' ? args?.value : args;
   const currency = typeof args === 'object' && args?.currency;
+  const title = typeof args === 'object' && args?.title;
+
   const currencyHtml = currency
     ? `<span class="pretty-number__currency">${currency}</span>`
     : '';
 
+  const titleHTML = title ? `<b>${title}</b>` : '';
+
   el.innerHTML = `
     <span class="pretty-number">
+
       ${args?.noPretty ? value : prettyNumber(value)}
       <span
         class="pretty-number__tooltip"
-        style="${tooltipStyle}"
+        style="${tooltipStyle}; flex-direction: column;"
       >
-        ${args?.noPretty ? value : prettyNumberTooltip(value)}
-        ${currencyHtml}
+        ${titleHTML}
+          <span style="display: inline-flex">
+            ${args?.noPretty ? value : prettyNumberTooltip(value)}
+            ${currencyHtml}
+          </span>
         </span>
     </span>
   `;

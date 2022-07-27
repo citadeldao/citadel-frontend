@@ -103,6 +103,7 @@ export default {
                       publicKey: w.publicKey,
                       privateKeyEncoded: w.privateKeyEncoded,
                       mnemonicEncoded: w.mnemonicEncoded,
+                      privateKeyHash: w?.privateKeyHash,
                     },
                   })),
                 passwordHash: backup.value.passwordHash,
@@ -154,9 +155,8 @@ export default {
       if (success) {
         showModal.value = true;
       }
-
-      await store.dispatch('wallets/getNewWallets', 'lazy');
-      store.dispatch('wallets/getNewWallets', 'detail');
+      // await store.dispatch('wallets/getNewWallets','lazy');
+      // store.dispatch('wallets/getNewWallets','detail');
     };
 
     const redirectToNewWallet = () => {

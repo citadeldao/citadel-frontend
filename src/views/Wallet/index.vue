@@ -317,7 +317,8 @@ export default {
     const { t } = useI18n();
     const store = useStore();
     const route = useRoute();
-    const { currency, currentWallet, isHardwareWallet } = useWallets();
+    const { currency, currentWallet, isHardwareWallet, currentToken } =
+      useWallets();
     const subtokensIsLoading = ref(false);
     const { loadKtAddresses, ktAddresses } = useKtAddresses();
     const showClaimModal = computed(() => {
@@ -338,9 +339,6 @@ export default {
     );
     const subtokens = computed(() =>
       store.getters['subtokens/formatedSubtokens']()
-    );
-    const currentToken = computed(
-      () => store.getters['subtokens/currentToken']
     );
     onMounted(async () => {
       await loadKtAddresses(currentWallet?.value?.id);
@@ -590,19 +588,19 @@ export default {
           showConfirmClaim.value = false;
           clearLedgerModals();
           showConfirmLedgerModal.value = true;
-
-          try {
-            res = await currentWallet.value.signAndSendMulti({
-              walletId: currentWallet.value.id,
-              rawTransactions: resRawTxs.value,
-              derivationPath: currentWallet.value.derivationPath,
-            });
+          res = await currentWallet.value.signAndSendMulti({
+            walletId: currentWallet.value.id,
+            rawTransactions: resRawTxs.value,
+            derivationPath: currentWallet.value.derivationPath,
+          });
+          if (res.ok) {
             txHash.value = res.data;
             showConfirmClaim.value = false;
             showConfirmLedgerModal.value = false;
+            showConfirmUnstakedClaim.value = false;
             showClaimSuccessModal.value = true;
-          } catch (e) {
-            ledgerErrorHandler(e);
+          } else {
+            ledgerErrorHandler(res.error);
           }
         }
         // if not hardware
@@ -618,6 +616,7 @@ export default {
           if (res.ok) {
             txHash.value = res.data;
             showConfirmClaim.value = false;
+            showConfirmUnstakedClaim.value = false;
             showClaimSuccessModal.value = true;
             isLoading.value = false;
           } else {
@@ -1264,10 +1263,11 @@ export default {
   }
 
   &__main {
+    position: relative;
     display: flex;
     flex-direction: column;
     background: $white;
-    box-shadow: -10px 4px 27px rgba(0, 0, 0, 0.1);
+    box-shadow: $card-shadow;
     border-radius: 50px;
     padding: 0 45px;
     @include lg {
@@ -1277,24 +1277,32 @@ export default {
     @include md {
       border-radius: 16px;
       padding: 0 24px;
-      box-shadow: 0px 0px 25px rgba(106, 75, 255, 0.3);
+    }
+    @include laptop {
+      border-radius: 8px;
+      padding: 0 20px;
     }
   }
 
   &__right-section {
     display: flex;
     flex-direction: column;
-    min-width: 400px;
-    width: 400px;
+    max-width: 400px;
+    width: 100%;
     margin-bottom: 78px;
     @include lg {
-      min-width: 329px;
-      width: 329px;
+      max-width: 350px;
     }
     @include md {
-      min-width: 239px;
-      width: 239px;
+      max-width: 250px;
       margin-bottom: 54px;
+    }
+    @include laptop {
+      max-width: 200px;
+    }
+
+    & > div {
+      width: 100%;
     }
   }
 

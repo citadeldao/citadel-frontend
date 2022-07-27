@@ -102,6 +102,10 @@ input[type='checkbox'] {
         transition: all 0.3s ease-in-out;
         background: $too-dark-blue;
         border: none;
+        &:hover,
+        &__label {
+          background: $blue;
+        }
       }
 
       &__label {
@@ -130,6 +134,7 @@ input[type='checkbox'] {
 
 .checkbox {
   display: inline-flex;
+  justify-content: space-between;
   align-items: center;
   cursor: pointer;
 
@@ -151,8 +156,13 @@ input[type='checkbox'] {
   }
 
   &__label {
+    @include text-default;
     display: flex;
-    padding-right: 8px;
+    font-size: 1rem !important;
+    width: fit-content;
+    @include laptop {
+      font-size: 0.875rem !important;
+    }
   }
 
   &__tooltip {

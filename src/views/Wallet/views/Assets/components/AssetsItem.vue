@@ -2,14 +2,17 @@
   <div
     class="assets-item"
     :class="{
-      'assets-item--native': isNativeToken,
       'assets-item--not-linked': isNotLinked,
+      'assets-item--disabled': isDisabled,
+      'assets-item--active': isActive,
     }"
   >
     <div class="assets-item__cell">
       <AssetIcon
+        :is-native-token="isNativeToken"
         :name="item.name"
         :code="item.code"
+        :net="item.net"
         class="assets-item__icon"
       />
       <span class="assets-item__name">{{ item?.name }}</span>
@@ -83,6 +86,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    isDisabled: {
+      type: Boolean,
+      default: false,
+    },
+    isActive: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props) {
     const showIconPlaceholder = ref(false);
@@ -97,7 +108,7 @@ export default {
 
 <style lang="scss" scoped>
 @mixin hover {
-  .assets-item {
+  .assets-item:not(.assets-item--disabled) {
     &__icon {
       background: $dark-blue;
     }
@@ -123,6 +134,10 @@ export default {
   border-radius: 8px;
   margin-bottom: 8px;
   cursor: pointer;
+
+  @include laptop {
+    height: 48px;
+  }
 
   &:hover {
     background: #f4e9fc;
@@ -166,6 +181,10 @@ export default {
 
       @include md {
         width: 22%;
+      }
+
+      @include laptop {
+        width: 18%;
       }
     }
 
@@ -237,7 +256,7 @@ export default {
       #fad0c466 1%,
       #ffd1ff66 100%
     );
-    cursor: default;
+    cursor: pointer;
     @include hover;
 
     &:hover {
@@ -249,7 +268,26 @@ export default {
       );
     }
   }
+  &--disabled {
+    background-color: #e2e8ef;
+    cursor: not-allowed;
 
+    &:deep * {
+      color: #9e9e9e;
+    }
+    &:deep .assets-item__icon {
+      background-color: $mid-gray;
+    }
+    &:hover {
+      background-color: #e2e8ef;
+      &:deep .assets-item__icon {
+        background-color: $mid-gray;
+      }
+      &:deep * {
+        color: #9e9e9e;
+      }
+    }
+  }
   &--not-linked {
     background: linear-gradient(
       90deg,
@@ -284,6 +322,21 @@ export default {
         background: $red;
         box-shadow: 0 15px 50px rgba($red, 0.1), 0 10px 15px rgba($red, 0.16);
       }
+    }
+  }
+  &--active {
+    background: linear-gradient(
+      90deg,
+      #fad0c466 0%,
+      #fad0c466 1%,
+      #ffd1ff66 100%
+    );
+    transition: none;
+    cursor: pointer;
+    .assets-item__icon {
+      background: $dark-blue;
+      box-shadow: 0 15px 50px rgba(26, 83, 240, 0.1),
+        0 10px 15px rgba(26, 83, 240, 0.16);
     }
   }
 }

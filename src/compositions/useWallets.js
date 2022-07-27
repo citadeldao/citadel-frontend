@@ -6,12 +6,20 @@ import BigNumber from 'bignumber.js';
 import { WALLET_TYPES } from '@/config/walletType';
 
 export default function useWallets(wallet = null, showCount = undefined) {
+  const sunbtokensList = computed(store.getters['subtokens/formatedSubtokens']);
   const currentWallet = computed(
     () =>
       store.getters['wallets/currentWallet'] &&
       findWalletInArray(wallets.value, store.getters['wallets/currentWallet'])
   );
-
+  const currentToken = computed(
+    () =>
+      store.getters['subtokens/currentToken'] &&
+      findWalletInArray(
+        sunbtokensList.value,
+        store.getters['subtokens/currentToken']
+      )
+  );
   // instance of given wallet
   const walletByAddress = (walletInfo) =>
     store.getters['wallets/walletByAddress'](walletInfo);
@@ -32,16 +40,14 @@ export default function useWallets(wallet = null, showCount = undefined) {
 
   const marketcap = computed(
     () =>
-      store.getters['profile/info']?.marketcap[
+      store.getters['profile/marketcaps']?.[
         wallet?.net || currentWallet.value?.net
       ]
   );
 
   const currency = computed(
     () =>
-      store.getters['profile/info']?.rates[
-        wallet?.net || currentWallet.value?.net
-      ]
+      store.getters['profile/rates']?.[wallet?.net || currentWallet.value?.net]
   );
 
   const customWalletsLists = computed(
@@ -167,7 +173,7 @@ export default function useWallets(wallet = null, showCount = undefined) {
         };
       }
 
-      const currency = store.getters['profile/info'].rates;
+      const currency = store.getters['profile/rates'];
       const balance = wlt.balance.calculatedBalance;
       blncStruct[wlt.net].balance = BigNumber(blncStruct[wlt.net].balance)
         .plus(balance)
@@ -281,5 +287,6 @@ export default function useWallets(wallet = null, showCount = undefined) {
     currentWallet,
     balanceStructure: finalStructure,
     isHardwareWallet,
+    currentToken,
   };
 }

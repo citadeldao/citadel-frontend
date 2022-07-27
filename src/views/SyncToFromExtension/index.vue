@@ -176,7 +176,6 @@ import { sha3_256 } from 'js-sha3';
 import notify from '@/plugins/notify';
 import CatPage from '@/components/CatPage';
 import citadel from '@citadeldao/lib-citadel';
-import models from '@/models';
 
 export default {
   components: {
@@ -340,19 +339,11 @@ export default {
           syncResult &&
           (await Promise.all(
             syncResult.map(async (wallet) => {
-              const WalletConstructor = models[wallet.net.toUpperCase()];
-              const walletOpts = {
-                address: wallet.address,
-                privateKeyEncoded: wallet.privateKeyEncoded,
-                publicKey: wallet.publicKey,
-                type: WALLET_TYPES.PRIVATE_KEY,
-                config: store.getters['networks/configByNet'](wallet.net),
-              };
-              const newInstance = new WalletConstructor(walletOpts);
-
-              const privateKey = newInstance.getPrivateKeyDecoded(
+              const privateKey = citadel.decodePrivateKeyByPassword(
+                wallet.net,
+                wallet.privateKeyEncoded,
                 password.value
-              );
+              ).data;
 
               const res = await citadel.addWalletByPrivateKey({
                 net: wallet.net,
@@ -434,10 +425,15 @@ export default {
                     type: WALLET_TYPES.ONE_SEED,
                     net: w.net,
                     address: w.address,
-                    privateKeyEncoded: CryptoJS.AES.encrypt(
-                      w.getPrivateKeyDecoded(password.value).toString('hex'),
+                    privateKeyEncoded: citadel.encodePrivateKeyByPassword(
+                      w.net,
+                      citadel.decodePrivateKeyByPassword(
+                        w.net,
+                        w.privateKeyEncoded,
+                        password.value
+                      ).data,
                       passwordExtension.value
-                    ).toString(),
+                    ).data,
                   },
                 ],
               };
@@ -449,7 +445,7 @@ export default {
             emit('close');
           }
         } catch (err) {
-          console.log('error');
+          console.log(err, 'error');
           syncLoading.value = false;
         }
       }

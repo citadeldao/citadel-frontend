@@ -1,23 +1,35 @@
 <template>
   <div class="settings">
-    <div class="settings__subscriptions">
-      <Subscriptions />
-    </div>
-    <div class="settings__transfer-data">
-      <TransferData />
-    </div>
-    <div class="settings__address">
+    <div class="settings__left-side">
+      <CrossChain :visibleClass="'comingSoon'" />
       <Addresses @exportWallet="exportWallet" />
     </div>
-    <div class="settings__change-email">
-      <ChangeEmail />
+
+    <div class="settings__right-side">
+      <div class="settings__cross-chain">
+        <CrossChain :visibleClass="'comingSoon'" />
+      </div>
+      <div class="settings__transfer-data">
+        <TransferData />
+      </div>
+
+      <div class="settings__right-wrap">
+        <div class="two_in_one">
+          <Language />
+          <Subscriptions />
+        </div>
+
+        <div class="column">
+          <ChangeEmail :visibleClass="'comingSoon'" />
+          <ChangePassword />
+        </div>
+
+        <ExtensionSettings :visibleClass="'comingSoon'" />
+
+        <DeleteAccount />
+      </div>
     </div>
-    <div class="settings__language">
-      <Language />
-    </div>
-    <div class="settings__delete">
-      <Delete />
-    </div>
+
     <teleport to="body">
       <Modal v-if="showModal">
         <ModalContent
@@ -113,13 +125,16 @@ import ModalContent from '@/components/ModalContent';
 import Addresses from './components/Addresses';
 import Subscriptions from './components/Subscriptions';
 import TransferData from './components/TransferData';
-import ChangeEmail from './components/ChangeEmail';
+import ChangeEmail from './components/Account/Email';
+import ChangePassword from './components/Account/Password';
+import DeleteAccount from './components/Account/Delete';
 import Language from './components/Language';
-import Delete from './components/Delete';
 import CreateVkModal from '@/views/Wallet/components/CreateVkModal.vue';
 import ManageViewingKeysModal from './components/ManageViewingKeysModal';
 import ChangeVkModal from './components/ChangeVkModal.vue';
 import Modal from '@/components/Modal';
+import CrossChain from './components/CrossChain';
+import ExtensionSettings from './components/ExtensionSettings';
 import { computed, provide, ref, onMounted, watch } from 'vue';
 import { WALLET_TYPES, VIEWING_KEY_TYPES } from '@/config/walletType';
 import { i18n } from '@/plugins/i18n';
@@ -135,7 +150,7 @@ export default {
     TransferData,
     ChangeEmail,
     Language,
-    Delete,
+    DeleteAccount,
     ModalContent,
     ChooseExportType,
     ApproveExport,
@@ -143,6 +158,9 @@ export default {
     ManageViewingKeysModal,
     ChangeVkModal,
     CreateVkModal,
+    CrossChain,
+    ChangePassword,
+    ExtensionSettings,
   },
   setup() {
     const store = useStore();
@@ -175,7 +193,7 @@ export default {
       createVkWallet.value = wallet;
       createVkViewingKey.value = vk;
       snip20TokenFee.value =
-        (await vk.getFees(vk.id, vk.net))?.data?.low?.fee || 0.2;
+        (await vk.getFees(vk.id, vk.net))?.data?.high?.fee || 0.2;
     };
     provide('openCreateVkModal', openCreateVkModal);
     const closeCreateVkModal = () => {
@@ -321,109 +339,104 @@ export default {
 
 <style lang="scss" scoped>
 .settings {
-  display: grid;
-  grid-gap: 30px;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(4, auto);
+  line-height: 1.5 !important;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 
-  &__subscriptions {
-    grid-column: 4 / 5;
-    grid-row: 2 / 2;
-  }
-
-  &__transfer-data {
-    grid-column: 3 / 5;
-    grid-row: 1 / 2;
-  }
-
-  &__address {
-    grid-column: 1 / 3;
-    grid-row: 2 / 5;
-  }
-
-  &__change-email {
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
-  }
-
-  &__language {
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
-  }
-
-  &__delete {
-    grid-column: 3 / 4;
-    grid-row: 2 / 3;
-  }
-
-  @include lg {
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(4, auto);
-
-    &__transfer-data {
-      grid-column: 5 / 7;
-      grid-row: 3 / 4;
+  & > div {
+    &:first-child {
+      flex: 0 0 63%;
+    }
+    &:nth-child(2) {
+      flex: 0 0 35%;
     }
 
-    &__subscriptions {
-      grid-column: 3 / 5;
-      grid-row: 3 / 4;
+    @include laptop-xl {
+      &:first-child,
+      &:nth-child(2) {
+        flex: 0 0 49%;
+      }
     }
-
-    &__address {
-      grid-column: 1 / 7;
-      grid-row: 2 / 3;
+  }
+  &__left-side {
+    & .cross-chain-card {
+      display: none;
     }
-
-    &__change-email {
-      grid-column: 1 / 4;
-      grid-row: 1 / 2;
+    @include laptop-l {
+      & .cross-chain-card {
+        display: flex;
+        margin-bottom: $card-margin;
+      }
     }
-
-    &__language {
-      grid-column: 4 / 7;
-      grid-row: 1 / 2;
-    }
-
-    &__delete {
-      grid-column: 1 / 3;
-      grid-row: 3 / 4;
+    @include laptop {
+      & .cross-chain-card {
+        display: flex;
+        margin-bottom: $card-margin;
+      }
     }
   }
 
-  @include md {
-    grid-gap: 15px;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(6, auto);
-
-    &__transfer-data {
-      grid-column: 1 / 3;
-      grid-row: 3 / 4;
+  &__right-side {
+    & > div {
+      margin-bottom: $card-margin;
     }
 
-    &__subscriptions {
-      grid-column: 2 / 3;
-      grid-row: 5 / 6;
+    @include laptop-l {
+      & .settings__cross-chain {
+        display: none;
+      }
     }
 
-    &__address {
-      grid-column: 1 / 3;
-      grid-row: 2 / 3;
+    @include laptop {
+      & .settings__cross-chain {
+        display: none;
+      }
     }
 
-    &__change-email {
-      grid-column: 1 / 2;
-      grid-row: 1 / 2;
+    .two_in_one {
+      @include card-default;
+
+      & > div {
+        border-radius: 0;
+        padding: 0;
+        box-shadow: none;
+        filter: none;
+      }
+      & > div:not(:last-child) {
+        margin-bottom: $card-margin;
+      }
     }
 
-    &__language {
-      grid-column: 2 / 3;
-      grid-row: 1 / 2;
+    .column {
+      display: flex;
+      flex-direction: column;
+      div:first-child {
+        margin-bottom: $card-margin;
+      }
     }
+    @include laptop-l {
+      & .cross-chain-card {
+        display: none;
+      }
+    }
+  }
 
-    &__delete {
-      grid-column: 1 / 2;
-      grid-row: 5 / 6;
+  &__right-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: stretch;
+
+    & > div {
+      flex: 0 0 49%;
+      margin-bottom: $card-margin;
+      @include laptop-l {
+        flex: 0 0 100%;
+      }
+      @include laptop {
+        flex: 0 0 100%;
+      }
     }
   }
 }

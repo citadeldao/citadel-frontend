@@ -46,9 +46,16 @@
       </div>
     </td>
     <td class="table-row__date-time">
-      <span>{{
-        transaction.date ? moment(transaction.date).fromNow() : ''
-      }}</span>
+      <Tooltip>
+        <template #content>
+          <span> {{ defaultDate(transaction.date) }} </span>
+        </template>
+        <template #default>
+          <span>{{
+            transaction.date ? moment(transaction.date).fromNow() : ''
+          }}</span>
+        </template>
+      </Tooltip>
     </td>
     <td class="table-row__to">
       <div class="table-row__to-section">
@@ -76,9 +83,16 @@
         <div class="table-row__amount-block">
           <div class="table-row__amount-block-line">
             <div class="table-row__amount-block-date-time">
-              <span>{{
-                transaction.date ? moment(transaction.date).fromNow() : ''
-              }}</span>
+              <Tooltip>
+                <template #content>
+                  <span> {{ defaultDate(transaction.date) }} </span>
+                </template>
+                <template #default>
+                  <span>{{
+                    transaction.date ? moment(transaction.date).fromNow() : ''
+                  }}</span>
+                </template>
+              </Tooltip>
             </div>
             <div v-if="transaction.value" class="table-row__amount-value">
               <span
@@ -185,6 +199,7 @@ import inIcon from '@/assets/icons/transactions/in.svg';
 import out from '@/assets/icons/transactions/out.svg';
 import useTransaction from '@/compositions/useTransaction';
 import Loading from '@/components/Loading.vue';
+import defaultDate from '@/helpers/date.js';
 
 export default {
   name: 'TableRow',
@@ -294,6 +309,7 @@ export default {
     });
 
     return {
+      defaultDate,
       icon,
       type,
       status,

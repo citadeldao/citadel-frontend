@@ -660,8 +660,13 @@ export default {
 
     watch(
       () => props.currentWallet,
-      () => {
-        setCosmosNetworkBridgeToken();
+      (newVal, oldVal) => {
+        if (
+          newVal.net !== oldVal.net ||
+          newVal.address.toLowerCase() !== oldVal.address.toLowerCase()
+        ) {
+          setCosmosNetworkBridgeToken();
+        }
       }
     );
 
@@ -1309,7 +1314,7 @@ export default {
     padding: 21px 0 17px 0;
   }
   @include md {
-    padding: 19px 0 0 0;
+    padding: 19px 0 63px;
   }
 
   &__switch {
@@ -1364,6 +1369,9 @@ export default {
       flex-direction: column;
       margin-bottom: 0;
     }
+    @include laptop {
+      flex-direction: row;
+    }
   }
 
   &__autocomplete {
@@ -1385,6 +1393,9 @@ export default {
     @include md {
       width: 100%;
       margin-bottom: 23px;
+    }
+    @include laptop {
+      width: 48%;
     }
   }
 
