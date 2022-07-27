@@ -166,7 +166,7 @@
                 value: extensionTransactionForSign.fee,
                 currency: selectedApp.networks[0],
               }"
-            />{{ selectedApp.networks[0] }}
+            />{{ extensionTransactionForSign.net || selectedApp.networks[0] }}
           </div>
         </div>
         <div class="item">
