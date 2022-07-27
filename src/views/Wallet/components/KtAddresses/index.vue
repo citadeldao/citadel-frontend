@@ -105,12 +105,8 @@ export default {
     const hiddenData = computed(() =>
       ktAddresses.value.slice(showCount.value, ktAddresses.value.length)
     );
-    const onInputRange = (e) => {
-      console.log(e, 'e');
-    };
 
     return {
-      onInputRange,
       showCount,
       currentKtAddress,
       ktAddresses,

@@ -18,31 +18,17 @@
         </span>
       </div>
     </div>
-    <div class="kt-address--copy">
-      <svg
-        width="1"
-        height="32"
-        viewBox="0 0 1 32"
-        :fill="type === 'main' ? '#6a4bff' : '#1a53f0'"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <line
-          x1="0.5"
-          y1="-2.18557e-08"
-          x2="0.500001"
-          y2="32"
-          stroke="#4F70CF"
-          stroke-dasharray="2 2"
-        />
-      </svg>
-      <div class="input__copy">
-        <copy @click.stop="copyValue" />
-        <transition name="fade1">
-          <span v-if="isCopied" class="input__tooltip">
-            {{ $t('copiedToClipboard') }}
-          </span>
-        </transition>
-      </div>
+
+    <div
+      class="input__copy"
+      :style="{ borderLeftColor: type === 'main' ? '#6a4bff' : '#1a53f0' }"
+    >
+      <copy @click.stop="copyValue" />
+      <transition name="fade1">
+        <span v-if="isCopied" class="input__tooltip">
+          {{ $t('copiedToClipboard') }}
+        </span>
+      </transition>
     </div>
   </div>
 </template>
@@ -93,7 +79,6 @@ export default {
       )
     );
     const copyValue = () => {
-      console.log(formatedAddress.value, 'formatedAddress.value');
       copyToClipboard(props.item.address);
       isCopied.value = true;
 
@@ -119,6 +104,7 @@ export default {
     display: flex;
     align-items: center;
     position: relative;
+    border-left: 1px dashed #1a53f0;
     & svg {
       width: 22.9px;
       margin-left: 17px;
@@ -152,11 +138,6 @@ export default {
       border-style: solid;
       border-color: transparent transparent $too-ligth-gray transparent;
     }
-  }
-}
-.kt-address {
-  &--copy {
-    display: flex;
   }
 }
 .kt-address-item {

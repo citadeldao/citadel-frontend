@@ -19,12 +19,12 @@
           </div>
         </transition>
       </div>
-      <div class="wallet__kt-addresses-wrapper">
+      <div
+        class="wallet__kt-addresses-wrapper"
+        v-if="currentWallet.hasKtAddresses && ktAddresses.length"
+      >
         <div class="kt-addresses__title">KT {{ $t('address') }}</div>
-        <div
-          v-if="currentWallet.hasKtAddresses && ktAddresses.length"
-          class="wallet__kt-addresses"
-        >
+        <div class="wallet__kt-addresses">
           <KtAddresses :current-wallet="currentWallet" />
         </div>
       </div>
@@ -80,12 +80,6 @@
           :wallet-type="currentWallet.type"
           @prepareUnstakedClaim="prepareUnstakedClaim"
         />
-      </div>
-      <div
-        v-if="currentWallet.hasKtAddresses && ktAddresses.length"
-        class="wallet__kt-addresses-md"
-      >
-        <KtAddressesMd :current-wallet="currentWallet" />
       </div>
       <div
         v-if="currentToken?.net === OUR_TOKEN"
@@ -271,7 +265,6 @@ import ClaimRewards from './components/ClaimRewards';
 import ClaimUnstakedBlock from './components/ClaimUnstakedBlock';
 import MainHeader from './components/MainHeader';
 import KtAddresses from './components/KtAddresses';
-import KtAddressesMd from './components/KtAddressesMd';
 import Alias from './components/Alias';
 import ConfirmLedgerModal from '@/components/Modals/Ledger/ConfirmLedgerModal';
 import ConnectLedgerModal from '@/components/Modals/Ledger/ConnectLedgerModal';
@@ -311,7 +304,6 @@ export default {
     XCTConfirmClaimModal,
     BalanceAndPledged,
     KtAddresses,
-    KtAddressesMd,
     Loading,
     ClaimUnstakedBlock,
     KiChainStub,
@@ -1398,6 +1390,9 @@ export default {
       display: none;
     }
     @include xl {
+      display: none;
+    }
+    @include md {
       display: none;
     }
   }
