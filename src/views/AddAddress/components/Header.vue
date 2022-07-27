@@ -17,7 +17,7 @@
 
 <script>
 import { computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import StepperMini from '@/components/StepperMini';
 import BackButton from '@/components/UI/BackButton';
 
@@ -41,12 +41,17 @@ export default {
   },
   setup(props) {
     const router = useRouter();
+    const route = useRoute();
     const currentStepInfo = computed(() =>
       props.steps.find((item) => item.id === props.currentStep)
     );
 
     const goBack = () => {
-      router.back();
+      if (route.name === 'MetamaskKeplr') {
+        router.push({ name: 'AddWalletTypes' });
+      } else {
+        router.back();
+      }
     };
 
     return { currentStepInfo, goBack };
