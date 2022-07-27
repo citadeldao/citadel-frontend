@@ -469,7 +469,7 @@ export default {
 
       let mergeWallet = null; // metamask
 
-      if ([metamaskConnector.value.network].includes(nets[0])) {
+      if (nets.includes(metamaskConnector.value.network)) {
         const metamaskNet = metamaskConnector.value.network;
         const metamaskAddress =
           metamaskConnector.value.accounts[0] &&
