@@ -166,7 +166,7 @@
                 value: extensionTransactionForSign.fee,
                 currency: selectedApp.networks[0],
               }"
-            />{{ selectedApp.networks[0] }}
+            />{{ extensionTransactionForSign.net || selectedApp.networks[0] }}
           </div>
         </div>
         <div class="item">
@@ -469,7 +469,7 @@ export default {
 
       let mergeWallet = null; // metamask
 
-      if ([metamaskConnector.value.network].includes(nets[0])) {
+      if (nets.includes(metamaskConnector.value.network)) {
         const metamaskNet = metamaskConnector.value.network;
         const metamaskAddress =
           metamaskConnector.value.accounts[0] &&
@@ -640,6 +640,8 @@ export default {
     watch(route, (route) => {
       if (!route.params.name) {
         closeApp(true);
+        showFullScreen.value = false;
+        showArtefactsForNormalScreen();
       } else {
         selectedApp.value = Object.assign(
           {},
