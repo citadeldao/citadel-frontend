@@ -164,9 +164,9 @@
             <span
               v-pretty-number="{
                 value: extensionTransactionForSign.fee,
-                currency: selectedApp.networks[0],
+                currency: (signerWallet || metamaskSigner)?.code,
               }"
-            />{{ extensionTransactionForSign.net || selectedApp.networks[0] }}
+            />{{ (signerWallet || metamaskSigner)?.code }}
           </div>
         </div>
         <div class="item">
