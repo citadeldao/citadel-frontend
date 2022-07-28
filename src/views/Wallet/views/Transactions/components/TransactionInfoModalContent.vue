@@ -10,12 +10,26 @@
         class="inner-tx__view-item"
       >
         <template v-if="item.components && item.components.length">
+          <div class="icon-type">
+            <claimIcon
+              v-if="item.type.toLowerCase() === 'claim'"
+              width="32"
+              height="32"
+            />
+            <stakeIcon
+              v-if="item.type.toLowerCase() === 'stake'"
+              width="32"
+              height="32"
+            />
+            <div>{{ item.type }}</div>
+          </div>
           <div
             v-for="(component, n) in item.components"
             :key="n"
             class="inner-tx__view-item-component"
           >
             <div class="title">{{ component.title }}</div>
+            <div class="line" />
             <div v-if="component.type === 'amount'" class="value">
               <div class="value-amount">{{ component.value.text }}</div>
               <div class="value-symbol">{{ component.value.symbol }}</div>
@@ -32,7 +46,7 @@
         </template>
       </div>
     </div>
-    <div
+    <!-- <div
       v-if="currentWallet.hasTransactionComment"
       class="transaction-info-modal-content__textarea"
     >
@@ -61,20 +75,29 @@
           @update:value="$emit('update:txComment', $event)"
         />
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
-import { ref, nextTick } from 'vue';
-import Textarea from '@/components/UI/Textarea';
-import comment from '@/assets/icons/comment.svg';
+import { ref } from 'vue';
+// import Textarea from '@/components/UI/Textarea';
+// import comment from '@/assets/icons/comment.svg';
+import claimIcon from '@/assets/icons/transactions/claim.svg';
+import stakeIcon from '@/assets/icons/transactions/stake.svg';
 import InfoBlock from './InfoBlock.vue';
 import TxStatuses from './TxStatuses';
 
 export default {
   namae: 'TransactionInfoModalContent',
-  components: { InfoBlock, comment, Textarea, TxStatuses },
+  components: {
+    InfoBlock,
+    // comment,
+    // Textarea,
+    TxStatuses,
+    claimIcon,
+    stakeIcon,
+  },
   props: {
     info: {
       type: Object,
@@ -89,11 +112,10 @@ export default {
     },
   },
   setup(props) {
-    console.log(111, props.info);
     const showPlaceholder = ref(!props.info.note);
     const togleShowPlaceholder = () => {
       showPlaceholder.value = false;
-      nextTick(() => document.getElementById('comment').focus());
+      // nextTick(() => document.getElementById('comment').focus());
     };
 
     return { showPlaceholder, togleShowPlaceholder };
@@ -118,11 +140,25 @@ $blue-dark: #262b61;
     }
 
     &__view-item {
+      position: relative;
+      margin-top: 50px;
       margin-bottom: 15px;
       background: #f0f3fd;
       border-radius: 8px;
       padding: 16px;
       box-sizing: border-box;
+
+      .icon-type {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        left: 0;
+        top: -40px;
+
+        div {
+          margin-left: 10px;
+        }
+      }
 
       &.empty {
         border: none;
@@ -130,7 +166,6 @@ $blue-dark: #262b61;
       }
 
       .title {
-        min-width: 130px;
         color: #6b93c0;
       }
 
@@ -166,10 +201,19 @@ $blue-dark: #262b61;
 
     &__view-item-component {
       display: flex;
+      justify-content: space-between;
       margin-top: 5px;
+      align-items: center;
 
       .title {
         font-size: 13px;
+        margin-bottom: 7px;
+      }
+
+      .line {
+        width: 100%;
+        border: 0.01rem dashed #a18eff;
+        height: 1px;
       }
     }
   }

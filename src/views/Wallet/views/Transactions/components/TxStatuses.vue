@@ -63,7 +63,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding-bottom: 15px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   border-bottom: 1px dashed #bcc2d8;
 
   &__item {

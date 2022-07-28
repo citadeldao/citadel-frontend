@@ -335,7 +335,7 @@ export default {
       showTransactionInfoModal.value = true;
 
       if (props.currentWallet.hasTransactionComment) {
-        nextTick(() => document.getElementById('comment').focus());
+        // nextTick(() => document.getElementById('comment').focus());
       }
     };
     const infoModalSubmit = async () => {

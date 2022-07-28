@@ -474,6 +474,8 @@
     "Stake": "Stake",
     "receive": "Receive",
     "fee": "Fee",
+    "addComment": "Add comment",
+    "editComment": "Edit comment",
     "comment": "Comment",
     "export": "Export",
     "timeDate": "Time & Data",
