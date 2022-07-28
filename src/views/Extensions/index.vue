@@ -605,15 +605,16 @@ export default {
     watch(extensionTransactionForSign, () => {
       if (extensionTransactionForSign?.value?.transaction) {
         const currentAddress = extensionTransactionForSign.value.address;
+        const currentNet = extensionTransactionForSign.value.net;
 
-        const nets = currentApp.value.networks.map((net) => {
-          return net.toLowerCase();
-        });
+        // const nets = currentApp.value.networks.map((net) => {
+        //   return net.toLowerCase();
+        // });
 
         signerWallet.value = walletsList.value.find(
           (w) =>
             w.address.toLowerCase() === currentAddress.toLowerCase() &&
-            nets.includes(w.net.toLowerCase()) &&
+            w.net === currentNet &&
             w.type !== WALLET_TYPES.PUBLIC_KEY
         );
 
