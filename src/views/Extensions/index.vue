@@ -640,6 +640,8 @@ export default {
     watch(route, (route) => {
       if (!route.params.name) {
         closeApp(true);
+        showFullScreen.value = false;
+        showArtefactsForNormalScreen();
       } else {
         selectedApp.value = Object.assign(
           {},
