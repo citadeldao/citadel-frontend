@@ -374,6 +374,7 @@ export default {
           currentWallet.value.id
         );
         await store.dispatch('dao/getHolderInfo', currentWallet.value.id);
+        await store.dispatch('dao/getRewardsXCT', currentWallet.value.id);
         await store.dispatch(
           'dao/getTotalClaimedRewardsXCT',
           currentWallet.value.id
@@ -692,11 +693,7 @@ export default {
     const daoRewards = computed(
       () => store.getters['dao/holderInfo'].holder?.claimable
     );
-    const xctRewards = computed(() =>
-      BigNumber(currentToken.value?.tokenBalance.claimableRewards)
-        .minus(daoRewards.value)
-        .toNumber()
-    );
+    const xctRewards = computed(() => store.getters['dao/xctRewards']);
     const claimOptions = ref({
       xctRewards: !!xctRewards.value,
       daoRewards: !!daoRewards.value,
