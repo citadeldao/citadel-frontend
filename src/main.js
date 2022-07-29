@@ -19,20 +19,18 @@ import Vue from 'vue';
 
 const app = createApp(App);
 
-if (process.env.NODE_ENV === 'production') {
-  Sentry.init({
-    Vue,
-    dsn: process.env.VUE_APP_SENTRY_DSN,
-    tunnel: new URL(process.env.VUE_APP_SENTRY_DSN).origin + '/tunnel',
-    integrations: [
-      new Integrations.BrowserTracing({
-        routingInstrumentation: Sentry.vueRouterInstrumentation(router),
-      }),
-    ],
-    environment: process.env.NODE_ENV,
-    tracesSampleRate: 0.3,
-  });
-}
+Sentry.init({
+  Vue,
+  dsn: process.env.VUE_APP_SENTRY_DSN,
+  tunnel: new URL(process.env.VUE_APP_SENTRY_DSN).origin + '/tunnel',
+  integrations: [
+    new Integrations.BrowserTracing({
+      routingInstrumentation: Sentry.vueRouterInstrumentation(router),
+    }),
+  ],
+  environment: process.env.NODE_ENV,
+  tracesSampleRate: 0.3,
+});
 
 if (window.navigator && navigator.serviceWorker) {
   navigator.serviceWorker.getRegistrations().then((registrations) => {
