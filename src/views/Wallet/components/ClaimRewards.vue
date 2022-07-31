@@ -112,8 +112,8 @@ export default {
     );
     const apy = computed(() =>
       props.isCurrentToken && props.currentWallet?.net === OUR_TOKEN
-        ? store.getters['subtokens/inflationInfoXCT'].yieldPct
-        : store.getters['profile/formatYeldByNet'](props.currentWallet.net)
+        ? +store.getters['subtokens/inflationInfoXCT'].yieldPct
+        : +store.getters['profile/formatYeldByNet'](props.currentWallet.net)
     );
     const infoModal = ref(false);
     const router = useRouter();

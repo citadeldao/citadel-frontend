@@ -30,7 +30,10 @@
           </h4>
         </div>
         <div class="sidebar__addresses-header">
-          <h4 class="sidebar__addresses-header-title">
+          <h4
+            class="sidebar__addresses-header-title"
+            data-qa="Current-wallets-list-name"
+          >
             {{
               activeTab === 'all'
                 ? $t('layouts.addAddressLayout.addresses')
@@ -720,6 +723,7 @@ export default {
     align-items: center;
     justify-content: space-around;
     max-width: calc(#{$sidebar-max-width} - 50px);
+    min-height: 80px;
     max-height: 80px;
     width: 100%;
     height: 100%;

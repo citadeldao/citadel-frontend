@@ -186,7 +186,9 @@
             "block1Title": "为什么我需要导入地址？",
             "block1Info": "这是一个仅可查看的地址，因为您使用公钥添加该账户，或者您已注销。",
             "block2Title": "想知道如何导入地址？",
-            "block2Info": "查看如何使用私钥或助记词短语导入地址的分步骤指导。"
+            "block2Info": "查看如何使用私钥或助记词短语导入地址的分步骤指导。",
+            "availableAssets": "可用资产",
+            "totalAssets": "总资产"
         },
         "stubs": {
             "chain": "Ki 链暂时不可用",
@@ -588,7 +590,7 @@
             "favoritePlaceholder": "您最常用的钱包将展示在此处。点击公钥旁边的星标添加收藏。",
             "overall": "全部",
             "addresses": "地址",
-            "wallets": "地址"
+            "wallets": "钱包"
         }
     },
     "backBtn": "返回",
@@ -656,10 +658,10 @@
             "addRewardsNotification": "您已订阅奖励邮件通知",
             "removeRewardsNotification": "您已取消订阅奖励邮件通知",
             "rewardsDigestTooltip": "您的累积奖励、可领取的代币和可质押资产每两周更新一次",
-            "newsletter": "新闻摘要",
+            "newsletter": "新闻",
             "newsletterTooltip": "-",
-            "addNewsletterNotification": "您已订阅电子邮件通讯通知",
-            "removeNewsletterNotification": "你已取消接收电邮通讯通知"
+            "addNewsletterNotification": "您已经订阅新闻通知",
+            "removeNewsletterNotification": "您已取消订阅新闻通知"
         },
         "transferData": {
             "title": "几秒内将数据从web传输至移动设备",
@@ -680,7 +682,7 @@
             "inputLabel": "您的邮箱",
             "inputPlaceHolder": "邮箱",
             "button": "切换",
-            "comingSoon": "即将到来"
+            "comingSoon": "即将上线"
         },
         "language": {
             "title": "语言",
@@ -695,23 +697,7 @@
             "inputLabel": "输入“删除”进行确认",
             "placeholder": "delete"
         },
-        "crossChain": {
-            "title": "Citadel.one 跨链 Web3",
-            "description": "使用全新的 Citadel.one 浏览器扩展程序访问您最喜爱的应用程序。",
-            "button": "让我们开始吧",
-            "comingSoon": "即将到来"
-        },
-        "extensionSettings": {
-            "title": "Extensions settings",
-            "description": "管理您的 Citadel.one 迷你应用程序的设置在一个。",
-            "button": "打开设置",
-            "comingSoon": "即将到来"
-        },
         "changePassword": {
-            "title": "您的密码",
-            "description": "您可以在此处更改密码",
-            "button": "改变",
-            "comingSoon": "即将到来",
             "btnTitle": "更改密码",
             "btnUpdate": "更新",
             "modalTitle": "密码更改",
@@ -721,7 +707,25 @@
             "incorrectOldPassword": "旧密码错误",
             "minLen": "至少 8 位",
             "successTitle": "您的密码已成功更改",
-            "successDescription": "使用新密码确认交易"
+            "successDescription": "使用新密码确认交易",
+            "title": "您的密码",
+            "description": "您可以在此更改密码",
+            "button": "更改",
+            "comingSoon": "即将上线",
+            "tooltip": "Citadel.one 作为一个非托管平台，我们不会存储您的密码 — 它保存在您浏览器的本地存储中。如果清除 Cookies，您的密码将被删除 — 因此您必须创建一个新密码。"
+        },
+        "crossChain": {
+            "title": "Citadel.one 跨链 Web3",
+            "description": "通过全新的 Citadel.one 浏览器扩展程序直接访问您喜爱的应用程序",
+            "button": "现在开始",
+            "comingSoon": "即将上线"
+        },
+        "extensionSettings": {
+            "title": "扩展程序设置",
+            "description": "一体化管理您的 Citadel.one \"迷你应用程序\"设置",
+            "button": "打开设置\n",
+            "comingSoon": "即将上线",
+            "successDescription": "使用您的密码确认交易"
         }
     },
     "overallPage": {
@@ -915,7 +919,8 @@
         "transactionData": "交易数据",
         "transactionFee": "交易手续费",
         "signMessage": "签名消息",
-        "searchPlaceholder": "开始输入 APP 名称"
+        "searchPlaceholder": "开始输入 APP 名称",
+        "typeOperation": ""
     },
     "tokenDescriptionComdex": "Comdex 是搭建在 Cosmos 上的去中心化合成资产协议",
     "tokenDescriptionJuno": "Juno 是基于 Cosmos  搭建的区块链，为部署可交互操作的智能合约提供环境。",
@@ -1182,18 +1187,6 @@
     "changeValidators": "切换节点",
     "redelegateNote": "您必须选择另一个验证节点重新进行质押",
     "assets": "资产",
-    "assetsStubs": {
-        "title": "",
-        "subtitle": "",
-        "card1": {
-            "title": "",
-            "action": ""
-        },
-        "card2": {
-            "title": "",
-            "action": ""
-        }
-    },
     "menu": {
         "settings": "设置",
         "logOut": "退出登录"
@@ -1271,5 +1264,18 @@
         "syncMainDescription": "即刻同步您的地址至 Citadel.one 浏览器扩展",
         "syncMainSync": "同步"
     },
-    "noApyNote": "通过质押加密资产获得被动收入！"
+    "noApyNote": "通过质押加密资产获得被动收入！",
+    "assetsStubs": {
+        "title": "您还未拥有任何资产",
+        "subtitle": "您可以直接通过 Citadel.one 兑换，或从外部交易所充值",
+        "card1": {
+            "title": "通过 Citadel.one 兑换",
+            "action": "扩展程序"
+        },
+        "card2": {
+            "title": "充值自",
+            "action": "交易所"
+        }
+    },
+    "dontHaveEnoughFoundsForFee": "您的余额不足，无法支付交易手续费"
 }

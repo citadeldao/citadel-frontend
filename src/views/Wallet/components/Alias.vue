@@ -231,7 +231,7 @@ export default {
 
       await store.dispatch('wallets/renameWalletTitle', {
         walletId: props.currentWallet.id,
-        title: alias.value,
+        title: alias.value.trim(),
       });
       // store.dispatch('wallets/getNewWallets','lazy');
       editMode.value = false;

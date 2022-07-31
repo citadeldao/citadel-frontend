@@ -192,7 +192,9 @@ export default {
 
       .title {
         color: $black;
-        @include title-default;
+        // @include title-default;
+        font-size: 24px;
+        font-family: 'Panton_Bold';
         display: flex;
         align-items: center;
 

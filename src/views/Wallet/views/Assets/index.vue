@@ -5,14 +5,21 @@
   <div v-else class="assets">
     <template
       v-if="
-        currentWallet.balance.mainBalance || currentWallet.subtokenBalanceUSD
+        stateCurrentWallet.balance.calculatedBalance ||
+        stateCurrentWallet.subtokenBalanceUSD ||
+        stateCurrentWallet.net === 'secret' ||
+        currentToken
       "
     >
       <div class="assets__header">
-        <BalanceCard type="red" text="Total Assets" :value="balanceUSD" />
+        <BalanceCard
+          type="red"
+          :text="$t('wallet.info.totalAssets')"
+          :value="balanceUSD"
+        />
         <BalanceCard
           type="blue"
-          text="Available assets"
+          :text="$t('wallet.info.availableAssets')"
           :value="balanceAvailableUSD"
         />
 
@@ -33,6 +40,7 @@
             relative-component="body"
             :items="filterList"
             input-style
+            id="assetsFilter"
           />
         </div>
       </div>
@@ -46,16 +54,28 @@
         </div>
 
         <AssetsItem
-          :item="currentWallet"
-          :balance="currentWallet.balance"
+          :item="stateCurrentWallet"
+          :balance="stateCurrentWallet.balance"
           is-native-token
+          :is-active="currentWallet.net === stateCurrentWallet.net"
+          @click="setCurrentToken(stateCurrentWallet)"
         />
         <AssetsItem
           v-for="(item, index) in displayData"
           :key="`${item.name}-${index}`"
           :balance="item.tokenBalance"
           :item="item"
-          :is-not-linked="isNotLinkedSnip20(item)"
+          :is-not-linked="
+            isNotLinkedSnip20(item) &&
+            stateCurrentWallet.type !== WALLET_TYPES.KEPLR
+          "
+          :is-disabled="
+            (item.config.standard === TOKEN_STANDARDS.SNIP_20 &&
+              stateCurrentWallet.type === WALLET_TYPES.KEPLR &&
+              !item.linked) ||
+            (item.config.standard !== TOKEN_STANDARDS.SNIP_20 && !item.linked)
+          "
+          :is-active="item.net === currentWallet.net"
           @click="setCurrentToken(item)"
         />
 
@@ -146,7 +166,7 @@ import Pagination from '@/components/Pagination.vue';
 import RoundArrowButton from '@/components/UI/RoundArrowButton';
 import Card from '@/components/UI/Card';
 import useWallets from '@/compositions/useWallets';
-import { OUR_TOKEN } from '@/config/walletType';
+import { OUR_TOKEN, WALLET_TYPES } from '@/config/walletType';
 
 export default {
   name: 'AssetsBlock',
@@ -197,7 +217,6 @@ export default {
       { icon: 'byValueReverse', value: 'byValueReverse' },
     ]);
     const filterValue = ref(filterList.value[3].value);
-
     const isNotLinkedSnip20 = (token) => {
       const isSnip20 = computed(
         () => token.config.standard === TOKEN_STANDARDS.SNIP_20
@@ -207,14 +226,26 @@ export default {
     };
 
     const setCurrentToken = async (token) => {
-      if (isNotLinkedSnip20(token)) {
+      if (
+        token.net.toLowerCase() === stateCurrentWallet.value.net.toLowerCase()
+      ) {
+        store.dispatch('subtokens/setCurrentToken', null);
+        redirectToWallet({
+          wallet: store.getters['wallets/walletByAddress'](route.params),
+          root: true,
+        });
+      } else if (
+        isNotLinkedSnip20(token) &&
+        !token.linked &&
+        stateCurrentWallet.value.type !== WALLET_TYPES.KEPLR
+      ) {
         mainIsLoading.value = true;
         snip20TokenFee.value =
           (await token.getFees(token.id, token.net))?.data?.high?.fee || 0.2;
         mainIsLoading.value = false;
         showCreateVkModal.value = true;
         snip20Token.value = token;
-      } else {
+      } else if (!isNotLinkedSnip20(token) && token.linked) {
         store.dispatch('subtokens/setCurrentToken', token);
         redirectToWallet({
           wallet: store.getters['wallets/walletByAddress'](route.params),
@@ -234,9 +265,15 @@ export default {
     };
 
     const filteredTokens = computed(() => {
-      const data = [...props.tokenList];
-      const byAlphabet = sortByAlphabet(data, 'code');
-      const byValue = data.sort((a, b) => a.balanceUSD - b.balanceUSD);
+      const data = [...filteredTokensList.value].sort(
+        (a, b) => isNotLinkedSnip20(b) - isNotLinkedSnip20(a)
+      );
+      const byAlphabet = sortByAlphabet(data, 'code').sort(
+        (a, b) => isNotLinkedSnip20(b) - isNotLinkedSnip20(a)
+      );
+      const byValue = data
+        .sort((a, b) => a.balanceUSD - b.balanceUSD)
+        .sort((a, b) => isNotLinkedSnip20(b) - isNotLinkedSnip20(a));
       switch (filterValue.value) {
         case 'byAlphabet':
           return byAlphabet;
@@ -250,7 +287,6 @@ export default {
           return data;
       }
     });
-
     const filteredItems = computed(() => {
       const indexXCT = filteredTokens.value.findIndex(
         (e) => e.net === OUR_TOKEN
@@ -273,24 +309,36 @@ export default {
     });
 
     const balanceUSD = computed(() => {
-      const nativeTokenBalance = stateCurrentWallet.value.balanceUSD;
-      const totalTokenBalance = props.tokenList.reduce((acc, token) => {
-        return BigNumber(acc).plus(token.balanceUSD).toNumber();
-      }, 0);
-
-      return BigNumber(nativeTokenBalance).plus(totalTokenBalance).toNumber();
+      return BigNumber(stateCurrentWallet.value.balanceUSD)
+        .plus(stateCurrentWallet.value.subtokenBalanceUSD)
+        .toNumber();
     });
 
     const balanceAvailableUSD = computed(() => {
-      return props.tokenList.reduce((acc, token) => {
-        const availableUSD = BigNumber(token.tokenBalance.mainBalance)
-          .multipliedBy(token.tokenBalance.price.USD)
-          .toNumber();
-
-        return BigNumber(acc).plus(availableUSD).toNumber();
-      }, 0);
+      const nativeTokenBalance = BigNumber(
+        stateCurrentWallet.value.balance.mainBalance
+      )
+        .multipliedBy(
+          store.getters['profile/rates'][stateCurrentWallet.value.net].USD
+        )
+        .toNumber();
+      return BigNumber(
+        props.tokenList.reduce((acc, token) => {
+          const availableUSD = BigNumber(token.tokenBalance.mainBalance)
+            .multipliedBy(token.tokenBalance.price.USD)
+            .toNumber();
+          return BigNumber(acc).plus(availableUSD).toNumber();
+        }, 0)
+      )
+        .plus(nativeTokenBalance)
+        .toNumber();
     });
-
+    const filteredTokensList = computed(() => {
+      if (!keyword.value) {
+        return props.tokenList.filter((e) => isNotLinkedSnip20(e) || e.linked);
+      }
+      return props.tokenList;
+    });
     const {
       displayData,
       currentPage,
@@ -324,6 +372,8 @@ export default {
       }
     );
     return {
+      TOKEN_STANDARDS,
+      filteredTokensList,
       OUR_TOKEN,
       setCurrentToken,
       setMainToken,
@@ -346,6 +396,7 @@ export default {
       snip20Token,
       balanceUSD,
       balanceAvailableUSD,
+      WALLET_TYPES,
     };
   },
 };
@@ -422,6 +473,7 @@ export default {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    text-transform: capitalize;
 
     & > * {
       flex-grow: 1;
