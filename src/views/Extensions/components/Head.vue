@@ -48,8 +48,6 @@
           @blur="
             () => {
               showMobileSearch = false;
-              searchAppStr = '';
-              $emit('search', '');
             }
           "
           class="filter-input"
