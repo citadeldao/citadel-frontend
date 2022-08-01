@@ -26,6 +26,7 @@ import { steps as ledgerSteps } from '@/static/importLedger';
 import useCreateWallets from '@/compositions/useCreateWallets';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
+import { INPUT_TYPE_ICON } from '@/config/newWallets';
 
 export default {
   name: 'ImportLedger',
@@ -49,7 +50,7 @@ export default {
     const { newWallets, redirectToNewWallet } = useCreateWallets();
     onMounted(() => {
       store.dispatch('newWallets/setCatPageProps', {
-        inputTypeIcon: 'hardware-dot',
+        inputTypeIcon: INPUT_TYPE_ICON.HARDWARE,
         walletTypePlaceholder: t('catPage.placeholderHardware'),
       });
     });

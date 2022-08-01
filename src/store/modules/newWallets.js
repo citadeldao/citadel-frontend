@@ -1,3 +1,4 @@
+import { INPUT_TYPE_ICON } from '@/config/newWallets';
 const types = {
   //modal
   SHOW_MODAL: 'SHOW_MODAL',
@@ -22,7 +23,7 @@ export default {
     newWalletList: [],
     routeName: '',
     catPageProps: {
-      inputTypeIcon: 'oneseed-dot',
+      inputTypeIcon: INPUT_TYPE_ICON.SEED,
       dataQa: null,
       walletTypePlaceholder: 'Citadel One-Seed',
     },

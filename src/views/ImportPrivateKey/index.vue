@@ -30,6 +30,7 @@ import { WALLET_TYPES } from '../../config/walletType';
 import { onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
+import { INPUT_TYPE_ICON } from '@/config/newWallets';
 
 export default {
   name: 'ImportPrivateKey',
@@ -60,7 +61,7 @@ export default {
     const store = useStore();
     onMounted(() => {
       store.dispatch('newWallets/setCatPageProps', {
-        inputTypeIcon: 'private-dot',
+        inputTypeIcon: INPUT_TYPE_ICON.PRIVATE,
         walletTypePlaceholder: t('catPage.placeholderPrivate'),
         dataQa: 'add-address__existing__private-key',
       });

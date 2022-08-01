@@ -53,6 +53,7 @@ import Header from '../AddAddress/components/Header';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import KeplrConnector from '@/models/Services/Keplr';
 import closeIcon from '@/assets/icons/close.svg';
+import { INPUT_TYPE_ICON } from '@/config/newWallets';
 
 const { t } = i18n.global;
 
@@ -189,7 +190,7 @@ export default {
 
     onMounted(async () => {
       store.dispatch('newWallets/setCatPageProps', {
-        inputTypeIcon: 'keplr-dot',
+        inputTypeIcon: INPUT_TYPE_ICON.KEPLR,
         walletTypePlaceholder: 'Citadel Keplr',
       });
       store.dispatch('newWallets/routerTo', 'WalletStake');

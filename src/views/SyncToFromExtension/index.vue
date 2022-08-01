@@ -146,16 +146,6 @@
           </div>
         </ModalContent>
       </Modal>
-      <!-- SUCCESS IMPORT FROM -->
-      <!-- <Modal v-if="showSuccessFromSyncModal">
-        <CatPage
-          :data="importedFromWallets"
-          :wallet-type-placeholder="$t('catPage.placeholderPrivate')"
-          input-type-icon="private-dot"
-          @close="onSuccessFromSyncClose"
-          @buttonClick="onSuccessFromSyncClose"
-        />
-      </Modal> -->
     </teleport>
   </div>
 </template>
@@ -175,6 +165,7 @@ import { i18n } from '@/plugins/i18n';
 import { sha3_256 } from 'js-sha3';
 import notify from '@/plugins/notify';
 import citadel from '@citadeldao/lib-citadel';
+import { INPUT_TYPE_ICON } from '@/config/newWallets';
 
 export default {
   components: {
@@ -214,7 +205,7 @@ export default {
 
     onMounted(async () => {
       store.dispatch('newWallets/setCatPageProps', {
-        inputTypeIcon: 'private-dot',
+        inputTypeIcon: INPUT_TYPE_ICON.PRIVATE,
         walletTypePlaceholder: t('catPage.placeholderPrivate'),
       });
       if (!window.citadel) {

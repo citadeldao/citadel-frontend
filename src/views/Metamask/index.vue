@@ -47,6 +47,7 @@ import { WALLET_TYPES } from '@/config/walletType';
 import ModalContent from '@/components/ModalContent';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import AddressAlreadyAdded from '@/components/Modals/AddressAlreadyAdded';
+import { INPUT_TYPE_ICON } from '@/config/newWallets';
 
 import { i18n } from '@/plugins/i18n';
 const { t } = i18n.global;
@@ -84,7 +85,7 @@ export default {
     }, 15000);
     onMounted(() => {
       store.dispatch('newWallets/setCatPageProps', {
-        inputTypeIcon: 'metamask-dot',
+        inputTypeIcon: INPUT_TYPE_ICON.METAMASK,
         walletTypePlaceholder: 'Citadel Metamask',
       });
     });

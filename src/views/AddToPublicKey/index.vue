@@ -34,31 +34,12 @@
         </PrimaryButton>
       </form>
     </div>
-    <teleport to="body">
-      <Modal v-if="showModal">
-        <img v-if="showLoader" src="@/assets/gif/loader.gif" alt="" />
-        <AddressAlreadyAdded
-          v-else-if="showAlreadyAddedModal"
-          v-click-away="alreadyAddedCloseHandler"
-          @close="alreadyAddedCloseHandler"
-          @buttonClick="alreadyAddedClickHandler"
-        />
-        <NewWalletsModal
-          v-else
-          :wallet-type-placeholder="$t('catPage.placeholderPublic')"
-          input-type-icon="public-dot"
-          data-qa="add-address__existing__public-key"
-        />
-      </Modal>
-    </teleport>
   </div>
 </template>
 
 <script>
 import Input from '@/components/UI/Input';
 import Autocomplete from '@/components/UI/Autocomplete';
-import Modal from '@/components/Modal';
-import AddressAlreadyAdded from '@/components/Modals/AddressAlreadyAdded';
 import Header from '../AddAddress/components/Header';
 import { ref, computed, onMounted } from 'vue';
 import PrimaryButton from '@/components/UI/PrimaryButton';
@@ -67,6 +48,7 @@ import useSelectNetwork from '@/compositions/useSelectNetwork';
 import useCreateWallets from '@/compositions/useCreateWallets';
 import { useI18n } from 'vue-i18n';
 import { WALLET_TYPES } from '../../config/walletType';
+import { INPUT_TYPE_ICON } from '@/config/newWallets';
 
 export default {
   name: 'AddToPublicKey',
@@ -75,8 +57,6 @@ export default {
     Autocomplete,
     Input,
     PrimaryButton,
-    Modal,
-    AddressAlreadyAdded,
   },
   setup() {
     const store = useStore();
@@ -103,7 +83,7 @@ export default {
     });
     onMounted(() => {
       store.dispatch('newWallets/setCatPageProps', {
-        inputTypeIcon: 'public-dot',
+        inputTypeIcon: INPUT_TYPE_ICON.PUBLIC,
         dataQa: 'add-address__existing__public-key',
         walletTypePlaceholder: t('catPage.placeholderPublic'),
       });
@@ -112,9 +92,7 @@ export default {
       setAddress,
       setNets,
       createWallets,
-      showLoader,
       newWallets,
-      redirectToNewWallet,
       showAlreadyAddedModal,
     } = useCreateWallets();
 
@@ -132,33 +110,15 @@ export default {
       createWallets(WALLET_TYPES.PUBLIC_KEY);
     };
 
-    const successModalCloseHandler = () => {
-      store.dispatch('newWallets/hideModal');
-      redirectToNewWallet();
-    };
-    const successModalClickHandler = successModalCloseHandler;
-
-    const alreadyAddedCloseHandler = () => {
-      showAlreadyAddedModal.value = false;
-      store.dispatch('newWallets/hideModal');
-      redirectToNewWallet();
-    };
-    const alreadyAddedClickHandler = alreadyAddedCloseHandler;
-
     return {
       search,
       address,
       submitHandler,
-      successModalCloseHandler,
-      successModalClickHandler,
       networks,
       msgError,
       isValidAddress,
-      showLoader,
       newWallets,
       showAlreadyAddedModal,
-      alreadyAddedClickHandler,
-      alreadyAddedCloseHandler,
     };
   },
 };

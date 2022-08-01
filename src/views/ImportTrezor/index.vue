@@ -26,6 +26,8 @@ import useCreateWallets from '@/compositions/useCreateWallets';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
+import { INPUT_TYPE_ICON } from '@/config/newWallets';
+
 export default {
   name: 'ImportTrezor',
   components: {
@@ -53,7 +55,7 @@ export default {
     const { t } = useI18n();
     onMounted(() => {
       store.dispatch('newWallets/setCatPageProps', {
-        inputTypeIcon: 'hardware-dot',
+        inputTypeIcon: INPUT_TYPE_ICON.HARDWARE,
         walletTypePlaceholder: t('catPage.placeholderHardware'),
       });
     });
