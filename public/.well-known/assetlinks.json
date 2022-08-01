@@ -1,0 +1,11 @@
+[{
+  "relation": [
+  		"delegate_permission/common.handle_all_urls"
+		],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "one.citadel.mobile",
+    "sha256_cert_fingerprints":
+    ["72:B7:B0:BA:D6:48:47:53:49:20:67:6A:46:90:21:8C:9E:D4:C5:0C:6D:AC:DE:7D:16:29:E1:5A:61:0A:B3:09"]
+  }
+}]
