@@ -168,7 +168,7 @@ export default {
   }
   &__address {
     display: flex;
-    font-size: 15px;
+    font-size: 16px;
     line-height: 19px;
     position: relative;
     margin-bottom: 6px;
@@ -183,6 +183,9 @@ export default {
     }
     @include md {
       margin-right: 54px;
+    }
+    @include laptop {
+      font-size: 14px;
     }
   }
   &__balance {

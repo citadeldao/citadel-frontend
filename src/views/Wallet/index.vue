@@ -1167,6 +1167,12 @@ export default {
     font-family: 'Panton_Bold';
     margin-bottom: 18px;
     margin-bottom: 0;
+    @include md {
+      font-size: 20px;
+    }
+    @include laptop {
+      max-width: 17px;
+    }
   }
 }
 .wallet {
