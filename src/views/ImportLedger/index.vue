@@ -11,42 +11,25 @@
         @selectWallet="addWallet"
       />
     </div>
-    <teleport v-if="showModal" to="body">
-      <Modal>
-        <img v-if="showLoader" src="@/assets/gif/loader.gif" alt="" />
-        <CatPage
-          v-else
-          v-click-away="modalClickHandler"
-          :wallet-type-placeholder="$t('catPage.placeholderHardware')"
-          input-type-icon="hardware-dot"
-          :data="newWallets"
-          @close="modalCloseHandler"
-          @buttonClick="modalClickHandler"
-        />
-      </Modal>
-    </teleport>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import Header from '../AddAddress/components/Header';
 import ImportHardwareWallet from './components/ImportHardwareWallet';
 import ConnectDevice from './components/ConnectDevice';
 import ChooseDerivationPath from './components/ChooseDerivationPath';
-import CatPage from '@/components/CatPage';
 import useCurrentStep from '@/compositions/useCurrentStep';
-import Modal from '@/components/Modal';
 import { steps as ledgerSteps } from '@/static/importLedger';
 import useCreateWallets from '@/compositions/useCreateWallets';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 
 export default {
   name: 'ImportLedger',
   components: {
-    CatPage,
-    Modal,
     Header,
     ImportHardwareWallet,
     ConnectDevice,
@@ -54,6 +37,7 @@ export default {
   },
   setup() {
     const store = useStore();
+    const { t } = useI18n();
     const { currentStep, steps } = useCurrentStep(2, ledgerSteps);
     const net = ref('');
     const showModal = ref(false);
@@ -63,7 +47,12 @@ export default {
       net.value = netName;
     };
     const { newWallets, redirectToNewWallet } = useCreateWallets();
-
+    onMounted(() => {
+      store.dispatch('newWallets/setCatPageProps', {
+        inputTypeIcon: 'hardware-dot',
+        walletTypePlaceholder: t('catPage.placeholderHardware'),
+      });
+    });
     const modalCloseHandler = () => {
       redirectToNewWallet();
       showModal.value = false;

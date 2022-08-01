@@ -33,32 +33,14 @@
         {{ $t('keplr.confirm') }}
       </PrimaryButton>
     </div>
-
-    <teleport v-if="showSuccess" to="body">
-      <Modal v-if="walletLoading">
-        <Loading />
-      </Modal>
-      <Modal v-else>
-        <CatPage
-          v-click-away="modalCloseHandler"
-          :is-metamask="true"
-          input-type-icon="keplr-dot"
-          :wallet-type-placeholder="'Citadel Keplr'"
-          :data="importedAddresses"
-          @close="modalCloseHandler"
-          @buttonClick="modalCloseHandler"
-        />
-      </Modal>
-    </teleport>
   </div>
 </template>
 
 <script>
-import CatPage from '@/components/CatPage';
 import Modal from '@/components/Modal';
 import Loading from '@/components/Loading';
 
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import notify from '@/plugins/notify';
@@ -78,7 +60,6 @@ export default {
   name: 'Metamask',
   components: {
     PrimaryButton,
-    CatPage,
     CoinItem,
     Modal,
     Header,
@@ -194,6 +175,8 @@ export default {
       );
 
       if (result.every((r) => r)) {
+        store.dispatch('newWallets/setNewWalletsList', importedAddresses.value);
+        store.dispatch('newWallets/showModal');
         showSuccess.value = true;
       }
     };
@@ -204,19 +187,12 @@ export default {
       router.push('/add-address');
     };
 
-    const modalCloseHandler = () => {
-      showSuccess.value = false;
-
-      router.push({
-        name: 'WalletStake',
-        params: {
-          net: importedAddresses.value[0]?.net,
-          address: importedAddresses.value[0]?.address,
-        },
-      });
-    };
-
     onMounted(async () => {
+      store.dispatch('newWallets/setCatPageProps', {
+        inputTypeIcon: 'keplr-dot',
+        walletTypePlaceholder: 'Citadel Keplr',
+      });
+      store.dispatch('newWallets/routerTo', 'WalletStake');
       if (!window.keplr) {
         notify({
           type: 'warning',
@@ -224,14 +200,15 @@ export default {
         });
       }
     });
+    onUnmounted(() => {
+      store.dispatch('newWallets/routerTo', null);
+    });
 
     return {
       showSuccess,
       chains,
       walletLoading,
-      modalCloseHandler,
       cancel,
-
       onSelectCoin,
       selectedCoins,
       importWallets,

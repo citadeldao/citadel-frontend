@@ -13,20 +13,6 @@
       <EnterOneSeed v-if="currentStep === 3" @confirmMnemonic="setMnemonic" />
       <SelectNetworks v-if="currentStep === 4" @selectNets="finalStep" />
     </div>
-    <teleport to="body">
-      <transition name="fade">
-        <Modal v-if="showModal">
-          <img v-if="showLoader" src="@/assets/gif/loader.gif" alt="" />
-          <CatPage
-            v-else
-            v-click-away="modalClickHandler"
-            :data="newWallets"
-            @close="modalCloseHandler"
-            @buttonClick="modalClickHandler"
-          />
-        </Modal>
-      </transition>
-    </teleport>
   </div>
 </template>
 
@@ -35,18 +21,14 @@ import Header from '../AddAddress/components/Header';
 import EnterOneSeed from './components/EnterOneSeed';
 import EnterPassword from './components/EnterPassword';
 import CreatePassword from './components/CreatePassword';
-import CatPage from '@/components/CatPage';
-import Modal from '@/components/Modal';
 import useCurrentStep from '@/compositions/useCurrentStep';
 import SelectNetworks from './components/SelectNetworks';
 import useCreateWallets from '@/compositions/useCreateWallets';
 import { steps as restoreOneSeedSteps } from '@/static/restoreOneSeed';
-
+import { useStore } from 'vuex';
 export default {
   name: 'RestoreOneSeed',
   components: {
-    CatPage,
-    Modal,
     EnterOneSeed,
     Header,
     EnterPassword,
@@ -71,26 +53,23 @@ export default {
       newWallets,
       redirectToNewWallet,
     } = useCreateWallets();
-
+    const store = useStore();
     const finalStep = (nets) => {
+      store.dispatch('newWallets/showLoader');
       setNets(nets);
       setType('oneSeed');
       const success = createWallets();
       success.then(() => {
         !isPasswordHash.value && savePassword();
         !isUserMnemonic.value && saveMnemonic();
+        store.dispatch('newWallets/setNewWalletsList', newWallets.value);
+        store.dispatch('newWallets/hideLoader');
+        store.dispatch('newWallets/showModal');
       });
+      store.dispatch('newWallets/hideLoader');
     };
 
     isUserMnemonic.value && redirectToNewWallet();
-    const modalCloseHandler = () => {
-      showModal.value = false;
-      redirectToNewWallet();
-    };
-    const modalClickHandler = () => {
-      showModal.value = false;
-      redirectToNewWallet();
-    };
 
     return {
       steps,
@@ -101,8 +80,6 @@ export default {
       isPasswordHash,
       finalStep,
       newWallets,
-      modalCloseHandler,
-      modalClickHandler,
       showLoader,
     };
   },

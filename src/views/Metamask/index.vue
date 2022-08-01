@@ -29,26 +29,6 @@
         <Loading />
       </Modal>
     </teleport>
-    <teleport v-if="showModal" to="body">
-      <Modal v-if="showAlreadyAddedModal">
-        <AddressAlreadyAdded
-          v-click-away="alreadyAddedCloseHandler"
-          @close="alreadyAddedCloseHandler"
-          @buttonClick="alreadyAddedCloseHandler"
-        />
-      </Modal>
-      <Modal v-else>
-        <CatPage
-          v-click-away="modalCloseHandler"
-          :is-metamask="true"
-          input-type-icon="metamask-dot"
-          :wallet-type-placeholder="'Citadel Metamask'"
-          :data="[existAddressInMetamask]"
-          @close="modalCloseHandler"
-          @buttonClick="modalCloseHandler"
-        />
-      </Modal>
-    </teleport>
   </div>
 </template>
 
@@ -57,7 +37,7 @@ import Loading from '@/components/Loading';
 import CatPage from '@/components/CatPage';
 import ModalCard from '@/components/ModalCard';
 import Modal from '@/components/Modal';
-import { ref, computed, watch, markRaw } from 'vue';
+import { ref, computed, watch, markRaw, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import notify from '@/plugins/notify';
@@ -69,7 +49,6 @@ import PrimaryButton from '@/components/UI/PrimaryButton';
 import AddressAlreadyAdded from '@/components/Modals/AddressAlreadyAdded';
 
 import { i18n } from '@/plugins/i18n';
-import redirectToWallet from '../../router/helpers/redirectToWallet';
 const { t } = i18n.global;
 
 export default {
@@ -92,23 +71,26 @@ export default {
     const showLoader = ref(true);
     const existAddressInMetamask = ref(false);
 
-    const {
-      setAddress,
-      setNets,
-      createWallets,
-      redirectToNewWallet,
-      newWallets,
-      showAlreadyAddedModal,
-    } = useCreateWallets();
+    const { setAddress, setNets, createWallets, newWallets } =
+      useCreateWallets();
 
     store.dispatch('metamask/connectToMetamask');
 
-    setTimeout(() => {
+    const timeOut = setTimeout(() => {
       if (showLoader.value) {
         showLoader.value = false;
         router.push('/add-address/import-existing-address/metamask-keplr');
       }
     }, 7000);
+    onMounted(() => {
+      store.dispatch('newWallets/setCatPageProps', {
+        inputTypeIcon: 'metamask-dot',
+        walletTypePlaceholder: 'Citadel Metamask',
+      });
+    });
+    onUnmounted(() => {
+      clearInterval(timeOut);
+    });
 
     const metamaskConnector = computed(
       () => store.getters['metamask/metamaskConnector']
@@ -174,24 +156,8 @@ export default {
 
     const router = useRouter();
 
-    const modalCloseHandler = () => {
-      redirectToNewWallet();
-      existAddressInMetamask.value = false;
-      showModal.value = false;
-    };
-
-    const alreadyAddedCloseHandler = () => {
-      redirectToWallet({
-        wallet: existAddressInMetamask.value,
-        root: true,
-      });
-
-      showModal.value = false;
-      showAlreadyAddedModal.value = false;
-      existAddressInMetamask.value = false;
-    };
-
     const importWallet = async () => {
+      store.dispatch('newWallets/showLoader');
       const { network, accounts } = metamaskConnector.value;
 
       showLoader.value = true;
@@ -222,12 +188,14 @@ export default {
         // eslint-disable-next-line prefer-destructuring
         existAddressInMetamask.value = newWallets.value[0];
       } else {
-        showAlreadyAddedModal.value = true;
+        store.dispatch(
+          'newWallets/setNewWalletsList',
+          [existAddressInMetamask.value] || newWallets.value
+        );
+        store.dispatch('newWallets/showAlreadyAddedModal');
       }
-
-      showLoader.value = false;
+      store.dispatch('newWallets/hideLoader');
       importModal.value = false;
-      showModal.value = true;
     };
 
     const cancel = () => {
@@ -241,11 +209,8 @@ export default {
       showLoader,
       currentIcon,
       existAddressInMetamask,
-      showAlreadyAddedModal,
-      modalCloseHandler,
       importWallet,
       cancel,
-      alreadyAddedCloseHandler,
     };
   },
 };

@@ -25,29 +25,13 @@
       />
       <SelectNetworks v-if="currentStep === 4" @selectNets="finalStep" />
     </div>
-    <teleport to="body">
-      <transition name="fade">
-        <Modal v-if="showModal">
-          <img v-if="showLoader" src="@/assets/gif/loader.gif" alt="" />
-          <CatPage
-            v-else
-            v-click-away="modalClickHandler"
-            :data="newWallets"
-            data-qa="add-address__one-seed"
-            @close="modalCloseHandler"
-            @buttonClick="modalClickHandler"
-          />
-        </Modal>
-      </transition>
-    </teleport>
   </div>
 </template>
 
 <script>
+import { onMounted } from 'vue';
 import ConfirmOneSeed from './components/ConfirmOneSeed';
 import CreateOneSeed from './components/CreateOneSeed';
-import CatPage from '@/components/CatPage';
-import Modal from '@/components/Modal';
 import SelectNetworks from './components/SelectNetworks';
 import Header from '../AddAddress/components/Header';
 import EnterPassword from './components/EnterPassword';
@@ -59,6 +43,7 @@ import {
 } from '@/static/addToOneSeed';
 import useCreateWallets from '@/compositions/useCreateWallets';
 import { WALLET_TYPES } from '../../config/walletType';
+import { useStore } from 'vuex';
 
 export default {
   name: 'AddToOneSeed',
@@ -67,15 +52,11 @@ export default {
     EnterPassword,
     CreatePassword,
     SelectNetworks,
-    Modal,
-    CatPage,
     CreateOneSeed,
     ConfirmOneSeed,
   },
   setup() {
     const {
-      showLoader,
-      showModal,
       setPassword,
       setMnemonic,
       savePassword,
@@ -89,15 +70,26 @@ export default {
       isPasswordHash,
       redirectToNewWallet,
     } = useCreateWallets();
+    const store = useStore();
+    onMounted(() => {
+      store.dispatch('newWallets/setCatPageProps', {
+        dataQa: 'add-address__one-seed',
+      });
+    });
 
     const finalStep = (nets) => {
+      store.dispatch('newWallets/showLoader');
       isUserMnemonic.value && setMnemonic();
       setNets(nets);
       setType('oneSeed');
-      createWallets(WALLET_TYPES.ONE_SEED).then((success) => {
+      createWallets(WALLET_TYPES.ONE_SEED).then(async (success) => {
         if (success) {
           !isUserMnemonic.value && saveMnemonic();
           !isPasswordHash.value && savePassword();
+          await redirectToNewWallet();
+          store.dispatch('newWallets/setNewWalletsList', newWallets.value);
+          store.dispatch('newWallets/showModal');
+          store.dispatch('newWallets/hideLoader');
         }
       });
     };
@@ -107,29 +99,16 @@ export default {
       isUserMnemonic.value ? stepsOneSeed : stepsOneSeed1
     );
 
-    const modalCloseHandler = () => {
-      showModal.value = false;
-      redirectToNewWallet();
-    };
-    const modalClickHandler = () => {
-      showModal.value = false;
-      redirectToNewWallet();
-    };
-
     return {
       steps,
       currentStep,
-      showModal,
       isUserMnemonic,
       isPasswordHash,
-      modalCloseHandler,
-      modalClickHandler,
       walletOpts,
       setPassword,
       setMnemonic,
       newWallets,
       finalStep,
-      showLoader,
     };
   },
 };

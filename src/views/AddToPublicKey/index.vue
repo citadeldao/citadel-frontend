@@ -43,15 +43,11 @@
           @close="alreadyAddedCloseHandler"
           @buttonClick="alreadyAddedClickHandler"
         />
-        <CatPage
+        <NewWalletsModal
           v-else
-          v-click-away="successModalCloseHandler"
-          :data="newWallets"
           :wallet-type-placeholder="$t('catPage.placeholderPublic')"
           input-type-icon="public-dot"
           data-qa="add-address__existing__public-key"
-          @close="successModalCloseHandler"
-          @buttonClick="successModalClickHandler"
         />
       </Modal>
     </teleport>
@@ -61,11 +57,10 @@
 <script>
 import Input from '@/components/UI/Input';
 import Autocomplete from '@/components/UI/Autocomplete';
-import CatPage from '@/components/CatPage';
 import Modal from '@/components/Modal';
 import AddressAlreadyAdded from '@/components/Modals/AddressAlreadyAdded';
 import Header from '../AddAddress/components/Header';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import { useStore } from 'vuex';
 import useSelectNetwork from '@/compositions/useSelectNetwork';
@@ -80,7 +75,6 @@ export default {
     Autocomplete,
     Input,
     PrimaryButton,
-    CatPage,
     Modal,
     AddressAlreadyAdded,
   },
@@ -107,12 +101,17 @@ export default {
 
       return regExp.test(address.value);
     });
-
+    onMounted(() => {
+      store.dispatch('newWallets/setCatPageProps', {
+        inputTypeIcon: 'public-dot',
+        dataQa: 'add-address__existing__public-key',
+        walletTypePlaceholder: t('catPage.placeholderPublic'),
+      });
+    });
     const {
       setAddress,
       setNets,
       createWallets,
-      showModal,
       showLoader,
       newWallets,
       redirectToNewWallet,
@@ -134,14 +133,14 @@ export default {
     };
 
     const successModalCloseHandler = () => {
-      showModal.value = false;
+      store.dispatch('newWallets/hideModal');
       redirectToNewWallet();
     };
     const successModalClickHandler = successModalCloseHandler;
 
     const alreadyAddedCloseHandler = () => {
       showAlreadyAddedModal.value = false;
-      showModal.value = false;
+      store.dispatch('newWallets/hideModal');
       redirectToNewWallet();
     };
     const alreadyAddedClickHandler = alreadyAddedCloseHandler;
@@ -150,7 +149,6 @@ export default {
       search,
       address,
       submitHandler,
-      showModal,
       successModalCloseHandler,
       successModalClickHandler,
       networks,
