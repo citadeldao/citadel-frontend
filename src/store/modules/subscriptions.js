@@ -20,8 +20,8 @@ export default {
   },
 
   mutations: {
-    [types.SET_SUBSCRIPTIONS](state, subscriptionItems) {
-      state.subscriptions = subscriptionItems;
+    [types.SET_SUBSCRIPTIONS](state, subscriptions) {
+      state.subscriptions = subscriptions;
     },
   },
 
@@ -39,14 +39,11 @@ export default {
       }
     },
 
-    async updateSubscriptions({ rewardsDigest, newsletter }) {
-      const { error } = await citadel.manageSubscriptions({
-        rewardsDigest,
-        newsletter,
-      });
+    async updateSubscriptions({ commit }, data) {
+      const { error } = await citadel.manageSubscriptions(data);
 
       if (!error) {
-        this.getSubscriptions();
+        commit(types.SET_SUBSCRIPTIONS, data);
       } else {
         notify({
           type: 'warning',

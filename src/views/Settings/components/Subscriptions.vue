@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { computed, ref, onMounted } from 'vue';
+import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 import Checkbox from '@/components/UI/Checkbox';
@@ -51,9 +51,9 @@ export default {
   setup() {
     const store = useStore();
     const { t } = useI18n();
-
-    onMounted(async () => {
-      await store.dispatch('subscriptions/getSubscriptions');
+    const subscriptions = ref({
+      rewardsDigest: false,
+      newsletter: false,
     });
 
     const isDisabled = ref({
@@ -61,7 +61,9 @@ export default {
       newsletter: false,
     });
 
-    const subscriptions = ref(store.getters['subscriptions/subscriptions']);
+    store.dispatch('subscriptions/getSubscriptions').then(() => {
+      subscriptions.value = store.getters['subscriptions/subscriptions'];
+    });
 
     const changeSubscriptionState = async (key) => {
       const msg = key == 'rewardsDigest' ? 'Rewards' : 'Newsletter';
