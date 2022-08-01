@@ -470,7 +470,6 @@ export default {
   }
 
   &__visibility-icon,
-  &__clear-icon,
   &__copy {
     right: 17px;
     bottom: 14px;
@@ -487,13 +486,18 @@ export default {
   &__clear-icon {
     width: 16px;
     height: 16px;
-    bottom: 17px;
+    bottom: 17px !important;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: $round;
     background: $mid-blue;
-
+    @include lg {
+      bottom: 14px !important;
+    }
+    @include xs-lg {
+      bottom: 13px !important;
+    }
     &:hover {
       background: $red;
     }
