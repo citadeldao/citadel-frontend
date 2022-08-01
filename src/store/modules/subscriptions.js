@@ -20,8 +20,8 @@ export default {
   },
 
   mutations: {
-    [types.SET_SUBSCRIPTIONS](state, subscriptionItems) {
-      state.subscriptions = subscriptionItems;
+    [types.SET_SUBSCRIPTIONS](state, subscriptions) {
+      state.subscriptions = { ...subscriptions };
     },
   },
 
@@ -45,9 +45,7 @@ export default {
         newsletter,
       });
 
-      if (!error) {
-        this.getSubscriptions();
-      } else {
+      if (error) {
         notify({
           type: 'warning',
           text: error,
