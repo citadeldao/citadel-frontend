@@ -22,6 +22,8 @@ import ktAddresses from './modules/ktAddresses';
 import metamask from './modules/metamask';
 import keplr from './modules/keplr';
 
+import subscriptions from './modules/subscriptions';
+
 export default createStore({
   modules: {
     app,
@@ -45,5 +47,6 @@ export default createStore({
     ktAddresses,
     metamask,
     keplr,
+    subscriptions,
   },
 });

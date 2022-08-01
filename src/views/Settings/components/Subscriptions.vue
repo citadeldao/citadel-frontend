@@ -10,20 +10,20 @@
       <div class="subscriptions__select">
         <Checkbox
           id="rewardDigest"
-          :value="profileInfo.subscribe_rewards"
+          :value="subscriptions.rewardsDigest"
           :label="$t('settings.subscriptions.rewardsDigest')"
           :info="$t('settings.subscriptions.rewardsDigestTooltip')"
-          :disabled="isRewardDisabled"
-          @change="changeSubscriptionState"
+          :disabled="isDisabled.rewardsDigest"
+          @change="changeSubscriptionState('rewardsDigest')"
         />
 
         <Checkbox
           id="newsletter"
-          :value="false"
+          :value="subscriptions.newsletter"
           :label="$t('settings.subscriptions.newsletter')"
           :info="$t('settings.subscriptions.newsletterTooltip')"
-          :disabled="true"
-          @change="changeSubscriptionState"
+          :disabled="isDisabled.newsletter"
+          @change="changeSubscriptionState('newsletter')"
         />
       </div>
       <SyncExtension
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 import Checkbox from '@/components/UI/Checkbox';
@@ -51,25 +51,37 @@ export default {
   setup() {
     const store = useStore();
     const { t } = useI18n();
-    const profileInfo = computed(() => store.getters['profile/info']);
-    const isPasswordHash = computed(() => store.getters['crypto/passwordHash']);
-    const isRewardDisabled = ref(false);
 
-    const global = computed(() => window);
+    onMounted(async () => {
+      await store.dispatch('subscriptions/getSubscriptions');
+    });
 
-    const changeSubscriptionState = async (newValue) => {
-      isRewardDisabled.value = true;
+    const isDisabled = ref({
+      rewardsDigest: false,
+      newsletter: false,
+    });
 
-      await store.dispatch('profile/changeSubscribeRewards', newValue);
+    const subscriptions = ref(store.getters['subscriptions/subscriptions']);
+
+    const changeSubscriptionState = async (key) => {
+      const msg = key == 'rewardsDigest' ? 'Rewards' : 'Newsletter';
+
+      subscriptions.value[key] = !subscriptions.value[key];
+      isDisabled.value[key] = true;
+
+      await store.dispatch('subscriptions/updateSubscriptions', {
+        ...subscriptions.value,
+      });
 
       setTimeout(() => {
-        isRewardDisabled.value = false;
+        isDisabled.value[key] = false;
       }, FREEZE_DURATION);
 
-      const type = newValue ? 'success' : 'info';
-      const text = newValue
-        ? t('settings.subscriptions.addRewardsNotification')
-        : t('settings.subscriptions.removeRewardsNotification');
+      const type = subscriptions.value[key] ? 'success' : 'info';
+
+      const text = subscriptions.value[key]
+        ? t(`settings.subscriptions.add${msg}Notification`)
+        : t(`settings.subscriptions.remove${msg}Notification`);
 
       notify({
         type,
@@ -78,11 +90,14 @@ export default {
       });
     };
 
+    const global = computed(() => window);
+    const isPasswordHash = computed(() => store.getters['crypto/passwordHash']);
+
     return {
       global,
       isPasswordHash,
-      profileInfo,
-      isRewardDisabled,
+      subscriptions,
+      isDisabled,
       changeSubscriptionState,
     };
   },
