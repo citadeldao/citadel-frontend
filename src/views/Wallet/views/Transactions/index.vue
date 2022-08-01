@@ -14,17 +14,14 @@
       class="transactions__table"
     >
       <tr>
-        <th>{{ $t('type') }}</th>
-        <th class="transactions__table-xl">
+        <th class="radius-th-left header type">{{ $t('type') }}</th>
+        <th class="header">
           {{ $t('status') }}
         </th>
-        <th class="transactions__table-xl">
+        <th class="header">{{ $t('amount') }}</th>
+        <th class="radius-th-right header">
           {{ $t('timeDate') }}
         </th>
-        <th class="transactions__table-xl">
-          {{ $t('address') }}
-        </th>
-        <th>{{ $t('amount') }}</th>
       </tr>
 
       <template v-if="currentPage === 1">
@@ -408,7 +405,18 @@ export default {
     @include md {
       margin-bottom: 16px;
     }
+
+    .radius-th-left {
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+    }
+
+    .radius-th-right {
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
   }
+
   &__table-status {
     display: none;
     font-size: 16px;
@@ -426,6 +434,15 @@ export default {
     line-height: 19px;
     font-style: normal;
     font-family: 'Panton_Regular';
+
+    &.header {
+      background: #e1e8fb;
+
+      &.type {
+        padding-right: 170px;
+      }
+    }
+
     &:first-child {
       padding-left: 24px;
       @include md {

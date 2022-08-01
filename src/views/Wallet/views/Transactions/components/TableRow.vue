@@ -9,131 +9,41 @@
         <keep-alive>
           <component :is="icon" :width="32" :height="32" />
         </keep-alive>
-        <keep-alive>
-          <component
-            v-if="transaction.view && transaction.view.length"
-            :is="'messages'"
-            :width="32"
-            :height="32"
-          />
-        </keep-alive>
         <span class="table-row__type-block-type">
           {{ type.title }}
         </span>
+        <div
+          v-if="transaction.view && transaction.view.length > 1"
+          class="table-row__type-block-inner-amount"
+        >
+          {{ transaction.view.length }}
+        </div>
       </div>
     </td>
     <td class="table-row__status">
       <div class="table-row__status-info">
-        <span class="table-row__status-info-type">
-          {{ type.title }}
-        </span>
         <span
           :style="{ color: status.color }"
           class="table-row__status-info-status"
         >
           {{ $t(status.title) }}
         </span>
-        <div class="table-row__type-block">
-          <keep-alive>
-            <component
-              v-if="transaction.view && transaction.view.length"
-              :is="'messages'"
-              :width="32"
-              :height="32"
-            />
-          </keep-alive>
-        </div>
-      </div>
-    </td>
-    <td class="table-row__date-time">
-      <Tooltip>
-        <template #content>
-          <span> {{ defaultDate(transaction.date) }} </span>
-        </template>
-        <template #default>
-          <span>{{
-            transaction.date ? moment(transaction.date).fromNow() : ''
-          }}</span>
-        </template>
-      </Tooltip>
-    </td>
-    <td class="table-row__to">
-      <div class="table-row__to-section">
-        <out v-if="direction === 'income'" />
-        <inIcon v-if="direction === 'outcome'" />
-        <span>{{ address }}</span>
       </div>
     </td>
     <td class="table-row__amount">
-      <div class="table-row__amount-content-wrapper">
-        <div
-          :class="{ hasMsgs: !transaction.view || !transaction.view.length }"
-          class="table-row__status-info"
-        >
-          <span class="table-row__status-info-type">
-            {{ type.title }}
-          </span>
+      <div class="table-row__amount-content-wrapper mini">
+        <div class="table-row__amount-value">
           <span
-            :style="{ color: status.color }"
-            class="table-row__status-info-status"
-          >
-            {{ $t(status.title) }}
+            v-pretty-number="{
+              value: formatedValue,
+              currency: currentWallet.code,
+            }"
+            class="table-row__amount-value-value"
+            :style="{ color: valueColor }"
+          />
+          <span class="table-row__amount-value-currency">
+            {{ currentWallet.code }}
           </span>
-        </div>
-        <div class="table-row__amount-block">
-          <div class="table-row__amount-block-line">
-            <div class="table-row__amount-block-date-time">
-              <Tooltip>
-                <template #content>
-                  <span> {{ defaultDate(transaction.date) }} </span>
-                </template>
-                <template #default>
-                  <span>{{
-                    transaction.date ? moment(transaction.date).fromNow() : ''
-                  }}</span>
-                </template>
-              </Tooltip>
-            </div>
-            <div v-if="transaction.value" class="table-row__amount-value">
-              <span
-                v-pretty-number="{
-                  value: formatedValue,
-                  currency: currentWallet.code,
-                }"
-                class="table-row__amount-value-value"
-                :style="{ color: valueColor }"
-              />
-              <span class="table-row__amount-value-currency">
-                {{ currentWallet.code }}
-              </span>
-              <comment
-                v-if="transaction.note"
-                class="table-row__comment-icon"
-              />
-            </div>
-          </div>
-          <div class="table-row__amount-block-line">
-            <div class="table-row__amount-block-to">
-              <out
-                v-if="
-                  direction === 'income' ||
-                  (fromMempool && transaction.direction === 'transfer')
-                "
-              />
-              <inIcon v-if="direction === 'outcome'" />
-              <span>{{ address }}</span>
-            </div>
-            <span v-if="!isNaN(fee)" class="table-row__amount-fee">
-              <span class="table-row__amount-fee-fee">{{ $t('fee') }}:</span>
-              <span
-                v-pretty-number="{ value: fee, currency: currentWallet.code }"
-                class="table-row__amount-fee-value"
-              />
-              <span class="table-row__amount-fee-currency">{{
-                transaction.fee.symbol
-              }}</span>
-            </span>
-          </div>
         </div>
       </div>
 
@@ -152,37 +62,29 @@
               {{ currentWallet.code }}
             </span>
           </div>
-          <span v-if="!isNaN(fee)" class="table-row__amount-fee">
-            <span class="table-row__amount-fee-fee">{{ $t('fee') }}:</span>
-            <span
-              v-pretty-number="{ value: fee }"
-              class="table-row__amount-fee-value"
-            />
-            <span class="table-row__amount-fee-currency">{{
-              transaction.fee.symbol
-            }}</span>
-          </span>
         </div>
-        <comment v-if="transaction.note" class="table-row__comment-icon" />
       </div>
     </td>
-  </tr>
-  <tr v-if="transaction.note">
-    <td colspan="5" class="table-row__comment">
-      <div class="table-row__arrow">
-        <curveArrow />
-      </div>
-      <div class="table-row__comment-content">
-        <div class="table-row__comment-title">
-          <span>{{ $t('comment') }}</span>
-          <EditButton @click="$emit('editComment', transaction)">
-            {{ $t('edit') }}
-          </EditButton>
-        </div>
-        <span class="table-row__comment-comment">
-          {{ transaction.note }}
-        </span>
-      </div>
+    <td class="table-row__date-time">
+      <Tooltip>
+        <template #content>
+          <span> {{ defaultDate(transaction.date) }} </span>
+        </template>
+        <template #default>
+          <span>{{
+            transaction.date ? moment(transaction.date).fromNow() : ''
+          }}</span>
+          <linkIcon
+            width="21"
+            hidden="18"
+            @click.stop="
+              () => {
+                global.open(txUrl, '_blank');
+              }
+            "
+          />
+        </template>
+      </Tooltip>
     </td>
   </tr>
 </template>
@@ -194,23 +96,25 @@ import BigNumber from 'bignumber.js';
 import EditButton from '@/components/UI/EditButton';
 import curveArrow from '@/assets/icons/transactions/curve-arrow.svg';
 import comment from '@/assets/icons/transactions/comment.svg';
-import messages from '@/assets/icons/transactions/messages.svg';
 import inIcon from '@/assets/icons/transactions/in.svg';
 import out from '@/assets/icons/transactions/out.svg';
 import useTransaction from '@/compositions/useTransaction';
 import Loading from '@/components/Loading.vue';
 import defaultDate from '@/helpers/date.js';
+import linkIcon from '@/assets/icons/link.svg';
+import Tooltip from '@/components/UI/Tooltip';
 
 export default {
   name: 'TableRow',
   components: {
     inIcon,
+    Tooltip,
     out,
     comment,
     curveArrow,
     EditButton,
-    messages,
     Loading,
+    linkIcon,
   },
   props: {
     transaction: {
@@ -231,6 +135,8 @@ export default {
   setup(props) {
     let type;
 
+    const global = computed(() => window);
+
     if (props.transaction.type) {
       const data = useTransaction(props.transaction);
       type = data.type;
@@ -238,12 +144,19 @@ export default {
       const data = useTransaction(props.transaction.view[0]);
       type = data.type;
     }
-    console.log(type.value, props.transaction);
 
     const icon = ref();
     import(`@/assets/icons/transactions/${type.value.icon}.svg`).then((val) => {
       icon.value = markRaw(val.default);
     });
+
+    const txUrl = computed(() =>
+      props.currentWallet?.getTxUrl(
+        props.currentWallet.id,
+        props.transaction.hash
+      )
+    );
+
     const status = computed(() => {
       if (props.fromMempool) {
         return { title: 'waiting', color: '#F4BD13' };
@@ -309,6 +222,8 @@ export default {
     });
 
     return {
+      txUrl,
+      global,
       defaultDate,
       icon,
       type,
@@ -380,17 +295,17 @@ export default {
     display: flex;
     align-items: center;
     @include lg {
-      align-items: initial;
+      align-items: center;
     }
 
     & svg {
-      margin-right: 16px;
+      margin-right: 7px;
     }
   }
 
   &__type-block-type {
     @include lg {
-      display: none;
+      // display: none;
     }
   }
 
@@ -403,6 +318,20 @@ export default {
     line-height: 19px;
   }
 
+  &__type-block-inner-amount {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 19px;
+    background: #b6e5ff;
+    border-radius: 2px;
+    font-size: 12px;
+    color: #1a53f0;
+    font-family: 'Panton_Bold';
+    margin-left: 7px;
+  }
+
   &__status-info {
     &.hasMsgs {
       margin-left: -45px;
@@ -411,7 +340,7 @@ export default {
 
   &__status-info-status {
     @include lg {
-      margin-top: 11px;
+      // margin-top: 11px;
       font-size: 14px;
     }
     @include md {
@@ -429,7 +358,7 @@ export default {
   &__status {
     padding-right: 20px !important;
     @include lg {
-      display: none;
+      // display: none;
     }
     @include md {
       display: none;
@@ -442,7 +371,7 @@ export default {
   }
 
   &__date-time {
-    display: none;
+    // display: none;
     padding-right: 20px !important;
     @include xl {
       display: table-cell;
@@ -457,33 +386,6 @@ export default {
       &:first-child {
         margin-right: 10px;
       }
-    }
-  }
-
-  &__to {
-    display: none;
-    @include xl {
-      display: table-cell;
-    }
-  }
-
-  &__to-section {
-    align-items: center;
-    display: flex;
-
-    & svg {
-      margin-right: 16px;
-    }
-
-    & span {
-      max-width: 299px;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      font-size: 16px;
-      line-height: 19px;
-      letter-spacing: -0.02em;
-      color: $too-dark-blue;
     }
   }
 
@@ -507,6 +409,12 @@ export default {
   }
 
   &__amount-content-wrapper {
+    &.mini {
+      @include xl {
+        display: none;
+      }
+    }
+
     display: flex;
     @include md {
       justify-content: flex-end;
@@ -580,7 +488,7 @@ export default {
 
   &__amount-block-xl {
     display: none;
-    justify-content: flex-end;
+    // justify-content: flex-end;
     @include xl {
       display: flex;
     }
@@ -594,7 +502,7 @@ export default {
   &__amount-value {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    // justify-content: flex-end;
   }
 
   &__amount-value-value,
@@ -608,103 +516,6 @@ export default {
   &__amount-value-value {
     font-family: 'Panton_Bold' !important;
     margin-right: 3px;
-  }
-
-  &__amount-fee {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-  }
-
-  &__amount-fee-fee,
-  &__amount-fee-value,
-  &__amount-fee-currency {
-    font-size: 14px;
-    line-height: 17px;
-    color: $mid-gray;
-  }
-
-  &__amount-fee-value {
-    font-family: 'Panton_Bold' !important;
-    letter-spacing: -0.02em;
-    color: $mid-blue;
-    margin-right: 3px;
-  }
-
-  &__amount-fee-currency {
-    color: $black;
-  }
-
-  &__amount-fee-fee {
-    margin-right: 8px;
-  }
-
-  &__comment-icon {
-    margin-left: 9px;
-    @include lg {
-      margin-left: 15px;
-    }
-  }
-
-  &__comment {
-    width: 0;
-    border-top: 1px dashed $too-ligth-blue;
-    position: relative;
-    padding: 14px 87px 12px 70px;
-    border-bottom: 1px solid $too-ligth-blue;
-    @include lg {
-      padding: 16px 7px 9px 70px;
-    }
-    @include md {
-      padding: 8px 14px 12px 70px;
-    }
-  }
-
-  &__arrow {
-    position: absolute;
-    padding: 0px 23px 0px 29px;
-    height: 53px;
-    left: 0px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    top: -2px;
-    background: white;
-    @include md {
-      top: -8px;
-    }
-  }
-
-  &__comment-content {
-    display: flex;
-    flex-direction: column;
-  }
-
-  &__comment-title {
-    display: flex;
-    align-items: center;
-    margin-bottom: 7px;
-    @include md {
-      margin-bottom: 2px;
-    }
-
-    & span {
-      font-size: 16px;
-      line-height: 25px;
-      color: $too-dark-blue;
-      font-family: 'Panton_SemiBold';
-      margin-right: 6px;
-    }
-  }
-
-  &__comment-comment {
-    font-size: 14px;
-    line-height: 24px;
-    color: $mid-blue;
-    @include md {
-      font-size: 12px;
-      line-height: 22px;
-    }
   }
 }
 </style>

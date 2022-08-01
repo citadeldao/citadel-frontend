@@ -40,21 +40,6 @@
         class="comment-field"
       />
     </div>
-    <!-- <div class="info-block__line">
-      <span class="info-block__line-title">{{ $t('status') }}: </span>
-      <span
-        class="info-block__status"
-        :style="{ color: info.formatedStatus.color }"
-      >
-        {{ info.formatedStatus.title }}
-      </span>
-    </div>
-    <div v-if="info.date" class="info-block__line">
-      <span class="info-block__line-title"> {{ $t('date') }}: </span>
-      <span class="info-block__date">
-        {{ info.date }}
-      </span>
-    </div> -->
     <div v-if="info.to" class="info-block__line">
       <span class="info-block__line-title"> {{ $t('sendTo') }}: </span>
       <span class="info-block__line-to">
