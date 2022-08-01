@@ -723,6 +723,7 @@ export default {
     align-items: center;
     justify-content: space-around;
     max-width: calc(#{$sidebar-max-width} - 50px);
+    min-height: 80px;
     max-height: 80px;
     width: 100%;
     height: 100%;

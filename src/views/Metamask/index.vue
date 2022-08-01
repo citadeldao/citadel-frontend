@@ -81,7 +81,7 @@ export default {
         showLoader.value = false;
         router.push('/add-address/import-existing-address/metamask-keplr');
       }
-    }, 7000);
+    }, 15000);
     onMounted(() => {
       store.dispatch('newWallets/setCatPageProps', {
         inputTypeIcon: 'metamask-dot',
