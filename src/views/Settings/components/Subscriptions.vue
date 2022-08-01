@@ -61,7 +61,7 @@ export default {
       newsletter: false,
     });
 
-    const subscriptions = ref(store.getters['subscriptions/subscriptions']);
+    const subscriptions = computed(() => store.getters['subscriptions/subscriptions']);
 
     const changeSubscriptionState = async (key) => {
       const msg = key == 'rewardsDigest' ? 'Rewards' : 'Newsletter';
