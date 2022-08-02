@@ -53,7 +53,10 @@
           >$</span
         >
         <span
-          v-pretty-number="{ value: balance?.price?.USD, currency: 'USD' }"
+          v-pretty-number="{
+            value: balance?.price?.USD || balance,
+            currency: 'USD',
+          }"
           class="assets-item__value"
         />
       </div>
@@ -75,7 +78,7 @@ export default {
       default: () => ({}),
     },
     balance: {
-      type: Object,
+      type: [Object, Number],
       default: () => ({}),
     },
     isNativeToken: {

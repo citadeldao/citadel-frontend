@@ -55,7 +55,7 @@
 
         <AssetsItem
           :item="stateCurrentWallet"
-          :balance="stateCurrentWallet.balance"
+          :balance="stateCurrenWalletBalance"
           is-native-token
           :is-active="currentWallet.net === stateCurrentWallet.net"
           @click="setCurrentToken(stateCurrentWallet)"
@@ -217,6 +217,14 @@ export default {
       { icon: 'byValueReverse', value: 'byValueReverse' },
     ]);
     const filterValue = ref(filterList.value[3].value);
+
+    const stateCurrenWalletBalance = computed(() => {
+      if (props.currentWallet.net === stateCurrentWallet.value.net) {
+        return store.getters['profile/rates'][props.currentWallet.net].USD;
+      }
+      return stateCurrentWallet.value.balance;
+    });
+
     const isNotLinkedSnip20 = (token) => {
       const isSnip20 = computed(
         () => token.config.standard === TOKEN_STANDARDS.SNIP_20
@@ -380,6 +388,7 @@ export default {
       isNotLinkedSnip20,
       closeCreateVkModal,
       stateCurrentWallet,
+      stateCurrenWalletBalance,
       keyword,
       filterValue,
       filteredTokens,
