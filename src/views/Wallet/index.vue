@@ -288,6 +288,7 @@ import notify from '@/plugins/notify';
 import { useI18n } from 'vue-i18n';
 import useApi from '@/api/useApi';
 import { keplrNetworksProtobufFormat } from '@/config/availableNets';
+import { keplrNetworks } from '@/config/availableNets';
 
 export default {
   name: 'Wallet',
@@ -345,9 +346,12 @@ export default {
     const checkKeplrAddress = async () => {
       if (currentWallet.value.type === WALLET_TYPES.KEPLR) {
         try {
-          await window.keplr.enable(currentWallet.value.net);
+          const chain = keplrNetworks.find(
+            (conf) => conf.net === currentWallet.value.net
+          ).key;
+          await window.keplr.enable(chain);
           const accounts = await window.keplr
-            .getOfflineSigner(currentWallet.value.net)
+            .getOfflineSigner(chain)
             .getAccounts();
           const keplrAddress = accounts && accounts[0].address;
           const pubkey = Buffer.from(accounts && accounts[0].pubkey).toString(
