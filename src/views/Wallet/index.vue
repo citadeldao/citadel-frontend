@@ -288,6 +288,7 @@ import notify from '@/plugins/notify';
 import { useI18n } from 'vue-i18n';
 import useApi from '@/api/useApi';
 import { keplrNetworksProtobufFormat } from '@/config/availableNets';
+
 export default {
   name: 'Wallet',
   components: {
@@ -340,9 +341,45 @@ export default {
     const subtokens = computed(() =>
       store.getters['subtokens/formatedSubtokens']()
     );
+
+    const checkKeplrAddress = async () => {
+      if (currentWallet.value.type === WALLET_TYPES.KEPLR) {
+        try {
+          await window.keplr.enable(currentWallet.value.net);
+          const accounts = await window.keplr
+            .getOfflineSigner(currentWallet.value.net)
+            .getAccounts();
+          const keplrAddress = accounts && accounts[0].address;
+          const pubkey = Buffer.from(accounts && accounts[0].pubkey).toString(
+            'hex'
+          );
+
+          if (keplrAddress && keplrAddress !== currentWallet.value.address) {
+            notify({
+              type: 'warning',
+              text: 'Please change account in Keplr to sign transaction',
+            });
+          } else {
+            if (keplrAddress === currentWallet.value.address) {
+              const walletPublicKey = currentWallet.value.publicKey;
+              if (walletPublicKey !== pubkey) {
+                await store.dispatch('wallets/pushWallets', {
+                  wallets: [{ ...currentWallet.value, publicKey: pubkey }],
+                });
+                window.location.reload();
+              }
+            }
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    };
+
     onMounted(async () => {
       await loadKtAddresses(currentWallet?.value?.id);
       await loadXCTInfo();
+      await checkKeplrAddress();
     });
 
     watch(
@@ -357,6 +394,7 @@ export default {
           if (params.net && params.address) {
             await loadKtAddresses(currentWallet?.value?.id);
             await loadXCTInfo();
+            await checkKeplrAddress();
           }
         }
       },
