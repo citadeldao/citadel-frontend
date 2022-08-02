@@ -48,7 +48,7 @@ import ConfirmOneSeed from './components/ConfirmOneSeed';
 import CreateOneSeed from './components/CreateOneSeed';
 import CatPage from '@/components/CatPage';
 import Modal from '@/components/Modal';
-import SelectNetworks from './components/SelectNetworks';
+import SelectNetworks from '@/components/UI/SelectNetworks';
 import Header from '../AddAddress/components/Header';
 import EnterPassword from './components/EnterPassword';
 import CreatePassword from './components/CreatePassword';

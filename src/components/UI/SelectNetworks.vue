@@ -19,20 +19,18 @@
         :current-page="currentPage"
         @current-change="setCurrentPage"
       /> -->
-      <div
-        v-if="networksAmount !== displayData.length"
-        class="more"
-        @click="showAllNetworks"
-      >
-        <div>{{ $t('addToOneSeed.moreNetworks') }}</div>
-        <BackButton :is-down="true" data-qa="More networks" />
-      </div>
-      <div class="title">
-        {{ $t('addToOneSeed.walletCreated') }}
-      </div>
-      <div class="desc">
-        {{ $t('addToOneSeed.walletCreatedDescription') }}
-      </div>
+      <template v-if="networksAmount !== displayData.length">
+        <div class="more" @click="showAllNetworks">
+          <div>{{ $t('addToOneSeed.moreNetworks') }}</div>
+          <BackButton :is-down="true" data-qa="More networks" />
+        </div>
+        <div class="title">
+          {{ $t('addToOneSeed.walletCreated') }}
+        </div>
+        <div class="desc">
+          {{ $t('addToOneSeed.walletCreatedDescription') }}
+        </div>
+      </template>
       <PrimaryButton
         data-qa="Get-started"
         :disabled="!checkedItems.length"
@@ -74,11 +72,26 @@ export default {
 
     const keyword = ref('');
     const displayData = computed(() => {
+      const strictOrderedAbbrs = ['BTC', 'BNB', 'ETH', 'ATOM', 'OSMO', 'SCRT'];
+      const filterExistAbbr = networks.value.filter(
+        (e) => strictOrderedAbbrs.indexOf(e.abbr) !== -1
+      );
+      let customOrderedNets = [
+        filterExistAbbr[1],
+        filterExistAbbr[0],
+        filterExistAbbr[3],
+        filterExistAbbr[2],
+        filterExistAbbr[4],
+        filterExistAbbr[5],
+      ];
+      let filterNets = networks.value.filter(
+        (e) => strictOrderedAbbrs.indexOf(e.abbr) === -1
+      );
+      filterNets.unshift(...customOrderedNets);
       if (!keyword.value) {
-        return networks.value;
+        return filterNets;
       }
-
-      return networks.value.filter(
+      return filterNets.filter(
         (item) =>
           item.title.toLowerCase().includes(keyword.value.toLowerCase()) ||
           item.abbr.toLowerCase().includes(keyword.value.toLowerCase())

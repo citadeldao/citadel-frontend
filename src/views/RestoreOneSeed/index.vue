@@ -38,7 +38,7 @@ import CreatePassword from './components/CreatePassword';
 import CatPage from '@/components/CatPage';
 import Modal from '@/components/Modal';
 import useCurrentStep from '@/compositions/useCurrentStep';
-import SelectNetworks from './components/SelectNetworks';
+import SelectNetworks from '@/components/UI/SelectNetworks';
 import useCreateWallets from '@/compositions/useCreateWallets';
 import { steps as restoreOneSeedSteps } from '@/static/restoreOneSeed';
 
