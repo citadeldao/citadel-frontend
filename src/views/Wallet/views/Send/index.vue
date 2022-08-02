@@ -460,8 +460,6 @@ export default {
   },
   emits: ['prepareClaim', 'prepareXctClaim'],
   setup(props) {
-    console.log('token', props.currentToken);
-    console.log('wallet', props.currentWallet);
     const showSuccessModal = ref(false);
     const { t } = useI18n();
     const isSendToAnotherNetwork = ref(false);
