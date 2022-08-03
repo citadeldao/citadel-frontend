@@ -69,6 +69,10 @@ export default function useCreateWallets() {
     walletOpts.account = account;
   };
 
+  const setPublicKey = (pk) => {
+    walletOpts.publicKey = pk;
+  };
+
   const setType = (type) => {
     walletOpts.type = type;
   };
@@ -111,15 +115,13 @@ export default function useCreateWallets() {
       }
 
       if (newWalletType === WALLET_TYPES.KEPLR) {
-        const publicKey = store.getters['keplr/keplrConnector'].accounts[0].pubkey;
-        const pb = Buffer.from(publicKey).toString('hex');
         const config = store.getters['networks/configByNet'](walletOpts.nets[0]);
         const { data, error } = await citadel.addCreatedWallet({
           ...config,
           net: walletOpts.nets[0],
           address: walletOpts.address,
           type: newWalletType,
-          publicKey: pb,
+          publicKey: walletOpts.publicKey,
           networkName: config.name,
         });
         newWalletsList = data ? [data] : [];
@@ -226,5 +228,6 @@ export default function useCreateWallets() {
     redirectToNewWallet,
     showAlreadyAddedModal,
     setAccount,
+    setPublicKey,
   };
 }

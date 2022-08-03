@@ -126,6 +126,7 @@ export default {
             if (!find) {
               importedAddresses.value.push({
                 address: accs[0].address,
+                pubkey: Buffer.from(accs[0].pubkey).toString('hex'),
                 net: c.net,
                 key: c.key,
               });
@@ -164,6 +165,7 @@ export default {
           setNets([c.net]);
           setType('keplr');
           setAddress(c.address);
+          setPublicKey(c.pubkey);
 
           try {
             await createWallets(WALLET_TYPES.KEPLR);
@@ -182,7 +184,8 @@ export default {
       }
     };
 
-    const { setNets, setType, createWallets, setAddress } = useCreateWallets();
+    const { setNets, setType, createWallets, setAddress, setPublicKey } =
+      useCreateWallets();
 
     const cancel = () => {
       router.push('/add-address');
