@@ -484,19 +484,24 @@ export default {
   }
 
   &__clear-icon {
+    position: absolute;
     width: 16px;
     height: 16px;
-    bottom: 17px !important;
+    bottom: 17px;
+    right: 17px;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: $round;
     background: $mid-blue;
     @include lg {
-      bottom: 14px !important;
+      bottom: 14px;
     }
     @include xs-lg {
-      bottom: 13px !important;
+      bottom: 13px;
+    }
+    @include md {
+      bottom: 13px;
     }
     &:hover {
       background: $red;
