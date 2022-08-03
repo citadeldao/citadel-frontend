@@ -55,7 +55,8 @@
 
         <AssetsItem
           :item="stateCurrentWallet"
-          :balance="stateCurrenWalletBalance"
+          :balance="stateCurrentWallet.balance"
+          :price="stateCurrenWalletPrice"
           is-native-token
           :is-active="currentWallet.net === stateCurrentWallet.net"
           @click="setCurrentToken(stateCurrentWallet)"
@@ -64,6 +65,7 @@
           v-for="(item, index) in displayData"
           :key="`${item.name}-${index}`"
           :balance="item.tokenBalance"
+          :price="item.tokenBalance.price.USD"
           :item="item"
           :is-not-linked="
             isNotLinkedSnip20(item) &&
@@ -218,7 +220,7 @@ export default {
     ]);
     const filterValue = ref(filterList.value[3].value);
 
-    const stateCurrenWalletBalance = computed(() => {
+    const stateCurrenWalletPrice = computed(() => {
       if (props.currentWallet.net === stateCurrentWallet.value.net) {
         return store.getters['profile/rates'][props.currentWallet.net].USD;
       }
@@ -388,7 +390,7 @@ export default {
       isNotLinkedSnip20,
       closeCreateVkModal,
       stateCurrentWallet,
-      stateCurrenWalletBalance,
+      stateCurrenWalletPrice,
       keyword,
       filterValue,
       filteredTokens,
