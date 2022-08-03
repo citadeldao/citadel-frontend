@@ -1170,8 +1170,8 @@ export default {
     @include md {
       font-size: 20px;
     }
-    @include laptop {
-      max-width: 17px;
+    @include xs-lg {
+      font-size: 20px;
     }
   }
 }
