@@ -1173,6 +1173,9 @@ export default {
     @include xs-lg {
       font-size: 20px;
     }
+    @include laptop {
+      font-size: 17px;
+    }
   }
 }
 .wallet {
@@ -1379,6 +1382,9 @@ export default {
       border-radius: 20px;
       max-width: 368px !important;
       margin-left: 120px;
+      @include laptop {
+        margin-left: 94px;
+      }
       margin-right: 0px;
       position: absolute;
     }
