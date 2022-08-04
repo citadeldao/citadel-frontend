@@ -136,6 +136,7 @@ export default {
 
   @include lg {
     flex: 0 0 25%;
+    min-width: 240px;
   }
 
   @include laptop-l {
@@ -144,10 +145,12 @@ export default {
 
   @include md {
     flex: 0 0 50%;
+    min-width: 240px;
   }
 
   @include laptop {
     flex: 0 0 50%;
+    min-width: 240px;
   }
 
   &:hover {

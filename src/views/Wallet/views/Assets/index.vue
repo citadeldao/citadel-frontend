@@ -590,18 +590,6 @@ export default {
 .assets {
   &__search {
     .input {
-      &__clear-icon {
-        bottom: 19px;
-
-        @include lg {
-          bottom: 15px;
-        }
-
-        @include md {
-          bottom: 14px;
-        }
-      }
-
       & > input {
         @include md {
           padding: 25px 25px 10px 36px;

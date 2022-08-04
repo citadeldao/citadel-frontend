@@ -2,8 +2,7 @@ import useApi from '@/api/useApi';
 const extensionsApi = useApi('extensions');
 import axios from 'axios';
 
-const APP_DOMEN =
-  'https://api-extensions-service.apps.citadel.okd.3ahtim54r.ru';
+const APP_DOMEN = process.env.VUE_APP_BACKEND_URL_APPS;
 
 const types = {
   SET_CURRENT_APP_INFO: 'SET_CURRENT_APP_INFO',
@@ -68,6 +67,12 @@ export default {
       if (ok) {
         commit(types.SET_CURRENT_APP_INFO, data);
       }
+    },
+    async putMempoolChangeStatus(_, { mempool_id, hash }) {
+      await extensionsApi.putMempoolChangeStatus({
+        mempool_id,
+        hash,
+      });
     },
   },
 };

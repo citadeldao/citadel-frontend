@@ -19,7 +19,7 @@ import Vue from 'vue';
 
 const app = createApp(App);
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.VUE_APP_SENTRY_DSN) {
   Sentry.init({
     Vue,
     dsn: process.env.VUE_APP_SENTRY_DSN,
