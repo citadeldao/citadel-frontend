@@ -23,7 +23,11 @@
         v-if="currentStep === 3"
         :mnemonic="walletOpts.mnemonic"
       />
-      <SelectNetworks v-if="currentStep === 4" @selectNets="finalStep" />
+      <DownloadOneSeed
+        v-if="currentStep === 4"
+        @downloadMnemonic="toFinallyStep"
+      />
+      <SelectNetworks v-if="currentStep === 5" @selectNets="finalStep" />
     </div>
     <teleport to="body">
       <transition name="fade">
@@ -48,6 +52,7 @@ import ConfirmOneSeed from './components/ConfirmOneSeed';
 import CreateOneSeed from './components/CreateOneSeed';
 import CatPage from '@/components/CatPage';
 import Modal from '@/components/Modal';
+import DownloadOneSeed from './components/DownloadOneSeed';
 import SelectNetworks from '@/components/UI/SelectNetworks';
 import Header from '../AddAddress/components/Header';
 import EnterPassword from './components/EnterPassword';
@@ -71,6 +76,7 @@ export default {
     CatPage,
     CreateOneSeed,
     ConfirmOneSeed,
+    DownloadOneSeed,
   },
   setup() {
     const {
