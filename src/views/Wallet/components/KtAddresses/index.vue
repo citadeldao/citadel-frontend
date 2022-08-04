@@ -1,9 +1,5 @@
 <template>
   <div class="kt-addresses">
-    <div class="kt-addresses__title">
-      KT <span>{{ $t('address') }}</span>
-      <div class="scroll"></div>
-    </div>
     <div id="list" class="kt-addresses__list">
       <resize-observer :show-trigger="true" @notify="handleResize" />
       <KtAddressItem
@@ -21,18 +17,6 @@
         :is-checked="isChecked(item)"
         @click="updateCurrentKtAddress(item)"
       />
-      <!-- <div
-        v-if="hiddenData.length"
-        class="kt-addresses__hidden-items"
-        @click="showModal = true"
-      >
-        <span class="kt-addresses__hidden-items-title">
-          {{ $t('all') }} KT <span>{{ $t('address') }}</span>
-        </span>
-        <span class="kt-addresses__hidden-items-count">
-          + {{ hiddenData.length }}
-        </span>
-      </div> -->
     </div>
   </div>
   <teleport v-if="showModal" to="body">
@@ -143,6 +127,8 @@ export default {
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
+  transform: rotateX(180deg);
+  padding-top: 0.1rem;
   @include lg {
     margin-bottom: 16px;
   }
@@ -160,6 +146,7 @@ export default {
   &__list {
     position: relative;
     display: flex;
+    padding-bottom: 2rem;
   }
   &__hidden-items {
     width: 225px;
