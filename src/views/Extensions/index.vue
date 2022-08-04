@@ -164,9 +164,9 @@
             <span
               v-pretty-number="{
                 value: extensionTransactionForSign.fee,
-                currency: selectedApp.networks[0],
+                currency: (signerWallet || metamaskSigner)?.code,
               }"
-            />{{ extensionTransactionForSign.net || selectedApp.networks[0] }}
+            />{{ (signerWallet || metamaskSigner)?.code }}
           </div>
         </div>
         <div class="item">
@@ -349,7 +349,7 @@ export default {
     const showLedgerConnect = ref(false);
     const ledgerError = ref('');
     const msgSuccessSignature = ref('');
-    const fullScreenAppIds = ref([6, 10, 12, 14, 15]);
+    const fullScreenAppIds = ref([6, 7, 10, 12, 14, 15, 18]);
 
     const { wallets: walletsList } = useWallets();
 
@@ -605,15 +605,16 @@ export default {
     watch(extensionTransactionForSign, () => {
       if (extensionTransactionForSign?.value?.transaction) {
         const currentAddress = extensionTransactionForSign.value.address;
+        const currentNet = extensionTransactionForSign.value.net;
 
-        const nets = currentApp.value.networks.map((net) => {
-          return net.toLowerCase();
-        });
+        // const nets = currentApp.value.networks.map((net) => {
+        //   return net.toLowerCase();
+        // });
 
         signerWallet.value = walletsList.value.find(
           (w) =>
             w.address.toLowerCase() === currentAddress.toLowerCase() &&
-            nets.includes(w.net.toLowerCase()) &&
+            w.net === currentNet &&
             w.type !== WALLET_TYPES.PUBLIC_KEY
         );
 
