@@ -15,7 +15,7 @@ import citadel from '@citadeldao/lib-citadel';
 import hljsVuePlugin from '@highlightjs/vue-plugin';
 import * as Sentry from '@sentry/vue';
 import { Integrations } from '@sentry/tracing';
-import * as Vue from 'vue';
+import Vue from 'vue';
 
 const app = createApp(App);
 
