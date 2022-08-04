@@ -52,6 +52,7 @@ export default {
       savePassword,
       showAlreadyAddedModal,
       setAccount,
+      redirectToNewWallet,
     } = useCreateWallets();
     const { currentStep, steps } = useCurrentStep(
       2,
@@ -73,8 +74,9 @@ export default {
       setType('privateKey');
       account && setAccount(account);
       const success = createWallets(WALLET_TYPES.PRIVATE_KEY);
-      success.then(() => {
+      success.then(async () => {
         !isPasswordHash.value && savePassword();
+        await redirectToNewWallet();
         store.dispatch('newWallets/setNewWalletsList', newWallets.value);
         store.dispatch('newWallets/showModal');
         store.dispatch('newWallets/hideLoader');

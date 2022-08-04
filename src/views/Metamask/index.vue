@@ -72,8 +72,13 @@ export default {
     const showLoader = ref(true);
     const existAddressInMetamask = ref(false);
 
-    const { setAddress, setNets, createWallets, newWallets } =
-      useCreateWallets();
+    const {
+      setAddress,
+      setNets,
+      createWallets,
+      newWallets,
+      redirectToNewWallet,
+    } = useCreateWallets();
 
     store.dispatch('metamask/connectToMetamask');
 
@@ -195,6 +200,10 @@ export default {
         );
         store.dispatch('newWallets/showAlreadyAddedModal');
       }
+
+      await redirectToNewWallet();
+      store.dispatch('newWallets/setNewWalletsList', newWallets.value);
+      store.dispatch('newWallets/showModal');
       store.dispatch('newWallets/hideLoader');
       importModal.value = false;
     };

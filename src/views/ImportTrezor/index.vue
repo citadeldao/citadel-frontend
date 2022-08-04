@@ -51,7 +51,7 @@ export default {
     const setNet = (n) => {
       net.value = n;
     };
-    const { newWallets } = useCreateWallets();
+    const { newWallets, redirectToNewWallet } = useCreateWallets();
     const { t } = useI18n();
     onMounted(() => {
       store.dispatch('newWallets/setCatPageProps', {
@@ -70,6 +70,7 @@ export default {
       if (!error) {
         newWallets.value = [newWalletInstance];
         const newWallet = newWalletInstance;
+        await redirectToNewWallet();
         store.dispatch('newWallets/setNewWalletsList', newWallets.value);
         store.dispatch('newWallets/showModal');
         await store.dispatch('wallets/pushWallets', { wallets: [newWallet] });

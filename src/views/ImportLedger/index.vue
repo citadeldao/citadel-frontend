@@ -41,8 +41,6 @@ export default {
     const { t } = useI18n();
     const { currentStep, steps } = useCurrentStep(2, ledgerSteps);
     const net = ref('');
-    const showModal = ref(false);
-    const showLoader = ref(false);
     const router = useRouter();
     const setNet = (netName) => {
       net.value = netName;
@@ -54,15 +52,9 @@ export default {
         walletTypePlaceholder: t('catPage.placeholderHardware'),
       });
     });
-    const modalCloseHandler = () => {
-      redirectToNewWallet();
-      showModal.value = false;
-    };
-    const modalClickHandler = () => modalCloseHandler();
 
     const addWallet = async (wallet) => {
-      showModal.value = true;
-      showLoader.value = true;
+      store.dispatch('newWallets/showLoader');
       const { newWalletInstance, error } = await store.dispatch(
         'crypto/addHardwareWalletToAccount',
         { wallet }
@@ -72,22 +64,22 @@ export default {
         newWallets.value = [newWalletInstance];
         const newWallet = newWalletInstance;
         await store.dispatch('wallets/pushWallets', { wallets: [newWallet] });
+        await redirectToNewWallet();
+        store.dispatch('newWallets/setNewWalletsList', newWallets.value);
+        store.dispatch('newWallets/showModal');
+        store.dispatch('newWallets/hideLoader');
         // await store.dispatch('wallets/getNewWallets','lazy');
         // store.dispatch('wallets/getNewWallets','detail');
       } else {
         router.push({ name: 'AddAddress' });
       }
 
-      showLoader.value = false;
+      store.dispatch('newWallets/hideLoader');
     };
 
     return {
       steps,
       currentStep,
-      showModal,
-      showLoader,
-      modalCloseHandler,
-      modalClickHandler,
       setNet,
       newWallets,
       net,

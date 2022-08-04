@@ -179,13 +179,20 @@ export default {
 
       if (result.every((r) => r)) {
         store.dispatch('newWallets/setNewWalletsList', importedAddresses.value);
+        await redirectToNewWallet();
         store.dispatch('newWallets/showModal');
         showSuccess.value = true;
       }
     };
 
-    const { setNets, setType, createWallets, setAddress, setPublicKey } =
-      useCreateWallets();
+    const {
+      setNets,
+      setType,
+      createWallets,
+      setAddress,
+      setPublicKey,
+      redirectToNewWallet,
+    } = useCreateWallets();
 
     const cancel = () => {
       router.push('/add-address');

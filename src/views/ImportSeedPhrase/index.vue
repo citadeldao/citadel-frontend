@@ -60,6 +60,7 @@ export default {
       isPasswordHash,
       walletOpts,
       setImportedFromSeed,
+      redirectToNewWallet,
     } = useCreateWallets();
 
     const { currentStep, steps } = useCurrentStep(
@@ -109,7 +110,7 @@ export default {
         newWallets.value = [newInstance];
         const newWallet = newInstance;
         await store.dispatch('wallets/pushWallets', { wallets: [newWallet] });
-        console.error(newWallets, 'newWallets');
+        await redirectToNewWallet();
         store.dispatch('newWallets/setNewWalletsList', newWallets.value);
         store.dispatch('newWallets/hideLoader');
         store.dispatch('newWallets/showModal');
