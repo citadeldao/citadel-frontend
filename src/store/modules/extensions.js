@@ -68,5 +68,11 @@ export default {
         commit(types.SET_CURRENT_APP_INFO, data);
       }
     },
+    async putMempoolChangeStatus(_, { mempool_id, hash }) {
+      await extensionsApi.putMempoolChangeStatus({
+        mempool_id,
+        hash,
+      });
+    },
   },
 };
