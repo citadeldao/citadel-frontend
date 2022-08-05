@@ -31,7 +31,7 @@
       </div>
     </td>
     <td class="table-row__amount">
-      <div class="table-row__amount-content-wrapper mini">
+      <div v-if="formatedValue" class="table-row__amount-content-wrapper mini">
         <div class="table-row__amount-value">
           <span
             v-pretty-number="{
@@ -48,7 +48,7 @@
       </div>
 
       <div class="table-row__amount-block-xl">
-        <div class="table-row__amount-info">
+        <div v-if="formatedValue" class="table-row__amount-info">
           <div class="table-row__amount-value">
             <span
               v-pretty-number="{
@@ -199,7 +199,11 @@ export default {
         : +props.transaction.fee.text;
     });
     const formatedValue = computed(() => {
-      return BigNumber(props.transaction.value).toNumber();
+      if (!props.transaction.view) return 0;
+      const findType = props.transaction.view[0].components.find(
+        (w) => w.type === 'amount'
+      );
+      return BigNumber(findType?.value?.text || 0).toNumber();
     });
     const currentTransaction = ref({
       ...props.transaction,

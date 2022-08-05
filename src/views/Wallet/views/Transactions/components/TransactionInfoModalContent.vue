@@ -21,6 +21,11 @@
               width="32"
               height="32"
             />
+            <receivedIcon
+              v-if="item.type.toLowerCase() === 'received'"
+              width="32"
+              height="32"
+            />
             <div>{{ item.type }}</div>
           </div>
           <div
@@ -85,6 +90,7 @@ import { ref } from 'vue';
 // import comment from '@/assets/icons/comment.svg';
 import claimIcon from '@/assets/icons/transactions/claim.svg';
 import stakeIcon from '@/assets/icons/transactions/stake.svg';
+import receivedIcon from '@/assets/icons/transactions/received.svg';
 import InfoBlock from './InfoBlock.vue';
 import TxStatuses from './TxStatuses';
 
@@ -97,6 +103,7 @@ export default {
     TxStatuses,
     claimIcon,
     stakeIcon,
+    receivedIcon,
   },
   props: {
     info: {
