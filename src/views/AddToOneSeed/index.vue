@@ -23,10 +23,7 @@
         v-if="currentStep === 3"
         :mnemonic="walletOpts.mnemonic"
       />
-      <DownloadOneSeed
-        v-if="currentStep === 4"
-        @downloadMnemonic="toFinallyStep"
-      />
+      <DownloadOneSeed v-if="currentStep === 4" />
       <SelectNetworks v-if="currentStep === 5" @selectNets="finalStep" />
     </div>
     <teleport to="body">
@@ -166,6 +163,7 @@ export default {
     overflow: hidden;
     display: flex;
     flex-grow: 1;
+    justify-content: center;
   }
 }
 </style>

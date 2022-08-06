@@ -47,10 +47,6 @@ export const steps1 = [
   },
   {
     id: 4,
-    stepDesc: t('steps.selectNetworks'),
-    icon: 'squares',
-    headerTitle: t('steps.selectNetworks'),
-    headerInfo: t('steps.addToOneSeed.step4headerInfo'),
     status: 'inactive',
   },
   {

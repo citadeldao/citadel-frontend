@@ -15,7 +15,6 @@ const downLoadWallets = (backup) => {
   const blob = new Blob([backup], {
     type: 'text/plain;charset=utf-8',
   });
-
   FileSaver.saveAs(blob, `${filename}.citadel`);
 };
 

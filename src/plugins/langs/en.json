@@ -115,7 +115,12 @@
         "walletCreated": "Your wallet has been created!",
         "walletCreatedDescription": " If you want to go to the list of available networks, tick the checkbox",
         "errorConfirmWords1": "Please, check the entered words.",
-        "errorConfirmWords2": "If you wrote down your seed-phrase incorrectly, go back to the previous step and make sure your records are right."
+        "errorConfirmWords2": "If you wrote down your seed-phrase incorrectly, go back to the previous step and make sure your records are right.",
+        "backUp":{
+            "h1":"You can save your seed phrase to your computer",
+            "h2":"Set a checkmark near the 'Download file' field to get the encrypted file with your seed phrase. You will be then enabled to import this file with no need to enter the seed phrase manually.",
+            "h3":"Attention! Don't use this feature unless you are using your personal computer!"
+        }
     },
     "importExistingAddress": {
         "card1Title": "Seed - phrase",
