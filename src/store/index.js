@@ -18,7 +18,7 @@ import subtokens from './modules/subtokens';
 import dao from './modules/dao';
 import investors from './modules/investors';
 import ktAddresses from './modules/ktAddresses';
-
+import libCallback from './modules/libCallback';
 import metamask from './modules/metamask';
 import keplr from './modules/keplr';
 
@@ -45,5 +45,6 @@ export default createStore({
     ktAddresses,
     metamask,
     keplr,
+    libCallback,
   },
 });

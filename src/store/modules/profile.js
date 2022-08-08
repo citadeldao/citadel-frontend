@@ -51,6 +51,12 @@ export default {
         backendUrl: process.env.VUE_APP_BACKEND_URL,
         debug: JSON.parse(process.env.VUE_APP_DEBUG_LIB),
         appURL: process.env.VUE_APP_BACKEND_URL_APPS,
+        socketURL: process.env.VUE_APP_BACKEND_WS_URL,
+        getPrivateWalletInfoCallback: async (data) => {
+          return await dispatch('libCallback/sendPrivateKeysToLib', data, {
+            root: true,
+          });
+        },
       });
 
       if (!error) {

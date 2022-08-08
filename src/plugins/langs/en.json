@@ -919,7 +919,8 @@
         "transactionFee": "Transaction fee",
         "signMessage": "Sign message",
         "searchPlaceholder": "Start typing the app name",
-        "typeOperation": "Type operation"
+        "typeOperation": "Type operation",
+        "execute": "execute"
     },
     "tokenDescriptionComdex": "Comdex is a decentralized synthetic assets protocol built on the Cosmos. ",
     "tokenDescriptionJuno": "Juno is a Cosmos-based chain that provides an environment for the deployment of interoperable smart contracts.",

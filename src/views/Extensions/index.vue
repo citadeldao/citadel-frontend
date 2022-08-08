@@ -277,6 +277,18 @@
         </div>
       </ModalContent>
     </Modal>
+    <LibPasswordModal
+      v-if="showLibPasswordModal"
+      :title="selectedApp.name"
+      :desc="selectedApp.short_description"
+      :internal-icon="selectedApp.logo"
+    />
+    <!-- <LibLedgerModal
+      v-if="showLibLedgerModal"
+      :title="selectedApp.name"
+      :desc="selectedApp.short_description"
+      :internal-icon="selectedApp.logo"
+    /> -->
   </div>
 </template>
 <script>
@@ -287,6 +299,8 @@ import {
 import Loading from '@/components/Loading';
 import { ref, markRaw, computed, watch } from 'vue';
 import Modal from '@/components/Modal';
+// import LibLedgerModal from './components/libModals/LibLedgerModal.vue';
+import LibPasswordModal from './components/libModals/LibPasswordModal.vue';
 import linkIcon from '@/assets/icons/link.svg';
 import linkIconHovered from '@/assets/icons/link_hovered.svg';
 import ModalContent from '@/components/ModalContent';
@@ -323,6 +337,8 @@ export default {
     Modal,
     ModalContent,
     Input,
+    // LibLedgerModal,
+    LibPasswordModal,
   },
   setup() {
     const showFullScreen = ref(false);
@@ -930,7 +946,15 @@ export default {
         showLedgerConnect.value = false;
       }
     };
-/* eslint-disable */
+
+    const showLibLedgerModal = computed(
+      () => store.getters['libCallback/showLedgerModal']
+    );
+    const showLibPasswordModal = computed(
+      () => store.getters['libCallback/showPasswordModal']
+    );
+
+    /* eslint-disable */
     return {
       showFullScreen,
       showTx,
@@ -979,199 +1003,202 @@ export default {
       msgSuccessSignature,
       closeSignMessageModal,
       signMessage,
+
+      // lib callback
+      showLibLedgerModal,
+      showLibPasswordModal,
     };
   },
 };
 </script>
 <style lang="scss" scoped>
-  .extensions {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+.extensions {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 16px;
+
+  &__app-wrap {
+    margin-top: 35px;
     position: relative;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    border-radius: 16px;
+    border-radius: 20px;
 
-    &__app-wrap {
-      margin-top: 35px;
-      position: relative;
-      border-radius: 20px;
-
-      &.fullScreen {
-        width: 100%;
-        box-sizing: border-box;
-        padding: 0 35px;
-      }
-
-      .close-icon {
-        position: absolute;
-        top: 0px;
-        right: -40px;
-
-        &:hover {
-          cursor: pointer;
-          opacity: .7;
-        }
-      }
-    }
-
-    &__apps {
+    &.fullScreen {
       width: 100%;
-      display: flex;
-      align-items: flex-start;
-      justify-content: flex-start;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-      padding: 25px;
       box-sizing: border-box;
-      z-index: 0;
-      float: left;
-      background: $white;
-      border-radius: 0 0 16px 16px;
+      padding: 0 35px;
     }
 
-    .label.description {
-      margin: 25px 0 0 0;
-      width: 100%;
-      text-align: left;
-      font-weight: 700;
-    }
-
-    &__loading {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #fff;
-      border-radius: 15px;
-      width: 100%;
-      height: 100vh;
-      // margin-top: 150px;
-      z-index: 10;
-    }
-
-    &__app {
-      width: 140px;
-      height: 45px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #fff;
-      margin: 0 10px;
-      z-index: 10;
+    .close-icon {
+      position: absolute;
+      top: 0px;
+      right: -40px;
 
       &:hover {
         cursor: pointer;
-        background: #6A4BFF;
-        color: #fff;
-      }
-    }
-
-    &__frame {
-      border-radius: 20px;
-      border: none;
-      outline: none;
-      z-index: 1;
-    }
-
-    .modal-content {
-      .password-wrap {
-        border-top: 1px solid #BCC2D8;
-        width: 100%;
-        height: 90px;
-        margin-top: 20px;
-        padding-top: 20px;
-      }
-
-      div.code {
-        white-space: pre;
-      }
-
-      .item-tx {
-        overflow: auto;
-        width: 100%;
-        margin-top: 0; // -35px;
-        max-height: 260px;
-      }
-
-      .item {
-        margin: 10px 0;
-        width: 100%;
-        display: flex;
-
-        .signature {
-          word-break: break-word;
-        }
-
-        span {
-          text-align: right;
-        }
-
-        align-items: center;
-        justify-content: space-between;
-
-        a {
-          text-decoration: none;
-          text-decoration: underline;
-          color: #437FEC;
-
-          .link-icon {
-            width: 18px;
-            height: 16px;
-            margin-left: 5px;
-
-            &.hovered {
-              display: none;
-            }
-          }
-
-          &:hover {
-            color: pointer;
-            color: #756AA8;
-
-            .link-icon {
-              display: none;
-
-              &.hovered {
-                display: initial;
-              }
-            }
-          }
-        }
-
-        .arrow-icon {
-          &.open {
-            transform: rotate(180deg);
-          }
-        }
-
-        .show {
-          z-index: 0;
-          color: #6B93C0;
-          border-bottom: 1px dotted #6B93C0;
-          text-transform: lowercase;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-
-          svg {
-            margin-top: 2px;
-            margin-left: 4px;
-          }
-        }
-
-        .red {
-          color: $red;
-        }
-
-        &.mt30 {
-          margin-top: 30px;
-        }
+        opacity: 0.7;
       }
     }
   }
 
+  &__apps {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    padding: 25px;
+    box-sizing: border-box;
+    z-index: 0;
+    float: left;
+    background: $white;
+    border-radius: 0 0 16px 16px;
+  }
+
+  .label.description {
+    margin: 25px 0 0 0;
+    width: 100%;
+    text-align: left;
+    font-weight: 700;
+  }
+
+  &__loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border-radius: 15px;
+    width: 100%;
+    height: 100vh;
+    // margin-top: 150px;
+    z-index: 10;
+  }
+
+  &__app {
+    width: 140px;
+    height: 45px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    margin: 0 10px;
+    z-index: 10;
+
+    &:hover {
+      cursor: pointer;
+      background: #6a4bff;
+      color: #fff;
+    }
+  }
+
+  &__frame {
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    z-index: 1;
+  }
+
+  .modal-content {
+    .password-wrap {
+      border-top: 1px solid #bcc2d8;
+      width: 100%;
+      height: 90px;
+      margin-top: 20px;
+      padding-top: 20px;
+    }
+
+    div.code {
+      white-space: pre;
+    }
+
+    .item-tx {
+      overflow: auto;
+      width: 100%;
+      margin-top: 0; // -35px;
+      max-height: 260px;
+    }
+
+    .item {
+      margin: 10px 0;
+      width: 100%;
+      display: flex;
+
+      .signature {
+        word-break: break-word;
+      }
+
+      span {
+        text-align: right;
+      }
+
+      align-items: center;
+      justify-content: space-between;
+
+      a {
+        text-decoration: none;
+        text-decoration: underline;
+        color: #437fec;
+
+        .link-icon {
+          width: 18px;
+          height: 16px;
+          margin-left: 5px;
+
+          &.hovered {
+            display: none;
+          }
+        }
+
+        &:hover {
+          color: pointer;
+          color: #756aa8;
+
+          .link-icon {
+            display: none;
+
+            &.hovered {
+              display: initial;
+            }
+          }
+        }
+      }
+
+      .arrow-icon {
+        &.open {
+          transform: rotate(180deg);
+        }
+      }
+
+      .show {
+        z-index: 0;
+        color: #6b93c0;
+        border-bottom: 1px dotted #6b93c0;
+        text-transform: lowercase;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+
+        svg {
+          margin-top: 2px;
+          margin-left: 4px;
+        }
+      }
+
+      .red {
+        color: $red;
+      }
+
+      &.mt30 {
+        margin-top: 30px;
+      }
+    }
+  }
+}
 </style>
