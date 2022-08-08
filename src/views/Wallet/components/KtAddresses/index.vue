@@ -206,7 +206,7 @@ export default {
   top: 50%;
   max-width: calc(100% - 110px);
   right: 0;
-  overflow: scroll;
+  overflow: auto;
   &::-webkit-scrollbar {
     height: 4px; /* width of the entire scrollbar */
     border-radius: 20px;
