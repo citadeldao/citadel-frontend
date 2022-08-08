@@ -12,11 +12,6 @@
     }"
     @click="toggleChecked"
   >
-    <div class="derivation-path-card__icon-mobile">
-      <keep-alive>
-        <component :is="icon" />
-      </keep-alive>
-    </div>
     <div class="derivation-path-card__wrapper1">
       <div class="derivation-path-card__section">
         <cardChecked v-if="exist" class="derivation-path-card__checked-icon" />
@@ -315,6 +310,7 @@ export default {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  position: relative;
 
   @include lg {
     width: 277px;
@@ -374,8 +370,7 @@ export default {
       display: none;
     }
   }
-  &__icon,
-  &__icon-mobile {
+  &__icon {
     width: 46px;
     height: 46px;
     display: flex;
@@ -387,7 +382,9 @@ export default {
     margin-right: 16px;
     fill: $mid-blue;
     @include md {
-      display: none;
+      position: absolute;
+      width: 32px;
+      height: 32px;
     }
     & svg {
       max-width: 24px;
@@ -396,13 +393,11 @@ export default {
     }
   }
   &__icon-mobile {
-    /* display: none; */
-    visibility: hidden;
+    display: none;
     width: 32px;
     height: 32px;
     @include md {
       display: flex;
-      visibility: visible;
     }
   }
   &__info {
@@ -415,6 +410,7 @@ export default {
       flex-direction: row;
       justify-content: space-between;
       margin-bottom: 3px;
+      padding-left: 47px;
     }
   }
   &__title {
@@ -441,15 +437,14 @@ export default {
     @include md {
       flex-direction: row;
       justify-content: space-between;
+      margin-left: 48px;
     }
   }
   &__wrapper1 {
-    padding-bottom: 15px;
     @include md {
       flex-grow: 1;
       display: flex;
       flex-direction: column;
-      padding-bottom: 0;
     }
   }
   &__address {
@@ -557,6 +552,11 @@ export default {
   .derivation-path-card__checked-icon {
     width: 16px;
     height: 16px;
+  }
+  .derivation-path-card__icon {
+    @include md {
+      top: 5px;
+    }
   }
 }
 
