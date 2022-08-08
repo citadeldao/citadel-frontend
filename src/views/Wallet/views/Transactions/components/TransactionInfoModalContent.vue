@@ -218,7 +218,7 @@ $blue-dark: #262b61;
       }
 
       .line {
-        width: 100%;
+        flex-grow: 1;
         border: 0.01rem dashed #a18eff;
         height: 1px;
       }
