@@ -396,11 +396,13 @@ export default {
     }
   }
   &__icon-mobile {
-    display: none;
+    /* display: none; */
+    visibility: hidden;
     width: 32px;
     height: 32px;
     @include md {
       display: flex;
+      visibility: visible;
     }
   }
   &__info {
@@ -442,10 +444,12 @@ export default {
     }
   }
   &__wrapper1 {
+    padding-bottom: 15px;
     @include md {
       flex-grow: 1;
       display: flex;
       flex-direction: column;
+      padding-bottom: 0;
     }
   }
   &__address {
