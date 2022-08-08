@@ -46,7 +46,6 @@ export default class CryptoCoin {
       frozenBalance: 'balanceTooltipInfo.frozenBalanceBalanceInfo2',
     };
     this.isCosmosNetwork = cosmosNetworks.includes(this.net);
-    this.privateKey = opts?.privateKey || null;
   }
 
   getScannerLink() {
