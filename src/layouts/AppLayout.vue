@@ -137,7 +137,7 @@ export default {
             net: hashInfo.value.net,
           });
           if (hashWallet && hashWallet.type !== WALLET_TYPES.PUBLIC_KEY) {
-            router.push({
+            await router.push({
               name: 'WalletStake',
               params: {
                 net: hashInfo.value.net,
