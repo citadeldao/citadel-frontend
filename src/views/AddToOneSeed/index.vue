@@ -93,9 +93,9 @@ export default {
       redirectToNewWallet,
     } = useCreateWallets();
 
-    const finalStep = (nets) => {
+    const finalStep = (checkedNets) => {
       isUserMnemonic.value && setMnemonic();
-      setNets(nets);
+      setNets(checkedNets);
       setType('oneSeed');
       createWallets(WALLET_TYPES.ONE_SEED).then((success) => {
         if (success) {

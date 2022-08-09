@@ -58,7 +58,7 @@ export default function useCreateWallets() {
   };
 
   const setNets = (nets) => {
-    walletOpts.nets = nets;
+    walletOpts.nets = nets[1];
   };
 
   const setAddress = (address) => {
@@ -149,7 +149,6 @@ export default function useCreateWallets() {
 
         return;
       }
-
       for (const item of newWalletsList) {
         if (item.error) {
           notify({

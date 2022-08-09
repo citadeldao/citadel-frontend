@@ -24,7 +24,7 @@
   </div>
 </template>
 <script>
-import { ref, markRaw, computed } from 'vue';
+import { ref, markRaw, computed, inject } from 'vue';
 import { useStore } from 'vuex';
 import Checkbox from '@/components/UI/Checkbox';
 import PrimaryButton from '@/components/UI/PrimaryButton';
@@ -35,9 +35,10 @@ export default {
     Checkbox,
     PrimaryButton,
   },
-  setup() {
+  emits: ['downloadedFile'],
+  setup(props, { emit }) {
     const store = useStore();
-
+    const nextStep = inject('nextStep');
     const downloadCheck = ref(true);
     const icon = ref();
     const keyStorage = computed(
@@ -48,6 +49,8 @@ export default {
     });
     const clickHandler = async () => {
       exportPrivateKeys(keyStorage.value);
+      emit('downloadedFile');
+      nextStep();
     };
     return { icon, downloadCheck, keyStorage, clickHandler };
   },
@@ -59,7 +62,6 @@ export default {
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  margin-top: 93px;
   text-align: center;
   h1 {
     font-weight: 700;

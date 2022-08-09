@@ -63,7 +63,7 @@ export default {
   box-sizing: border-box;
   min-height: 100vh;
   height: 100vh;
-  overflow-y: auto;
+  overflow-y: overlay;
   background: linear-gradient(255.4deg, #f0f2fc 0%, #edf2fc 100%);
 
   &__header {

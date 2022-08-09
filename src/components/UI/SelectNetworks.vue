@@ -1,13 +1,21 @@
 <template>
   <div class="select-networks">
     <div class="select-networks__networks">
+      <Input
+        id="assetsSearch"
+        v-model="keyword"
+        :label="$t('searchNetworks')"
+        type="text"
+        icon="loop"
+        clearable
+      />
       <NetworkCard
         v-for="network in displayData.slice(0, networksAmount)"
         :key="network.id"
         :network="network"
         :checked="checked(network.id)"
         data-qa="add-address__one-seed"
-        @check="addItem"
+        @check="onCheck"
         @uncheck="removeItem"
       />
     </div>
@@ -50,10 +58,11 @@ import BackButton from '@/components/UI/BackButton';
 import useCheckItem from '@/compositions/useCheckItem';
 import { useStore } from 'vuex';
 import { computed, ref } from '@vue/reactivity';
-
+import { onMounted } from 'vue';
+import Input from '@/components/UI/Input';
 export default {
   name: 'SelectNetworks',
-  components: { NetworkCard, PrimaryButton, BackButton },
+  components: { NetworkCard, PrimaryButton, BackButton, Input },
   emits: ['selectNets'],
   setup(props, { emit }) {
     const store = useStore();
@@ -88,6 +97,7 @@ export default {
         (e) => strictOrderedAbbrs.indexOf(e.abbr) === -1
       );
       filterNets.unshift(...customOrderedNets);
+      //
       if (!keyword.value) {
         return filterNets;
       }
@@ -102,14 +112,33 @@ export default {
       networksAmount.value = displayData.value.length;
     };
     const { checked, addItem, removeItem, checkedItems } = useCheckItem();
-
+    const checkedNetYetAdded = [];
     const clickHandler = () => {
       const checkedNets = checkedItems.value.map(
         (index) => networks.value[index].net
       );
-      emit('selectNets', checkedNets);
+      const checkedNetsWithoutYetAdded = checkedNets.filter(
+        (e) => checkedNetYetAdded.indexOf(e) === -1
+      );
+      emit('selectNets', [checkedNets, checkedNetsWithoutYetAdded]);
     };
-
+    const onCheck = (e) => {
+      addItem(e);
+    };
+    onMounted(() => {
+      // с алиасами беда
+      let wallets = store.getters['wallets/wallets'];
+      for (const key in displayData.value) {
+        let findedItemIndex = wallets.findIndex(
+          (e) => e.net === displayData.value[key].net
+        );
+        if (findedItemIndex !== -1) {
+          addItem(+key);
+          checkedNetYetAdded.push(wallets[findedItemIndex].net);
+          // displayData.value[key].isChecked = true;
+        }
+      }
+    });
     return {
       displayData,
       checked,
@@ -119,6 +148,7 @@ export default {
       clickHandler,
       checkedItems,
       showAllNetworks,
+      onCheck,
       networksAmount,
     };
   },
@@ -140,6 +170,10 @@ export default {
   // @include md {
   //   padding-top: 24px;
   // }
+  & .input {
+    height: 68px;
+    margin: 0 70px;
+  }
   &__search-input {
     height: 68px;
     width: 100%;
@@ -153,6 +187,7 @@ export default {
     }
   }
   &__networks {
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
