@@ -146,16 +146,6 @@
           </div>
         </ModalContent>
       </Modal>
-      <!-- SUCCESS IMPORT FROM -->
-      <Modal v-if="showSuccessFromSyncModal">
-        <CatPage
-          :data="importedFromWallets"
-          :wallet-type-placeholder="$t('catPage.placeholderPrivate')"
-          input-type-icon="private-dot"
-          @close="onSuccessFromSyncClose"
-          @buttonClick="onSuccessFromSyncClose"
-        />
-      </Modal>
     </teleport>
   </div>
 </template>
@@ -174,8 +164,8 @@ import { useStore } from 'vuex';
 import { i18n } from '@/plugins/i18n';
 import { sha3_256 } from 'js-sha3';
 import notify from '@/plugins/notify';
-import CatPage from '@/components/CatPage';
 import citadel from '@citadeldao/lib-citadel';
+import { INPUT_TYPE_ICON } from '@/config/newWallets';
 
 export default {
   components: {
@@ -185,7 +175,6 @@ export default {
     ModalContent,
     PrimaryButton,
     AddressItem,
-    CatPage,
   },
   emits: ['close'],
   setup(props, { emit }) {
@@ -215,6 +204,10 @@ export default {
     const CryptoJS = require('crypto-js');
 
     onMounted(async () => {
+      store.dispatch('newWallets/setCatPageProps', {
+        inputTypeIcon: INPUT_TYPE_ICON.PRIVATE,
+        walletTypePlaceholder: t('catPage.placeholderPrivate'),
+      });
       if (!window.citadel) {
         notify({
           type: 'warning',
@@ -293,7 +286,7 @@ export default {
     };
 
     const onSuccessFromSyncClose = () => {
-      showSuccessFromSyncModal.value = false;
+      store.dispatch('newWallets/hideModal');
       showSyncFromModal.value = false;
       emit('close');
     };
@@ -365,7 +358,7 @@ export default {
           ));
 
         if (syncResult && result.every((res) => !!res)) {
-          showSuccessFromSyncModal.value = true;
+          store.dispatch('newWallets/showModal');
           syncLoading.value = false;
           password.value = '';
           importedFromWallets.value = syncResult;

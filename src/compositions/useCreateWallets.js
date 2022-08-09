@@ -186,7 +186,6 @@ export default function useCreateWallets() {
       const success = !![...newWallets.value].filter((w) => w).length;
       showModal.value = false;
       showLoader.value = false;
-
       if (success) {
         showModal.value = true;
       }
@@ -199,8 +198,8 @@ export default function useCreateWallets() {
   };
 
   const router = useRouter();
-  const redirectToNewWallet = () => {
-    redirectToWallet({
+  const redirectToNewWallet = async () => {
+    await redirectToWallet({
       wallet: newWallets.value[0],
       root: true,
     });
