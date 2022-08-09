@@ -344,7 +344,10 @@ export default {
     );
 
     const checkKeplrAddress = async () => {
-      if (currentWallet.value.type === WALLET_TYPES.KEPLR) {
+      if (
+        currentWallet.value &&
+        currentWallet.value.type === WALLET_TYPES.KEPLR
+      ) {
         try {
           const chain = keplrNetworks.find(
             (conf) => conf.net === currentWallet.value.net

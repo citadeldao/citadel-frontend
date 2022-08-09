@@ -70,10 +70,11 @@ export default {
       if (!error) {
         newWallets.value = [newWalletInstance];
         const newWallet = newWalletInstance;
+        await store.dispatch('wallets/pushWallets', { wallets: [newWallet] });
         await redirectToNewWallet();
         store.dispatch('newWallets/setNewWalletsList', newWallets.value);
         store.dispatch('newWallets/showModal');
-        await store.dispatch('wallets/pushWallets', { wallets: [newWallet] });
+        store.dispatch('newWallets/hideLoader');
         // await store.dispatch('wallets/getNewWallets','lazy');
         // store.dispatch('wallets/getNewWallets','detail');
       } else {
