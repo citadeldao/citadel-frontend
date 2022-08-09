@@ -82,7 +82,7 @@ export default {
       default: () => ({}),
     },
     price: {
-      type: Number,
+      type: [Number, String],
       default: 0,
     },
     isNativeToken: {
