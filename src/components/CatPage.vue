@@ -104,7 +104,6 @@ export default {
           if (!aliases[`${wallet.net}_${wallet.address}`]?.length) {
             return false;
           }
-
           await store.dispatch('wallets/renameWalletTitle', {
             walletId: wallet.id,
             title: aliases[`${wallet.net}_${wallet.address}`],

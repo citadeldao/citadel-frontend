@@ -126,16 +126,14 @@ export default {
       addItem(e);
     };
     onMounted(() => {
-      // с алиасами беда
-      let wallets = store.getters['wallets/wallets'];
+      const wallets = store.getters['wallets/wallets'];
       for (const key in displayData.value) {
-        let findedItemIndex = wallets.findIndex(
+        const foundItem = wallets.find(
           (e) => e.net === displayData.value[key].net
         );
-        if (findedItemIndex !== -1) {
-          addItem(+key);
-          checkedNetYetAdded.push(wallets[findedItemIndex].net);
-          // displayData.value[key].isChecked = true;
+        if (foundItem) {
+          addItem(+displayData.value[key].id);
+          checkedNetYetAdded.push(displayData.value[key].net);
         }
       }
     });
