@@ -56,6 +56,7 @@
         <AssetsItem
           :item="stateCurrentWallet"
           :balance="stateCurrentWallet.balance"
+          :price="stateCurrenWalletPrice"
           is-native-token
           :is-active="currentWallet.net === stateCurrentWallet.net"
           @click="setCurrentToken(stateCurrentWallet)"
@@ -64,6 +65,7 @@
           v-for="(item, index) in displayData"
           :key="`${item.name}-${index}`"
           :balance="item.tokenBalance"
+          :price="item.tokenBalance.price.USD"
           :item="item"
           :is-not-linked="
             isNotLinkedSnip20(item) &&
@@ -217,6 +219,14 @@ export default {
       { icon: 'byValueReverse', value: 'byValueReverse' },
     ]);
     const filterValue = ref(filterList.value[3].value);
+
+    const stateCurrenWalletPrice = computed(() => {
+      if (props.currentWallet.net === stateCurrentWallet.value.net) {
+        return store.getters['profile/rates'][props.currentWallet.net].USD;
+      }
+      return stateCurrentWallet.value.balance;
+    });
+
     const isNotLinkedSnip20 = (token) => {
       const isSnip20 = computed(
         () => token.config.standard === TOKEN_STANDARDS.SNIP_20
@@ -380,6 +390,7 @@ export default {
       isNotLinkedSnip20,
       closeCreateVkModal,
       stateCurrentWallet,
+      stateCurrenWalletPrice,
       keyword,
       filterValue,
       filteredTokens,
@@ -590,18 +601,6 @@ export default {
 .assets {
   &__search {
     .input {
-      &__clear-icon {
-        bottom: 19px;
-
-        @include lg {
-          bottom: 15px;
-        }
-
-        @include md {
-          bottom: 14px;
-        }
-      }
-
       & > input {
         @include md {
           padding: 25px 25px 10px 36px;
