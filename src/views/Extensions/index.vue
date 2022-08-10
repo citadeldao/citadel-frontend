@@ -190,7 +190,7 @@
         >
           <highlightjs
             language="javascript"
-            :code="JSON.stringify(extensionTransactionForSign.transaction).replaceAll(',', ', \n').replaceAll('{', '{ \n').replaceAll('}', '\n}')"
+            :code="JSON.stringify(extensionTransactionForSign.messageScrt || extensionTransactionForSign.transaction).replaceAll(',', ', \n').replaceAll('{', '{ \n').replaceAll('}', '\n}')"
           />
         </pre>
         <div
@@ -277,12 +277,12 @@
         </div>
       </ModalContent>
     </Modal>
-    <LibPasswordModal
+    <!-- <LibPasswordModal
       v-if="showLibPasswordModal"
       :title="selectedApp.name"
       :desc="selectedApp.short_description"
       :internal-icon="selectedApp.logo"
-    />
+    /> -->
     <!-- <LibLedgerModal
       v-if="showLibLedgerModal"
       :title="selectedApp.name"
@@ -300,7 +300,7 @@ import Loading from '@/components/Loading';
 import { ref, markRaw, computed, watch } from 'vue';
 import Modal from '@/components/Modal';
 // import LibLedgerModal from './components/libModals/LibLedgerModal.vue';
-import LibPasswordModal from './components/libModals/LibPasswordModal.vue';
+// import LibPasswordModal from './components/libModals/LibPasswordModal.vue';
 import linkIcon from '@/assets/icons/link.svg';
 import linkIconHovered from '@/assets/icons/link_hovered.svg';
 import ModalContent from '@/components/ModalContent';
@@ -321,6 +321,7 @@ import extensionsSocketTypes from '@/config/extensionsSocketTypes';
 
 import useApi from '@/api/useApi';
 import { keplrNetworksProtobufFormat } from '@/config/availableNets';
+import citadel from '@citadeldao/lib-citadel';
 
 export default {
   name: 'Extensions',
@@ -338,7 +339,7 @@ export default {
     ModalContent,
     Input,
     // LibLedgerModal,
-    LibPasswordModal,
+    // LibPasswordModal,
   },
   setup() {
     const showFullScreen = ref(false);
@@ -619,6 +620,10 @@ export default {
     );
 
     watch(extensionTransactionForSign, () => {
+      console.log(
+        'extensionTransactionForSign',
+        extensionTransactionForSign.value
+      );
       if (extensionTransactionForSign?.value?.transaction) {
         const currentAddress = extensionTransactionForSign.value.address;
         const currentNet = extensionTransactionForSign.value.net;
@@ -758,6 +763,17 @@ export default {
     };
 
     const confirmClickHandler = async () => {
+      // FOR SECRET DEV
+      if (extensionTransactionForSign.value.messageScrt) {
+        const privateKey = citadel.decodePrivateKeyByPassword(
+          signerWallet.value.net,
+          signerWallet.value.privateKeyEncoded,
+          password.value
+        ).data;
+        console.log('SECRET!', privateKey);
+        return;
+      }
+
       if (
         signerWallet.value &&
         signerWallet.value.type === WALLET_TYPES.KEPLR
@@ -947,12 +963,12 @@ export default {
       }
     };
 
-    const showLibLedgerModal = computed(
-      () => store.getters['libCallback/showLedgerModal']
-    );
-    const showLibPasswordModal = computed(
-      () => store.getters['libCallback/showPasswordModal']
-    );
+    // const showLibLedgerModal = computed(
+    //   () => store.getters['libCallback/showLedgerModal']
+    // );
+    // const showLibPasswordModal = computed(
+    //   () => store.getters['libCallback/showPasswordModal']
+    // );
 
     /* eslint-disable */
     return {
@@ -1005,8 +1021,8 @@ export default {
       signMessage,
 
       // lib callback
-      showLibLedgerModal,
-      showLibPasswordModal,
+      // showLibLedgerModal,
+      // showLibPasswordModal,
     };
   },
 };

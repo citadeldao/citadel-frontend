@@ -58,6 +58,19 @@ export async function socketEventHandler({ eventName, data }) {
     //   }
     // });
     case 'message-from-app':
+      if (data.type === 'scrt-execute') {
+        store.commit(
+          'extensions/SET_TRANSACTION_FOR_SIGN',
+          {
+            transaction: {},
+            address: data.message.sender,
+            net: 'secret',
+            messageScrt: data.message,
+          },
+          { root: true }
+        );
+      }
+
       if (data.type === 'view-scrt-balance') {
         const secretAddress = data.message.address;
         const sSecretContract = data.message.tokenContract;
