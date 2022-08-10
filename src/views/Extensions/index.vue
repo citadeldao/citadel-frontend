@@ -770,7 +770,13 @@ export default {
           signerWallet.value.privateKeyEncoded,
           password.value
         ).data;
+        const response = await citadel.executeContract(signerWallet.value.id, {
+          privateKey,
+          derivationPath: signerWallet.value.derivationPath,
+          ...extensionTransactionForSign.value.messageScrt,
+        });
         console.log('SECRET!', privateKey);
+        console.log('response', response);
         return;
       }
 
