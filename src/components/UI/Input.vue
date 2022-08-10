@@ -485,15 +485,11 @@ export default {
 
   &__clear-icon {
     position: absolute;
-    width: 16px;
-    height: 16px;
     bottom: 17px;
     right: 17px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: $round;
-    background: $mid-blue;
     @include lg {
       bottom: 14px;
     }
@@ -508,11 +504,8 @@ export default {
     }
 
     & svg {
-      position: absolute;
+      cursor: pointer;
       bottom: 3px !important;
-      width: 9px;
-      height: 9px;
-      fill: $white;
     }
   }
 

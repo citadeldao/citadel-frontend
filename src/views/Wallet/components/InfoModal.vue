@@ -94,7 +94,6 @@ export default {
     margin-bottom: 45px;
   }
   &__upper-right {
-    width: 15px;
     cursor: pointer;
   }
   &__title {
