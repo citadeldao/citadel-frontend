@@ -54,7 +54,7 @@ export default {
 
       // for tests
       if (JSON.parse(process.env.VUE_APP_DEBUG_LIB)) {
-        window.citadel = citadel;
+        window.citadelLib = citadel;
       }
 
       if (!error) {
