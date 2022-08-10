@@ -775,8 +775,32 @@ export default {
           derivationPath: signerWallet.value.derivationPath,
           ...extensionTransactionForSign.value.messageScrt,
         });
-        console.log('SECRET!', privateKey);
-        console.log('response', response);
+
+        if (response?.data?.transactionHash) {
+          confirmModalDisabled.value = false;
+          showLedgerConnect.value = false;
+          successTx.value = [response.data.transactionHash];
+          confirmModalDisabled.value = false;
+          confirmModalCloseHandler();
+          showSuccessModal.value = true;
+          store.dispatch('extensions/sendCustomMsg', {
+            token: currentAppInfo.value.token,
+            message: extensionsSocketTypes.messages.success,
+            type: extensionsSocketTypes.types.execute,
+          });
+        } else {
+          store.dispatch('extensions/sendCustomMsg', {
+            token: currentAppInfo.value.token,
+            message: extensionsSocketTypes.messages.failed,
+            type: extensionsSocketTypes.types.execute,
+          });
+          notify({
+            type: 'warning',
+            text: response?.data?.error,
+          });
+
+          return;
+        }
         return;
       }
 
