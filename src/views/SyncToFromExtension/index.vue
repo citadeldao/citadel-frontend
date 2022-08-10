@@ -42,7 +42,7 @@
             <template v-else>
               <div class="syncto-input">
                 <Input
-                  id="walletSearch"
+                  id="walletSearchSync"
                   v-model="searchWalletStr"
                   :label="$t('searchToken')"
                   type="text"
