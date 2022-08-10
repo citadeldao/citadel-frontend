@@ -47,7 +47,7 @@
           </div>
         </template>
       </div>
-      <PrimaryButton data-qa="Ok" @click="clickHandler">
+      <PrimaryButton :disabled="disabled" data-qa="Ok" @click="clickHandler">
         {{ $t('ok') }}
       </PrimaryButton>
     </div>
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { reactive, markRaw } from 'vue';
+import { reactive, markRaw, ref } from 'vue';
 import { useStore } from 'vuex';
 import closeIcon from '@/assets/icons/close-icon.svg';
 import PrimaryButton from '@/components/UI/PrimaryButton';
@@ -89,6 +89,7 @@ export default {
   },
   emits: ['close', 'buttonClick'],
   setup(props, { emit }) {
+    const disabled = ref(false);
     const store = useStore();
     const aliases = reactive({});
     const icons = reactive({});
@@ -100,6 +101,7 @@ export default {
     });
 
     const clickHandler = async () => {
+      disabled.value = true;
       await Promise.all(
         props.data.map(async (wallet) => {
           if (!aliases[`${wallet.net}_${wallet.address}`]?.length) {
@@ -107,7 +109,9 @@ export default {
           }
 
           await store.dispatch('wallets/renameWalletTitle', {
-            walletId: wallet.id,
+            walletId: store.getters['wallets/wallets'].find(
+              (e) => wallet.address === e.address
+            ).id,
             title: aliases[`${wallet.net}_${wallet.address}`],
           });
 /* eslint-disable */
@@ -118,9 +122,10 @@ export default {
       //   store.dispatch('wallets/getNewWallets','lazy');
       // }
       emit('buttonClick');
+      disabled.value = false;
     };
 
-    return { aliases, clickHandler, icons };
+    return { aliases,disabled, clickHandler, icons };
   },
 };
 </script>
