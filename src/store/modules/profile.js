@@ -52,6 +52,11 @@ export default {
         debug: JSON.parse(process.env.VUE_APP_DEBUG_LIB),
       });
 
+      // for tests
+      if (JSON.parse(process.env.VUE_APP_DEBUG_LIB)) {
+        window.citadelLib = citadel;
+      }
+
       if (!error) {
         await dispatch('getMarketcaps');
         await dispatch('getRates');

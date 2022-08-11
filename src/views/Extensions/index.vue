@@ -858,6 +858,10 @@ export default {
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;
           successTx.value = metamaskResult.txHash;
+          store.dispatch('extensions/putMempoolChangeStatus', {
+            hash: metamaskResult.txHash,
+            mempool_id: extensionTransactionForSign.value.mem_tx_id,
+          });
           confirmModalDisabled.value = false;
           confirmModalCloseHandler();
           showSuccessModal.value = true;

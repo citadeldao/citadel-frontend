@@ -575,7 +575,7 @@
     "addAddressExp": "Add address",
     "addAnAddress": "Add an address",
     "chooseSuitableMethod": "Choose a suitable method to import an existing address",
-    "address": "Address",
+    "address": "address",
     "enterAddress": "Enter address",
     "import": "Import",
     "enterMnemonicPhrase": "Enter a mnemonic phrase",
