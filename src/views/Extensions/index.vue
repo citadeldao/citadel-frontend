@@ -277,18 +277,6 @@
         </div>
       </ModalContent>
     </Modal>
-    <!-- <LibPasswordModal
-      v-if="showLibPasswordModal"
-      :title="selectedApp.name"
-      :desc="selectedApp.short_description"
-      :internal-icon="selectedApp.logo"
-    /> -->
-    <!-- <LibLedgerModal
-      v-if="showLibLedgerModal"
-      :title="selectedApp.name"
-      :desc="selectedApp.short_description"
-      :internal-icon="selectedApp.logo"
-    /> -->
   </div>
 </template>
 <script>
@@ -299,8 +287,6 @@ import {
 import Loading from '@/components/Loading';
 import { ref, markRaw, computed, watch } from 'vue';
 import Modal from '@/components/Modal';
-// import LibLedgerModal from './components/libModals/LibLedgerModal.vue';
-// import LibPasswordModal from './components/libModals/LibPasswordModal.vue';
 import linkIcon from '@/assets/icons/link.svg';
 import linkIconHovered from '@/assets/icons/link_hovered.svg';
 import ModalContent from '@/components/ModalContent';
@@ -338,8 +324,6 @@ export default {
     Modal,
     ModalContent,
     Input,
-    // LibLedgerModal,
-    // LibPasswordModal,
   },
   setup() {
     const showFullScreen = ref(false);
@@ -776,10 +760,10 @@ export default {
           ...extensionTransactionForSign.value.messageScrt,
         });
 
-        if (response?.data?.transactionHash) {
+        if (response?.data) {
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;
-          successTx.value = [response.data.transactionHash];
+          successTx.value = response.data;
           confirmModalDisabled.value = false;
           confirmModalCloseHandler();
           showSuccessModal.value = true;
@@ -794,9 +778,13 @@ export default {
             message: extensionsSocketTypes.messages.failed,
             type: extensionsSocketTypes.types.execute,
           });
+          confirmModalDisabled.value = false;
+          showLedgerConnect.value = false;
+          confirmModalDisabled.value = false;
+          confirmModalCloseHandler();
           notify({
             type: 'warning',
-            text: response?.data?.error,
+            text: response?.error,
           });
 
           return;
@@ -993,13 +981,6 @@ export default {
       }
     };
 
-    // const showLibLedgerModal = computed(
-    //   () => store.getters['libCallback/showLedgerModal']
-    // );
-    // const showLibPasswordModal = computed(
-    //   () => store.getters['libCallback/showPasswordModal']
-    // );
-
     /* eslint-disable */
     return {
       showFullScreen,
@@ -1049,10 +1030,6 @@ export default {
       msgSuccessSignature,
       closeSignMessageModal,
       signMessage,
-
-      // lib callback
-      // showLibLedgerModal,
-      // showLibPasswordModal,
     };
   },
 };
