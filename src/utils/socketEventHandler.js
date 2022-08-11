@@ -74,6 +74,7 @@ export async function socketEventHandler({ eventName, data }) {
       if (data.type === 'view-scrt-balance') {
         const secretAddress = data.message.address;
         const sSecretContract = data.message.tokenContract;
+        const sSecretNetwork = data.message.net;
 
         const sendErrorMsg = () => {
           store.dispatch('extensions/sendCustomMsg', {
@@ -87,26 +88,29 @@ export async function socketEventHandler({ eventName, data }) {
         };
 
         const { wallets } = useWallets();
-        const wallet = wallets.value
-          .filter((w) => w.type !== WALLET_TYPES.WALLET_TYPES)
-          .find((w) => w.address === secretAddress);
+        const wallet = wallets.value.find(
+          (w) =>
+            w.type !== WALLET_TYPES.PUBLIC_KEY && w.address === secretAddress
+        );
 
         if (wallet) {
-          store.dispatch('wallets/setCurrentWallet', wallet);
-          const searchToken = store.getters['subtokens/formatedSubtokens'](
-            'myTokens',
-            wallet
-          );
+          if (wallet.subtokensList?.find) {
+            const token = wallet.subtokensList.find(
+              (t) => t.net === sSecretNetwork
+            );
 
-          if (searchToken[0] && searchToken[0].tokenBalance) {
-            store.dispatch('extensions/sendCustomMsg', {
-              token: store.getters['extensions/currentAppInfo'].token,
-              message: {
-                balance: searchToken[0].tokenBalance.calculatedBalance,
-                tokenContract: sSecretContract,
-              },
-              type: data.type,
-            });
+            if (token) {
+              store.dispatch('extensions/sendCustomMsg', {
+                token: store.getters['extensions/currentAppInfo'].token,
+                message: {
+                  balance: token.tokenBalance.calculatedBalance,
+                  tokenContract: sSecretContract,
+                },
+                type: data.type,
+              });
+              return;
+            }
+            sendErrorMsg();
           } else {
             sendErrorMsg();
           }
