@@ -985,6 +985,9 @@ export default {
 </script>
 <style lang="scss" scoped>
   .extensions {
+    max-width: 1628px;
+    width: 100%;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -1003,7 +1006,7 @@ export default {
       &.fullScreen {
         width: 100%;
         box-sizing: border-box;
-        padding: 0 35px;
+        // padding: 0 35px;
       }
 
       .close-icon {

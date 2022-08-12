@@ -62,10 +62,13 @@ export default function useCurrentWalletRequests() {
   const txError = ref(null);
 
   const signAndSendTransfer = async (rawTx, password) => {
+    const privateKey = wallet.value.privateKeyEncoded
+      ? password && wallet.value.getPrivateKeyDecoded(password)
+      : password && store.getters['crypto/decodeUserMnemonic'](password);
     const res = await wallet.value.signAndSendTransfer({
       walletId: wallet.value.id,
       rawTransaction: rawTx,
-      privateKey: password && wallet.value.getPrivateKeyDecoded(password),
+      privateKey,
       derivationPath: wallet.value.derivationPath,
     });
     const { data } = res;
