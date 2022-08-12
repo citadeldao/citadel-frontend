@@ -29,7 +29,11 @@
           />
         </div>
       </div>
-      <PrimaryButton class="confirm" @click="importWallets">
+      <PrimaryButton
+        :disabled="!selectedCoins.length"
+        class="confirm"
+        @click="importWallets"
+      >
         {{ $t('keplr.confirm') }}
       </PrimaryButton>
     </div>
