@@ -499,13 +499,14 @@ export default {
     @include md {
       bottom: 13px;
     }
-    &:hover {
-      background: $red;
-    }
 
     & svg {
       cursor: pointer;
       bottom: 3px !important;
+      fill: $mid-blue !important;
+      &:hover {
+        fill: $red !important;
+      }
     }
   }
 
