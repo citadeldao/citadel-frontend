@@ -410,16 +410,17 @@ export default {
   emits: ['showPlaceholder', 'prepareClaim', 'prepareXctClaim', 'stake'],
   setup(props, { emit }) {
     onMounted(() => {
-      setTimeout(() => {
-        const items = document.querySelectorAll('.stake-list-item__title');
-        items.forEach((e) => {
-          const label = e.querySelector('.label--type--label');
-          if (label && e.clientWidth >= 268) {
-            console.warn(e.text);
+      const items = document.querySelectorAll('.stake-list-item__title');
+      items.forEach((e) => {
+        const label = e.querySelector('.label--type--label');
+        if (label) {
+          if (e.clientWidth >= 400) {
+            label.style.right = '-49px';
+          } else if (e.clientWidth >= 280) {
             label.style.right = '-49px';
           }
-        });
-      }, 5000);
+        }
+      });
     });
     const {
       showModal,

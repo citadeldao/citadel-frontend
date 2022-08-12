@@ -40,11 +40,7 @@
               </div>
             </template>
             <template #default>
-              <Label
-                style="position: absolute; top: 4px"
-                v-if="item.hasOwnProperty('isActive') && !item.isActive"
-                color="#FA3B33"
-              >
+              <Label style="position: absolute; top: 4px" color="#FA3B33">
                 {{ $t('jailed') }}
               </Label>
             </template>
@@ -454,10 +450,10 @@ export default {
     text-overflow: ellipsis;
     overflow: hidden;
     @include xs-lg {
-      max-width: 230px;
+      max-width: 280px;
     }
     @include md {
-      max-width: 200px;
+      max-width: 400px;
       font-size: 14px;
     }
   }
