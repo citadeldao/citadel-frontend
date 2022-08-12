@@ -86,7 +86,6 @@ export default function useCreateWallets() {
 
   const createWallets = async (type) => {
     const newWalletType = type || walletOpts.type;
-console.warn('hui')
     try {
       showModal.value = true;
       showLoader.value = true;
@@ -114,14 +113,11 @@ console.warn('hui')
       const wallets = store.getters['wallets/wallets']
       const allAddressList = wallets.filter(e => allWalletsList.findIndex(e2 => e2.net === e.net))
       
-      console.warn(newWalletsOptsList, oldWalletsOptsList,'hui1')
       if (newWalletType === WALLET_TYPES.ONE_SEED && newWalletsOptsList.length) {
-        console.warn(walletOpts.nets,'fas')
         const { data, error } = await citadel.addWalletCollectionByMnemonic(newWalletsOptsList);
         newWalletsList = data;
         errorMessage = error;
       }
-      console.warn(newWalletsOptsList, oldWalletsOptsList, 'hui12')
       if (newWalletType === WALLET_TYPES.KEPLR) {
         const config = store.getters['networks/configByNet'](walletOpts.nets[0]);
         const { data, error } = await citadel.addCreatedWallet({
@@ -135,24 +131,20 @@ console.warn('hui')
         newWalletsList = data ? [data] : [];
         errorMessage = error;
       }
-      console.warn(newWalletsOptsList, oldWalletsOptsList, 'hui125')
 
       if (newWalletType === WALLET_TYPES.PRIVATE_KEY) {
         const { data, error } = await citadel.addWalletCollectionByPrivateKey(newWalletsOptsList);
         newWalletsList = data;
         errorMessage = error;
       }
-      console.warn(newWalletsOptsList, oldWalletsOptsList, 'hui124')
 
       if (newWalletType === WALLET_TYPES.PUBLIC_KEY) {
         const { data, error } = await citadel.addWalletCollectionByPublicKey(newWalletsOptsList);
         newWalletsList = data;
         errorMessage = error;
       }
-      console.warn(newWalletsOptsList, oldWalletsOptsList, 'hui123')
 
       if (errorMessage) {
-        console.warn(errorMessage,'afsd')
         notify({
           type: 'warning',
           text: errorMessage,
@@ -163,10 +155,8 @@ console.warn('hui')
 
         return;
       }
-      console.warn(newWalletsList,walletOpts, 'afsd')
       if (newWalletsList) {
         for (const item of newWalletsList) {
-          console.warn('afsd1')
           if (item.error) {
             notify({
               type: 'warning',
@@ -185,7 +175,6 @@ console.warn('hui')
           }
         }
       }
-      console.warn(newWallets.value,'afsd1')
 
       // await store.dispatch('wallets/getNewWallets', 'lazy');
       // store.dispatch('wallets/getNewWallets', 'detail');
