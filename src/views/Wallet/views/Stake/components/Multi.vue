@@ -335,7 +335,7 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import BigNumber from 'bignumber.js';
 import WalletButtonsPanel from '@/components/WalletButtonsPanel';
@@ -409,6 +409,18 @@ export default {
   },
   emits: ['showPlaceholder', 'prepareClaim', 'prepareXctClaim', 'stake'],
   setup(props, { emit }) {
+    onMounted(() => {
+      setTimeout(() => {
+        const items = document.querySelectorAll('.stake-list-item__title');
+        items.forEach((e) => {
+          const label = e.querySelector('.label--type--label');
+          if (label && e.clientWidth >= 268) {
+            console.warn(e.text);
+            label.style.right = '-49px';
+          }
+        });
+      }, 5000);
+    });
     const {
       showModal,
       modalCloseHandler,

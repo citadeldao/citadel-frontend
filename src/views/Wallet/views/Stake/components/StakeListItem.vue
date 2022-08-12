@@ -41,6 +41,7 @@
             </template>
             <template #default>
               <Label
+                style="position: absolute; top: 4px"
                 v-if="item.hasOwnProperty('isActive') && !item.isActive"
                 color="#FA3B33"
               >
@@ -438,19 +439,23 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: relative;
   }
 
   &__title-title {
-    display: flex;
+    display: block;
     align-items: center;
     font-size: 17px;
     line-height: 20px;
     font-family: 'Panton_Bold';
     margin-bottom: 7px;
-    max-width: 268px;
+    max-width: 400px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    @include xs-lg {
+      max-width: 230px;
+    }
     @include md {
       max-width: 200px;
       font-size: 14px;
