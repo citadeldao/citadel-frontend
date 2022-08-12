@@ -224,7 +224,7 @@ export default {
       if (props.currentWallet.net === stateCurrentWallet.value.net) {
         return store.getters['profile/rates'][props.currentWallet.net].USD;
       }
-      return stateCurrentWallet.value.balance;
+      return stateCurrentWallet.value.balance.price.USD;
     });
 
     const isNotLinkedSnip20 = (token) => {
