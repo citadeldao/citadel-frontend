@@ -71,12 +71,6 @@
             isNotLinkedSnip20(item) &&
             stateCurrentWallet.type !== WALLET_TYPES.KEPLR
           "
-          :is-disabled="
-            (item.config.standard === TOKEN_STANDARDS.SNIP_20 &&
-              stateCurrentWallet.type === WALLET_TYPES.KEPLR &&
-              !item.linked) ||
-            (item.config.standard !== TOKEN_STANDARDS.SNIP_20 && !item.linked)
-          "
           :is-active="item.net === currentWallet.net"
           @click="setCurrentToken(item)"
         />
@@ -255,7 +249,7 @@ export default {
         mainIsLoading.value = false;
         showCreateVkModal.value = true;
         snip20Token.value = token;
-      } else if (!isNotLinkedSnip20(token) && token.linked) {
+      } else {
         store.dispatch('subtokens/setCurrentToken', token);
         redirectToWallet({
           wallet: store.getters['wallets/walletByAddress'](route.params),
