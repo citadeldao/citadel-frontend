@@ -40,7 +40,11 @@
               </div>
             </template>
             <template #default>
-              <Label style="position: absolute; top: 4px" color="#FA3B33">
+              <Label
+                v-if="item.hasOwnProperty('isActive') && !item.isActive"
+                style="position: absolute; top: 4px"
+                color="#FA3B33"
+              >
                 {{ $t('jailed') }}
               </Label>
             </template>
