@@ -24,6 +24,7 @@ if (process.env.VUE_APP_SENTRY_DSN) {
     Vue,
     dsn: process.env.VUE_APP_SENTRY_DSN,
     tunnel: new URL(process.env.VUE_APP_SENTRY_DSN).origin + '/tunnel',
+    release: process.env.VUE_APP_RELEASE,
     integrations: [
       new Integrations.BrowserTracing({
         routingInstrumentation: Sentry.vueRouterInstrumentation(router),
