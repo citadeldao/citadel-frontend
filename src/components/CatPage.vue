@@ -62,6 +62,7 @@ import PrimaryButton from '@/components/UI/PrimaryButton';
 import Input from '@/components/UI/Input';
 import catIcon from '@/assets/icons/cat-icon.svg';
 import { INPUT_TYPE_ICON } from '@/config/newWallets';
+import { findAddressWithNet } from '@/helpers';
 
 export default {
   name: 'CatPage',
@@ -109,14 +110,14 @@ export default {
           }
 
           await store.dispatch('wallets/renameWalletTitle', {
-            walletId: store.getters['wallets/wallets'].find(
-              (e) => wallet.address === e.address
-            ).id,
+            walletId: findAddressWithNet(store.getters['wallets/wallets'], {
+              address: wallet.address,
+              net: wallet.net,
+            }).id,
             title: aliases[`${wallet.net}_${wallet.address}`],
           });
-/* eslint-disable */
           return true;
-        }),
+        })
       );
       // if (renamed.filter((w) => w).length) {
       //   store.dispatch('wallets/getNewWallets','lazy');
@@ -125,7 +126,7 @@ export default {
       disabled.value = false;
     };
 
-    return { aliases,disabled, clickHandler, icons };
+    return { aliases, disabled, clickHandler, icons };
   },
 };
 </script>
@@ -244,7 +245,7 @@ export default {
   &__title {
     font-size: 30px;
     line-height: 30px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     @include lg {
       margin-bottom: 10px;
     }
@@ -282,7 +283,7 @@ export default {
   }
 
   &__add-address {
-    font-family: "Panton_Light";
+    font-family: 'Panton_Light';
     font-size: 14px;
     line-height: 30px;
     color: $gray;
@@ -315,7 +316,7 @@ export default {
   &__address-line {
     font-size: 14px;
     line-height: 25px;
-    font-family: "Panton_Light";
+    font-family: 'Panton_Light';
   }
 
   &__input {
