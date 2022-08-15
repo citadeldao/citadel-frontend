@@ -1187,6 +1187,7 @@
     "changeValidators": "Change validators",
     "redelegateNote": "You must choose another validator to redelegate",
     "assets": "Assets",
+    "asset": "asset",
     "menu": {
         "settings": "Settings",
         "logOut": "Log Out"

@@ -1187,6 +1187,7 @@
     "changeValidators": "切换节点",
     "redelegateNote": "您必须选择另一个验证节点重新进行质押",
     "assets": "资产",
+    "asset": "",
     "menu": {
         "settings": "设置",
         "logOut": "退出登录"
