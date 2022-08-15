@@ -28,11 +28,13 @@
         </div>
       </div>
       <div class="stake-list-item__title">
-        <span
-          class="stake-list-item__title-title"
-          :style="{ maxWidth: `${titleMaxWidth}px` }"
-        >
-          {{ title }}
+        <div>
+          <span
+            class="stake-list-item__title-title"
+            :style="{ maxWidth: `${titleMaxWidth}px` }"
+          >
+            {{ title }}
+          </span>
           <Tooltip>
             <template #content>
               <div class="stake-list-item__tooltip">
@@ -41,15 +43,14 @@
             </template>
             <template #default>
               <Label
-                v-if="item.hasOwnProperty('isActive') && !item.isActive"
-                style="position: absolute; top: 4px"
                 color="#FA3B33"
+                style="align-items: center; margin-top: -6px"
               >
                 {{ $t('jailed') }}
               </Label>
             </template>
           </Tooltip>
-        </span>
+        </div>
         <div v-if="!type" class="stake-list-item__title-title-info">
           <div class="stake-list-item__title-line">
             <span class="stake-list-item__title-line-title"
@@ -439,7 +440,6 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    position: relative;
   }
 
   &__title-title {
@@ -449,7 +449,7 @@ export default {
     line-height: 20px;
     font-family: 'Panton_Bold';
     margin-bottom: 7px;
-    max-width: 400px;
+    max-width: 268px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -457,7 +457,7 @@ export default {
       max-width: 280px;
     }
     @include md {
-      max-width: 400px;
+      max-width: 360px;
       font-size: 14px;
     }
   }

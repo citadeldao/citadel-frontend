@@ -335,7 +335,7 @@
 </template>
 
 <script>
-import { computed, ref, onMounted } from 'vue';
+import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import BigNumber from 'bignumber.js';
 import WalletButtonsPanel from '@/components/WalletButtonsPanel';
@@ -409,9 +409,6 @@ export default {
   },
   emits: ['showPlaceholder', 'prepareClaim', 'prepareXctClaim', 'stake'],
   setup(props, { emit }) {
-    onMounted(() => {
-      setStyleForStakeItemTitleType();
-    });
     const {
       showModal,
       modalCloseHandler,
@@ -454,19 +451,6 @@ export default {
       disabledPolkadot,
       isWithoutDelegation,
     } = useStaking(props.stakeNodes, props.list);
-    const setStyleForStakeItemTitleType = () => {
-      const items = document.querySelectorAll('.stake-list-item__title');
-      items.forEach((e) => {
-        const label = e.querySelector('.label--type--label');
-        if (label) {
-          if (e.clientWidth >= 400) {
-            label.style.right = '-49px';
-          } else if (e.clientWidth >= 280) {
-            label.style.right = '-49px';
-          }
-        }
-      });
-    };
     const keplrConnector = computed(
       () => store.getters['keplr/keplrConnector']
     );
