@@ -15,29 +15,6 @@
         @setSpecifications="finalStep"
       />
     </div>
-    <teleport to="body">
-      <transition name="fade">
-        <Modal v-if="showModal">
-          <img v-if="showLoader" src="@/assets/gif/loader.gif" alt="" />
-          <AddressAlreadyAdded
-            v-else-if="showAlreadyAddedModal"
-            v-click-away="alreadyAddedCloseHandler"
-            @close="alreadyAddedCloseHandler"
-            @buttonClick="alreadyAddedClickHandler"
-          />
-          <CatPage
-            v-else
-            v-click-away="successModalCloseHandler"
-            :data="newWallets"
-            :wallet-type-placeholder="$t('catPage.placeholderPrivate')"
-            input-type-icon="private-dot"
-            data-qa="add-address__existing__private-key"
-            @close="successModalCloseHandler"
-            @buttonClick="successModalClickHandler"
-          />
-        </Modal>
-      </transition>
-    </teleport>
   </div>
 </template>
 
@@ -46,29 +23,25 @@ import Header from '../AddAddress/components/Header';
 import EnterPassword from './components/EnterPassword';
 import CreatePassword from './components/CreatePassword';
 import AddressSpecifications from './components/AddressSpecifications';
-import CatPage from '@/components/CatPage';
-import Modal from '@/components/Modal';
-import AddressAlreadyAdded from '@/components/Modals/AddressAlreadyAdded';
 import useCurrentStep from '@/compositions/useCurrentStep';
 import { getSteps } from '@/static/importPrivateKey';
 import useCreateWallets from '@/compositions/useCreateWallets';
 import { WALLET_TYPES } from '../../config/walletType';
+import { onMounted } from 'vue';
+import { useStore } from 'vuex';
+import { useI18n } from 'vue-i18n';
+import { INPUT_TYPE_ICON } from '@/config/newWallets';
 
 export default {
   name: 'ImportPrivateKey',
   components: {
-    CatPage,
-    Modal,
     EnterPassword,
     CreatePassword,
     Header,
     AddressSpecifications,
-    AddressAlreadyAdded,
   },
   setup() {
     const {
-      showLoader,
-      showModal,
       setPassword,
       setPrivateKey,
       setNets,
@@ -77,39 +50,38 @@ export default {
       newWallets,
       isPasswordHash,
       savePassword,
-      redirectToNewWallet,
       showAlreadyAddedModal,
       setAccount,
+      redirectToNewWallet,
     } = useCreateWallets();
-
     const { currentStep, steps } = useCurrentStep(
       2,
       getSteps(isPasswordHash.value)
     );
-
+    const { t } = useI18n();
+    const store = useStore();
+    onMounted(() => {
+      store.dispatch('newWallets/setCatPageProps', {
+        inputTypeIcon: INPUT_TYPE_ICON.PRIVATE,
+        walletTypePlaceholder: t('catPage.placeholderPrivate'),
+        dataQa: 'add-address__existing__private-key',
+      });
+    });
     const finalStep = ({ net, privateKey, account }) => {
+      store.dispatch('newWallets/showLoader');
       setPrivateKey(privateKey);
       setNets([net]);
       setType('privateKey');
       account && setAccount(account);
       const success = createWallets(WALLET_TYPES.PRIVATE_KEY);
-      success.then(() => {
+      success.then(async () => {
         !isPasswordHash.value && savePassword();
+        await redirectToNewWallet();
+        store.dispatch('newWallets/setNewWalletsList', newWallets.value);
+        store.dispatch('newWallets/showModal');
+        store.dispatch('newWallets/hideLoader');
       });
     };
-
-    const successModalCloseHandler = () => {
-      showModal.value = false;
-      redirectToNewWallet();
-    };
-    const successModalClickHandler = successModalCloseHandler;
-
-    const alreadyAddedCloseHandler = () => {
-      showAlreadyAddedModal.value = false;
-      showModal.value = false;
-      redirectToNewWallet();
-    };
-    const alreadyAddedClickHandler = alreadyAddedCloseHandler;
 
     return {
       steps,
@@ -117,14 +89,8 @@ export default {
       setPassword,
       setPrivateKey,
       isPasswordHash,
-      showModal,
       newWallets,
       finalStep,
-      successModalClickHandler,
-      successModalCloseHandler,
-      alreadyAddedClickHandler,
-      alreadyAddedCloseHandler,
-      showLoader,
       showAlreadyAddedModal,
     };
   },

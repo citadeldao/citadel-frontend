@@ -1,8 +1,5 @@
 <template>
   <div class="kt-addresses">
-    <span class="kt-addresses__title">
-      KT <span>{{ $t('address') }}</span>
-    </span>
     <div id="list" class="kt-addresses__list">
       <resize-observer :show-trigger="true" @notify="handleResize" />
       <KtAddressItem
@@ -20,18 +17,6 @@
         :is-checked="isChecked(item)"
         @click="updateCurrentKtAddress(item)"
       />
-      <div
-        v-if="hiddenData.length"
-        class="kt-addresses__hidden-items"
-        @click="showModal = true"
-      >
-        <span class="kt-addresses__hidden-items-title">
-          {{ $t('all') }} KT <span>{{ $t('address') }}</span>
-        </span>
-        <span class="kt-addresses__hidden-items-count">
-          + {{ hiddenData.length }}
-        </span>
-      </div>
     </div>
   </div>
   <teleport v-if="showModal" to="body">
@@ -116,9 +101,7 @@ export default {
     const isChecked = (item) =>
       currentKtAddress?.value?.address?.toLowerCase() ===
       item.address.toLowerCase();
-    const displayData = computed(() =>
-      ktAddresses.value.slice(0, showCount.value)
-    );
+    const displayData = computed(() => ktAddresses.value);
     const hiddenData = computed(() =>
       ktAddresses.value.slice(showCount.value, ktAddresses.value.length)
     );
@@ -144,6 +127,8 @@ export default {
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
+  transform: rotateX(180deg);
+  padding-top: 0.1rem;
   @include lg {
     margin-bottom: 16px;
   }
@@ -161,6 +146,7 @@ export default {
   &__list {
     position: relative;
     display: flex;
+    padding-bottom: 2rem;
   }
   &__hidden-items {
     width: 225px;
@@ -207,6 +193,38 @@ export default {
     overflow-x: hidden;
     margin-top: 16px;
     max-height: 281px;
+  }
+  &__title {
+    display: flex;
+    width: 100%;
+    position: relative;
+  }
+}
+.scroll {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  max-width: calc(100% - 110px);
+  right: 0;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    height: 4px; /* width of the entire scrollbar */
+    border-radius: 20px;
+    position: absolute;
+    top: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #c3ceeb; /* color of the tracking area */
+    border-radius: 20px;
+    position: absolute;
+    top: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #6b758e; /* color of the scroll thumb */
+    border-radius: 20px; /* roundness of the scroll thumb */
+    //border: 3px solid orange; /* creates padding around scroll thumb */
   }
 }
 </style>
