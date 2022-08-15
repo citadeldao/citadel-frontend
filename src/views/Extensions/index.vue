@@ -604,10 +604,6 @@ export default {
     );
 
     watch(extensionTransactionForSign, () => {
-      console.log(
-        'extensionTransactionForSign',
-        extensionTransactionForSign.value
-      );
       if (extensionTransactionForSign?.value?.transaction) {
         const currentAddress = extensionTransactionForSign.value.address;
         const currentNet = extensionTransactionForSign.value.net;
