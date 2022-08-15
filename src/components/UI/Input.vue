@@ -503,9 +503,9 @@ export default {
     & svg {
       cursor: pointer;
       bottom: 3px !important;
-      fill: $mid-blue !important;
+      fill: $mid-blue;
       &:hover {
-        fill: $red !important;
+        fill: $red;
       }
     }
   }
