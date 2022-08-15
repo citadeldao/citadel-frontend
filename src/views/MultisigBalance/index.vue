@@ -430,7 +430,9 @@ export default {
     };
 
     const confirmClaim = async () => {
+      console.log('signerWallet.value', signerWallet.value);
       if (
+        signerWallet.value.type === WALLET_TYPES.PUBLIC_KEY &&
         selectedAddress.value &&
         selectedAddress.value.toLowerCase() ===
           metamaskConnector.value.accounts[0]?.toLowerCase()

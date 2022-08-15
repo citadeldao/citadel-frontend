@@ -114,7 +114,13 @@
           </span>
         </div>
       </div>
-      <div v-if="!currentWallet.hideMemo" class="send__memo">
+      <div
+        v-if="
+          !currentWallet.hideMemo &&
+          !['eth', 'bsc'].includes(currentToken?.parentCoin?.net)
+        "
+        class="send__memo"
+      >
         <div class="send__memo-toggle">
           <span class="send__memo-title">
             {{ $t('memo') }}

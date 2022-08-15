@@ -708,6 +708,7 @@ export default {
 
   &__additional-info-white-space {
     flex-grow: 1;
+    margin-bottom: 3px;
     border-bottom: 1px dashed $gainsboro;
   }
 

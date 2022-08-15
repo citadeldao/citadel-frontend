@@ -119,7 +119,7 @@ export default {
           .times(currency.value?.USD)
           .toNumber();
         const walletInstance = new WalletConstructor(walletOpts);
-
+        delete walletInstance.privateKey;
         return walletInstance;
       } catch (error) {
         notify({
