@@ -349,7 +349,7 @@ export default {
     const showLedgerConnect = ref(false);
     const ledgerError = ref('');
     const msgSuccessSignature = ref('');
-    const fullScreenAppIds = ref([6, 10, 12, 14, 15, 18]);
+    const fullScreenAppIds = ref([6, 7, 10, 12, 14, 15, 18]);
 
     const { wallets: walletsList } = useWallets();
 
@@ -858,6 +858,10 @@ export default {
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;
           successTx.value = metamaskResult.txHash;
+          store.dispatch('extensions/putMempoolChangeStatus', {
+            hash: metamaskResult.txHash,
+            mempool_id: extensionTransactionForSign.value.mem_tx_id,
+          });
           confirmModalDisabled.value = false;
           confirmModalCloseHandler();
           showSuccessModal.value = true;
@@ -981,6 +985,9 @@ export default {
 </script>
 <style lang="scss" scoped>
   .extensions {
+    max-width: 1628px;
+    width: 100%;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -999,7 +1006,7 @@ export default {
       &.fullScreen {
         width: 100%;
         box-sizing: border-box;
-        padding: 0 35px;
+        // padding: 0 35px;
       }
 
       .close-icon {

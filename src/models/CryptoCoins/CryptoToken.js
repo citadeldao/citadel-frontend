@@ -11,17 +11,17 @@ export default class CryptoToken extends CryptoCoin {
     this.tokenBalance = tokenBalance;
     this.parentCoin = opts.parentCoin;
     this.linked = opts.linked || false;
-    this.hasStake = opts.actions.stake || false;
-    this.hasClaim = opts.actions.claim || false;
-    this.hasTransfer = opts.actions.transfer || false;
+    this.hasStake = opts?.actions?.stake || false;
+    this.hasClaim = opts?.actions?.claim || false;
+    this.hasTransfer = opts?.actions?.transfer || false;
     this.fee_key = opts.fee_key;
     this.hasXCT = opts.hasXCT || false;
-    this.showFrozenBalance = !!opts.actions.stake;
+    this.showFrozenBalance = !!opts?.actions?.stake;
     this.hasUnstakeingPerioud = false;
     this.savedViewingKey = opts.savedViewingKey || null;
-    this.hasTransactionComment = opts.config.hasTransactionComment;
+    this.hasTransactionComment = opts?.config?.hasTransactionComment;
     this.messages = {
-      frozenBalance: opts.actions.stake
+      frozenBalance: opts?.actions?.stake
         ? 'balanceTooltipInfo.frozenBalanceBalanceInfo2'
         : '',
     };
