@@ -47,10 +47,10 @@
 
       <div class="assets-table">
         <div class="assets-table__thead">
-          <div>Asset</div>
-          <div>Balance</div>
-          <div>USD Balance</div>
-          <div>Price</div>
+          <div>{{ $t('asset') }}</div>
+          <div>{{ $t('balance') }}</div>
+          <div>USD {{ $t('balance') }}</div>
+          <div>{{ $t('price') }}</div>
         </div>
 
         <AssetsItem
@@ -546,6 +546,7 @@ export default {
       font-size: 18px;
       text-align: left;
       color: $mid-blue;
+      text-transform: capitalize;
 
       @include lg {
         font-size: $wallet-assets-heading-font-size;
