@@ -49,7 +49,9 @@ export default {
     });
     const clickHandler = async () => {
       exportPrivateKeys(keyStorage.value);
-      emit('downloadedFile');
+      if (downloadCheck.value) {
+        emit('downloadedFile');
+      }
       nextStep();
     };
     return { icon, downloadCheck, keyStorage, clickHandler };

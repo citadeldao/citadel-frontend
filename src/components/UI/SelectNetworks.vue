@@ -136,6 +136,9 @@ export default {
           checkedNetYetAdded.push(displayData.value[key].net);
         }
       }
+      for (const key in displayData.value.slice(0, 6)) {
+        addItem(+displayData.value[key].id);
+      }
     });
     return {
       displayData,

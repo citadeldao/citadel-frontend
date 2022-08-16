@@ -23,7 +23,10 @@
         v-if="currentStep === 3"
         :mnemonic="walletOpts.mnemonic"
       />
-      <DownloadOneSeed v-if="currentStep === 4" />
+      <DownloadOneSeed
+        v-if="currentStep === 4"
+        @downloadedFile="setDownloadFile"
+      />
       <SelectNetworks v-if="currentStep === 5" @selectNets="finalStep" />
     </div>
   </div>
