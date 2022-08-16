@@ -458,7 +458,7 @@ export default {
       max-width: 280px;
     }
     @include md {
-      max-width: 360px;
+      max-width: 200px;
       font-size: 14px;
     }
   }
