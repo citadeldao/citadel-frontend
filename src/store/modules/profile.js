@@ -50,7 +50,14 @@ export default {
       const { data, error } = await citadel.init({
         backendUrl: process.env.VUE_APP_BACKEND_URL,
         debug: JSON.parse(process.env.VUE_APP_DEBUG_LIB),
+        appURL: process.env.VUE_APP_BACKEND_URL_APPS,
+        socketURL: process.env.VUE_APP_BACKEND_WS_URL,
       });
+
+      // for tests
+      if (JSON.parse(process.env.VUE_APP_DEBUG_LIB)) {
+        window.citadelLib = citadel;
+      }
 
       if (!error) {
         await dispatch('getMarketcaps');
@@ -113,7 +120,7 @@ export default {
     async updateCurrentWalletMarketcap({ commit, state }, data) {
       if (
         data.net.toLowerCase() ===
-        state.currentWalletMarketcap.net.toLowerCase()
+        state.currentWalletMarketcap?.net?.toLowerCase()
       ) {
         commit(types.SET_CURRENT_WALLET_MARKETCAP, {
           ...data.marketCap.marketCapInfo,

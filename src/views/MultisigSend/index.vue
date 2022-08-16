@@ -304,7 +304,7 @@
             v-model:txComment="txComment"
             :show-from="false"
             :wallet="signerWallet"
-            :tx-hash="[successTx]"
+            :tx-hash="successTx"
             :fee="prepareTransferFund?.value?.fee"
             type="transfer"
           />
@@ -508,7 +508,7 @@ export default {
       txComment.value &&
         (await store.dispatch('transactions/postTransactionNote', {
           network: 'bsc',
-          hash: successTx.value,
+          hash: successTx.value[0],
           text: txComment.value,
         }));
       txComment.value = '';

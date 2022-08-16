@@ -20,10 +20,13 @@
         </transition>
       </div>
       <div
+        class="wallet__kt-addresses-wrapper"
         v-if="currentWallet.hasKtAddresses && ktAddresses.length"
-        class="wallet__kt-addresses"
       >
-        <KtAddresses :current-wallet="currentWallet" />
+        <div class="kt-addresses__title">KT {{ $t('address') }}</div>
+        <div class="wallet__kt-addresses">
+          <KtAddresses :current-wallet="currentWallet" />
+        </div>
       </div>
       <div class="wallet__main">
         <template v-if="!currentWallet.isStub">
@@ -77,12 +80,6 @@
           :wallet-type="currentWallet.type"
           @prepareUnstakedClaim="prepareUnstakedClaim"
         />
-      </div>
-      <div
-        v-if="currentWallet.hasKtAddresses && ktAddresses.length"
-        class="wallet__kt-addresses-md"
-      >
-        <KtAddressesMd :current-wallet="currentWallet" />
       </div>
       <div
         v-if="currentToken?.net === OUR_TOKEN"
@@ -268,7 +265,6 @@ import ClaimRewards from './components/ClaimRewards';
 import ClaimUnstakedBlock from './components/ClaimUnstakedBlock';
 import MainHeader from './components/MainHeader';
 import KtAddresses from './components/KtAddresses';
-import KtAddressesMd from './components/KtAddressesMd';
 import Alias from './components/Alias';
 import ConfirmLedgerModal from '@/components/Modals/Ledger/ConfirmLedgerModal';
 import ConnectLedgerModal from '@/components/Modals/Ledger/ConnectLedgerModal';
@@ -288,6 +284,8 @@ import notify from '@/plugins/notify';
 import { useI18n } from 'vue-i18n';
 import useApi from '@/api/useApi';
 import { keplrNetworksProtobufFormat } from '@/config/availableNets';
+import { keplrNetworks } from '@/config/availableNets';
+
 export default {
   name: 'Wallet',
   components: {
@@ -308,7 +306,6 @@ export default {
     XCTConfirmClaimModal,
     BalanceAndPledged,
     KtAddresses,
-    KtAddressesMd,
     Loading,
     ClaimUnstakedBlock,
     KiChainStub,
@@ -340,9 +337,51 @@ export default {
     const subtokens = computed(() =>
       store.getters['subtokens/formatedSubtokens']()
     );
+
+    const checkKeplrAddress = async () => {
+      if (
+        currentWallet.value &&
+        currentWallet.value.type === WALLET_TYPES.KEPLR
+      ) {
+        try {
+          const chain = keplrNetworks.find(
+            (conf) => conf.net === currentWallet.value.net
+          ).key;
+          await window.keplr.enable(chain);
+          const accounts = await window.keplr
+            .getOfflineSigner(chain)
+            .getAccounts();
+          const keplrAddress = accounts && accounts[0].address;
+          const pubkey = Buffer.from(accounts && accounts[0].pubkey).toString(
+            'hex'
+          );
+
+          if (keplrAddress && keplrAddress !== currentWallet.value.address) {
+            notify({
+              type: 'warning',
+              text: 'Please change account in Keplr to sign transaction',
+            });
+          } else {
+            if (keplrAddress === currentWallet.value.address) {
+              const walletPublicKey = currentWallet.value.publicKey;
+              if (walletPublicKey !== pubkey) {
+                await store.dispatch('wallets/pushWallets', {
+                  wallets: [{ ...currentWallet.value, publicKey: pubkey }],
+                });
+                window.location.reload();
+              }
+            }
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    };
+
     onMounted(async () => {
       await loadKtAddresses(currentWallet?.value?.id);
       await loadXCTInfo();
+      await checkKeplrAddress();
     });
 
     watch(
@@ -357,6 +396,7 @@ export default {
           if (params.net && params.address) {
             await loadKtAddresses(currentWallet?.value?.id);
             await loadXCTInfo();
+            await checkKeplrAddress();
           }
         }
       },
@@ -374,6 +414,7 @@ export default {
           currentWallet.value.id
         );
         await store.dispatch('dao/getHolderInfo', currentWallet.value.id);
+        await store.dispatch('dao/getRewardsXCT', currentWallet.value.id);
         await store.dispatch(
           'dao/getTotalClaimedRewardsXCT',
           currentWallet.value.id
@@ -692,11 +733,7 @@ export default {
     const daoRewards = computed(
       () => store.getters['dao/holderInfo'].holder?.claimable
     );
-    const xctRewards = computed(() =>
-      BigNumber(currentToken.value?.tokenBalance.claimableRewards)
-        .minus(daoRewards.value)
-        .toNumber()
-    );
+    const xctRewards = computed(() => store.getters['dao/xctRewards']);
     const claimOptions = ref({
       xctRewards: !!xctRewards.value,
       daoRewards: !!daoRewards.value,
@@ -1163,6 +1200,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.kt-addresses {
+  &__title {
+    position: absolute;
+    top: -12px;
+    font-size: 22px;
+    line-height: 26px;
+    font-family: 'Panton_Bold';
+    margin-bottom: 18px;
+    margin-bottom: 0;
+    @include md {
+      font-size: 20px;
+    }
+    @include xs-lg {
+      font-size: 20px;
+    }
+    @include laptop {
+      font-size: 17px;
+    }
+  }
+}
 .wallet {
   display: flex;
   flex-grow: 1;
@@ -1263,10 +1320,11 @@ export default {
   }
 
   &__main {
+    position: relative;
     display: flex;
     flex-direction: column;
     background: $white;
-    box-shadow: -10px 4px 27px rgba(0, 0, 0, 0.1);
+    box-shadow: $card-shadow;
     border-radius: 50px;
     padding: 0 45px;
     @include lg {
@@ -1276,24 +1334,32 @@ export default {
     @include md {
       border-radius: 16px;
       padding: 0 24px;
-      box-shadow: 0px 0px 25px rgba(106, 75, 255, 0.3);
+    }
+    @include laptop {
+      border-radius: 8px;
+      padding: 0 20px;
     }
   }
 
   &__right-section {
     display: flex;
     flex-direction: column;
-    min-width: 400px;
-    width: 400px;
+    max-width: 400px;
+    width: 100%;
     margin-bottom: 78px;
     @include lg {
-      min-width: 329px;
-      width: 329px;
+      max-width: 350px;
     }
     @include md {
-      min-width: 239px;
-      width: 239px;
+      max-width: 250px;
       margin-bottom: 54px;
+    }
+    @include laptop {
+      max-width: 200px;
+    }
+
+    & > div {
+      width: 100%;
     }
   }
 
@@ -1337,8 +1403,38 @@ export default {
   }
 
   &__kt-addresses {
-    @include md {
-      display: none;
+    overflow: auto;
+    position: relative;
+    transform: rotateX(180deg);
+    perspective: 1px;
+    &-wrapper {
+      max-width: 100%;
+      position: relative;
+      margin: 1rem auto 0rem auto;
+    }
+    &::-webkit-scrollbar {
+      max-width: 368px !important;
+      height: 4px; /* width of the entire scrollbar */
+      border-radius: 20px;
+      scrollbar-width: thin;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #c3ceeb; /* color of the tracking area */
+      border-radius: 20px;
+      max-width: 368px !important;
+      margin-left: 120px;
+      @include laptop {
+        margin-left: 94px;
+      }
+      margin-right: 0px;
+      position: absolute;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #6b758e; /* color of the scroll thumb */
+      border-radius: 20px; /* roundness of the scroll thumb */
+      //border: 3px solid orange; /* creates padding around scroll thumb */
     }
   }
 
@@ -1348,6 +1444,9 @@ export default {
       display: none;
     }
     @include xl {
+      display: none;
+    }
+    @include md {
       display: none;
     }
   }

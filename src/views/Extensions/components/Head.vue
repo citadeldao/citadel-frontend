@@ -38,16 +38,30 @@
       </template>
     </div>
     <div v-if="showFilter" class="extensions__head-filter">
-      <div class="wrap-input">
+      <div :class="{ mobile: showMobileSearch }" class="wrap-input">
         <keep-alive class="icon">
           <component :is="searchIcon" />
         </keep-alive>
         <input
           v-model="searchAppStr"
           :placeholder="$t('extensions.searchPlaceholder')"
+          @blur="
+            () => {
+              showMobileSearch = false;
+            }
+          "
           class="filter-input"
           @input="$emit('search', searchAppStr)"
         />
+      </div>
+      <div
+        v-if="!showMobileSearch"
+        class="wrap-input-mini"
+        @click="showMobileSearch = true"
+      >
+        <keep-alive>
+          <component :is="searchIcon" />
+        </keep-alive>
       </div>
       <div v-if="false" class="filter">
         <keep-alive>
@@ -86,6 +100,7 @@ export default {
     const searchIcon = ref();
     const searchAppStr = ref('');
     const showAppLogo = ref(false);
+    const showMobileSearch = ref(false);
 
     watch(
       () => props.appLogo,
@@ -116,6 +131,7 @@ export default {
       appsIcon,
       filterIcon,
       showAppLogo,
+      showMobileSearch,
     };
   },
 };
@@ -126,7 +142,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  padding: 0 25px;
+  padding: 0 25px 0 35px;
   width: 100%;
   background: linear-gradient(90deg, #4776e6 0%, #8e54e9 100%);
   border-radius: 16px 16px 0px 0px;
@@ -143,7 +159,7 @@ export default {
     border: 3px solid #fff;
     background: #6b93c0;
     position: absolute;
-    right: 40px;
+    right: 30px;
     top: 25px;
     z-index: 100;
 
@@ -209,6 +225,21 @@ export default {
     }
   }
 
+  .wrap-input-mini {
+    cursor: pointer;
+    display: none;
+    width: 48px;
+    height: 48px;
+    border: 1px dashed #c3ceeb;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+
+    svg {
+      transform: scale(1.3);
+    }
+  }
+
   .filter-input {
     color: $white;
     padding-left: 32px;
@@ -261,6 +292,25 @@ export default {
 
     .description {
       color: #59779a;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .extensions__head-filter {
+    .wrap-input {
+      display: none;
+
+      &.mobile {
+        display: flex;
+      }
+    }
+  }
+
+  .extensions__head-filter {
+    .wrap-input-mini {
+      margin-right: 10px;
+      display: flex;
     }
   }
 }

@@ -4,7 +4,6 @@ import store from '@/store';
 /* eslint-disable-next-line consistent-return */
 export default async (to, from, next) => {
   const isAuthenticated = getStorage(types.IS_AUTHENTICATED) === 'true';
-
   if (to.hash) {
     localStorage.setItem('hashInfo', to.hash);
   }

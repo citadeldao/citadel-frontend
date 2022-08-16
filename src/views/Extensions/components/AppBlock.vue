@@ -1,6 +1,6 @@
 <template>
   <div
-    :style="{ borderLeft: `8px solid ${color}` }"
+    :style="{ borderLeft: `16px solid ${color != '#fff' ? color : '#8496C0'}` }"
     class="app-block"
     @click="$emit('openApp', title)"
   >
@@ -17,9 +17,6 @@
             onerror="this.src = window.defaultIcon"
           />
         </div>
-        <!-- <keep-alive>
-          <component :is="appIcon" />
-        </keep-alive> -->
       </div>
       <div class="titles">
         <div class="title">
@@ -115,19 +112,54 @@ export default {
 </script>
 <style scoped lang="scss">
 .app-block {
-  width: 300px;
-  height: 234px;
+  position: relative;
+
   display: flex;
   flex-direction: column;
+
+  height: 240px;
+  transform: scale(0.9);
+  transition: 0.2s;
+
   padding: 15px;
-  box-sizing: border-box;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  position: relative;
+  padding-left: 20px;
+
+  box-shadow: $card-shadow;
   background: $white;
-  border-radius: 8px;
-  overflow: hidden;
-  transition: transform 0.2s;
-  will-change: transform;
+  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+
+  flex: 0 0 25%;
+
+  @include lg {
+    flex: 0 0 25%;
+    min-width: 240px;
+  }
+
+  @include laptop-l {
+    flex: 0 0 33%;
+  }
+
+  @include md {
+    flex: 0 0 50%;
+    min-width: 240px;
+  }
+
+  @include laptop {
+    flex: 0 0 50%;
+    min-width: 240px;
+  }
+
+  &:hover {
+    transform: scale(1);
+  }
+
+  &::last-child {
+    margin-right: auto;
+  }
 
   .tooltip {
     width: 200px;
@@ -144,9 +176,9 @@ export default {
   &__head {
     display: flex;
     align-items: center;
-    positions: relative;
-
+    height: 70px;
     .app {
+      padding-top: 5px;
       box-sizing: border-box;
       min-width: 48px;
       height: 48px;
@@ -155,29 +187,31 @@ export default {
       justify-content: center;
       align-items: center;
       background: linear-gradient(90deg, #f3e7ff 0%, #cde6ff 100%);
-      position: absolute;
-      top: 10px;
-      left: 10px;
+      overflow: hidden;
     }
 
     .titles {
-      margin-left: 50px;
+      margin-left: 12px;
 
       .title {
         color: $black;
+        // @include title-default;
+        font-size: 24px;
         font-family: 'Panton_Bold';
-        font-size: 18px;
+        display: flex;
+        align-items: center;
+
+        margin-bottom: 5px;
 
         svg {
-          margin-top: 3px;
-          margin-left: 12px;
+          margin-left: 5px;
         }
       }
 
       .category {
-        color: $dark-blue;
         font-family: 'Panton_SemiBold';
-        font-size: 14px;
+        color: $dark-blue;
+        font-size: 0.875rem;
       }
     }
   }
@@ -187,45 +221,49 @@ export default {
 
     .description {
       color: $mid-blue;
-      font-family: 'Panton_Regular';
-      font-size: 14px;
-      line-height: 20px;
-      overflow: hidden;
+      @include text-default;
+      font-size: 1rem;
+      line-height: 1.5;
       max-height: 100px;
     }
   }
 
   &__readmore {
+    cursor: pointer;
+    font-family: 'Panton_Bold';
     display: flex;
     align-items: center;
-    color: $mid-blue;
-    font-family: 'Panton_Bold';
-    font-size: 14px;
+
+    width: fit-content;
+    margin-top: auto;
+    margin-left: auto;
+
+    color: $black;
     text-transform: uppercase;
-    position: absolute;
-    bottom: 20px;
-    right: 15px;
 
     &:hover {
-      cursor: pointer;
-      opacity: 0.7;
+      color: $blue;
     }
 
     svg {
+      transition: 0.3s;
       margin-left: 10px;
+      path {
+        fill: $mid-blue;
+      }
+    }
+
+    svg:hover {
+      fill: #1a53f0;
+      fill: red;
     }
   }
-}
 
-.app-block:hover {
-  box-shadow: -10px 4px 50px rgba(0, 0, 0, 0.1);
-  transform: scale(1.1);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  z-index: 100;
-
-  .app-block__readmore {
-    color: #1a53f0;
+  &:hover {
+    transform: scale(1);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    z-index: 100;
   }
 }
 </style>

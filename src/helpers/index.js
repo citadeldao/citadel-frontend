@@ -58,7 +58,6 @@ export const addressTextWidth = (text, fontFamily, fontSize) => {
   span.innerHTML = text;
   const width = Math.ceil(span.clientWidth);
   document.body.removeChild(span);
-
   return width;
 };
 
@@ -71,17 +70,16 @@ export const formattedWalletAddress = (
   if (addressTextWidth(address, fontFamily, fontSize) > +wrapperWidth) {
     const addressEnd = `...${address.substr(address.length - 4)}`;
     let addressStart = address.substring(0, address.length - 4);
-
     while (
       addressTextWidth(`${addressStart}${addressEnd}`, fontFamily, fontSize) >
-      +wrapperWidth
+        +wrapperWidth &&
+      addressStart
     ) {
       addressStart = addressStart.substring(0, addressStart.length - 1);
     }
 
     return `${addressStart}${addressEnd}`;
   }
-
   return address;
 };
 

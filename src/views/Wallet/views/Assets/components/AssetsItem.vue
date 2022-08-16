@@ -2,8 +2,8 @@
   <div
     class="assets-item"
     :class="{
-      'assets-item--native': isChoosenToken,
       'assets-item--not-linked': isNotLinked,
+      'assets-item--active': isActive,
     }"
   >
     <div class="assets-item__cell">
@@ -52,7 +52,10 @@
           >$</span
         >
         <span
-          v-pretty-number="{ value: balance?.price?.USD, currency: 'USD' }"
+          v-pretty-number="{
+            value: price,
+            currency: 'USD',
+          }"
           class="assets-item__value"
         />
       </div>
@@ -74,18 +77,22 @@ export default {
       default: () => ({}),
     },
     balance: {
-      type: Object,
+      type: [Object],
       default: () => ({}),
+    },
+    price: {
+      type: [Number, String],
+      default: 0,
     },
     isNativeToken: {
       type: Boolean,
       default: false,
     },
-    isChoosenToken: {
+    isNotLinked: {
       type: Boolean,
       default: false,
     },
-    isNotLinked: {
+    isActive: {
       type: Boolean,
       default: false,
     },
@@ -130,6 +137,10 @@ export default {
   margin-bottom: 8px;
   cursor: pointer;
 
+  @include laptop {
+    height: 48px;
+  }
+
   &:hover {
     background: #f4e9fc;
     @include hover;
@@ -172,6 +183,10 @@ export default {
 
       @include md {
         width: 22%;
+      }
+
+      @include laptop {
+        width: 18%;
       }
     }
 
@@ -290,6 +305,21 @@ export default {
         background: $red;
         box-shadow: 0 15px 50px rgba($red, 0.1), 0 10px 15px rgba($red, 0.16);
       }
+    }
+  }
+  &--active {
+    background: linear-gradient(
+      90deg,
+      #fad0c466 0%,
+      #fad0c466 1%,
+      #ffd1ff66 100%
+    );
+    transition: none;
+    cursor: pointer;
+    .assets-item__icon {
+      background: $dark-blue;
+      box-shadow: 0 15px 50px rgba(26, 83, 240, 0.1),
+        0 10px 15px rgba(26, 83, 240, 0.16);
     }
   }
 }

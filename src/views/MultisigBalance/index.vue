@@ -266,7 +266,7 @@
             v-model:txComment="txComment"
             :show-from="false"
             :wallet="signerWallet || mergeWallet"
-            :tx-hash="[successTx]"
+            :tx-hash="successTx"
             :fee="preparePrivateClaim?.fee"
             type="transfer"
           />
@@ -430,7 +430,9 @@ export default {
     };
 
     const confirmClaim = async () => {
+      console.log('signerWallet.value', signerWallet.value);
       if (
+        signerWallet.value.type === WALLET_TYPES.PUBLIC_KEY &&
         selectedAddress.value &&
         selectedAddress.value.toLowerCase() ===
           metamaskConnector.value.accounts[0]?.toLowerCase()
@@ -452,7 +454,7 @@ export default {
           });
           showClaimModal.value = false;
           showSuccessModal.value = true;
-          successTx.value = metamaskResult.txHash;
+          successTx.value = [metamaskResult.txHash];
         }
 
         return;
@@ -506,7 +508,7 @@ export default {
       txComment.value &&
         (await store.dispatch('transactions/postTransactionNote', {
           network: 'bsc',
-          hash: successTx.value,
+          hash: successTx.value[0],
           text: txComment.value,
         }));
       txComment.value = '';

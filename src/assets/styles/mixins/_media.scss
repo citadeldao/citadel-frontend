@@ -4,14 +4,40 @@
   }
 }
 
+@mixin laptop-xl {
+  @media (min-width: 1440.98px) {
+    @content;
+  }
+}
+
 @mixin lg {
   @media (min-width: 1280px) and (max-width: 1919.98px) {
     @content;
   }
 }
 
+@mixin xs-lg {
+  @media (min-width: 1279.98px) and (max-width: 1440.98px) {
+    @content;
+  }
+}
+
+@mixin laptop-l {
+  @media (min-width: 1024.98px) and (max-width: 1440.98px) {
+    @content;
+  }
+}
+
+
+
 @mixin md {
-  @media (max-width: 1279.98px) {
+  @media (max-width: 1279.96px) {
+    @content;
+  }
+}
+
+@mixin laptop {
+  @media (max-width: 1024.98px) {
     @content;
   }
 }

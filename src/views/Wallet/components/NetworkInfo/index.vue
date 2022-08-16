@@ -23,7 +23,9 @@
           </keep-alive>
         </div>
 
-        <span>{{ currentWallet.shortName || currentWallet.name }}</span>
+        <span data-qa="current-wallet-name">
+          {{ currentWallet.shortName || currentWallet.name }}</span
+        >
       </div>
       <div class="network-info__social-toggle-wrapper">
         <!-- Ссылки на соцсети сеток для 1280 px -->
@@ -392,7 +394,10 @@ export default {
   @include md {
     padding: 16px;
   }
-
+  @include laptop {
+    padding: 20px;
+    border-radius: 8px;
+  }
   &__header {
     display: flex;
     justify-content: space-between;
@@ -612,6 +617,9 @@ export default {
     @include lg {
       margin-bottom: 12px;
     }
+    @include laptop {
+      margin-bottom: 0;
+    }
   }
 
   &__info-usd-price,
@@ -700,6 +708,7 @@ export default {
 
   &__additional-info-white-space {
     flex-grow: 1;
+    margin-bottom: 3px;
     border-bottom: 1px dashed $gainsboro;
   }
 
@@ -728,6 +737,9 @@ export default {
 
       @include lg {
         margin-bottom: 0;
+      }
+      @include laptop {
+        display: none;
       }
     }
 

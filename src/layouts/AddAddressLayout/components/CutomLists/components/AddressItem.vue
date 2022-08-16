@@ -12,9 +12,7 @@
       </keep-alive>
     </div>
     <div class="address-item__info">
-      <span class="address-item__title">
-        {{ walletName }}
-      </span>
+      <span class="address-item__title">{{ walletName }}</span>
       <div class="address-item__address">
         <span class="address-item__address-address">
           {{ address.address }}
@@ -113,6 +111,9 @@ export default {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    @include laptop {
+      width: 80%;
+    }
   }
   &__title {
     font-size: 16px;

@@ -29,7 +29,7 @@ export default class CryptoCoin {
     this.subtokenBalanceUSD = opts?.subtokenBalanceUSD || 0;
     this.balanceUSD = opts?.balanceUSD;
     this.hasTransactionComment = true;
-    this.hasSubtoken = !!opts?.config.tokens;
+    this.hasSubtoken = !!opts?.config?.tokens;
     this.hasBuy = opts?.config?.methods?.buy || false;
     this.hasExchange = opts?.config?.methods?.exchange || false;
     this.hasStake = opts?.config?.methods?.stake || false;
@@ -46,7 +46,6 @@ export default class CryptoCoin {
       frozenBalance: 'balanceTooltipInfo.frozenBalanceBalanceInfo2',
     };
     this.isCosmosNetwork = cosmosNetworks.includes(this.net);
-    this.privateKey = opts?.privateKey || null;
   }
 
   getScannerLink() {
@@ -64,7 +63,9 @@ export default class CryptoCoin {
   getPrivateKeyDecoded(password) {
     const { error, data } = citadel.decodePrivateKeyByPassword(
       this.net,
-      this.mnemonicEncoded || this.privateKeyEncoded,
+      this.mnemonicEncoded ||
+        this.privateKeyEncoded ||
+        store.getters['crypto/encodeUserMnemonic'],
       password
     );
 
@@ -289,9 +290,14 @@ export default class CryptoCoin {
 
     if (!error) {
       if (!data.enough && options.transactionType !== 'transfer') {
+        const availableBalance =
+          this?.tokenBalance?.mainBalance || this?.balance?.mainBalance;
         notify({
           type: 'warning',
-          text: t('dontHaveEnoughFounds'),
+          text:
+            availableBalance < +data.fee
+              ? t('dontHaveEnoughFoundsForFee')
+              : t('dontHaveEnoughFounds', { type: options.transactionType }),
         });
       }
 

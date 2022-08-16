@@ -37,7 +37,7 @@
           <div class="cat-page__input">
             <Input
               :id="`name-${index}`"
-              v-model="aliases[`${wallet.net}_${wallet.address}`]"
+              v-model.trim="aliases[`${wallet.net}_${wallet.address}`]"
               :label="$t('catPage.inputLabel')"
               type="text"
               :icon="inputTypeIcon"
@@ -47,7 +47,7 @@
           </div>
         </template>
       </div>
-      <PrimaryButton data-qa="Ok" @click="clickHandler">
+      <PrimaryButton :disabled="disabled" data-qa="Ok" @click="clickHandler">
         {{ $t('ok') }}
       </PrimaryButton>
     </div>
@@ -55,12 +55,14 @@
 </template>
 
 <script>
-import { reactive, markRaw } from 'vue';
+import { reactive, markRaw, ref } from 'vue';
 import { useStore } from 'vuex';
 import closeIcon from '@/assets/icons/close-icon.svg';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import Input from '@/components/UI/Input';
 import catIcon from '@/assets/icons/cat-icon.svg';
+import { INPUT_TYPE_ICON } from '@/config/newWallets';
+import { findAddressWithNet } from '@/helpers';
 
 export default {
   name: 'CatPage',
@@ -83,11 +85,12 @@ export default {
     },
     inputTypeIcon: {
       type: String,
-      default: 'oneseed-dot',
+      default: INPUT_TYPE_ICON.SEED,
     },
   },
   emits: ['close', 'buttonClick'],
   setup(props, { emit }) {
+    const disabled = ref(false);
     const store = useStore();
     const aliases = reactive({});
     const icons = reactive({});
@@ -99,6 +102,7 @@ export default {
     });
 
     const clickHandler = async () => {
+      disabled.value = true;
       await Promise.all(
         props.data.map(async (wallet) => {
           if (!aliases[`${wallet.net}_${wallet.address}`]?.length) {
@@ -106,20 +110,23 @@ export default {
           }
 
           await store.dispatch('wallets/renameWalletTitle', {
-            walletId: wallet.id,
+            walletId: findAddressWithNet(store.getters['wallets/wallets'], {
+              address: wallet.address,
+              net: wallet.net,
+            }).id,
             title: aliases[`${wallet.net}_${wallet.address}`],
           });
-/* eslint-disable */
           return true;
-        }),
+        })
       );
       // if (renamed.filter((w) => w).length) {
       //   store.dispatch('wallets/getNewWallets','lazy');
       // }
       emit('buttonClick');
+      disabled.value = false;
     };
 
-    return { aliases, clickHandler, icons };
+    return { aliases, disabled, clickHandler, icons };
   },
 };
 </script>
@@ -238,7 +245,7 @@ export default {
   &__title {
     font-size: 30px;
     line-height: 30px;
-    font-family: "Panton_Bold";
+    font-family: 'Panton_Bold';
     @include lg {
       margin-bottom: 10px;
     }
@@ -276,7 +283,7 @@ export default {
   }
 
   &__add-address {
-    font-family: "Panton_Light";
+    font-family: 'Panton_Light';
     font-size: 14px;
     line-height: 30px;
     color: $gray;
@@ -309,7 +316,7 @@ export default {
   &__address-line {
     font-size: 14px;
     line-height: 25px;
-    font-family: "Panton_Light";
+    font-family: 'Panton_Light';
   }
 
   &__input {

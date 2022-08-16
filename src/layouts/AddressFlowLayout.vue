@@ -42,8 +42,7 @@ export default {
 
         return;
       }
-
-      router.go(-1);
+      router.push({ name: 'HomePage' });
     };
 
     return {

@@ -3,78 +3,134 @@
     <Loading />
   </div>
   <div v-else class="assets">
-    <div class="assets__header">
-      <BalanceCard type="red" text="Total Assets" :value="balanceUSD" />
-      <BalanceCard
-        type="blue"
-        text="Available assets"
-        :value="balanceAvailableUSD"
-      />
+    <template
+      v-if="
+        stateCurrentWallet.balance.calculatedBalance ||
+        stateCurrentWallet.subtokenBalanceUSD ||
+        stateCurrentWallet.net === 'secret' ||
+        currentToken
+      "
+    >
+      <div class="assets__header">
+        <BalanceCard
+          type="red"
+          :text="$t('wallet.info.totalAssets')"
+          :value="balanceUSD"
+        />
+        <BalanceCard
+          type="blue"
+          :text="$t('wallet.info.availableAssets')"
+          :value="balanceAvailableUSD"
+        />
 
-      <div class="assets__search">
-        <Input
-          id="assetsSearch"
-          v-model="keyword"
-          :label="$t('searchToken')"
-          type="text"
-          icon="loop"
-          :placeholder="$t('inputToken')"
-          clearable
+        <div class="assets__search">
+          <Input
+            id="assetsSearch"
+            v-model="keyword"
+            :label="$t('searchToken')"
+            type="text"
+            icon="loop"
+            :placeholder="$t('inputToken')"
+            clearable
+          />
+        </div>
+        <div class="assets__sort">
+          <WalletFilterDropdown
+            v-model:value="filterValue"
+            relative-component="body"
+            :items="filterList"
+            input-style
+            id="assetsFilter"
+          />
+        </div>
+      </div>
+
+      <div class="assets-table">
+        <div class="assets-table__thead">
+          <div>{{ $t('asset') }}</div>
+          <div>{{ $t('balance') }}</div>
+          <div>USD {{ $t('balance') }}</div>
+          <div>{{ $t('price') }}</div>
+        </div>
+
+        <AssetsItem
+          :item="stateCurrentWallet"
+          :balance="stateCurrentWallet.balance"
+          :price="stateCurrenWalletPrice"
+          is-native-token
+          :is-active="currentWallet.net === stateCurrentWallet.net"
+          @click="setCurrentToken(stateCurrentWallet)"
+        />
+        <AssetsItem
+          v-for="(item, index) in displayData"
+          :key="`${item.name}-${index}`"
+          :balance="item.tokenBalance"
+          :price="item.tokenBalance.price.USD"
+          :item="item"
+          :is-not-linked="
+            isNotLinkedSnip20(item) &&
+            stateCurrentWallet.type !== WALLET_TYPES.KEPLR
+          "
+          :is-active="item.net === currentWallet.net"
+          @click="setCurrentToken(item)"
+        />
+
+        <Pagination
+          :total="total"
+          :current-page="currentPage"
+          :page-size="pageSize"
+          :page-sizes="pageSizes"
+          @change-page="setCurrentPage"
+          @change-page-size="setPageSize"
         />
       </div>
-      <div class="assets__sort">
-        <WalletFilterDropdown
-          v-model:value="filterValue"
-          relative-component=".assets__sort"
-          :items="filterList"
-          input-style
-          id="assetsFilter"
-        />
+      <div v-if="!displayData.length && keyword" class="assets__placeholder">
+        <searchError />
+        <span>
+          {{ $t('tokenSearchError') }}
+        </span>
       </div>
-    </div>
-
-    <div class="assets-table">
-      <div class="assets-table__thead">
-        <div>Asset</div>
-        <div>Balance</div>
-        <div>USD Balance</div>
-        <div>Price</div>
+    </template>
+    <template v-else>
+      <div class="empty__balance">
+        <h2>{{ $t('assetsStubs.title') }}</h2>
+        <h3>
+          {{ $t('assetsStubs.subtitle') }}
+        </h3>
+        <div class="cards__container">
+          <router-link to="/extensions">
+            <Card class="card-special" iconName="zeroBalanceStub">
+              <template #default>
+                <span class="card-special-title">
+                  {{ $t('assetsStubs.card1.title') }}
+                </span>
+                <span class="card-special-title-staking">
+                  {{ $t('assetsStubs.card1.action') }}
+                </span>
+                <RoundArrowButton data-qa="stake__start-staking-button" />
+              </template>
+            </Card>
+          </router-link>
+          <a
+            target="_blank"
+            href="https://medium.com/citadel-one/how-to-withdraw-cryptocurrency-from-cex-to-citadel-one-71886d084f08"
+          >
+            <Card class="card-special" iconName="zeroBalanceStub1">
+              <template #default>
+                <span class="card-special-title">
+                  {{ $t('assetsStubs.card2.title') }}
+                </span>
+                <span class="card-special-title-staking">
+                  {{ $t('assetsStubs.card2.action') }}
+                </span>
+                <RoundArrowButton data-qa="stake__start-staking-button" />
+              </template>
+            </Card>
+          </a>
+        </div>
       </div>
-      <AssetsItem
-        :item="stateCurrentWallet"
-        :balance="stateCurrentWallet.balance"
-        is-native-token
-        :is-choosen-token="!currentToken"
-        @click="setCurrentToken(stateCurrentWallet)"
-      />
-
-      <AssetsItem
-        v-for="(item, index) in displayData"
-        :key="`${item.name}-${index}`"
-        :balance="item.tokenBalance"
-        :item="item"
-        :is-not-linked="isNotLinkedSnip20(item)"
-        @click="setCurrentToken(item)"
-        :is-choosen-token="currentToken?.net === item?.net"
-      />
-
-      <Pagination
-        :total="total"
-        :current-page="currentPage"
-        :page-size="pageSize"
-        :page-sizes="pageSizes"
-        @change-page="setCurrentPage"
-        @change-page-size="setPageSize"
-      />
-    </div>
-    <div v-if="keyword && !total" class="assets__placeholder">
-      <searchError />
-      <span>
-        {{ $t('tokenSearchError') }}
-      </span>
-    </div>
+    </template>
   </div>
-
   <teleport v-if="showCreateVkModal" to="body">
     <CreateVkModal
       :address="currentWallet.address"
@@ -103,8 +159,10 @@ import redirectToWallet from '@/router/helpers/redirectToWallet';
 import { TOKEN_STANDARDS } from '@/config/walletType';
 import usePaginationWithSearch from '@/compositions/usePaginationWithSearch';
 import Pagination from '@/components/Pagination.vue';
+import RoundArrowButton from '@/components/UI/RoundArrowButton';
+import Card from '@/components/UI/Card';
 import useWallets from '@/compositions/useWallets';
-import { OUR_TOKEN } from '@/config/walletType';
+import { OUR_TOKEN, WALLET_TYPES } from '@/config/walletType';
 
 export default {
   name: 'AssetsBlock',
@@ -117,6 +175,8 @@ export default {
     BalanceCard,
     CreateVkModal,
     Pagination,
+    RoundArrowButton,
+    Card,
   },
   props: {
     currentWallet: {
@@ -154,6 +214,13 @@ export default {
     ]);
     const filterValue = ref(filterList.value[3].value);
 
+    const stateCurrenWalletPrice = computed(() => {
+      if (props.currentWallet.net === stateCurrentWallet.value.net) {
+        return store.getters['profile/rates'][props.currentWallet.net].USD;
+      }
+      return stateCurrentWallet.value.balance.price.USD;
+    });
+
     const isNotLinkedSnip20 = (token) => {
       const isSnip20 = computed(
         () => token.config.standard === TOKEN_STANDARDS.SNIP_20
@@ -163,7 +230,19 @@ export default {
     };
 
     const setCurrentToken = async (token) => {
-      if (isNotLinkedSnip20(token)) {
+      if (
+        token.net.toLowerCase() === stateCurrentWallet.value.net.toLowerCase()
+      ) {
+        store.dispatch('subtokens/setCurrentToken', null);
+        redirectToWallet({
+          wallet: store.getters['wallets/walletByAddress'](route.params),
+          root: true,
+        });
+      } else if (
+        isNotLinkedSnip20(token) &&
+        !token.linked &&
+        stateCurrentWallet.value.type !== WALLET_TYPES.KEPLR
+      ) {
         mainIsLoading.value = true;
         snip20TokenFee.value =
           (await token.getFees(token.id, token.net))?.data?.high?.fee || 0.2;
@@ -190,9 +269,15 @@ export default {
     };
 
     const filteredTokens = computed(() => {
-      const data = [...props.tokenList];
-      const byAlphabet = sortByAlphabet(data, 'code');
-      const byValue = data.sort((a, b) => a.balanceUSD - b.balanceUSD);
+      const data = [...filteredTokensList.value].sort(
+        (a, b) => isNotLinkedSnip20(b) - isNotLinkedSnip20(a)
+      );
+      const byAlphabet = sortByAlphabet(data, 'code').sort(
+        (a, b) => isNotLinkedSnip20(b) - isNotLinkedSnip20(a)
+      );
+      const byValue = data
+        .sort((a, b) => a.balanceUSD - b.balanceUSD)
+        .sort((a, b) => isNotLinkedSnip20(b) - isNotLinkedSnip20(a));
       switch (filterValue.value) {
         case 'byAlphabet':
           return byAlphabet;
@@ -206,7 +291,6 @@ export default {
           return data;
       }
     });
-
     const filteredItems = computed(() => {
       const indexXCT = filteredTokens.value.findIndex(
         (e) => e.net === OUR_TOKEN
@@ -229,24 +313,36 @@ export default {
     });
 
     const balanceUSD = computed(() => {
-      const nativeTokenBalance = stateCurrentWallet.value.balanceUSD;
-      const totalTokenBalance = props.tokenList.reduce((acc, token) => {
-        return BigNumber(acc).plus(token.balanceUSD).toNumber();
-      }, 0);
-
-      return BigNumber(nativeTokenBalance).plus(totalTokenBalance).toNumber();
+      return BigNumber(stateCurrentWallet.value.balanceUSD)
+        .plus(stateCurrentWallet.value.subtokenBalanceUSD)
+        .toNumber();
     });
 
     const balanceAvailableUSD = computed(() => {
-      return props.tokenList.reduce((acc, token) => {
-        const availableUSD = BigNumber(token.tokenBalance.mainBalance)
-          .multipliedBy(token.tokenBalance.price.USD)
-          .toNumber();
-
-        return BigNumber(acc).plus(availableUSD).toNumber();
-      }, 0);
+      const nativeTokenBalance = BigNumber(
+        stateCurrentWallet.value.balance.mainBalance
+      )
+        .multipliedBy(
+          store.getters['profile/rates'][stateCurrentWallet.value.net].USD
+        )
+        .toNumber();
+      return BigNumber(
+        props.tokenList.reduce((acc, token) => {
+          const availableUSD = BigNumber(token.tokenBalance.mainBalance)
+            .multipliedBy(token.tokenBalance.price.USD)
+            .toNumber();
+          return BigNumber(acc).plus(availableUSD).toNumber();
+        }, 0)
+      )
+        .plus(nativeTokenBalance)
+        .toNumber();
     });
-
+    const filteredTokensList = computed(() => {
+      if (!keyword.value) {
+        return props.tokenList.filter((e) => isNotLinkedSnip20(e) || e.linked);
+      }
+      return props.tokenList;
+    });
     const {
       displayData,
       currentPage,
@@ -268,24 +364,27 @@ export default {
       setCurrentPage(1);
       setPageSize(pageSizes.value[0]);
     };
-    const OUR_TOKEN_INDEX = computed(() =>
-      displayData.value.findIndex((e) => e.net === OUR_TOKEN)
-    );
 
     watch(
-      () => [props.currentWallet, props.currentToken],
-      () => {
-        clearFilters();
+      () => stateCurrentWallet.value,
+      (newVal, oldVal) => {
+        if (
+          newVal?.net.toLowerCase() !== oldVal?.net.toLowerCase() ||
+          newVal?.address.toLowerCase() !== oldVal?.address.toLowerCase()
+        )
+          clearFilters();
       }
     );
     return {
+      TOKEN_STANDARDS,
+      filteredTokensList,
       OUR_TOKEN,
-      OUR_TOKEN_INDEX,
       setCurrentToken,
       setMainToken,
       isNotLinkedSnip20,
       closeCreateVkModal,
       stateCurrentWallet,
+      stateCurrenWalletPrice,
       keyword,
       filterValue,
       filteredTokens,
@@ -302,12 +401,71 @@ export default {
       snip20Token,
       balanceUSD,
       balanceAvailableUSD,
+      WALLET_TYPES,
     };
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.cards__container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  a {
+    text-decoration: none;
+    max-width: 359px;
+    width: 100%;
+    &:first-child {
+      margin-right: 3%;
+    }
+    &:last-child {
+      margin-left: 3%;
+    }
+    @media (max-width: 1400px) {
+      max-width: 260px;
+    }
+  }
+  & .card {
+    position: relative;
+    max-width: 359px;
+    width: 100%;
+    height: 300px;
+    transition: none;
+    &:hover {
+      background: linear-gradient(90deg, #f1f0ff 0%, #e3f6ff 100%);
+    }
+    color: initial;
+    img {
+      right: 0;
+      left: 0;
+      bottom: 0;
+      border-radius: 16px;
+    }
+    @media (max-width: 1400px) {
+      max-width: 260px;
+      width: 100%;
+      height: 220px;
+      &-special {
+        padding: 22px 0 0 22px;
+      }
+      & .round-arrow-button {
+        top: 46px !important;
+        right: 20px !important;
+      }
+      & .round-arrow-button__icon {
+        margin-right: -41px;
+        margin-top: -19px;
+        top: -16px;
+      }
+    }
+    @media (max-width: 1280px) {
+      & .round-arrow-button {
+        right: 35px !important;
+      }
+    }
+  }
+}
 .assets {
   width: 100%;
   display: flex;
@@ -320,6 +478,7 @@ export default {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    text-transform: capitalize;
 
     & > * {
       flex-grow: 1;
@@ -387,13 +546,14 @@ export default {
       font-size: 18px;
       text-align: left;
       color: $mid-blue;
+      text-transform: capitalize;
 
       @include lg {
-        font-size: 16px;
+        font-size: $wallet-assets-heading-font-size;
       }
 
       @include md {
-        font-size: 14px;
+        font-size: $wallet-assets-heading-font-size-md;
       }
 
       &:nth-child(1) {
@@ -411,6 +571,9 @@ export default {
 
         @include md {
           width: 22%;
+        }
+        @include laptop {
+          width: 18%;
         }
       }
     }
@@ -433,18 +596,6 @@ export default {
 .assets {
   &__search {
     .input {
-      &__clear-icon {
-        bottom: 19px;
-
-        @include lg {
-          bottom: 15px;
-        }
-
-        @include md {
-          bottom: 14px;
-        }
-      }
-
       & > input {
         @include md {
           padding: 25px 25px 10px 36px;
@@ -485,7 +636,53 @@ export default {
         width: 56px;
         height: 56px;
       }
+      @include laptop {
+        & svg {
+          width: 22px;
+          height: 22px;
+        }
+      }
     }
+  }
+}
+.empty__balance {
+  padding: 55px 0 97px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 18px;
+  h2,
+  h3 {
+    margin: 0 auto;
+  }
+  h2 {
+    font-weight: 700;
+    font-size: 1.6666667em;
+    line-height: 1.6666667em;
+  }
+  h3 {
+    font-weight: 400;
+    font-size: 1em;
+    line-height: 1em;
+    text-align: center;
+    color: $mid-blue;
+    margin: 11px auto 42px auto;
+  }
+  @include lg {
+    font-size: 18px;
+  }
+  @include md {
+    font-size: 15px;
+  }
+}
+.card-special {
+  padding: 33px 0 0 33px;
+  &-title {
+    font-size: 18px;
+  }
+  button {
+    top: 64px;
+    right: 75px;
   }
 }
 </style>

@@ -10,11 +10,20 @@
       <div class="subscriptions__select">
         <Checkbox
           id="rewardDigest"
-          :value="profileInfo.subscribe_rewards"
+          :value="subscriptions.rewardsDigest"
           :label="$t('settings.subscriptions.rewardsDigest')"
           :info="$t('settings.subscriptions.rewardsDigestTooltip')"
-          :disabled="isRewardDisabled"
-          @change="changeSubscriptionState"
+          :disabled="isDisabled.rewardsDigest"
+          @change="changeSubscriptionState('rewardsDigest')"
+        />
+
+        <Checkbox
+          id="newsletter"
+          :value="subscriptions.newsletter"
+          :label="$t('settings.subscriptions.newsletter')"
+          :info="$t('settings.subscriptions.newsletterTooltip')"
+          :disabled="isDisabled.newsletter"
+          @change="changeSubscriptionState('newsletter')"
         />
       </div>
       <SyncExtension
@@ -42,25 +51,39 @@ export default {
   setup() {
     const store = useStore();
     const { t } = useI18n();
-    const profileInfo = computed(() => store.getters['profile/info']);
-    const isPasswordHash = computed(() => store.getters['crypto/passwordHash']);
-    const isRewardDisabled = ref(false);
+    const subscriptions = ref({
+      rewardsDigest: false,
+      newsletter: false,
+    });
 
-    const global = computed(() => window);
+    const isDisabled = ref({
+      rewardsDigest: false,
+      newsletter: false,
+    });
 
-    const changeSubscriptionState = async (newValue) => {
-      isRewardDisabled.value = true;
+    store.dispatch('subscriptions/getSubscriptions').then(() => {
+      subscriptions.value = store.getters['subscriptions/subscriptions'];
+    });
 
-      await store.dispatch('profile/changeSubscribeRewards', newValue);
+    const changeSubscriptionState = async (key) => {
+      const msg = key == 'rewardsDigest' ? 'Rewards' : 'Newsletter';
+
+      subscriptions.value[key] = !subscriptions.value[key];
+      isDisabled.value[key] = true;
+
+      await store.dispatch('subscriptions/updateSubscriptions', {
+        ...subscriptions.value,
+      });
 
       setTimeout(() => {
-        isRewardDisabled.value = false;
+        isDisabled.value[key] = false;
       }, FREEZE_DURATION);
 
-      const type = newValue ? 'success' : 'info';
-      const text = newValue
-        ? t('settings.subscriptions.addRewardsNotification')
-        : t('settings.subscriptions.removeRewardsNotification');
+      const type = subscriptions.value[key] ? 'success' : 'info';
+
+      const text = subscriptions.value[key]
+        ? t(`settings.subscriptions.add${msg}Notification`)
+        : t(`settings.subscriptions.remove${msg}Notification`);
 
       notify({
         type,
@@ -69,11 +92,14 @@ export default {
       });
     };
 
+    const global = computed(() => window);
+    const isPasswordHash = computed(() => store.getters['crypto/passwordHash']);
+
     return {
       global,
       isPasswordHash,
-      profileInfo,
-      isRewardDisabled,
+      subscriptions,
+      isDisabled,
       changeSubscriptionState,
     };
   },
@@ -82,27 +108,14 @@ export default {
 
 <style lang="scss" scoped>
 .subscriptions {
-  height: 100%;
   min-width: 150px;
-  padding: 40px 45px;
+  padding: $card-padding;
   background: $white;
   box-shadow: -10px 4px 27px rgba(0, 0, 0, 0.1);
-  border-radius: 25px;
-  @include lg {
-    padding: 30px 40px;
-  }
-  @include md {
-    box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
-    padding: 22px 29px 30px;
-  }
+  border-radius: $card-border-radius;
 
   &__title {
-    font-size: 20px;
-    line-height: 30px;
-    font-family: 'Panton_Bold';
-    @include md {
-      margin-bottom: 4px;
-    }
+    @include title-default;
   }
 
   &__sync {
@@ -110,17 +123,14 @@ export default {
   }
 
   &__desc {
-    font-size: 16px;
-    line-height: 27px;
-    color: $mid-blue;
+    @include text-default;
     margin-bottom: 16px;
-    @include lg {
-      font-size: 14px;
-      line-height: 24px;
-    }
-    @include md {
-      font-size: 14px;
-      line-height: 24px;
+  }
+  &__select {
+    display: flex;
+    flex-direction: column;
+    & > div:not(:last-child) {
+      margin-bottom: 15px;
     }
   }
 }

@@ -121,7 +121,7 @@ export class SocketManager {
 
         if (wallet) {
           notify({
-            type: tx.status === 'success' ? tx.status : 'warning',
+            type: tx && tx.status === 'success' ? tx.status : 'warning',
             text: '',
             hash: wallet.getTxUrl(wallet.id, tx.hash),
             duration: 10000,

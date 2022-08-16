@@ -63,6 +63,7 @@
         :disabled="disabled"
         :bg-color="currentWalletInfo?.claimableRewards ? '#6A4BFF' : `white`"
         :icon-fill="currentWalletInfo?.claimableRewards ? 'white' : `#6A4BFF`"
+        data-qa="Claim-rewards"
         @click="handleButtonClick"
       />
     </div>
@@ -111,8 +112,8 @@ export default {
     );
     const apy = computed(() =>
       props.isCurrentToken && props.currentWallet?.net === OUR_TOKEN
-        ? store.getters['subtokens/inflationInfoXCT'].yieldPct
-        : store.getters['profile/formatYeldByNet'](props.currentWallet.net)
+        ? +store.getters['subtokens/inflationInfoXCT'].yieldPct
+        : +store.getters['profile/formatYeldByNet'](props.currentWallet.net)
     );
     const infoModal = ref(false);
     const router = useRouter();

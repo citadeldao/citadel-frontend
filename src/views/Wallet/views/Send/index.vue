@@ -114,7 +114,13 @@
           </span>
         </div>
       </div>
-      <div v-if="!currentWallet.hideMemo" class="send__memo">
+      <div
+        v-if="
+          !currentWallet.hideMemo &&
+          !['eth', 'bsc'].includes(currentToken?.parentCoin?.net)
+        "
+        class="send__memo"
+      >
         <div class="send__memo-toggle">
           <span class="send__memo-title">
             {{ $t('memo') }}
@@ -362,7 +368,7 @@
           :amount="amount"
           :fee="fee.fee"
           type="transfer"
-          :tx-hash="[txHash]"
+          :tx-hash="txHash"
         />
       </ModalContent>
     </Modal>
@@ -1001,7 +1007,7 @@ export default {
         } else {
           showConfirmModal.value = false;
           showSuccessModal.value = true;
-          txHash.value = metamaskResult.txHash;
+          txHash.value = [metamaskResult.txHash];
         }
 
         isLoading.value = false;
@@ -1081,7 +1087,7 @@ export default {
           isLoading.value = false;
           showConfirmModal.value = false;
           showSuccessModal.value = true;
-          txHash.value = data.data.txhash;
+          txHash.value = [data.data.txhash];
         } else {
           notify({
             type: 'warning',
@@ -1149,7 +1155,7 @@ export default {
       customFee.value = 0;
       showSuccessModal.value = false;
 
-      if (txHash.value) {
+      if (txHash?.value?.[0]) {
         amount.value = '';
         txComment.value = '';
       }
@@ -1203,7 +1209,7 @@ export default {
       txComment.value &&
         (await store.dispatch('transactions/postTransactionNote', {
           network: props.currentWallet.net,
-          hash: txHash.value,
+          hash: txHash.value[0],
           text: txComment.value,
         }));
       successCloseHandler();
@@ -1314,7 +1320,7 @@ export default {
     padding: 21px 0 17px 0;
   }
   @include md {
-    padding: 19px 0 0 0;
+    padding: 19px 0 63px;
   }
 
   &__switch {
@@ -1369,6 +1375,9 @@ export default {
       flex-direction: column;
       margin-bottom: 0;
     }
+    @include laptop {
+      flex-direction: row;
+    }
   }
 
   &__autocomplete {
@@ -1390,6 +1399,9 @@ export default {
     @include md {
       width: 100%;
       margin-bottom: 23px;
+    }
+    @include laptop {
+      width: 48%;
     }
   }
 

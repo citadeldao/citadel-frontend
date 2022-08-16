@@ -8,17 +8,17 @@ import router from '@/router';
  * @param root {Boolean} - using /wallet/ tab matching
  */
 
-export default ({ wallet, token, root = false }) => {
+export default async ({ wallet, token, root = false }) => {
   const currentRoute = router.currentRoute.value;
   const hasContext = currentRoute.name !== 'Wallet';
 
   if (!wallet) {
-    router.push({ name: 'AddAddress' });
+    await router.push({ name: 'AddAddress' });
   }
 
   const routeName =
     (root && hasContext) || !hasContext ? 'WalletAssets' : currentRoute.name;
-  router.push({
+  await router.push({
     name: routeName,
     params: {
       net: wallet?.net,
