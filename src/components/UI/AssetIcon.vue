@@ -11,7 +11,7 @@
       <span>{{ iconPlaceholder[1] }}</span>
     </div>
     <img
-      v-show="!showIconPlaceholder && !isNativeToken"
+      v-if="!showIconPlaceholder && !isNativeToken"
       :key="code"
       :src="getTokenIcon(code?.toLowerCase())"
       alt=""
@@ -66,6 +66,7 @@ export default {
     watch(
       () => props.net,
       (newVal) => {
+        showIconPlaceholder.value = false;
         if (props.isNativeToken) {
           import(`@/assets/icons/networks/${newVal}.svg`).then((val) => {
             icon.value = markRaw(val.default);
