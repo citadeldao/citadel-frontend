@@ -16,7 +16,7 @@
         :checked="checked(network.id)"
         data-qa="add-address__one-seed"
         @check="onCheck"
-        @uncheck="removeItem"
+        @uncheck="prepareRemoveItem"
       />
     </div>
     <div class="select-networks__controls">
@@ -112,6 +112,19 @@ export default {
       networksAmount.value = displayData.value.length;
     };
     const { checked, addItem, removeItem, checkedItems } = useCheckItem();
+    const prepareRemoveItem = (id) => {
+      if (
+        displayData.value.find(
+          (e1) =>
+            e1.net ===
+            checkedNetYetAdded.find((e2) =>
+              e2 === e1.net && id === e1.id ? e1.net : null
+            )
+        )?.id === id
+      )
+        return removeItem(id, true);
+      removeItem(id);
+    };
     const checkedNetYetAdded = [];
     const clickHandler = () => {
       const checkedNets = checkedItems.value.map(
@@ -139,6 +152,7 @@ export default {
       for (const key in displayData.value.slice(0, 6)) {
         addItem(+displayData.value[key].id);
       }
+      showAllNetworks();
     });
     return {
       displayData,
@@ -149,6 +163,7 @@ export default {
       clickHandler,
       checkedItems,
       showAllNetworks,
+      prepareRemoveItem,
       onCheck,
       networksAmount,
     };

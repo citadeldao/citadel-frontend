@@ -49,7 +49,7 @@ import {
 import useCreateWallets from '@/compositions/useCreateWallets';
 import { WALLET_TYPES } from '../../config/walletType';
 import { useStore } from 'vuex';
-
+import { downLoadWallets } from '@/helpers/exportPrivateKeys';
 export default {
   name: 'AddToOneSeed',
   components: {
@@ -103,7 +103,9 @@ export default {
       1,
       isUserMnemonic.value ? stepsOneSeed : stepsOneSeed1
     );
-
+    const setDownloadFile = () => {
+      downLoadWallets(JSON.stringify({ mnemonic: walletOpts.mnemonic }));
+    };
     return {
       steps,
       currentStep,
@@ -114,6 +116,7 @@ export default {
       setMnemonic,
       newWallets,
       finalStep,
+      setDownloadFile,
     };
   },
 };

@@ -48,8 +48,9 @@ export default {
       icon.value = markRaw(val.default);
     });
     const clickHandler = async () => {
-      exportPrivateKeys(keyStorage.value);
       if (downloadCheck.value) {
+        exportPrivateKeys(keyStorage.value);
+
         emit('downloadedFile');
       }
       nextStep();
