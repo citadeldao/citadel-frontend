@@ -163,7 +163,6 @@ export default {
         'keplr/connectToKeplr',
         importedAddresses.value[0].key
       );
-
       const result = await Promise.all(
         await importedAddresses.value.map(async (c) => {
           setNets([c.net]);
@@ -173,7 +172,6 @@ export default {
 
           try {
             await createWallets(WALLET_TYPES.KEPLR);
-
             return true;
           } catch (err) {
             return false;
@@ -182,7 +180,7 @@ export default {
       );
 
       if (result.every((r) => r)) {
-        store.dispatch('newWallets/setNewWalletsList', importedAddresses.value);
+        store.dispatch('newWallets/setNewWalletsList', newWallets.value);
         await redirectToNewWallet();
         store.dispatch('newWallets/showModal');
         showSuccess.value = true;
@@ -196,6 +194,7 @@ export default {
       setAddress,
       setPublicKey,
       redirectToNewWallet,
+      newWallets,
     } = useCreateWallets();
 
     const cancel = () => {
