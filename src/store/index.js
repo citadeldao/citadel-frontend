@@ -18,7 +18,7 @@ import subtokens from './modules/subtokens';
 import dao from './modules/dao';
 import investors from './modules/investors';
 import ktAddresses from './modules/ktAddresses';
-
+import newWallets from './modules/newWallets';
 import metamask from './modules/metamask';
 import keplr from './modules/keplr';
 
@@ -48,5 +48,6 @@ export default createStore({
     metamask,
     keplr,
     subscriptions,
+    newWallets,
   },
 });

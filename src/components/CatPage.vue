@@ -61,6 +61,7 @@ import closeIcon from '@/assets/icons/close-icon.svg';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import Input from '@/components/UI/Input';
 import catIcon from '@/assets/icons/cat-icon.svg';
+import { INPUT_TYPE_ICON } from '@/config/newWallets';
 
 export default {
   name: 'CatPage',
@@ -83,7 +84,7 @@ export default {
     },
     inputTypeIcon: {
       type: String,
-      default: 'oneseed-dot',
+      default: INPUT_TYPE_ICON.SEED,
     },
   },
   emits: ['close', 'buttonClick'],

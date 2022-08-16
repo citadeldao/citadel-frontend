@@ -29,36 +29,22 @@
           />
         </div>
       </div>
-      <PrimaryButton class="confirm" @click="importWallets">
+      <PrimaryButton
+        :disabled="!selectedCoins.length"
+        class="confirm"
+        @click="importWallets"
+      >
         {{ $t('keplr.confirm') }}
       </PrimaryButton>
     </div>
-
-    <teleport v-if="showSuccess" to="body">
-      <Modal v-if="walletLoading">
-        <Loading />
-      </Modal>
-      <Modal v-else>
-        <CatPage
-          v-click-away="modalCloseHandler"
-          :is-metamask="true"
-          input-type-icon="keplr-dot"
-          :wallet-type-placeholder="'Citadel Keplr'"
-          :data="importedAddresses"
-          @close="modalCloseHandler"
-          @buttonClick="modalCloseHandler"
-        />
-      </Modal>
-    </teleport>
   </div>
 </template>
 
 <script>
-import CatPage from '@/components/CatPage';
 import Modal from '@/components/Modal';
 import Loading from '@/components/Loading';
 
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import notify from '@/plugins/notify';
@@ -71,6 +57,7 @@ import Header from '../AddAddress/components/Header';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import KeplrConnector from '@/models/Services/Keplr';
 import closeIcon from '@/assets/icons/close.svg';
+import { INPUT_TYPE_ICON } from '@/config/newWallets';
 
 const { t } = i18n.global;
 
@@ -78,7 +65,6 @@ export default {
   name: 'Metamask',
   components: {
     PrimaryButton,
-    CatPage,
     CoinItem,
     Modal,
     Header,
@@ -144,6 +130,7 @@ export default {
             if (!find) {
               importedAddresses.value.push({
                 address: accs[0].address,
+                pubkey: Buffer.from(accs[0].pubkey).toString('hex'),
                 net: c.net,
                 key: c.key,
               });
@@ -182,6 +169,7 @@ export default {
           setNets([c.net]);
           setType('keplr');
           setAddress(c.address);
+          setPublicKey(c.pubkey);
 
           try {
             await createWallets(WALLET_TYPES.KEPLR);
@@ -194,29 +182,32 @@ export default {
       );
 
       if (result.every((r) => r)) {
+        store.dispatch('newWallets/setNewWalletsList', importedAddresses.value);
+        await redirectToNewWallet();
+        store.dispatch('newWallets/showModal');
         showSuccess.value = true;
       }
     };
 
-    const { setNets, setType, createWallets, setAddress } = useCreateWallets();
+    const {
+      setNets,
+      setType,
+      createWallets,
+      setAddress,
+      setPublicKey,
+      redirectToNewWallet,
+    } = useCreateWallets();
 
     const cancel = () => {
       router.push('/add-address');
     };
 
-    const modalCloseHandler = () => {
-      showSuccess.value = false;
-
-      router.push({
-        name: 'WalletStake',
-        params: {
-          net: importedAddresses.value[0]?.net,
-          address: importedAddresses.value[0]?.address,
-        },
-      });
-    };
-
     onMounted(async () => {
+      store.dispatch('newWallets/setCatPageProps', {
+        inputTypeIcon: INPUT_TYPE_ICON.KEPLR,
+        walletTypePlaceholder: 'Citadel Keplr',
+      });
+      store.dispatch('newWallets/routerTo', 'WalletStake');
       if (!window.keplr) {
         notify({
           type: 'warning',
@@ -224,14 +215,15 @@ export default {
         });
       }
     });
+    onUnmounted(() => {
+      store.dispatch('newWallets/routerTo', null);
+    });
 
     return {
       showSuccess,
       chains,
       walletLoading,
-      modalCloseHandler,
       cancel,
-
       onSelectCoin,
       selectedCoins,
       importWallets,
