@@ -28,7 +28,7 @@
         </div>
       </div>
       <div class="stake-list-item__title">
-        <div>
+        <div style="display: flex">
           <span
             class="stake-list-item__title-title"
             :style="{ maxWidth: `${titleMaxWidth}px` }"
@@ -43,6 +43,7 @@
             </template>
             <template #default>
               <Label
+                v-if="item.hasOwnProperty('isActive') && !item.isActive"
                 color="#FA3B33"
                 style="align-items: center; margin-top: -6px"
               >
