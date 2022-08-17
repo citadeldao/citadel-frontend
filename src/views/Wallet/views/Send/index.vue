@@ -403,7 +403,7 @@ import { useRoute } from 'vue-router';
 import { useStore } from 'vuex';
 import useCheckPassword from '@/compositions/useCheckPassword';
 import Loading from '@/components/Loading';
-import { WALLET_TYPES } from '@/config/walletType';
+import { WALLET_TYPES, TOKEN_STANDARDS } from '@/config/walletType';
 import { screenWidths } from '@/config/sreenWidthThresholds';
 import Tooltip from '@/components/Tooltip';
 import useApi from '@/api/useApi';
@@ -616,10 +616,16 @@ export default {
           walletId: newWallet.id,
           token: route.params.token,
         });
-        const bridgeToken = itemsNetworks.value?.find(
-          (item) =>
-            item.key === props.currentWallet.net.slice(parseNetworkLength)
-        );
+
+        const bridgeToken = itemsNetworks.value?.find((item) => {
+          if (props.currentWallet.config.standard === TOKEN_STANDARDS.CW_20) {
+            return itemsNetworks.value[0];
+          } else {
+            return (
+              item.key === props.currentWallet.net.slice(parseNetworkLength)
+            );
+          }
+        });
 
         if (bridgeToken) {
           bridgeTargetNet.value = bridgeToken.key;
@@ -862,7 +868,8 @@ export default {
           // check select network in cosmosnetworks ibc token to bridge
           if (
             props.currentToken.net.slice(parseNetworkLength) !==
-            bridgeTargetNet.value
+              bridgeTargetNet.value &&
+            props.currentWallet.config.standard !== TOKEN_STANDARDS.CW_20
           ) {
             return t('messages.incorrectNetwork');
           }
