@@ -45,7 +45,7 @@
               <Label
                 v-if="item.hasOwnProperty('isActive') && !item.isActive"
                 color="#FA3B33"
-                style="align-items: center; margin-top: -6px"
+                class="label"
               >
                 {{ $t('jailed') }}
               </Label>
@@ -594,5 +594,9 @@ export default {
 
   &__right-section-share-currency {
   }
+}
+.label {
+  align-items: center;
+  margin-top: -6px;
 }
 </style>
