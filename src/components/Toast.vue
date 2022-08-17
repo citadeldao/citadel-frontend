@@ -23,7 +23,7 @@
 
 <script>
 import { markRaw, ref, computed } from 'vue';
-import closeIcon from '@/assets/icons/close-icon.svg';
+import closeIcon from '@/assets/icons/close-icon-round.svg';
 import linkIcon from '@/assets/icons/link.svg';
 import { useI18n } from 'vue-i18n';
 

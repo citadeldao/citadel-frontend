@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import closeIcon from '@/assets/icons/close-icon.svg';
+import closeIcon from '@/assets/icons/close-icon-round.svg';
 import addedIcon from '@/assets/icons/wallet-added.svg';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 

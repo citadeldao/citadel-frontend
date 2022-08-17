@@ -15,7 +15,7 @@
 
 <script>
 import { useStore } from 'vuex';
-import closeIcon from '@/assets/icons/close-icon.svg';
+import closeIcon from '@/assets/icons/close-icon-round.svg';
 import warning from '@/assets/icons/warningIcon.svg';
 import success from '@/assets/icons/success.svg';
 

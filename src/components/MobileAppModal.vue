@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import closeIcon from '@/assets/icons/close-icon.svg';
+import closeIcon from '@/assets/icons/close-icon-round.svg';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import downloadAppIcon from '@/assets/icons/downloadApp.png';
 

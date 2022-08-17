@@ -22,7 +22,7 @@
 
 <script>
 import QrcodeVue from 'qrcode.vue';
-import closeIcon from '@/assets/icons/close-icon.svg';
+import closeIcon from '@/assets/icons/close-icon-round.svg';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import copyToClipboard from '@/helpers/copyToClipboard';
 import { ref } from '@vue/reactivity';
