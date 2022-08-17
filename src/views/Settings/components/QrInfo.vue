@@ -61,7 +61,7 @@ import qrStep1 from '@/assets/icons/qr-step1.svg';
 import qrStep2 from '@/assets/icons/qr-step2.svg';
 import qrStep3 from '@/assets/icons/qr-step3.svg';
 import BackButton from '@/components/UI/BackButton';
-import closeIcon from '@/assets/icons/close-icon-round.svg';
+import closeIcon from '@/assets/icons/close-icon.svg';
 import useWallets from '@/compositions/useWallets';
 
 export default {

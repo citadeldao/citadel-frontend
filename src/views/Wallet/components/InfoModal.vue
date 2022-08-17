@@ -50,7 +50,7 @@
   </div>
 </template>
 <script>
-import closeIcon from '@/assets/icons/close-icon-round.svg';
+import closeIcon from '@/assets/icons/close-icon.svg';
 import placeholderKey from '@/assets/icons/placeholderKey.svg';
 import placeholderQuestion from '@/assets/icons/placeholderQuestion.svg';
 import PrimaryButton from '@/components/UI/PrimaryButton';

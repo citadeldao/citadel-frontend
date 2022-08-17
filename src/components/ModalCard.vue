@@ -17,7 +17,7 @@
 
 <script>
 import PrimaryButton from '@/components/UI/PrimaryButton';
-import closeIcon from '@/assets/icons/close-icon-round.svg';
+import closeIcon from '@/assets/icons/close-icon.svg';
 import { markRaw, ref } from 'vue';
 export default {
   name: 'ModalCard',
