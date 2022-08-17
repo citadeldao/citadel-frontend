@@ -57,7 +57,7 @@
 <script>
 import { reactive, markRaw } from 'vue';
 import { useStore } from 'vuex';
-import closeIcon from '@/assets/icons/close-icon-round.svg';
+import closeIcon from '@/assets/icons/close-icon.svg';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import Input from '@/components/UI/Input';
 import catIcon from '@/assets/icons/cat-icon.svg';
