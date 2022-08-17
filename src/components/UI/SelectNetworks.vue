@@ -60,6 +60,7 @@ import { useStore } from 'vuex';
 import { computed, ref } from '@vue/reactivity';
 import { onMounted } from 'vue';
 import Input from '@/components/UI/Input';
+import { netsPositionPriority } from '@/config/netsPositionPriority.js';
 export default {
   name: 'SelectNetworks',
   components: { NetworkCard, PrimaryButton, BackButton, Input },
@@ -68,6 +69,8 @@ export default {
     const store = useStore();
     const networksAmount = ref(6);
     const networksList = store.getters['networks/networksList'];
+    const wallets = store.getters['wallets/wallets'];
+
     const networks = computed(() =>
       networksList.map((network, index) => ({
         id: index,
@@ -81,31 +84,44 @@ export default {
 
     const keyword = ref('');
     const displayData = computed(() => {
-      const strictOrderedAbbrs = ['BTC', 'BNB', 'ETH', 'ATOM', 'OSMO', 'SCRT'];
-      const filterExistAbbr = networks.value.filter(
-        (e) => strictOrderedAbbrs.indexOf(e.abbr) !== -1
-      );
-      let customOrderedNets = [
-        filterExistAbbr[1],
-        filterExistAbbr[0],
-        filterExistAbbr[3],
-        filterExistAbbr[2],
-        filterExistAbbr[4],
-        filterExistAbbr[5],
-      ];
-      let filterNets = networks.value.filter(
-        (e) => strictOrderedAbbrs.indexOf(e.abbr) === -1
-      );
-      filterNets.unshift(...customOrderedNets);
+      let nets = networks.value.sort((a) => {
+        if (netsPositionPriority[a.abbr]) {
+          console.log('le');
+          return -1;
+        }
+        return 1;
+      });
+      // const strictOrderedAbbrs = ['BTC', 'BNB', 'ETH', 'ATOM', 'OSMO', 'SCRT'];
+      // const filterExistAbbr = networks.value.filter(
+      //   (e) => strictOrderedAbbrs.indexOf(e.abbr) !== -1
+      // );
+      // let customOrderedNets = [
+      //   filterExistAbbr[1],
+      //   filterExistAbbr[0],
+      //   filterExistAbbr[3],
+      //   filterExistAbbr[2],
+      //   filterExistAbbr[4],
+      //   filterExistAbbr[5],
+      // ];
+      // let filterNets = networks.value.filter(
+      //   (e) => strictOrderedAbbrs.indexOf(e.abbr) === -1
+      // );
+      // filterNets.unshift(...customOrderedNets);
       //
       if (!keyword.value) {
-        return filterNets;
+        return nets;
+        // return filterNets;
       }
-      return filterNets.filter(
+      return nets.filter(
         (item) =>
           item.title.toLowerCase().includes(keyword.value.toLowerCase()) ||
           item.abbr.toLowerCase().includes(keyword.value.toLowerCase())
       );
+      // return filterNets.filter(
+      //   (item) =>
+      //     item.title.toLowerCase().includes(keyword.value.toLowerCase()) ||
+      //     item.abbr.toLowerCase().includes(keyword.value.toLowerCase())
+      // );
     });
 
     const showAllNetworks = () => {
@@ -139,7 +155,6 @@ export default {
       addItem(e);
     };
     onMounted(() => {
-      const wallets = store.getters['wallets/wallets'];
       for (const key in displayData.value) {
         const foundItem = wallets.find(
           (e) => e.net === displayData.value[key].net

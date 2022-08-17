@@ -42,7 +42,7 @@ export default {
     const downloadCheck = ref(true);
     const icon = ref();
     const keyStorage = computed(
-      () => `user_${store.getters['profile/info']?.id}`
+      () => `user_${store.getters['profile/info'].id}`
     );
     import(`@/assets/icons/document-circle.svg`).then((val) => {
       icon.value = markRaw(val.default);

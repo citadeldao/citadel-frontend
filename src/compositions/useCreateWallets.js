@@ -14,7 +14,7 @@ import useWallets from '@/compositions/useWallets';
 export default function useCreateWallets() {
   const store = useStore();
   const { wallets } = useWallets();
-
+  // const wallets = store.getters['wallets/wallets']
   const isUserMnemonic = computed(
     () => !!store.getters['crypto/encodeUserMnemonic'],
   );
@@ -110,7 +110,7 @@ export default function useCreateWallets() {
       const newWalletsOptsList = mapWallets(walletOpts.nets[1]);
       const oldWalletsOptsList = mapWallets(walletOpts.nets[0]);
       const allWalletsList = oldWalletsOptsList.concat(newWalletsOptsList)
-      const wallets = store.getters['wallets/wallets']
+
       const allAddressList = wallets.filter(e => allWalletsList.findIndex(e2 => e2.net === e.net))
       
       if (newWalletType === WALLET_TYPES.ONE_SEED && newWalletsOptsList.length) {
