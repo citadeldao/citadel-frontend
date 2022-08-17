@@ -96,7 +96,7 @@
 </template>
 
 <script>
-import closeIcon from '@/assets/icons/close-icon.svg';
+import closeIcon from '@/assets/icons/close-icon-round.svg';
 import copy from '@/assets/icons/copy.svg';
 import info from '@/assets/icons/input/info.svg';
 import vision from '@/assets/icons/input/vision.svg';
