@@ -450,16 +450,22 @@ export default {
     line-height: 20px;
     font-family: 'Panton_Bold';
     margin-bottom: 7px;
-    max-width: 268px;
+    max-width: 400px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    @include xl {
+      max-width: 180px;
+    }
     @include xs-lg {
       max-width: 280px;
     }
     @include md {
       max-width: 200px;
       font-size: 14px;
+    }
+    @include laptop-l {
+      max-width: 16vw;
     }
   }
 
