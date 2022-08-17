@@ -67,7 +67,7 @@
 import { ref, computed } from 'vue';
 import { tokenIconPlaceholder } from '@/helpers';
 import AssetIcon from '@/components/UI/AssetIcon.vue';
-
+import { useStore } from 'vuex';
 export default {
   name: 'AssetsItem',
   components: { AssetIcon },
@@ -79,10 +79,6 @@ export default {
     balance: {
       type: [Object],
       default: () => ({}),
-    },
-    price: {
-      type: [Number, String],
-      default: 0,
     },
     isNativeToken: {
       type: Boolean,
@@ -102,8 +98,14 @@ export default {
     const iconPlaceholder = computed(() =>
       tokenIconPlaceholder(props.item.name)
     );
-
-    return { showIconPlaceholder, iconPlaceholder };
+    const store = useStore();
+    const price = computed(() => {
+      if (props.isNativeToken) {
+        return store.getters['profile/rates'][props.item.net].USD;
+      }
+      return props.item.tokenBalance.price.USD;
+    });
+    return { showIconPlaceholder, iconPlaceholder, price };
   },
 };
 </script>
