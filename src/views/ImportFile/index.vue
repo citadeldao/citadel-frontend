@@ -33,7 +33,7 @@ import { ref, computed, onMounted } from 'vue';
 import { steps as fileSteps } from '@/static/importFile';
 import { useStore } from 'vuex';
 import { WALLET_TYPES } from '@/config/walletType';
-
+import redirectToWallet from '@/router/helpers/redirectToWallet';
 export default {
   name: 'ImportFile',
   components: {
@@ -51,7 +51,7 @@ export default {
     const privateWalletsMode = ref(false); // citadel accs, when has oneseed
     const { isPasswordHash } = useCreateWallets();
     onMounted(() => {
-      store.dispatch('newWallets/setCatPageProps', {
+      store.commit('newWallets/setCatPageProps', {
         dataQa: 'add-address__existing__file',
       });
     });
@@ -107,8 +107,7 @@ export default {
     };
 
     const finalStep = async () => {
-      store.dispatch('newWallets/showModal');
-      store.dispatch('newWallets/showLoader');
+      store.commit('newWallets/setLoader', true);
       const list = backup.value.privateWallets || backup.value.wallets;
       await Promise.all(
         list.map(async (wallet) => {
@@ -133,11 +132,16 @@ export default {
         root: true,
       });
       const success = !![...newWallets.value].filter((w) => w).length;
-      store.dispatch('newWallets/hideModal');
-      store.dispatch('newWallets/hideLoader');
+      store.commit('newWallets/setModal', false);
+      store.commit('newWallets/setLoader', false);
 
       if (success) {
-        store.dispatch('newWallets/showModal');
+        store.commit('newWallets/setNewWalletsList', newWallets.value);
+        await redirectToWallet({
+          wallet: newWallets.value[0],
+          root: true,
+        });
+        store.commit('newWallets/setModal', true);
       }
       // await store.dispatch('wallets/getNewWallets','lazy');
       // store.dispatch('wallets/getNewWallets','detail');

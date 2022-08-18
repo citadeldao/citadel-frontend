@@ -55,18 +55,18 @@ export default {
     } = useCreateWallets();
     const store = useStore();
     const finalStep = (nets) => {
-      store.dispatch('newWallets/showLoader');
+      store.commit('newWallets/setLoader', true);
       setNets(nets);
       setType('oneSeed');
       const success = createWallets();
-      success.then(() => {
+      success.then(async () => {
         !isPasswordHash.value && savePassword();
         !isUserMnemonic.value && saveMnemonic();
-        store.dispatch('newWallets/setNewWalletsList', newWallets.value);
-        store.dispatch('newWallets/hideLoader');
-        store.dispatch('newWallets/showModal');
+        await redirectToNewWallet();
+        store.commit('newWallets/setNewWalletsList', newWallets.value);
+        store.commit('newWallets/setLoader', false);
+        store.commit('newWallets/setModal', true);
       });
-      store.dispatch('newWallets/hideLoader');
     };
 
     isUserMnemonic.value && redirectToNewWallet();
