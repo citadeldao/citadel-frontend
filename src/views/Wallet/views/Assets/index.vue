@@ -131,10 +131,10 @@
   </div>
   <teleport v-if="showCreateVkModal" to="body">
     <CreateVkModal
-      :address="currentWallet.address"
+      :address="stateCurrentWallet.address"
       :token="snip20Token"
       :token-fee="snip20TokenFee"
-      :current-wallet="currentWallet"
+      :current-wallet="stateCurrentWallet"
       @close="closeCreateVkModal"
     />
   </teleport>

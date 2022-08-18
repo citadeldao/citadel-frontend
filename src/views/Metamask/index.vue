@@ -89,7 +89,7 @@ export default {
       }
     }, 15000);
     onMounted(() => {
-      store.dispatch('newWallets/setCatPageProps', {
+      store.commit('newWallets/setCatPageProps', {
         inputTypeIcon: INPUT_TYPE_ICON.METAMASK,
         walletTypePlaceholder: 'Citadel Metamask',
       });
@@ -163,7 +163,7 @@ export default {
     const router = useRouter();
 
     const importWallet = async () => {
-      store.dispatch('newWallets/showLoader');
+      store.commit('newWallets/setLoader', true);
       const { network, accounts } = metamaskConnector.value;
 
       showLoader.value = true;
@@ -194,17 +194,17 @@ export default {
         // eslint-disable-next-line prefer-destructuring
         existAddressInMetamask.value = newWallets.value[0];
       } else {
-        store.dispatch(
+        store.commit(
           'newWallets/setNewWalletsList',
           [existAddressInMetamask.value] || newWallets.value
         );
-        store.dispatch('newWallets/showAlreadyAddedModal');
+        store.commit('newWallets/setAlreadyAddedModal', true);
       }
 
       await redirectToNewWallet();
-      store.dispatch('newWallets/setNewWalletsList', newWallets.value);
-      store.dispatch('newWallets/showModal');
-      store.dispatch('newWallets/hideLoader');
+      store.commit('newWallets/setNewWalletsList', newWallets.value);
+      store.commit('newWallets/setModal', true);
+      store.commit('newWallets/setLoader', false);
       importModal.value = false;
     };
 

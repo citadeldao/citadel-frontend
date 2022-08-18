@@ -204,7 +204,7 @@ export default {
     const CryptoJS = require('crypto-js');
 
     onMounted(async () => {
-      store.dispatch('newWallets/setCatPageProps', {
+      store.commit('newWallets/setCatPageProps', {
         inputTypeIcon: INPUT_TYPE_ICON.PRIVATE,
         walletTypePlaceholder: t('catPage.placeholderPrivate'),
       });
@@ -286,7 +286,7 @@ export default {
     };
 
     const onSuccessFromSyncClose = () => {
-      store.dispatch('newWallets/hideModal');
+      store.commit('newWallets/setModal', false);
       showSyncFromModal.value = false;
       emit('close');
     };
@@ -358,7 +358,7 @@ export default {
           ));
 
         if (syncResult && result.every((res) => !!res)) {
-          store.dispatch('newWallets/showModal');
+          store.commit('newWallets/setModal', true);
           syncLoading.value = false;
           password.value = '';
           importedFromWallets.value = syncResult;
