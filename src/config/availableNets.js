@@ -60,7 +60,7 @@ export const keplrNetworks = [
   { label: 'e-Money', key: 'emoney-3', net: 'emoney' },
   { label: 'Evmos', key: 'evmos_9001-2', net: 'evmos' },
   { label: 'Fetch.ai', key: 'fetchhub-3', net: 'fetch' },
-  // { label: 'Injective: injective-1', key: 'injective-1', net: 'injective' },
+  { label: 'Injective', key: 'injective-1', net: 'injective' },
   { label: 'Ki Chain', key: 'kichain-2', net: 'kichain' },
   { label: 'Lum', key: 'lum-network-1', net: 'lum' },
   { label: 'Rizon', key: 'titan-1', net: 'rizon' },
