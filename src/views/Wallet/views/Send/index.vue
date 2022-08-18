@@ -403,7 +403,7 @@ import { useRoute } from 'vue-router';
 import { useStore } from 'vuex';
 import useCheckPassword from '@/compositions/useCheckPassword';
 import Loading from '@/components/Loading';
-import { WALLET_TYPES, TOKEN_STANDARDS } from '@/config/walletType';
+import { WALLET_TYPES /* , TOKEN_STANDARDS */ } from '@/config/walletType';
 import { screenWidths } from '@/config/sreenWidthThresholds';
 import Tooltip from '@/components/Tooltip';
 import useApi from '@/api/useApi';
@@ -607,47 +607,48 @@ export default {
         net: route.params.net,
         address: route.params.address,
       });
-      const parseNetwork =
-        props.currentWallet?.parentCoin?.net || props.currentWallet.net;
-      const parseNetworkLength = parseNetwork.length + 1;
+      // const parseNetwork =
+      //   props.currentWallet?.parentCoin?.net || props.currentWallet.net;
+      // const parseNetworkLength = parseNetwork.length + 1;
 
-      if (route.params.token) {
-        itemsNetworks.value = props.currentWallet.getCrossNetworkRoutes({
-          walletId: newWallet.id,
-          token: route.params.token,
-        });
+      // if (route.params.token) {
+      //   itemsNetworks.value = props.currentWallet.getCrossNetworkRoutes({
+      //     walletId: newWallet.id,
+      //     token: route.params.token,
+      //   });
 
-        const bridgeToken = itemsNetworks.value?.find((item) => {
-          if (props.currentWallet.config.standard === TOKEN_STANDARDS.CW_20) {
-            return itemsNetworks.value[0];
-          } else {
-            return (
-              item.key === props.currentWallet.net.slice(parseNetworkLength)
-            );
-          }
-        });
+      //   // const bridgeToken = itemsNetworks.value?.find((item) => {
+      //   //   if (props.currentWallet.config.standard === TOKEN_STANDARDS.CW_20) {
+      //   //     return itemsNetworks.value[0];
+      //   //   } else {
+      //   //     return (
+      //   //       item.key === props.currentWallet.net.slice(parseNetworkLength)
+      //   //     );
+      //   //   }
+      //   // });
 
-        if (bridgeToken) {
-          bridgeTargetNet.value = bridgeToken.key;
-        } else {
-          bridgeTargetNet.value = null; // itemsNetworks.value[0].key
-          isSendToAnotherNetwork.value = false;
-        }
-      } /* if (cosmosBridgeNetworks.includes(route.params.net)) */ else {
-        itemsNetworks.value = props.currentWallet.getCrossNetworkRoutes({
-          walletId: newWallet.id,
-          token: route.params.net,
-        });
-        itemsNetworks.value = itemsNetworks.value.map((item) => {
-          return {
-            ...item,
-            label: getDecorateLabel(props.currentWallet.net, item.label),
-          };
-        });
+      //   // if (bridgeToken) {
+      //   bridgeTargetNet.value =
+      //     itemsNetworks.value && itemsNetworks.value[0]?.key;
+      //   // } else {
+      //   //   bridgeTargetNet.value = null; // itemsNetworks.value[0].key
+      //   //   isSendToAnotherNetwork.value = false;
+      //   // }
+      // } /* if (cosmosBridgeNetworks.includes(route.params.net)) */ else {
+      itemsNetworks.value = props.currentWallet.getCrossNetworkRoutes({
+        walletId: newWallet.id,
+        token: route.params.token || route.params.net,
+      });
+      itemsNetworks.value = itemsNetworks.value.map((item) => {
+        return {
+          ...item,
+          label: getDecorateLabel(props.currentWallet.net, item.label),
+        };
+      });
 
-        bridgeTargetNet.value =
-          itemsNetworks.value && itemsNetworks.value[0]?.key;
-      }
+      bridgeTargetNet.value =
+        itemsNetworks.value && itemsNetworks.value[0]?.key;
+      // }
     };
 
     setCosmosNetworkBridgeToken();
@@ -847,9 +848,9 @@ export default {
     );
 
     const networksConfig = computed(() => store.getters['networks/config']);
-    const parseNetwork =
-      props.currentWallet?.parentCoin?.net || props.currentWallet.net;
-    const parseNetworkLength = parseNetwork.length + 1;
+    // const parseNetwork =
+    //   props.currentWallet?.parentCoin?.net || props.currentWallet.net;
+    // const parseNetworkLength = parseNetwork.length + 1;
 
     const incorrectAddress = computed(() => {
       // validate if switch another network
@@ -864,16 +865,16 @@ export default {
       };
 
       if (isSendToAnotherNetwork.value) {
-        if (props.currentToken) {
-          // check select network in cosmosnetworks ibc token to bridge
-          if (
-            props.currentToken.net.slice(parseNetworkLength) !==
-              bridgeTargetNet.value &&
-            props.currentWallet.config.standard !== TOKEN_STANDARDS.CW_20
-          ) {
-            return t('messages.incorrectNetwork');
-          }
-        }
+        // if (props.currentToken) {
+        //   // check select network in cosmosnetworks ibc token to bridge
+        //   if (
+        //     props.currentToken.net.slice(parseNetworkLength) !==
+        //       bridgeTargetNet.value &&
+        //     props.currentWallet.config.standard !== TOKEN_STANDARDS.CW_20
+        //   ) {
+        //     return t('messages.incorrectNetwork');
+        //   }
+        // }
 
         return (
           toAddress.value &&
