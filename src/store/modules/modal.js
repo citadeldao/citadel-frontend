@@ -9,7 +9,7 @@ export default {
     modals: [],
   }),
   getters: {
-    isModalShown: (state) => (name) => state.modals.includes(name),
+    isShowModal: (state) => (name) => state.modals.includes(name),
   },
   mutations: {
     [types.ADD_MODAL](state, name) {

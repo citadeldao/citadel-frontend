@@ -82,7 +82,7 @@ export default {
       return regExp.test(address.value);
     });
     onMounted(() => {
-      store.dispatch('newWallets/setCatPageProps', {
+      store.commit('newWallets/setCatPageProps', {
         inputTypeIcon: INPUT_TYPE_ICON.PUBLIC,
         dataQa: 'add-address__existing__public-key',
         walletTypePlaceholder: t('catPage.placeholderPublic'),

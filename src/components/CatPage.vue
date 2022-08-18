@@ -4,7 +4,7 @@
     <div class="cat-page__content">
       <closeIcon class="cat-page__close-icon" @click="$emit('close')" />
       <div class="cat-page__section">
-        <div class="cat-page__cat-icon">
+        <div class="cat-page__cat-icon" v-if="data.length <= 1">
           <catIcon />
         </div>
         <div class="cat-page__info">
@@ -113,7 +113,7 @@ export default {
             walletId: findAddressWithNet(store.getters['wallets/wallets'], {
               address: wallet.address,
               net: wallet.net,
-            }).id,
+            })?.id,
             title: aliases[`${wallet.net}_${wallet.address}`],
           });
           return true;

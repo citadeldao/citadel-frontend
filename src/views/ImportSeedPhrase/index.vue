@@ -74,12 +74,12 @@ export default {
       setPassphrase(passphrase);
     };
     onMounted(() => {
-      store.dispatch('newWallets/setCatPageProps', {
+      store.commit('newWallets/setCatPageProps', {
         dataQa: 'add-address__existing__seed-phrase',
       });
     });
     const finalStep = async (wallet) => {
-      store.dispatch('newWallets/showLoader');
+      store.commit('newWallets/setLoader', true);
       setImportedFromSeed();
       const { data, error } = await await citadel.addCreatedWallet({
         ...wallet,
@@ -111,16 +111,16 @@ export default {
         const newWallet = newInstance;
         await store.dispatch('wallets/pushWallets', { wallets: [newWallet] });
         await redirectToNewWallet();
-        store.dispatch('newWallets/setNewWalletsList', newWallets.value);
-        store.dispatch('newWallets/hideLoader');
-        store.dispatch('newWallets/showModal');
+        store.commit('newWallets/setNewWalletsList', newWallets.value);
+        store.commit('newWallets/setLoader', false);
+        store.commit('newWallets/setModal', true);
         // await store.dispatch('wallets/getNewWallets','lazy');
         // store.dispatch('wallets/getNewWallets','detail');
       } else {
         router.push({ name: 'AddAddress' });
       }
 
-      store.dispatch('newWallets/hideLoader');
+      store.commit('newWallets/setLoader', false);
     };
 
     return {
