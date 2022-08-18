@@ -451,7 +451,6 @@ export default {
       disabledPolkadot,
       isWithoutDelegation,
     } = useStaking(props.stakeNodes, props.list);
-
     const keplrConnector = computed(
       () => store.getters['keplr/keplrConnector']
     );

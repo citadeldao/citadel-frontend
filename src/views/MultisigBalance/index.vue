@@ -266,7 +266,7 @@
             v-model:txComment="txComment"
             :show-from="false"
             :wallet="signerWallet || mergeWallet"
-            :tx-hash="[successTx]"
+            :tx-hash="successTx"
             :fee="preparePrivateClaim?.fee"
             type="transfer"
           />
@@ -453,7 +453,7 @@ export default {
           });
           showClaimModal.value = false;
           showSuccessModal.value = true;
-          successTx.value = metamaskResult.txHash;
+          successTx.value = [metamaskResult.txHash];
         }
 
         return;
@@ -507,7 +507,7 @@ export default {
       txComment.value &&
         (await store.dispatch('transactions/postTransactionNote', {
           network: 'bsc',
-          hash: successTx.value,
+          hash: successTx.value[0],
           text: txComment.value,
         }));
       txComment.value = '';
