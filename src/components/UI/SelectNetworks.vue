@@ -61,6 +61,8 @@ import { computed, ref } from '@vue/reactivity';
 import { onMounted } from 'vue';
 import Input from '@/components/UI/Input';
 import { netsPositionPriority } from '@/config/netsPositionPriority.js';
+import useWallets from '@/compositions/useWallets';
+
 export default {
   name: 'SelectNetworks',
   components: { NetworkCard, PrimaryButton, BackButton, Input },
@@ -69,7 +71,7 @@ export default {
     const store = useStore();
     const networksAmount = ref(6);
     const networksList = store.getters['networks/networksList'];
-    const wallets = store.getters['wallets/wallets'];
+    const { wallets } = useWallets();
 
     const networks = computed(() =>
       networksList.map((network, index) => ({
@@ -84,30 +86,15 @@ export default {
 
     const keyword = ref('');
     const displayData = computed(() => {
-      let nets = networks.value.sort((a) => {
-        if (netsPositionPriority[a.abbr]) {
-          console.log('le');
-          return -1;
-        }
-        return 1;
+      let preferredOrder = [
+        ...netsPositionPriority,
+        ...networks.value
+          .filter((e) => netsPositionPriority.indexOf(e.abbr) === -1)
+          .map((e) => e.abbr),
+      ];
+      let nets = networks.value.sort((a, b) => {
+        return preferredOrder.indexOf(a.abbr) - preferredOrder.indexOf(b.abbr);
       });
-      // const strictOrderedAbbrs = ['BTC', 'BNB', 'ETH', 'ATOM', 'OSMO', 'SCRT'];
-      // const filterExistAbbr = networks.value.filter(
-      //   (e) => strictOrderedAbbrs.indexOf(e.abbr) !== -1
-      // );
-      // let customOrderedNets = [
-      //   filterExistAbbr[1],
-      //   filterExistAbbr[0],
-      //   filterExistAbbr[3],
-      //   filterExistAbbr[2],
-      //   filterExistAbbr[4],
-      //   filterExistAbbr[5],
-      // ];
-      // let filterNets = networks.value.filter(
-      //   (e) => strictOrderedAbbrs.indexOf(e.abbr) === -1
-      // );
-      // filterNets.unshift(...customOrderedNets);
-      //
       if (!keyword.value) {
         return nets;
         // return filterNets;
@@ -129,16 +116,20 @@ export default {
     };
     const { checked, addItem, removeItem, checkedItems } = useCheckItem();
     const prepareRemoveItem = (id) => {
-      if (
-        displayData.value.find(
-          (e1) =>
-            e1.net ===
-            checkedNetYetAdded.find((e2) =>
-              e2 === e1.net && id === e1.id ? e1.net : null
-            )
-        )?.id === id
-      )
-        return removeItem(id, true);
+      const nonRemovableItem =
+        displayData.value.find((displayedNet) => {
+          const findedCheckedNetYetAdded = checkedNetYetAdded.find(
+            (findedCheckedNetYetAddedItem) => {
+              if (
+                findedCheckedNetYetAddedItem === displayedNet.net &&
+                id === displayedNet.id
+              )
+                return displayedNet.net;
+            }
+          );
+          displayedNet.net === findedCheckedNetYetAdded;
+        })?.id === id;
+      if (nonRemovableItem) return removeItem(id, true);
       removeItem(id);
     };
     const checkedNetYetAdded = [];
@@ -146,17 +137,17 @@ export default {
       const checkedNets = checkedItems.value.map(
         (index) => networks.value[index].net
       );
-      const checkedNetsWithoutYetAdded = checkedNets.filter(
-        (e) => checkedNetYetAdded.indexOf(e) === -1
+      const checkedNetsWithoutYetAdded = computed(() =>
+        checkedNets.filter((e) => checkedNetYetAdded.indexOf(e) === -1)
       );
-      emit('selectNets', [checkedNets, checkedNetsWithoutYetAdded]);
+      emit('selectNets', [checkedNets, checkedNetsWithoutYetAdded.value]);
     };
     const onCheck = (e) => {
       addItem(e);
     };
     onMounted(() => {
       for (const key in displayData.value) {
-        const foundItem = wallets.find(
+        const foundItem = wallets.value.find(
           (e) => e.net === displayData.value[key].net
         );
         if (foundItem) {
@@ -164,8 +155,12 @@ export default {
           checkedNetYetAdded.push(displayData.value[key].net);
         }
       }
-      for (const key in displayData.value.slice(0, 6)) {
-        addItem(+displayData.value[key].id);
+      for (const key in displayData.value.slice(
+        0,
+        netsPositionPriority.length
+      )) {
+        console.log(typeof displayData.value[key].id);
+        addItem(displayData.value[key].id);
       }
       showAllNetworks();
     });
