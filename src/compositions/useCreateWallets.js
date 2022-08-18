@@ -14,6 +14,7 @@ import useWallets from '@/compositions/useWallets';
 export default function useCreateWallets() {
   const store = useStore();
   const { wallets } = useWallets();
+
   const isUserMnemonic = computed(
     () => !!store.getters['crypto/encodeUserMnemonic'],
   );
@@ -85,38 +86,34 @@ export default function useCreateWallets() {
 
   const createWallets = async (type) => {
     const newWalletType = type || walletOpts.type;
+
     try {
       showModal.value = true;
       showLoader.value = true;
       let newWalletsList;
       let errorMessage;
-      const mapWallets = (arr) => {
-        return arr.map((net) => {
-          return {
-            address: walletOpts.address,
-            net,
-            mnemonic: walletOpts.mnemonic,
-            privateKey: walletOpts.privateKey || null,
-            derivationPath: walletOpts.derivationPath ||
-              `${models[net.toUpperCase()].getDerivationPath(net, store.getters['wallets/freePathIndex']({ net }))}`
-              || '',
-            type: newWalletType,
-            account: walletOpts.account,
-            passphrase: walletOpts.passphrase,
-          };
-        });
-      };
-      const newWalletsOptsList = mapWallets(walletOpts.nets[1]);
-      const oldWalletsOptsList = mapWallets(walletOpts.nets[0]);
-      const allWalletsList = oldWalletsOptsList.concat(newWalletsOptsList)
 
-      const allAddressList = wallets.value.filter(e => allWalletsList.findIndex(e2 => e2.net === e.net))
-      
-      if (newWalletType === WALLET_TYPES.ONE_SEED && newWalletsOptsList.length) {
+      const newWalletsOptsList = walletOpts.nets.map((net) => {
+        return {
+          address: walletOpts.address,
+          net,
+          mnemonic: walletOpts.mnemonic,
+          privateKey: walletOpts.privateKey || null,
+          derivationPath: walletOpts.derivationPath ||
+            `${models[net.toUpperCase()].getDerivationPath(net, store.getters['wallets/freePathIndex']({ net }))}`
+            || '',
+          type: newWalletType,
+          account: walletOpts.account,
+          passphrase: walletOpts.passphrase,
+        };
+      });
+
+      if (newWalletType === WALLET_TYPES.ONE_SEED) {
         const { data, error } = await citadel.addWalletCollectionByMnemonic(newWalletsOptsList);
         newWalletsList = data;
         errorMessage = error;
       }
+
       if (newWalletType === WALLET_TYPES.KEPLR) {
         const config = store.getters['networks/configByNet'](walletOpts.nets[0]);
         const { data, error } = await citadel.addCreatedWallet({
@@ -154,33 +151,31 @@ export default function useCreateWallets() {
 
         return;
       }
-      if (newWalletsList) {
-        for (const item of newWalletsList) {
-          if (item.error) {
-            notify({
-              type: 'warning',
-              text: item.error,
-            });
-          } else {
-            const newInstance = await store.dispatch('crypto/createNewWalletInstance', {
-              walletOpts: {
-                ...item,
-                importedFromSeed: walletOpts.importedFromSeed,
-              },
-              password: walletOpts.password,
-            });
-            newWallets.value.push(newInstance);
-            await store.dispatch('wallets/pushWallets', { wallets: [newInstance] });
-          }
+
+      for (const item of newWalletsList) {
+        if (item.error) {
+          notify({
+            type: 'warning',
+            text: item.error,
+          });
+        } else {
+          const newInstance = await store.dispatch('crypto/createNewWalletInstance', {
+            walletOpts: {
+              ...item,
+              importedFromSeed: walletOpts.importedFromSeed,
+            },
+            password: walletOpts.password,
+          });
+          newWallets.value.push(newInstance);
+          await store.dispatch('wallets/pushWallets', { wallets: [newInstance] });
         }
       }
 
       // await store.dispatch('wallets/getNewWallets', 'lazy');
       // store.dispatch('wallets/getNewWallets', 'detail');
-      if (!newWallets.value.length) {
-        newWallets.value = allAddressList.map((item) => {
-          return item
-        }
+      if (!newWallets.value.length && (newWalletType === WALLET_TYPES.PUBLIC_KEY || newWalletType === WALLET_TYPES.KEPLR)) {
+        newWallets.value = newWalletsOptsList.map((item) =>
+          findWalletInArray(wallets.value, { address: item.address, net: item.net })
         );
         showLoader.value = false;
         showAlreadyAddedModal.value = true;
