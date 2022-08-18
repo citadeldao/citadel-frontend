@@ -328,14 +328,20 @@ export default {
       );
       modalCloseHandler();
     };
-    const showTransactionInfo = (transaction) => {
+    const showTransactionInfo = async (transaction) => {
       currentTransaction.value = transaction;
       txComment.value = transaction.note;
       showModal.value = true;
       showTransactionInfoModal.value = true;
 
       if (props.currentWallet.hasTransactionComment) {
-        nextTick(() => document.getElementById('comment').focus());
+        await nextTick();
+        document
+          .querySelector(
+            '.transaction-info-modal-content__textarea-placeholder'
+          )
+          .click();
+        document.getElementById('comment').focus();
       }
     };
     const infoModalSubmit = async () => {
