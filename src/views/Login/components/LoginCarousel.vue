@@ -172,7 +172,7 @@ export default {
       &:hover {
         button {
           opacity: 1;
-          background-color: $blue;
+          background-color: $light-green;
 
           &::after {
             content: '';
@@ -185,7 +185,7 @@ export default {
         width: 10px;
         height: 10px;
         border-radius: 50%;
-        background-color: $too-ligth-blue;
+        background-color: $light-green;
         opacity: 1;
 
         &::after {
@@ -204,7 +204,11 @@ export default {
 
       &.is-active {
         button {
-          background-color: $dark-blue;
+          background-color: $white;
+          border: 1px solid $white;
+          padding: 3px;
+          box-sizing: border-box;
+          border-radius: 50%;
 
           &::after {
             content: '';
@@ -215,7 +219,7 @@ export default {
             width: 20px;
             height: 20px;
             transform: translate(-50%, -50%);
-            border: 1px solid $dark-blue;
+            border: 1px solid $white;
           }
         }
       }

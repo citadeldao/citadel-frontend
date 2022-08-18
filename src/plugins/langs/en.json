@@ -1,5 +1,13 @@
 {
     "login": {
+        "loginInWith": "Login in with",
+        "socialAccount": "Social account",
+        "web3wallet": "Web3 Wallet",
+        "web3TitleMenu": "Log in with Web3",
+        "web3DescriptionMenu": "Connect your Web3 wallet to enter your account",
+        "socialTitleMenu": "Log in with Social",
+        "socialDescriptionMenu": "Use your social network to enter your account",
+        "with": "With",
         "login": "Log in",
         "signup": "Sign up",
         "formInfo": "Enter your email to receive a verification code",

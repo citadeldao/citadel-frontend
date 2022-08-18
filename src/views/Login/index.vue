@@ -5,50 +5,65 @@
     </Modal>
   </transition>
   <div v-else class="login">
-    <header class="login__header">
-      <div class="login__logo">
-        <citadelLogo />
-      </div>
-    </header>
-
-    <main class="login__content">
-      <LoginCarousel v-if="!syncMode" />
-      <SyncCarousel v-else />
-
-      <div class="login__form">
-        <SyncStart v-if="showSyncBlock" @sync="sync" />
-        <template v-else>
-          <LoginForm
-            v-if="currentStep === 1 && !showSyncBlock"
-            :disabled="formDisabled"
-            @formSubmit="formSubmit"
-            @socialClick="socialClick"
-          />
-          <Verification
-            v-if="currentStep === 2 && !showSyncBlock"
-            :error="verificationError"
-            @change="onChangeVerification"
-            @verification="verification"
-            @sendVerificationCode="sendVerificationCode"
-          />
-        </template>
-        <div
-          v-if="currentStep === 1 && !showSyncBlock"
-          class="login__question"
-          @click="showEmailModal = true"
-        >
-          <div class="login__question-info">
-            <conversation />
-            <span
-              >{{ $t('login.questionText1') }} <b>{{ $t('Citadel.one') }}</b>
-              {{ $t('login.questionText2') }}</span
-            >
-          </div>
-          <RoundArrowButton />
+    <div class="left">
+      <header class="login__header">
+        <div class="login__logo">
+          <citadelLogo />
         </div>
-      </div>
-      <WhyCitadel v-if="showEmailModal" @close="showEmailModal = false" />
-    </main>
+        <LoginCarousel v-if="!syncMode" />
+        <SyncCarousel v-else />
+      </header>
+    </div>
+    <div class="right">
+      <main class="login__content">
+        <div class="login__form">
+          <SyncStart v-if="showSyncBlock" @sync="sync" />
+          <template v-else>
+            <template v-if="!walletMenuType">
+              <LoginForm
+                v-if="currentStep === 1 && !showSyncBlock"
+                :disabled="formDisabled"
+                @formSubmit="formSubmit"
+                @socialClick="socialClick"
+              >
+                <div
+                  v-if="currentStep === 1 && !showSyncBlock"
+                  class="login__question-info"
+                  @click="showEmailModal = true"
+                >
+                  <div>
+                    {{ $t('login.questionText1') }}
+                    <span class="bold">{{ $t('Citadel.one') }}</span>
+                    {{ $t('login.questionText2') }}
+                  </div>
+                </div>
+              </LoginForm>
+              <LoginMenu
+                @loginSocial="onLoginSocial"
+                @loginWeb3="onLoginWeb3"
+              />
+            </template>
+            <LoginMenuWeb3
+              v-if="walletMenuType === WALLET_MENU_TYPE.web3"
+              @cancel="walletMenuType = ''"
+            />
+            <LoginMenuSocial
+              v-if="walletMenuType === WALLET_MENU_TYPE.social"
+              @cancel="walletMenuType = ''"
+            />
+
+            <Verification
+              v-if="currentStep === 2 && !showSyncBlock"
+              :error="verificationError"
+              @change="onChangeVerification"
+              @verification="verification"
+              @sendVerificationCode="sendVerificationCode"
+            />
+          </template>
+        </div>
+        <WhyCitadel v-if="showEmailModal" @close="showEmailModal = false" />
+      </main>
+    </div>
   </div>
 </template>
 
@@ -64,7 +79,10 @@ import LoginForm from './components/LoginForm';
 import LoginCarousel from './components/LoginCarousel';
 import SyncCarousel from './components/SyncCarousel';
 import SyncStart from './components/SyncStart';
-import citadelLogo from '@/assets/icons/citadelLogo.svg';
+import LoginMenu from './components/LoginMenu';
+import LoginMenuWeb3 from './components/LoginMenuWeb3';
+import LoginMenuSocial from './components/LoginMenuSocial';
+import citadelLogo from '@/assets/icons/citadelLogoWhite.svg';
 import initPersistedstate from '@/plugins/persistedstate';
 // import { SocketManager } from '@/utils/socket';
 import { socketEventHandler } from '@/utils/socketEventHandler';
@@ -73,15 +91,16 @@ import WhyCitadel from './components/WhyCitadel';
 import redirectToWallet from '@/router/helpers/redirectToWallet';
 import { parseHash, findAddressWithNet } from '@/helpers';
 import { WALLET_TYPES } from '@/config/walletType';
-import RoundArrowButton from '@/components/UI/RoundArrowButton';
-import conversation from '@/assets/icons/conversation.svg';
+
+const WALLET_MENU_TYPE = {
+  social: 'sosical',
+  web3: 'web3',
+};
 
 export default {
   name: 'Login',
   components: {
     citadelLogo,
-    RoundArrowButton,
-    conversation,
     LoginForm,
     Verification,
     Modal,
@@ -89,6 +108,9 @@ export default {
     SyncCarousel,
     SyncStart,
     WhyCitadel,
+    LoginMenu,
+    LoginMenuWeb3,
+    LoginMenuSocial,
   },
   setup() {
     const router = useRouter();
@@ -103,6 +125,8 @@ export default {
     const showSyncBlock = ref(false);
 
     const hashInfo = ref('');
+
+    const walletMenuType = ref('');
 
     if (syncMode.value) {
       hashInfo.value = parseHash(localHashInfo);
@@ -279,7 +303,21 @@ export default {
       }
     };
 
+    const onLoginSocial = () => {
+      walletMenuType.value = WALLET_MENU_TYPE.social;
+    };
+
+    const onLoginWeb3 = () => {
+      walletMenuType.value = WALLET_MENU_TYPE.web3;
+      console.log('onLoginWeb3', walletMenuType.value);
+    };
+
     return {
+      WALLET_MENU_TYPE,
+      onLoginSocial,
+      onLoginWeb3,
+      walletMenuType,
+
       syncMode,
       showSyncBlock,
       sync,
@@ -302,18 +340,42 @@ export default {
 .login {
   position: relative;
   min-height: 100vh;
-  padding: 100px;
-  background-image: url('~@/assets/icons/login_bg.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: 50%;
+  // padding: 100px;
+  display: flex;
+  align-items: center;
+
+  .left {
+    width: 50%;
+    box-sizing: border-box;
+    background-image: url('~@/assets/icons/login_bg.png');
+    // background-color: #5030A0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .right {
+    width: 50%;
+    box-sizing: border-box;
+    background-color: #fff;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   @include lg {
-    padding: 50px;
+    // padding: 50px;
   }
 
   @include md {
-    padding: 40px;
+    // padding: 40px;
   }
 
   &::after {
@@ -347,13 +409,14 @@ export default {
 
   &__logo {
     display: flex;
-    margin-bottom: 62px;
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    transform: scale(0.9);
 
     @include lg {
-      margin-bottom: 40px;
-    }
-    @include md {
-      margin-bottom: 30px;
+      top: 20px;
+      left: 20px;
     }
 
     // & span {
@@ -403,33 +466,17 @@ export default {
     }
   }
 
-  &__question {
-    display: flex;
-    height: 80px;
-    border-radius: 16px;
-    align-items: center;
-    justify-content: space-between;
-    background: $paleturquoise;
-    padding: 0 24px 0 32px;
-    cursor: pointer;
-
-    &:hover {
-      background: $white;
-      box-shadow: 0 15px 50px rgba(80, 100, 124, 0.1),
-        0 10px 15px rgba(80, 100, 124, 0.16);
-    }
-
-    @include md {
-      padding: 0 16px 0 32px;
-    }
-  }
-
   &__question-info {
-    display: flex;
+    margin-top: -5px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    display: inline-block;
     align-items: center;
+    color: #1a53f0;
+    border-bottom: 1px dashed #1a53f0;
 
-    & svg {
-      margin-right: 15px;
+    .bold {
+      font-weight: bold;
     }
   }
 }
