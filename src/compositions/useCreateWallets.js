@@ -162,6 +162,7 @@ export default function useCreateWallets() {
           const newInstance = await store.dispatch('crypto/createNewWalletInstance', {
             walletOpts: {
               ...item,
+              mnemonic: walletOpts.mnemonic,
               importedFromSeed: walletOpts.importedFromSeed,
             },
             password: walletOpts.password,
