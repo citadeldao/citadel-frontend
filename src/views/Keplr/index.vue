@@ -44,7 +44,7 @@
 import Modal from '@/components/Modal';
 import Loading from '@/components/Loading';
 
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import notify from '@/plugins/notify';
@@ -163,7 +163,6 @@ export default {
         'keplr/connectToKeplr',
         importedAddresses.value[0].key
       );
-
       const result = await Promise.all(
         await importedAddresses.value.map(async (c) => {
           setNets([c.net]);
@@ -173,7 +172,6 @@ export default {
 
           try {
             await createWallets(WALLET_TYPES.KEPLR);
-
             return true;
           } catch (err) {
             return false;
@@ -182,9 +180,9 @@ export default {
       );
 
       if (result.every((r) => r)) {
-        store.dispatch('newWallets/setNewWalletsList', importedAddresses.value);
+        store.commit('newWallets/setNewWalletsList', newWallets.value);
         await redirectToNewWallet();
-        store.dispatch('newWallets/showModal');
+        store.commit('newWallets/setModal', true);
         showSuccess.value = true;
       }
     };
@@ -196,6 +194,7 @@ export default {
       setAddress,
       setPublicKey,
       redirectToNewWallet,
+      newWallets,
     } = useCreateWallets();
 
     const cancel = () => {
@@ -203,20 +202,16 @@ export default {
     };
 
     onMounted(async () => {
-      store.dispatch('newWallets/setCatPageProps', {
+      store.commit('newWallets/setCatPageProps', {
         inputTypeIcon: INPUT_TYPE_ICON.KEPLR,
         walletTypePlaceholder: 'Citadel Keplr',
       });
-      store.dispatch('newWallets/routerTo', 'WalletStake');
       if (!window.keplr) {
         notify({
           type: 'warning',
           text: t('keplr.notFound'),
         });
       }
-    });
-    onUnmounted(() => {
-      store.dispatch('newWallets/routerTo', null);
     });
 
     return {

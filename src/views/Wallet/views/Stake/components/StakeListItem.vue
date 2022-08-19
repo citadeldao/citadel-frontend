@@ -28,11 +28,13 @@
         </div>
       </div>
       <div class="stake-list-item__title">
-        <span
-          class="stake-list-item__title-title"
-          :style="{ maxWidth: `${titleMaxWidth}px` }"
-        >
-          {{ title }}
+        <div style="display: flex">
+          <span
+            class="stake-list-item__title-title"
+            :style="{ maxWidth: `${titleMaxWidth}px` }"
+          >
+            {{ title }}
+          </span>
           <Tooltip>
             <template #content>
               <div class="stake-list-item__tooltip">
@@ -43,12 +45,13 @@
               <Label
                 v-if="item.hasOwnProperty('isActive') && !item.isActive"
                 color="#FA3B33"
+                class="label"
               >
                 {{ $t('jailed') }}
               </Label>
             </template>
           </Tooltip>
-        </span>
+        </div>
         <div v-if="!type" class="stake-list-item__title-title-info">
           <div class="stake-list-item__title-line">
             <span class="stake-list-item__title-line-title"
@@ -441,19 +444,28 @@ export default {
   }
 
   &__title-title {
-    display: flex;
+    display: block;
     align-items: center;
     font-size: 17px;
     line-height: 20px;
     font-family: 'Panton_Bold';
     margin-bottom: 7px;
-    max-width: 268px;
+    max-width: 400px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    @include xl {
+      max-width: 180px;
+    }
+    @include xs-lg {
+      max-width: 280px;
+    }
     @include md {
       max-width: 200px;
       font-size: 14px;
+    }
+    @include laptop-l {
+      max-width: 16vw;
     }
   }
 
@@ -582,5 +594,9 @@ export default {
 
   &__right-section-share-currency {
   }
+}
+.label {
+  align-items: center;
+  margin-top: -6px;
 }
 </style>

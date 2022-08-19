@@ -5,10 +5,14 @@
       class="action-modal-content__info"
     >
       <exclamation class="action-modal-content__info-icon" />
-      <span class="action-modal-content__info-text">
-        After the confirmation of unstaking transaction, your assets will be
-        locked for <strong>{{ wallet.unstakeingPerioud || 21 }} days</strong>.
-        Unstaked assets will be depicted in the frozen balance section.
+      <span
+        class="action-modal-content__info-text"
+        v-html="
+          $t('unstaking.unstakeNote', {
+            unstakeingPerioud: wallet.unstakeingPerioud || 21,
+          })
+        "
+      >
       </span>
     </div>
     <NominatedNodes

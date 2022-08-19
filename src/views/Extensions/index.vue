@@ -863,7 +863,7 @@ export default {
         } else {
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;
-          successTx.value = metamaskResult.txHash;
+          successTx.value = [metamaskResult.txHash];
           store.dispatch('extensions/putMempoolChangeStatus', {
             hash: metamaskResult.txHash,
             mempool_id: extensionTransactionForSign.value.mem_tx_id,
@@ -1048,10 +1048,10 @@ export default {
   background-repeat: no-repeat;
   border-radius: 16px;
 
-  &__app-wrap {
-    margin-top: 35px;
-    position: relative;
-    border-radius: 20px;
+    &__app-wrap {
+      margin-top: 35px;
+      position: relative;
+      border-radius: 20px;
 
     &.fullScreen {
       width: 100%;
@@ -1071,20 +1071,20 @@ export default {
     }
   }
 
-  &__apps {
-    width: 100%;
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-    padding: 25px;
-    box-sizing: border-box;
-    z-index: 0;
-    float: left;
-    background: $white;
-    border-radius: 0 0 16px 16px;
-  }
+    &__apps {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+      padding: 25px;
+      box-sizing: border-box;
+      z-index: 0;
+      float: left;
+      background: $white;
+      border-radius: 0 0 16px 16px;
+    }
 
   .label.description {
     margin: 25px 0 0 0;
