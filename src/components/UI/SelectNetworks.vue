@@ -116,19 +116,18 @@ export default {
     };
     const { checked, addItem, removeItem, checkedItems } = useCheckItem();
     const prepareRemoveItem = (id) => {
-      const nonRemovableItem =
-        displayData.value.find((displayedNet) => {
-          const findedCheckedNetYetAdded = checkedNetYetAdded.find(
-            (findedCheckedNetYetAddedItem) => {
-              if (
-                findedCheckedNetYetAddedItem === displayedNet.net &&
-                id === displayedNet.id
-              )
-                return displayedNet.net;
-            }
-          );
-          displayedNet.net === findedCheckedNetYetAdded;
-        })?.id === id;
+      const nonRemovableItem = displayData.value.find((displayedNet) => {
+        const findedCheckedNetYetAdded = checkedNetYetAdded.find(
+          (findedCheckedNetYetAddedItem) => {
+            if (
+              findedCheckedNetYetAddedItem === displayedNet.net &&
+              id === displayedNet.id
+            )
+              return displayedNet.net;
+          }
+        );
+        return displayedNet.net === findedCheckedNetYetAdded;
+      });
       if (nonRemovableItem) return removeItem(id, true);
       removeItem(id);
     };
@@ -137,10 +136,20 @@ export default {
       const checkedNets = checkedItems.value.map(
         (index) => networks.value[index].net
       );
-      const checkedNetsWithoutYetAdded = computed(() =>
-        checkedNets.filter((e) => checkedNetYetAdded.indexOf(e) === -1)
+      const oneSeedZeroLastIndexWalletsList = wallets.value
+        .filter(
+          (e) =>
+            (e.type === 'oneSeed' &&
+              e.derivationPath[e.derivationPath.length - 1] === '0') ||
+            e.derivationPath[e.derivationPath.length - 1] === ''
+        )
+        .map((e) => e.net);
+      emit(
+        'selectNets',
+        checkedNets.filter(
+          (e) => oneSeedZeroLastIndexWalletsList.indexOf(e) === -1
+        )
       );
-      emit('selectNets', [checkedNets, checkedNetsWithoutYetAdded.value]);
     };
     const onCheck = (e) => {
       addItem(e);
