@@ -117,6 +117,7 @@ export default {
         })
         .then((wallet) => {
           customWallet.value = wallet;
+          addSingleItem(wallet.walletInstance);
           addSingleItem(wallets.value[0].walletInstance);
           isInvalid.value = false;
         })
@@ -127,7 +128,6 @@ export default {
         });
     };
     setCustomWallet();
-    // addSingleItem(wallets.value[0].walletInstance);
 
     const clickHandler = () => {
       emit('selectWallet', checkedItems.value[0]);

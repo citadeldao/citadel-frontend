@@ -58,7 +58,7 @@ export default function useCreateWallets() {
   };
 
   const setNets = (nets) => {
-    walletOpts.nets = nets[1];
+    walletOpts.nets = nets;
   };
 
   const setAddress = (address) => {
