@@ -743,55 +743,15 @@ export default {
     };
 
     const confirmClickHandler = async () => {
-      // FOR SECRET DEV
-      if (extensionTransactionForSign.value.messageScrt) {
-        const privateKey = citadel.decodePrivateKeyByPassword(
-          signerWallet.value.net,
-          signerWallet.value.privateKeyEncoded,
-          password.value
-        ).data;
-        const response = await citadel.executeContract(signerWallet.value.id, {
-          privateKey,
-          derivationPath: signerWallet.value.derivationPath,
-          ...extensionTransactionForSign.value.messageScrt,
-        });
-
-        if (response?.data) {
-          confirmModalDisabled.value = false;
-          showLedgerConnect.value = false;
-          successTx.value = response.data;
-          confirmModalDisabled.value = false;
-          confirmModalCloseHandler();
-          showSuccessModal.value = true;
-          store.dispatch('extensions/sendCustomMsg', {
-            token: currentAppInfo.value.token,
-            message: extensionsSocketTypes.messages.success,
-            type: extensionsSocketTypes.types.execute,
-          });
-        } else {
-          store.dispatch('extensions/sendCustomMsg', {
-            token: currentAppInfo.value.token,
-            message: extensionsSocketTypes.messages.failed,
-            type: extensionsSocketTypes.types.execute,
-          });
-          confirmModalDisabled.value = false;
-          showLedgerConnect.value = false;
-          confirmModalDisabled.value = false;
-          confirmModalCloseHandler();
-          notify({
-            type: 'warning',
-            text: response?.error,
-          });
-
-          return;
-        }
-        return;
-      }
-
       if (
         signerWallet.value &&
         signerWallet.value.type === WALLET_TYPES.KEPLR
       ) {
+        // FOR SECRET DEV (keplr not yet supported)
+        if (extensionTransactionForSign.value.messageScrt) {
+          return;
+        }
+
         let keplrResult;
         const signType =
           extensionTransactionForSign.value.transaction.direct &&
@@ -935,6 +895,52 @@ export default {
       let result;
 
       try {
+        // FOR SECRET DEV
+        if (extensionTransactionForSign.value.messageScrt) {
+          const response = await citadel.executeContract(
+            signerWallet.value.id,
+            {
+              privateKey:
+                password.value &&
+                signerWallet.value.getPrivateKeyDecoded(password.value),
+              proxy: false,
+              derivationPath: signerWallet.value.derivationPath,
+              ...extensionTransactionForSign.value.messageScrt,
+            }
+          );
+
+          if (response?.data) {
+            confirmModalDisabled.value = false;
+            showLedgerConnect.value = false;
+            successTx.value = response.data;
+            confirmModalDisabled.value = false;
+            confirmModalCloseHandler();
+            showSuccessModal.value = true;
+            store.dispatch('extensions/sendCustomMsg', {
+              token: currentAppInfo.value.token,
+              message: extensionsSocketTypes.messages.success,
+              type: extensionsSocketTypes.types.execute,
+            });
+          } else {
+            store.dispatch('extensions/sendCustomMsg', {
+              token: currentAppInfo.value.token,
+              message: extensionsSocketTypes.messages.failed,
+              type: extensionsSocketTypes.types.execute,
+            });
+            confirmModalDisabled.value = false;
+            showLedgerConnect.value = false;
+            confirmModalDisabled.value = false;
+            confirmModalCloseHandler();
+            notify({
+              type: 'warning',
+              text: response?.error,
+            });
+
+            return;
+          }
+          return;
+        }
+
         result = await signerWallet.value.signAndSendTransfer({
           walletId: signerWallet.value.id,
           rawTransaction: extensionTransactionForSign.value,
