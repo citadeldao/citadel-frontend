@@ -659,7 +659,7 @@
             "removeRewardsNotification": "您已取消订阅奖励邮件通知",
             "rewardsDigestTooltip": "您的累积奖励、可领取的代币和可质押资产每两周更新一次",
             "newsletter": "新闻",
-            "newsletterTooltip": "-",
+            "newsletterTooltip": "",
             "addNewsletterNotification": "您已经订阅新闻通知",
             "removeNewsletterNotification": "您已取消订阅新闻通知"
         },
