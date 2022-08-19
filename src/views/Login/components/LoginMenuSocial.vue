@@ -6,7 +6,7 @@
     <span class="login-menu-web3__info">
       {{ $t('login.socialDescriptionMenu') }}
     </span>
-    <div class="login-menu-web3__item">
+    <div class="login-menu-web3__item" @click="$emit('loginWith', 'apple')">
       <div class="icon">
         <appleSvg />
       </div>
@@ -14,7 +14,7 @@
         <div class="description">{{ $t('login.with') }} Apple</div>
       </div>
     </div>
-    <div class="login-menu-web3__item">
+    <div class="login-menu-web3__item" @click="$emit('loginWith', 'google')">
       <div class="icon">
         <googleSvg />
       </div>
@@ -22,7 +22,7 @@
         <div class="description">{{ $t('login.with') }} Google</div>
       </div>
     </div>
-    <div class="login-menu-web3__item">
+    <div class="login-menu-web3__item" @click="$emit('loginWith', 'in')">
       <div class="icon">
         <inSvg />
       </div>

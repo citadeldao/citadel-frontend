@@ -44,12 +44,26 @@
               />
             </template>
             <LoginMenuWeb3
-              v-if="walletMenuType === WALLET_MENU_TYPE.web3"
+              v-if="!loginWith && walletMenuType === WALLET_MENU_TYPE.web3"
+              @loginWith="onLoginWith"
               @cancel="walletMenuType = ''"
             />
             <LoginMenuSocial
-              v-if="walletMenuType === WALLET_MENU_TYPE.social"
+              v-if="!loginWith && walletMenuType === WALLET_MENU_TYPE.social"
+              @loginWith="onLoginWith"
               @cancel="walletMenuType = ''"
+            />
+            <DisclaimerContinueWithEmail
+              v-if="!connectedToWeb3 && loginWith"
+              @useEmail="onUseEmail"
+              @continue="continueLogin"
+            />
+            <DisclaimerApproveWeb3
+              :is-metamask="loginWith === 'metamask'"
+              @cancel="onApproveCancel"
+              v-if="
+                connectedToWeb3 && ['metamask', 'keplr'].includes(loginWith)
+              "
             />
 
             <Verification
@@ -82,6 +96,8 @@ import SyncStart from './components/SyncStart';
 import LoginMenu from './components/LoginMenu';
 import LoginMenuWeb3 from './components/LoginMenuWeb3';
 import LoginMenuSocial from './components/LoginMenuSocial';
+import DisclaimerContinueWithEmail from './components/DisclaimerContinueWithEmail';
+import DisclaimerApproveWeb3 from './components/DisclaimerApproveWeb3';
 import citadelLogo from '@/assets/icons/citadelLogoWhite.svg';
 import initPersistedstate from '@/plugins/persistedstate';
 // import { SocketManager } from '@/utils/socket';
@@ -111,6 +127,8 @@ export default {
     LoginMenu,
     LoginMenuWeb3,
     LoginMenuSocial,
+    DisclaimerContinueWithEmail,
+    DisclaimerApproveWeb3,
   },
   setup() {
     const router = useRouter();
@@ -127,6 +145,8 @@ export default {
     const hashInfo = ref('');
 
     const walletMenuType = ref('');
+    const loginWith = ref('');
+    const connectedToWeb3 = ref(false);
 
     if (syncMode.value) {
       hashInfo.value = parseHash(localHashInfo);
@@ -312,11 +332,36 @@ export default {
       console.log('onLoginWeb3', walletMenuType.value);
     };
 
+    const onLoginWith = (type) => {
+      loginWith.value = type;
+    };
+
+    const onUseEmail = () => {
+      walletMenuType.value = '';
+      loginWith.value = '';
+    };
+
+    const continueLogin = () => {
+      connectedToWeb3.value = true;
+    };
+
+    const onApproveCancel = () => {
+      walletMenuType.value = '';
+      loginWith.value = '';
+      connectedToWeb3.value = false;
+    };
+
     return {
       WALLET_MENU_TYPE,
       onLoginSocial,
       onLoginWeb3,
       walletMenuType,
+      onLoginWith,
+      loginWith,
+      continueLogin,
+      onUseEmail,
+      connectedToWeb3,
+      onApproveCancel,
 
       syncMode,
       showSyncBlock,

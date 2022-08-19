@@ -6,7 +6,7 @@
     <span class="login-menu-web3__info">
       {{ $t('login.web3DescriptionMenu') }}
     </span>
-    <div class="login-menu-web3__item">
+    <div class="login-menu-web3__item" @click="$emit('loginWith', 'metamask')">
       <div class="icon">
         <mmSvg />
       </div>
@@ -15,7 +15,7 @@
         <div class="description">Metamask</div>
       </div>
     </div>
-    <div class="login-menu-web3__item">
+    <div class="login-menu-web3__item" @click="$emit('loginWith', 'keplr')">
       <div class="icon">
         <keplrSvg />
       </div>
