@@ -59,6 +59,7 @@
           is-native-token
           :is-active="currentWallet.net === stateCurrentWallet.net"
           @click="setCurrentToken(stateCurrentWallet)"
+          :style="{ marginBottom: !displayData.length ? '0' : '8px' }"
         />
         <AssetsItem
           v-for="(item, index) in displayData"
