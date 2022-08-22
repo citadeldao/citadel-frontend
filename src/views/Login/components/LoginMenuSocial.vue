@@ -22,7 +22,7 @@
         <div class="description">{{ $t('login.with') }} Google</div>
       </div>
     </div>
-    <div class="login-menu-web3__item" @click="$emit('loginWith', 'in')">
+    <div class="login-menu-web3__item" @click="$emit('loginWith', 'linkedin')">
       <div class="icon">
         <inSvg />
       </div>

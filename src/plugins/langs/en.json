@@ -15,6 +15,7 @@
         "approveKeplrTitle": "Approve via Keplr",
         "approveMetamaskTitle": "Approve via Metamask",
         "approveDescription": "A pop-up browser extension will appear to approve the wallet connection.",
+        "confirmAddressTitle": "Your One-Seed addresses will be added as Private key addresses because your local",
         "with": "With",
         "login": "Log in",
         "signup": "Sign up",

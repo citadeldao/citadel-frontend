@@ -119,4 +119,8 @@ export default class MetamaskConnector {
       return { error: 'Metamask sign tx error' };
     }
   }
+
+  disconnect() {
+    this.accounts = [];
+  }
 }

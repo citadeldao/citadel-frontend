@@ -68,4 +68,7 @@ export default class keplrConnector {
   }
 
   async changeNetwork() {}
+  disconnect() {
+    this.accounts = [];
+  }
 }

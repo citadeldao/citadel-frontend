@@ -62,8 +62,35 @@
               :is-metamask="loginWith === 'metamask'"
               @cancel="onApproveCancel"
               v-if="
-                connectedToWeb3 && ['metamask', 'keplr'].includes(loginWith)
+                !keplrConnector?.accounts[0] &&
+                !metamaskConnector?.accounts[0] &&
+                connectedToWeb3 &&
+                ['metamask', 'keplr'].includes(loginWith)
               "
+            />
+
+            <ConfirmWeb3Address
+              v-if="keplrConnector?.accounts[0]"
+              :is-keplr="!!keplrConnector.accounts[0].address"
+              :name="keplrNetworks[0].label"
+              :network="keplrNetworks[0].net"
+              :address="keplrConnector.accounts[0].address"
+              @cancel="onWeb3AddressCancel"
+              @confirm="onWeb3AddressConfirm"
+              @refreshKeplr="onRefreshWeb3Keplr"
+            />
+
+            <ConfirmWeb3Address
+              v-if="metamaskConnector?.accounts[0]"
+              :name="
+                metamaskConnector.network === 'bsc'
+                  ? 'Binance Smart Chain'
+                  : 'Ethereum'
+              "
+              :network="metamaskConnector.network"
+              :address="metamaskConnector.accounts[0]"
+              @cancel="onWeb3AddressCancel"
+              @confirm="onWeb3AddressConfirm"
             />
 
             <Verification
@@ -98,6 +125,7 @@ import LoginMenuWeb3 from './components/LoginMenuWeb3';
 import LoginMenuSocial from './components/LoginMenuSocial';
 import DisclaimerContinueWithEmail from './components/DisclaimerContinueWithEmail';
 import DisclaimerApproveWeb3 from './components/DisclaimerApproveWeb3';
+import ConfirmWeb3Address from './components/ConfirmWeb3Address';
 import citadelLogo from '@/assets/icons/citadelLogoWhite.svg';
 import initPersistedstate from '@/plugins/persistedstate';
 // import { SocketManager } from '@/utils/socket';
@@ -107,6 +135,7 @@ import WhyCitadel from './components/WhyCitadel';
 import redirectToWallet from '@/router/helpers/redirectToWallet';
 import { parseHash, findAddressWithNet } from '@/helpers';
 import { WALLET_TYPES } from '@/config/walletType';
+import { keplrNetworks } from '@/config/availableNets';
 
 const WALLET_MENU_TYPE = {
   social: 'sosical',
@@ -129,6 +158,7 @@ export default {
     LoginMenuSocial,
     DisclaimerContinueWithEmail,
     DisclaimerApproveWeb3,
+    ConfirmWeb3Address,
   },
   setup() {
     const router = useRouter();
@@ -147,6 +177,14 @@ export default {
     const walletMenuType = ref('');
     const loginWith = ref('');
     const connectedToWeb3 = ref(false);
+
+    const metamaskConnector = computed(
+      () => store.getters['metamask/metamaskConnector']
+    );
+
+    const keplrConnector = computed(
+      () => store.getters['keplr/keplrConnector']
+    );
 
     if (syncMode.value) {
       hashInfo.value = parseHash(localHashInfo);
@@ -329,7 +367,6 @@ export default {
 
     const onLoginWeb3 = () => {
       walletMenuType.value = WALLET_MENU_TYPE.web3;
-      console.log('onLoginWeb3', walletMenuType.value);
     };
 
     const onLoginWith = (type) => {
@@ -341,14 +378,40 @@ export default {
       loginWith.value = '';
     };
 
-    const continueLogin = () => {
-      connectedToWeb3.value = true;
+    const continueLogin = async () => {
+      if (['apple', 'google', 'linkedin'].includes(loginWith.value)) {
+        await store.dispatch('auth/loginSocial', { social: loginWith.value });
+      } else {
+        connectedToWeb3.value = true;
+
+        if (loginWith.value === 'keplr') {
+          await store.dispatch('keplr/connectToKeplr', keplrNetworks[0].key);
+        }
+
+        if (loginWith.value === 'metamask') {
+          await store.dispatch('metamask/connectToMetamask');
+        }
+      }
     };
 
     const onApproveCancel = () => {
       walletMenuType.value = '';
       loginWith.value = '';
       connectedToWeb3.value = false;
+    };
+
+    const onWeb3AddressCancel = () => {
+      connectedToWeb3.value = false;
+      keplrConnector.value.disconnect();
+      metamaskConnector.value.disconnect();
+    };
+
+    const onWeb3AddressConfirm = () => {
+      console.log('confirm');
+    };
+
+    const onRefreshWeb3Keplr = async () => {
+      await store.dispatch('keplr/connectToKeplr', keplrNetworks[1].key);
     };
 
     return {
@@ -362,6 +425,12 @@ export default {
       onUseEmail,
       connectedToWeb3,
       onApproveCancel,
+      metamaskConnector,
+      keplrConnector,
+      keplrNetworks,
+      onWeb3AddressCancel,
+      onWeb3AddressConfirm,
+      onRefreshWeb3Keplr,
 
       syncMode,
       showSyncBlock,
