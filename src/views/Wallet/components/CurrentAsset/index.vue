@@ -1,7 +1,7 @@
 <template>
   <div
     class="current-asset"
-    @click="openSelectAssetModal"
+    @click="redirectToAsset"
     @mouseover="isHovered = true"
     @mouseleave="isHovered = false"
   >
@@ -32,24 +32,6 @@
       </keep-alive>
     </span>
 
-    <teleport to="body">
-      <Modal v-if="isSelectAssetModalOpened">
-        <ModalContent
-          :title="$t('assetsModal.title')"
-          :desc="$t('assetsModal.description')"
-          @close="closeSelectAssetModal"
-        >
-          <template #default>
-            <AssetsListModal
-              :state-current-wallet="stateCurrentWallet"
-              :current-wallet="currentWallet"
-              @click="goToAsset"
-            />
-          </template>
-        </ModalContent>
-      </Modal>
-    </teleport>
-
     <teleport v-if="showCreateVkModal" to="body">
       <CreateVkModal
         :address="currentWallet.address"
@@ -64,24 +46,17 @@
 </template>
 
 <script>
-import { ref, computed, inject, markRaw } from 'vue';
-import { useStore } from 'vuex';
+import { ref, inject, markRaw } from 'vue';
 import useWallets from '@/compositions/useWallets';
-import Modal from '@/components/Modal';
-import ModalContent from '@/components/ModalContent';
 import AssetIcon from '@/components/UI/AssetIcon.vue';
 import CreateVkModal from '@/views/Wallet/components/CreateVkModal.vue';
-import AssetsListModal from './SelectAssetModal/AssetsListModal';
 import redirectToWallet from '@/router/helpers/redirectToWallet';
-import { TOKEN_STANDARDS } from '@/config/walletType';
+import { useRoute } from 'vue-router';
 
 export default {
   name: 'CurrentAsset',
   components: {
-    Modal,
-    ModalContent,
     AssetIcon,
-    AssetsListModal,
     CreateVkModal,
   },
   props: {
@@ -100,69 +75,34 @@ export default {
       icon.value = markRaw(val.default);
     });
     const { currentWallet: stateCurrentWallet } = useWallets();
-    const store = useStore();
-    const isSelectAssetModalOpened = ref(false);
     const showCreateVkModal = ref(false);
     const snip20TokenFee = ref(null);
     const snip20Token = ref(null);
     const mainIsLoading = inject('isLoading');
     const { currentWallet: wallet } = useWallets();
-
-    const isNotLinkedSnip20 = (token) => {
-      const isSnip20 = computed(
-        () => token?.config?.standard === TOKEN_STANDARDS.SNIP_20
-      );
-
-      return isSnip20?.value && !token.linked;
+    const route = useRoute();
+    const redirectToAsset = async () => {
+      await redirectToWallet({
+        wallet: route.params,
+        token: { net: route.params.token },
+        root: true,
+      });
     };
-
-    const openSelectAssetModal = () => {
-      isSelectAssetModalOpened.value = true;
-    };
-
-    const closeSelectAssetModal = () => {
-      isSelectAssetModalOpened.value = false;
-    };
-
     const closeCreateVkModal = () => {
       snip20Token.value = null;
       showCreateVkModal.value = false;
     };
 
-    const goToAsset = async (asset) => {
-      if (isNotLinkedSnip20(asset)) {
-        mainIsLoading.value = true;
-        snip20TokenFee.value =
-          (await asset.getFees(asset.id, asset.net))?.data?.high?.fee || 0.2;
-        mainIsLoading.value = false;
-        showCreateVkModal.value = true;
-        snip20Token.value = asset;
-      } else {
-        await store.dispatch('subtokens/setCurrentToken', asset);
-
-        closeSelectAssetModal();
-        if (asset)
-          redirectToWallet({
-            wallet: wallet.value,
-            token: asset,
-            root: true,
-          });
-      }
-    };
-
     return {
       icon,
       stateCurrentWallet,
-      isSelectAssetModalOpened,
       showCreateVkModal,
       snip20TokenFee,
       snip20Token,
       mainIsLoading,
       wallet,
-      openSelectAssetModal,
-      closeSelectAssetModal,
+      redirectToAsset,
       closeCreateVkModal,
-      goToAsset,
     };
   },
 };
