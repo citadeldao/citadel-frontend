@@ -116,19 +116,18 @@ export default {
     };
     const { checked, addItem, removeItem, checkedItems } = useCheckItem();
     const prepareRemoveItem = (id) => {
-      const nonRemovableItem =
-        displayData.value.find((displayedNet) => {
-          const findedCheckedNetYetAdded = checkedNetYetAdded.find(
-            (findedCheckedNetYetAddedItem) => {
-              if (
-                findedCheckedNetYetAddedItem === displayedNet.net &&
-                id === displayedNet.id
-              )
-                return displayedNet.net;
-            }
-          );
-          displayedNet.net === findedCheckedNetYetAdded;
-        })?.id === id;
+      const nonRemovableItem = displayData.value.find((displayedNet) => {
+        const findedCheckedNetYetAdded = checkedNetYetAdded.find(
+          (findedCheckedNetYetAddedItem) => {
+            if (
+              findedCheckedNetYetAddedItem === displayedNet.net &&
+              id === displayedNet.id
+            )
+              return displayedNet.net;
+          }
+        );
+        return displayedNet.net === findedCheckedNetYetAdded;
+      });
       if (nonRemovableItem) return removeItem(id, true);
       removeItem(id);
     };
