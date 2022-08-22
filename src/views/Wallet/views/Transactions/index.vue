@@ -333,16 +333,6 @@ export default {
       txComment.value = transaction.note;
       showModal.value = true;
       showTransactionInfoModal.value = true;
-
-      if (props.currentWallet.hasTransactionComment) {
-        await nextTick();
-        document
-          .querySelector(
-            '.transaction-info-modal-content__textarea-placeholder'
-          )
-          .click();
-        document.getElementById('comment').focus();
-      }
     };
     const infoModalSubmit = async () => {
       if (currentTransaction.value.note !== txComment.value) {
