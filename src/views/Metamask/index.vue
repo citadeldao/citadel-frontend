@@ -198,6 +198,7 @@ export default {
           'newWallets/setNewWalletsList',
           [existAddressInMetamask.value] || newWallets.value
         );
+        store.commit('newWallets/setLoader', false);
         store.commit('newWallets/setAlreadyAddedModal', true);
       }
 
