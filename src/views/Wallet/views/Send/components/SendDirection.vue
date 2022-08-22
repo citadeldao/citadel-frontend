@@ -84,17 +84,19 @@
         {{ wallet?.code }} {{ $t('neededResources') }}
       </span>
     </div>
-    <a
-      v-for="item in txUrl"
-      :key="item"
-      :href="item"
-      class="send-direction__line"
-      target="_blank"
-    >
-      <span class="send-direction__line-title">
+
+    <span class="send-direction__line-title">
+      <a
+        v-for="item in txUrl"
+        :key="item"
+        :href="item"
+        class="send-direction__line"
+        target="_blank"
+      >
         {{ $t('viewTranscasction')
-        }}<linkIcon class="send-direction__link-icon" /> </span
-    ></a>
+        }}<linkIcon class="send-direction__link-icon"
+      /></a>
+    </span>
   </div>
 </template>
 
@@ -228,7 +230,7 @@ export default {
     justify-content: space-between;
     margin-top: 8px;
     text-decoration: none;
-
+    color: inherit;
     & svg {
       margin-left: 10px;
     }
