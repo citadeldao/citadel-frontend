@@ -659,7 +659,7 @@
             "removeRewardsNotification": "You have unsubscribed to email rewards notifications",
             "rewardsDigestTooltip": "Biweekly updates on your accrued rewards, claimable tokens and assets to stake",
             "newsletter": "Newsletter",
-            "newsletterTooltip": "-",
+            "newsletterTooltip": "Receive essential Citadel.one events & updates monthly",
             "addNewsletterNotification": "You have subscribed to email newsletter notifications",
             "removeNewsletterNotification": "You have unsubscribed to email newsletter notifications"
         },

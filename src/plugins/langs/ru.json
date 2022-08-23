@@ -659,7 +659,7 @@
             "removeRewardsNotification": "Вы отписались от мейл-рассылки о ваших вознаграждениях за стейкинг",
             "rewardsDigestTooltip": "Двухнедельные отчеты о ваших вознаграждениях и активах, которые вы еще не застейкали",
             "newsletter": "Новостная рассылка",
-            "newsletterTooltip": "=",
+            "newsletterTooltip": "",
             "addNewsletterNotification": "Вы подписались на уведомления по электронной почте",
             "removeNewsletterNotification": "Вы отменили подписку на уведомления по электронной почте\n"
         },
