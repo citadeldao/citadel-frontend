@@ -1326,7 +1326,6 @@ export default {
   &__switch {
     width: 49.5%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     margin-right: 20px;
 
@@ -1343,6 +1342,7 @@ export default {
       font-size: 18px;
       line-height: 30px;
       font-family: 'Panton_Bold';
+      margin-right: 1.5rem;
       @include md {
         font-size: 16px;
       }
