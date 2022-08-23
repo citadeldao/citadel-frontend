@@ -19,7 +19,7 @@ export default class CryptoCoin {
     this.name = opts?.config?.name;
     this.code = opts?.config?.code;
     this.address = opts?.address;
-    this.mnemonicEncoded = opts?.mnemonicEncoded || null;
+    // this.mnemonicEncoded = opts?.mnemonicEncoded || null;
     this.privateKeyEncoded = opts?.privateKeyEncoded || null;
     this.publicKey = opts?.publicKey || null;
     this.derivationPath = opts?.derivationPath;

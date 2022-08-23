@@ -47,14 +47,14 @@ export default {
     };
     const { newWallets, redirectToNewWallet } = useCreateWallets();
     onMounted(() => {
-      store.dispatch('newWallets/setCatPageProps', {
+      store.commit('newWallets/setCatPageProps', {
         inputTypeIcon: INPUT_TYPE_ICON.HARDWARE,
         walletTypePlaceholder: t('catPage.placeholderHardware'),
       });
     });
 
     const addWallet = async (wallet) => {
-      store.dispatch('newWallets/showLoader');
+      store.commit('newWallets/setLoader', true);
       const { newWalletInstance, error } = await store.dispatch(
         'crypto/addHardwareWalletToAccount',
         { wallet }
@@ -65,16 +65,16 @@ export default {
         const newWallet = newWalletInstance;
         await store.dispatch('wallets/pushWallets', { wallets: [newWallet] });
         await redirectToNewWallet();
-        store.dispatch('newWallets/setNewWalletsList', newWallets.value);
-        store.dispatch('newWallets/showModal');
-        store.dispatch('newWallets/hideLoader');
+        store.commit('newWallets/setNewWalletsList', newWallets.value);
+        store.commit('newWallets/setModal', true);
+        store.commit('newWallets/setLoader', false);
         // await store.dispatch('wallets/getNewWallets','lazy');
         // store.dispatch('wallets/getNewWallets','detail');
       } else {
         router.push({ name: 'AddAddress' });
       }
 
-      store.dispatch('newWallets/hideLoader');
+      store.commit('newWallets/setLoader', false);
     };
 
     return {
