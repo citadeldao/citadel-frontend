@@ -162,6 +162,7 @@ export default function useCreateWallets() {
           const newInstance = await store.dispatch('crypto/createNewWalletInstance', {
             walletOpts: {
               ...item,
+              mnemonic: walletOpts.mnemonic,
               importedFromSeed: walletOpts.importedFromSeed,
             },
             password: walletOpts.password,
@@ -186,7 +187,6 @@ export default function useCreateWallets() {
       const success = !![...newWallets.value].filter((w) => w).length;
       showModal.value = false;
       showLoader.value = false;
-
       if (success) {
         showModal.value = true;
       }
@@ -199,8 +199,8 @@ export default function useCreateWallets() {
   };
 
   const router = useRouter();
-  const redirectToNewWallet = () => {
-    redirectToWallet({
+  const redirectToNewWallet = async () => {
+    await redirectToWallet({
       wallet: newWallets.value[0],
       root: true,
     });

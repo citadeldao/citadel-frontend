@@ -10,11 +10,17 @@
       <MobileAppModal @close="isClosed = true" />
     </Modal>
   </teleport>
+  <teleport v-if="newWalletsModalShow" to="body">
+    <Modal>
+      <NewWalletsModal data-qa="" />
+    </Modal>
+  </teleport>
 </template>
 
 <script>
 import Modal from '@/components/Modal';
 import MobileAppModal from './components/MobileAppModal';
+import NewWalletsModal from '@/components/Modals/NewWallets';
 import { computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import Toasts from '@/components/Toasts.vue';
@@ -30,6 +36,7 @@ export default {
     AppLayout,
     MobileAppModal,
     Modal,
+    NewWalletsModal,
   },
   setup() {
     const isClosed = ref(false);
@@ -38,12 +45,21 @@ export default {
     const showModal = computed(
       () => !!(width.value < screenWidths.md && !isClosed.value && isMobile)
     );
-
+    const newWalletsModalShow = computed(
+      () =>
+        store.getters['newWallets/isShowModal'] ||
+        store.getters['newWallets/isShowLoader'] ||
+        store.getters['newWallets/isShowAlreadyAddedModal']
+    );
     onMounted(() => {
       store.dispatch('i18n/init');
     });
 
-    return { showModal, isClosed };
+    return {
+      showModal,
+      newWalletsModalShow,
+      isClosed,
+    };
   },
 };
 </script>

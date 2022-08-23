@@ -18,7 +18,7 @@
             v-model:txComment="txComment"
             :show-from="false"
             :wallet="signerWallet || metamaskSigner"
-            :tx-hash="[successTx]"
+            :tx-hash="successTx"
             :fee="extensionTransactionForSign?.fee"
             :type="extensionTransactionForSign?.type"
           />
@@ -378,7 +378,7 @@ export default {
       txComment.value &&
         (await store.dispatch('transactions/postTransactionNote', {
           network: currentApp.value.networks[0],
-          hash: successTx.value,
+          hash: successTx.value[0],
           text: txComment.value,
         }));
       txComment.value = '';
@@ -820,7 +820,7 @@ export default {
         if (data.ok) {
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;
-          successTx.value = data.data.txhash;
+          successTx.value = [data.data.txhash];
           confirmModalDisabled.value = false;
           confirmModalCloseHandler();
           showSuccessModal.value = true;
@@ -857,7 +857,11 @@ export default {
         } else {
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;
-          successTx.value = metamaskResult.txHash;
+          successTx.value = [metamaskResult.txHash];
+          store.dispatch('extensions/putMempoolChangeStatus', {
+            hash: metamaskResult.txHash,
+            mempool_id: extensionTransactionForSign.value.mem_tx_id,
+          });
           confirmModalDisabled.value = false;
           confirmModalCloseHandler();
           showSuccessModal.value = true;
@@ -896,8 +900,8 @@ export default {
         });
 
         if (
-          typeof result.data === 'string' &&
-          [64, 66].includes(result.data.length)
+          typeof result.data[0] === 'string' &&
+          [64, 66].includes(result.data[0].length)
         ) {
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;
@@ -981,6 +985,9 @@ export default {
 </script>
 <style lang="scss" scoped>
   .extensions {
+    max-width: 1628px;
+    width: 100%;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -993,13 +1000,13 @@ export default {
 
     &__app-wrap {
       margin-top: 35px;
-      position: relative;      
+      position: relative;
       border-radius: 20px;
 
       &.fullScreen {
         width: 100%;
         box-sizing: border-box;
-        padding: 0 35px;
+        // padding: 0 35px;
       }
 
       .close-icon {

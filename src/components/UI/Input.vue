@@ -96,7 +96,7 @@
 </template>
 
 <script>
-import closeIcon from '@/assets/icons/close-icon.svg';
+import closeIcon from '@/assets/icons/close-icon-round.svg';
 import copy from '@/assets/icons/copy.svg';
 import info from '@/assets/icons/input/info.svg';
 import vision from '@/assets/icons/input/vision.svg';
@@ -470,7 +470,6 @@ export default {
   }
 
   &__visibility-icon,
-  &__clear-icon,
   &__copy {
     right: 17px;
     bottom: 14px;
@@ -485,25 +484,29 @@ export default {
   }
 
   &__clear-icon {
-    width: 16px;
-    height: 16px;
+    position: absolute;
     bottom: 17px;
+    right: 17px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: $round;
-    background: $mid-blue;
-
-    &:hover {
-      background: $red;
+    @include lg {
+      bottom: 14px;
+    }
+    @include xs-lg {
+      bottom: 13px;
+    }
+    @include md {
+      bottom: 13px;
     }
 
     & svg {
-      position: absolute;
+      cursor: pointer;
       bottom: 3px !important;
-      width: 9px;
-      height: 9px;
-      fill: $white;
+      fill: $mid-blue;
+      &:hover {
+        fill: $red;
+      }
     }
   }
 

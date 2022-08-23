@@ -239,6 +239,7 @@ export default {
         isDataLoading.value = true;
         await store.dispatch('dao/getActivity');
         await store.dispatch('dao/getHolderInfo', props.currentWallet.id);
+        await store.dispatch('dao/getRewardsXCT', props.currentWallet.id);
         await store.dispatch(
           'dao/getUnassignedAddresses',
           props.currentWallet.id

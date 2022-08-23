@@ -120,7 +120,7 @@ export default {
     );
     const activeList = computed(() => store.getters['wallets/activeList']);
     const showModal = computed(() =>
-      store.getters['modal/isModalShown'](CUSTOM_LIST_MODAL)
+      store.getters['modal/isShowModal'](CUSTOM_LIST_MODAL)
     );
 
     const createList = () => {

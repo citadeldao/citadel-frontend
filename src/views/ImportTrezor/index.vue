@@ -11,20 +11,6 @@
         @selectWallet="addWallet"
       />
     </div>
-    <teleport v-if="showModal" to="body">
-      <Modal>
-        <img v-if="showLoader" src="@/assets/gif/loader.gif" alt="" />
-        <CatPage
-          v-else
-          v-click-away="modalClickHandler"
-          :data="newWallets"
-          :wallet-type-placeholder="$t('catPage.placeholderHardware')"
-          input-type-icon="hardware-dot"
-          @close="modalCloseHandler"
-          @buttonClick="modalCloseHandler"
-        />
-      </Modal>
-    </teleport>
   </div>
 </template>
 
@@ -33,20 +19,18 @@ import Header from '../AddAddress/components/Header';
 import ImportHardwareWallet from './components/ImportHardwareWallet';
 import ConnectDevice from './components/ConnectDevice';
 import ChooseDerivationPath from './components/ChooseDerivationPath';
-import CatPage from '@/components/CatPage';
 import useCurrentStep from '@/compositions/useCurrentStep';
-import Modal from '@/components/Modal';
-import { provide, ref } from 'vue';
+import { provide, ref, onMounted } from 'vue';
 import { steps as trezorSteps } from '@/static/importTrezor';
 import useCreateWallets from '@/compositions/useCreateWallets';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+import { INPUT_TYPE_ICON } from '@/config/newWallets';
 
 export default {
   name: 'ImportTrezor',
   components: {
-    CatPage,
-    Modal,
     Header,
     ImportHardwareWallet,
     ConnectDevice,
@@ -63,21 +47,20 @@ export default {
 
     const { currentStep, steps } = useCurrentStep(2, trezorSteps);
 
-    const showModal = ref(false);
-    const showLoader = ref(false);
-
     const net = ref('');
     const setNet = (n) => {
       net.value = n;
     };
     const { newWallets, redirectToNewWallet } = useCreateWallets();
-    const modalCloseHandler = () => {
-      redirectToNewWallet();
-      showModal.value = false;
-    };
+    const { t } = useI18n();
+    onMounted(() => {
+      store.commit('newWallets/setCatPageProps', {
+        inputTypeIcon: INPUT_TYPE_ICON.HARDWARE,
+        walletTypePlaceholder: t('catPage.placeholderHardware'),
+      });
+    });
     const addWallet = async (wallet) => {
-      showModal.value = true;
-      showLoader.value = true;
+      store.commit('newWallets/setLoader', true);
 
       const { newWalletInstance, error } = await store.dispatch(
         'crypto/addHardwareWalletToAccount',
@@ -87,26 +70,26 @@ export default {
       if (!error) {
         newWallets.value = [newWalletInstance];
         const newWallet = newWalletInstance;
-
         await store.dispatch('wallets/pushWallets', { wallets: [newWallet] });
+        await redirectToNewWallet();
+        store.commit('newWallets/setNewWalletsList', newWallets.value);
+        store.commit('newWallets/setModal', true);
+        store.commit('newWallets/setLoader', false);
         // await store.dispatch('wallets/getNewWallets','lazy');
         // store.dispatch('wallets/getNewWallets','detail');
       } else {
         router.push({ name: 'AddAddress' });
       }
 
-      showLoader.value = false;
+      store.commit('newWallets/setLoader', false);
     };
 
     return {
       steps,
       currentStep,
-      showModal,
-      modalCloseHandler,
       setNet,
       net,
       addWallet,
-      showLoader,
       newWallets,
     };
   },

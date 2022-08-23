@@ -3,7 +3,6 @@
     class="assets-item"
     :class="{
       'assets-item--not-linked': isNotLinked,
-      'assets-item--disabled': isDisabled,
       'assets-item--active': isActive,
     }"
   >
@@ -53,7 +52,10 @@
           >$</span
         >
         <span
-          v-pretty-number="{ value: balance?.price?.USD, currency: 'USD' }"
+          v-pretty-number="{
+            value: price,
+            currency: 'USD',
+          }"
           class="assets-item__value"
         />
       </div>
@@ -65,7 +67,7 @@
 import { ref, computed } from 'vue';
 import { tokenIconPlaceholder } from '@/helpers';
 import AssetIcon from '@/components/UI/AssetIcon.vue';
-
+import { useStore } from 'vuex';
 export default {
   name: 'AssetsItem',
   components: { AssetIcon },
@@ -75,7 +77,7 @@ export default {
       default: () => ({}),
     },
     balance: {
-      type: Object,
+      type: [Object],
       default: () => ({}),
     },
     isNativeToken: {
@@ -83,10 +85,6 @@ export default {
       default: false,
     },
     isNotLinked: {
-      type: Boolean,
-      default: false,
-    },
-    isDisabled: {
       type: Boolean,
       default: false,
     },
@@ -100,15 +98,21 @@ export default {
     const iconPlaceholder = computed(() =>
       tokenIconPlaceholder(props.item.name)
     );
-
-    return { showIconPlaceholder, iconPlaceholder };
+    const store = useStore();
+    const price = computed(() => {
+      if (props.isNativeToken) {
+        return store.getters['profile/rates'][props.item.net].USD;
+      }
+      return props.item.tokenBalance.price.USD;
+    });
+    return { showIconPlaceholder, iconPlaceholder, price };
   },
 };
 </script>
 
 <style lang="scss" scoped>
 @mixin hover {
-  .assets-item:not(.assets-item--disabled) {
+  .assets-item {
     &__icon {
       background: $dark-blue;
     }
@@ -268,26 +272,7 @@ export default {
       );
     }
   }
-  &--disabled {
-    background-color: #e2e8ef;
-    cursor: not-allowed;
 
-    &:deep * {
-      color: #9e9e9e;
-    }
-    &:deep .assets-item__icon {
-      background-color: $mid-gray;
-    }
-    &:hover {
-      background-color: #e2e8ef;
-      &:deep .assets-item__icon {
-        background-color: $mid-gray;
-      }
-      &:deep * {
-        color: #9e9e9e;
-      }
-    }
-  }
   &--not-linked {
     background: linear-gradient(
       90deg,

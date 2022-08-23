@@ -288,7 +288,8 @@
         "actionModalDesc": "Your tokens will be unstaked and frozen for some time",
         "unstakeTo": "Unstake to",
         "unstakeFrom": "Unstake from",
-        "amountToUnstake": "Amount to unstake"
+        "amountToUnstake": "Amount to unstake",
+        "unstakeNote": "After the confirmation of unstaking transaction, your assets will be locked for {unstakeingPerioud} days.Unstaked assets will be depicted in the frozen balance section."
     },
     "singleStake": {
         "chooseNodeModalDesc": "To stake your assets, choose node and set the amount for delegation. Take into account that there is <strong style='color:#0a2778;'>no unstaking period</strong> for",
@@ -658,7 +659,7 @@
             "removeRewardsNotification": "You have unsubscribed to email rewards notifications",
             "rewardsDigestTooltip": "Biweekly updates on your accrued rewards, claimable tokens and assets to stake",
             "newsletter": "Newsletter",
-            "newsletterTooltip": "-",
+            "newsletterTooltip": "Receive essential Citadel.one events & updates monthly",
             "addNewsletterNotification": "You have subscribed to email newsletter notifications",
             "removeNewsletterNotification": "You have unsubscribed to email newsletter notifications"
         },
@@ -1276,5 +1277,6 @@
             "action": "exchanges"
         }
     },
-    "dontHaveEnoughFoundsForFee": "You do not have enough funds to pay the transaction fee."
+    "dontHaveEnoughFoundsForFee": "You do not have enough funds to pay the transaction fee.",
+    "asset": "asset"
 }

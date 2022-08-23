@@ -17,21 +17,6 @@
         @selectWallet="finalStep"
       />
     </div>
-    <teleport to="body">
-      <transition name="fade">
-        <Modal v-if="showModal">
-          <img v-if="showLoader" src="@/assets/gif/loader.gif" alt="" />
-          <CatPage
-            v-else
-            v-click-away="modalClickHandler"
-            :data="newWallets"
-            data-qa="add-address__existing__seed-phrase"
-            @close="modalCloseHandler"
-            @buttonClick="modalClickHandler"
-          />
-        </Modal>
-      </transition>
-    </teleport>
   </div>
 </template>
 
@@ -41,21 +26,16 @@ import AddressSpecifications from './components/AddressSpecifications';
 import Header from '../AddAddress/components/Header';
 import EnterPassword from './components/EnterPassword';
 import CreatePassword from './components/CreatePassword';
-import CatPage from '@/components/CatPage';
-import Modal from '@/components/Modal';
 import useCurrentStep from '@/compositions/useCurrentStep';
 import { getSteps } from '@/static/importSeedPhrase';
 import useCreateWallets from '@/compositions/useCreateWallets';
-import { ref } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import citadel from '@citadeldao/lib-citadel';
-
+import { onMounted } from 'vue';
 export default {
   name: 'ImportSeedPhrase',
   components: {
-    CatPage,
-    Modal,
     EnterPassword,
     CreatePassword,
     Header,
@@ -64,8 +44,6 @@ export default {
   },
   setup() {
     const store = useStore();
-    const showModal = ref(false);
-    const showLoader = ref(false);
     const router = useRouter();
 
     const {
@@ -95,19 +73,13 @@ export default {
       setMnemonic(mnemonic);
       setPassphrase(passphrase);
     };
-
-    const modalCloseHandler = () => {
-      showModal.value = false;
-      redirectToNewWallet();
-    };
-    const modalClickHandler = () => {
-      showModal.value = false;
-      redirectToNewWallet();
-    };
-
+    onMounted(() => {
+      store.commit('newWallets/setCatPageProps', {
+        dataQa: 'add-address__existing__seed-phrase',
+      });
+    });
     const finalStep = async (wallet) => {
-      showModal.value = true;
-      showLoader.value = true;
+      store.commit('newWallets/setLoader', true);
       setImportedFromSeed();
       const { data, error } = await await citadel.addCreatedWallet({
         ...wallet,
@@ -138,21 +110,22 @@ export default {
         newWallets.value = [newInstance];
         const newWallet = newInstance;
         await store.dispatch('wallets/pushWallets', { wallets: [newWallet] });
+        await redirectToNewWallet();
+        store.commit('newWallets/setNewWalletsList', newWallets.value);
+        store.commit('newWallets/setLoader', false);
+        store.commit('newWallets/setModal', true);
         // await store.dispatch('wallets/getNewWallets','lazy');
         // store.dispatch('wallets/getNewWallets','detail');
       } else {
         router.push({ name: 'AddAddress' });
       }
 
-      showLoader.value = false;
+      store.commit('newWallets/setLoader', false);
     };
 
     return {
       steps,
       currentStep,
-      showModal,
-      modalCloseHandler,
-      modalClickHandler,
       setPassword,
       setDerivationPath,
       isPasswordHash,
@@ -160,7 +133,6 @@ export default {
       newWallets,
       finalStep,
       walletOpts,
-      showLoader,
     };
   },
 };
