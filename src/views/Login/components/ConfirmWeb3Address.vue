@@ -2,10 +2,16 @@
   <div class="confirm-web3-address">
     <div class="confirm-web3-address__notify">
       <warningSvg width="40" height="40" class="icon" />
-      <div>{{ $t('login.confirmAddressTitle') }}</div>
+      <div
+        v-html="
+          isKeplr
+            ? $t('login.confirmAddressTitleKeplr')
+            : $t('login.confirmAddressTitleMetamask')
+        "
+      />
     </div>
     <div class="confirm-web3-address__address">
-      <div class="icon">
+      <div v-if="rerenderIcon" class="icon">
         <keep-alive>
           <component :is="icon" />
         </keep-alive>
@@ -29,7 +35,7 @@
   </div>
 </template>
 <script>
-import { markRaw, ref } from 'vue';
+import { markRaw, ref, watch } from 'vue';
 import warningSvg from '@/assets/icons/newLogin/warning.svg';
 import refreshSvg from '@/assets/icons/newLogin/refresh.svg';
 import PrimaryButton from '@/components/UI/PrimaryButton';
@@ -56,12 +62,24 @@ export default {
   },
   setup(props) {
     const icon = ref();
+    const rerenderIcon = ref(true);
+
     import(`@/assets/icons/token/${props.network}.svg`).then((val) => {
       icon.value = markRaw(val.default);
     });
 
+    watch(
+      () => props.network,
+      () => {
+        import(`@/assets/icons/token/${props.network}.svg`).then((val) => {
+          icon.value = markRaw(val.default);
+        });
+      }
+    );
+
     return {
       icon,
+      rerenderIcon,
     };
   },
 };

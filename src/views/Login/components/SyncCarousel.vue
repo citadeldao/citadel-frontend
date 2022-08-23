@@ -172,7 +172,7 @@ export default {
         width: 10px;
         height: 10px;
         border-radius: 50%;
-        background-color: $too-ligth-blue;
+        background-color: $light-green;
         opacity: 1;
 
         &::after {
@@ -184,14 +184,18 @@ export default {
           border-radius: 50%;
           transform: translate(-50%, -50%);
           box-shadow: 0 5px 10px #00000029;
-          background-color: $white;
+          background-color: $light-green;
           z-index: -1;
         }
       }
 
       &.is-active {
         button {
-          background-color: $dark-blue;
+          background-color: $white;
+          border: 1px solid $white;
+          padding: 3px;
+          box-sizing: border-box;
+          border-radius: 50%;
 
           &::after {
             content: '';
@@ -202,7 +206,7 @@ export default {
             width: 20px;
             height: 20px;
             transform: translate(-50%, -50%);
-            border: 1px solid $dark-blue;
+            border: 1px solid $white;
           }
         }
       }

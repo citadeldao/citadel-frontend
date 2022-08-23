@@ -39,6 +39,7 @@
                 </div>
               </LoginForm>
               <LoginMenu
+                v-if="!userName"
                 @loginSocial="onLoginSocial"
                 @loginWeb3="onLoginWeb3"
               />
@@ -99,6 +100,11 @@
               @change="onChangeVerification"
               @verification="verification"
               @sendVerificationCode="sendVerificationCode"
+              @cancelVerification="
+                () => {
+                  userName = '';
+                }
+              "
             />
           </template>
         </div>
@@ -219,6 +225,7 @@ export default {
         const { error, data } = await sendVerificationCode();
 
         if (error) {
+          userName.value = '';
           setCurrentStep(1);
         }
 
@@ -411,7 +418,7 @@ export default {
     };
 
     const onRefreshWeb3Keplr = async () => {
-      await store.dispatch('keplr/connectToKeplr', keplrNetworks[1].key);
+      await store.dispatch('keplr/connectToKeplr', keplrNetworks[0].key);
     };
 
     return {
@@ -431,6 +438,7 @@ export default {
       onWeb3AddressCancel,
       onWeb3AddressConfirm,
       onRefreshWeb3Keplr,
+      userName,
 
       syncMode,
       showSyncBlock,

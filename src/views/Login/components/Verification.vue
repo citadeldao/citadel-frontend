@@ -78,6 +78,7 @@ export default {
     const showResendCode = ref(false);
 
     const back = () => {
+      emit('cancelVerification');
       previousStep();
     };
     const sendCode = () => {
@@ -171,7 +172,7 @@ export default {
   align-items: center;
   padding: 55px 60px 60px 60px;
   background: $white;
-  box-shadow: -10px 4px 50px rgba(0, 0, 0, 0.1);
+  // box-shadow: -10px 4px 50px rgba(0, 0, 0, 0.1);
   border-radius: 25px;
   margin-bottom: 46px;
   @include lg {
