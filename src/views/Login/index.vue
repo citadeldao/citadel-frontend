@@ -10,8 +10,9 @@
         <div class="login__logo">
           <citadelLogo />
         </div>
-        <LoginCarousel v-if="!syncMode" />
-        <SyncCarousel v-else />
+        <div class="langs" v-if="confirmedAddress" />
+        <LoginCarousel v-if="!syncMode && !confirmedAddress" />
+        <SyncCarousel v-if="syncMode && !confirmedAddress" />
       </header>
     </div>
     <div class="right">
@@ -71,7 +72,7 @@
             />
 
             <ConfirmWeb3Address
-              v-if="keplrConnector?.accounts[0]"
+              v-if="!confirmedAddress && keplrConnector?.accounts[0]"
               :is-keplr="!!keplrConnector.accounts[0].address"
               :name="keplrNetworks[0].label"
               :network="keplrNetworks[0].net"
@@ -82,7 +83,7 @@
             />
 
             <ConfirmWeb3Address
-              v-if="metamaskConnector?.accounts[0]"
+              v-if="!confirmedAddress && metamaskConnector?.accounts[0]"
               :name="
                 metamaskConnector.network === 'bsc'
                   ? 'Binance Smart Chain'
@@ -92,6 +93,11 @@
               :address="metamaskConnector.accounts[0]"
               @cancel="onWeb3AddressCancel"
               @confirm="onWeb3AddressConfirm"
+            />
+
+            <SelectLanguage
+              v-if="confirmedAddress"
+              @cancel="confirmedAddress = false"
             />
 
             <Verification
@@ -132,6 +138,7 @@ import LoginMenuSocial from './components/LoginMenuSocial';
 import DisclaimerContinueWithEmail from './components/DisclaimerContinueWithEmail';
 import DisclaimerApproveWeb3 from './components/DisclaimerApproveWeb3';
 import ConfirmWeb3Address from './components/ConfirmWeb3Address';
+import SelectLanguage from './components/SelectLanguage';
 import citadelLogo from '@/assets/icons/citadelLogoWhite.svg';
 import initPersistedstate from '@/plugins/persistedstate';
 // import { SocketManager } from '@/utils/socket';
@@ -165,6 +172,7 @@ export default {
     DisclaimerContinueWithEmail,
     DisclaimerApproveWeb3,
     ConfirmWeb3Address,
+    SelectLanguage,
   },
   setup() {
     const router = useRouter();
@@ -183,6 +191,7 @@ export default {
     const walletMenuType = ref('');
     const loginWith = ref('');
     const connectedToWeb3 = ref(false);
+    const confirmedAddress = ref(false);
 
     const metamaskConnector = computed(
       () => store.getters['metamask/metamaskConnector']
@@ -415,6 +424,7 @@ export default {
 
     const onWeb3AddressConfirm = () => {
       console.log('confirm');
+      confirmedAddress.value = true;
     };
 
     const onRefreshWeb3Keplr = async () => {
@@ -438,6 +448,7 @@ export default {
       onWeb3AddressCancel,
       onWeb3AddressConfirm,
       onRefreshWeb3Keplr,
+      confirmedAddress,
       userName,
 
       syncMode,
@@ -479,6 +490,15 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    .langs {
+      width: 700px;
+      height: calc(100vh - 50px);
+      background-image: url('~@/assets/icons/newLogin/langs.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: 0 20px;
+    }
   }
 
   .right {
