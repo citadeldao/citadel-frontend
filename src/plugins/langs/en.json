@@ -1134,6 +1134,11 @@
             "title": "Oraichain",
             "description": "As the world’s first AI-powered oracle and ecosystem for blockchains, Oraichain now transforms itself to become an advanced AI Layer 1 for Data Economy and Oracle services that serves as a foundational layer for the creation of a new generation of smart contracts and Dapps and create a complete AI Ecosystem on blockchain.",
             "shortDescription": "Oraichain is the world's first intelligent and secure solution for emerging Web3, scalable Dapps, and decentralized AI."
+        },
+        "polygon": {
+            "title": "Polygon",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "Uptime",

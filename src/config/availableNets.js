@@ -35,8 +35,11 @@ export const ledgerNets = [
   'mantle',
   'crescent',
   'orai',
+  'polygon',
   // 'evmos',
 ];
+
+export const metamaskNets = ['bsc', 'eth', 'polygon'];
 
 export const trezorNets = ['btc', 'eth', 'bsc', 'tez'];
 
