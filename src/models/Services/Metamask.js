@@ -56,6 +56,13 @@ export default class MetamaskConnector {
     });
   }
 
+  async signMessage(message, signer) {
+    return await window.ethereum.request({
+      method: 'personal_sign',
+      params: [signer, this.web3.utils.utf8ToHex(message)],
+    });
+  }
+
   async sendMetamaskTransaction(rawTx) {
     const transaction = rawTx.transaction || rawTx;
 

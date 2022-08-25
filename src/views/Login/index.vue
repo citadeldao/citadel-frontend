@@ -149,6 +149,7 @@ import redirectToWallet from '@/router/helpers/redirectToWallet';
 import { parseHash, findAddressWithNet } from '@/helpers';
 import { WALLET_TYPES } from '@/config/walletType';
 import { keplrNetworks } from '@/config/availableNets';
+import useCreateWallets from '@/compositions/useCreateWallets';
 
 const WALLET_MENU_TYPE = {
   social: 'sosical',
@@ -192,6 +193,8 @@ export default {
     const loginWith = ref('');
     const connectedToWeb3 = ref(false);
     const confirmedAddress = ref(false);
+
+    const { setNets, setAddress, createWallets } = useCreateWallets();
 
     const metamaskConnector = computed(
       () => store.getters['metamask/metamaskConnector']
@@ -422,9 +425,89 @@ export default {
       metamaskConnector.value.disconnect();
     };
 
-    const onWeb3AddressConfirm = () => {
-      console.log('confirm');
-      confirmedAddress.value = true;
+    const onWeb3AddressConfirm = async () => {
+      let address = '';
+      let net = '';
+      if (loginWith.value === 'metamask') {
+        address = metamaskConnector.value.accounts[0];
+        net = metamaskConnector.value.network;
+      }
+
+      if (loginWith.value === 'keplr') {
+        address = metamaskConnector.value.accounts[0];
+        address = keplrConnector.value.accounts[0].address;
+        net = keplrNetworks[0].net;
+      }
+      console.log('confirm', address, net);
+
+      const { data, error, res } = await store.dispatch('auth/authWeb3', {
+        address,
+        net,
+      });
+
+      if (loginWith.value === 'metamask') {
+        const metamaskResult = await metamaskConnector.value.signMessage(
+          res,
+          address
+        );
+
+        const { data, error } = await store.dispatch('auth/confirmWeb3', {
+          address,
+          net,
+          sign: metamaskResult,
+          pubKey: '',
+        });
+
+        if (data) {
+          confirmedAddress.value = true;
+
+          const { error } = await store.dispatch('profile/getInfo');
+
+          if (!error) {
+            await store.dispatch('networks/loadConfig');
+            initPersistedstate(store);
+
+            citadel.addEventListener('socketEvent', socketEventHandler);
+            citadel.addEventListener('walletListUpdated', async () => {
+              await store.dispatch('wallets/getNewWallets', 'lazy');
+            });
+            await store.dispatch('app/setWallets');
+            store.dispatch('wallets/getCustomWalletsList');
+            store.dispatch('rewards/getRewards');
+            store.dispatch('transactions/getMempool');
+          }
+
+          setAddress(address);
+          setNets([net]);
+          createWallets(WALLET_TYPES.PUBLIC_KEY);
+        } else {
+          notify({
+            type: 'warning',
+            text: error,
+          });
+        }
+      }
+
+      if (loginWith.value === 'keplr') {
+        if (data) {
+          const keplrResult = await keplrConnector.value.sendKeplrTransaction(
+            res,
+            address,
+            {
+              preferNoSetFee: true,
+              preferNoSetMemo: true,
+            }
+          );
+          console.log('keplrResult', keplrResult);
+        } else {
+          notify({
+            type: 'warning',
+            text: error,
+          });
+          return;
+        }
+      }
+      // confirmedAddress.value = true;
     };
 
     const onRefreshWeb3Keplr = async () => {

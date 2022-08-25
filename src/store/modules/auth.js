@@ -71,6 +71,43 @@ export default {
         };
       }
     },
+    async authWeb3(_, { address, net }) {
+      try {
+        const { ok, data, error } = await api.authWeb3({ address, net });
+
+        if (ok) {
+          return { data: ok, error: null, res: data };
+        }
+
+        return { data: null, error: error };
+      } catch (error) {
+        return {
+          data: null,
+          error: error.response && error.response.data.error,
+        };
+      }
+    },
+    async confirmWeb3(_, { address, sign, pubKey, net }) {
+      try {
+        const { ok, error } = await api.confirmWeb3({
+          address,
+          sign,
+          pubKey,
+          net,
+        });
+
+        if (ok) {
+          return { data: ok, error: null };
+        }
+
+        return { data: null, error: error };
+      } catch (error) {
+        return {
+          data: null,
+          error: error.response && error.response.data.error,
+        };
+      }
+    },
     loginSocial(_, { social }) {
       window.location.href = `${process.env.VUE_APP_BACKEND_URL}/profile/auth/${social}`;
     },

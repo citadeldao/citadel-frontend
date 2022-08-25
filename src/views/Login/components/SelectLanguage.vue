@@ -17,13 +17,10 @@
       @change="changeLanguage"
       class="login-menu-changelang__input"
     />
-    <PrimaryButton
-      class="login-menu-changelang__btn"
-      @click="$emit('confirm', currentLanguage)"
-    >
+    <PrimaryButton class="login-menu-changelang__btn" @click="next">
       {{ $t('confirm') }}
     </PrimaryButton>
-    <div class="login-menu-changelang__cancel" @click="$emit('cancel')">
+    <div class="login-menu-changelang__cancel" @click="next">
       {{ $t('login.back') }}
     </div>
   </div>
@@ -48,9 +45,14 @@ export default {
       await store.dispatch('i18n/setLocale', value);
     };
 
+    const next = () => {
+      window.location.reload();
+    };
+
     return {
       languages,
       currentLanguage,
+      next,
       changeLanguage,
     };
   },
