@@ -86,16 +86,15 @@
     </div>
 
     <span class="send-direction__line-title">
-      <a
+      <div
         v-for="item in txUrl"
         :key="item"
-        :href="item"
         class="send-direction__line"
         target="_blank"
       >
         {{ $t('viewTranscasction')
-        }}<linkIcon class="send-direction__link-icon"
-      /></a>
+        }}<a :href="item"> <linkIcon class="send-direction__link-icon" /></a>
+      </div>
     </span>
   </div>
 </template>
@@ -231,6 +230,9 @@ export default {
     margin-top: 8px;
     text-decoration: none;
     color: inherit;
+    a {
+      line-height: initial;
+    }
     & svg {
       margin-left: 10px;
     }
