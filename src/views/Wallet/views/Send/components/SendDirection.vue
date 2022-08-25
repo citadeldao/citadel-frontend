@@ -86,14 +86,11 @@
     </div>
 
     <span class="send-direction__line-title">
-      <div
-        v-for="item in txUrl"
-        :key="item"
-        class="send-direction__line"
-        target="_blank"
-      >
+      <div v-for="item in txUrl" :key="item" class="send-direction__line">
         {{ $t('viewTranscasction')
-        }}<a :href="item"> <linkIcon class="send-direction__link-icon" /></a>
+        }}<a :href="item" target="_blank">
+          <linkIcon class="send-direction__link-icon"
+        /></a>
       </div>
     </span>
   </div>
