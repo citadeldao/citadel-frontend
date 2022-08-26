@@ -97,6 +97,7 @@
 
             <SelectLanguage
               v-if="confirmedAddress"
+              @accountCreate="onAccountCreate"
               @cancel="confirmedAddress = false"
             />
 
@@ -194,7 +195,14 @@ export default {
     const connectedToWeb3 = ref(false);
     const confirmedAddress = ref(false);
 
-    const { setNets, setAddress, createWallets } = useCreateWallets();
+    const { setNets, setAddress, setPublicKey, createWallets } =
+      useCreateWallets();
+
+    const { wallets } = useWallets();
+
+    const onAccountCreate = () => {
+      window.location.reload();
+    };
 
     const metamaskConnector = computed(
       () => store.getters['metamask/metamaskConnector']
@@ -303,7 +311,6 @@ export default {
           store.dispatch('wallets/getCustomWalletsList');
           store.dispatch('rewards/getRewards');
           /* await */ store.dispatch('transactions/getMempool');
-          const { wallets } = useWallets();
 
           redirectToWallet({
             wallet: wallets?.value[0],
@@ -438,12 +445,41 @@ export default {
         address = keplrConnector.value.accounts[0].address;
         net = keplrNetworks[0].net;
       }
-      console.log('confirm', address, net);
 
       const { data, error, res } = await store.dispatch('auth/authWeb3', {
         address,
         net,
       });
+
+      const initialize = async (walletType) => {
+        confirmedAddress.value = true;
+
+        const { error } = await store.dispatch('profile/getInfo');
+
+        if (!error) {
+          await store.dispatch('networks/loadConfig');
+          initPersistedstate(store);
+
+          citadel.addEventListener('socketEvent', socketEventHandler);
+          citadel.addEventListener('walletListUpdated', async () => {
+            await store.dispatch('wallets/getNewWallets', 'lazy');
+          });
+          await store.dispatch('app/setWallets');
+          store.dispatch('wallets/getCustomWalletsList');
+          store.dispatch('rewards/getRewards');
+          store.dispatch('transactions/getMempool');
+        }
+
+        setAddress(address);
+        setNets([net]);
+
+        if (walletType === WALLET_TYPES.KEPLR) {
+          setPublicKey(
+            Buffer.from(keplrConnector.value.accounts[0].pubkey).toString('hex')
+          );
+        }
+        createWallets(walletType);
+      };
 
       if (loginWith.value === 'metamask') {
         const metamaskResult = await metamaskConnector.value.signMessage(
@@ -459,27 +495,7 @@ export default {
         });
 
         if (data) {
-          confirmedAddress.value = true;
-
-          const { error } = await store.dispatch('profile/getInfo');
-
-          if (!error) {
-            await store.dispatch('networks/loadConfig');
-            initPersistedstate(store);
-
-            citadel.addEventListener('socketEvent', socketEventHandler);
-            citadel.addEventListener('walletListUpdated', async () => {
-              await store.dispatch('wallets/getNewWallets', 'lazy');
-            });
-            await store.dispatch('app/setWallets');
-            store.dispatch('wallets/getCustomWalletsList');
-            store.dispatch('rewards/getRewards');
-            store.dispatch('transactions/getMempool');
-          }
-
-          setAddress(address);
-          setNets([net]);
-          createWallets(WALLET_TYPES.PUBLIC_KEY);
+          initialize(WALLET_TYPES.PUBLIC_KEY);
         } else {
           notify({
             type: 'warning',
@@ -498,7 +514,26 @@ export default {
               preferNoSetMemo: true,
             }
           );
-          console.log('keplrResult', keplrResult);
+
+          if (keplrResult.signature) {
+            const { data, error } = await store.dispatch('auth/confirmWeb3', {
+              address,
+              net,
+              sign: keplrResult.signature,
+              pubKey: Buffer.from(
+                keplrConnector.value.accounts[0].pubkey
+              ).toString('hex'),
+            });
+
+            if (data) {
+              initialize(WALLET_TYPES.KEPLR);
+            } else {
+              notify({
+                type: 'warning',
+                text: error,
+              });
+            }
+          }
         } else {
           notify({
             type: 'warning',
@@ -533,6 +568,7 @@ export default {
       onRefreshWeb3Keplr,
       confirmedAddress,
       userName,
+      onAccountCreate,
 
       syncMode,
       showSyncBlock,

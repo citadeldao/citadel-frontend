@@ -36,7 +36,7 @@ export default {
     Select,
     PrimaryButton,
   },
-  setup() {
+  setup(_, { emit }) {
     const store = useStore();
     const languages = store.getters['i18n/locales'];
     const currentLanguage = ref(store.getters['i18n/locale']);
@@ -46,7 +46,7 @@ export default {
     };
 
     const next = () => {
-      window.location.reload();
+      emit('accountCreate');
     };
 
     return {
