@@ -1137,8 +1137,8 @@
         },
         "polygon": {
             "title": "Polygon",
-            "description": "",
-            "shortDescription": ""
+            "description": "Polygon is a decentralized layer-2 scaling solution and a multi-chain Ethereum ecosystem, called Ethereum's Internet of Blockchains. Polygon aims to overcome the limitations of Ethereum and enable developers to build scalable and user-friendly dApps with lower gas fees and faster transactions",
+            "shortDescription": "Polygon is a decentralized Ethereum layer-2 scaling solution aims to enable developers to build scalable and user-friendly dApps with lower gas fees and faster transactions"
         }
     },
     "uptime": "Uptime",
