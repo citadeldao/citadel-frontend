@@ -897,48 +897,66 @@ export default {
       try {
         // FOR SECRET DEV
         if (extensionTransactionForSign.value.messageScrt) {
-          const response = await citadel.executeContract(
-            signerWallet.value.id,
-            {
-              privateKey:
-                password.value &&
-                signerWallet.value.getPrivateKeyDecoded(password.value),
-              proxy: false,
-              derivationPath: signerWallet.value.derivationPath,
-              ...extensionTransactionForSign.value.messageScrt,
-            }
+          console.log(
+            '>>>>extensionTransactionForSign.value',
+            extensionTransactionForSign.value
           );
+          let response;
 
-          if (response?.data) {
-            confirmModalDisabled.value = false;
-            showLedgerConnect.value = false;
-            successTx.value = response.data;
-            confirmModalDisabled.value = false;
-            confirmModalCloseHandler();
-            showSuccessModal.value = true;
-            store.dispatch('extensions/sendCustomMsg', {
-              token: currentAppInfo.value.token,
-              message: extensionsSocketTypes.messages.success,
-              type: extensionsSocketTypes.types.execute,
-            });
-          } else {
-            store.dispatch('extensions/sendCustomMsg', {
-              token: currentAppInfo.value.token,
-              message: extensionsSocketTypes.messages.failed,
-              type: extensionsSocketTypes.types.execute,
-            });
-            confirmModalDisabled.value = false;
-            showLedgerConnect.value = false;
-            confirmModalDisabled.value = false;
-            confirmModalCloseHandler();
-            notify({
-              type: 'warning',
-              text: response?.error,
-            });
+          // check scrt message type and call
+          switch (extensionTransactionForSign.value.type) {
+            case extensionsSocketTypes.types.execute: {
+              response = await citadel.executeContract(signerWallet.value.id, {
+                privateKey:
+                  password.value &&
+                  signerWallet.value.getPrivateKeyDecoded(password.value),
+                proxy: false,
+                derivationPath: signerWallet.value.derivationPath,
+                ...extensionTransactionForSign.value.messageScrt,
+              });
 
-            return;
+              // send success message to app
+              if (response?.data) {
+                confirmModalDisabled.value = false;
+                showLedgerConnect.value = false;
+                successTx.value = response.data;
+                confirmModalDisabled.value = false;
+                confirmModalCloseHandler();
+                showSuccessModal.value = true;
+                store.dispatch('extensions/sendCustomMsg', {
+                  token: currentAppInfo.value.token,
+                  message: extensionsSocketTypes.messages.success,
+                  type: extensionsSocketTypes.types.execute,
+                });
+              } else {
+                // send failed message to app
+                store.dispatch('extensions/sendCustomMsg', {
+                  token: currentAppInfo.value.token,
+                  message: extensionsSocketTypes.messages.failed,
+                  type: extensionsSocketTypes.types.execute,
+                });
+                confirmModalDisabled.value = false;
+                showLedgerConnect.value = false;
+                confirmModalDisabled.value = false;
+                confirmModalCloseHandler();
+                notify({
+                  type: 'warning',
+                  text: response?.error,
+                });
+
+                return;
+              }
+              break;
+            }
+
+            case extensionsSocketTypes.types.generateVK: {
+              break;
+            }
+
+            default: {
+              return;
+            }
           }
-          return;
         }
 
         result = await signerWallet.value.signAndSendTransfer({
@@ -1048,10 +1066,10 @@ export default {
   background-repeat: no-repeat;
   border-radius: 16px;
 
-    &__app-wrap {
-      margin-top: 35px;
-      position: relative;
-      border-radius: 20px;
+  &__app-wrap {
+    margin-top: 35px;
+    position: relative;
+    border-radius: 20px;
 
     &.fullScreen {
       width: 100%;
@@ -1071,20 +1089,20 @@ export default {
     }
   }
 
-    &__apps {
-      width: 100%;
-      display: flex;
-      align-items: flex-start;
-      justify-content: flex-start;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-      padding: 25px;
-      box-sizing: border-box;
-      z-index: 0;
-      float: left;
-      background: $white;
-      border-radius: 0 0 16px 16px;
-    }
+  &__apps {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    padding: 25px;
+    box-sizing: border-box;
+    z-index: 0;
+    float: left;
+    background: $white;
+    border-radius: 0 0 16px 16px;
+  }
 
   .label.description {
     margin: 25px 0 0 0;

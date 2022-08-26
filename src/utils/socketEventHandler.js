@@ -1,6 +1,7 @@
 import store from '@/store/index';
 import useWallets from '@/compositions/useWallets';
 import { WALLET_TYPES } from '@/config/walletType';
+import extensionsSocketTypes from '@config/extensionsSocketTypes';
 import notify from '@/plugins/notify';
 
 export async function socketEventHandler({ eventName, data }) {
@@ -58,7 +59,7 @@ export async function socketEventHandler({ eventName, data }) {
     //   }
     // });
     case 'message-from-app':
-      if (data.type === 'scrt-execute') {
+      if (data.type === extensionsSocketTypes.types.execute) {
         store.commit(
           'extensions/SET_TRANSACTION_FOR_SIGN',
           {
@@ -66,12 +67,27 @@ export async function socketEventHandler({ eventName, data }) {
             address: data.message.sender,
             net: 'secret',
             messageScrt: data.message,
+            type: data.type,
           },
           { root: true }
         );
       }
 
-      if (data.type === 'view-scrt-balance') {
+      if (data.type === extensionsSocketTypes.types.generateVK) {
+        store.commit(
+          'extensions/SET_TRANSACTION_FOR_SIGN',
+          {
+            transaction: {},
+            address: data.message.address,
+            net: 'secret',
+            messageScrt: data.message,
+            type: data.type,
+          },
+          { root: true }
+        );
+      }
+
+      if (data.type === extensionsSocketTypes.types.balance) {
         const secretAddress = data.message.address;
         const sSecretContract = data.message.tokenContract;
         const sSecretNetwork = data.message.net;

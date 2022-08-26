@@ -5,6 +5,7 @@ import notify from '@/plugins/notify';
 import citadel from '@citadeldao/lib-citadel';
 import useWallets from '@/compositions/useWallets';
 import { WALLET_TYPES } from '@/config/walletType';
+import extensionsSocketTypes from '@/config/extensionsSocketTypes';
 
 const api = useApi('auth');
 
@@ -45,7 +46,7 @@ export class SocketManager {
       });
 
       this.socket.on('message-from-app', async (data) => {
-        if (data.type === 'view-scrt-balance') {
+        if (data.type === extensionsSocketTypes.types.balance) {
           const secretAddress = data.message.address;
           const sSecretContract = data.message.tokenContract;
 
