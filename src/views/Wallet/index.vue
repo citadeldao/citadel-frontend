@@ -660,9 +660,17 @@ export default {
             showConfirmUnstakedClaim.value = false;
             showClaimSuccessModal.value = true;
             isLoading.value = false;
+            notify({
+              type: 'success',
+              text: 'Claimed successfully',
+            });
           } else {
             claimModalCloseHandler();
             isLoading.value = false;
+            notify({
+              type: 'warning',
+              text: res.error,
+            });
           }
         }
       }
