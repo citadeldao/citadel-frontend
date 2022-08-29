@@ -111,13 +111,7 @@
         @close="connectLedgerCloseHandler"
       />
     </Modal>
-    <Modal
-      v-if="
-        !showLedgerConnect &&
-        extensionTransactionForSign &&
-        !extensionTransactionForSign.error_type
-      "
-    >
+    <Modal v-if="showExtensionTransactionModal">
       <ModalContent
         :title="selectedApp.name"
         :desc="selectedApp.short_description"
@@ -217,6 +211,20 @@
         </div>
       </ModalContent>
     </Modal>
+    <!-- CREATE VK MODAL FOR SECRET APP-->
+    <teleport v-if="showCreateVkModal" to="body">
+      <CreateVkModal
+        :address="signerWallet.address"
+        :token="snip20Token"
+        :token-fee="snip20TokenFee"
+        :current-wallet="signerWallet"
+        :app-name="selectedApp.name"
+        :app-icon="selectedApp.logo"
+        :redirect="false"
+        @close="closeCreateVkModal({ success: false })"
+        @success="closeCreateVkModal({ success: true })"
+      />
+    </teleport>
     <Modal v-if="messageForSign && !showLedgerConnect">
       <ModalContent
         :title="selectedApp.name"
@@ -287,6 +295,7 @@ import {
 import Loading from '@/components/Loading';
 import { ref, markRaw, computed, watch } from 'vue';
 import Modal from '@/components/Modal';
+import CreateVkModal from '@/views/Wallet/components/CreateVkModal.vue';
 import linkIcon from '@/assets/icons/link.svg';
 import linkIconHovered from '@/assets/icons/link_hovered.svg';
 import ModalContent from '@/components/ModalContent';
@@ -314,6 +323,7 @@ export default {
   components: {
     ConnectLedgerModal,
     ConfirmLedgerModal,
+    CreateVkModal,
     Head,
     AppBlock,
     linkIcon,
@@ -351,6 +361,9 @@ export default {
     const ledgerError = ref('');
     const msgSuccessSignature = ref('');
     const fullScreenAppIds = ref([6, 7, 9, 10, 12, 14, 15, 18]);
+    const snip20TokenFee = ref(null);
+    const snip20Token = ref({});
+    const showCreateVkModal = ref(false);
 
     const { wallets: walletsList } = useWallets();
 
@@ -443,6 +456,16 @@ export default {
     const extensionTransactionForSign = computed(
       () => store.getters['extensions/extensionTransactionForSign']
     );
+
+    const showExtensionTransactionModal = computed(
+      () =>
+        !showLedgerConnect.value &&
+        extensionTransactionForSign &&
+        !extensionTransactionForSign.value.error_type &&
+        extensionTransactionForSign.value.type !==
+          extensionsSocketTypes.types.generateVK
+    );
+
     const metamaskConnector = computed(
       () => store.getters['metamask/metamaskConnector']
     );
@@ -603,7 +626,7 @@ export default {
       }
     );
 
-    watch(extensionTransactionForSign, () => {
+    watch(extensionTransactionForSign, async () => {
       if (extensionTransactionForSign?.value?.transaction) {
         const currentAddress = extensionTransactionForSign.value.address;
         const currentNet = extensionTransactionForSign.value.net;
@@ -635,6 +658,35 @@ export default {
           );
         } else {
           metamaskSigner.value = null;
+        }
+
+        // FOR SECRET DEV: set viewingKey
+        if (
+          extensionTransactionForSign?.value?.type ===
+          extensionsSocketTypes.types.generateVK
+        ) {
+          // set token
+          const { data: tokens } = citadel.getTokensById(signerWallet.value.id);
+          // get config
+          const tokenConfig = Object.values(tokens).find(
+            ({ address }) =>
+              address === extensionTransactionForSign.value.messageScrt.contract
+          );
+          snip20Token.value = {
+            ...tokenConfig,
+            // for txURL
+            id: signerWallet.value.id,
+            getTxUrl: signerWallet.value.getTxUrl,
+          };
+
+          // get fee
+          snip20TokenFee.value = (
+            await signerWallet.value.getFees(
+              signerWallet.value.id,
+              snip20Token.value.net
+            )
+          )?.data?.medium?.fee;
+          showCreateVkModal.value = true;
         }
       }
     });
@@ -690,6 +742,38 @@ export default {
       msgSuccessSignature.value = '';
       showLedgerConnect.value = false;
       store.commit('extensions/SET_MESSAGE_FOR_SIGN', null, { root: true });
+    };
+
+    // for secret dev
+    const closeCreateVkModal = ({ success } = {}) => {
+      if (!extensionTransactionForSign.value) {
+        return;
+      }
+      try {
+        // close modals
+        showCreateVkModal.value = false;
+        // set default values
+        snip20TokenFee.value = null;
+        snip20Token.value = null;
+        // send cancel message
+        store.dispatch('extensions/sendCustomMsg', {
+          token: currentAppInfo.value.token,
+          message: success
+            ? extensionsSocketTypes.messages.success
+            : extensionsSocketTypes.messages.canceled,
+          type: extensionsSocketTypes.types.message,
+        });
+      } catch (error) {
+        store.dispatch('extensions/sendCustomMsg', {
+          token: currentAppInfo.value.token,
+          message: extensionsSocketTypes.messages.failed,
+          type: extensionsSocketTypes.types.transaction,
+        });
+      } finally {
+        store.commit('extensions/SET_TRANSACTION_FOR_SIGN', null, {
+          root: true,
+        });
+      }
     };
 
     const signMessage = async () => {
@@ -895,67 +979,55 @@ export default {
       let result;
 
       try {
-        // FOR SECRET DEV
-        if (extensionTransactionForSign.value.messageScrt) {
-          console.log(
-            '>>>>extensionTransactionForSign.value',
-            extensionTransactionForSign.value
+        // FOR SECRET DEV: EXECUTE CONTRACT
+        if (
+          extensionTransactionForSign.value.messageScrt &&
+          extensionTransactionForSign.value.type ===
+            extensionsSocketTypes.types.execute
+        ) {
+          // execute contract
+          const response = await citadel.executeContract(
+            signerWallet.value.id,
+            {
+              privateKey:
+                password.value &&
+                signerWallet.value.getPrivateKeyDecoded(password.value),
+              proxy: false,
+              derivationPath: signerWallet.value.derivationPath,
+              ...extensionTransactionForSign.value.messageScrt,
+            }
           );
-          let response;
 
-          // check scrt message type and call
-          switch (extensionTransactionForSign.value.type) {
-            case extensionsSocketTypes.types.execute: {
-              response = await citadel.executeContract(signerWallet.value.id, {
-                privateKey:
-                  password.value &&
-                  signerWallet.value.getPrivateKeyDecoded(password.value),
-                proxy: false,
-                derivationPath: signerWallet.value.derivationPath,
-                ...extensionTransactionForSign.value.messageScrt,
-              });
+          // send success message to app
+          if (response?.data) {
+            confirmModalDisabled.value = false;
+            showLedgerConnect.value = false;
+            successTx.value = response.data;
+            confirmModalDisabled.value = false;
+            confirmModalCloseHandler();
+            showSuccessModal.value = true;
+            store.dispatch('extensions/sendCustomMsg', {
+              token: currentAppInfo.value.token,
+              message: extensionsSocketTypes.messages.success,
+              type: extensionsSocketTypes.types.execute,
+            });
+          } else {
+            // send failed message to app
+            store.dispatch('extensions/sendCustomMsg', {
+              token: currentAppInfo.value.token,
+              message: extensionsSocketTypes.messages.failed,
+              type: extensionsSocketTypes.types.execute,
+            });
+            confirmModalDisabled.value = false;
+            showLedgerConnect.value = false;
+            confirmModalDisabled.value = false;
+            confirmModalCloseHandler();
+            notify({
+              type: 'warning',
+              text: response?.error,
+            });
 
-              // send success message to app
-              if (response?.data) {
-                confirmModalDisabled.value = false;
-                showLedgerConnect.value = false;
-                successTx.value = response.data;
-                confirmModalDisabled.value = false;
-                confirmModalCloseHandler();
-                showSuccessModal.value = true;
-                store.dispatch('extensions/sendCustomMsg', {
-                  token: currentAppInfo.value.token,
-                  message: extensionsSocketTypes.messages.success,
-                  type: extensionsSocketTypes.types.execute,
-                });
-              } else {
-                // send failed message to app
-                store.dispatch('extensions/sendCustomMsg', {
-                  token: currentAppInfo.value.token,
-                  message: extensionsSocketTypes.messages.failed,
-                  type: extensionsSocketTypes.types.execute,
-                });
-                confirmModalDisabled.value = false;
-                showLedgerConnect.value = false;
-                confirmModalDisabled.value = false;
-                confirmModalCloseHandler();
-                notify({
-                  type: 'warning',
-                  text: response?.error,
-                });
-
-                return;
-              }
-              break;
-            }
-
-            case extensionsSocketTypes.types.generateVK: {
-              break;
-            }
-
-            default: {
-              return;
-            }
+            return;
           }
         }
 
@@ -1050,6 +1122,11 @@ export default {
       msgSuccessSignature,
       closeSignMessageModal,
       signMessage,
+      snip20TokenFee,
+      snip20Token,
+      closeCreateVkModal,
+      showCreateVkModal,
+      showExtensionTransactionModal,
     };
   },
 };

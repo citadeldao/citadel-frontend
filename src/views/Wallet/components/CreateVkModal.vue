@@ -15,6 +15,20 @@
         <Loading />
       </div>
       <div class="fields">
+        <div class="field" v-if="appName">
+          <div class="fieldName">
+            {{ $t('app') }}
+          </div>
+          <div class="app-name">
+            <img
+              v-if="appIcon"
+              :src="appIcon"
+              width="22"
+              height="22"
+              class="app-icon"
+            />{{ appName }}
+          </div>
+        </div>
         <div class="field">
           <div class="fieldName">
             {{ $t('sendFrom') }}
@@ -212,7 +226,7 @@ export default {
     },
     tokenFee: {
       type: Number,
-      default: 0.2,
+      default: 0.002,
     },
     currentWallet: {
       type: Object,
@@ -225,6 +239,12 @@ export default {
     redirect: {
       type: Boolean,
       default: true,
+    },
+    appName: {
+      type: String,
+    },
+    appIcon: {
+      type: String,
     },
   },
   emits: ['close', 'success'],
@@ -462,6 +482,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.app-icon {
+  vertical-align: middle;
+  width: 24px;
+  height: 24px;
+}
+
+.app-name {
+  color: #1a53f0;
+  font-weight: 700;
+}
 .createVkPassword {
   height: 68px;
   margin-top: 19px;

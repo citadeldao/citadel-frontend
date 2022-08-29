@@ -1,7 +1,7 @@
 import store from '@/store/index';
 import useWallets from '@/compositions/useWallets';
 import { WALLET_TYPES } from '@/config/walletType';
-import extensionsSocketTypes from '@config/extensionsSocketTypes';
+import extensionsSocketTypes from '@/config/extensionsSocketTypes';
 import notify from '@/plugins/notify';
 
 export async function socketEventHandler({ eventName, data }) {
