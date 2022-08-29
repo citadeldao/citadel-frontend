@@ -3,6 +3,7 @@ import useWallets from '@/compositions/useWallets';
 import { WALLET_TYPES } from '@/config/walletType';
 import extensionsSocketTypes from '@/config/extensionsSocketTypes';
 import notify from '@/plugins/notify';
+import citadel from '@citadeldao/lib-citadel';
 
 export async function socketEventHandler({ eventName, data }) {
   // this.socket.on('transaction-events-client', (tx) => {
@@ -89,15 +90,15 @@ export async function socketEventHandler({ eventName, data }) {
 
       if (data.type === extensionsSocketTypes.types.balance) {
         const secretAddress = data.message.address;
-        const sSecretContract = data.message.tokenContract;
-        const sSecretNetwork = data.message.net;
+        const tokenContract = data.message.tokenContract;
+        const tokenKey = data.message.net;
 
-        const sendErrorMsg = () => {
+        const sendErrorMsg = (error) => {
           store.dispatch('extensions/sendCustomMsg', {
             token: store.getters['extensions/currentAppInfo'].token,
             message: {
-              balance: 'Viewingkey not found, balance: ?',
-              tokenContract: sSecretContract,
+              balance: error.message || 'Viewingkey not found, balance: ?',
+              tokenContract,
             },
             type: data.type,
           });
@@ -111,22 +112,37 @@ export async function socketEventHandler({ eventName, data }) {
 
         if (wallet) {
           if (wallet.subtokensList?.find) {
-            const token = wallet.subtokensList.find(
-              (t) => t.net === sSecretNetwork
-            );
+            // send cache
+            const token = wallet.subtokensList.find((t) => t.net === tokenKey);
 
-            if (token) {
+            token &&
               store.dispatch('extensions/sendCustomMsg', {
                 token: store.getters['extensions/currentAppInfo'].token,
                 message: {
                   balance: token.tokenBalance.calculatedBalance,
-                  tokenContract: sSecretContract,
+                  tokenContract,
                 },
                 type: data.type,
               });
+
+            // update balance (by SVK, keplr etc)
+            const { data: balance, error } = await citadel.getBalanceById(
+              wallet.id,
+              tokenKey
+            );
+            if (error) {
+              sendErrorMsg();
               return;
             }
-            sendErrorMsg();
+            store.dispatch('extensions/sendCustomMsg', {
+              token: store.getters['extensions/currentAppInfo'].token,
+              message: {
+                balance: balance.calculatedBalance,
+                tokenContract,
+              },
+              type: data.type,
+            });
+            return;
           } else {
             sendErrorMsg();
           }
