@@ -369,14 +369,16 @@ export default {
   methods: {
     onResize() {
       this.sidebarClass = window.innerWidth <= 1024 ? 'compact' : '';
-      if (window.innerWidth <= 1024) {
-        document
-          .querySelector('#main')
-          .addEventListener('click', this.onClickMain);
-      } else {
-        document
-          .querySelector('#main')
-          .removeEventListener('click', this.onClickMain);
+      if (document.querySelector('#main')) {
+        if (window.innerWidth <= 1024) {
+          document
+            .querySelector('#main')
+            .addEventListener('click', this.onClickMain);
+        } else {
+          document
+            .querySelector('#main')
+            .removeEventListener('click', this.onClickMain);
+        }
       }
     },
     onClickMain() {
