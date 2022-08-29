@@ -6,6 +6,7 @@ import useWallets from '@/compositions/useWallets';
 import { OUR_NODE } from '@/config/walletType';
 import BigNumber from 'bignumber.js';
 import { useStore } from 'vuex';
+import { getDecimalCount } from '@/helpers';
 
 export default function useStaking(stakeNodes, list) {
   const { t } = useI18n();
@@ -291,8 +292,22 @@ export default function useStaking(stakeNodes, list) {
   provide('maxAdditionalFee', maxAdditionalFee)
 
   const insufficientFunds = computed(
-    () =>
-      !!amount.value && +amount.value > +maxAmount.value && t('insufficientFunds'),
+    () =>{
+      if(+amount.value){
+        if (
+          getDecimalCount(amount.value) > +currentWallet.value.config.decimals
+        ) {
+          return t('minAmountError', {
+            code: currentWallet.value.code,
+            minAmount: currentWallet.value.minAmount,
+          });
+        }
+        if (+amount.value > +maxAmount.value) {
+          return t('insufficientFunds');
+        }
+      }
+      return false
+    }
   );
   provide('insufficientFunds', insufficientFunds);
 

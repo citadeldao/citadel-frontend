@@ -218,6 +218,7 @@ import { useStore } from 'vuex';
 import useLedger from '@/compositions/useLedger';
 import useWallets from '@/compositions/useWallets';
 import notify from '@/plugins/notify';
+import { getDecimalCount } from '@/helpers';
 
 export default {
   name: 'XCTStaking',
@@ -357,12 +358,22 @@ export default {
     });
     provide('maxAmount', maxAmount);
 
-    const insufficientFunds = computed(
-      () =>
-        !!amount.value &&
-        amount.value > maxAmount.value &&
-        t('insufficientFunds')
-    );
+    const insufficientFunds = computed(() => {
+      if (+amount.value) {
+        if (
+          getDecimalCount(amount.value) > +props.currentWallet.config.decimals
+        ) {
+          return t('minAmountError', {
+            code: props.currentWallet.code,
+            minAmount: props.currentWallet.minAmount,
+          });
+        }
+        if (+amount.value > +maxAmount.value) {
+          return t('insufficientFunds');
+        }
+      }
+      return false;
+    });
     provide('insufficientFunds', insufficientFunds);
 
     const disabled = computed(() => {

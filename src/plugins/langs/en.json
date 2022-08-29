@@ -1278,5 +1278,6 @@
         }
     },
     "dontHaveEnoughFoundsForFee": "You do not have enough funds to pay the transaction fee.",
-    "asset": "asset"
+    "asset": "asset",
+    "minAmountError": "Minimum amount is {minAmount} {code}"
 }

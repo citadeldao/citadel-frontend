@@ -414,6 +414,7 @@ import { useI18n } from 'vue-i18n';
 import AddressItem from '@/layouts/AddAddressLayout/components/CutomLists/components/AddressItem';
 import { keplrNetworksProtobufFormat } from '@/config/availableNets';
 import { getDecorateLabel } from '@/config/decorators';
+import { getDecimalCount } from '@/helpers';
 
 export default {
   name: 'Send',
@@ -818,7 +819,15 @@ export default {
     // Error Handlers
     const insufficientFunds = computed(
       () => {
-        if (amount.value) {
+        if (+amount.value) {
+          if (
+            getDecimalCount(amount.value) > +props.currentWallet.config.decimals
+          ) {
+            return t('minAmountError', {
+              code: props.currentWallet.code,
+              minAmount: props.currentWallet.minAmount,
+            });
+          }
           if (
             props.currentWallet.minSendAmount &&
             props.currentWallet.minSendAmount > +amount.value
@@ -830,7 +839,7 @@ export default {
           }
 
           if (+amount.value > +maxAmount.value) {
-            return 'Insufficient funds';
+            return t('insufficientFunds');
           }
         }
 
@@ -903,7 +912,7 @@ export default {
           requestsError.value ||
           insufficientFunds.value ||
           incorrectAddress.value ||
-          !amount.value ||
+          !+amount.value ||
           !toAddress.value
         )
     );

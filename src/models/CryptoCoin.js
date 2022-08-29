@@ -5,6 +5,7 @@ import citadel from '@citadeldao/lib-citadel';
 import { i18n } from '@/plugins/i18n';
 import store from '@/store';
 import router from '@/router';
+import BigNumber from 'bignumber.js';
 
 const { t } = i18n.global;
 const CryptoJS = require('crypto-js');
@@ -40,6 +41,10 @@ export default class CryptoCoin {
     this.importedFromSeed = opts?.importedFromSeed || false;
     this.decimals = opts?.config?.decimals;
     this.hasCustomFee = opts?.config?.fee_key === 'fee';
+    this.minAmount = BigNumber(0.1)
+      .exponentiatedBy(opts?.config?.decimals)
+      .toNumber()
+      .toFixed(opts?.config?.decimals);
 
     this.hasUnstakeingPerioud = true;
     this.messages = {
