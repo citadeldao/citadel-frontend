@@ -460,7 +460,7 @@ export default {
     const showExtensionTransactionModal = computed(
       () =>
         !showLedgerConnect.value &&
-        extensionTransactionForSign &&
+        extensionTransactionForSign.value &&
         !extensionTransactionForSign.value?.error_type &&
         extensionTransactionForSign.value?.type !==
           extensionsSocketTypes.types.generateVK
