@@ -461,7 +461,7 @@ export default {
       () =>
         !showLedgerConnect.value &&
         extensionTransactionForSign &&
-        !extensionTransactionForSign.value.error_type &&
+        !extensionTransactionForSign.value?.error_type &&
         extensionTransactionForSign.value.type !==
           extensionsSocketTypes.types.generateVK
     );
