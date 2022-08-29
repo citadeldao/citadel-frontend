@@ -26,7 +26,6 @@ import CatPage from '@/components/CatPage';
 import { useStore } from 'vuex';
 import AddressAlreadyAdded from '@/components/Modals/AddressAlreadyAdded';
 import redirectToWallet from '@/router/helpers/redirectToWallet';
-import router from '@/router';
 export default {
   name: 'NewWallets',
   components: {
@@ -36,44 +35,32 @@ export default {
   setup() {
     const store = useStore();
     const dataQa = computed(
-      () => store.getters['newWallets/catPagePropsG'].dataQa
+      () => store.getters['newWallets/catPageProps'].dataQa
     );
     const inputTypeIcon = computed(
-      () => store.getters['newWallets/catPagePropsG'].inputTypeIcon
+      () => store.getters['newWallets/catPageProps'].inputTypeIcon
     );
     const walletTypePlaceholder = computed(
-      () => store.getters['newWallets/catPagePropsG'].walletTypePlaceholder
+      () => store.getters['newWallets/catPageProps'].walletTypePlaceholder
     );
     const newWalletList = computed(
-      () => store.getters['newWallets/newWalletsListG']
+      () => store.getters['newWallets/newWalletsList']
     );
-    const showLoader = computed(
-      () => store.getters['newWallets/isShowLoaderG']
-    );
-    const showModal = computed(() => store.getters['newWallets/isModalShown']);
+    const showLoader = computed(() => store.getters['newWallets/isShowLoader']);
+    const showModal = computed(() => store.getters['newWallets/isShowModal']);
     const showAlreadyAddedModal = computed(
-      () => store.getters['newWallets/isShowAlreadyAddedModalG']
+      () => store.getters['newWallets/isShowAlreadyAddedModal']
     );
-    const routeName = computed(() => store.getters['newWallets/routeNameG']);
     const modalCloseHandler = async () => {
-      store.dispatch('newWallets/hideModal');
-      if (!routeName.value) {
-        await redirectToWallet({
-          wallet:
-            newWalletList.value[0] || store.getters['wallets/currentWallet'],
-          root: true,
-        });
-      } else {
-        router.push({
-          name: routeName.value,
-          params: {
-            net: newWalletList.value[0]?.net,
-            address: newWalletList.value[0]?.address,
-          },
-        });
-      }
-      store.dispatch('newWallets/hideLoader');
-      store.dispatch('newWallets/hideAlreadyAddedModal');
+      store.commit('newWallets/setModal', false);
+      await redirectToWallet({
+        wallet:
+          newWalletList.value[0] || store.getters['wallets/currentWallet'],
+        root: true,
+      });
+      store.commit('newWallets/setLoader', false);
+      store.commit('newWallets/setAlreadyAddedModal', false);
+      store.commit('newWallets/setNewWalletsList', []);
     };
     return {
       newWalletList,

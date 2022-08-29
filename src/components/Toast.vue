@@ -185,9 +185,8 @@ export default {
     &:hover svg {
       fill: $black;
     }
-
     svg {
-      width: 12px;
+      width: 16px;
       height: 18px;
     }
   }

@@ -289,7 +289,7 @@
         "unstakeTo": "解锁至",
         "unstakeFrom": "解锁自",
         "amountToUnstake": "可解除质押金额",
-        "unstakeNote": ""
+        "unstakeNote": "确认解除质押交易后，您的资产将被冻结 {unstakeingPerioud} 天。解除质押部分的资产将展示在冻结余额处。"
     },
     "singleStake": {
         "chooseNodeModalDesc": "如需质押您的资产，选择节点并设置质押金额。请注意此处 <strong style='color:#0a2778;'> 可立即解锁 </strong> ",
@@ -659,7 +659,7 @@
             "removeRewardsNotification": "您已取消订阅奖励邮件通知",
             "rewardsDigestTooltip": "您的累积奖励、可领取的代币和可质押资产每两周更新一次",
             "newsletter": "新闻",
-            "newsletterTooltip": "-",
+            "newsletterTooltip": "接收每月 Citadel.one 活动及新鲜资讯",
             "addNewsletterNotification": "您已经订阅新闻通知",
             "removeNewsletterNotification": "您已取消订阅新闻通知"
         },
@@ -920,7 +920,7 @@
         "transactionFee": "交易手续费",
         "signMessage": "签名消息",
         "searchPlaceholder": "开始输入 APP 名称",
-        "typeOperation": ""
+        "typeOperation": "输入操作"
     },
     "tokenDescriptionComdex": "Comdex 是搭建在 Cosmos 上的去中心化合成资产协议",
     "tokenDescriptionJuno": "Juno 是基于 Cosmos  搭建的区块链，为部署可交互操作的智能合约提供环境。",
@@ -929,6 +929,7 @@
         "notFound": "您的浏览器未找到 Metamask 钱包",
         "changeNetwork": "在 Metamask 中切换网络",
         "cancel": "取消",
+        "confirm": "",
         "importWallet": "导入钱包",
         "allreadyAdded": "地址已添加",
         "titleModal": "导入 Metamask 钱包",
@@ -1187,7 +1188,6 @@
     "changeValidators": "切换节点",
     "redelegateNote": "您必须选择另一个验证节点重新进行质押",
     "assets": "资产",
-    "asset": "",
     "menu": {
         "settings": "设置",
         "logOut": "退出登录"
@@ -1274,9 +1274,10 @@
             "action": "扩展程序"
         },
         "card2": {
-            "title": "充值自",
+            "title": "充值自 ",
             "action": "交易所"
         }
     },
-    "dontHaveEnoughFoundsForFee": "您的余额不足，无法支付交易手续费"
+    "dontHaveEnoughFoundsForFee": "您的余额不足，无法支付交易手续费",
+    "asset": "资产"
 }

@@ -61,14 +61,14 @@ export default {
     const { t } = useI18n();
     const store = useStore();
     onMounted(() => {
-      store.dispatch('newWallets/setCatPageProps', {
+      store.commit('newWallets/setCatPageProps', {
         inputTypeIcon: INPUT_TYPE_ICON.PRIVATE,
         walletTypePlaceholder: t('catPage.placeholderPrivate'),
         dataQa: 'add-address__existing__private-key',
       });
     });
     const finalStep = ({ net, privateKey, account }) => {
-      store.dispatch('newWallets/showLoader');
+      store.commit('newWallets/setLoader', true);
       setPrivateKey(privateKey);
       setNets([net]);
       setType('privateKey');
@@ -77,9 +77,9 @@ export default {
       success.then(async () => {
         !isPasswordHash.value && savePassword();
         await redirectToNewWallet();
-        store.dispatch('newWallets/setNewWalletsList', newWallets.value);
-        store.dispatch('newWallets/showModal');
-        store.dispatch('newWallets/hideLoader');
+        store.commit('newWallets/setNewWalletsList', newWallets.value);
+        store.commit('newWallets/setModal', true);
+        store.commit('newWallets/setLoader', false);
       });
     };
 
