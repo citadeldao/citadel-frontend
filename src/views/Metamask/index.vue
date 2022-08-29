@@ -171,8 +171,6 @@ export default {
       store.commit('newWallets/setLoader', true);
       const { network, accounts } = metamaskConnector.value;
 
-      showLoader.value = true;
-
       if (!['bsc', 'eth'].includes(metamaskConnector.value.network)) {
         notify({
           type: 'warning',
@@ -203,6 +201,7 @@ export default {
           'newWallets/setNewWalletsList',
           [existAddressInMetamask.value] || newWallets.value
         );
+        store.commit('newWallets/setLoader', false);
         store.commit('newWallets/setAlreadyAddedModal', true);
       }
 
