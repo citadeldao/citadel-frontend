@@ -89,15 +89,18 @@ export async function socketEventHandler({ eventName, data }) {
       }
 
       if (data.type === extensionsSocketTypes.types.balance) {
+        if (!data?.message) {
+          return;
+        }
         const secretAddress = data.message.address;
         const tokenContract = data.message.tokenContract;
         const tokenKey = data.message.net;
 
-        const sendErrorMsg = (error) => {
+        const sendErrorMsg = () => {
           store.dispatch('extensions/sendCustomMsg', {
             token: store.getters['extensions/currentAppInfo'].token,
             message: {
-              balance: error.message || 'Viewingkey not found, balance: ?',
+              balance: 'Viewingkey not found, balance: ?',
               tokenContract,
             },
             type: data.type,
@@ -132,6 +135,10 @@ export async function socketEventHandler({ eventName, data }) {
             );
             if (error) {
               sendErrorMsg();
+              notify({
+                type: 'warning',
+                text: error.message,
+              });
               return;
             }
             store.dispatch('extensions/sendCustomMsg', {
