@@ -929,6 +929,7 @@
         "notFound": "Metamask not found in your browser",
         "changeNetwork": "Change network in metamask",
         "cancel": "Cancel",
+        "confirm": "Confirm",
         "importWallet": "Import wallet",
         "allreadyAdded": "Address already added",
         "titleModal": "Import metamask wallet",
