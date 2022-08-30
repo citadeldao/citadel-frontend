@@ -9,7 +9,7 @@
         class="action-modal-content__info-text"
         v-html="
           $t('unstaking.unstakeNote', {
-            unstakeingPerioud: wallet.unstakeingPerioud || 21,
+            unstakeingPerioud: wallet.unstakeingPerioud,
           })
         "
       >

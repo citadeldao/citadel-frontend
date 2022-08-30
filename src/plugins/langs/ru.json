@@ -261,7 +261,7 @@
         "chooseNodeModalDesc": "Кликните на список валидаторов чтобы выбрать на кого заделегировать",
         "chooseNodeModalDesc1": "Чтобы застейкать свои активы, выберите ноды и укажите нужную сумму делегации. Обратите внимание, что период анстейкинга {net} составляет <span style='color: #0A2778; font-weight: bold;'>{perioud} days</span>.",
         "chooseNodeModalDescWithFrom": "Чтобы застейкать свои активы, выберите ноды и укажите нужную сумму делегации. Обратите внимание, что период анстейкинга {net} длится от <span style='color: #0A2778; font-weight: bold;'>from {perioudFrom} до {perioudTo} дней</span>. Чтобы проверить длительность анстейкинга на текущий момент, перейдите по ссылке:  <a href='{link}' style='color: #0A2778; font-weight: bold;text-decoration:none'>link</a>.",
-        "Stake": "Стейкать",
+        "Stake": "Стейкинг",
         "staking": "Стейкинг",
         "searchNode": "Поиск ноды",
         "searchInputPlaceholder": "Начните печатать название ноды",
@@ -527,9 +527,9 @@
         "part4": "день",
         "part5": " "
     },
-    "frozen": "Замороженные",
+    "frozen": "Заморожено",
     "available": "Доступно",
-    "staked": "Застейканный",
+    "staked": "Застейкано",
     "balance": "Баланс",
     "transactions": "транзакции",
     "send": "Отправить",
@@ -907,7 +907,7 @@
     "extensions": {
         "showLabel": "Показать",
         "headerTitle": "Приложения",
-        "headerDescription": "Используйте ваши любимые приложения DeFi и другие расширения не покидая Citadel.one!",
+        "headerDescription": "Используйте ваши любимые приложения DeFi и другие приложения не покидая Citadel.one!",
         "readMore": "Узнать больше",
         "networks": "Сети",
         "guide": "Инструкция",
@@ -1275,7 +1275,7 @@
         "subtitle": "Вы можете совершить обмен на Citadel.one или пополнить депозит с помощью биржи.",
         "card1": {
             "title": "Обмен на Citadel.one",
-            "action": "расширения"
+            "action": "приложения"
         },
         "card2": {
             "title": "Депозит с ",
