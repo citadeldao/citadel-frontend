@@ -7,6 +7,8 @@ export default class CryptoCoinOASIS extends CryptoCoin {
     this.showFrozenBalance = true;
     this.unstakeingPerioud = '21';
     this.hasRedelegation = true;
+    this.minSendAmount = 0.01;
+    this.minStakingAmount = 100;
   }
 
   getPublicKeyDecoded() {
