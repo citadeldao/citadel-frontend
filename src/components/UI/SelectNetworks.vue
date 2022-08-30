@@ -86,7 +86,7 @@ export default {
 
     const keyword = ref('');
     const displayData = computed(() => {
-      let preferredOrder = [
+      const preferredOrder = [
         ...netsPositionPriority,
         ...networks.value
           .filter((e) => netsPositionPriority.indexOf(e.abbr) === -1)
@@ -97,18 +97,12 @@ export default {
       });
       if (!keyword.value) {
         return nets;
-        // return filterNets;
       }
       return nets.filter(
         (item) =>
           item.title.toLowerCase().includes(keyword.value.toLowerCase()) ||
           item.abbr.toLowerCase().includes(keyword.value.toLowerCase())
       );
-      // return filterNets.filter(
-      //   (item) =>
-      //     item.title.toLowerCase().includes(keyword.value.toLowerCase()) ||
-      //     item.abbr.toLowerCase().includes(keyword.value.toLowerCase())
-      // );
     });
 
     const showAllNetworks = () => {
@@ -161,7 +155,7 @@ export default {
     const onCheck = (e) => {
       addItem(e);
     };
-    onMounted(() => {
+    const prepareSelectedItems = () => {
       for (const key in displayData.value) {
         const foundItem = wallets.value.find(
           (e) => e.net === displayData.value[key].net
@@ -175,9 +169,11 @@ export default {
         0,
         netsPositionPriority.length
       )) {
-        console.log(typeof displayData.value[key].id);
         addItem(displayData.value[key].id);
       }
+    };
+    onMounted(() => {
+      prepareSelectedItems();
       showAllNetworks();
     });
     return {
