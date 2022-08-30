@@ -45,9 +45,9 @@
         >{{ $t('link') }}.</a
       >
     </span>
-    <span v-else class="balance-tooltip-info__period">
+    <span class="balance-tooltip-info__period">
       {{
-        !currentWallet.hasUnstakeingPerioud
+        !currentWallet.unstakeingPerioud
           ? `${$t('balanceTooltipInfo.noPeriod')} ${currentWallet.name}.`
           : `${$t(
               'balanceTooltipInfo.unstakingPeriod'
@@ -56,7 +56,7 @@
             )}`
       }}
       <span
-        v-if="currentWallet.hasUnstakeingPerioud"
+        v-if="currentWallet.unstakeingPerioud"
         class="balance-tooltip-info__period-days"
         >{{ currentWallet.unstakeingPerioud }}
         days.

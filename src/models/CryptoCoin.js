@@ -37,7 +37,6 @@ export default class CryptoCoin {
     this.hasClaim = opts?.config?.methods?.claim || false;
     this.hasPledged = false;
     this.hasFee = true;
-    this.showFrozenBalance = false;
     this.importedFromSeed = opts?.importedFromSeed || false;
     this.decimals = opts?.config?.decimals;
     this.hasCustomFee = opts?.config?.fee_key === 'fee';
@@ -45,8 +44,8 @@ export default class CryptoCoin {
       .exponentiatedBy(opts?.config?.decimals)
       .toNumber()
       .toFixed(opts?.config?.decimals);
+    this.unstakeingPerioud = opts?.config?.unstakeingPerioud;
 
-    this.hasUnstakeingPerioud = true;
     this.messages = {
       frozenBalance: 'balanceTooltipInfo.frozenBalanceBalanceInfo2',
     };
