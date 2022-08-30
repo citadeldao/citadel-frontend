@@ -62,7 +62,7 @@ import { onMounted } from 'vue';
 import Input from '@/components/UI/Input';
 import { netsPositionPriority } from '@/config/netsPositionPriority.js';
 import useWallets from '@/compositions/useWallets';
-
+import { WALLET_TYPES } from '@/config/walletType.js';
 export default {
   name: 'SelectNetworks',
   components: { NetworkCard, PrimaryButton, BackButton, Input },
@@ -136,10 +136,27 @@ export default {
       const checkedNets = checkedItems.value.map(
         (index) => networks.value[index].net
       );
-      const checkedNetsWithoutYetAdded = computed(() =>
-        checkedNets.filter((e) => checkedNetYetAdded.indexOf(e) === -1)
+      let polkadotCondition;
+      const oneSeedZeroLastIndexWalletsList = wallets.value
+        .filter((wallet) => {
+          if (wallet.net === 'polkadot')
+            polkadotCondition = wallet.derivationPath;
+          if (
+            (WALLET_TYPES.ONE_SEED &&
+              wallet.derivationPath[wallet.derivationPath.length - 1] ===
+                '0') ||
+            !polkadotCondition
+          ) {
+            return wallet;
+          }
+        })
+        .map((e) => e.net);
+      emit(
+        'selectNets',
+        checkedNets.filter(
+          (e) => oneSeedZeroLastIndexWalletsList.indexOf(e) === -1
+        )
       );
-      emit('selectNets', [checkedNets, checkedNetsWithoutYetAdded.value]);
     };
     const onCheck = (e) => {
       addItem(e);
