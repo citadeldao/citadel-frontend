@@ -340,7 +340,8 @@
         "claimTo": "提取至",
         "amountToClaim": "可提取金额",
         "confirmModalTitle": "确认提取奖励",
-        "confirmModalDesc": "您将在可用余额中查看应计奖励"
+        "confirmModalDesc": "您将在可用余额中查看应计奖励",
+        "claimSuccessfuly": ""
     },
     "exportWallet": {
         "card1Info": "导出关联助记词",
