@@ -662,7 +662,7 @@ export default {
             isLoading.value = false;
             notify({
               type: 'success',
-              text: 'Claimed successfully',
+              text: t('claim.claimSuccessfuly'),
             });
           } else {
             claimModalCloseHandler();

@@ -340,7 +340,8 @@
         "claimTo": "Claim to",
         "amountToClaim": "Amount to claim",
         "confirmModalTitle": "Confirm the rewards claim",
-        "confirmModalDesc": "You will see the accrued rewards in the available balance"
+        "confirmModalDesc": "You will see the accrued rewards in the available balance",
+        "claimSuccessfuly": "Claimed successfully"
     },
     "exportWallet": {
         "card1Info": "Export the associated mnemonic phrase",
