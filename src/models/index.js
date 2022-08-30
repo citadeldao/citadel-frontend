@@ -38,6 +38,8 @@ import CryptoCoinPOLKADOT from './CryptoCoins/CryptoCoinPOLKADOT';
 import CryptoCoinEVMOS from './CryptoCoins/CryptoCoinEVMOS';
 import CryptoCoinCRESCENT from './CryptoCoins/CryptoCoinCRESCENT';
 import CryptoCoinORAI from './CryptoCoins/CryptoCoinORAI';
+import CryptoCoinOPTIMISM from './CryptoCoins/CryptoCoinOPTIMISM';
+import CryptoCoinARBITRUM from './CryptoCoins/CryptoCoinARBITRUM';
 
 export default {
   // nets
@@ -81,4 +83,6 @@ export default {
   EVMOS: CryptoCoinEVMOS,
   CRESCENT: CryptoCoinCRESCENT,
   ORAI: CryptoCoinORAI,
+  OPTIMISM: CryptoCoinOPTIMISM,
+  ARBITRUM: CryptoCoinARBITRUM,
 };

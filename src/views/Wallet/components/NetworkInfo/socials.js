@@ -565,4 +565,32 @@ export default {
       href: 'https://www.coingecko.com/en/coins/crescent-network',
     },
   },
+  arbitrum: {
+    web: {
+      title: 'portal.arbitrum.one',
+      href: 'https://portal.arbitrum.one/',
+    },
+    twitter: {
+      title: '@arbitrum',
+      href: 'arbitrum',
+    },
+    // landing: {
+    //   title: 'Coingecko',
+    //   href: 'https://www.coingecko.com/en/coins/crescent-network',
+    // },
+  },
+  optimism: {
+    web: {
+      title: 'optimism.io',
+      href: 'https://www.optimism.io/',
+    },
+    twitter: {
+      title: '@optimismFND',
+      href: 'optimismFND',
+    },
+    // landing: {
+    //   title: 'Coingecko',
+    //   href: 'https://www.coingecko.com/en/coins/crescent-network',
+    // },
+  },
 };
