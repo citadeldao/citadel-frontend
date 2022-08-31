@@ -50,11 +50,14 @@
       <span class="info-block__line-title"> {{ $t('amount') }}: </span>
       <div>
         <span
-          v-pretty-number="{ value: info.value, currency: currentWallet?.code }"
+          v-pretty-number="{
+            value: info.value,
+            currency: formatedValueSymbol || currentWallet?.code,
+          }"
           class="info-block__line-amount"
         />
         <span class="info-block__line-currency">
-          {{ currentWallet?.code }}
+          {{ formatedValueSymbol || currentWallet?.code }}
         </span>
       </div>
     </div>
@@ -88,6 +91,14 @@ export default {
       props.currentWallet?.getTxUrl(props.currentWallet.id, props.info.hash)
     );
 
+    const formatedValueSymbol = computed(() => {
+      if (!props.info.view) return '';
+      const findType = props.info.view[0].components.find(
+        (w) => w.type === 'amount'
+      );
+      return findType.value.symbol;
+    });
+
     const setComment = async () => {
       if (activateEdit.value) {
         if (customNote.value !== props.info.note) {
@@ -108,7 +119,7 @@ export default {
       nextTick(() => document.getElementById('editComment').focus());
     };
 
-    return { txUrl, customNote, activateEdit, setComment };
+    return { txUrl, customNote, activateEdit, setComment, formatedValueSymbol };
   },
 };
 </script>
@@ -207,6 +218,9 @@ export default {
     font-size: 14px;
     line-height: 30px;
     word-break: break-word;
+  }
+  &__line-to {
+    text-align: right;
   }
   &__status {
     font-family: 'Panton_Bold';

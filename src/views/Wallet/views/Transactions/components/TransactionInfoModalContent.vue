@@ -173,6 +173,7 @@ $blue-dark: #262b61;
       &.empty {
         border: none;
         padding: 0;
+        margin: 0;
       }
 
       .title {
