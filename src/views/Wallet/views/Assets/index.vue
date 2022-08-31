@@ -232,6 +232,7 @@ export default {
       if (
         token.net.toLowerCase() === stateCurrentWallet.value.net.toLowerCase()
       ) {
+        console.warn('testtest');
         store.dispatch('subtokens/setCurrentToken', null);
         redirectToWallet({
           wallet: store.getters['wallets/walletByAddress'](route.params),
@@ -250,6 +251,7 @@ export default {
         snip20Token.value = token;
       } else {
         store.dispatch('subtokens/setCurrentToken', token);
+        console.warn('testtest');
         redirectToWallet({
           wallet: store.getters['wallets/walletByAddress'](route.params),
           token,

@@ -15,6 +15,7 @@ export default async ({ wallet, token, root = false }) => {
   if (!wallet) {
     await router.push({ name: 'AddAddress' });
   }
+  console.warn('testtest');
 
   const routeName =
     (root && hasContext) || !hasContext ? 'WalletAssets' : currentRoute.name;

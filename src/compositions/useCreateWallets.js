@@ -145,6 +145,7 @@ export default function useCreateWallets() {
           type: 'warning',
           text: errorMessage,
         });
+        console.warn('testtest1');
         router.push({ name: 'AddAddress' });
         showModal.value = false;
         showLoader.value = false;
