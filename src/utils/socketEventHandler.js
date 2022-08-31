@@ -135,10 +135,11 @@ export async function socketEventHandler({ eventName, data }) {
             );
             if (error) {
               sendErrorMsg();
-              notify({
-                type: 'warning',
-                text: error.message,
-              });
+              error.code === 1 &&
+                notify({
+                  type: 'warning',
+                  text: error.message,
+                });
               return;
             }
             store.dispatch('extensions/sendCustomMsg', {
