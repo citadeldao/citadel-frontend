@@ -10,6 +10,7 @@ const types = {
   SET_TOTAL_CLAIMED_REWARDS_XCT: 'SET_TOTAL_CLAIMED_REWARDS_XCT',
   SET_REWARDS: 'SET_REWARDS',
   SET_CALCULATOR_DATA: 'SET_CALCULATOR_DATA',
+  SET_REWARDS_XCT: 'SET_REWARDS_XCT',
 };
 
 export default {
@@ -22,6 +23,7 @@ export default {
     totalClaimedRewardsXCT: 0,
     rewards: [],
     calculatorData: {},
+    xctRewards: 0,
   }),
 
   getters: {
@@ -34,6 +36,7 @@ export default {
     totalClaimedRewardsXCT: (state) => state.totalClaimedRewardsXCT,
     rewards: (state) => state.rewards,
     calculatorData: (state) => state.calculatorData,
+    xctRewards: (state) => state.xctRewards,
   },
 
   mutations: {
@@ -57,6 +60,9 @@ export default {
     },
     [types.SET_CALCULATOR_DATA](state, data) {
       state.calculatorData = data;
+    },
+    [types.SET_REWARDS_XCT](state, data) {
+      state.xctRewards = data;
     },
   },
 
@@ -153,6 +159,27 @@ export default {
 
       if (!error) {
         commit(types.SET_TOTAL_CLAIMED_REWARDS_XCT, data);
+      } else {
+        notify({
+          type: 'warning',
+          text: error,
+        });
+      }
+    },
+
+    async getRewardsXCT({ commit, rootGetters }, walletId) {
+      if (!rootGetters['wallets/currentWallet'].hasXCT) {
+        return;
+      }
+
+      const { error, data } = await citadel.callTokenInfo(
+        walletId,
+        'bsc_xct',
+        'xctRewards'
+      );
+
+      if (!error) {
+        commit(types.SET_REWARDS_XCT, data.claimable);
       } else {
         notify({
           type: 'warning',

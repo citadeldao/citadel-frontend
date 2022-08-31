@@ -19,7 +19,7 @@ export default class CryptoCoin {
     this.name = opts?.config?.name;
     this.code = opts?.config?.code;
     this.address = opts?.address;
-    this.mnemonicEncoded = opts?.mnemonicEncoded || null;
+    // this.mnemonicEncoded = opts?.mnemonicEncoded || null;
     this.privateKeyEncoded = opts?.privateKeyEncoded || null;
     this.publicKey = opts?.publicKey || null;
     this.derivationPath = opts?.derivationPath;
@@ -63,7 +63,9 @@ export default class CryptoCoin {
   getPrivateKeyDecoded(password) {
     const { error, data } = citadel.decodePrivateKeyByPassword(
       this.net,
-      this.mnemonicEncoded || this.privateKeyEncoded,
+      this.mnemonicEncoded ||
+        this.privateKeyEncoded ||
+        store.getters['crypto/encodeUserMnemonic'],
       password
     );
 

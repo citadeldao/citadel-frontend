@@ -47,16 +47,15 @@
 
       <div class="assets-table">
         <div class="assets-table__thead">
-          <div>Asset</div>
-          <div>Balance</div>
-          <div>USD Balance</div>
-          <div>Price</div>
+          <div>{{ $t('asset') }}</div>
+          <div>{{ $t('balance') }}</div>
+          <div>USD {{ $t('balance') }}</div>
+          <div>{{ $t('price') }}</div>
         </div>
 
         <AssetsItem
           :item="stateCurrentWallet"
           :balance="stateCurrentWallet.balance"
-          :price="stateCurrenWalletPrice"
           is-native-token
           :is-active="currentWallet.net === stateCurrentWallet.net"
           @click="setCurrentToken(stateCurrentWallet)"
@@ -65,17 +64,10 @@
           v-for="(item, index) in displayData"
           :key="`${item.name}-${index}`"
           :balance="item.tokenBalance"
-          :price="item.tokenBalance.price.USD"
           :item="item"
           :is-not-linked="
             isNotLinkedSnip20(item) &&
             stateCurrentWallet.type !== WALLET_TYPES.KEPLR
-          "
-          :is-disabled="
-            (item.config.standard === TOKEN_STANDARDS.SNIP_20 &&
-              stateCurrentWallet.type === WALLET_TYPES.KEPLR &&
-              !item.linked) ||
-            (item.config.standard !== TOKEN_STANDARDS.SNIP_20 && !item.linked)
           "
           :is-active="item.net === currentWallet.net"
           @click="setCurrentToken(item)"
@@ -139,10 +131,10 @@
   </div>
   <teleport v-if="showCreateVkModal" to="body">
     <CreateVkModal
-      :address="currentWallet.address"
+      :address="stateCurrentWallet.address"
       :token="snip20Token"
       :token-fee="snip20TokenFee"
-      :current-wallet="currentWallet"
+      :current-wallet="stateCurrentWallet"
       @close="closeCreateVkModal"
     />
   </teleport>
@@ -220,12 +212,13 @@ export default {
     ]);
     const filterValue = ref(filterList.value[3].value);
 
-    const stateCurrenWalletPrice = computed(() => {
-      if (props.currentWallet.net === stateCurrentWallet.value.net) {
-        return store.getters['profile/rates'][props.currentWallet.net].USD;
-      }
-      return stateCurrentWallet.value.balance;
-    });
+    // const stateCurrentWalletPrice = computed(() => {
+    //   console.log(props.currentWallet, stateCurrentWallet, 'test');
+    //   if (props.currentWallet.net === stateCurrentWallet.value.net) {
+    //     return store.getters['profile/rates'][props.currentWallet.net].USD;
+    //   }
+    //   return props.currentWallet.tokenBalance.price.USD;
+    // });
 
     const isNotLinkedSnip20 = (token) => {
       const isSnip20 = computed(
@@ -255,7 +248,7 @@ export default {
         mainIsLoading.value = false;
         showCreateVkModal.value = true;
         snip20Token.value = token;
-      } else if (!isNotLinkedSnip20(token) && token.linked) {
+      } else {
         store.dispatch('subtokens/setCurrentToken', token);
         redirectToWallet({
           wallet: store.getters['wallets/walletByAddress'](route.params),
@@ -390,7 +383,6 @@ export default {
       isNotLinkedSnip20,
       closeCreateVkModal,
       stateCurrentWallet,
-      stateCurrenWalletPrice,
       keyword,
       filterValue,
       filteredTokens,
@@ -552,6 +544,7 @@ export default {
       font-size: 18px;
       text-align: left;
       color: $mid-blue;
+      text-transform: capitalize;
 
       @include lg {
         font-size: $wallet-assets-heading-font-size;

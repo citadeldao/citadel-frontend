@@ -325,7 +325,7 @@ export default {
       );
       modalCloseHandler();
     };
-    const showTransactionInfo = (transaction) => {
+    const showTransactionInfo = async (transaction) => {
       currentTransaction.value = transaction;
       txComment.value = transaction.note;
       showModal.value = true;

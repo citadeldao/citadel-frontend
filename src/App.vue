@@ -47,9 +47,9 @@ export default {
     );
     const newWalletsModalShow = computed(
       () =>
-        store.getters['newWallets/isModalShown'] ||
-        store.getters['newWallets/isShowLoaderG'] ||
-        store.getters['newWallets/isShowAlreadyAddedModalG']
+        store.getters['newWallets/isShowModal'] ||
+        store.getters['newWallets/isShowLoader'] ||
+        store.getters['newWallets/isShowAlreadyAddedModal']
     );
     onMounted(() => {
       store.dispatch('i18n/init');

@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 // import Textarea from '@/components/UI/Textarea';
 // import comment from '@/assets/icons/comment.svg';
 import claimIcon from '@/assets/icons/transactions/claim.svg';
@@ -124,6 +124,9 @@ export default {
       showPlaceholder.value = false;
       // nextTick(() => document.getElementById('comment').focus());
     };
+    onMounted(() => {
+      togleShowPlaceholder();
+    });
 
     return { showPlaceholder, togleShowPlaceholder };
   },

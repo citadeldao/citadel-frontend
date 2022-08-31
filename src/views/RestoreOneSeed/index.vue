@@ -55,18 +55,18 @@ export default {
     } = useCreateWallets();
     const store = useStore();
     const finalStep = (nets) => {
-      store.dispatch('newWallets/showLoader');
+      store.commit('newWallets/setLoader', true);
       setNets(nets);
       setType('oneSeed');
       const success = createWallets();
-      success.then(() => {
+      success.then(async () => {
         !isPasswordHash.value && savePassword();
         !isUserMnemonic.value && saveMnemonic();
-        store.dispatch('newWallets/setNewWalletsList', newWallets.value);
-        store.dispatch('newWallets/hideLoader');
-        store.dispatch('newWallets/showModal');
+        await redirectToNewWallet();
+        store.commit('newWallets/setNewWalletsList', newWallets.value);
+        store.commit('newWallets/setLoader', false);
+        store.commit('newWallets/setModal', true);
       });
-      store.dispatch('newWallets/hideLoader');
     };
 
     isUserMnemonic.value && redirectToNewWallet();
@@ -94,9 +94,9 @@ export default {
   border-radius: 25px;
   padding: 0 44px;
   flex-grow: 1;
-  height: calc(100% + 50px); // calc(100vh - 114px);
+  height: calc(100% - 38px);
   @include lg {
-    height: calc(100% + 50px); // calc(100vh - 114px);
+    height: calc(100% - 38px);
     padding: 0 40px;
   }
   @include md {
