@@ -89,7 +89,6 @@ export async function socketEventHandler({ eventName, data }) {
       }
 
       if (data.type === extensionsSocketTypes.types.balance) {
-        console.log('>>>START');
         if (!data?.message) {
           return;
         }
@@ -115,6 +114,21 @@ export async function socketEventHandler({ eventName, data }) {
         );
 
         if (wallet) {
+          // send cached balance
+          if (wallet.subtokensList?.find) {
+            const token = wallet.subtokensList.find((t) => t.net === tokenKey);
+
+            token &&
+              store.dispatch('extensions/sendCustomMsg', {
+                token: store.getters['extensions/currentAppInfo'].token,
+                message: {
+                  balance: token.tokenBalance.calculatedBalance,
+                  tokenContract,
+                },
+                type: data.type,
+              });
+          }
+
           // update balance (by SVK, keplr etc)
           const { data: balance, error } = await citadel.getBalanceById(
             wallet.id,
@@ -138,32 +152,6 @@ export async function socketEventHandler({ eventName, data }) {
             type: data.type,
           });
           return;
-          // if (wallet.subtokensList?.find) {
-          //   // send cache
-          //   const token = wallet.subtokensList.find((t) => t.net === tokenKey);
-
-          //   token &&
-          //     store.dispatch('extensions/sendCustomMsg', {
-          //       token: store.getters['extensions/currentAppInfo'].token,
-          //       message: {
-          //         balance: token.tokenBalance.calculatedBalance,
-          //         tokenContract,
-          //       },
-          //       type: data.type,
-          //     });
-
-          //   store.dispatch('extensions/sendCustomMsg', {
-          //     token: store.getters['extensions/currentAppInfo'].token,
-          //     message: {
-          //       balance: balance.calculatedBalance,
-          //       tokenContract,
-          //     },
-          //     type: data.type,
-          //   });
-          //   return;
-          // } else {
-          //   sendErrorMsg();
-          // }
         }
       }
 

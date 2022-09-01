@@ -745,7 +745,7 @@ export default {
     };
 
     // for secret dev
-    const closeCreateVkModal = ({ success } = {}) => {
+    const closeCreateVkModal = async ({ success } = {}) => {
       if (!extensionTransactionForSign.value) {
         return;
       }
@@ -753,9 +753,8 @@ export default {
         // close modals
         showCreateVkModal.value = false;
         // set default values
-        snip20TokenFee.value = null;
-        snip20Token.value = null;
-        // send cancel message
+
+        // send success or cancel message
         store.dispatch('extensions/sendCustomMsg', {
           token: currentAppInfo.value.token,
           message: success
@@ -763,6 +762,25 @@ export default {
             : extensionsSocketTypes.messages.canceled,
           type: extensionsSocketTypes.types.message,
         });
+
+        // if success, send new balance (move to app)
+        const { data } = await citadel.getBalanceById(
+          signerWallet.value.id,
+          snip20Token.value.net
+        );
+
+        data &&
+          store.dispatch('extensions/sendCustomMsg', {
+            token: currentAppInfo.value.token,
+            message: {
+              balance: data.calculatedBalance,
+              tokenContract: snip20Token.value.address,
+            },
+            type: extensionsSocketTypes.types.balance,
+          });
+
+        snip20TokenFee.value = null;
+        snip20Token.value = null;
       } catch (error) {
         store.dispatch('extensions/sendCustomMsg', {
           token: currentAppInfo.value.token,

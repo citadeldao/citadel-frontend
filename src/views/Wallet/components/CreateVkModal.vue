@@ -392,11 +392,14 @@ export default {
         transactionHash = res?.data?.transactionHash;
         vk = res?.data?.viewingKey;
       } else {
-        isConfirmModalLoading.value = false;
-        showConfirmModal.value = false;
-
-        clearLedgerModals();
-        showConfirmLedgerModal.value = true;
+        if (isKeplrWallet.value) {
+          isConfirmModalLoading.value = true;
+        } else {
+          isConfirmModalLoading.value = false;
+          showConfirmModal.value = false;
+          clearLedgerModals();
+          showConfirmLedgerModal.value = true;
+        }
 
         const { error: resError, data } = await citadel.setViewingKey(
           props.currentWallet.id,
