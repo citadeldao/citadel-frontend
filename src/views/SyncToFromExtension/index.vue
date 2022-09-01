@@ -45,6 +45,7 @@
                   id="walletSearchSync"
                   v-model="searchWalletStr"
                   :label="$t('searchToken')"
+                  :hard-autocomplete-off="true"
                   type="text"
                   icon="loop"
                   :placeholder="$t('inputToken')"
@@ -67,6 +68,7 @@
                 <Input
                   id="password"
                   v-model="password"
+                  :hard-autocomplete-off="true"
                   :show-error-text="!!incorrectPassword && confirmPassword"
                   :error="
                     incorrectPassword && confirmPassword
@@ -82,8 +84,9 @@
               </div>
               <div class="password-wrap mt-10">
                 <Input
-                  id="password"
+                  id="passwordConfirm"
                   v-model="passwordExtension"
+                  :hard-autocomplete-off="true"
                   :show-error-text="
                     !!incorrectPasswordExtension && confirmPassword
                   "
@@ -132,6 +135,7 @@
                       ? 'Incorrect password'
                       : ''
                   "
+                  :hard-autocomplete-off="true"
                   :label="$t('enterPassword')"
                   :placeholder="$t('password')"
                   type="password"
