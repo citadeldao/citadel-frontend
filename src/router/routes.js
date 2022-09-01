@@ -19,7 +19,7 @@ export default [
     },
   },
   {
-    path: '/wallet/:net/:token?/:address',
+    path: '/wallet/:net?/:token?/:address?',
     name: 'Wallet',
     // redirect: to => ({ name: 'WalletSend', params: { ...to.params } }),
     component: () => import(/* webpackChunkName: 'Wallet' */ '@/views/Wallet'),
