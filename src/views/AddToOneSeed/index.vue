@@ -123,13 +123,13 @@ export default {
   border-radius: 25px;
   flex-grow: 1;
   padding: 0 44px;
-  height: calc(100% - 38px);
+  min-height: calc(100% - 38px);
   // calc(100vh - 114px);
   margin-bottom: 8px;
 
   @include lg {
     padding: 0 40px;
-    height: calc(100% - 38px);
+    min-height: calc(100% - 38px);
   }
   @include md {
     padding: 0 31px;
