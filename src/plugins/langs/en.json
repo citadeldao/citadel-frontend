@@ -1142,7 +1142,7 @@
             "shortDescription": "Optimism is a Layer 2 scaling solution for Ethereum that uses advanced data compression techniques to speed up and cut the costs of Ethereum transactions."
         },
         "arbitrum": {
-            "title": "Oraichain",
+            "title": "Arbitrum",
             "description": "Arbitrum is a Layer 2 scaling solution for Ethereum that enhances the capabilities of Ethereum’s smart contracts. It aims to speed up transaction times and cut fees on the Ethereum blockchain by Optimistic Rollup technology.",
             "shortDescription": "Arbitrum is a Layer 2 scaling solution for Ethereum that enhances the capabilities of Ethereum’s smart contracts."
         }
