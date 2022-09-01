@@ -929,11 +929,11 @@
         "notFound": "Вы не установили Metamask для вашего браузера",
         "changeNetwork": "Пожалуйста, выберите другую сеть в Metamask\n",
         "cancel": "Отменить",
-        "confirm": "",
         "importWallet": "Импортировать кошелек",
         "allreadyAdded": "Адрес уже добавлен",
         "titleModal": "Импортировать Metamask",
-        "descModal": "Измените свой адрес или выберите другую сеть в Metamask"
+        "descModal": "Измените свой адрес или выберите другую сеть в Metamask",
+        "confirm": "Подтвердить"
     },
     "netInfo": {
         "akash": {
