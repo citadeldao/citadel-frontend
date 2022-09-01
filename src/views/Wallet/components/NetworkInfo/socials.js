@@ -574,10 +574,10 @@ export default {
       title: '@arbitrum',
       href: 'arbitrum',
     },
-    // landing: {
-    //   title: 'Coingecko',
-    //   href: 'https://www.coingecko.com/en/coins/crescent-network',
-    // },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/ethereum',
+    },
   },
   optimism: {
     web: {
@@ -588,9 +588,9 @@ export default {
       title: '@optimismFND',
       href: 'optimismFND',
     },
-    // landing: {
-    //   title: 'Coingecko',
-    //   href: 'https://www.coingecko.com/en/coins/crescent-network',
-    // },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/ethereum',
+    },
   },
 };
