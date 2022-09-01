@@ -46,7 +46,7 @@
         </div>
       </div>
       <div
-        v-if="!isHardwareWallet(currentWallet.type)"
+        v-if="!isHardwareWallet(currentWallet.type) && !isKeplrWallet"
         class="createVkPassword"
       >
         <Input
@@ -103,7 +103,7 @@
           @keyup.enter="confirmImportHandler"
         />
       </div>
-      <div
+      <!-- <div
         v-if="!isHardwareWallet(currentWallet.type)"
         class="createVkPassword"
         :class="{ 'mt-40': ivkInputError }"
@@ -120,7 +120,7 @@
           :error="inputError"
           @keyup.enter="confirmImportHandler"
         />
-      </div>
+      </div> -->
     </ModalContent>
 
     <!--Confirm Ledger Modals-->
@@ -183,7 +183,7 @@
   </Modal>
 </template>
 <script>
-import { ref, provide, watch, inject } from 'vue';
+import { ref, provide, watch, inject, computed } from 'vue';
 import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 import { isHardwareWallet } from '@/config/walletType';
@@ -200,6 +200,7 @@ import Loading from '@/components/Loading';
 import useCheckPassword from '@/compositions/useCheckPassword';
 import useLedger from '@/compositions/useLedger';
 import redirectToWallet from '@/router/helpers/redirectToWallet';
+import { WALLET_TYPES } from '../../../config/walletType';
 
 export default {
   name: 'CreateVkModal',
@@ -265,6 +266,9 @@ export default {
     const viewingKey = ref(''); // should be empty
     const ivk = ref('');
     const ivkInputError = ref('');
+    const isKeplrWallet = computed(
+      () => props.currentWallet.type === WALLET_TYPES.KEPLR
+    );
 
     const { password, passwordError, inputError } = useCheckPassword();
     provide('inputError', inputError);
@@ -289,7 +293,11 @@ export default {
       isConfirmModalLoading.value = true;
       let isError = false;
 
-      if (passwordError.value && !isHardwareWallet(props.currentWallet.type)) {
+      if (
+        passwordError.value &&
+        !isHardwareWallet(props.currentWallet.type) &&
+        !isKeplrWallet.value
+      ) {
         inputError.value = passwordError.value;
         isConfirmModalLoading.value = false;
         isError = true;
@@ -350,7 +358,11 @@ export default {
     };
 
     const confirmClickHandler = async () => {
-      if (passwordError.value && !isHardwareWallet(props.currentWallet.type)) {
+      if (
+        passwordError.value &&
+        !isHardwareWallet(props.currentWallet.type) &&
+        !isKeplrWallet.value
+      ) {
         inputError.value = passwordError.value;
 
         return;
@@ -361,7 +373,7 @@ export default {
       let vk;
       isConfirmModalLoading.value = true;
 
-      if (!isHardwareWallet(props.currentWallet.type)) {
+      if (!isHardwareWallet(props.currentWallet.type) && !isKeplrWallet.value) {
         const res = await citadel.setViewingKey(
           props.currentWallet.id,
           props.token.net,
@@ -382,6 +394,7 @@ export default {
       } else {
         isConfirmModalLoading.value = false;
         showConfirmModal.value = false;
+
         clearLedgerModals();
         showConfirmLedgerModal.value = true;
 
@@ -458,6 +471,7 @@ export default {
       inputError,
       viewingKey,
       isHardwareWallet,
+      isKeplrWallet,
       showConnectLedgerModal,
       showConfirmLedgerModal,
       showAppLedgerModal,

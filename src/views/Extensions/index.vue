@@ -829,13 +829,9 @@ export default {
     const confirmClickHandler = async () => {
       if (
         signerWallet.value &&
-        signerWallet.value.type === WALLET_TYPES.KEPLR
+        signerWallet.value.type === WALLET_TYPES.KEPLR &&
+        !extensionTransactionForSign.value.messageScrt
       ) {
-        // FOR SECRET DEV (keplr not yet supported)
-        if (extensionTransactionForSign.value.messageScrt) {
-          return;
-        }
-
         let keplrResult;
         const signType =
           extensionTransactionForSign.value.transaction.direct &&
@@ -1026,9 +1022,8 @@ export default {
               type: 'warning',
               text: response?.error,
             });
-
-            return;
           }
+          return;
         }
 
         result = await signerWallet.value.signAndSendTransfer({
