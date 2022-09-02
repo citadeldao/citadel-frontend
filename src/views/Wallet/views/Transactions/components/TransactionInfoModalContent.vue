@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { ref, nextTick } from 'vue';
+import { ref, nextTick, onMounted } from 'vue';
 import Textarea from '@/components/UI/Textarea';
 import comment from '@/assets/icons/comment.svg';
 import InfoBlock from './InfoBlock.vue';
@@ -61,6 +61,9 @@ export default {
       showPlaceholder.value = false;
       nextTick(() => document.getElementById('comment').focus());
     };
+    onMounted(() => {
+      togleShowPlaceholder();
+    });
 
     return { showPlaceholder, togleShowPlaceholder };
   },

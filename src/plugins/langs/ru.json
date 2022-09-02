@@ -929,6 +929,7 @@
         "notFound": "Вы не установили Metamask для вашего браузера",
         "changeNetwork": "Пожалуйста, выберите другую сеть в Metamask\n",
         "cancel": "Отменить",
+        "confirm": "",
         "importWallet": "Импортировать кошелек",
         "allreadyAdded": "Адрес уже добавлен",
         "titleModal": "Импортировать Metamask",
