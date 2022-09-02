@@ -272,7 +272,7 @@ export default {
       const data = [...filteredTokensList.value].sort(
         (a, b) => isNotLinkedSnip20(b) - isNotLinkedSnip20(a)
       );
-      const byAlphabet = sortByAlphabet(data, 'code').sort(
+      const byAlphabet = sortByAlphabet(data, 'name').sort(
         (a, b) => isNotLinkedSnip20(b) - isNotLinkedSnip20(a)
       );
       const byValue = data

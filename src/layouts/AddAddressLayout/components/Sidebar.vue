@@ -265,9 +265,32 @@ export default {
 
       return customListWallets;
     });
+
+    const setPreferredOrderByBlocks = (sortedlist) => {
+      let firstIndexTitle = 0;
+      for (const item of sortedlist) {
+        if (item.title) {
+          break;
+        }
+        firstIndexTitle++;
+      }
+      const aliasItemsList = sortedlist.slice(
+        firstIndexTitle,
+        sortedlist.length
+      );
+      sortedlist.splice(firstIndexTitle, sortedlist.length);
+      sortedlist.sort((a, b) =>
+        a.address !== b.address ? (a.address < b.address ? -1 : 1) : 0
+      );
+      sortedlist.unshift(...aliasItemsList);
+      return sortedlist;
+    };
+
     const filteredWallets = computed(() => {
       const data = walletsList.value;
-      const byAlphabet = sortByAlphabet(data, 'code', 'address');
+      const byAlphabet = setPreferredOrderByBlocks(
+        sortByAlphabet(data, 'title')
+      );
       const byValue = data.sort((a, b) => a.balanceUSD - b.balanceUSD);
 
       switch (filterValue.value) {
