@@ -1,6 +1,6 @@
 <template>
   <div class="sync-data">
-    <SyncToFromExtension v-if="syncModal" @close="syncModal = false" />
+    <SyncToFromExtension v-if="syncModal" @close="closeModal" />
     <PrimaryButton class="sync-data__btn" @click="openSync">
       {{ $t('syncExtensions.syncWithExtension') }}
     </PrimaryButton>
@@ -27,6 +27,11 @@ export default {
       syncModal.value = true;
     };
 
+    const closeModal = () => {
+      syncModal.value = false;
+      localStorage.removeItem('openSync');
+    };
+
     if (route.hash === '#sync' || localStorage.getItem('openSync')) {
       setTimeout(() => {
         openSync();
@@ -36,6 +41,7 @@ export default {
 
     return {
       openSync,
+      closeModal,
       syncModal,
     };
   },

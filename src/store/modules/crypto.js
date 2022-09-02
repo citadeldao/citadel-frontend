@@ -102,15 +102,15 @@ export default {
               password
             )
           : null;
-        walletOpts.mnemonicEncoded = walletOpts.mnemonicEncoded
-          ? walletOpts.mnemonicEncoded
-          : walletOpts.mnemonic
-          ? WalletConstructor.encodePrivateKeyByPassword(
-              walletOpts.net,
-              walletOpts.mnemonic,
-              password
-            )
-          : null;
+        // walletOpts.mnemonicEncoded = walletOpts.mnemonicEncoded
+        //   ? walletOpts.mnemonicEncoded
+        //   : walletOpts.mnemonic
+        //   ? WalletConstructor.encodePrivateKeyByPassword(
+        //       walletOpts.net,
+        //       walletOpts.mnemonic,
+        //       password
+        //     )
+        //   : null;
         walletOpts.config = rootGetters['networks/configByNet'](walletOpts.net);
         const { currency } = useWallets(walletOpts);
         walletOpts.balanceUSD = BigNumber(
@@ -118,8 +118,8 @@ export default {
         )
           .times(currency.value?.USD)
           .toNumber();
-        const walletInstance = new WalletConstructor(walletOpts);
-
+        const walletInstance = new WalletConstructor(walletOpts, password);
+        delete walletInstance.privateKey;
         return walletInstance;
       } catch (error) {
         notify({

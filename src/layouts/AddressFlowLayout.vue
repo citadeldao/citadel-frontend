@@ -42,9 +42,7 @@ export default {
 
         return;
       }
-      window.history.state.back && window.history.state.back != '/login'
-        ? router.go(-1)
-        : router.push({ name: 'Settings' });
+      router.push({ name: 'HomePage' });
     };
 
     return {
@@ -110,13 +108,16 @@ export default {
   &__wrap {
     width: 1140px;
     transition: none;
-
     @include md {
       width: 100%;
     }
 
     &.menu-item {
-      margin-top: 100px;
+      margin-top: 38px;
+      min-height: calc(100% - 38px);
+    }
+    &:deep > div {
+      min-height: calc(100% - 38px);
     }
   }
 }

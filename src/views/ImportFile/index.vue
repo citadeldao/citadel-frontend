@@ -19,19 +19,6 @@
         @passwordConfirmed="finalStep"
       />
     </div>
-    <teleport v-if="showModal" to="body">
-      <Modal>
-        <img v-if="showLoader" src="@/assets/gif/loader.gif" alt="" />
-        <CatPage
-          v-else
-          v-click-away="modalClickHandler"
-          :data="newWallets"
-          data-qa="add-address__existing__file"
-          @close="modalCloseHandler"
-          @buttonClick="modalClickHandler"
-        />
-      </Modal>
-    </teleport>
   </div>
 </template>
 
@@ -40,22 +27,17 @@ import MigrationLayout from '@/views/Migration/index';
 import Header from '../AddAddress/components/Header';
 import UploadFile from './components/UploadFile';
 import EnterPassword from './components/EnterPassword';
-import CatPage from '@/components/CatPage';
-import Modal from '@/components/Modal';
 import useCurrentStep from '@/compositions/useCurrentStep';
 import useCreateWallets from '@/compositions/useCreateWallets';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { steps as fileSteps } from '@/static/importFile';
 import { useStore } from 'vuex';
 import { WALLET_TYPES } from '@/config/walletType';
 import redirectToWallet from '@/router/helpers/redirectToWallet';
-
 export default {
   name: 'ImportFile',
   components: {
     MigrationLayout,
-    CatPage,
-    Modal,
     UploadFile,
     Header,
     EnterPassword,
@@ -63,14 +45,16 @@ export default {
   setup() {
     const store = useStore();
     const { currentStep, steps } = useCurrentStep(2, fileSteps);
-    const showLoader = ref(false);
-    const showModal = ref(false);
     const newWallets = ref([]);
     const backup = ref(null);
     const oldFormat = ref(false);
     const privateWalletsMode = ref(false); // citadel accs, when has oneseed
     const { isPasswordHash } = useCreateWallets();
-
+    onMounted(() => {
+      store.commit('newWallets/setCatPageProps', {
+        dataQa: 'add-address__existing__file',
+      });
+    });
     const oldBackupKey = computed(
       () => `__wallets__${store.getters['profile/info']?.id}`
     );
@@ -123,8 +107,7 @@ export default {
     };
 
     const finalStep = async () => {
-      showModal.value = true;
-      showLoader.value = true;
+      store.commit('newWallets/setLoader', true);
       const list = backup.value.privateWallets || backup.value.wallets;
       await Promise.all(
         list.map(async (wallet) => {
@@ -149,34 +132,19 @@ export default {
         root: true,
       });
       const success = !![...newWallets.value].filter((w) => w).length;
-      showModal.value = false;
-      showLoader.value = false;
+      store.commit('newWallets/setModal', false);
+      store.commit('newWallets/setLoader', false);
 
       if (success) {
-        showModal.value = true;
+        store.commit('newWallets/setNewWalletsList', newWallets.value);
+        await redirectToWallet({
+          wallet: newWallets.value[0],
+          root: true,
+        });
+        store.commit('newWallets/setModal', true);
       }
       // await store.dispatch('wallets/getNewWallets','lazy');
       // store.dispatch('wallets/getNewWallets','detail');
-    };
-
-    const redirectToNewWallet = () => {
-      // eslint-disable-next-line
-      const [wallet] = newWallets.value; // TODO
-
-      newWallets.value = [];
-      redirectToWallet({
-        wallet: wallet,
-        root: true,
-      });
-    };
-
-    const modalCloseHandler = () => {
-      showModal.value = false;
-      redirectToNewWallet();
-    };
-    const modalClickHandler = () => {
-      showModal.value = false;
-      redirectToNewWallet();
     };
 
     return {
@@ -185,10 +153,6 @@ export default {
       privateWalletsMode,
       steps,
       currentStep,
-      showModal,
-      showLoader,
-      modalCloseHandler,
-      modalClickHandler,
       setBackup,
       backup,
       finalStep,

@@ -3,12 +3,12 @@
     <div class="column">
       <BackButton data-qa="add-address__back-button" @click="goBack" />
       <div class="header__section">
-        <span class="header__title">
+        <h2 class="header__title">
           {{ title || currentStepInfo.headerTitle }}
-        </span>
-        <span class="header__desc">
+        </h2>
+        <h3 class="header__desc">
           {{ info || currentStepInfo.headerInfo }}
-        </span>
+        </h3>
       </div>
     </div>
     <StepperMini :steps="steps" />
@@ -17,7 +17,7 @@
 
 <script>
 import { computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import StepperMini from '@/components/StepperMini';
 import BackButton from '@/components/UI/BackButton';
 
@@ -41,12 +41,17 @@ export default {
   },
   setup(props) {
     const router = useRouter();
+    const route = useRoute();
     const currentStepInfo = computed(() =>
       props.steps.find((item) => item.id === props.currentStep)
     );
 
     const goBack = () => {
-      router.back();
+      if (route.name === 'MetamaskKeplr') {
+        router.push({ name: 'AddWalletTypes' });
+      } else {
+        router.back();
+      }
     };
 
     return { currentStepInfo, goBack };
@@ -86,6 +91,7 @@ export default {
     font-size: 20px;
     line-height: 30px;
     font-weight: 700;
+    margin: 0;
     @include md {
       font-size: 18px;
     }
@@ -95,6 +101,8 @@ export default {
     font-size: 16px;
     line-height: 27px;
     color: $mid-blue;
+    margin: 0;
+
     @include md {
       font-size: 14px;
       line-height: 17px;

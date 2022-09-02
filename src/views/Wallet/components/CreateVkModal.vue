@@ -405,6 +405,24 @@ export default {
       }
     );
 
+    const connectLedgerCloseHandler = () => {
+      showConfirmModal.value = true;
+      clearLedgerModals();
+    };
+
+    const confirmLedgerCloseHandler = () => {
+      connectLedgerCloseHandler();
+    };
+
+    const appLedgerCloseHandler = () => {
+      connectLedgerCloseHandler();
+    };
+
+    const rejectedLedgerCloseHandler = () => {
+      clearLedgerModals();
+      closeHandler();
+    };
+
     return {
       showConfirmModal,
       isConfirmModalLoading,
@@ -434,6 +452,10 @@ export default {
       ivk,
       ivkInputError,
       showSuccessModal,
+      connectLedgerCloseHandler,
+      confirmLedgerCloseHandler,
+      appLedgerCloseHandler,
+      rejectedLedgerCloseHandler,
     };
   },
 };

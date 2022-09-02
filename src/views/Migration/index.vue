@@ -367,23 +367,24 @@ export default {
 
     const onChangeMigrationPassword = (val) => {
       migrationPassword.value = val;
+      migrationError.value = false;
     };
 
     const importOldWallets = async () => {
+      store.commit('newWallets/setLoader', true);
       migrationError.value = false;
       const newWallets = [];
 
       if (passwordIncorrect.value) {
         migrationError.value = true;
-
+        store.commit('newWallets/setLoader', false);
         return;
       }
 
       // put imported wallets to user settings
-      migrationProcess.value = true;
 
       for (const wallet of oldWallets.value) {
-        if (wallet.net && !wallet.existWallet) {
+        if (wallet.net) {
           // add import wallet to privateWallets
           const newInstance = await store.dispatch(
             'crypto/createNewWalletInstance',
@@ -400,28 +401,30 @@ export default {
       // await store.dispatch('wallets/getNewWallets','lazy');
 
       if (props.privateWalletsMode) {
-        migrationProcess.value = false;
         backupModalFlag.value = false;
         localStorage.removeItem(oldBackupKey.value);
         const { wallets } = useWallets();
         //window.location.reload();
         if (wallets.value[0]) {
-          router.push({
+          store.commit('newWallets/setNewWalletsList', newWallets);
+          await router.push({
             name: 'WalletAssets',
             params: {
               net: wallets.value[0].net,
               address: wallets.value[0].address,
             },
           });
+          store.commit('newWallets/setLoader', false);
+          store.commit('newWallets/setModal', true);
         }
 
         return;
       }
 
-      migrationProcess.value = false;
       localStorage.removeItem(oldBackupKey.value);
       restoreOneSeedModalFlag.value = true;
       backupModalFlag.value = false;
+      store.commit('newWallets/setLoader', false);
     };
 
     if (props.privateWalletsMode) {

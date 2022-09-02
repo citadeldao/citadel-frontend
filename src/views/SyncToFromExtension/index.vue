@@ -42,9 +42,10 @@
             <template v-else>
               <div class="syncto-input">
                 <Input
-                  id="walletSearch"
+                  id="walletSearchSync"
                   v-model="searchWalletStr"
                   :label="$t('searchToken')"
+                  :hard-autocomplete-off="true"
                   type="text"
                   icon="loop"
                   :placeholder="$t('inputToken')"
@@ -67,6 +68,7 @@
                 <Input
                   id="password"
                   v-model="password"
+                  :hard-autocomplete-off="true"
                   :show-error-text="!!incorrectPassword && confirmPassword"
                   :error="
                     incorrectPassword && confirmPassword
@@ -82,8 +84,9 @@
               </div>
               <div class="password-wrap mt-10">
                 <Input
-                  id="password"
+                  id="passwordConfirm"
                   v-model="passwordExtension"
+                  :hard-autocomplete-off="true"
                   :show-error-text="
                     !!incorrectPasswordExtension && confirmPassword
                   "
@@ -132,6 +135,7 @@
                       ? 'Incorrect password'
                       : ''
                   "
+                  :hard-autocomplete-off="true"
                   :label="$t('enterPassword')"
                   :placeholder="$t('password')"
                   type="password"
@@ -145,16 +149,6 @@
             </template>
           </div>
         </ModalContent>
-      </Modal>
-      <!-- SUCCESS IMPORT FROM -->
-      <Modal v-if="showSuccessFromSyncModal">
-        <CatPage
-          :data="importedFromWallets"
-          :wallet-type-placeholder="$t('catPage.placeholderPrivate')"
-          input-type-icon="private-dot"
-          @close="onSuccessFromSyncClose"
-          @buttonClick="onSuccessFromSyncClose"
-        />
       </Modal>
     </teleport>
   </div>
@@ -174,8 +168,8 @@ import { useStore } from 'vuex';
 import { i18n } from '@/plugins/i18n';
 import { sha3_256 } from 'js-sha3';
 import notify from '@/plugins/notify';
-import CatPage from '@/components/CatPage';
 import citadel from '@citadeldao/lib-citadel';
+import { INPUT_TYPE_ICON } from '@/config/newWallets';
 
 export default {
   components: {
@@ -185,7 +179,6 @@ export default {
     ModalContent,
     PrimaryButton,
     AddressItem,
-    CatPage,
   },
   emits: ['close'],
   setup(props, { emit }) {
@@ -215,6 +208,10 @@ export default {
     const CryptoJS = require('crypto-js');
 
     onMounted(async () => {
+      store.commit('newWallets/setCatPageProps', {
+        inputTypeIcon: INPUT_TYPE_ICON.PRIVATE,
+        walletTypePlaceholder: t('catPage.placeholderPrivate'),
+      });
       if (!window.citadel) {
         notify({
           type: 'warning',
@@ -293,7 +290,7 @@ export default {
     };
 
     const onSuccessFromSyncClose = () => {
-      showSuccessFromSyncModal.value = false;
+      store.commit('newWallets/setModal', false);
       showSyncFromModal.value = false;
       emit('close');
     };
@@ -365,7 +362,7 @@ export default {
           ));
 
         if (syncResult && result.every((res) => !!res)) {
-          showSuccessFromSyncModal.value = true;
+          store.commit('newWallets/setModal', true);
           syncLoading.value = false;
           password.value = '';
           importedFromWallets.value = syncResult;

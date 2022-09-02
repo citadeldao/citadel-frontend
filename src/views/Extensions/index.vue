@@ -18,7 +18,7 @@
             v-model:txComment="txComment"
             :show-from="false"
             :wallet="signerWallet || metamaskSigner"
-            :tx-hash="[successTx]"
+            :tx-hash="successTx"
             :fee="extensionTransactionForSign?.fee"
             :type="extensionTransactionForSign?.type"
           />
@@ -77,14 +77,18 @@
     <div v-if="loading" class="extensions__loading">
       <Loading />
     </div>
-    <div v-if="currentApp" class="extensions__app-wrap">
+    <div
+      v-if="currentApp"
+      :class="{ fullScreen: showFullScreen }"
+      class="extensions__app-wrap"
+    >
       <keep-alive v-if="!showFullScreen">
         <component :is="closeIcon" class="close-icon" @click="closeApp()" />
       </keep-alive>
       <iframe
         :src="currentApp.url"
         frameBorder="0"
-        :width="showFullScreen ? 1280 : 550"
+        :width="showFullScreen ? '100%' : 550"
         height="710"
         align="left"
         name="target"
@@ -126,7 +130,7 @@
         @buttonClick="confirmClickHandler"
       >
         <div class="item mt30">
-          <div class="label">Type operation</div>
+          <div class="label">{{ $t('extensions.typeOperation') }}</div>
           <span class="red">{{ extensionTransactionForSign?.type }}</span>
         </div>
         <div
@@ -160,9 +164,9 @@
             <span
               v-pretty-number="{
                 value: extensionTransactionForSign.fee,
-                currency: selectedApp.networks[0],
+                currency: (signerWallet || metamaskSigner)?.code,
               }"
-            />{{ selectedApp.networks[0] }}
+            />{{ (signerWallet || metamaskSigner)?.code }}
           </div>
         </div>
         <div class="item">
@@ -345,7 +349,9 @@ export default {
     const showLedgerConnect = ref(false);
     const ledgerError = ref('');
     const msgSuccessSignature = ref('');
-    const fullScreenAppIds = ref([12, 15]);
+    const fullScreenAppIds = ref([
+      6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 21, 22, 23,
+    ]);
 
     const { wallets: walletsList } = useWallets();
 
@@ -374,16 +380,10 @@ export default {
       txComment.value &&
         (await store.dispatch('transactions/postTransactionNote', {
           network: currentApp.value.networks[0],
-          hash: successTx.value,
+          hash: successTx.value[0],
           text: txComment.value,
         }));
       txComment.value = '';
-
-      store.dispatch('extensions/sendCustomMsg', {
-        token: currentAppInfo.value.token,
-        message: extensionsSocketTypes.messages.success,
-        type: extensionsSocketTypes.types.transaction,
-      });
 
       confirmPassword.value = false;
       showSuccessModal.value = false;
@@ -428,7 +428,9 @@ export default {
     };
 
     const appBackground = computed(() =>
-      currentApp.value ? currentApp.value.background : null
+      currentApp.value && !fullScreenAppIds.value.includes(selectedApp.value.id)
+        ? currentApp.value.background
+        : null
     );
     const currentAppInfo = computed(
       () => store.getters['extensions/currentAppInfo']
@@ -445,6 +447,7 @@ export default {
     const metamaskConnector = computed(
       () => store.getters['metamask/metamaskConnector']
     );
+
     const keplrConnector = computed(
       () => store.getters['keplr/keplrConnector']
     );
@@ -468,7 +471,7 @@ export default {
 
       let mergeWallet = null; // metamask
 
-      if ([metamaskConnector.value.network].includes(nets[0])) {
+      if (nets.includes(metamaskConnector.value.network)) {
         const metamaskNet = metamaskConnector.value.network;
         const metamaskAddress =
           metamaskConnector.value.accounts[0] &&
@@ -501,18 +504,17 @@ export default {
           }));
 
         if (mergeWallet) {
-          wallets.push({ address: mergeWallet.address, net: mergeWallet.net });
+          wallets.push({
+            address: mergeWallet.address,
+            net: mergeWallet.net,
+            from: 'metamask',
+          });
         }
 
         selectedApp.value.url += `?token=${
           currentAppInfo.value.token
         }&wallets=${JSON.stringify(wallets)}`;
         currentApp.value = selectedApp.value;
-
-        /* setTimeout(() => {
-          const win = window.frames.target;
-          win.postMessage('Message from citadel', selectedApp.value.url);
-        }, 5000); */
       }
     };
 
@@ -568,18 +570,53 @@ export default {
       }
     }); */
 
+    watch(
+      () => metamaskConnector.value.accounts,
+      (newV) => {
+        if (
+          newV &&
+          newV[0] &&
+          selectedApp.value &&
+          [6, 7].includes(selectedApp.value.id)
+        ) {
+          const metamaskNet =
+            metamaskConnector.value.chainId === 56 ? 'bsc' : 'eth';
+          const metamaskAddress = newV[0] && newV[0].toLowerCase();
+
+          const findWallet = walletsList.value.find(
+            (w) =>
+              w.type === WALLET_TYPES.PUBLIC_KEY &&
+              metamaskNet === w.net &&
+              metamaskAddress === w.address.toLowerCase()
+          );
+
+          const win = window.frames.target;
+          win &&
+            win.postMessage(
+              {
+                from: 'metamask',
+                address: findWallet ? findWallet.address : null,
+                net: findWallet ? findWallet.net : null,
+              },
+              selectedApp.value.url
+            );
+        }
+      }
+    );
+
     watch(extensionTransactionForSign, () => {
       if (extensionTransactionForSign?.value?.transaction) {
         const currentAddress = extensionTransactionForSign.value.address;
+        const currentNet = extensionTransactionForSign.value.net;
 
-        const nets = currentApp.value.networks.map((net) => {
-          return net.toLowerCase();
-        });
+        // const nets = currentApp.value.networks.map((net) => {
+        //   return net.toLowerCase();
+        // });
 
         signerWallet.value = walletsList.value.find(
           (w) =>
             w.address.toLowerCase() === currentAddress.toLowerCase() &&
-            nets.includes(w.net.toLowerCase()) &&
+            w.net === currentNet &&
             w.type !== WALLET_TYPES.PUBLIC_KEY
         );
 
@@ -606,6 +643,8 @@ export default {
     watch(route, (route) => {
       if (!route.params.name) {
         closeApp(true);
+        showFullScreen.value = false;
+        showArtefactsForNormalScreen();
       } else {
         selectedApp.value = Object.assign(
           {},
@@ -617,6 +656,14 @@ export default {
         }
       }
     });
+
+    const sendSuccessMSG = () => {
+      store.dispatch('extensions/sendCustomMsg', {
+        token: currentAppInfo.value.token,
+        message: extensionsSocketTypes.messages.success,
+        type: extensionsSocketTypes.types.transaction,
+      });
+    };
 
     const confirmModalCloseHandlerWithRequest = () => {
       password.value = '';
@@ -775,10 +822,11 @@ export default {
         if (data.ok) {
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;
-          successTx.value = data.data.txhash;
+          successTx.value = [data.data.txhash];
           confirmModalDisabled.value = false;
           confirmModalCloseHandler();
           showSuccessModal.value = true;
+          sendSuccessMSG();
         } else {
           notify({
             type: 'warning',
@@ -811,10 +859,15 @@ export default {
         } else {
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;
-          successTx.value = metamaskResult.txHash;
+          successTx.value = [metamaskResult.txHash];
+          store.dispatch('extensions/putMempoolChangeStatus', {
+            hash: metamaskResult.txHash,
+            mempool_id: extensionTransactionForSign.value.mem_tx_id,
+          });
           confirmModalDisabled.value = false;
           confirmModalCloseHandler();
           showSuccessModal.value = true;
+          sendSuccessMSG();
         }
 
         return;
@@ -836,7 +889,7 @@ export default {
       }
 
       let result;
-      console.log('test', extensionTransactionForSign.value);
+
       try {
         result = await signerWallet.value.signAndSendTransfer({
           walletId: signerWallet.value.id,
@@ -849,8 +902,8 @@ export default {
         });
 
         if (
-          typeof result.data === 'string' &&
-          [64, 66].includes(result.data.length)
+          typeof result.data[0] === 'string' &&
+          [64, 66].includes(result.data[0].length)
         ) {
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;
@@ -858,6 +911,7 @@ export default {
           confirmModalDisabled.value = false;
           confirmModalCloseHandler();
           showSuccessModal.value = true;
+          sendSuccessMSG();
         } else {
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;
@@ -933,6 +987,9 @@ export default {
 </script>
 <style lang="scss" scoped>
   .extensions {
+    max-width: 1628px;
+    width: 100%;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -947,6 +1004,12 @@ export default {
       margin-top: 35px;
       position: relative;
       border-radius: 20px;
+
+      &.fullScreen {
+        width: 100%;
+        box-sizing: border-box;
+        // padding: 0 35px;
+      }
 
       .close-icon {
         position: absolute;

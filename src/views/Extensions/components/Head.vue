@@ -48,8 +48,6 @@
           @blur="
             () => {
               showMobileSearch = false;
-              searchAppStr = '';
-              $emit('search', '');
             }
           "
           class="filter-input"
@@ -144,7 +142,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  padding: 0 25px;
+  padding: 0 25px 0 35px;
   width: 100%;
   background: linear-gradient(90deg, #4776e6 0%, #8e54e9 100%);
   border-radius: 16px 16px 0px 0px;
@@ -161,7 +159,7 @@ export default {
     border: 3px solid #fff;
     background: #6b93c0;
     position: absolute;
-    right: 40px;
+    right: 30px;
     top: 25px;
     z-index: 100;
 

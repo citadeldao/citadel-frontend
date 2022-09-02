@@ -288,7 +288,8 @@
         "actionModalDesc": "Your tokens will be unstaked and frozen for some time",
         "unstakeTo": "Unstake to",
         "unstakeFrom": "Unstake from",
-        "amountToUnstake": "Amount to unstake"
+        "amountToUnstake": "Amount to unstake",
+        "unstakeNote": "After the confirmation of unstaking transaction, your assets will be locked for {unstakeingPerioud} days.Unstaked assets will be depicted in the frozen balance section."
     },
     "singleStake": {
         "chooseNodeModalDesc": "To stake your assets, choose node and set the amount for delegation. Take into account that there is <strong style='color:#0a2778;'>no unstaking period</strong> for",
@@ -339,7 +340,8 @@
         "claimTo": "Claim to",
         "amountToClaim": "Amount to claim",
         "confirmModalTitle": "Confirm the rewards claim",
-        "confirmModalDesc": "You will see the accrued rewards in the available balance"
+        "confirmModalDesc": "You will see the accrued rewards in the available balance",
+        "claimSuccessfuly": "Claimed successfully"
     },
     "exportWallet": {
         "card1Info": "Export the associated mnemonic phrase",
@@ -658,7 +660,7 @@
             "removeRewardsNotification": "You have unsubscribed to email rewards notifications",
             "rewardsDigestTooltip": "Biweekly updates on your accrued rewards, claimable tokens and assets to stake",
             "newsletter": "Newsletter",
-            "newsletterTooltip": "-",
+            "newsletterTooltip": "Receive essential Citadel.one events & updates monthly",
             "addNewsletterNotification": "You have subscribed to email newsletter notifications",
             "removeNewsletterNotification": "You have unsubscribed to email newsletter notifications"
         },
@@ -918,7 +920,8 @@
         "transactionData": "Transaction data",
         "transactionFee": "Transaction fee",
         "signMessage": "Sign message",
-        "searchPlaceholder": "Start typing the app name"
+        "searchPlaceholder": "Start typing the app name",
+        "typeOperation": "Type operation"
     },
     "tokenDescriptionComdex": "Comdex is a decentralized synthetic assets protocol built on the Cosmos. ",
     "tokenDescriptionJuno": "Juno is a Cosmos-based chain that provides an environment for the deployment of interoperable smart contracts.",
@@ -930,7 +933,8 @@
         "importWallet": "Import wallet",
         "allreadyAdded": "Address already added",
         "titleModal": "Import metamask wallet",
-        "descModal": "Change your address or network in metamask"
+        "descModal": "Change your address or network in metamask",
+        "confirm": "Confirm"
     },
     "netInfo": {
         "akash": {
@@ -1159,8 +1163,7 @@
         "privacyPolicy": "Privacy policy",
         "termsOfService": "Terms of service"
     },
-    "dontHaveEnoughFoundsForFee": "You do not have enough funds to pay the transaction fee.",
-    "dontHaveEnoughFounds": "You do not have enough funds to do the {type} transaction",
+    "dontHaveEnoughFounds": "You do not have enough funds to pay the transaction fee.",
     "transactionsSocket": {
         "failed": "Transaction failed",
         "completed": "Transaction completed",
@@ -1275,5 +1278,7 @@
             "title": "Deposit from ",
             "action": "exchanges"
         }
-    }
+    },
+    "dontHaveEnoughFoundsForFee": "You do not have enough funds to pay the transaction fee.",
+    "asset": "asset"
 }

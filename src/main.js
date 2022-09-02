@@ -19,11 +19,12 @@ import Vue from 'vue';
 
 const app = createApp(App);
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.VUE_APP_SENTRY_DSN) {
   Sentry.init({
     Vue,
     dsn: process.env.VUE_APP_SENTRY_DSN,
     tunnel: new URL(process.env.VUE_APP_SENTRY_DSN).origin + '/tunnel',
+    release: process.env.VUE_APP_RELEASE,
     integrations: [
       new Integrations.BrowserTracing({
         routingInstrumentation: Sentry.vueRouterInstrumentation(router),

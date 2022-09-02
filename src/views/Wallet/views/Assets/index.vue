@@ -3,7 +3,14 @@
     <Loading />
   </div>
   <div v-else class="assets">
-    <template v-if="currentWallet.balance.mainBalance || tokenList.length">
+    <template
+      v-if="
+        stateCurrentWallet.balance.calculatedBalance ||
+        stateCurrentWallet.subtokenBalanceUSD ||
+        stateCurrentWallet.net === 'secret' ||
+        currentToken
+      "
+    >
       <div class="assets__header">
         <BalanceCard
           type="red"
@@ -40,27 +47,30 @@
 
       <div class="assets-table">
         <div class="assets-table__thead">
-          <div>Asset</div>
-          <div>Balance</div>
-          <div>USD Balance</div>
-          <div>Price</div>
+          <div>{{ $t('asset') }}</div>
+          <div>{{ $t('balance') }}</div>
+          <div>USD {{ $t('balance') }}</div>
+          <div>{{ $t('price') }}</div>
         </div>
 
         <AssetsItem
           :item="stateCurrentWallet"
           :balance="stateCurrentWallet.balance"
           is-native-token
+          :is-active="currentWallet.net === stateCurrentWallet.net"
           @click="setCurrentToken(stateCurrentWallet)"
+          :class="{ 'assets-single__item': !displayData.length }"
         />
         <AssetsItem
           v-for="(item, index) in displayData"
           :key="`${item.name}-${index}`"
           :balance="item.tokenBalance"
           :item="item"
-          :is-not-linked="isNotLinkedSnip20(item)"
-          :is-disabled="
-            item.config.standard !== TOKEN_STANDARDS.SNIP_20 && !item.linked
+          :is-not-linked="
+            isNotLinkedSnip20(item) &&
+            stateCurrentWallet.type !== WALLET_TYPES.KEPLR
           "
+          :is-active="item.net === currentWallet.net"
           @click="setCurrentToken(item)"
         />
 
@@ -122,10 +132,10 @@
   </div>
   <teleport v-if="showCreateVkModal" to="body">
     <CreateVkModal
-      :address="currentWallet.address"
+      :address="stateCurrentWallet.address"
       :token="snip20Token"
       :token-fee="snip20TokenFee"
-      :current-wallet="currentWallet"
+      :current-wallet="stateCurrentWallet"
       @close="closeCreateVkModal"
     />
   </teleport>
@@ -151,7 +161,7 @@ import Pagination from '@/components/Pagination.vue';
 import RoundArrowButton from '@/components/UI/RoundArrowButton';
 import Card from '@/components/UI/Card';
 import useWallets from '@/compositions/useWallets';
-import { OUR_TOKEN } from '@/config/walletType';
+import { OUR_TOKEN, WALLET_TYPES } from '@/config/walletType';
 
 export default {
   name: 'AssetsBlock',
@@ -203,6 +213,14 @@ export default {
     ]);
     const filterValue = ref(filterList.value[3].value);
 
+    // const stateCurrentWalletPrice = computed(() => {
+    //   console.log(props.currentWallet, stateCurrentWallet, 'test');
+    //   if (props.currentWallet.net === stateCurrentWallet.value.net) {
+    //     return store.getters['profile/rates'][props.currentWallet.net].USD;
+    //   }
+    //   return props.currentWallet.tokenBalance.price.USD;
+    // });
+
     const isNotLinkedSnip20 = (token) => {
       const isSnip20 = computed(
         () => token.config.standard === TOKEN_STANDARDS.SNIP_20
@@ -212,14 +230,26 @@ export default {
     };
 
     const setCurrentToken = async (token) => {
-      if (isNotLinkedSnip20(token) && !token.linked) {
+      if (
+        token.net.toLowerCase() === stateCurrentWallet.value.net.toLowerCase()
+      ) {
+        store.dispatch('subtokens/setCurrentToken', null);
+        redirectToWallet({
+          wallet: store.getters['wallets/walletByAddress'](route.params),
+          root: true,
+        });
+      } else if (
+        isNotLinkedSnip20(token) &&
+        !token.linked &&
+        stateCurrentWallet.value.type !== WALLET_TYPES.KEPLR
+      ) {
         mainIsLoading.value = true;
         snip20TokenFee.value =
           (await token.getFees(token.id, token.net))?.data?.high?.fee || 0.2;
         mainIsLoading.value = false;
         showCreateVkModal.value = true;
         snip20Token.value = token;
-      } else if (!isNotLinkedSnip20(token) && token.linked) {
+      } else {
         store.dispatch('subtokens/setCurrentToken', token);
         redirectToWallet({
           wallet: store.getters['wallets/walletByAddress'](route.params),
@@ -242,7 +272,7 @@ export default {
       const data = [...filteredTokensList.value].sort(
         (a, b) => isNotLinkedSnip20(b) - isNotLinkedSnip20(a)
       );
-      const byAlphabet = sortByAlphabet(data, 'code').sort(
+      const byAlphabet = sortByAlphabet(data, 'name').sort(
         (a, b) => isNotLinkedSnip20(b) - isNotLinkedSnip20(a)
       );
       const byValue = data
@@ -371,6 +401,7 @@ export default {
       snip20Token,
       balanceUSD,
       balanceAvailableUSD,
+      WALLET_TYPES,
     };
   },
 };
@@ -442,7 +473,9 @@ export default {
   border-radius: 16px;
   background: $white;
   padding: 24px 0 11px 0;
-
+  &-single__item {
+    margin-bottom: 0;
+  }
   &__header {
     display: flex;
     align-items: center;
@@ -515,6 +548,7 @@ export default {
       font-size: 18px;
       text-align: left;
       color: $mid-blue;
+      text-transform: capitalize;
 
       @include lg {
         font-size: $wallet-assets-heading-font-size;
@@ -564,18 +598,6 @@ export default {
 .assets {
   &__search {
     .input {
-      &__clear-icon {
-        bottom: 19px;
-
-        @include lg {
-          bottom: 15px;
-        }
-
-        @include md {
-          bottom: 14px;
-        }
-      }
-
       & > input {
         @include md {
           padding: 25px 25px 10px 36px;

@@ -62,6 +62,7 @@ export const TOKEN_STANDARDS = {
   SNIP_20: 'snip20',
   ERC_20: 'erc20',
   BEP_20: 'bep20',
+  CW_20: 'cw20',
 };
 
 export const POLKA_EMPTY = 'empty'; // used for path index

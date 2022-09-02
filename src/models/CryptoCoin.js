@@ -19,7 +19,7 @@ export default class CryptoCoin {
     this.name = opts?.config?.name;
     this.code = opts?.config?.code;
     this.address = opts?.address;
-    this.mnemonicEncoded = opts?.mnemonicEncoded || null;
+    // this.mnemonicEncoded = opts?.mnemonicEncoded || null;
     this.privateKeyEncoded = opts?.privateKeyEncoded || null;
     this.publicKey = opts?.publicKey || null;
     this.derivationPath = opts?.derivationPath;
@@ -29,7 +29,7 @@ export default class CryptoCoin {
     this.subtokenBalanceUSD = opts?.subtokenBalanceUSD || 0;
     this.balanceUSD = opts?.balanceUSD;
     this.hasTransactionComment = true;
-    this.hasSubtoken = !!opts?.config.tokens;
+    this.hasSubtoken = !!opts?.config?.tokens;
     this.hasBuy = opts?.config?.methods?.buy || false;
     this.hasExchange = opts?.config?.methods?.exchange || false;
     this.hasStake = opts?.config?.methods?.stake || false;
@@ -46,7 +46,6 @@ export default class CryptoCoin {
       frozenBalance: 'balanceTooltipInfo.frozenBalanceBalanceInfo2',
     };
     this.isCosmosNetwork = cosmosNetworks.includes(this.net);
-    this.privateKey = opts?.privateKey || null;
   }
 
   getScannerLink() {
@@ -64,7 +63,9 @@ export default class CryptoCoin {
   getPrivateKeyDecoded(password) {
     const { error, data } = citadel.decodePrivateKeyByPassword(
       this.net,
-      this.mnemonicEncoded || this.privateKeyEncoded,
+      this.mnemonicEncoded ||
+        this.privateKeyEncoded ||
+        store.getters['crypto/encodeUserMnemonic'],
       password
     );
 

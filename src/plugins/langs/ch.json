@@ -187,8 +187,8 @@
             "block1Info": "这是一个仅可查看的地址，因为您使用公钥添加该账户，或者您已注销。",
             "block2Title": "想知道如何导入地址？",
             "block2Info": "查看如何使用私钥或助记词短语导入地址的分步骤指导。",
-            "availableAssets": "",
-            "totalAssets": ""
+            "availableAssets": "可用资产",
+            "totalAssets": "总资产"
         },
         "stubs": {
             "chain": "Ki 链暂时不可用",
@@ -288,7 +288,8 @@
         "actionModalDesc": "您的代币将解除质押并锁定一段时间",
         "unstakeTo": "解锁至",
         "unstakeFrom": "解锁自",
-        "amountToUnstake": "可解除质押金额"
+        "amountToUnstake": "可解除质押金额",
+        "unstakeNote": "确认解除质押交易后，您的资产将被冻结 {unstakeingPerioud} 天。解除质押部分的资产将展示在冻结余额处。"
     },
     "singleStake": {
         "chooseNodeModalDesc": "如需质押您的资产，选择节点并设置质押金额。请注意此处 <strong style='color:#0a2778;'> 可立即解锁 </strong> ",
@@ -339,7 +340,8 @@
         "claimTo": "提取至",
         "amountToClaim": "可提取金额",
         "confirmModalTitle": "确认提取奖励",
-        "confirmModalDesc": "您将在可用余额中查看应计奖励"
+        "confirmModalDesc": "您将在可用余额中查看应计奖励",
+        "claimSuccessfuly": ""
     },
     "exportWallet": {
         "card1Info": "导出关联助记词",
@@ -658,7 +660,7 @@
             "removeRewardsNotification": "您已取消订阅奖励邮件通知",
             "rewardsDigestTooltip": "您的累积奖励、可领取的代币和可质押资产每两周更新一次",
             "newsletter": "新闻",
-            "newsletterTooltip": "-",
+            "newsletterTooltip": "接收每月 Citadel.one 活动及新鲜资讯",
             "addNewsletterNotification": "您已经订阅新闻通知",
             "removeNewsletterNotification": "您已取消订阅新闻通知"
         },
@@ -918,7 +920,8 @@
         "transactionData": "交易数据",
         "transactionFee": "交易手续费",
         "signMessage": "签名消息",
-        "searchPlaceholder": "开始输入 APP 名称"
+        "searchPlaceholder": "开始输入 APP 名称",
+        "typeOperation": "输入操作"
     },
     "tokenDescriptionComdex": "Comdex 是搭建在 Cosmos 上的去中心化合成资产协议",
     "tokenDescriptionJuno": "Juno 是基于 Cosmos  搭建的区块链，为部署可交互操作的智能合约提供环境。",
@@ -930,7 +933,8 @@
         "importWallet": "导入钱包",
         "allreadyAdded": "地址已添加",
         "titleModal": "导入 Metamask 钱包",
-        "descModal": "在 Metamask 中切换地址或网络"
+        "descModal": "在 Metamask 中切换地址或网络",
+        "confirm": ""
     },
     "netInfo": {
         "akash": {
@@ -1159,8 +1163,7 @@
         "privacyPolicy": "隐私条款",
         "termsOfService": "服务条款"
     },
-    "dontHaveEnoughFoundsForFee": "您的余额不足，无法支付交易手续费",
-    "dontHaveEnoughFounds": "",
+    "dontHaveEnoughFounds": "您的余额不足，无法支付交易手续费",
     "transactionsSocket": {
         "failed": "交易失败",
         "completed": "交易完成",
@@ -1272,8 +1275,10 @@
             "action": "扩展程序"
         },
         "card2": {
-            "title": "充值自",
+            "title": "充值自 ",
             "action": "交易所"
         }
-    }
+    },
+    "dontHaveEnoughFoundsForFee": "您的余额不足，无法支付交易手续费",
+    "asset": "资产"
 }
