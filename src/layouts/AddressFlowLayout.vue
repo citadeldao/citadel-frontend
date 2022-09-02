@@ -114,10 +114,10 @@ export default {
 
     &.menu-item {
       margin-top: 38px;
-      height: calc(100% - 38px);
+      min-height: calc(100% - 38px);
     }
     &:deep > div {
-      height: calc(100% - 38px);
+      min-height: calc(100% - 38px);
     }
   }
 }
