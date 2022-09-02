@@ -190,6 +190,9 @@ $blue-dark: #262b61;
           margin-right: 5px;
           color: $dark-blue;
           font-family: 'Panton_Bold';
+          word-break: break-all;
+          text-align: right;
+          padding-left: 5px;
         }
 
         .value-symbol {
