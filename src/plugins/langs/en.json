@@ -1135,6 +1135,11 @@
             "title": "Oraichain",
             "description": "As the world’s first AI-powered oracle and ecosystem for blockchains, Oraichain now transforms itself to become an advanced AI Layer 1 for Data Economy and Oracle services that serves as a foundational layer for the creation of a new generation of smart contracts and Dapps and create a complete AI Ecosystem on blockchain.",
             "shortDescription": "Oraichain is the world's first intelligent and secure solution for emerging Web3, scalable Dapps, and decentralized AI."
+        },
+        "tron": {
+            "title": "Tron network",
+            "description": "TRON is a decentralized blockchain platform for supporting smart contracts. TRON's mission is to accelerate the decentralization of the Internet via blockchain technology and decentralized applications (dApps) and build Web 4.0 with a global free content entertainment system, where people can create, own and share content without third parties.",
+            "shortDescription": "TRON is a decentralized blockchain platform that aims to accelerate the decentralization of the Internet via blockchain technology and decentralized applications (dApps). The project's main mission is to build Web 4.0 with a global free content entertainment system."
         }
     },
     "uptime": "Uptime",

@@ -551,18 +551,18 @@ export default {
       href: 'https://www.coingecko.com/en/coins/evmos',
     },
   },
-  crescent: {
+  tron: {
     web: {
-      title: 'crescent.network',
-      href: 'https://crescent.network/',
+      title: 'tron.network',
+      href: 'https://tron.network/',
     },
     twitter: {
-      title: '@CrescentHub',
-      href: 'CrescentHub',
+      title: '@trondao',
+      href: 'trondao',
     },
     landing: {
       title: 'Coingecko',
-      href: 'https://www.coingecko.com/en/coins/crescent-network',
+      href: 'https://www.coingecko.com/en/coins/tron',
     },
   },
 };

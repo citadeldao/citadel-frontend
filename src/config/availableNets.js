@@ -36,6 +36,7 @@ export const ledgerNets = [
   'crescent',
   'orai',
   // 'evmos',
+  'tron',
 ];
 
 export const trezorNets = ['btc', 'eth', 'bsc', 'tez'];
