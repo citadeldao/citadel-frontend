@@ -1,34 +1,32 @@
 <template>
-  <div class="matamask">
-    <teleport v-if="importModal" to="body">
-      <Modal v-if="metamaskConnector.accounts && metamaskConnector.accounts[0]">
-        <ModalContent
-          :submit-button="false"
-          :hide-close="true"
-          :title="$t('metamask.titleModal')"
-          :desc="$t('metamask.descModal')"
-          :button-text="$t('metamask.importWallet')"
-          :button-text2="$t('metamask.cancel')"
-          @buttonClick="importWallet"
-          @buttonClick2="cancel"
-        >
-          <div class="import-container">
-            <div class="import-container__icon">
-              <div v-if="!currentIcon">?</div>
-              <div v-else>
-                <component :is="currentIcon" />
-              </div>
-            </div>
-            <div class="import-container__address">
-              {{ metamaskConnector.accounts[0] }}
-            </div>
-          </div>
-        </ModalContent>
-      </Modal>
-      <Modal v-if="showLoader">
-        <Loading />
-      </Modal>
-    </teleport>
+  <div class="metamask">
+    <Header
+      :title="$t('metamask.titleModal')"
+      :info="$t('metamask.descModal')"
+    />
+    <Modal v-if="showLoader">
+      <Loading />
+    </Modal>
+    <section class="metamask__section">
+      <div class="import-container">
+        <div class="import-container__icon">
+          <div v-if="!currentIcon">?</div>
+          <component v-else :is="currentIcon" />
+        </div>
+        <div class="import-container__address">
+          <p>{{ networkName }}</p>
+          {{ metamaskConnector.accounts[0] }}
+        </div>
+      </div>
+      <div class="btn__container">
+        <PrimaryButton class="confirm" @click="importWallet">
+          {{ $t('confirm') }}
+        </PrimaryButton>
+        <!-- <PrimaryButton class="no-decoration" @click="cancel">
+          {{ $t('metamask.cancel') }}
+        </PrimaryButton> -->
+      </div>
+    </section>
   </div>
 </template>
 
@@ -48,6 +46,7 @@ import ModalContent from '@/components/ModalContent';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import AddressAlreadyAdded from '@/components/Modals/AddressAlreadyAdded';
 import { INPUT_TYPE_ICON } from '@/config/newWallets';
+import Header from '../AddAddress/components/Header';
 
 import { i18n } from '@/plugins/i18n';
 const { t } = i18n.global;
@@ -62,6 +61,7 @@ export default {
     ModalContent,
     PrimaryButton,
     AddressAlreadyAdded,
+    Header,
   },
   setup() {
     const store = useStore();
@@ -71,7 +71,6 @@ export default {
     const currentIcon = ref();
     const showLoader = ref(true);
     const existAddressInMetamask = ref(false);
-
     const {
       setAddress,
       setNets,
@@ -100,6 +99,12 @@ export default {
 
     const metamaskConnector = computed(
       () => store.getters['metamask/metamaskConnector']
+    );
+    const networkName = computed(
+      () =>
+        store.getters['networks/networksList'].find(
+          (e) => e.net === metamaskConnector.value.network
+        ).name
     );
     // metamaskConnector.value.changeNetwork();
 
@@ -166,8 +171,6 @@ export default {
       store.commit('newWallets/setLoader', true);
       const { network, accounts } = metamaskConnector.value;
 
-      showLoader.value = true;
-
       if (!['bsc', 'eth'].includes(metamaskConnector.value.network)) {
         notify({
           type: 'warning',
@@ -198,6 +201,7 @@ export default {
           'newWallets/setNewWalletsList',
           [existAddressInMetamask.value] || newWallets.value
         );
+        store.commit('newWallets/setLoader', false);
         store.commit('newWallets/setAlreadyAddedModal', true);
       }
 
@@ -219,6 +223,7 @@ export default {
       showLoader,
       currentIcon,
       existAddressInMetamask,
+      networkName,
       importWallet,
       cancel,
     };
@@ -229,12 +234,29 @@ export default {
 <style lang="scss" scoped>
 .import-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-
+  width: 400px;
+  height: 80px;
+  background: #f0f3fd;
+  border-radius: 8px;
+  align-self: center;
   &__address {
-    margin-top: 10px;
+    max-width: 297px;
+    overflow-y: clip;
+    text-overflow: ellipsis;
+    color: $dark-blue;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+    p {
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 19px;
+      margin: 0 0 8px 0;
+      color: initial;
+    }
   }
 
   &__icon {
@@ -243,19 +265,54 @@ export default {
     align-items: center;
     color: #fff;
     font-weight: 600;
-    margin-top: 35px;
-    width: 50px;
-    height: 50px;
-    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
     text-align: center;
     padding: 13px 0;
+    margin-right: 8px;
 
     & svg {
       fill: white;
       height: 24px;
     }
 
-    background: $mid-blue;
+    background: $dark-blue;
+  }
+}
+.metamask {
+  display: flex;
+  flex-direction: column;
+  background: $white;
+  box-shadow: -10px 4px 27px rgba(0, 0, 0, 0.1);
+  border-radius: 25px;
+  padding: 0 44px 40px;
+  flex-grow: 1;
+
+  @include lg {
+    padding: 0 40px;
+  }
+  @include md {
+    box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
+    padding: 0 31px;
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 40px;
+    margin-top: 48px;
+  }
+}
+.btn__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  button {
+    margin-top: 22px;
+    @include md {
+      margin-top: 32px;
+    }
   }
 }
 </style>

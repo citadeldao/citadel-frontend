@@ -576,7 +576,7 @@
     "addAddressExp": "Add address",
     "addAnAddress": "Add an address",
     "chooseSuitableMethod": "Choose a suitable method to import an existing address",
-    "address": "address",
+    "address": "Address",
     "enterAddress": "Enter address",
     "import": "Import",
     "enterMnemonicPhrase": "Enter a mnemonic phrase",
@@ -664,7 +664,7 @@
             "removeRewardsNotification": "You have unsubscribed to email rewards notifications",
             "rewardsDigestTooltip": "Biweekly updates on your accrued rewards, claimable tokens and assets to stake",
             "newsletter": "Newsletter",
-            "newsletterTooltip": "-",
+            "newsletterTooltip": "Receive essential Citadel.one events & updates monthly",
             "addNewsletterNotification": "You have subscribed to email newsletter notifications",
             "removeNewsletterNotification": "You have unsubscribed to email newsletter notifications"
         },
@@ -934,6 +934,7 @@
         "notFound": "Metamask not found in your browser",
         "changeNetwork": "Change network in metamask",
         "cancel": "Cancel",
+        "confirm": "Confirm",
         "importWallet": "Import wallet",
         "allreadyAdded": "Address already added",
         "titleModal": "Import metamask wallet",
@@ -1192,7 +1193,6 @@
     "changeValidators": "Change validators",
     "redelegateNote": "You must choose another validator to redelegate",
     "assets": "Assets",
-    "asset": "asset",
     "menu": {
         "settings": "Settings",
         "logOut": "Log Out"
@@ -1283,5 +1283,6 @@
             "action": "exchanges"
         }
     },
-    "dontHaveEnoughFoundsForFee": "You do not have enough funds to pay the transaction fee."
+    "dontHaveEnoughFoundsForFee": "You do not have enough funds to pay the transaction fee.",
+    "asset": "asset"
 }
