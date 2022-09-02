@@ -13,7 +13,7 @@ export default async ({ wallet, token, root = false }) => {
   const hasContext = currentRoute.name !== 'Wallet';
 
   if (!wallet) {
-    await router.push({ name: 'AddAddress' });
+    return await router.push({ name: 'AddAddress' });
   }
 
   const routeName =
