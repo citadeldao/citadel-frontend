@@ -63,7 +63,6 @@ export default {
         if (currentToken) {
           await store.dispatch('subtokens/setCurrentToken', currentToken);
         } else {
-          console.warn('testtest');
           await store.dispatch('subtokens/setCurrentToken', null);
           redirectToWallet({
             wallet: { net, address },
@@ -93,12 +92,10 @@ export default {
             !findAddressWithNet(wallets.value, { address, net }) ||
             (token && !hasTokenInWallet)
           ) {
-            console.warn('hi');
             router.push({ name: 'AddAddress' });
 
             return;
           }
-          console.warn('testtest');
 
           redirectToWallet({
             wallet: store.getters['wallets/currentWallet'],
@@ -107,7 +104,7 @@ export default {
         }
       })
       .catch((e) => {
-        console.warn(e, 'bol');
+        console.error(e);
         router.push({ name: 'Login' });
       })
       .finally(() => {

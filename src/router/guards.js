@@ -13,7 +13,6 @@ export default async (to, from, next) => {
   }
 
   if (to.meta.guard === 'private' && !isAuthenticated) {
-    console.warn('testtest1', 'pie');
     return next({ name: 'Login' });
   }
 
@@ -22,7 +21,6 @@ export default async (to, from, next) => {
     isAuthenticated &&
     !store.getters['wallets/wallets'].length
   ) {
-    console.warn('testtest1', 'pie1');
     return next({ name: 'AddAddress' });
   }
 
