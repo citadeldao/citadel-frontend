@@ -59,6 +59,7 @@
           is-native-token
           :is-active="currentWallet.net === stateCurrentWallet.net"
           @click="setCurrentToken(stateCurrentWallet)"
+          :class="{ 'assets-single__item': !displayData.length }"
         />
         <AssetsItem
           v-for="(item, index) in displayData"
@@ -471,7 +472,9 @@ export default {
   border-radius: 16px;
   background: $white;
   padding: 24px 0 11px 0;
-
+  &-single__item {
+    margin-bottom: 0;
+  }
   &__header {
     display: flex;
     align-items: center;
