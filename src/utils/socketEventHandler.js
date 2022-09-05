@@ -69,6 +69,7 @@ export async function socketEventHandler({ eventName, data }) {
             net: 'secret',
             messageScrt: data.message,
             type: data.type,
+            meta_info: data.meta_info,
           },
           { root: true }
         );
@@ -83,6 +84,7 @@ export async function socketEventHandler({ eventName, data }) {
             net: 'secret',
             messageScrt: data.message,
             type: data.type,
+            meta_info: data.meta_info,
           },
           { root: true }
         );
