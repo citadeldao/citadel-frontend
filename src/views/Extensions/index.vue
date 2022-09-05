@@ -1020,6 +1020,7 @@ export default {
             extensionsSocketTypes.types.execute
         ) {
           showConfirmModalLoading.value = true;
+
           // execute contract
           const response = await citadel.executeContract(
             signerWallet.value.id,
@@ -1032,6 +1033,8 @@ export default {
               ...extensionTransactionForSign.value.messageScrt,
             }
           );
+
+          // execute contract with message collection
           // send success message to app
           if (response?.data) {
             confirmModalDisabled.value = false;
