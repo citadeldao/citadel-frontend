@@ -1,1283 +1,1284 @@
 {
-  "login": {
-      "login": "Log in",
-      "signup": "Sign up",
-      "formInfo": "Enter your email to receive a verification code",
-      "withSocial": "Or log in with",
-      "questionText1": "Why",
-      "questionText2": "requires my email?",
-      "signIn": "Sign in",
-      "verification": "Verification",
-      "verificationInfo": "You will receive an email with a verification code. Enter it here to confirm the action",
-      "verificationNote": "Note: If you don't receive the confirmation message, please check your spam box",
-      "sendCode": "Send code",
-      "resend": "Resend",
-      "resendCode": "Resend code",
-      "inputPlaceholder": "input e-mail",
-      "enterEmail": "Enter email",
-      "incorrectEmail": "Incorrect email",
-      "carousel": {
-          "stake": {
-              "title": "Stake & Maximize your rewards ",
-              "text": "Join the crypto world with a DAO-based platform for next-generation asset management"
-          },
-          "xtc": {
-              "title": "Receive XCT for staking",
-              "text": "Join the crypto world with a DAO-based platform for next-generation asset management"
-          },
-          "dao": {
-              "title": "Participate in DAO",
-              "text": "Join the crypto world with a DAO-based platform for next-generation asset management"
-          },
-          "buy": {
-              "title": "Buy & Exchange crypto",
-              "text": "Join the crypto world with a DAO-based platform for next-generation asset management"
-          },
-          "useCases": {
-              "title": "Try the crypto use-cases",
-              "text": "Join the crypto world with a DAO-based platform for next-generation asset management"
-          },
-          "keep": {
-              "title": "Keep track of your portfolio",
-              "text": "Join the crypto world with a DAO-based platform for next-generation asset management"
-          }
-      },
-      "whyEmailTitle": "Why Citadel.one requires my email?",
-      "whyEmailDescription": "Citadel.one is a non-custodial wallet, so your email doesn’t provide access to your adresses.",
-      "whyEmailDescription1": "Two reasons why we ask for your email:",
-      "whyEmailMarker1": "It helps you conveniently switch between web platform and mobile application.",
-      "whyEmailMarker2": "We can always stay in touch with you in case it’s necessary. There is lack of communication in crypto applications so people cannot get info about the end of lockup period after unstaking, shutdown of their validator, or when a loan liquidation is approaching. We will also notify you when it’s time to stake the rewards you accumulated so that you earn more.",
-      "whyEmailDescription3": "If you want to register anonymously, use our",
-      "guide": "guide",
-      "sync": {
-          "chooseValidator": {
-              "title": "1. Choose a validator",
-              "text": "You can select any validator from a full list of available nodes"
-          },
-          "setAmount": {
-              "title": "2. Set the amount to stake",
-              "text": "Assets will be delegated to the chosen validator"
-          },
-          "claimRewards": {
-              "title": "3. Enjoy your staking rewards!",
-              "text": "You can claim your rewards in a couple of clicks"
-          }
-      }
-  },
-  "logout": {
-      "modal": {
-          "title": "Are you sure you want to quit?",
-          "eraseBtn": "Erase locally stored user data including private keys",
-          "downloadBackup": "Download backup file"
-      }
-  },
-  "messages": {
-      "incorrectAddress": "Incorrect address",
-      "incorrectNetwork": "Incorrect network"
-  },
-  "addToPublicKey": {
-      "title": "Add a public address",
-      "info": "Add your address to explore Citadel.one analytical functionality"
-  },
-  "addAddress": {
-      "cardTitle1": "Add networks to One-seed",
-      "cardTitle2": "Create one seed",
-      "cardDescP1": "Citadel One-seed wallet enables users to create addresses for all the networks integrated into the platform using only one",
-      "cardDescP2": "mnemonic phrase. Thus, there is no need to store and remember multiple seeds for various wallets",
-      "cardNote": "Recommended",
-      "cardButton": "Add networks",
-      "card1Title": "Import existing address",
-      "card1Note": "Fast",
-      "card2Title": "Import hardware wallet",
-      "card2Desc": "Import addresses from Ledger or Trezor device for advanced use",
-      "card2Note": "Advanced",
-      "card3Title": "Add public address",
-      "card3Desc": "Add your address to explore Citadel analytical functionality",
-      "card3Important": "Note: You won't be able to stake or transfer your assets with this option",
-      "card3Note": "Watch-only",
-      "button": "Add address",
-      "invalidDerivationPath": "Invalid derivation path"
-  },
-  "addToOneSeed": {
-      "rearrangeWords": "Please rearrange the words in the correct order to confirm your mnemonic phrase.",
-      "exclamation": "DO NOT FORGET to save your seed phrase. You will need it for the account recovery. If you lose your seed phrase, you will lose your assets.",
-      "checkboxLabel": "I wrote down my seed phrase ",
-      "infoTitle": "Why is seed phrase important",
-      "infoLine1": "One-seed will be used to generate all of your Citadel.one native addresses.",
-      "infoLine2": "We highly advise you not to take a photo or screenshot but rather to write it down on paper.",
-      "infoLine3": "If you lose this information, no one can recover it. Keep it safe.",
-      "exclamationLearn": "Learn more about seed phrase",
-      "whySeedTitle": "Why do I need a seed phrase?",
-      "whySeedDescription": "Your seed phrase gives you access to your wallet and all the private keys in the wallet. You can think of a crypto wallet as a password manager for your crypto — as long as you have your master password (the seed phrase) you have access to all the associated crypto.",
-      "selectWord": "Select word",
-      "getStartedBtn": "Get started",
-      "moreNetworks": "More networks",
-      "walletCreated": "Your wallet has been created!",
-      "walletCreatedDescription": " If you want to go to the list of available networks, tick the checkbox",
-      "errorConfirmWords1": "Please, check the entered words.",
-      "errorConfirmWords2": "If you wrote down your seed-phrase incorrectly, go back to the previous step and make sure your records are right."
-  },
-  "importExistingAddress": {
-      "card1Title": "Seed - phrase",
-      "card1Info": "Import your seed-phrase to add an address",
-      "card2Title": "Private key",
-      "card2Info": "Import your private key to add an address",
-      "card3Info": "Connect your Web3 Wallet to add an address",
-      "card4Info": "Import Citadel backup file to restore your wallets",
-      "card4Title": "Import file",
-      "card5Info": "Enter your Citadel seed-phrase to restore One-seed wallet",
-      "card5Title": "Restore one-seed"
-  },
-  "importHardwareWallet": {
-      "note": "If you use Chrome for Windows, in some cases to connect a Ledger device, you should change the browser settings.",
-      "card1Info": "Connect your Ledger device",
-      "card2Info": "Connect your Trezor device"
-  },
-  "importLedger": {
-      "title": "Connect your Ledger to the computer you are using",
-      "title1": "Please, select the App you have opened in Ledger"
-  },
-  "importTrezor": {
-      "title": "Connect your Trezor to the computer you are using",
-      "title1": "Please, select the App you have opened in Trezor"
-  },
-  "catPage": {
-      "congratulations": "Сongratulations",
-      "message": "The address was added successfully. You can now set the name for it in the special field below.",
-      "addedAddress": "Added address",
-      "inputLabel": "Enter your alias address",
-      "placeholderSeed": "Citadel One-Seed",
-      "placeholderPrivate": "Citadel Private key",
-      "placeholderPublic": "Citadel Public key",
-      "placeholderHardware": "Citadel Hardware"
-  },
-  "importFile": {
-      "title": "Import or drag-and-drop your backup file to restore your wallets",
-      "selectBackupFile": "Select backup file"
-  },
-  "restoreOneSeed": {
-      "placeholder": "Enter the seed phrase that you've created in Citadel.one before to access your One-seed wallet",
-      "counterMessage": "Enter words through a space"
-  },
-  "metamaskKeplr": {
-      "card1Info": "Connect your Metamask device",
-      "card2Info": "Connect your Keplr device",
-      "modalCardMessage": "Confirmation required",
-      "modalCard1Info": "Please confirm the transaction in the Metamask extension pop-up in your browser.",
-      "modalCard2Info": "Please confirm the transaction in the Keplr extension pop-up in your browser."
-  },
-  "qr": {
-      "modalErrorInfo": "Choose addresses that you want to transfer to the Mobile App with a QR-code. Take into account that you can transfer up to 3 addresses at once.",
-      "modalInfo": " Choose addresses that you want to transfer to the Mobile App with a QR-code",
-      "generateQR": "Generate QR"
-  },
-  "qrInfo": {
-      "title": "Connect your Citadel.one Mobile App to the Web platform",
-      "note": "Scan the QR-code above to transfer your account data to Citadel.one mobile app. Then click 'Next' to access the following QR-code.",
-      "scanQrInfo": "Scan the QR-code above to transfer your account data to Citadel.one mobile app.",
-      "step1Info": "Open Citadel.one app",
-      "step2Info": "Go to 'Add an address' and choose 'Connect with QR'",
-      "step3Info": "Scan your QR-code"
-  },
-  "wallet": {
-      "info": {
-          "title": "Import your wallet to start managing your assets",
-          "note": "To send, stake or exchange your tokens, you need to import your address with the seed phrase or private key.",
-          "block1Title": "Why do I need to import my address?",
-          "block1Info": "This is a view-only address, because you've added it with a public key or you were logged out.",
-          "block2Title": "Need some guidance on address import?",
-          "block2Info": "Check the step-by-step guide on how to import an address with your private key or a seed phrase.",
-          "availableAssets": "Available assets",
-          "totalAssets": "Total assets"
-      },
-      "stubs": {
-          "chain": "Ki-chain is temporarily unavailable",
-          "description": "We’ll be back shortly! Please take into account that your funds are safe!",
-          "subdescription": "Note: you will be still receiving XCT rewards if you assigned your address."
-      }
-  },
-  "balanceTooltipInfo": {
-      "availableBalance": "Available balance",
-      "availableBalanceInfo": "tokens that can be sent, staked and exchanged",
-      "stakedBalance": "Staked balance",
-      "stakedBalanceBalanceInfo": "cumulative staked balance that accrues rewards",
-      "frozenBalance": "Frozen balance",
-      "frozenBalanceBalanceInfo1": "tokens that are temporarily unavailable for withdrawal or exchange, but still can be staked",
-      "frozenBalanceBalanceInfo2": "tokens that are locked after the unstaking transaction",
-      "withFromPeriod": "The unstaking period for {code} fluctuates from",
-      "to": "to",
-      "iconPeriodLink": "Check the current unstaking period via the",
-      "noPeriod": "There is no unstaking period for",
-      "unstakingPeriod": "The unstaking period for",
-      "is": "is",
-      "frozenBalanceTooltipTitle": "Your tokens will become available in"
-  },
-  "transactionsPage": {
-      "placeHolderInfo1": "Your transaction history is empty.",
-      "placeHolderInfo2P1": "Deposit some",
-      "placeHolderInfo2P2": "to send, stake, and earn rewards.",
-      "buyVia": "Buy via",
-      "placeHolderInfoTitle2": "Deposit from exchanges",
-      "editCommentModalTitle": "Edit comment",
-      "editCommentModalDesc": "You can add your comment to transaction below",
-      "transactionInfoModalTitle": "Transaction information",
-      "transactionInfoModalDesc": "See the transaction details below"
-  },
-  "sendModal": {
-      "title1": "Confirm the token sending",
-      "desc1": "Please, check the details below",
-      "changingModals": {
-          "error": "Commission exceeds balance",
-          "title": "Consider changing the amount to proceed",
-          "decreaseDesc": "In order to cover the transaction fee, we suggest to slightly decrease the sending amount. If you want to continue with the previous amount, click &#34No&#34.",
-          "increaseDesc": "The transaction fee is lower, so we suggest to increase the sending amount. If you want to continue with the previous amount, click &#34No&#34."
-      },
-      "fee": {
-          "invalidAmount": "Invalid fee amount"
-      },
-      "desc2": "The transaction is in progress"
-  },
-  "yes": "Yes",
-  "no": "No",
-  "tryBtn": "Try again",
-  "errorPage": {
-      "pageNotFound": "Page not found",
-      "toHomePage": "To the homepage"
-  },
-  "lockBanner": {
-      "bannerInfo": "Import your address to start staking. Need a guide? Check ",
-      "thisLink": "this link"
-  },
-  "stakePlaceholder": {
-      "title": "Start staking in a couple of clicks!",
-      "whatIs": "What is",
-      "card1Info": "1. Choose nodes from the list",
-      "card2Info": "2. Set the amount to stake & confirm",
-      "card3Info": "3. Enjoy your crypto passive income",
-      "choseNodePlaceholderNote": "Click to select node for staking"
-  },
-  "staking": {
-      "chooseNodeForStaking": "Choose node for staking",
-      "chooseNodeModalDesc": "Click on the node at the list to select one to stake with.",
-      "chooseNodeModalDesc1": "To stake your assets, choose nodes and set the amount for delegation. Take into account that unstaking period for {net} is <span style='color: #0A2778; font-weight: bold;'>{perioud} days</span>.",
-      "chooseNodeModalDescWithFrom": "To stake your assets, choose nodes and set the amount for delegation. Take into account that unstaking period for {net} fluctuates <span style='color: #0A2778; font-weight: bold;'>from {perioudFrom} to {perioudTo} days</span>. Check the current unstaking period via the <a href='{link}' style='color: #0A2778; font-weight: bold;text-decoration:none'>link</a>.",
-      "Stake": "Stake",
-      "staking": "staking",
-      "searchNode": "Search node",
-      "searchInputPlaceholder": "Start typing Node name",
-      "editNode": "Edit node",
-      "actionModalTitle": "Confirm the staking transaction",
-      "actionModalDesc": "Your tokens will be staked",
-      "stakeFrom": "Stake from",
-      "stakeOn": "Stake on",
-      "amountToStake": "Amount to stake",
-      "inputNote": "Including funds reserved for commission token purchase",
-      "editModeDesc": "To stake or unstake your assets, set the amount for delegation in the field below. Take into account that unstaking period for {net} is <span style='color: #0A2778; font-weight: bold;'>{perioud} days</span>",
-      "editModeDescWithFrom": "To stake or unstake your assets, set the amount for delegation in the field below. Take into account that unstaking period for {net} fluctuates <span style='color: #0A2778; font-weight: bold;'>from {perioudFrom} to {perioudTo} days</span>. Check the current unstaking period via the <a href='{link}' style='color: #0A2778; font-weight: bold;text-decoration:none'>link</a>.",
-      "nodeIsNotActive": "Node is inactive, rewards are not being issued",
-      "nodeIsJailed": " This node is currently inactive, you don't get rewards for staking with it. Delegate your assets to another node"
-  },
-  "unstaking": {
-      "unstake": "Unstake",
-      "defaultPrefix": "Choose node and set the amount you want to unstake.",
-      "customPrefix": "Set the amount you want to unstake.",
-      "chooseNodeForUnstaking": "Choose node for unstaking",
-      "chooseNodeModalDesc": "Take into account that unstaking period for {net} is <span style='color: #0A2778; font-weight: bold;'>{perioud} days</span>.",
-      "chooseNodeModalDescWithFrom": "Take into account that unstaking period for {net} fluctuates <span style='color: #0A2778; font-weight: bold;'>from {perioudFrom} to {perioudTo} days</span>. Check the current unstaking period via the <a href='{link}' style='color: #0A2778; font-weight: bold;text-decoration:none'>link</a>.",
-      "actionModalTitle": "Confirm the unstaking transaction",
-      "actionModalDesc": "Your tokens will be unstaked and frozen for some time",
-      "unstakeTo": "Unstake to",
-      "unstakeFrom": "Unstake from",
-      "amountToUnstake": "Amount to unstake",
-      "unstakeNote": "After the confirmation of unstaking transaction, your assets will be locked for {unstakeingPerioud} days.Unstaked assets will be depicted in the frozen balance section."
-  },
-  "singleStake": {
-      "chooseNodeModalDesc": "To stake your assets, choose node and set the amount for delegation. Take into account that there is <strong style='color:#0a2778;'>no unstaking period</strong> for",
-      "actionModalTitle": "Confirm redelegation",
-      "actionModalDesc": "Your assets will be unstaked from the current validators and staked to the newly chosen once",
-      "undelegateFrom": "Undelegate from",
-      "delegateTo": "Delegate to"
-  },
-  "ledger": {
-      "connect": {
-          "title": "Connect your Ledger",
-          "desc": "Please connect your hardware wallet to the computer"
-      },
-      "openApp": {
-          "title": "Open (reopen) the Ledger app",
-          "desc": "Open the relevant network app on your Ledger device"
-      },
-      "confirm": {
-          "title": "Confirm the operation",
-          "desc": "Confirm the operation on your Ledger device"
-      },
-      "action": {
-          "title": "Action required",
-          "desc": "Oops.. The action wasn't confirmed. <br/>Please, tap the button on your Ledger device to proceed."
-      },
-      "rejected": {
-          "title": "Transaction rejected",
-          "desc": "Transaction rejected by ledger device"
-      },
-      "errors": {
-          "27404": "Enter your hardware wallet password and retry the operation"
-      }
-  },
-  "rewardsPage": {
-      "rewardsDetails": "Rewards details",
-      "periodRewards": "Period rewards",
-      "rewardsPlaceholder": "You have no rewards",
-      "rigthSectionPlaceholder": "You have no rewards notifications",
-      "rewardsReport": "Rewards Report",
-      "totalRewards": "Total rewards"
-  },
-  "DAO": {
-      "placeholderTitle": "Citadel.one DAO is coming",
-      "placeholderInfo": "Soon you will be able to participate in decisions regarding features and networks to integrate, financial and governance settings to implement."
-  },
-  "claim": {
-      "claim": "Claim",
-      "claimTo": "Claim to",
-      "amountToClaim": "Amount to claim",
-      "confirmModalTitle": "Confirm the rewards claim",
-      "confirmModalDesc": "You will see the accrued rewards in the available balance"
-  },
-  "exportWallet": {
-      "card1Info": "Export the associated mnemonic phrase",
-      "card2Info": "Export the associated private key",
-      "chooseExportTypeModalTitle": "Select export option",
-      "chooseExportTypeModalDesc": "Choose how to export this address",
-      "approveExportModalTitle1": "Export the private key",
-      "approveExportModalDesc1": "Enter your password to show the private key for this address",
-      "approveExportModalTitle2": "Export the mnemonic phrase",
-      "approveExportModalDesc2": "Enter your password to show the mnemonic phrase for this address",
-      "exportModalTitle1": "Your private key is displayed below",
-      "exportModalDesc": "Make sure to store it securely.",
-      "exportModalTitle2": "Your mnemonic phrase is displayed below"
-  },
-  "customLists": {
-      "createListModalDesc": "Choose addresses that you want to add to the list",
-      "editList": "Edit list",
-      "editListModalDesc": "Manage addresses in your lists",
-      "deleteList": "Delete list",
-      "deleteListModalTitle": "Do you want delete the list?",
-      "walletsCountTitle": "Addresses in the list",
-      "eneterListName": "Please, enter the list name.",
-      "warningModalDesc": "This list name already exists, please try another one",
-      "infoBanner": " You didn't add addresses to this list. Please, choose at least one address to create a list.",
-      "duplicateName": "A list with this name already exists. Please, choose another name"
-  },
-  "calculator": {
-      "title": "{coin} Staking Calculator",
-      "subtitle": "Calculate your rewards",
-      "yearlyReturn": "Yearly Return",
-      "howManyYouHave": "How many do you have?",
-      "yearlyReward": "Yearly rewards",
-      "expandTitle": "Get more rewards",
-      "expandSubtitle": "The more you stake with Citadel.one nodes, the more XCT rewards you get"
-  },
-  "xct": {
-      "publicKeyPlaceholderTitle": "Import your wallet to start earning XCT",
-      "assignedAddresses": "Assigned addresses",
-      "unAssignedAddresses": "Unassigned addresses",
-      "blocks": {
-          "title1": "You don't have addresses",
-          "title2": "Start earning XCT!",
-          "title3": "You can earn more!",
-          "title4": "Start staking XCT!",
-          "title5": "Great job!",
-          "title6": "Earn more with XCT staking!",
-          "desc1": "You don't have any staking addresses added to this Citadel.one account. Import them now to start earning more with your crypto!",
-          "desc2": "You haven't assigned your addresses to receive XCT. Assign them now to earn XCT for staking with Citadel.one nodes in addition to the network rewards!",
-          "desc3": "Not all of the addresses are assigned, which means you are missing some XCT rewards. Assign them now to get more with your staking!",
-          "desc4": "Start staking your accrued XCT rewards to receive even more!",
-          "desc5": "You assigned all the addresses to receive XCT tokens, which means you are successfully maximising the staking rewards with Citadel.one!"
-      },
-      "assignedAddressesModalTitle": "Your assigned addresses",
-      "assignedAddressesModalDesc": "Below you can find a list of addresses that are already assigned and eligible for receiving XCT rewards.",
-      "addressAssigningInfoModalTitle": "BSC addresses for XCT",
-      "addressAssigningInfoModalDesc": "Follow the instructions to assign your addresses and receive XCT rewards.",
-      "addressAssigningInfoModalBlock1Info": "Choose addresses from your Citadel.one wallet that you want to assign to this BSC address",
-      "addressAssigningInfoModalBlock2Info": "Confirm the address assignment by entering your payment password",
-      "addressAssigningInfoModalNote": " If you want to assign a Ledger address, you will have to connect your hardware device for the assignment confirmation.",
-      "assignAddressTooltipTitle": "Assigned to BSC address",
-      "unassignedAddressesModalTitle": "Choose addresses for assignment",
-      "unassignedAddressesModalDesc": "Select addresses to assign them to Binance Smart Chain address you've chosen on the previous step.",
-      "approveAssignWithPasswordModalDesc": "Enter the password to confirm the assignment of your addresses to the BSC address that you've chosen on the previous step.",
-      "newAssignedAddressesModalTitle": "Successfully added for XCT rewards",
-      "hardwareAddressesModalDesc": "Connect a hardware wallet to confirm your address in order to assign it successfully.",
-      "rewardsBlockTitle": "XCT Rewards",
-      "rewardsBlockSubtitle": "Additional rewards you are getting with Citadel.one",
-      "XCTStakingRewards": "XCT staking rewards",
-      "stakedOnCitadel": "Staked on Citadel.one",
-      "setStakingAmountModalDesc": "Set the amount of XCT to stake",
-      "setStakingAmountModalDesc1": "Set the amount of XCT to unstake",
-      "stakingPlaceholderCard1Info": "1. Click the button to start staking XCT",
-      "stakingPlaceholderCard3Info": "3. Enjoy additional XCT rewards",
-      "claimRewardsCheckbox2Label": "Assigned staking rewards",
-      "assignedAddressesBtn": "Assigned addresses",
-      "unAssignedAddressesBtn": "Unassigned addresses"
-  },
-  "accounts": "Accounts",
-  "neededResources": "for network resourses",
-  "restake": "Restake",
-  "otherAssets": "Other assets",
-  "hardwareWallet": "Hardware wallet",
-  "bscAddress": "BSC address",
-  "enterYourPassword": "Enter your password",
-  "enterPaymentPassword": "Enter your payment password",
-  "finish": "Finish",
-  "assigned": "Assigned",
-  "note": "Note",
-  "manage": "Manage",
-  "learnMore": "Learn more",
-  "Token": "Token",
-  "searchErrorText": "No addresses found for this request",
-  "searchToken": "Search token",
-  "inputToken": "Input token",
-  "commentPlaceholder": "Add a few words to specify your transaction",
-  "fail": "Fail",
-  "date": "Date",
-  "inputName": "Input name",
-  "listName": "List name",
-  "createList": "Create list",
-  "cancel": "Cancel",
-  "enterYourCitadelPassword": "Enter your Citadel password",
-  "show": "Show",
-  "yearAbbr": "y",
-  "monthAbbr": "m",
-  "custom": "Custom",
-  "all": "All",
-  "oneYear": "One Year",
-  "month": "Month",
-  "notifications": "Notifications",
-  "swap": "Swap",
-  "insufficientFunds": "Insufficient funds",
-  "changeNode": "Change node",
-  "startStaking": "Start staking",
-  "this": "this",
-  "AddWallet": "Add wallet",
-  "addWallet": "Add Wallet",
-  "download": "Download",
-  "enterTextComment": "Enter text comment",
-  "confirmed": "Confirmed",
-  "min": "min",
-  "pending": "Pending",
-  "addedToMempool": "Added to mempool",
-  "warning": "Warning",
-  "viewTranscasction": "View Transaction",
-  "viewBalance": "View balance",
-  "enterSendPassword": "Enter your password for sending validation",
-  "totalAmount": "Total amount",
-  "sendTo": "Send to",
-  "sendFrom": "Send from",
-  "unstake": "Unstake",
-  "Stake": "Stake",
-  "receive": "Receive",
-  "fee": "Fee",
-  "comment": "Comment",
-  "export": "Export",
-  "timeDate": "Time & Data",
-  "type": "Type",
-  "status": "Status",
-  "viewOnly": "View only",
-  "error": "Error",
-  "success": "Success",
-  "info": "Info",
-  "buyNow": "Buy now",
-  "settingsTitle": "Settings",
-  "overallTitle": "Overall",
-  "days": "days",
-  "copiedToClipboard": "Copied to clipboard",
-  "earn": "Earn",
-  "seed": "Seed",
-  "learnHow": "Learn how",
-  "importAddress": "Import address",
-  "chooseAddresses": "Choose addresses",
-  "addressName": "Address name",
-  "searchAddress": "Search address",
-  "save": "Save",
-  "transactionFee": "Transaction Fee",
-  "per": "per",
-  "price": "Price",
-  "link": "link",
-  "sendBannerInfo": "The bridge allows users to lock their ETH in a smart contract on Ethereum and mint secretETH. Below you can unwrap your secretETH and receive ETH tokens back ",
-  "selectAddress": "Select address",
-  "advanced": "Advanced",
-  "max": "MAX",
-  "inputMemo": "Input memo",
-  "memo": "Memo",
-  "memoTooltip": "Memo is a destination tag that is used to specify the recipient of a transaction.",
-  "includingFunds": "Including the default network fee",
-  "includingFunds-xl": "Including funds reserved for commission token purchase",
-  "amount": "Amount",
-  "to": "To",
-  "sendAssetsToAnotherNetwork": "Send assets to another network",
-  "rewards": "Rewards",
-  "stakingRatio": "Staking ratio",
-  "inflation": "Inflation",
-  "tokenPrice": "Token price",
-  "lockedForiGasGeneration": "locked for iGas generation",
-  "unpledgedBalance": "Unpledged balance",
-  "pledgedBalance": "Pledged balance",
-  "pledgeDescription": {
-      "part1": "The system needs to pledge IOST token to get iGas. 1 pledged IOST generates",
-      "part2": "100,000 Gas",
-      "part3": "per",
-      "part4": "Day",
-      "part5": ", it is also locked and cannot be traded. Unpledging token will unlock your IOST, but stop Gas generation."
-  },
-  "frozen": "Frozen",
-  "available": "Available",
-  "staked": "Staked",
-  "balance": "balance",
-  "transactions": "transactions",
-  "send": "Send",
-  "stake": "stake",
-  "youHave": "You have",
-  "claimRewards": "Claim rewards",
-  "oneSeed": "One Seed",
-  "publicKey": "Public key",
-  "hardware": "Hardware",
-  "edit": "Edit",
-  "Citadel.one": "Citadel.one",
-  "yourE-mail": "Your e-mail",
-  "loadingFile": "Loading file",
-  "incorrectFile": "Incorrect file. Tap here to upload another backup file.",
-  "incorrectPassword": "Incorrect password",
-  "passwordsDontMatch": "Passwords don't match",
-  "passwordTooShort": "Password is too short (must be at least 8 characters)",
-  "confirmPassword": "Confirm your password",
-  "createPassword": "Please create a payment password",
-  "password": "Password",
-  "yourComputer": "Your computer",
-  "enterYourPrivateKey": "Enter your private key",
-  "privateKey": "Private key",
-  "ok": "Ok",
-  "select": "Select",
-  "retry": "Retry",
-  "createPasswordNote": "Please create a payment password. It will be required for confirmation of all transactions made via Citadel.one platform. You will not be able to recover or change the password if you lose it. ",
-  "enterPasswordNote": "Enter your payment password to add new addresses to Citadel One-seed",
-  "understand": "I understand",
-  "enterPassword": "Enter a password",
-  "repeatYourPassword": "Repeat your password",
-  "network": "Network",
-  "Network": "network",
-  "create": "Create",
-  "guide": "guide",
-  "searchNetworks": "Search networks",
-  "selectHardwareWallet": "Select a hardware wallet",
-  "selectNetwork": "Select network",
-  "addAddressExp": "Add address",
-  "addAnAddress": "Add an address",
-  "chooseSuitableMethod": "Choose a suitable method to import an existing address",
-  "address": "Address",
-  "enterAddress": "Enter address",
-  "import": "Import",
-  "enterMnemonicPhrase": "Enter a mnemonic phrase",
-  "advancedSettings": "Advanced settings",
-  "mnemonicIncorrect": "Invalid mnemonic phrase",
-  "networkNameIncorrect": "Network is incorrect",
-  "pleaseSelectNetwork": "Please, select network",
-  "mnemonicPassphraseOptional": "Mnemonic passphrase (optional)",
-  "inputPassphrase": "Input passphrase",
-  "next": "Next",
-  "confirm": "Confirm",
-  "importExistingAddressExp": "Import an existing address",
-  "layouts": {
-      "addAddressLayout": {
-          "sidebarPlaceholder": "Your addresses will be displayed here",
-          "favoritePlaceholder": "Your favourite wallets will be diplayed here. Press star button near public key to add to favourites",
-          "overall": "Overall",
-          "addresses": "Addresses",
-          "wallets": "Wallets"
-      }
-  },
-  "backBtn": "Back",
-  "steps": {
-      "step": "Step",
-      "selectNetworks": "Choose networks",
-      "connectYourDevice": "Connect your device",
-      "derivationPath": "Derivation path",
-      "enterPassword": "Enter Password",
-      "chooseDerivationPath": "Choose a derivation path",
-      "createPaymentPassword": "Create a payment password",
-      "addNewAddress": "Add a new address",
-      "derivationPathInfo": "Derivation path specifies which private key (and thus which address) is used.",
-      "setPasswordForAllIn": "Set the password for all in-platform operations",
-      "addAddressSpecifications": "Add address specifications",
-      "enterPaymentPassword": "Enter a payment password",
-      "importFileExp": "Import file",
-      "chooseImportOption": "Choose import option",
-      "createPassword": "Create Password",
-      "addToOneSeed": {
-          "step1HeaderInfo1": "Add new networks to the existing One-seed wallet",
-          "createOneSeed": "Create One-seed",
-          "createOneSeedWallet": "Create a One-seed wallet",
-          "step2HeaderInfo": "Use one wallet to manage all the assets integrated into our platform",
-          "step3StepDesc": "Confirm a seed phrase",
-          "step4headerInfo": "Pick networks to add to your wallet"
-      },
-      "importLedger": {
-          "step2stepDesc": "Select the Ledger App",
-          "step2headerInfo": "Choose the network app on your Ledger device",
-          "step3headerInfo": "Connect the Ledger device to your computer and confirm"
-      },
-      "importTrezor": {
-          "step2stepDesc": "Select the Trezor App",
-          "step2headerInfo": "Choose the network app on your Trezor device",
-          "step3headerInfo": "Connect the Trezor device to your computer and confirm"
-      },
-      "importSeedPhrase": {
-          "step3HeaderInfo": "Select a network and enter a mnemonic phrase"
-      },
-      "importPrivateKey": {
-          "step3HeaderInfo": "Select a network and enter a corresponding private key"
-      },
-      "importFile": {
-          "step2HeaderInfo": "Select a Citadel.one backup file and upload it",
-          "step2StepDesc": "Import a backup file",
-          "step3HeaderTitle": "Enter the backup password",
-          "step3HeaderInfo": "Enter the backup file password to restore Citadel One-seed wallet",
-          "step3StepDesc": "Enter backup file password"
-      },
-      "restoreOneSeed": {
-          "step3HeaderTitle": "Enter a Citadel One-seed phrase",
-          "step3HeaderInfo": "Enter the mnemonic phrase created within Citadel.one",
-          "step3StepDesc": "Enter a seed phrase",
-          "step4HeaderInfo": "Addresses for this networks will be restored with your One-seed"
-      },
-      "enterPasswordForAllInSeed": "Add new networks to the existing Seed-phrase",
-      "enterPasswordForAllInPrivate": "Add a network using your private key"
-  },
-  "settings": {
-      "subscriptions": {
-          "title": "Subscriptions",
-          "description": "Subscribe to the relevant updates",
-          "rewardsDigest": "Account rewards digest",
-          "addRewardsNotification": "You have subscribed to email rewards notifications",
-          "removeRewardsNotification": "You have unsubscribed to email rewards notifications",
-          "rewardsDigestTooltip": "Biweekly updates on your accrued rewards, claimable tokens and assets to stake",
-          "newsletter": "Newsletter",
-          "newsletterTooltip": "Receive essential Citadel.one events & updates monthly",
-          "addNewsletterNotification": "You have subscribed to email newsletter notifications",
-          "removeNewsletterNotification": "You have unsubscribed to email newsletter notifications"
-      },
-      "transferData": {
-          "title": "Transfer data from web to mobile in seconds",
-          "description": "For your convenience, we've added a QR-code that allows you to effortlessly transfer your data from the Citadel.one web platform to the mobile app in just a couple of clicks.",
-          "button": "Open QR code"
-      },
-      "addresses": {
-          "title": "Addresses",
-          "description": "Delete your addresses or import seedphrase, private or viewing keys",
-          "deleteModalTitle": "Do you want to delete the address?",
-          "deleteSeedTitle": "Do you want to delete One-Seed info?",
-          "deleteSeedDesc": "You can delete all the locally stored data on your One-Seed",
-          "deleteSeedInfo": "Note: After confirmation of this action all the data associated with your One-Seed wallet will be removed."
-      },
-      "changeEmail": {
-          "title": "Your email",
-          "description": "Your account email",
-          "inputLabel": "Your e-mail",
-          "inputPlaceHolder": "e-mail",
-          "button": "Change",
-          "comingSoon": "COMING SOON"
-      },
-      "language": {
-          "title": "Language",
-          "description": "Chosen platform language",
-          "inputLabel": "Language"
-      },
-      "delete": {
-          "title": "Delete your account",
-          "description": "This operation cannot be reversed",
-          "modalDescription": "Please note that this action cannot be reversed. Your assets are safe - you only delete the Citadel.one account",
-          "button": "Delete account",
-          "inputLabel": "Type \"Delete account\" to confirm",
-          "placeholder": "Type 'delete'"
-      },
-      "changePassword": {
-          "btnTitle": "Change password",
-          "btnUpdate": "Update",
-          "modalTitle": "Password change",
-          "oldPassword": "Old password",
-          "newPassword": "New password",
-          "modalDescription": "This is the password you will use to confirm transaction signatures",
-          "incorrectOldPassword": "The old password is incorrect",
-          "minLen": "Min length 8 characters",
-          "successTitle": "Your password was successfully changed",
-          "successDescription": "Use your new password to confirm transactions",
-          "title": "Your password",
-          "description": "You can change your password here",
-          "button": "Change",
-          "comingSoon": "COMING SOON",
-          "tooltip": "As Citadel.one is a non-custodial platform, we do not store your password — it is kept in your browser’s local storage. If you clear your cookies, your password will be deleted — you will have to create a new one."
-      },
-      "crossChain": {
-          "title": "Citadel.one cross-chain Web3",
-          "description": "Access your favorite applications with a brand new Citadel.one browser extension.",
-          "button": "Get Started",
-          "comingSoon": "COMING SOON"
-      },
-      "extensionSettings": {
-          "title": "Extensions settings",
-          "description": "Manage your Citadel.one mini-applications' settings all-in-one. ",
-          "button": "Open Settings",
-          "comingSoon": "COMING SOON",
-          "successDescription": "Use your new password to confirm transactions"
-      }
-  },
-  "overallPage": {
-      "noBalance": "You have no balance",
-      "noRewards": "You have no rewards",
-      "balanceStructure": {
-          "title": "Balance structure"
-      },
-      "balanceHistory": {
-          "title": "Balance history"
-      },
-      "rewardsChart": {
-          "title": "Rewards Chart"
-      },
-      "favourites": {
-          "placeholder": {
-              "address": {
-                  "title": "Track your favorite addresses",
-                  "text": "Create address lists upon your priorities, set address aliases and track all of your favorite addresses in one place."
-              },
-              "portfolio": {
-                  "title": "Create sub-portfolios",
-                  "text": "Add addresses to the lists upon your needs and requirements and stay on top of your sub-portfolio performance."
-              }
-          }
-      },
-      "problemBalance": "We are providing some minor fixes to this section.",
-      "maintance": "Under maintenance"
-  },
-  "addedModal": {
-      "title": "Wallet already added",
-      "desc": "You already have this address added to your account."
-  },
-  "netInfoGeneral": {
-      "marketcap": "Market cap",
-      "marketcapTooltip": "Market capitalization is the total value of a cryptocurrency. It is calculated by multiplying the total number of coins in circulation by the cryptocurrency’s current price",
-      "supply": "Circulating supply",
-      "supplyTooltip": "Circulating supply is the total number of coins that are actively available for trade and circulating in the market",
-      "staked": "Staked ratio",
-      "stakedTooltip": "Percentage of eligible tokens that are being staked",
-      "inflation": "Inflation",
-      "inflationTooltip": "For the Inflation (Network Inflation) we take into account all newly-minted tokens & all reserve-funds that are being distributed as rewards",
-      "priceChart": " price chart",
-      "apyTooltip": "Annual Percentage Yield is counted as Staking Inflation / Staked",
-      "stakingRatioTooltip": "Percentage of eligible tokens that are being staked",
-      "dayTradingVol": "24 hour trading vol",
-      "dayTradingVolTooltip": "24-hour trading vol is the number of coins that have exchanged hands during the last 24 hours"
-  },
-  "viewingKey": {
-      "viewingKey": "Viewing key",
-      "passwordText": "Enter your password for validation",
-      "confirmOperation": "Confirm the operation",
-      "addVkFor": "Add viewing key for ",
-      "vkFor": "Viewing key for ",
-      "importVk": "Import viewing key for ",
-      "enterYourVk": "Enter your viewing key for validation",
-      "iHaveVk": "I have a viewing key.",
-      "viewingKeys": "Viewing keys",
-      "vkListedBelow": "Viewing keys for your SNIP-20 tokens are listed below.",
-      "searchViewingKeys": "Search Viewing keys",
-      "tokenName": "Token name",
-      "manageVks": "Manage Viewing keys",
-      "vkDesc": "Viewing keys for your SNIP-20 tokens are listed below. You can delete or create a new viewing key here.",
-      "deleteKey": "Delete key",
-      "createNew": "Create new",
-      "incorrectKey": "Incorrect key"
-  },
-  "tokenSearchError": "There is no tokens",
-  "myTokens": "My tokens",
-  "allTokens": "All tokens",
-  "favourites": "Favourites",
-  "daoTitle": "DAO",
-  "hours": "hours",
-  "minutes": "minutes",
-  "migration": {
-      "cancel": "Cancel",
-      "logout": "Log out",
-      "download": "Download backup file",
-      "forgotPassword": "Forgot password?",
-      "forgotDescription": "If you forgot your password, you can log out, set a new password and restore your seed phrase/wallets by yourself.",
-      "finishTitle": "Restore One-Seed",
-      "finishDescription": "To interact with the platform more conveniently, you can restore your seed phrase right away.",
-      "restore": "Restore",
-      "skip": "Skip",
-      "agree": "Agree",
-      "welcomeTitle": "Welcome to the new version 2.0 of Citadel!",
-      "welcomeDescription": "You can migrate all your addresses from the old version of Citadel.one application to the new one in a fast and easy way.",
-      "backupPassword": "Enter backup password",
-      "title": "Addresses migration",
-      "description": "We recognized some private keys associated with your account that are stored in your device from your last login into Citadel.one."
-  },
-  "multisigBalance": {
-      "title": "Unlocked xct",
-      "labelAddress": "Bsc address",
-      "labelPlaceholder": "Select address",
-      "contractLabel": "Select contract",
-      "contractPlaceholder": "Contract name",
-      "claim": "Claim",
-      "statsClaimed": "XCT claimed",
-      "statsClaimedDescription": "Сumulative total of claimed tokens",
-      "statsUnlocked": "Unlocked balance",
-      "statsUnlockedDescription": "Unlocked tokens is a sum of claimed and claimable tokens",
-      "totalFrozen": "Total frozen balance",
-      "statsFrozen": "Frozen balance",
-      "statsFrozenDescription": "Vested tokens",
-      "youHave": "Claimable XCT",
-      "confirmModalTitle": "Confirm the rewards claim",
-      "confirmModalDescription": "You will see the accrued rewards in the available balance",
-      "claimTo": "Claim to",
-      "amountToClaim": "Amount to claim",
-      "fee": "Fee",
-      "totalAmount": "Total amount"
-  },
-  "mobileAppModal": {
-      "title": "Download Citadel.one app!",
-      "info": "Enjoy your seamless crypto experience with all-in-one mobile application.",
-      "appStore": "App store",
-      "googlePlay": "Google play"
-  },
-  "redelegation": {
-      "redelegationDesc": "Choose nodes and set the amount you want to redelegate. Please note that with the same wallet address, you are only able to redelegate your assets up to <span style='color: #0A2778; font-weight: bold;'>7 times</span> in a <span style='color: #0A2778; font-weight: bold;'>21 day period</span>. No unstaking period applies.",
-      "redelegate": "Redelegate",
-      "chooseNodeTitle": "Choose node for redelegate",
-      "choseNodePlaceholderNote": "Click to select node for redelegate"
-  },
-  "rewardDetails": {
-      "title": "Reward details",
-      "subtitle": "The more you stake with Citadel.one nodes, the more XCT rewards you get",
-      "totalStaked": "Total staked",
-      "stakedOnCitadel": "Staked on <b>Citadel.one</b>"
-  },
-  "copied": "Copied",
-  "copy": "Copy",
-  "week": "Week",
-  "multisigSend": {
-      "title": "Multisig send",
-      "available": "Available",
-      "availableHint": "Tokens left to claim in total",
-      "spend": "Spent",
-      "spendHint": "Tokens spent in total",
-      "total": "Total",
-      "totalHint": "Total number of tokens distributed to fund during TGE",
-      "claimable": "Claimable",
-      "claimableHint": "Tokens available for claim",
-      "labelAddress": "Bsc address",
-      "labelPlaceholder": "Select address",
-      "selectFundPlaceholder": "Ecosystem fund",
-      "selectFundLabel": "Select fund",
-      "sendTo": "Send to",
-      "amountToSend": "Amount to send",
-      "fee": "Fee",
-      "totalAmount": "Total amount",
-      "confirmModalTitle": "Confirm the send fund",
-      "selectedFund": "Selected fund"
-  },
-  "importCustomPath": {
-      "labelSelect": "Select HD derivation path"
-  },
-  "ktAddresses": {
-      "modalTitle": "All addresses",
-      "modalDesc": "In Tezos, there are two types of addresses: implicit, or manager, addresses with a TZ prefix, and originated addresses with a KT prefix. Below you can see KT addresses that are associated with the main TZ address."
-  },
-  "withoutDelegation": "Stake without delegation",
-  "pledge": {
-      "chooseModeModalTitle1": "Lock the IOST for iGas generation",
-      "chooseModeModalSubtitle": "<span style='color: #0A2778; font-weight: bold;'>1</span> pledged IOST generates <span style='color: #0A2778; font-weight: bold;'>100 000</span> iGas per day",
-      "chooseModeModalTitle2": "Unlock the IOST used for iGas generation",
-      "pledge": "pledge",
-      "unpledge": "unpledge",
-      "confirmModalTitle1": "Confirm the pledge transaction",
-      "confirmModalDesc1": "Your tokens will be pledged",
-      "confirmModalTitle2": "Confirm the unpledge transaction",
-      "confirmModalDesc2": "Your tokens will be unpledged"
-  },
-  "minAmmount": "Amount must be high than 1",
-  "maxFloatDigits": "No more than two digits after the decimal point",
-  "emptyPassword": "Empty password",
-  "accruedDaily": "Accrued daily from 6-7 pm UTC",
-  "extensions": {
-      "showLabel": "Show",
-      "headerTitle": "Extensions Store",
-      "headerDescription": "Use your favorite dApps, DeFi applications and extensions natively!",
-      "readMore": "Read more",
-      "networks": "Networks",
-      "guide": "Guide",
-      "description": "Description",
-      "youCan": "With this app you can",
-      "launch": "Launch",
-      "dontShow": "Dont show this again",
-      "appTooltip": "This application is integrated by Citadel.one team.",
-      "transactionData": "Transaction data",
-      "transactionFee": "Transaction fee",
-      "signMessage": "Sign message",
-      "searchPlaceholder": "Start typing the app name",
-      "typeOperation": "Type operation"
-  },
-  "tokenDescriptionComdex": "Comdex is a decentralized synthetic assets protocol built on the Cosmos. ",
-  "tokenDescriptionJuno": "Juno is a Cosmos-based chain that provides an environment for the deployment of interoperable smart contracts.",
-  "tokenDescriptionOsmosis": "Osmosis is a decentralized peer-to-peer blockchain that people can use to create liquidity and trade IBC enabled tokens.",
-  "metamask": {
-      "notFound": "Metamask not found in your browser",
-      "changeNetwork": "Change network in metamask",
-      "cancel": "Cancel",
-      "confirm": "Confirm",
-      "importWallet": "Import wallet",
-      "allreadyAdded": "Address already added",
-      "titleModal": "Import metamask wallet",
-      "descModal": "Change your address or network in metamask"
-  },
-  "netInfo": {
-      "akash": {
-          "title": "Akash network",
-          "description": "Akash is a secure, transparent, and decentralized cloud computing marketplace that connects those who need computing resources with those that have the computing capacity to lease. Also called Akash DeCloud, it consists of two main components: the network and the platform. The Akash Network is an on-chain decentralized marketplace for leasing computing resources. While the Akash Platform is an off-chain deployment platform used for hosting and managing workloads.",
-          "shortDescription": "Akash is a secure, transparent, and decentralized cloud computing marketplace that connects those who need computing resources with those that have the computing capacity to lease."
-      },
-      "band": {
-          "title": "Band network",
-          "description": "Band Protocol is a software designed to incentivize a network of users to provide real-world data to decentralized applications (dapps) running on blockchains. For example, if a dapp developer wants to enable his or her users to enter wagers on the future price of gold, it would need to be able to determine its price at the desired later date.",
-          "shortDescription": "Band Protocol is a software designed to incentivize a network of users to provide real-world data to decentralized applications (dapps) running on blockchains."
-      },
-      "bsc": {
-          "title": "Binance Smart Chain network",
-          "description": "BNB Chain is an alternative to Ethereum and other leading DeFi platforms. BNB Chain gained popularity after Ethereum failed to prove viable to those who couldn't afford the fees - BNB Chain uses delegated proof of stake, allowing it to process more transactions per second and at a lower cost. The aim of the platform is to enable developers to build decentralized applications and help users manage their digital assets cross-chain with low latency and large capacity.",
-          "shortDescription": "BNB Chain is an alternative to Ethereum and other leading DeFi platforms. It has a primary focus to facilitate fast, decentralized trading"
-      },
-      "btc": {
-          "title": "Bitcoin network",
-          "description": "Bitcoin is a decentralized digital currency created in January 2009. It follows the ideas set out in a white paper by the mysterious and pseudonymous Satoshi Nakamoto.The identity of the person or persons who created the technology is still a mystery. Bitcoin offers the promise of lower transaction fees than traditional online payment mechanisms do, and unlike government-issued currencies, it is operated by a decentralized authority.",
-          "shortDescription": "Bitcoin is a digital or virtual currency created in 2008 that uses peer-to-peer technology to facilitate instant payments."
-      },
-      "cosmos": {
-          "title": "Cosmos network",
-          "description": "The Cosmos network consists of many independent, parallel blockchains, called zones, each powered by classical Byzantine fault-tolerant (BFT) consensus protocols like Tendermint (already used by platforms like ErisDB). Some zones act as hubs with respect to other zones, allowing many zones to interoperate through a shared hub. The architecture is a more general application of the Bitcoin sidechains concept, using classic BFT and Proof-of-Stake algorithms. Cosmos can interoperate with multiple other applications and cryptocurrencies, something other blockchains can’t do well. By creating a new zone, you can plug any blockchain system into the Cosmos hub and pass tokens back and forth between those zones, without the need for an intermediary.",
-          "shortDescription": "The Cosmos network consists of many independent, parallel blockchains, called zones, each powered by consensus protocols like Tendermint. Some zones act as hubs with respect to other zones, allowing many zones to interoperate through a shared hub."
-      },
-      "eth": {
-          "title": "Ethereum network",
-          "description": "Ethereum is a community-driven decentralized blockchain network powered by the Ether token that enables users to make transactions, earn interest on their holdings through staking, use and store NFTs, trade cryptocurrencies, play games, use social media and so much more. This “next-generation web” supports decentralized applications (DApps), decentralized finance (DeFi) and decentralized exchanges (DEXs), for instance.",
-          "shortDescription": "Ethereum is a decentralized, open-source blockchain with smart contract functionality."
-      },
-      "icon": {
-          "title": "ICON network",
-          "description": "ICON Network is a general purpose blockchain protocol based on the native cryptocurrency ICX that can run smart contracts, adopt the BFT-DPoS (Delegated Proof-of-Stake) consensus protocol, and use an economic-governance protocol called DPoC (Delegated Proof-of-Contribution). The ICON Network is powered by a proprietary blockchain engine called 'loopchain' and has the ability to handle hundreds of transactions per second. The ICON project was started to ensure the integrity and transparency of data shared between institutions and companies, and to move mutual assets on heterogeneous blockchains without a centralized organization.",
-          "shortDescription": "ICON Network is a general purpose blockchain protocol based on the native cryptocurrency ICX that can run smart contracts, adopt the BFT-DPoS consensus protocol, and use an economic-governance protocol called DPoC (Delegated Proof-of-Contribution)."
-      },
-      "iost": {
-          "title": "IOST network",
-          "description": "IOST is an ultra-fast, decentralised blockchain network based on the next-generation consensus algorithm “Proof of Believability” (PoB). Led by a team of proven founders and backed by world-class investors, our mission is to be the underlying architecture for online services that meets the security and scalability needs of a decentralized economy.",
-          "shortDescription": "IOST is an ultra-fast, decentralised blockchain network based on the next-generation consensus algorithm “Proof of Believability” (PoB)."
-      },
-      "kava": {
-          "title": "Kava network",
-          "description": "Kava is a cross-chain DeFi Hub for decentralized financial services and applications. It operates like a decentralized bank for digital assets connecting users with products like stablecoins, loans, and interest-bearing accounts so that they can do more and earn more with their digital assets.",
-          "shortDescription": "Kava is a cross-chain DeFi Hub for decentralized financial services and applications. "
-      },
-      "secret": {
-          "title": "Secret network",
-          "description": "Secret Network is the first blockchain with privacy-preserving smart contracts. That means applications built on Secret can utilize encrypted data without revealing it to anyone, even the nodes in the network. For the first time, Secret Network allows developers to build powerful, permissionless, privacy-preserving applications - Secret Apps.",
-          "shortDescription": "Secret Network is the first blockchain with privacy-preserving smart contracts. That means applications built on Secret can utilize encrypted data without revealing it to anyone, even the nodes in the network."
-      },
-      "tez": {
-          "title": "Tezos network",
-          "description": "Tezos is an open-source platform that addresses key barriers facing blockchain adoption for assets and applications backed by a global community of validators, researchers, and builders. By design, Tezos embraces long-term upgradability, open participation, collaboration, and smart contract safety.",
-          "shortDescription": "Tezos is an open-source platform that addresses key barriers facing blockchain adoption for assets and applications backed by a global community of validators, researchers, and builders."
-      },
-      "sentinel": {
-          "title": "Sentinel network",
-          "description": "Sentinel is a network of nodes that share their bandwidth, on which Decentralized VPNs and other such services are built. The purpose of the Sentinel ecosystem is to empower universal access to the internet in a trusted and provable manner. This will be done by allowing organizations and individuals around the world to construct cost-effective, scalable, distributed and decentralized networking solutions on Sentinel’s Cosmos-based blockchain.",
-          "shortDescription": "The Sentinel ecosystem is a global network of autonomous dVPN applications that enable private and censorship resistant internet access"
-      },
-      "persistence": {
-          "title": "Persistence network",
-          "description": "Persistence is an ecosystem of multi-chain DeFi products designed to stimulate global liquidity and enable seamless value exchange. Persistence is bringing different asset classes into DeFi through its products - Proof-of-Stake assets (pSTAKE), Agri Commodity assets (Comdex) and Trade Finance Debt assets (ShipFi).",
-          "shortDescription": "Persistence is a protocol powering institutional open finance by facilitating the borrowing of cryptoassets (stablecoins) using real-world assets, such as invoices, as collateral."
-      },
-      "chihuahua": {
-          "title": "Chihuahua network",
-          "description": "Chihuahua is a meme coin and aims to be a community-driven project with a Community Pool of 10B HUAHUA that can be used to fund projects on top of the chain proposed and voted via the Governance built-in in the Chihuahua chain. The project is built using the Cosmos SDK and Tendermint consensus.",
-          "shortDescription": "Chihuahua is the Cosmos meme coin and HUAHUA is the native staking and governance asset of the Chihuahua Chain"
-      },
-      "umee": {
-          "title": "Umee network",
-          "description": "Umee is a cross chain DeFi hub that interconnects between blockchains. As a base layer blockchain, applications and money lego primitives can be built on top of Umee to access cross chain leverage and liquidity. The Umee Blockchain facilitates interoperability between the Cosmos ecosystem, Ethereum network, side chain architectures, layer two scaling solutions, and alternative base layer protocols.",
-          "shortDescription": "Umee is a decentralized infrastructure for cross chain interactions between networks."
-      },
-      "stargaze": {
-          "title": "Stargaze network",
-          "description": "Stargaze is a fully decentralized NFT marketplace in the Cosmos ecosystem. It is a zone in the Cosmos ecosystem that exemplifies high levels of security, decentralization, transparency, and flexibility. Stargaze will enable content curators to earn rewards for finding content and appraising it. Its native STARS can be used for staking, participating in governance, interacting on the platform, and minting NFTs.",
-          "shortDescription": "Stargaze is a community-owned Interchain NFT marketplace in the Cosmos ecosystem."
-      },
-      "rizon": {
-          "title": "Rizon network",
-          "description": "RIZON Blockchain is a digital currency & asset hub that provides a platform where fiat currencies around the world can be securely issued and enable businesses to interoperate with each other. Rizon Blockchain will enable interoperability between sovereign blockchain networks and allowing for an environment for these networks to utilize a vast pool of liquidity, providing that caters to the business needs of individual projects. RIZON Blockchain has strong network background and capable boosting the inflow of the ecosystem participants and the diversification of business.",
-          "shortDescription": "The mission of RIZON Blockchain is to provide a platform where fiat currencies around the world can be securely issued on and enable businesses to interoperate with each other through the Cosmos IBC."
-      },
-      "comdex": {
-          "title": "Comdex network",
-          "description": "Comdex is a platform aimed at revolutionizing the fragmented commodity trade industry in an efficient, fast, and transparent way. The vision of Comdex is to revolutionize the rudimentary process of global commodity trade to minimize settlement times and maximize transparency, efficiency, and immutability in trade discovery and trade financing at lightning speeds.",
-          "shortDescription": "Comdex is a decentralized synthetic assets protocol built on Cosmos. Its mission is to create an ecosystem of interoperable solutions that will bridge the gap between DeFi and CeFi and thereby democratize finance."
-      },
-      "juno": {
-          "title": "Juno network",
-          "description": "Juno as a layer 1 smart contract network solves the first generation smart contract bottlenecks which are limited scalability, high cost for deployment and execution and offers an easy environment for developers across the globe to deploy scalable, secure decentralized applications efficiently.",
-          "shortDescription": "Juno is the permissionless neutral home of CosmWasm interoperable smart contracts and the InterWasm DAO. The ecosystem is pioneering CosmWasm development and adoption."
-      },
-      "osmosis": {
-          "title": "Osmosis network",
-          "description": "Osmosis is a decentralized peer-to-peer blockchain that people can use to create liquidity and trade IBC enabled tokens. The Osmosis blockchain is made up of free, public, and open-source software. Osmosis serves as an automated market maker (AMM) that connects to other Tendermint‐based blockchains, creating a heterogenous and interoperable cross‐chain trading experience for users.",
-          "shortDescription": "Osmosis is a cross-chain automated market maker (AMM) protocol built using the Cosmos SDK that allows developers to design, build and deploy their own customized AMMs."
-      },
-      "sifchain": {
-          "title": "Sifchain network",
-          "description": "Sifchain is the omni-chain solution for DEXs. More performant, more robust cryptoeconomics for trading and security, more flexible trading capabilities, an extensible omni-chain roadmap and eventual true DAO governance. Sifchain is the brainchild of Sif, the Norse goddess of earth, agriculture, fertility, family, and marriage. Sif represents the collaborative nature of the blockchain industry and the lush rewards that can be found in cultivating connections between multiple other chains.",
-          "shortDescription": "Sifchain is a decentralized exchange, that combines the best elements of liquidity pools and order books for optimal order execution."
-      },
-      "lum": {
-          "title": "Lum network",
-          "description": "The Lum Network is an open source blockchain protocol (layer 1) based on the Tendermint & Cosmos SDK, the most advanced and secure Delegated Proof-Of-Stake algorithm. It is powered by the LUM, its native crypto-asset.",
-          "shortDescription": "Lum network introduces fast, secure and sustainable open-source blockchain protocol setting a new standard to foster trust between businesses and customers while rewarding them"
-      },
-      "cheqd": {
-          "title": "Checkd network",
-          "description": "Cheqd team is building a secure network that enables individuals and organizations to fully control their personal data. cheqd helps companies create new and innovative business models, ensuring self-sovereign identity is a viable and rewarding service to offer to customers.",
-          "shortDescription": "Cheqd solution enables new business models, where verifiable credentials are exchanged in a trusted, reusable, safer, and cheaper way."
-      },
-      "fetch": {
-          "title": "Fetch.ai network",
-          "description": "Fetch.ai is a Cambridge-based artificial intelligence lab building an open-access decentralized machine learning network for smart infrastructure. The Fetch.ai blockchain is an interchain protocol, based on the Cosmos-SDK, and uses a high-performance WASM-based smart contract language (Cosmwasm) to allow advanced cryptography and machine learning logic to be implemented on-chain. This also allows the Fetch.ai network to also serve as a layer-2 network for legacy blockchain networks and as an interchain bridge to the outside world.",
-          "shortDescription": "Fetch.ai is an AI lab building an open access, tokenized machine learning network to enable smart infrastructure built around a decentralized digital economy."
-      },
-      "injective": {
-          "title": "Injective network",
-          "description": "Injective is a custom interoperable layer one protocol for building powerful exchange, DeFi, derivatives & Web3 applications. Injective was created using the Cosmos SDK and is able to achieve instant transaction finality while sustaining lightning fast speeds. INJ is the native deflationary scarce asset that powers the Injective Protocol and its rapidly growing ecosystem. Injective is incubated by Binance and is backed by Pantera Capital.",
-          "shortDescription": "Injective is the interoperable layer 1 protocol optimized for building cross-chain Web3 DeFi apps."
-      },
-      "bitsong": {
-          "title": "Bitsong network",
-          "description": "BitSong is a distributed, open-source and permissionless music ecosystem conceived in December 2017 and built using blockchain technology. The objective is to create a decentralized and trustless hub that advantageously interconnects the various market players of the music industry.",
-          "shortDescription": "BitSong brings musical artists and their fans together strategically in a blockchain-based system where they gain control over their revenue stream, have access to Web3 growth tools, and enjoy opportunities within a mutually beneficial earnings model."
-      },
-      "kichain": {
-          "title": "Ki-Chain network",
-          "description": "Ki Chain is a blockchain platform based on the Cosmos Ecosystem, which aims to provide traditional and crypto investors with a convenient investment and trading platform that will significantly expand their opportunities and provide easy interaction with the crypto industry for traditional investors.",
-          "shortDescription": "The Ki Chain blockchain platform is a Cosmos-based network designed to provide crypto investors with the infrastructure to conveniently interact with crypto assets across CeFi and DeFi markets."
-      },
-      "regen": {
-          "title": "Regen network",
-          "description": "Regen Ledger is a public Proof-of-Stake blockchain built on the Cosmos SDK. It’s primary goal is twofold — indexing claims and assertions pertaining to ecological health, and securely tracking a new class of financial assets, called Ecosystem Service Credits, which are tied to measurable changes in ecological health.",
-          "shortDescription": "Regen is a blockchain network of ecological knowledge changing the economics of regenerative agriculture to reverse global warming."
-      },
-      "starname": {
-          "title": "Starname network",
-          "description": "A *starname provides you with the personalized identity of your choice on the blockchain. You can send and receive payments directly, own and store assets, trade, and participate across the crypto universe — all with the same *starname.",
-          "shortDescription": "*starname is a truly decentralized name service aligned with Web3 core philosophy of digital ownership."
-      },
-      "emoney": {
-          "title": "e-Money network",
-          "description": "Founded in 2016 by a Danish fintech company, e-Money is a blockchain-based payment platform that aims to bridge the legacy banking system with a single efficient blockchain layer. Built on Cosmos technology, the e-Money protocol is built for the issuance of a range of interest-bearing currency-backed stablecoins.",
-          "shortDescription": "e-Money is a blockchain-based payment platform built on Cosmos, committed to bringing financial inclusion and helping people around the world to have easy access to cryptocurrencies."
-      },
-      "iris": {
-          "title": "Iris network",
-          "description": "IRISnet (a.k.a IRIS Hub) is designed to be the foundation for the next generation distributed applications. Built with Cosmos-SDK, IRIS Hub enables cross-chain interoperability through a unified service model, while providing a variety of modules to support DeFi applications.",
-          "shortDescription": "The IRIS network is an internet of blockchains intended to provide a technology foundation that facilitates construction of distributed business applications."
-      },
-      "cerberus": {
-          "title": "Cerberus network",
-          "description": "The Cerberus blockchain is a completely permissionless blockchain where anyone can join the network and run a validator. The community will have the ability to gain value from the coin by staking Cerberus ($CRBRUS) with validators and liquidity pools. In the second half of 2022, Cerberus team plans to focus on launching its NFT project.",
-          "shortDescription": "Cerberus is the first three-headed meme-coin and NFT project in the Cosmos."
-      },
-      "mantle": {
-          "title": "AssetMantle network",
-          "description": "With AssetMantle, you can easily create dedicated marketplaces for a wide range of products from specific sellers or groups of sellers. Consider it as Shopify for NFTs where instead of listing products on an ‘Amazon for NFTs’ (such as OpenSea), creators and artists can create their own Shopify-style stores for their specific NFT.",
-          "shortDescription": "AssetMantle is a one-of-a-kind platform to facilitate commerce for your NFTs."
-      },
-      "gbridge": {
-          "title": "Gravity Bridge network",
-          "description": "Cosmos Gravity Bridge is a purpose-built, fully decentralized, trustless blockchain which bridges assets between the Ethereum and Cosmos ecosystems. Ethereum and EVM compatible tokens can be transferred across the Gravity Bridge to a Cosmos wallet and then onto other Cosmos wallets or DEXs. Cosmos SDK based blockchains can similarly send tokens across Gravity Bridge to the Ethereum ecosystem, making them available for transfer or potentially trading on Uniswap or other ETH DEXs.",
-          "shortDescription": "Gravity Bridge is a decentralized Cosmos blockchain whose primary purpose is to secure the operation of bridges between blockchains."
-      },
-      "konstellation": {
-          "title": "Konstellation network",
-          "description": "Konstellation is a Layer-3 blockchain protocol built on Cosmos and currently connected to Solana and Binance Smart Chain. Thanks to IBC relayers, Konstellation aims to develop various Dapps in different domains (DeFi, CeFi, NFT, DAO) accessible across all blockchains. Konstellation interoperability allows investors to invest in cross-chain digital assets, mint a wide range of fiat-pegged stablecoins, explore NFT opportunities, and participate in a play-to-earn game and DAO. The network is powered by DARC tokens required for transactions, utility on the Konstellation Dapps, and governance on the Konstellation network.",
-          "shortDescription": "Konstellation Network is a blockchain protocol, built on Cosmos SDK, creating a global infrastructure for the future of the decentralized capital markets."
-      },
-      "evmos": {
-          "title": "Evmos network",
-          "description": "Evmos is an application-agnostic chain that will be interoperable with the Ethereum mainnet, EVM-compatible environments, and other BFT chains via IBC, making it easy for users and developers to interact seamlessly between chains. Evmos aims to be the EVM Hub of Cosmos, making it easy for smart contracts to deploy and communicate within the Cosmos ecosystem.",
-          "shortDescription": "Evmos is the EVM Hub on the Cosmos Network. It is the flagship implementation of the Ethermint library that prioritizes interoperability and novel economics."
-      },
-      "axelar": {
-          "title": "Axelar network",
-          "description": "Axelar network is a scalable cross-chain communication platform. Blockchain platform builders can use it to seamlessly plug-in their blockchains to all other blockchain ecosystems. Application developers can choose the best blockchain to host their applications and use Axelar’s cross-chain communication protocols to lock, unlock, and transfer assets, as well as communicate with applications on any other chain. By connecting dapps with multiple blockchain ecosystems, the Axelar platform empowers users to interact with all applications across the ecosystem directly from their wallets.",
-          "shortDescription": "Axelar network is a decentralized state machine responsible for facilitating cross-chain requests. The network supports a few key protocols, such as Cross-Chain Gateway Protocol (CGP)."
-      },
-      "crescent": {
-          "title": "Crescent network",
-          "description": "Crescent is a DeFi Hub that invites users on a journey to explore limitless possibilities of digital assets by unifying various blockchains in ways unseen in the Cosmos ecosystem.",
-          "shortDescription": "Crescent is to provide a connected DeFi functionality for Cosmos Ecosystem to enhance capital efficiency and manage risk effectively."
-      },
-      "polkadot": {
-          "title": "Polkadot network",
-          "description": "Polkadot is a network protocol that allows arbitrary data—not just tokens—to be transferred across blockchains.This means Polkadot is a true multi-chain application environment where things like cross-chain registries and cross-chain computation are possible.Polkadot can transfer this data across public, open, permissionless blockchains as well as private, permissioned blockchains.",
-          "shortDescription": "Polkadot is a network protocol that allows arbitrary data—not just tokens—to be transferred across blockchains. This means Polkadot is a true multi-chain application environment where things like cross-chain registries and cross-chain computation are possible."
-      },
-      "orai": {
-          "title": "Oraichain",
-          "description": "As the world’s first AI-powered oracle and ecosystem for blockchains, Oraichain now transforms itself to become an advanced AI Layer 1 for Data Economy and Oracle services that serves as a foundational layer for the creation of a new generation of smart contracts and Dapps and create a complete AI Ecosystem on blockchain.",
-          "shortDescription": "Oraichain is the world's first intelligent and secure solution for emerging Web3, scalable Dapps, and decentralized AI."
-      }
-  },
-  "uptime": "Uptime",
-  "active": "Active",
-  "noactive": "inactive",
-  "jailed": "JAILED",
-  "sendAssetsDestination": "Destination network",
-  "keplr": {
-      "notFound": "Keplr not found in your browser",
-      "cancel": "Cancel",
-      "importWallet": "Import wallet",
-      "allreadyAdded": "Address already added",
-      "titleModal": "Import Keplr wallet",
-      "descModal": "Select chain to connect Keplr",
-      "selectChainId": "Select ChainId",
-      "errorSignMismatch": "Please change account in Keplr to sign transaction",
-      "allExist": "Operation canceled or all addresses already exists",
-      "confirm": "Confirm",
-      "selectAll": "Select all",
-      "unselectAll": "Unselect all",
-      "addTitle": "Add networks from Keplr",
-      "addInfo": "Choose networks to import from your Keplr wallet"
-  },
-  "faq": {
-      "privacyPolicy": "Privacy policy",
-      "termsOfService": "Terms of service"
-  },
-  "dontHaveEnoughFounds": "You do not have enough funds to pay the transaction fee.",
-  "transactionsSocket": {
-      "failed": "Transaction failed",
-      "completed": "Transaction completed",
-      "viewTitle": "View on explorer"
-  },
-  "confirmModalTitle": "Confirm the rewards claim",
-  "confirmModalDesc": "You will see the accrued rewards in the available balance",
-  "manageStaking": "Manage staking",
-  "stakeShare": "Stake share",
-  "additionalFee": "Additional fee",
-  "rewardDestination": "Reward destination",
-  "unstakedBalance": "Unstaked balance",
-  "claimUnstakedText": "Your assets are unstaked. Confirm the transaction to claim it now.",
-  "stakingAmount": "Staking amount",
-  "polkadot": {
-      "chooseNodeModalDesc": "Set the amount of tokens you want to stake. Then, choose nodes for delegation. Your funds can be distributed to <span style='color: #0A2778; font-weight: 700;'>not more than {maxNodes} nodes</span>. Also, take into account that the unstaking period for ${net} is <span style='color: #0A2778' font-weight: 700;>{perioud} days</span>. Over this time, your unstaked tokens will be frozen. <span style='color: #FF5722; font-weight: 700;'>Minimal staking balance: {minStakingAmount} {code}</span>",
-      "nominatedNodesTitle": "Nominated nodes:",
-      "error": {
-          "chooseNotMoreThan16Nodes": "Choose not more than 16 nodes"
-      }
-  },
-  "minSendAmountError": "The minimum transaction amount is {minAmount} {code}.",
-  "changeValidators": "Change validators",
-  "redelegateNote": "You must choose another validator to redelegate",
-  "assets": "Assets",
-  "menu": {
-      "settings": "Settings",
-      "logOut": "Log Out"
-  },
-  "stakingNote": "If you are not willing to change the validator, you can just set the new amount",
-  "assetsModal": {
-      "title": "Select token",
-      "description": "Once the token is selected, you can send, stake, claim, and manage it",
-      "searchLabel": "Search token",
-      "searchPlaceholder": "Start typing the token name",
-      "currentAsset": "Current assets"
-  },
-  "enterPasswordBackup": "Enter the backup file password to restore Citadel One-seed wallet",
-  "enterPasswordBackupLabel": "Enter your backup file password",
-  "walletsAdding": {
-      "mainMenuTitle": "Add an address",
-      "importMenuTitle": "Import",
-      "mainMenuDescription": "Import an address created outside Citadel.one",
-      "menu": {
-          "create": "Create",
-          "createDescription": "Citadel One-seed wallet enables users to create addresses for all the networks integrated into the platform.",
-          "import": "Import",
-          "importDescription": "Import your address to start managing your assets. ",
-          "addNetworks": "Add Networks",
-          "addNetworksDescription": "Citadel One-seed wallet enables users to create addresses for all the networks integrated into the platform using only one mnemonic phrase. Thus, there is no need to store and remember multiple seeds for various wallets."
-      },
-      "menuTypes": {
-          "restoreTitle": "Restore",
-          "restoreDescription": "For existing Citadel.one users",
-          "importWallet": "Import wallet",
-          "importDescription": "For external wallet users",
-          "externalWallet": "External wallet",
-          "externalDescription": "For advanced users",
-          "restoreOneSeed": "Restore one-seed",
-          "restoreOneSeedDescription": "Choose a suitable method to import an existing address",
-          "importFile": "Import file",
-          "importFileDescription": "Choose a suitable method to import an existing address",
-          "seedPhrase": "Seed-phrase",
-          "seedPhraseDescription": "Import your seed-phrase to add an address",
-          "privateKey": "Private key",
-          "privateKeyDescription": "Import your private key to add an address",
-          "metamaskKeplr": "Metamask, Keplr",
-          "metamaskKeplrDescription": "Connect your Web3 Wallet to add an address",
-          "hardware": "Hardware wallet",
-          "hardwareDescription": "Import addresses from Ledger or Trezor device for advanced use",
-          "sourceAddress": "Source Address",
-          "destinationAddress": "Destination Address"
-      }
-  },
-  "tokenDescriptionPersistence": "Persistence is an ecosystem of multi-chain DeFi products designed to stimulate global liquidity and enable seamless value exchange. Persistence is bringing different asset classes into DeFi through its products - Proof-of-Stake assets (pSTAKE), Agri Commodity assets (Comdex) and Trade Finance Debt assets (ShipFi).",
-  "tokenDescriptionSENTINEL": "Sentinel is a network of nodes that share their bandwidth, on which Decentralized VPNs and other such services are built. The purpose of the Sentinel ecosystem is to empower universal access to the internet in a trusted and provable manner. This will be done by allowing organizations and individuals around the world to construct cost-effective, scalable, distributed and decentralized networking solutions on Sentinel’s Cosmos-based blockchain.",
-  "tokenDescriptionChihuahua": "Chihuahua is a meme coin and aims to be a community-driven project with a Community Pool of 10B HUAHUA that can be used to fund projects on top of the chain proposed and voted via the Governance built-in in the Chihuahua chain. The project is built using the Cosmos SDK and Tendermint consensus.",
-  "tokenDescriptionUmee": "Umee is a cross chain DeFi hub that interconnects between blockchains. As a base layer blockchain, applications and money lego primitives can be built on top of Umee to access cross chain leverage and liquidity. The Umee Blockchain facilitates interoperability between the Cosmos ecosystem, Ethereum network, side chain architectures, layer two scaling solutions, and alternative base layer protocols.",
-  "tokenDescriptionStargaze": "Stargaze is a community-owned Interchain NFT marketplace in the Cosmos ecosystem.",
-  "tokenDescriptionRizon": "The mission of RIZON Blockchain is to provide a platform where fiat currencies around the world can be securely issued on and enable businesses to interoperate with each other through the Cosmos IBC.",
-  "tokenDescriptionSifchain": "Sifchain is the omni-chain solution for DEXs. More performant, more robust cryptoeconomics for trading and security, more flexible trading capabilities, an extensible omni-chain roadmap and eventual true DAO governance. Sifchain is the brainchild of Sif, the Norse goddess of earth, agriculture, fertility, family, and marriage. Sif represents the collaborative nature of the blockchain industry and the lush rewards that can be found in cultivating connections between multiple other chains.",
-  "tokenDescriptionLum": "The Lum Network is an open source blockchain protocol (layer 1) based on the Tendermint & Cosmos SDK, the most advanced and secure Delegated Proof-Of-Stake algorithm. It is powered by the LUM, its native crypto-asset.",
-  "tokenDescriptionCheqd": "Cheqd team is building a secure network that enables individuals and organizations to fully control their personal data. cheqd helps companies create new and innovative business models, ensuring self-sovereign identity is a viable and rewarding service to offer to customers.",
-  "tokenDescriptionInjective": "Injective is the interoperable layer 1 protocol optimized for building cross-chain Web3 DeFi apps.",
-  "syncExtensions": {
-      "modalMenuTitle": "Select addresses",
-      "modalMenuDescription": "Select addresses to sync with the extension",
-      "syncTo": "Export adresses",
-      "syncFrom": "Import adresses",
-      "syncDescription": "Choose addresses you want to add to your Citadel.one browser extension",
-      "notFound": "Citadel browser extension not found",
-      "walletsNotFound": "Not wallets found to sync with browser extension",
-      "emptyWallets": "You must setup browser extension before syncing",
-      "syncWithExtension": "Exporting addresses to browser extension",
-      "syncingFromTitle": "Importing addresses from  browser extension",
-      "syncingFromDescription": "Confirm this operation with a password",
-      "incorrectPasswordExtension": "Incorrect extension password",
-      "enterPassword": "Enter extension password",
-      "syncMainTitle": "Synchronize addresses",
-      "syncMainDescription": "Synchronize your addresses with Citadel.one Browser Extension in seconds",
-      "syncMainSync": "Sync"
-  },
-  "noApyNote": "Get passive income via staking your crypto assets!",
-  "assetsStubs": {
-      "title": "You don't have any assets yet",
-      "subtitle": "You can swap it directly via Citadel.one or deposit from an external exchange",
-      "card1": {
-          "title": "Swap via Citadel.one ",
-          "action": "extensions "
-      },
-      "card2": {
-          "title": "Deposit from ",
-          "action": "exchanges"
-      }
-  },
-  "dontHaveEnoughFoundsForFee": "You do not have enough funds to pay the transaction fee.",
-  "asset": "asset"
+    "login": {
+        "login": "Connexion",
+        "signup": "S'inscrire",
+        "formInfo": "Saisissez votre email pour recevoir un code de vérification",
+        "withSocial": "Ou connectez-vous avec",
+        "questionText1": "Pourquoi",
+        "questionText2": "a besoin de mon email ?",
+        "signIn": "Se connecter",
+        "verification": "Vérification",
+        "verificationInfo": "Vous recevrez un email avec un code de vérification. Entrez-le ici pour confirmer l'action",
+        "verificationNote": "Note : Si vous ne recevez pas le message de confirmation, vérifiez votre boîte spam",
+        "sendCode": "Envoyer le code",
+        "resend": "Renvoyer",
+        "resendCode": "Renvoyer le code",
+        "inputPlaceholder": "saisir l'email",
+        "enterEmail": "Entrer l'email",
+        "incorrectEmail": "Email incorrect",
+        "carousel": {
+            "stake": {
+                "title": "Stakez et maximisez vos récompenses ",
+                "text": "Rejoignez le monde des crypto-monnaies avec une plateforme basée sur les DAO pour une gestion d'actifs de nouvelle génération"
+            },
+            "xtc": {
+                "title": "Recevoir des XCT pour le staking",
+                "text": "Rejoignez le monde des crypto-monnaies avec une plateforme basée sur les DAO pour une gestion d'actifs de nouvelle génération"
+            },
+            "dao": {
+                "title": "Participer à la DAO",
+                "text": "Rejoignez le monde des crypto-monnaies avec une plateforme basée sur les DAO pour une gestion d'actifs de nouvelle génération"
+            },
+            "buy": {
+                "title": "Acheter et échanger des crypto-monnaies",
+                "text": "Rejoignez le monde des crypto-monnaies avec une plateforme basée sur les DAO pour une gestion d'actifs de nouvelle génération"
+            },
+            "useCases": {
+                "title": "Essayez les cas d'utilisation de la crypto",
+                "text": "Rejoignez le monde des crypto-monnaies avec une plateforme basée sur les DAO pour une gestion d'actifs de nouvelle génération"
+            },
+            "keep": {
+                "title": "Suivre votre portefeuille",
+                "text": "Rejoignez le monde des crypto-monnaies avec une plateforme basée sur les DAO pour une gestion d'actifs de nouvelle génération."
+            }
+        },
+        "whyEmailTitle": "Pourquoi Citadel.one exige-t-il mon adresse email ?",
+        "whyEmailDescription": "Citadel.one est un portefeuille non-custodial , donc votre email ne donne pas accès à vos adresses.",
+        "whyEmailDescription1": "Deux raisons pour lesquelles nous vous demandons votre adresse email :",
+        "whyEmailMarker1": "Il vous permet de passer facilement de la plateforme web à l'application mobile.",
+        "whyEmailMarker2": "Nous pouvons toujours rester en contact avec vous si cela s'avère nécessaire. Il y a un manque de communication dans les applications crypto, de sorte que les gens ne peuvent pas obtenir d'informations sur la fin de la période de blocage après le unstaking, la fermeture de leur validateur, ou quand la liquidation d'un prêt est proche. Nous vous informerons également lorsqu'il sera temps de mettre staking les récompenses que vous avez accumulées afin que vous gagniez davantage.",
+        "whyEmailDescription3": "Si vous souhaitez vous inscrire de manière anonyme, utilisez notre site web",
+        "guide": "guide",
+        "sync": {
+            "chooseValidator": {
+                "title": "1. Choisissez un validateur",
+                "text": "Vous pouvez sélectionner n'importe quel validateur à partir d'une liste complète de nœuds disponibles"
+            },
+            "setAmount": {
+                "title": "2. Définissez le montant à staker",
+                "text": "Les actifs seront délégués au validateur choisi"
+            },
+            "claimRewards": {
+                "title": "3. Profitez de vos récompenses de staking !",
+                "text": "Vous pouvez réclamer vos récompenses en quelques clics."
+            }
+        }
+    },
+    "logout": {
+        "modal": {
+            "title": "Vous êtes sûr de vouloir quitter ?",
+            "eraseBtn": "Effacer les données utilisateur stockées localement, y compris les clés privées",
+            "downloadBackup": "Télécharger le fichier de sauvegarde"
+        }
+    },
+    "messages": {
+        "incorrectAddress": "Adresse incorrecte",
+        "incorrectNetwork": "Réseau incorrect"
+    },
+    "addToPublicKey": {
+        "title": "Ajouter une adresse publique",
+        "info": "Ajoutez votre adresse pour explorer la fonctionnalité analytique de Citadel.one"
+    },
+    "addAddress": {
+        "cardTitle1": "Ajouter des réseaux à One-seed",
+        "cardTitle2": "Créer une one seed",
+        "cardDescP1": "Le portefeuilles Citadel One-seed permet aux utilisateurs de créer des adresses pour tous les réseaux intégrés à la plateforme en utilisant un seul",
+        "cardDescP2": "phrase mnémotechnique. Ainsi, il n'est pas nécessaire de stocker et de se souvenir de plusieurs seeds pour les différents portefeuilles",
+        "cardNote": "Recommandé",
+        "cardButton": "Ajouter des réseaux",
+        "card1Title": "Importer une adresse existante",
+        "card1Note": "Rapidement",
+        "card2Title": "Importer un portefeuille matériel",
+        "card2Desc": "Importation d'adresses depuis Ledger ou le dispositif Trezor pour une utilisation avancée",
+        "card2Note": "Avancé",
+        "card3Title": "Ajouter une adresse publique",
+        "card3Desc": "Ajoutez votre adresse pour explorer les fonctionnalités analytiques de Citadel",
+        "card3Important": "Note : Vous ne pourrez pas staker ou transférer vos actifs avec cette option",
+        "card3Note": "lecture seule",
+        "button": "Ajouter une adresse",
+        "invalidDerivationPath": "Chemin de dérivation invalide"
+    },
+    "addToOneSeed": {
+        "rearrangeWords": "Veuillez réarranger les mots dans l'ordre correct pour confirmer votre phrase mnémotechnique.",
+        "exclamation": "N'OUBLIEZ PAS de sauvegarder votre seed phrase. Vous en aurez besoin pour la récupération du compte. Si vous perdez votre phrase de démarrage, vous perdrez vos actifs.",
+        "checkboxLabel": "J'ai écrit ma seed phrase ",
+        "infoTitle": "Pourquoi la seed phrase est-elle importante",
+        "infoLine1": "One-seed sera utilisé pour générer toutes vos adresses natives Citadel.one.",
+        "infoLine2": "Nous vous conseillons vivement de ne pas prendre de photo ou de faire une capture d'écran mais plutôt de l'écrire sur papier.",
+        "infoLine3": "Si vous perdez ces informations, personne ne peut les récupérer. Gardez-les en sécurité.",
+        "exclamationLearn": "En savoir plus sur la seed phrase",
+        "whySeedTitle": "Pourquoi ai-je besoin d'une seed phrase ?",
+        "whySeedDescription": "Votre seed phrasevous permet d'accéder à votre portefeuille et à toutes les clés privées qu'il contient. Vous pouvez considérer un portefeuille de crypto comme un gestionnaire de mots de passe pour votre crypto - tant que vous disposez de votre mot de passe principal (la seed phrase), vous avez accès à toutes les crypto associées.",
+        "selectWord": "Sélectionnez un mot",
+        "getStartedBtn": "Commencez",
+        "moreNetworks": "Autres réseaux",
+        "walletCreated": "Votre portefeuille a été créé !",
+        "walletCreatedDescription": " Si vous souhaitez accéder à la liste des réseaux disponibles, cochez la case correspondante",
+        "errorConfirmWords1": "Veuillez vérifier les mots saisis.",
+        "errorConfirmWords2": "Si vous avez mal noté votre seed-phrase, revenez à l'étape précédente et assurez-vous que vos enregistrements sont corrects."
+    },
+    "importExistingAddress": {
+        "card1Title": "Seed - phrase",
+        "card1Info": "Importez votre seed-phrase pour ajouter une adresse",
+        "card2Title": "Clé privée",
+        "card2Info": "Importez votre clé privée pour ajouter une adresse",
+        "card3Info": "Connectez votre portefeuille Web3 pour ajouter une adresse",
+        "card4Info": "Importez un fichier de sauvegarde Citadel pour restaurer vos portefeuilles",
+        "card4Title": "Importer un fichier",
+        "card5Info": "Entrez votre seed-phrase Citadel pour restaurer le portefeuille One-seed",
+        "card5Title": "Restaurer one-seed"
+    },
+    "importHardwareWallet": {
+        "note": "Si vous utilisez Chrome pour Windows, dans certains cas pour connecter un appareil Ledger, vous devez modifier les paramètres du navigateur.",
+        "card1Info": "Connectez votre appareil Ledger",
+        "card2Info": "Connectez votre appareil Trezor"
+    },
+    "importLedger": {
+        "title": "Connectez votre Ledger à l'ordinateur que vous utilisez",
+        "title1": "Veuillez sélectionner l'application que vous avez ouverte dans Ledger"
+    },
+    "importTrezor": {
+        "title": "Connectez votre Trezor à l'ordinateur que vous utilisez",
+        "title1": "Veuillez sélectionner l'application que vous avez ouverte dans Trezor"
+    },
+    "catPage": {
+        "congratulations": "Félicitations",
+        "message": "L'adresse a été ajoutée avec succès. Vous pouvez maintenant lui donner un nom dans le champ spécial ci-dessous.",
+        "addedAddress": "Adresse ajoutée",
+        "inputLabel": "Saisissez votre adresse alias",
+        "placeholderSeed": "Citadel One-Seed",
+        "placeholderPrivate": "Clé privée Citadel",
+        "placeholderPublic": "Clé publique Citadel",
+        "placeholderHardware": "Matériel Citadel"
+    },
+    "importFile": {
+        "title": "Importez ou glissez-déposez votre fichier de sauvegarde pour restaurer vos portefeuilles",
+        "selectBackupFile": "Sélectionnez le fichier de sauvegarde"
+    },
+    "restoreOneSeed": {
+        "placeholder": "Saisissez la seed phrase que vous avez créée dans Citadel.one pour accéder à votre portefeuille One-seed",
+        "counterMessage": "Saisissez les mots par un espace"
+    },
+    "metamaskKeplr": {
+        "card1Info": "Connectez votre appareil Metamask",
+        "card2Info": "Connectez votre appareil Keplr",
+        "modalCardMessage": "Confirmation requise",
+        "modalCard1Info": "Veuillez confirmer la transaction dans la fenêtre pop-up de l'extension Metamask dans votre navigateur.",
+        "modalCard2Info": "Veuillez confirmer la transaction dans la fenêtre pop-up de l'extension Keplr dans votre navigateur."
+    },
+    "qr": {
+        "modalErrorInfo": "Choisissez les adresses que vous souhaitez transférer vers l'application mobile à l'aide d'un QR code. Tenez compte du fait que vous pouvez transférer jusqu'à 3 adresses à la fois.",
+        "modalInfo": " Choisissez les adresses que vous souhaitez transférer vers l'application mobile avec un QR code",
+        "generateQR": "Générer QR"
+    },
+    "qrInfo": {
+        "title": "Connecter votre application mobile Citadel.one à la plateforme Web",
+        "note": "Scannez le QR-code ci-dessus pour transférer les données de votre compte vers l'application mobile Citadel.one. Cliquez ensuite sur 'Suivant' pour accéder au QR-code suivant.",
+        "scanQrInfo": "Scannez le code QR ci-dessus pour transférer les données de votre compte vers l'application mobile Citadel.one.",
+        "step1Info": "Ouvrez l'application Citadel.one",
+        "step2Info": "Allez dans 'Ajouter une adresse' et choisissez 'Connecter avec QR'",
+        "step3Info": "Scanner votre QR-code"
+    },
+    "wallet": {
+        "info": {
+            "title": "Importez votre portefeuille pour commencer à gérer vos actifs",
+            "note": "Pour envoyer, staker ou échanger vos jetons, vous devez importer votre adresse avec la seed phrase ou la clé privée.",
+            "block1Title": "Pourquoi dois-je importer mon adresse ?",
+            "block1Info": "Il s'agit d'une adresse en lecture seule, car vous l'avez ajoutée avec une clé publique ou vous avez été déconnecté.",
+            "block2Title": "Vous avez besoin de conseils sur l'importation d'adresses ?",
+            "block2Info": "Consultez le guide étape par étape pour savoir comment importer une adresse avec votre clé privée ou une seed phrase.",
+            "availableAssets": "Actifs disponibles",
+            "totalAssets": "Total des actifs"
+        },
+        "stubs": {
+            "chain": "Ki-chain est temporairement indisponible",
+            "description": "Nous serons de retour sous peu ! Veuillez prendre en compte que vos fonds sont en sécurité !",
+            "subdescription": "Remarque : vous continuerez à recevoir des récompenses XCT si vous avez attribué votre adresse."
+        }
+    },
+    "balanceTooltipInfo": {
+        "availableBalance": "Solde disponible",
+        "availableBalanceInfo": "des jetons qui peuvent être envoyés, stakés et échangés",
+        "stakedBalance": "Solde Staké",
+        "stakedBalanceBalanceInfo": "solde cumulé staké qui donne lieu à des récompenses",
+        "frozenBalance": "Solde gelé",
+        "frozenBalanceBalanceInfo1": "des jetons qui sont temporairement indisponibles pour le retrait ou l'échange, mais qui peuvent toujours être staké",
+        "frozenBalanceBalanceInfo2": "les jetons qui sont verrouillés après l'opération d'unstaking",
+        "withFromPeriod": "La période d'unstaking pour le {code} fluctue de",
+        "to": "à",
+        "iconPeriodLink": "Vérifiez la période d'unstaking en cours via le",
+        "noPeriod": "Il n'y a pas de période d'unstaking pour",
+        "unstakingPeriod": "La période d'unstaking pour",
+        "is": "est",
+        "frozenBalanceTooltipTitle": "Vos jetons seront disponibles dans"
+    },
+    "transactionsPage": {
+        "placeHolderInfo1": "L'historique de vos transactions est vide.",
+        "placeHolderInfo2P1": "Déposer des",
+        "placeHolderInfo2P2": "pour envoyer, staker et gagner des récompenses.",
+        "buyVia": "Acheter via",
+        "placeHolderInfoTitle2": "Dépôt provenant des exchanges",
+        "editCommentModalTitle": "Modifier le commentaire",
+        "editCommentModalDesc": "Vous pouvez ajouter votre commentaire à la transaction ci-dessous",
+        "transactionInfoModalTitle": "Informations sur la transaction",
+        "transactionInfoModalDesc": "Voir les détails de la transaction ci-dessous"
+    },
+    "sendModal": {
+        "title1": "Confirmez l'envoi du jeton",
+        "desc1": "Veuillez vérifier les détails ci-dessous",
+        "changingModals": {
+            "error": "La commission excède le solde",
+            "title": "Envisager de modifier le montant pour procéder",
+            "decreaseDesc": "Afin de couvrir les frais de transaction, nous vous suggérons de diminuer légèrement le montant de l'envoi. Si vous voulez continuer avec le montant précédent, cliquez sur &#34No&#34.",
+            "increaseDesc": "Les frais de transaction sont moins élevés, nous vous suggérons donc d'augmenter le montant de l'envoi. Si vous voulez continuer avec le montant précédent, cliquez sur &#34No&#34."
+        },
+        "fee": {
+            "invalidAmount": "Montant des frais invalide"
+        },
+        "desc2": "La transaction est en cours"
+    },
+    "yes": "Oui",
+    "no": "Non",
+    "tryBtn": "Essayez à nouveau",
+    "errorPage": {
+        "pageNotFound": "Page non trouvée",
+        "toHomePage": "Vers la page d'accueil"
+    },
+    "lockBanner": {
+        "bannerInfo": "Importez votre adresse pour commencer à staker. Besoin d'un guide ? Consultez ",
+        "thisLink": "ce lien"
+    },
+    "stakePlaceholder": {
+        "title": "Commencez à staker en quelques clics !",
+        "whatIs": "Qu'est-ce que",
+        "card1Info": "1. Choisissez les nœuds dans la liste",
+        "card2Info": "2. Définissez le montant de stake et confirmez",
+        "card3Info": "3. Profitez de votre revenu passif en crypto",
+        "choseNodePlaceholderNote": "Cliquez sur sélectionner le nœud pour le staking"
+    },
+    "staking": {
+        "chooseNodeForStaking": "Choisir le nœud pour le staking",
+        "chooseNodeModalDesc": "Cliquez sur le nœud dans la liste pour en sélectionner un avec lequel vous voulez staker.",
+        "chooseNodeModalDesc1": "Pour mettre en staking vos actifs, choisissez les nœuds et définissez le montant de la délégation. Prenez en compte que la période d’unstaking pour {net} est de <span style='color: #0A2778; font-weight: bold;'>{perioud} jours</span>.",
+        "chooseNodeModalDescWithFrom": "Pour mettre en staking vos actifs, choisissez les nœuds et définissez le montant de la délégation. Prenez en compte que la période d'unstaking pour {net} fluctue <span style='color: #0A2778; font-weight: bold;'> de {perioudFrom} à {perioudTo} jours</span>. Vérifiez la période d'unstaking actuelle via le <a href='{link}' style='color: #0A2778; font-weight: bold;text-decoration:none'>lien</a>.",
+        "Stake": "Stake",
+        "staking": "staking",
+        "searchNode": "Recherche de nœuds",
+        "searchInputPlaceholder": "Commencez à taper le nom du noeud",
+        "editNode": "Modifier le nœud",
+        "actionModalTitle": "Confirmer l'opération de staking",
+        "actionModalDesc": "Vos jetons seront stakés",
+        "stakeFrom": "Stake de",
+        "stakeOn": "Stake sur",
+        "amountToStake": "Montant à staker",
+        "inputNote": "Y compris les fonds réservés à l'achat de jetons de commission",
+        "editModeDesc": "Pour staker ou unstaker vos avoirs, définissez le montant de la délégation dans le champ ci-dessous. Tenez compte du fait que la période de déstockage pour {net} est de <span style='color: #0A2778; font-weight: bold;'>{perioud} jours</span>",
+        "editModeDescWithFrom": "Pour staker ou unstaker vos avoirs, définissez le montant de la délégation dans le champ ci-dessous. Tenez compte du fait que la période d'unstaking pour {net} fluctue <span style='color: #0A2778; font-weight: bold;'>de {perioudFrom} à {perioudTo} jours</span>. Vérifiez la période d'unstaking actuelle via le <a href='{link}' style='color: #0A2778; font-weight: bold;text-decoration:none'>lien</a>.",
+        "nodeIsNotActive": "Le nœud est inactif, les récompenses ne sont pas émises.",
+        "nodeIsJailed": " Ce nœud est actuellement inactif, vous n'obtenez pas de récompenses pour le staking avec lui. Déléguer vos actifs à un autre nœud"
+    },
+    "unstaking": {
+        "unstake": "Unstake",
+        "defaultPrefix": "Choisissez le nœud et définissez le montant que vous souhaitez unstaker.",
+        "customPrefix": "Définissez le montant que vous voulez unstaker.",
+        "chooseNodeForUnstaking": "Choisir le nœud pour l'unstaking",
+        "chooseNodeModalDesc": "Tenez compte du fait que la période d'unstaking pour {net} est de <span style='color: #0A2778; font-weight: bold;'>{perioud} jours</span>.",
+        "chooseNodeModalDescWithFrom": "Tenez compte du fait que la période d'unstaking de {net} fluctue <span style='color: #0A2778; font-weight: bold;'>de {perioudFrom} à {perioudTo} jours</span>. Vérifiez la période d'unstaking actuelle via le <a href='{link}' style='color: #0A2778; font-weight: bold;text-decoration:none'>lien</a>.",
+        "actionModalTitle": "Confirmer l'opération d'unstaking",
+        "actionModalDesc": "Vos jetons seront unstakés et gelés pendant un certain temps",
+        "unstakeTo": "Unstake vers",
+        "unstakeFrom": "Unstake de",
+        "amountToUnstake": "Montant à unstaker",
+        "unstakeNote": "Après la confirmation de la transaction de déblocage, vos actifs seront bloqués pendant {unstakeingPerioud} jours. Les actifs débloqués seront représentés dans la section des soldes bloqués."
+    },
+    "singleStake": {
+        "chooseNodeModalDesc": "Pour staker vos actifs, choisissez le nœud et fixez le montant de la délégation. Prenez en compte qu'il n'y a <strong style='color:#0a2778;'>pas de période d'unstaking</strong> pour les",
+        "actionModalTitle": "Confirmer la redélégation",
+        "actionModalDesc": "Vos actifs seront unstakés des validateurs actuels et mis en staking sur le nouveau validateur choisi une fois",
+        "undelegateFrom": "Non-déléguer de",
+        "delegateTo": "Déléguer à"
+    },
+    "ledger": {
+        "connect": {
+            "title": "Connectez votre Ledger",
+            "desc": "Veuillez connecter votre portefeuille matériel à l'ordinateur"
+        },
+        "openApp": {
+            "title": "Ouvrez (rouvrez) l'application Ledger",
+            "desc": "Ouvrez l'application réseau appropriée sur votre appareil Ledger"
+        },
+        "confirm": {
+            "title": "Confirmez l'opération",
+            "desc": "Confirmez l'opération sur votre appareil Ledger"
+        },
+        "action": {
+            "title": "Action requise",
+            "desc": "Oups.. L'action n'a pas été confirmée. <br/>Veuillez appuyer sur le bouton de votre appareil Ledger pour continuer."
+        },
+        "rejected": {
+            "title": "Transaction rejetée",
+            "desc": "Transaction rejetée par l'appareil Ledger"
+        },
+        "errors": {
+            "27404": "Saisissez le mot de passe de votre portefeuille matériel et réessayez l'opération"
+        }
+    },
+    "rewardsPage": {
+        "rewardsDetails": "Détails des récompenses",
+        "periodRewards": "Récompenses pour la période",
+        "rewardsPlaceholder": "Vous n'avez aucune récompense",
+        "rigthSectionPlaceholder": "Vous n'avez pas de notifications de récompenses",
+        "rewardsReport": "Rapport sur les récompenses",
+        "totalRewards": "Récompenses totales"
+    },
+    "DAO": {
+        "placeholderTitle": "La DAO de Citadel.one arrive",
+        "placeholderInfo": "Vous pourrez bientôt participer aux décisions concernant les fonctionnalités et les réseaux à intégrer, les paramètres financiers et de gouvernance à mettre en œuvre."
+    },
+    "claim": {
+        "claim": "Claim",
+        "claimTo": "Claim à",
+        "amountToClaim": "Montant à claim",
+        "confirmModalTitle": "Confirmer la demande de claim des récompenses",
+        "confirmModalDesc": "Vous verrez les récompenses accumulées dans le solde disponible",
+        "claimSuccessfuly": ""
+    },
+    "exportWallet": {
+        "card1Info": "Exporter la phrase mnémotechnique associée",
+        "card2Info": "Exporter la clé privée associée",
+        "chooseExportTypeModalTitle": "Sélectionnez l'option d'exportation",
+        "chooseExportTypeModalDesc": "Choisissez comment exporter cette adresse",
+        "approveExportModalTitle1": "Exportation de la clé privée",
+        "approveExportModalDesc1": "Entrez votre mot de passe pour afficher la clé privée de cette adresse",
+        "approveExportModalTitle2": "Exportez la phrase mnémotechnique",
+        "approveExportModalDesc2": "Entrez votre mot de passe pour afficher la phrase mnémonique de cette adresse",
+        "exportModalTitle1": "Votre clé privée est affichée ci-dessous",
+        "exportModalDesc": "Veillez à le stocker en toute sécurité.",
+        "exportModalTitle2": "Votre phrase mnémotechnique est affichée ci-dessous"
+    },
+    "customLists": {
+        "createListModalDesc": "Choisissez les adresses que vous voulez ajouter à la liste",
+        "editList": "Editer la liste",
+        "editListModalDesc": "Gérer les adresses dans vos listes",
+        "deleteList": "Supprimer la liste",
+        "deleteListModalTitle": "Voulez-vous supprimer la liste ?",
+        "walletsCountTitle": "Adresses dans la liste",
+        "eneterListName": "Veuillez entrer le nom de la liste.",
+        "warningModalDesc": "Ce nom de liste existe déjà, veuillez en essayer un autre",
+        "infoBanner": " Vous n'avez pas ajouté d'adresses à cette liste. Veuillez choisir au moins une adresse pour créer une liste.",
+        "duplicateName": "Une liste portant ce nom existe déjà. Veuillez choisir un autre nom"
+    },
+    "calculator": {
+        "title": "Calculateur du staking {coin}",
+        "subtitle": "Calculez vos récompenses",
+        "yearlyReturn": "Rendement annuel",
+        "howManyYouHave": "Combien en avez-vous ?",
+        "yearlyReward": "Récompenses annuelles",
+        "expandTitle": "Obtenez plus de récompenses",
+        "expandSubtitle": "Plus vous stakez avec les nœuds Citadel.one, plus vous recevez de récompenses XCT"
+    },
+    "xct": {
+        "publicKeyPlaceholderTitle": "Importez votre portefeuille pour commencer à gagner des XCT",
+        "assignedAddresses": "Adresses assignées",
+        "unAssignedAddresses": "Adresses non assignées",
+        "blocks": {
+            "title1": "Vous n'avez pas d'adresses",
+            "title2": "Commencez à gagner du XCT !",
+            "title3": "Vous pouvez gagner plus !",
+            "title4": "Commencez le staking d'XCT !",
+            "title5": "Excellent travail !",
+            "title6": "Gagnez plus avec le staking d'XCT !",
+            "desc1": "Vous n'avez pas d'adresses de staking ajoutées à ce compte Citadel.one. Importez-les maintenant pour commencer à gagner plus avec votre crypto !",
+            "desc2": "Vous n'avez pas encore assigné vos adresses pour recevoir des XCT. Assignez-les maintenant pour gagner des XCT pour le staking avec les nœuds Citadel.one en plus des récompenses du réseau !",
+            "desc3": "Toutes les adresses ne sont pas assignées, ce qui signifie que vous manquez certaines récompenses XCT. Attribuez-les maintenant pour obtenir plus avec votre staking !",
+            "desc4": "Commencez le staking de vos récompenses XCT accumulées pour en recevoir encore plus !",
+            "desc5": "Vous avez assigné toutes les adresses pour recevoir des jetons XCT, ce qui signifie que vous avez réussi à maximiser les récompenses de staking avec Citadel.one !"
+        },
+        "assignedAddressesModalTitle": "Vos adresses assignées",
+        "assignedAddressesModalDesc": "Vous trouverez ci-dessous une liste d'adresses déjà assignées et éligibles pour recevoir des récompenses XCT.",
+        "addressAssigningInfoModalTitle": "Adresses BSC pour XCT",
+        "addressAssigningInfoModalDesc": "Suivez les instructions pour assigner vos adresses et recevoir les récompenses XCT.",
+        "addressAssigningInfoModalBlock1Info": "Choisissez les adresses de votre portefeuille Citadel.one que vous souhaitez assigner à cette adresse BSC.",
+        "addressAssigningInfoModalBlock2Info": "Confirmez l'attribution de l'adresse en saisissant votre mot de passe de paiement",
+        "addressAssigningInfoModalNote": " Si vous souhaitez attribuer une adresse Ledger, vous devrez connecter votre dispositif matériel pour la confirmation de son assignation.",
+        "assignAddressTooltipTitle": "Assigné à l'adresse BSC",
+        "unassignedAddressesModalTitle": "Choisir les adresses à assigner",
+        "unassignedAddressesModalDesc": "Sélectionnez les adresses pour les assigner à l'adresse Binance Smart Chain que vous avez choisie à l'étape précédente.",
+        "approveAssignWithPasswordModalDesc": "Entrez le mot de passe pour confirmer l’assignation de vos adresses à l'adresse BSC que vous avez choisie à l'étape précédente.",
+        "newAssignedAddressesModalTitle": "Ajouté avec succès pour les récompenses XCT",
+        "hardwareAddressesModalDesc": "Connectez un porte-monnaie matériel pour confirmer votre adresse afin de l'assigner avec succès.",
+        "rewardsBlockTitle": "Récompenses XCT",
+        "rewardsBlockSubtitle": "Récompenses supplémentaires que vous obtenez avec Citadel.one",
+        "XCTStakingRewards": "Récompenses de staking XCT",
+        "stakedOnCitadel": "Staké sur Citadel.one",
+        "setStakingAmountModalDesc": "Définissez le montant d'XCT à staker",
+        "setStakingAmountModalDesc1": "Définissez le montant d'XCT à unstake",
+        "stakingPlaceholderCard1Info": "1. Cliquez sur le bouton pour commencer à staker vos XCT",
+        "stakingPlaceholderCard3Info": "3. Profitez de récompenses XCT supplémentaires",
+        "claimRewardsCheckbox2Label": "Récompenses de staking assignées",
+        "assignedAddressesBtn": "Adresses assignées",
+        "unAssignedAddressesBtn": "Adresses non assignées"
+    },
+    "accounts": "Comptes",
+    "neededResources": "pour les ressources réseau",
+    "restake": "Restake",
+    "otherAssets": "Autres actifs",
+    "hardwareWallet": "Portefeuille matériel",
+    "bscAddress": "Adresse BSC",
+    "enterYourPassword": "Saisissez votre mot de passe",
+    "enterPaymentPassword": "Saisissez votre mot de passe de paiement",
+    "finish": "Terminer",
+    "assigned": "Assigné",
+    "note": "Note",
+    "manage": "Gérer",
+    "learnMore": "Plus d'informations",
+    "Token": "Jeton",
+    "searchErrorText": "Aucune adresse trouvée pour cette demande",
+    "searchToken": "Recherche de jetons",
+    "inputToken": "Saisir jeton",
+    "commentPlaceholder": "Ajoutez quelques mots pour préciser votre transaction",
+    "fail": "Échec",
+    "date": "Date",
+    "inputName": "Saisir Nom",
+    "listName": "Nom de la liste",
+    "createList": "Créer une liste",
+    "cancel": "Annuler",
+    "enterYourCitadelPassword": "Entrez votre mot de passe Citadel",
+    "show": "Afficher",
+    "yearAbbr": "y",
+    "monthAbbr": "m",
+    "custom": "Personnalisé",
+    "all": "Tous",
+    "oneYear": "Un an",
+    "month": "Mois",
+    "notifications": "Notifications",
+    "swap": "Swap",
+    "insufficientFunds": "Fonds insuffisants",
+    "changeNode": "Changer de nœud",
+    "startStaking": "Commencez le staking",
+    "this": "ce",
+    "AddWallet": "Ajoutez un portefeuille",
+    "addWallet": "Ajoutez un portefeuille",
+    "download": "Télécharger",
+    "enterTextComment": "Entrez un commentaire textuel",
+    "confirmed": "Confirmé",
+    "min": "min",
+    "pending": "En attente",
+    "addedToMempool": "Ajouté à mempool",
+    "warning": "Avertissement",
+    "viewTranscasction": "Afficher la transaction",
+    "viewBalance": "Afficher le solde",
+    "enterSendPassword": "Entrez votre mot de passe pour valider l'envoi",
+    "totalAmount": "Montant total",
+    "sendTo": "Envoyer à",
+    "sendFrom": "Envoyer depuis",
+    "unstake": "Unstake",
+    "Stake": "Stake",
+    "receive": "Recevoir",
+    "fee": "Frais",
+    "comment": "Commentaire",
+    "export": "Exporter",
+    "timeDate": "Temps et données",
+    "type": "Type",
+    "status": "Statut",
+    "viewOnly": "Lecture seule",
+    "error": "Erreur",
+    "success": "Succès",
+    "info": "Info",
+    "buyNow": "Acheter maintenant",
+    "settingsTitle": "Paramètres",
+    "overallTitle": "En général",
+    "days": "jours",
+    "copiedToClipboard": "Copié dans le presse-papiers",
+    "earn": "Gagner",
+    "seed": "Seed",
+    "learnHow": "Apprenez comment",
+    "importAddress": "Importer une adresse",
+    "chooseAddresses": "Choisissez des adresses",
+    "addressName": "Nom de l'adresse",
+    "searchAddress": "Rechercher une adresse",
+    "save": "Sauvegarder",
+    "transactionFee": "Frais de transaction",
+    "per": "par",
+    "price": "Prix",
+    "link": "lien",
+    "sendBannerInfo": "Le pont permet aux utilisateurs de verrouiller leur ETH dans un contrat intelligent sur Ethereum et de monnayer secretETH. Vous pouvez ensuite unwrap votre secretETH et recevoir des jetons ETH en retour ",
+    "selectAddress": "Sélectionnez une adresse",
+    "advanced": "Avancé",
+    "max": "MAX",
+    "inputMemo": "Saisir mémo",
+    "memo": "Memo",
+    "memoTooltip": "Le mémo est une balise de destination qui est utilisée pour spécifier le destinataire d'une transaction.",
+    "includingFunds": "Y compris les frais de réseau par défaut",
+    "includingFunds-xl": "Y compris les fonds réservés à l'achat de jetons de commission",
+    "amount": "Montant",
+    "to": "À",
+    "sendAssetsToAnotherNetwork": "Envoyer des actifs à un autre réseau",
+    "rewards": "Récompenses",
+    "stakingRatio": "Ratio de staking",
+    "inflation": "Inflation",
+    "tokenPrice": "Prix du jeton",
+    "lockedForiGasGeneration": "verrouillé pour la génération iGas",
+    "unpledgedBalance": "Solde non engagé",
+    "pledgedBalance": "Solde gagé",
+    "pledgeDescription": {
+        "part1": "Le système a besoin d'engager un jeton IOST pour obtenir iGas. 1 gage IOST génère",
+        "part2": "100,000 Gas",
+        "part3": "par",
+        "part4": "Jour",
+        "part5": ", il est également verrouillé et ne peut être échangé. Déplacer le jeton déverrouillera votre IOST, mais arrêtera la génération de gaz."
+    },
+    "frozen": "Geler",
+    "available": "Disponible",
+    "staked": "Staké",
+    "balance": "Solde",
+    "transactions": "transactions",
+    "send": "Envoyer",
+    "stake": "stake",
+    "youHave": "Vous avez",
+    "claimRewards": "Claim des récompenses",
+    "oneSeed": "One Seed",
+    "publicKey": "Clé publique",
+    "hardware": "Matériel",
+    "edit": "Modifier",
+    "Citadel.one": "Citadel.one",
+    "yourE-mail": "Votre email",
+    "loadingFile": "Chargement du fichier",
+    "incorrectFile": "Fichier incorrect. Tapez ici pour télécharger un autre fichier de sauvegarde.",
+    "incorrectPassword": "Mot de passe incorrect",
+    "passwordsDontMatch": "Les mots de passe ne correspondent pas",
+    "passwordTooShort": "Le mot de passe est trop court (il doit comporter au moins 8 caractères).",
+    "confirmPassword": "Confirmez votre mot de passe",
+    "createPassword": "Veuillez créer un mot de passe pour le paiement",
+    "password": "Mot de passe",
+    "yourComputer": "Votre ordinateur",
+    "enterYourPrivateKey": "Entrez votre clé privée",
+    "privateKey": "Clé privée",
+    "ok": "Ok",
+    "select": "Sélectionnez",
+    "retry": "Réessayer",
+    "createPasswordNote": "Veuillez créer un mot de passe de paiement. Il sera nécessaire pour la confirmation de toutes les transactions effectuées via la plateforme Citadel.one. Vous ne serez pas en mesure de récupérer ou de modifier le mot de passe si vous le perdez. ",
+    "enterPasswordNote": "Entrez votre mot de passe de paiement pour ajouter de nouvelles adresses One-seed à Citadel",
+    "understand": "Je comprends",
+    "enterPassword": "Entrez un mot de passe",
+    "repeatYourPassword": "Répétez votre mot de passe",
+    "network": "Réseau",
+    "Network": "réseau",
+    "create": "Créer",
+    "guide": "guide",
+    "searchNetworks": "Rechercher des réseaux",
+    "selectHardwareWallet": "Sélectionnez un portefeuille matériel",
+    "selectNetwork": "Sélectionnez le réseau",
+    "addAddressExp": "Ajouter une adresse",
+    "addAnAddress": "Ajouter une adresse",
+    "chooseSuitableMethod": "Choisissez une méthode appropriée pour importer une adresse existante",
+    "address": "Adresse",
+    "enterAddress": "Entrez l'adresse",
+    "import": "Importer",
+    "enterMnemonicPhrase": "Entrez une phrase mnémotechnique",
+    "advancedSettings": "Paramètres avancés",
+    "mnemonicIncorrect": "Phrase mnémonique invalide",
+    "networkNameIncorrect": "Le réseau est incorrect",
+    "pleaseSelectNetwork": "Veuillez sélectionner un réseau",
+    "mnemonicPassphraseOptional": "Passphrase mnémonique (facultatif)",
+    "inputPassphrase": "Saisir passphrase",
+    "next": "Suivant",
+    "confirm": "Confirmer",
+    "importExistingAddressExp": "Importez une adresse existante",
+    "layouts": {
+        "addAddressLayout": {
+            "sidebarPlaceholder": "Vos adresses seront affichées ici",
+            "favoritePlaceholder": "Vos portefeuilles préférés seront affichés ici. Appuyez sur le bouton étoile près de la clé publique pour l'ajouter aux favoris",
+            "overall": "En général",
+            "addresses": "Adresses",
+            "wallets": "Portefeuilles"
+        }
+    },
+    "backBtn": "Retour",
+    "steps": {
+        "step": "Étape",
+        "selectNetworks": "Choisissez les réseaux",
+        "connectYourDevice": "Connectez votre appareil",
+        "derivationPath": "Chemin de dérivation",
+        "enterPassword": "Entrez votre mot de passe",
+        "chooseDerivationPath": "Choisir un chemin de dérivation",
+        "createPaymentPassword": "Créer un mot de passe pour le paiement",
+        "addNewAddress": "Ajouter une nouvelle adresse",
+        "derivationPathInfo": "Le chemin de dérivation spécifie quelle clé privée (et donc quelle adresse) est utilisée.",
+        "setPasswordForAllIn": "Définir le mot de passe pour toutes les opérations sur la plate-forme",
+        "addAddressSpecifications": "Ajouter des spécifications d'adresse",
+        "enterPaymentPassword": "Saisissez un mot de passe de paiement",
+        "importFileExp": "Importer un fichier",
+        "chooseImportOption": "Choisissez l'option d'importation",
+        "createPassword": "Créer un mot de passe",
+        "addToOneSeed": {
+            "step1HeaderInfo1": "Ajouter de nouveaux réseaux au portefeuille One-seed existant",
+            "createOneSeed": "Créer une One-seed",
+            "createOneSeedWallet": "Créer un portefeuille One-seed",
+            "step2HeaderInfo": "Utilisez un seul portefeuille pour gérer tous les actifs intégrés à notre plateforme.",
+            "step3StepDesc": "Confirmer la seed phrase",
+            "step4headerInfo": "Choisissez des réseaux à ajouter à votre portefeuille"
+        },
+        "importLedger": {
+            "step2stepDesc": "Sélectionnez l'application Ledger",
+            "step2headerInfo": "Choisissez l'application réseau sur votre appareil Ledger",
+            "step3headerInfo": "Connectez l'appareil Ledger à votre ordinateur et confirmez"
+        },
+        "importTrezor": {
+            "step2stepDesc": "Sélectionnez l'application Trezor",
+            "step2headerInfo": "Choisissez l'application réseau sur votre appareil Trezor",
+            "step3headerInfo": "Connectez l'appareil Trezor à votre ordinateur et confirmez"
+        },
+        "importSeedPhrase": {
+            "step3HeaderInfo": "Sélectionnez un réseau et entrez une phrase mnémotechnique"
+        },
+        "importPrivateKey": {
+            "step3HeaderInfo": "Sélectionnez un réseau et entrez une clé privée correspondante"
+        },
+        "importFile": {
+            "step2HeaderInfo": "Sélectionnez un fichier de sauvegarde Citadel.one et téléchargez-le",
+            "step2StepDesc": "Importer un fichier de sauvegarde",
+            "step3HeaderTitle": "Entrez le mot de passe de la sauvegarde",
+            "step3HeaderInfo": "Entrez le mot de passe du fichier de sauvegarde pour restaurer le portefeuille Citadel One-seed",
+            "step3StepDesc": "Entrez le mot de passe du fichier de sauvegarde"
+        },
+        "restoreOneSeed": {
+            "step3HeaderTitle": "Entrez la phrase One-seed Citadel One-seed",
+            "step3HeaderInfo": "Entrez la phrase mnémonique créée dans Citadel.one",
+            "step3StepDesc": "Saisissez la seed phrase",
+            "step4HeaderInfo": "Les adresses de ces réseaux seront restaurées avec votre One-seed"
+        },
+        "enterPasswordForAllInSeed": "Ajouter de nouveaux réseaux à la Seed-phrase existante",
+        "enterPasswordForAllInPrivate": "Ajouter un réseau en utilisant votre clé privée"
+    },
+    "settings": {
+        "subscriptions": {
+            "title": "Abonnements",
+            "description": "Abonnez-vous aux mises à jour pertinentes",
+            "rewardsDigest": "Résumé des récompenses du compte",
+            "addRewardsNotification": "Vous avez souscrit aux notifications de récompenses par email",
+            "removeRewardsNotification": "Vous vous êtes désabonné des notifications de récompenses par email",
+            "rewardsDigestTooltip": "Des mises à jour bihebdomadaires sur les récompenses accumulées, les jetons à claim et les actifs à staker",
+            "newsletter": "Newsletter",
+            "newsletterTooltip": "Recevez chaque mois les événements et mises à jour essentiels de Citadel.one",
+            "addNewsletterNotification": "Vous avez souscrit aux notifications de la newsletter",
+            "removeNewsletterNotification": "Vous vous êtes désabonné des notifications de la newsletter"
+        },
+        "transferData": {
+            "title": "Transfert de données du web vers le mobile en quelques secondes",
+            "description": "Pour votre confort, nous avons ajouté un QR code qui vous permet de transférer sans effort vos données de la plateforme web Citadel.one vers l'application mobile en quelques clics.",
+            "button": "Ouvrir le QR code"
+        },
+        "addresses": {
+            "title": "Adresses",
+            "description": "Supprimez vos adresses ou importez des seedphrase, des clés privées ou des clés de visualisation",
+            "deleteModalTitle": "Voulez-vous supprimer l'adresse ?",
+            "deleteSeedTitle": "Voulez-vous supprimer l'information de One-Seed ?",
+            "deleteSeedDesc": "Vous pouvez supprimer toutes les données stockées localement sur votre One-Seed",
+            "deleteSeedInfo": "Remarque : après confirmation de cette action, toutes les données associées à votre portefeuille One-Seed seront supprimées."
+        },
+        "changeEmail": {
+            "title": "Votre email",
+            "description": "L'email de votre compte",
+            "inputLabel": "Votre e-mail",
+            "inputPlaceHolder": "e-mail",
+            "button": "Changement",
+            "comingSoon": "BIENTÔT DISPONIBLE"
+        },
+        "language": {
+            "title": "Langue",
+            "description": "Langue de la plate-forme choisie",
+            "inputLabel": "Langue"
+        },
+        "delete": {
+            "title": "Supprimer votre compte",
+            "description": "Cette opération ne peut être annulée",
+            "modalDescription": "Veuillez noter que cette action ne peut être annulée. Vos biens sont en sécurité - vous ne supprimez que le compte Citadel.one",
+            "button": "Supprimer le compte",
+            "inputLabel": "Tapez \"Supprimer le compte\" pour confirmer",
+            "placeholder": "Tapez 'supprimer'"
+        },
+        "changePassword": {
+            "btnTitle": "Modifier le mot de passe",
+            "btnUpdate": "Mise à jour",
+            "modalTitle": "Changement du mot de passe",
+            "oldPassword": "Ancien mot de passe",
+            "newPassword": "Nouveau mot de passe",
+            "modalDescription": "Il s'agit du mot de passe que vous utiliserez pour confirmer les signatures des transactions",
+            "incorrectOldPassword": "L'ancien mot de passe est incorrect",
+            "minLen": "Longueur minimum de 8 caractères",
+            "successTitle": "Votre mot de passe a été changé avec succès",
+            "successDescription": "Utilisez votre nouveau mot de passe pour confirmer les transactions",
+            "title": "Votre mot de passe",
+            "description": "Vous pouvez changer votre mot de passe ici",
+            "button": "Modification",
+            "comingSoon": "BIENTÔT DISPONIBLE",
+            "tooltip": "Citadel.one étant une plateforme non-custodial, nous ne stockons pas votre mot de passe - il est conservé dans le stockage local de votre navigateur. Si vous effacez vos cookies, votre mot de passe sera supprimé - vous devrez en créer un nouveau."
+        },
+        "crossChain": {
+            "title": "Citadel.one cross-chain Web3",
+            "description": "Accédez à vos applications préférées grâce à une toute nouvelle extension de navigateur Citadel.one.",
+            "button": "Commencez",
+            "comingSoon": "BIENTÔT DISPONIBLE"
+        },
+        "extensionSettings": {
+            "title": "Paramètres des extensions",
+            "description": "Gérez les paramètres de vos mini-applications Citadel.one en une seule fois. ",
+            "button": "Ouvrir les paramètres",
+            "comingSoon": "BIENTÔT DISPONIBLE",
+            "successDescription": "Utilisez votre nouveau mot de passe pour confirmer les transactions"
+        }
+    },
+    "overallPage": {
+        "noBalance": "Vous n'avez pas de solde",
+        "noRewards": "Vous n'avez aucune récompense",
+        "balanceStructure": {
+            "title": "Structure de la balance"
+        },
+        "balanceHistory": {
+            "title": "Historique du solde"
+        },
+        "rewardsChart": {
+            "title": "Tableau des récompenses"
+        },
+        "favourites": {
+            "placeholder": {
+                "address": {
+                    "title": "Suivez vos adresses préférées",
+                    "text": "Créez des listes d'adresses selon vos priorités, définissez des alias d'adresses et suivez toutes vos adresses favorites en un seul endroit."
+                },
+                "portfolio": {
+                    "title": "Créer des sous-portefeuilles",
+                    "text": "Ajoutez des adresses aux listes en fonction de vos besoins et de vos exigences et restez au fait des performances de votre sous-portefeuille."
+                }
+            }
+        },
+        "problemBalance": "Nous apportons quelques corrections mineures à cette section.",
+        "maintance": "En cours de maintenance"
+    },
+    "addedModal": {
+        "title": "Portefeuille déjà ajouté",
+        "desc": "Vous avez déjà ajouté cette adresse à votre compte."
+    },
+    "netInfoGeneral": {
+        "marketcap": "Capitalisation boursière",
+        "marketcapTooltip": "La capitalisation boursière est la valeur totale d'une crypto-monnaie. Elle est calculée en multipliant le nombre total de pièces en circulation par le prix actuel de la crypto-monnaie",
+        "supply": "Offre en en circulation",
+        "supplyTooltip": "L'offre en circulation est le nombre total de pièces qui sont activement disponibles pour le commerce et qui circulent sur le marché",
+        "staked": "Ratio staké",
+        "stakedTooltip": "Pourcentage de jetons éligibles qui sont stakés",
+        "inflation": "Inflation",
+        "inflationTooltip": "Pour l'inflation (inflation du réseau), nous prenons en compte tous les jetons nouvellement émis et tous les fonds de réserve qui sont distribués comme récompenses",
+        "priceChart": " graphique des prix",
+        "apyTooltip": "Le rendement annuel en pourcentage est compté dans l’Inflation du staking / staké",
+        "stakingRatioTooltip": "Pourcentage de jetons éligibles qui sont stakés",
+        "dayTradingVol": "Volume trading 24 heures",
+        "dayTradingVolTooltip": "Le volume de trading sur 24 heures est le nombre de pièces qui ont été échangées au cours des 24 dernières heures"
+    },
+    "viewingKey": {
+        "viewingKey": "Clé de visualisation",
+        "passwordText": "Entrez votre mot de passe pour la validation",
+        "confirmOperation": "Confirmer l'opération",
+        "addVkFor": "Ajouter une clé de visualisation pour ",
+        "vkFor": "Clé de visualisation pour ",
+        "importVk": "Importez la clé de visualisation pour ",
+        "enterYourVk": "Entrez votre clé de visualisation pour la validation",
+        "iHaveVk": "J'ai une clé de visualisation.",
+        "viewingKeys": "Clés de visualisation",
+        "vkListedBelow": "Les clés de visualisation de vos jetons SNIP-20 sont indiquées ci-dessous.",
+        "searchViewingKeys": "Rechercher clés de visualisation",
+        "tokenName": "Nom du jeton",
+        "manageVks": "Gérer les clés de visualisation",
+        "vkDesc": "Les clés de visualisation de vos jetons SNIP-20 sont listées ci-dessous. Vous pouvez supprimer ou créer une nouvelle clé de visualisation ici.",
+        "deleteKey": "Suppression de la clé",
+        "createNew": "Créer une nouvelle",
+        "incorrectKey": "Clé incorrecte"
+    },
+    "tokenSearchError": "Il n'y a pas de jetons",
+    "myTokens": "Mes jetons",
+    "allTokens": "Tous les jetons",
+    "favourites": "Favoris",
+    "daoTitle": "DAO",
+    "hours": "heures",
+    "minutes": "minutes",
+    "migration": {
+        "cancel": "Annuler",
+        "logout": "Se déconnecter",
+        "download": "Télécharger le fichier de sauvegarde",
+        "forgotPassword": "Mot de passe oublié ?",
+        "forgotDescription": "Si vous avez oublié votre mot de passe, vous pouvez vous déconnecter, définir un nouveau mot de passe et restaurer vous-même votre seed phrase/portefeuille.",
+        "finishTitle": "Restaurer une One-Seed",
+        "finishDescription": "Pour interagir avec la plateforme de manière plus pratique, vous pouvez restaurer immédiatement votre seed phrase.",
+        "restore": "Restaurer",
+        "skip": "Sauter",
+        "agree": "D'accord",
+        "welcomeTitle": "Bienvenue dans la nouvelle version 2.0 de Citadel !",
+        "welcomeDescription": "Vous pouvez migrer toutes vos adresses de l'ancienne version de l'application Citadel.one vers la nouvelle de manière simple et rapide.",
+        "backupPassword": "Entrez le mot de passe de la sauvegarde",
+        "title": "Adresses de migration",
+        "description": "Nous avons reconnu certaines clés privées associées à votre compte qui sont stockées dans votre appareil depuis votre dernière connexion à Citadel.one."
+    },
+    "multisigBalance": {
+        "title": "xct déverrouillé",
+        "labelAddress": "Adresse Bsc",
+        "labelPlaceholder": "Sélectionnez l'adresse",
+        "contractLabel": "Sélectionner le contrat",
+        "contractPlaceholder": "Nom du contrat",
+        "claim": "Claim",
+        "statsClaimed": "XCT claim",
+        "statsClaimedDescription": "Сumulatif total des jetons claim",
+        "statsUnlocked": "Solde débloqué",
+        "statsUnlockedDescription": "Les jetons débloqués sont la somme des jetons claim et des jetons pouvant être claimable",
+        "totalFrozen": "Total du solde gelé",
+        "statsFrozen": "Solde gelé",
+        "statsFrozenDescription": "Jetons investis",
+        "youHave": "XCT à réclamer",
+        "confirmModalTitle": "Confirmer la demande de claim des récompenses",
+        "confirmModalDescription": "Vous verrez les récompenses accumulées dans le solde disponible",
+        "claimTo": "Claim à",
+        "amountToClaim": "Montant à claim",
+        "fee": "Frais",
+        "totalAmount": "Montant total"
+    },
+    "mobileAppModal": {
+        "title": "Téléchargez l'application Citadel.one !",
+        "info": "Profitez de votre expérience crypto sans faille grâce à une application mobile tout-en-un.",
+        "appStore": "App store",
+        "googlePlay": "Google play"
+    },
+    "redelegation": {
+        "redelegationDesc": "Choisissez les nœuds et définissez le montant que vous souhaitez redéléguer. Veuillez noter qu'avec la même adresse de portefeuille, vous ne pouvez redéléguer vos actifs que jusqu'à <span style='color: #0A2778; font-weight: bold;'>7 fois</span> dans un <span style='color: #0A2778; font-weight: bold;'>21 jours</span>. Aucune période d'unstaking ne s'applique.",
+        "redelegate": "Redéléguer",
+        "chooseNodeTitle": "Choisir le nœud pour redéléguer",
+        "choseNodePlaceholderNote": "Cliquez pour sélectionner le nœud à redéléguer"
+    },
+    "rewardDetails": {
+        "title": "Détails des récompenses",
+        "subtitle": "Plus vous stakez avec les nœuds Citadel.one, plus vous recevez de récompenses XCT.",
+        "totalStaked": "Total staké",
+        "stakedOnCitadel": "Staké sur <b>Citadel.one</b>"
+    },
+    "copied": "Copié",
+    "copy": "Copie",
+    "week": "Semaine",
+    "multisigSend": {
+        "title": "Envoi multisig",
+        "available": "Disponible",
+        "availableHint": "Jetons restant à claim au total",
+        "spend": "Dépense",
+        "spendHint": "Jetons dépensés au total",
+        "total": "Total",
+        "totalHint": "Nombre total de jetons distribués financer pendant le TGE",
+        "claimable": "Claimable",
+        "claimableHint": "Jetons disponibles pour le claim",
+        "labelAddress": "Adresse Bsc",
+        "labelPlaceholder": "Sélectionnez l'adresse",
+        "selectFundPlaceholder": "Fonds pour l'écosystème",
+        "selectFundLabel": "Sélectionnez les fonds",
+        "sendTo": "Envoyer à",
+        "amountToSend": "Montant à envoyer",
+        "fee": "Frais",
+        "totalAmount": "Montant total",
+        "confirmModalTitle": "Confirmer l'envoi des fonds",
+        "selectedFund": "Fonds sélectionnés"
+    },
+    "importCustomPath": {
+        "labelSelect": "Sélectionner le chemin de dérivation du HD"
+    },
+    "ktAddresses": {
+        "modalTitle": "Toutes les adresses",
+        "modalDesc": "Dans Tezos, il existe deux types d'adresses : les adresses implicites, ou de gestionnaire, avec un préfixe TZ, et les adresses d'origine avec un préfixe KT. Ci-dessous, vous pouvez voir les adresses KT qui sont associées à l'adresse principale TZ."
+    },
+    "withoutDelegation": "Stake sans délégation",
+    "pledge": {
+        "chooseModeModalTitle1": "Verrouiller l'IOST pour la génération d'iGas",
+        "chooseModeModalSubtitle": "<span style='color: #0A2778; font-weight: bold;'>1</span> engagement IOST génère <span style='color: #0A2778; font-weight: bold;'>100 000</span> iGas par jour",
+        "chooseModeModalTitle2": "Déverrouiller l'IOST utilisé pour la génération d'iGas",
+        "pledge": "gage",
+        "unpledge": "désengager",
+        "confirmModalTitle1": "Confirmer la transaction de gage",
+        "confirmModalDesc1": "Vos jetons seront mis en gage",
+        "confirmModalTitle2": "Confirmer l'opération de désengagement",
+        "confirmModalDesc2": "Vos jetons ne seront pas mis en gage"
+    },
+    "minAmmount": "Le montant doit être supérieur à 1",
+    "maxFloatDigits": "Pas plus de deux chiffres après la virgule",
+    "emptyPassword": "Mot de passe vide",
+    "accruedDaily": "Accumulé quotidiennement de 6 à 7 heures UTC",
+    "extensions": {
+        "showLabel": "Afficher",
+        "headerTitle": "Magasin d'extensions",
+        "headerDescription": "Utilisez vos dApps, applications DeFi et extensions préférées en mode natif !",
+        "readMore": "En savoir plus",
+        "networks": "Réseaux",
+        "guide": "Guide",
+        "description": "Description",
+        "youCan": "Avec cette application, vous pouvez",
+        "launch": "Lancement",
+        "dontShow": "Ne montre plus cela",
+        "appTooltip": "Cette application est intégrée par l'équipe de Citadel.one.",
+        "transactionData": "Données de transaction",
+        "transactionFee": "Frais de transaction",
+        "signMessage": "Signer le message",
+        "searchPlaceholder": "Commencez à taper le nom de l'application",
+        "typeOperation": "Type d'opération"
+    },
+    "tokenDescriptionComdex": "Comdex est un protocole décentralisé d'actifs synthétiques construit sur Cosmos. ",
+    "tokenDescriptionJuno": "Juno est une chaîne basée sur Cosmos qui fournit un environnement pour le déploiement de contrats intelligents interopérables.",
+    "tokenDescriptionOsmosis": "Osmosis est une blockchain décentralisée peer-to-peer que les gens peuvent utiliser pour créer de la liquidité et échanger des jetons compatibles avec IBC.",
+    "metamask": {
+        "notFound": "Metamask n'a pas été trouvé dans votre navigateur",
+        "changeNetwork": "Changer de réseau dans metamask",
+        "cancel": "Annuler",
+        "importWallet": "Importer le portefeuille",
+        "allreadyAdded": "Adresse déjà ajoutée",
+        "titleModal": "Importer un portefeuille de metamask",
+        "descModal": "Changez votre adresse ou votre réseau dans metamask",
+        "confirm": "Confirmer"
+    },
+    "netInfo": {
+        "akash": {
+            "title": "Akash network",
+            "description": "Akash est marketplace de cloud computing, transparente et décentralisée qui met en relation ceux qui ont besoin de ressources informatiques avec ceux qui ont la capacité informatique à louer. Également appelé Akash DeCloud, il se compose de deux éléments principaux : le réseau et la plate-forme. Le réseau Akash est marketplace décentralisée sur chaîne pour la location de ressources informatiques. La plateforme Akash, quant à elle, est une plateforme de déploiement hors chaîne utilisée pour héberger et gérer les charges de travail.",
+            "shortDescription": "Akash est une marketplace de cloud computing, transparente et décentralisée qui met en relation ceux qui ont besoin de ressources informatiques avec ceux qui ont la capacité informatique à louer."
+        },
+        "band": {
+            "title": "Band network",
+            "description": "Band Protocol est un logiciel conçu pour inciter un réseau d'utilisateurs à fournir des données du monde réel à des applications décentralisées (dapps) fonctionnant sur des blockchains. Par exemple, si un développeur de dapps souhaite permettre à ses utilisateurs d'engager des paris sur le prix futur de l'or, il devra être en mesure de déterminer son prix à la date ultérieure souhaitée.",
+            "shortDescription": "Band Protocol est un logiciel conçu pour inciter un réseau d'utilisateurs à fournir des données du monde réel à des applications décentralisées (dapps) fonctionnant sur des blockchains."
+        },
+        "bsc": {
+            "title": "Binance Smart Chain network",
+            "description": "BNB Chain est une alternative à Ethereum et à d'autres grandes plates-formes DeFi. BNB Chain a gagné en popularité après qu'Ethereum ne se soit pas avéré viable pour ceux qui ne pouvaient pas payer les frais. BNB Chain utilise le proof of stake déléguée, ce qui lui permet de traiter plus de transactions par seconde et à moindre coût. L'objectif de la plateforme est de permettre aux développeurs de créer des applications décentralisées et d'aider les utilisateurs à gérer leurs actifs numériques en cross-chain avec une faible latence et une grande capacité.",
+            "shortDescription": "BNB Chain est une alternative à Ethereum et aux autres principales plateformes DeFi. Son objectif principal est de faciliter les échanges rapides et décentralisés"
+        },
+        "btc": {
+            "title": "Bitcoin network",
+            "description": "Le bitcoin est une monnaie numérique décentralisée créée en janvier 2009. Elle reprend les idées exposées dans un white paper du mystérieux et pseudonyme Satoshi Nakamoto. L'identité de la ou des personnes qui ont créé cette technologie reste un mystère. Le bitcoin offre la promesse de frais de transaction plus faibles que les mécanismes de paiement en ligne traditionnels et, contrairement aux monnaies émises par les gouvernements, il est géré par une autorité décentralisée.",
+            "shortDescription": "Le bitcoin est une monnaie numérique ou virtuelle créée en 2008 qui utilise la technologie peer-to-peer pour faciliter les paiements instantanés."
+        },
+        "cosmos": {
+            "title": "Cosmos network",
+            "description": "Le réseau Cosmos est constitué de nombreuses blockchains indépendantes et parallèles, appelées zones, chacune étant alimentée par des protocoles de consensus classiques à tolérance de fautes byzantine (BFT) comme Tendermint (déjà utilisé par des plateformes comme ErisDB). Certaines zones agissent comme des hubs par rapport à d'autres zones, permettant à de nombreuses zones d'interagir par le biais d'un hub partagé. L'architecture est une application plus générale du concept de chaînes latérales Bitcoin, utilisant les algorithmes classiques BFT et Proof-of-Stake. Cosmos peut interagir avec plusieurs autres applications et crypto-monnaies, ce que les autres blockchains ne peuvent pas faire correctement. En créant une nouvelle zone, vous pouvez brancher n'importe quel système de blockchain sur le hub de Cosmos et faire passer des jetons dans les deux sens entre ces zones, sans avoir besoin d'un intermédiaire.",
+            "shortDescription": "Le réseau Cosmos est constitué de nombreuses blockchains indépendantes et parallèles, appelées zones, chacune étant alimentée par des protocoles de consensus comme Tendermint. Certaines zones agissent comme des hubs par rapport à d'autres zones, permettant à de nombreuses zones d'interagir par le biais d'un hub partagé."
+        },
+        "eth": {
+            "title": "Ethereum network",
+            "description": "Ethereum est un réseau blockchain décentralisé et communautaire alimenté par le jeton Ether qui permet aux utilisateurs d'effectuer des transactions, de gagner des intérêts sur leurs avoirs grâce au staking, d'utiliser et de stocker des NFT, d'échanger des crypto-monnaies, de jouer à des jeux, d'utiliser les médias sociaux et bien plus encore. Ce \"web nouvelle génération\" prend en charge les applications décentralisées (DApps), la finance décentralisée (DeFi) et les échanges décentralisés (DEX), par exemple.",
+            "shortDescription": "Ethereum est une blockchain décentralisée et open-source dotée d'une fonctionnalité de contrat intelligent."
+        },
+        "icon": {
+            "title": "ICON network",
+            "description": "ICON Network est un protocole blockchain à usage général basé sur la crypto-monnaie native ICX qui peut exécuter des contrats intelligents, adopter le protocole de consensus BFT-DPoS (Delegated Proof-of-Stake) et utiliser un protocole de gouvernance économique appelé DPoC (Delegated Proof-of-Contribution). Le réseau ICON est alimenté par un moteur de blockchain propriétaire appelé 'loopchain' et a la capacité de traiter des centaines de transactions par seconde. Le projet ICON a été lancé pour assurer l'intégrité et la transparence des données partagées entre les institutions et les entreprises, et pour déplacer les actifs mutuels sur des blockchains hétérogènes sans organisation centralisée.",
+            "shortDescription": "ICON Network est un protocole blockchain à usage général basé sur la crypto-monnaie native ICX qui peut exécuter des contrats intelligents, adopter le protocole de consensus BFT-DPoS et utiliser un protocole de gouvernance économique appelé DPoC (Delegated Proof-of-Contribution)."
+        },
+        "iost": {
+            "title": "IOST network",
+            "description": "IOST est un réseau blockchain décentralisé ultra-rapide basé sur l'algorithme de consensus de nouvelle génération \"Proof of Believability\" (PoB). Dirigé par une équipe de fondateurs éprouvés et soutenu par des investisseurs de classe mondiale, notre mission est d'être l'architecture sous-jacente des services en ligne qui répond aux besoins de sécurité et d'évolutivité d'une économie décentralisée.",
+            "shortDescription": "IOST est un réseau blockchain décentralisé ultra-rapide basé sur l'algorithme de consensus de nouvelle génération \"Proof of Believability\" (PoB)."
+        },
+        "kava": {
+            "title": "Kava network",
+            "description": "Kava est un hub DeFi cross-chain pour les services et applications financiers décentralisés. Il fonctionne comme une banque décentralisée pour les actifs numériques en connectant les utilisateurs avec des produits tels que les stablecoins, les prêts et les comptes rémunérés afin qu'ils puissent faire plus et gagner plus avec leurs actifs numériques.",
+            "shortDescription": "Kava est un hub DeFi multi-chaîne pour les services et applications financiers décentralisés. "
+        },
+        "secret": {
+            "title": "Secret network",
+            "description": "Secret Network est la première blockchain dotée de contrats intelligents préservant la confidentialité. Cela signifie que les applications construites sur Secret peuvent utiliser des données cryptées sans les révéler à quiconque, même aux nœuds du réseau. Pour la première fois, Secret Network permet aux développeurs de créer des applications puissantes, sans autorisation et préservant la vie privée - Secret Apps.",
+            "shortDescription": "Secret Network est la première blockchain dotée de contrats intelligents préservant la confidentialité. Cela signifie que les applications construites sur Secret peuvent utiliser des données cryptées sans les révéler à quiconque, même aux nœuds du réseau."
+        },
+        "tez": {
+            "title": "Tezos network",
+            "description": "Tezos est une plateforme open-source qui s'attaque aux principaux obstacles à l'adoption de la blockchain pour les actifs et les applications, soutenue par une communauté mondiale de validateurs, de chercheurs et de constructeurs. De par sa conception, Tezos favorise la mise à niveau à long terme, la participation ouverte, la collaboration et la sécurité des contrats intelligents.",
+            "shortDescription": "Tezos est une plateforme open-source qui s'attaque aux principaux obstacles à l'adoption de la blockchain pour les actifs et les applications, soutenue par une communauté mondiale de validateurs, de chercheurs et de constructeurs."
+        },
+        "sentinel": {
+            "title": "Sentinel network",
+            "description": "Sentinel est un réseau de nœuds qui partagent leur bande passante, sur lequel sont construits les VPN décentralisés et autres services de ce type. L'objectif de l'écosystème Sentinel est de permettre l'accès universel à l'internet d'une manière fiable et vérifiable. Pour ce faire, les organisations et les particuliers du monde entier pourront construire des solutions de réseau rentables, évolutives, distribuées et décentralisées sur la blockchain de Sentinel, basée sur Cosmos.",
+            "shortDescription": "L'écosystème Sentinel est un réseau mondial d'applications dVPN autonomes qui permettent un accès Internet privé et résistant à la censure."
+        },
+        "persistence": {
+            "title": "Persistence network",
+            "description": "Persistence est un écosystème de produits DeFi multi-chaînes conçu pour stimuler la liquidité mondiale et permettre un échange de valeur transparent. Persistence introduit différentes classes d'actifs dans le DeFi par le biais de ses produits : les actifs Proof-of-Stake (pSTAKE), les actifs Agri Commodity (Comdex) et les actifs Trade Finance Debt (ShipFi).",
+            "shortDescription": "Persistence est un protocole alimentant la finance ouverte institutionnelle en facilitant l'emprunt de cryptoactifs (stablecoins) en utilisant des actifs du monde réel, tels que des factures, comme garantie."
+        },
+        "chihuahua": {
+            "title": "Chihuahua network",
+            "description": "Chihuahua est une monnaie mème et vise à être un projet dirigé par la communauté avec un pool communautaire de 10B HUAHUA qui peut être utilisé pour financer des projets au dessus de la chaîne proposés et votés via la gouvernance intégrée dans la chaîne Chihuahua. Le projet est construit en utilisant le Cosmos SDK et le consensus Tendermint.",
+            "shortDescription": "Chihuahua est la monnaie mème de Cosmos et HUAHUA est l'actif natif de staking et de gouvernance de la chaîne Chihuahua."
+        },
+        "umee": {
+            "title": "Umee network",
+            "description": "Umee est un hub DeFi cross chain qui interconnecte les blockchains. En tant que blockchain de couche de base, les applications et les primitives monétaires peuvent être construites sur Umee pour accéder à l'effet de levier et à la liquidité des chaînes croisées. La blockchain Umee facilite l'interopérabilité entre l'écosystème Cosmos, le réseau Ethereum, les architectures de chaînes latérales, les solutions de mise à l'échelle de la couche deux et les protocoles de couche de base alternatifs.",
+            "shortDescription": "Umee est une infrastructure décentralisée pour les interactions inter-chaînes entre réseaux."
+        },
+        "stargaze": {
+            "title": "Stargaze network",
+            "description": "Stargaze est une marketplace NFT entièrement décentralisée dans l'écosystème Cosmos. Il s'agit d'une zone de l'écosystème Cosmos qui illustre des niveaux élevés de sécurité, de décentralisation, de transparence et de flexibilité. Stargaze permettra aux conservateurs de contenu de gagner des récompenses pour avoir trouvé du contenu et l'avoir évalué. Ses STARS natives peuvent être utilisées pour staker, participer à la gouvernance, interagir sur la plateforme et frapper des NFT.",
+            "shortDescription": "Stargaze est une marketplace Interchain NFT appartenant à la communauté dans l'écosystème Cosmos."
+        },
+        "rizon": {
+            "title": "Rizon network",
+            "description": "RIZON Blockchain est un centre de devises et d'actifs numériques qui fournit une plateforme où les monnaies fiduciaires du monde entier peuvent être émises en toute sécurité et qui permet aux entreprises d'interagir les unes avec les autres. Rizon Blockchain permettra l'interopérabilité entre les réseaux blockchain souverains et la mise en place d'un environnement permettant à ces réseaux d'utiliser une vaste réserve de liquidités, répondant ainsi aux besoins commerciaux des projets individuels. RIZON Blockchain possède un solide réseau et est capable de stimuler l'afflux de participants à l'écosystème et la diversification des activités.",
+            "shortDescription": "La mission de RIZON Blockchain est de fournir une plateforme sur laquelle les monnaies fiduciaires du monde entier peuvent être émises en toute sécurité et de permettre aux entreprises d'interagir les unes avec les autres grâce au Cosmos IBC."
+        },
+        "comdex": {
+            "title": "Comdex network",
+            "description": "Comdex est une plateforme qui vise à révolutionner l'industrie fragmentée du commerce des produits de base de manière efficace, rapide et transparente. La vision de Comdex est de révolutionner le processus rudimentaire du commerce mondial des matières premières afin de minimiser les délais de règlement et de maximiser la transparence, l'efficacité et l'immuabilité dans la découverte et le financement du commerce à la vitesse de l'éclair.",
+            "shortDescription": "Comdex est un protocole décentralisé d'actifs synthétiques construit sur Cosmos. Sa mission est de créer un écosystème de solutions interopérables qui combleront le fossé entre DeFi et CeFi et démocratiseront ainsi la finance."
+        },
+        "juno": {
+            "title": "Juno network",
+            "description": "Juno, en tant que réseau de contrats intelligents de niveau 1, résout les problèmes liés aux contrats intelligents de première génération, à savoir une évolutivité limitée et des coûts de déploiement et d'exécution élevés.",
+            "shortDescription": "Juno est le foyer neutre permissionless des contrats intelligents interopérables CosmWasm et de la DAO InterWasm. L'écosystème est à l'avant-garde du développement et de l'adoption de CosmWasm."
+        },
+        "osmosis": {
+            "title": "Osmosis network",
+            "description": "Osmosis est une blockchain décentralisée peer-to-peer que les gens peuvent utiliser pour créer des liquidités et échanger des jetons compatibles avec IBC. La blockchain Osmosis est composée de logiciels gratuits, publics et open-source. Osmosis sert de teneur de marché automatisé (AMM) qui se connecte à d'autres blockchains basées sur Tendermint, créant ainsi une expérience de trading cross-chain hétérogène et interopérable pour les utilisateurs.",
+            "shortDescription": "Osmosis est un protocole de teneur de marché automatisé (AMM) inter-chaînes construit à l'aide du SDK Cosmos qui permet aux développeurs de concevoir, construire et déployer leurs propres AMMs personnalisés."
+        },
+        "sifchain": {
+            "title": "Sifchain network",
+            "description": "Sifchain est la solution omni-chaîne pour les DEX. Une cryptoéconomie plus performante et plus robuste pour le trading et la sécurité, des capacités de trading plus flexibles, une feuille de route omni-chaîne extensible et une véritable gouvernance DAO à terme. Sifchain est l'idée de Sif, la déesse nordique de la terre, de l'agriculture, de la fertilité, de la famille et du mariage. Sif représente la nature collaborative de l'industrie de la blockchain et les récompenses luxuriantes qui peuvent être trouvées en cultivant des connexions entre plusieurs autres chaînes.",
+            "shortDescription": "Sifchain est une bourse décentralisée, qui combine les meilleurs éléments des pools de liquidité et des carnets d'ordres pour une exécution optimale des ordres."
+        },
+        "lum": {
+            "title": "Lum network",
+            "description": "Le réseau Lum est un protocole blockchain open source (couche 1) basé sur le SDK Tendermint & Cosmos, l'algorithme Delegated Proof-Of-Stake le plus avancé et le plus sûr. Il est alimenté par le LUM, sa cryptomonnaie native.",
+            "shortDescription": "Le réseau Lum introduit un protocole blockchain open-source rapide, sûr et durable établissant une nouvelle norme pour favoriser la confiance entre les entreprises et les clients tout en les récompensant"
+        },
+        "cheqd": {
+            "title": "Checkd network",
+            "description": "L'équipe de Cheqd construit un réseau sécurisé qui permet aux individus et aux organisations de contrôler pleinement leurs données personnelles. cheqd aide les entreprises à créer des modèles commerciaux nouveaux et innovants, en veillant à ce que l'identité auto-souveraine soit un service viable et gratifiant à offrir aux clients.",
+            "shortDescription": "La solution Cheqd permet de mettre en place de nouveaux modèles commerciaux, dans lesquels des informations d'identification vérifiables sont échangées de manière fiable, réutilisable, plus sûre et moins coûteuse."
+        },
+        "fetch": {
+            "title": "Fetch.ai network",
+            "description": "Fetch.ai est un laboratoire d'intelligence artificielle basé à Cambridge qui construit un réseau d'apprentissage automatique décentralisé en libre accès pour les infrastructures intelligentes. La blockchain Fetch.ai est un protocole inter-chaînes, basé sur Cosmos-SDK, et utilise un langage de contrat intelligent très performant basé sur WASM (Cosmwasm) pour permettre la mise en œuvre d'une cryptographie avancée et d'une logique d'apprentissage automatique sur la chaîne. Cela permet également au réseau Fetch.ai de servir de réseau de niveau 2 pour les réseaux de blockchains existants et de pont interchaînes vers le monde extérieur.",
+            "shortDescription": "Fetch.ai est un laboratoire d'intelligence artificielle qui construit un réseau d'apprentissage automatique à accès libre et à jetons pour permettre la mise en place d'une infrastructure intelligente fondée sur une économie numérique décentralisée."
+        },
+        "injective": {
+            "title": "Injective network",
+            "description": "Injective est un protocole interopérable personnalisé de niveau 1 permettant de créer de puissantes applications d'échange, de DeFi, de dérivés et de Web3. Injective a été créé à l'aide du Cosmos SDK et est capable d'assurer la finalité instantanée des transactions tout en maintenant des vitesses fulgurantes. INJ est le bien rare déflationniste natif qui alimente le protocole Injective et son écosystème en pleine expansion. Injective est incubé par Binance et est soutenu par Pantera Capital.",
+            "shortDescription": "Injective est le protocole interopérable de couche 1 optimisé pour la création d'applications Web3 DeFi inter-chaînes."
+        },
+        "bitsong": {
+            "title": "Bitsong network",
+            "description": "BitSong est un écosystème musical distribué, open-source et permissionless, conçu en décembre 2017 et construit à l'aide de la technologie blockchain. L'objectif est de créer un hub décentralisé et trustless qui interconnecte avantageusement les différents acteurs du marché de l'industrie musicale.",
+            "shortDescription": "BitSong réunit les artistes musicaux et leurs fans de manière stratégique dans un système basé sur la blockchain où ils peuvent contrôler leur flux de revenus, avoir accès à des outils de croissance Web3 et profiter d'opportunités dans le cadre d'un modèle de gains mutuellement bénéfique."
+        },
+        "kichain": {
+            "title": "Ki-Chain network",
+            "description": "Ki Chain est une plateforme blockchain basée sur l'écosystème Cosmos, qui vise à fournir aux investisseurs traditionnels et aux investisseurs en crypto une plateforme d'investissement et de négociation pratique qui élargira considérablement leurs opportunités et permettra aux investisseurs traditionnels d'interagir facilement avec le secteur de la crypto.",
+            "shortDescription": "La plateforme blockchain Ki Chain est un réseau basé sur Cosmos conçu pour fournir aux investisseurs en crypto-monnaies l'infrastructure nécessaire pour interagir de manière pratique avec les actifs cryptographiques sur les marchés CeFi et DeFi."
+        },
+        "regen": {
+            "title": "Regen network",
+            "description": "Regen Ledger est une blockchain publique de type Proof-of-Stake construite sur le SDK Cosmos. Son objectif principal est double - indexer les réclamations et les affirmations relatives à la santé écologique et assurer le suivi sécurisé d'une nouvelle catégorie d'actifs financiers, appelés crédits de services écosystémiques, qui sont liés à des changements mesurables dans la santé écologique.",
+            "shortDescription": "Regen est un réseau blockchain de connaissances écologiques changeant l'économie de l'agriculture régénérative pour inverser le réchauffement climatique."
+        },
+        "starname": {
+            "title": "Starname network",
+            "description": "*Starname vous fournit l'identité personnalisée de votre choix sur la blockchain. Vous pouvez envoyer et recevoir des paiements directement, posséder et stocker des actifs, faire du commerce et participer à l'univers des crypto-monnaies, le tout avec le même *starname.",
+            "shortDescription": "*starname est un service de nom véritablement décentralisé, conforme à la philosophie de Web3 en matière de propriété numérique."
+        },
+        "emoney": {
+            "title": "e-Money network",
+            "description": "Fondée en 2016 par une société fintech danoise, e-Money est une plateforme de paiement basée sur la blockchain qui vise à combler le système bancaire hérité avec une seule couche blockchain efficace. Construit sur la technologie Cosmos, le protocole e-Money est construit pour l'émission d'une gamme de monnaies stables adossées à des devises portant intérêt.",
+            "shortDescription": "e-Money est une plateforme de paiement basée sur la blockchain construite sur Cosmos, qui s'engage à apporter l'inclusion financière et à aider les personnes du monde entier à avoir un accès facile aux crypto-monnaies."
+        },
+        "iris": {
+            "title": "Iris network",
+            "description": "IRISnet (alias IRIS Hub) est conçu pour servir de base à la prochaine génération d'applications distribuées. Construit avec Cosmos-SDK, IRIS Hub permet une interopérabilité inter-chaîne grâce à un modèle de service unifié, tout en fournissant une variété de modules pour supporter les applications DeFi.",
+            "shortDescription": "Le réseau IRIS est un internet de blockchains destiné à fournir une base technologique qui facilite la construction d'applications commerciales distribuées."
+        },
+        "cerberus": {
+            "title": "Cerberus network",
+            "description": "La blockchain Cerberus est une blockchain permissionless où tout le monde peut rejoindre le réseau et gérer un validateur. La communauté aura la possibilité d'obtenir de la valeur à partir de la pièce en mettant en staking Cerberus ($CRBRUS) avec des validateurs et des pools de liquidité. Au cours du second semestre de 2022, l'équipe de Cerberus prévoit de se concentrer sur le lancement de son projet NFT.",
+            "shortDescription": "Cerberus est le premier projet tricéphale de meme-coin et de NFT dans le Cosmos."
+        },
+        "mantle": {
+            "title": "AssetMantle network",
+            "description": "Avec AssetMantle, vous pouvez facilement créer des marketplaces dédiées à une large gamme de produits provenant de vendeurs spécifiques ou de groupes de vendeurs. Considérez-le comme Shopify pour NFTs où, au lieu de lister des produits sur un 'Amazon pour NFTs' (comme OpenSea), les créateurs et les artistes peuvent créer leurs propres magasins de style Shopify pour leur NFT spécifique.",
+            "shortDescription": "AssetMantle est une plateforme unique en son genre pour faciliter le commerce de vos NFT."
+        },
+        "gbridge": {
+            "title": "Gravity Bridge network",
+            "description": "Cosmos Gravity Bridge est une blockchain entièrement décentralisée et trustless, conçue à cet effet, qui relie les actifs entre les écosystèmes Ethereum et Cosmos. Les jetons compatibles Ethereum et EVM peuvent être transférés à travers le Gravity Bridge vers un portefeuille Cosmos, puis vers d'autres portefeuilles Cosmos ou DEX. Les blockchains basées sur Cosmos SDK peuvent également envoyer des jetons à travers Gravity Bridge vers l'écosystème Ethereum, les rendant disponibles pour le transfert ou potentiellement pour le commerce sur Uniswap ou d'autres DEX ETH.",
+            "shortDescription": "Gravity Bridge est une blockchain Cosmos décentralisée dont l'objectif principal est de sécuriser le fonctionnement des ponts entre blockchains."
+        },
+        "konstellation": {
+            "title": "Konstellation network",
+            "description": "Konstellation est un protocole blockchain de couche 3 construit sur Cosmos et actuellement connecté à Solana et Binance Smart Chain. Grâce aux relais IBC, Konstellation vise à développer diverses Dapps dans différents domaines (DeFi, CeFi, NFT, DAO) accessibles sur toutes les blockchains. L'interopérabilité de Konstellation permet aux investisseurs d'investir dans des actifs numériques cross-chain, de monnayer une large gamme de stablecoins libérés en fiat, d'explorer les opportunités NFT, et de participer à un jeu play-to-earn et DAO. Le réseau est alimenté par des jetons DARC nécessaires pour les transactions, l'utilité sur les Dapps Konstellation et la gouvernance sur le réseau Konstellation.",
+            "shortDescription": "Le réseau Konstellation est un protocole blockchain, construit sur Cosmos SDK, créant une infrastructure mondiale pour l'avenir des marchés de capitaux décentralisés."
+        },
+        "evmos": {
+            "title": "Evmos network",
+            "description": "Evmos est une chaîne agnostique en termes d'applications qui sera interopérable avec le réseau principal Ethereum, les environnements compatibles EVM et d'autres chaînes BFT via IBC, ce qui permettra aux utilisateurs et aux développeurs d'interagir de manière transparente entre les chaînes. Evmos a pour objectif d'être le Hub EVM de Cosmos, facilitant le déploiement et la communication des smart contracts au sein de l'écosystème Cosmos.",
+            "shortDescription": "Evmos est la plateforme EVM du réseau Cosmos. Il s'agit de l'implémentation phare de la bibliothèque Ethermint qui donne la priorité à l'interopérabilité et à une économie nouvelle."
+        },
+        "axelar": {
+            "title": "Axelar network",
+            "description": "Le réseau Axelar est une plateforme de communication inter-chaînes évolutive. Les créateurs de plateformes blockchain peuvent l'utiliser pour brancher de manière transparente leurs blockchains à tous les autres écosystèmes blockchain. Les développeurs d'applications peuvent choisir la meilleure blockchain pour héberger leurs applications et utiliser les protocoles de communication inter-chaînes d'Axelar pour verrouiller, déverrouiller et transférer des actifs, ainsi que pour communiquer avec des applications sur n'importe quelle autre chaîne. En connectant les dapps à plusieurs écosystèmes blockchain, la plateforme Axelar permet aux utilisateurs d'interagir avec toutes les applications de l'écosystème directement à partir de leurs portefeuilles.",
+            "shortDescription": "Le réseau Axelar est une machine à état décentralisée chargée de faciliter les demandes inter-chaînes. Le réseau prend en charge quelques protocoles clés, tels que le protocole CGP (Cross-Chain Gateway Protocol)."
+        },
+        "crescent": {
+            "title": "Crescent network",
+            "description": "Crescent est une plateforme DeFi qui invite les utilisateurs à explorer les possibilités illimitées des actifs numériques en unifiant diverses blockchains d'une manière inédite dans l'écosystème Cosmos.",
+            "shortDescription": "Crescent a pour objectif de fournir une fonctionnalité DeFi connectée à l'écosystème Cosmos afin d'améliorer l'efficacité du capital et de gérer efficacement les risques."
+        },
+        "polkadot": {
+            "title": "Polkadot network",
+            "description": "Polkadot est un protocole de réseau qui permet de transférer des données arbitraires - pas seulement des jetons - à travers des blockchains. Cela signifie que Polkadot est un véritable environnement d'application multi-chain où des choses comme les registres et les calculs cross-chain sont possibles. Polkadot peut transférer ces données à travers des blockchains publiques, ouvertes, sans permission, ainsi que des blockchains privées, avec permission.",
+            "shortDescription": "Polkadot est un protocole de réseau qui permet de transférer des données arbitraires, et pas seulement des jetons, entre les blockchains. Cela signifie que Polkadot est un véritable environnement d'applications multi-chaînes où des choses comme les registres et les calculs multi-chaînes sont possibles."
+        },
+        "orai": {
+            "title": "Oraichain",
+            "description": "En tant que premier oracle et écosystème alimenté par l'IA pour les blockchains, Oraichain se transforme maintenant pour devenir une couche 1 avancée d'IA pour l'économie des données et les services Oracle qui sert de couche fondamentale pour la création d'une nouvelle génération de contrats intelligents et de Dapps et créer un écosystème d'IA complet sur blockchain.",
+            "shortDescription": "Oraichain est la première solution intelligente et sécurisée au monde pour le Web3 émergent, les Dapps évolutives et l'IA décentralisée."
+        }
+    },
+    "uptime": "Disponibilité",
+    "active": "Actif",
+    "noactive": "inactif",
+    "jailed": "EMPRISONNÉ",
+    "sendAssetsDestination": "Réseau de destination",
+    "keplr": {
+        "notFound": "Keplr n'a pas été trouvé dans votre navigateur",
+        "cancel": "Annuler",
+        "importWallet": "Importer un portefeuille",
+        "allreadyAdded": "Adresse déjà ajoutée",
+        "titleModal": "Importer le portefeuille de Keplr",
+        "descModal": "Sélectionnez la chaîne pour connecter Keplr",
+        "selectChainId": "Sélectionnez ChainId",
+        "errorSignMismatch": "Veuillez changer de compte dans Keplr pour signer la transaction.",
+        "allExist": "Opération annulée ou toutes les adresses existent déjà",
+        "confirm": "Confirmer",
+        "selectAll": "Tout sélectionner",
+        "unselectAll": "Tout déselectionner",
+        "addTitle": "Ajouter des réseaux à partir de Keplr",
+        "addInfo": "Choisissez les réseaux à importer depuis votre portefeuille Keplr"
+    },
+    "faq": {
+        "privacyPolicy": "Politique de confidentialité",
+        "termsOfService": "Conditions d'utilisation"
+    },
+    "dontHaveEnoughFounds": "Vous n'avez pas assez de fonds pour payer les frais de transaction.",
+    "transactionsSocket": {
+        "failed": "Echec de la transaction",
+        "completed": "Transaction terminée",
+        "viewTitle": "Visualisation sur l'explorer"
+    },
+    "confirmModalTitle": "Confirmez la demande de récompenses",
+    "confirmModalDesc": "Vous verrez les récompenses accumulées dans le solde disponible.",
+    "manageStaking": "Gérer le staking",
+    "stakeShare": "Part de stake",
+    "additionalFee": "Frais supplémentaires",
+    "rewardDestination": "Destination des récompenses",
+    "unstakedBalance": "Solde débloqués",
+    "claimUnstakedText": "Vos actifs sont débloqués. Confirmez la transaction pour les réclamer maintenant.",
+    "stakingAmount": "Montant du staking",
+    "polkadot": {
+        "chooseNodeModalDesc": "Définissez le montant des jetons que vous souhaitez mettre en staking. Ensuite, choisissez les nœuds de délégation. Vos fonds peuvent être distribués à <span style='color: #0A2778; font-weight: 700;'>pas plus de {maxNodes} nœuds</span>. Il faut également tenir compte du fait que la période de d'unstaking pour ${net} est <span style='color: #0A2778' font-weight: 700;>{perioud} jours</span>. Pendant cette période, vos jetons unstaké seront gelés. <span style='color: #FF5722; font-weight: 700;'>Solde minimal de staking : {minStakingAmount} {code}</span>",
+        "nominatedNodesTitle": "Nœuds nominés :",
+        "error": {
+            "chooseNotMoreThan16Nodes": "Ne choisissez pas plus de 16 nœuds"
+        }
+    },
+    "minSendAmountError": "Le montant minimum de la transaction est {minAmount} {code}.",
+    "changeValidators": "Modifier les validateurs",
+    "redelegateNote": "Vous devez choisir un autre validateur à redéléguer",
+    "assets": "Actifs",
+    "menu": {
+        "settings": "Paramètres",
+        "logOut": "Se déconnecter"
+    },
+    "stakingNote": "Si vous ne souhaitez pas modifier le validateur, vous pouvez simplement définir le nouveau montant.",
+    "assetsModal": {
+        "title": "Sélectionnez un jeton",
+        "description": "Une fois le jeton sélectionné, vous pouvez l'envoyer, le mettre en stacking, le réclamer et le gérer",
+        "searchLabel": "Recherche d'un jeton",
+        "searchPlaceholder": "Commencez à taper le nom du jeton",
+        "currentAsset": "Actifs courants\n"
+    },
+    "enterPasswordBackup": "Entrez le mot de passe du fichier de sauvegarde pour restaurer le portefeuille Citadel One-seed",
+    "enterPasswordBackupLabel": "Entrez le mot de passe de votre fichier de sauvegarde",
+    "walletsAdding": {
+        "mainMenuTitle": "Ajouter une adresse",
+        "importMenuTitle": "Importer",
+        "mainMenuDescription": "Importer une adresse créée en dehors de Citadel.one",
+        "menu": {
+            "create": "Créer",
+            "createDescription": "Le portefeuille Citadel One-seed permet aux utilisateurs de créer des adresses pour tous les réseaux intégrés à la plateforme.",
+            "import": "Importer",
+            "importDescription": "Importez votre adresse pour commencer à gérer vos actifs. ",
+            "addNetworks": "Ajouter des réseaux",
+            "addNetworksDescription": "Le porte-monnaie Citadel One-seed permet aux utilisateurs de créer des adresses pour tous les réseaux intégrés à la plateforme en utilisant une seule phrase mnémotechnique. Ainsi, il n'est pas nécessaire de stocker et de se souvenir de plusieurs seeds pour différents portefeuilles."
+        },
+        "menuTypes": {
+            "restoreTitle": "Restaurer",
+            "restoreDescription": "Pour les utilisateurs de Citadel.one",
+            "importWallet": "Importer un portefeuille",
+            "importDescription": "Pour les utilisateurs de portefeuilles externes",
+            "externalWallet": "Portefeuille externe",
+            "externalDescription": "Pour les utilisateurs avancés",
+            "restoreOneSeed": "Restaurer une one-seed",
+            "restoreOneSeedDescription": "Choisissez une méthode appropriée pour importer une adresse existante",
+            "importFile": "Importer un fichier",
+            "importFileDescription": "Choisissez une méthode appropriée pour importer une adresse existante",
+            "seedPhrase": "Seed-phrase",
+            "seedPhraseDescription": "Importez votre seed-phrase pour ajouter une adresse",
+            "privateKey": "Clé privée",
+            "privateKeyDescription": "Importez votre clé privée pour ajouter une adresse",
+            "metamaskKeplr": "Metamask, Keplr",
+            "metamaskKeplrDescription": "Connectez votre portefeuille Web3 pour ajouter une adresse",
+            "hardware": "Portefeuille matériel",
+            "hardwareDescription": "Importer des adresses depuis le Ledger ou le dispositif Trezor pour une utilisation avancée",
+            "sourceAddress": "Adresse de la source",
+            "destinationAddress": "Adresse de destination"
+        }
+    },
+    "tokenDescriptionPersistence": "Persistence est un écosystème de produits DeFi multi-chaînes conçu pour stimuler la liquidité mondiale et permettre un échange de valeur transparent. Persistence introduit différentes classes d'actifs dans le DeFi par le biais de ses produits : les actifs Proof-of-Stake (pSTAKE), les actifs Agri Commodity (Comdex) et les actifs Trade Finance Debt (ShipFi).",
+    "tokenDescriptionSENTINEL": "Sentinel est un réseau de nœuds qui partagent leur bande passante, sur lequel sont construits les VPN décentralisés et autres services de ce type. L'objectif de l'écosystème Sentinel est de permettre l'accès universel à l'internet d'une manière fiable et vérifiable. Pour ce faire, les organisations et les particuliers du monde entier pourront construire des solutions de réseau rentables, évolutives, distribuées et décentralisées sur la blockchain de Sentinel, basée sur Cosmos.",
+    "tokenDescriptionChihuahua": "Chihuahua est une monnaie mème et vise à être un projet dirigé par la communauté avec un pool communautaire de 10B HUAHUA qui peut être utilisé pour financer des projets au sommet de la chaîne proposés et votés via la gouvernance intégrée dans la chaîne Chihuahua. Le projet est construit en utilisant le Cosmos SDK et le consensus Tendermint.",
+    "tokenDescriptionUmee": "Umee est un hub DeFi cross chain qui interconnecte les blockchains. En tant que blockchain de couche de base, les applications et les primitives monétaires peuvent être construites sur Umee pour accéder à l'effet de levier et à la liquidité des chaînes croisées. La blockchain Umee facilite l'interopérabilité entre l'écosystème Cosmos, le réseau Ethereum, les architectures de chaînes latérales, les solutions de mise à l'échelle de la couche deux et les protocoles de couche de base alternatifs.",
+    "tokenDescriptionStargaze": "Stargaze est une marketplace Interchain NFT appartenant à la communauté dans l'écosystème Cosmos.",
+    "tokenDescriptionRizon": "La mission de la blockchain RIZON est de fournir une plateforme sur laquelle les monnaies fiduciaires du monde entier peuvent être émises en toute sécurité et de permettre aux entreprises d'interagir les unes avec les autres grâce au Cosmos IBC.",
+    "tokenDescriptionSifchain": "Sifchain est la solution omni-chaîne pour les DEX. Une cryptoéconomie plus performante et plus robuste pour le trading et la sécurité, des capacités de trading plus flexibles, une feuille de route omni-chaîne extensible et une véritable gouvernance DAO à terme. Sifchain est l'idée de Sif, la déesse nordique de la terre, de l'agriculture, de la fertilité, de la famille et du mariage. Sif représente la nature collaborative de l'industrie de la blockchain et les récompenses luxuriantes qui peuvent être trouvées en cultivant des connexions entre plusieurs autres chaînes.",
+    "tokenDescriptionLum": "Le réseau Lum est un protocole blockchain open source (couche 1) basé sur le SDK Tendermint & Cosmos, l'algorithme Delegated Proof-Of-Stake le plus avancé et le plus sûr. Il est alimenté par le LUM, sa cryptomonnaie native.",
+    "tokenDescriptionCheqd": "L'équipe de Cheqd construit un réseau sécurisé qui permet aux individus et aux organisations de contrôler pleinement leurs données personnelles. cheqd aide les entreprises à créer des modèles commerciaux nouveaux et innovants, en veillant à ce que l'identité auto-souveraine soit un service viable et gratifiant à offrir aux clients.",
+    "tokenDescriptionInjective": "Injective est le protocole interopérable de couche 1 optimisé pour la création d'applications Web3 DeFi inter-chaînes.",
+    "syncExtensions": {
+        "modalMenuTitle": "Sélectionner les adresses",
+        "modalMenuDescription": "Sélectionnez les adresses à synchroniser avec l'extension",
+        "syncTo": "Exporter des adresses",
+        "syncFrom": "Importer des adresses",
+        "syncDescription": "Choisissez les adresses que vous souhaitez ajouter à votre extension de navigateur Citadel.one",
+        "notFound": "L'extension du navigateur Citadel n'a pas été trouvée",
+        "walletsNotFound": "Les portefeuilles ne se synchronisent pas avec l'extension de navigateur",
+        "emptyWallets": "Vous devez configurer l'extension du navigateur avant la synchronisation",
+        "syncWithExtension": "Exportation d'adresses vers une extension de navigateur",
+        "syncingFromTitle": "Importation d'adresses à partir d'une extension de navigateur",
+        "syncingFromDescription": "Confirmez cette opération avec un mot de passe",
+        "incorrectPasswordExtension": "Mot de passe de l'extension incorrect",
+        "enterPassword": "Entrez le mot de passe de l'extension",
+        "syncMainTitle": "Synchronisation des adresses",
+        "syncMainDescription": "Synchronisez vos adresses avec l'extension de navigateur Citadel.one en quelques secondes",
+        "syncMainSync": "synchroniser"
+    },
+    "noApyNote": "Obtenez un revenu passif avec le staking de vos actifs crypto !",
+    "assetsStubs": {
+        "title": "Vous n'avez pas encore d'actifs",
+        "subtitle": "Vous pouvez l'échanger directement via Citadel.one ou le déposer à partir d’un exchange externe",
+        "card1": {
+            "title": "Swap via Citadel.one ",
+            "action": "extensions "
+        },
+        "card2": {
+            "title": "Dépôt à partir de ",
+            "action": "exchanges"
+        }
+    },
+    "dontHaveEnoughFoundsForFee": "Vous n'avez pas assez de fonds pour payer les frais de transaction.",
+    "asset": "actif"
 }

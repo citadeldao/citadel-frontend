@@ -29,7 +29,6 @@ export default {
         const currentWallet =
           rootGetters['wallets/walletByAddress'](wallet) ||
           stateCurrentWallet.value;
-
         const subtokens = onlyLinked
           ? currentWallet.subtokensList
           : rootGetters['networks/getSubtokensByNet'](currentWallet.net).reduce(
