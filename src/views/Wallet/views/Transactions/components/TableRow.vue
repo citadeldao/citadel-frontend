@@ -74,20 +74,22 @@
           <span> {{ defaultDate(transaction.date) }} </span>
         </template>
         <template #default>
-          <span>{{
-            transaction.date ? moment(transaction.date).fromNow() : ''
-          }}</span>
-          <linkIcon
-            width="21"
-            hidden="18"
-            @click.stop="
-              () => {
-                global.open(txUrl, '_blank');
-              }
-            "
-          />
+          <div class="time">
+            {{ transaction.date ? moment(transaction.date).fromNow() : '' }}
+          </div>
         </template>
       </Tooltip>
+    </td>
+    <td class="table-row__link">
+      <linkIcon
+        width="21"
+        hidden="18"
+        @click.stop="
+          () => {
+            global.open(txUrl, '_blank');
+          }
+        "
+      />
     </td>
   </tr>
 </template>
@@ -106,6 +108,7 @@ import Loading from '@/components/Loading.vue';
 import defaultDate from '@/helpers/date.js';
 import linkIcon from '@/assets/icons/link.svg';
 import Tooltip from '@/components/UI/Tooltip';
+import { useI18n } from 'vue-i18n';
 
 export default {
   name: 'TableRow',
@@ -135,6 +138,7 @@ export default {
   },
   emits: ['editComment', 'showTransactionInfo'],
   setup(props) {
+    const { t } = useI18n();
     let type;
 
     const global = computed(() => window);
@@ -167,14 +171,29 @@ export default {
 
     const status = computed(() => {
       if (props.fromMempool) {
-        return { title: 'waiting', color: '#F4BD13' };
+        return {
+          title: 'waiting',
+          color: '#F4BD13',
+          headerTitle: t('transactionsPage.modalPendingHeader'),
+          headerDescription: t('transactionsPage.modalPendingDescription'),
+        };
       }
 
       if (props.transaction.isCanceled || props.transaction.type === 'unvote') {
-        return { title: 'fail', color: '#FA3B33' };
+        return {
+          title: 'fail',
+          color: '#FA3B33',
+          headerTitle: t('transactionsPage.modalFailHeader'),
+          headerDescription: t('transactionsPage.modalFailDescription'),
+        };
       }
 
-      return { title: 'confirmed', color: '#0FB774' };
+      return {
+        title: 'confirmed',
+        color: '#0FB774',
+        headerTitle: t('transactionsPage.modalSuccessHeader'),
+        headerDescription: t('transactionsPage.modalSuccessDescription'),
+      };
     });
     const address = computed(() => {
       if (props.fromMempool) {
@@ -225,9 +244,6 @@ export default {
     const currentTransaction = ref({
       ...props.transaction,
       formatedStatus: status.value,
-      date: props.transaction.date
-        ? moment(props.transaction.date).fromNow()
-        : '',
       value: formatedValue.value,
     });
 
@@ -299,7 +315,7 @@ export default {
       border-bottom-right-radius: 8px;
 
       @include lg {
-        padding-right: 0px;
+        // padding-right: 0px;
       }
       @include md {
         padding-right: 15px;
@@ -361,6 +377,8 @@ export default {
   }
 
   &__status-info-status {
+    text-transform: capitalize;
+
     @include lg {
       // margin-top: 11px;
       font-size: 14px;
@@ -394,21 +412,28 @@ export default {
 
   &__date-time {
     // display: none;
-    padding-right: 20px !important;
+    // padding-right: 20px !important;
+    .time {
+      font-size: 16px;
+      line-height: 19px;
+      letter-spacing: -0.02em;
+      color: $mid-blue;
+      margin-left: -5px;
+    }
+
     @include xl {
       display: table-cell;
     }
 
     & span {
-      font-size: 16px;
-      line-height: 19px;
-      letter-spacing: -0.02em;
-      color: $mid-blue;
-
       &:first-child {
         margin-right: 10px;
       }
     }
+  }
+
+  &__link {
+    padding-right: 20px;
   }
 
   &__amount {
@@ -427,6 +452,7 @@ export default {
 
     @include md {
       padding: 0px 15px 0px 0px !important;
+      display: none;
     }
   }
 

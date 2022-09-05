@@ -213,6 +213,12 @@
         "frozenBalanceTooltipTitle": "Your tokens will become available in"
     },
     "transactionsPage": {
+        "modalSuccessHeader": "Transaction Successful!",
+        "modalSuccessDescription": "Your transaction was completed.",
+        "modalPendingHeader": "Transaction Pending!",
+        "modalPendingDescription": "Your transaction was pending.",
+        "modalFailHeader": "Transaction failed!",
+        "modalFailDescription": "It may take some time for the transaction to complete.",
         "placeHolderInfo1": "Your transaction history is empty.",
         "placeHolderInfo2P1": "Deposit some",
         "placeHolderInfo2P2": "to send, stake, and earn rewards.",

@@ -23,12 +23,6 @@
         </div>
       </div>
     </div>
-    <div v-if="info.memo" class="info-block__line">
-      <span class="info-block__line-title"> {{ $t('memo') }}: </span>
-      <span class="info-block__line-to">
-        {{ info.memo }}
-      </span>
-    </div>
     <div v-if="info.note || activateEdit">
       <div class="comment-label">{{ $t('comment') }}</div>
       <div v-if="!activateEdit" class="comment-value">{{ info.note }}</div>
@@ -39,6 +33,12 @@
         rows="4"
         class="comment-field"
       />
+    </div>
+    <div v-if="info.memo" class="info-block__line">
+      <span class="info-block__line-title"> {{ $t('memo') }}: </span>
+      <span class="info-block__line-to">
+        {{ info.memo }}
+      </span>
     </div>
     <div v-if="info.to" class="info-block__line">
       <span class="info-block__line-title"> {{ $t('sendTo') }}: </span>

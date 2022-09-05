@@ -19,7 +19,16 @@
       </div>
       <div class="status">
         <div class="label">{{ $t('date') }}</div>
-        <div class="value time">{{ info.date }}</div>
+        <Tooltip>
+          <template #content>
+            <span> {{ defaultDate(info.date) }} </span>
+          </template>
+          <template #default>
+            <div class="value time">
+              {{ info.date ? moment(info.date).fromNow() : '' }}
+            </div>
+          </template>
+        </Tooltip>
       </div>
     </div>
     <div class="tx-statuses__item">
@@ -41,9 +50,12 @@ import calendar from '@/assets/icons/transaction-status/calendar.svg';
 import fee from '@/assets/icons/transaction-status/fee.svg';
 import pending from '@/assets/icons/transaction-status/pending.svg';
 import error from '@/assets/icons/transaction-status/error.svg';
+import Tooltip from '@/components/UI/Tooltip';
+import moment from 'moment';
+import defaultDate from '@/helpers/date.js';
 
 export default {
-  components: { success, pending, error, calendar, fee },
+  components: { success, pending, error, calendar, fee, Tooltip },
   props: {
     info: {
       required: true,
@@ -53,7 +65,11 @@ export default {
     },
   },
   setup(props) {
-    console.log(props.info);
+    console.log(1111, props.info);
+    return {
+      defaultDate,
+      moment,
+    };
   },
 };
 </script>
@@ -83,6 +99,10 @@ export default {
         font-size: 14px;
         font-weight: 400;
         color: #6b93c0;
+
+        &.time {
+          margin-left: -5px;
+        }
       }
 
       .stat {

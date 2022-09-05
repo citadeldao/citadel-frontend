@@ -33,8 +33,10 @@
             :key="n"
             class="inner-tx__view-item-component"
           >
-            <div class="title">{{ component.title }}</div>
-            <div class="line" />
+            <div v-if="component.type !== 'amount_collection'" class="title">
+              {{ component.title }}
+            </div>
+            <div v-if="component.type !== 'amount_collection'" class="line" />
             <div v-if="component.type === 'amount'" class="value">
               <div class="value-amount">{{ component.value.text }}</div>
               <div class="value-symbol">{{ component.value.symbol }}</div>
@@ -46,6 +48,24 @@
               <a target="_blank" :href="component.value.url">{{
                 component.value.text
               }}</a>
+            </div>
+            <!-- structure in type -->
+            <div
+              v-if="component.type === 'amount_collection'"
+              class="flex-value"
+            >
+              <div
+                v-for="(componentInner, key) in component.value"
+                :key="key"
+                class="inner-tx__view-item-component-flex"
+              >
+                <div class="value">
+                  <div class="value-symbol">
+                    {{ componentInner.symbol }}
+                  </div>
+                  <div class="title">{{ componentInner.text }}</div>
+                </div>
+              </div>
             </div>
           </div>
         </template>
@@ -180,6 +200,12 @@ $blue-dark: #262b61;
         color: #6b93c0;
       }
 
+      .flex-value {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+      }
+
       .value {
         display: flex;
         align-items: center;
@@ -220,7 +246,7 @@ $blue-dark: #262b61;
       align-items: center;
 
       .title {
-        font-size: 13px;
+        font-size: 14px;
         margin-bottom: 7px;
       }
 
@@ -228,6 +254,21 @@ $blue-dark: #262b61;
         flex-grow: 1;
         border: 0.01rem dashed #a18eff;
         height: 1px;
+      }
+
+      .inner-tx__view-item-component-flex {
+        flex-direction: column;
+        display: flex;
+
+        .value {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+
+          .value-symbol {
+            font-size: 11px;
+          }
+        }
       }
     }
   }

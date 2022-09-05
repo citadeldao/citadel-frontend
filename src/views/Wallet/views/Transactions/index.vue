@@ -15,13 +15,14 @@
     >
       <tr>
         <th class="radius-th-left header type">{{ $t('type') }}</th>
-        <th class="header">
+        <th class="header status">
           {{ $t('status') }}
         </th>
-        <th class="header">{{ $t('amount') }}</th>
-        <th class="radius-th-right header">
+        <th class="header amount">{{ $t('amount') }}</th>
+        <th class="header">
           {{ $t('timeDate') }}
         </th>
+        <th class="header" />
       </tr>
 
       <template v-if="currentPage === 1">
@@ -129,8 +130,8 @@
       <ModalContent
         v-if="showTransactionInfoModal"
         v-click-away="modalCloseHandler"
-        :title="$t('transactionsPage.transactionInfoModalTitle')"
-        :desc="$t('transactionsPage.transactionInfoModalDesc')"
+        :title="currentTransaction?.formatedStatus?.headerTitle"
+        :desc="currentTransaction?.formatedStatus?.headerDescription"
         button-text="ok"
         data-qa="transaction-info-modal"
         @buttonClick="infoModalSubmit"
@@ -439,7 +440,19 @@ export default {
       background: #e1e8fb;
 
       &.type {
-        padding-right: 170px;
+        padding-right: 180px;
+      }
+
+      &.status {
+        @include md {
+          display: none;
+        }
+      }
+
+      &.amount {
+        @include md {
+          display: none;
+        }
       }
     }
 
