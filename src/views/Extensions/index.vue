@@ -379,11 +379,13 @@ export default {
     const showLedgerConnect = ref(false);
     const ledgerError = ref('');
     const msgSuccessSignature = ref('');
-    const fullScreenAppIds = ref([6, 7, 9, 10, 12, 14, 15, 18]);
     const snip20TokenFee = ref(null);
     const snip20Token = ref({});
     const showCreateVkModal = ref(false);
     const showConfirmModalLoading = ref(false);
+    const fullScreenAppIds = ref([
+      6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 21, 22, 23,
+    ]);
 
     const { wallets: walletsList } = useWallets();
 

@@ -46,7 +46,10 @@
         </div>
       </div>
       <div
-        v-if="!isHardwareWallet(currentWallet.type) && !isKeplrWallet"
+        v-if="
+          currentWallet.type === WALLET_TYPES.PRIVATE_KEY ||
+          currentWallet.type === WALLET_TYPES.ONE_SEED
+        "
         class="createVkPassword"
       >
         <Input
@@ -200,7 +203,7 @@ import Loading from '@/components/Loading';
 import useCheckPassword from '@/compositions/useCheckPassword';
 import useLedger from '@/compositions/useLedger';
 import redirectToWallet from '@/router/helpers/redirectToWallet';
-import { WALLET_TYPES } from '../../../config/walletType';
+import { WALLET_TYPES } from '@/config/walletType';
 
 export default {
   name: 'CreateVkModal',
@@ -361,13 +364,11 @@ export default {
       if (
         passwordError.value &&
         !isHardwareWallet(props.currentWallet.type) &&
-        !isKeplrWallet.value
+        props.currentWallet.type !== WALLET_TYPES.KEPLR
       ) {
         inputError.value = passwordError.value;
-
         return;
       }
-
       let error;
       let transactionHash;
       let vk;
@@ -377,7 +378,9 @@ export default {
         const res = await citadel.setViewingKey(
           props.currentWallet.id,
           props.token.net,
-          props.vkType,
+          props.currentWallet.type === WALLET_TYPES.KEPLR
+            ? 'random'
+            : props.vkType,
           {
             privateKey: await props.currentWallet.getPrivateKeyDecoded(
               password.value
@@ -493,6 +496,7 @@ export default {
       confirmLedgerCloseHandler,
       appLedgerCloseHandler,
       rejectedLedgerCloseHandler,
+      WALLET_TYPES,
     };
   },
 };

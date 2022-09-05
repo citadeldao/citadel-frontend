@@ -340,7 +340,8 @@
         "claimTo": "Claim to",
         "amountToClaim": "Amount to claim",
         "confirmModalTitle": "Confirm the rewards claim",
-        "confirmModalDesc": "You will see the accrued rewards in the available balance"
+        "confirmModalDesc": "You will see the accrued rewards in the available balance",
+        "claimSuccessfuly": "Claimed successfully"
     },
     "exportWallet": {
         "card1Info": "Export the associated mnemonic phrase",
@@ -572,7 +573,7 @@
     "addAddressExp": "Add address",
     "addAnAddress": "Add an address",
     "chooseSuitableMethod": "Choose a suitable method to import an existing address",
-    "address": "address",
+    "address": "Address",
     "enterAddress": "Enter address",
     "import": "Import",
     "enterMnemonicPhrase": "Enter a mnemonic phrase",
@@ -934,7 +935,8 @@
         "importWallet": "Import wallet",
         "allreadyAdded": "Address already added",
         "titleModal": "Import metamask wallet",
-        "descModal": "Change your address or network in metamask"
+        "descModal": "Change your address or network in metamask",
+        "confirm": "Confirm"
     },
     "netInfo": {
         "akash": {
@@ -1189,7 +1191,6 @@
     "changeValidators": "Change validators",
     "redelegateNote": "You must choose another validator to redelegate",
     "assets": "Assets",
-    "asset": "asset",
     "menu": {
         "settings": "Settings",
         "logOut": "Log Out"
@@ -1280,5 +1281,6 @@
             "action": "exchanges"
         }
     },
-    "dontHaveEnoughFoundsForFee": "You do not have enough funds to pay the transaction fee."
+    "dontHaveEnoughFoundsForFee": "You do not have enough funds to pay the transaction fee.",
+    "asset": "asset"
 }
