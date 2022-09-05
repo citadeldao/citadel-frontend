@@ -24,7 +24,7 @@
           />
         </ModalContent>
       </Modal>
-      <!-- CONFIRM RESOTRE ONESEED -->
+      <!-- CONFIRM RESTORE ONESEED -->
       <Modal v-if="showAppInfoModal">
         <ModalContent
           v-click-away="
@@ -123,6 +123,9 @@
         @close="confirmModalCloseHandlerWithRequest"
         @buttonClick="confirmClickHandler"
       >
+        <div v-if="showConfirmModalLoading" class="loader">
+          <Loading />
+        </div>
         <div class="item mt30">
           <div class="label">{{ $t('extensions.typeOperation') }}</div>
           <span class="red">{{ extensionTransactionForSign?.type }}</span>
@@ -178,7 +181,7 @@
             </keep-alive>
           </div>
         </div>
-        <pre
+        <!-- <pre
           v-if="showTx && extensionTransactionForSign?.transaction"
           class="item-tx"
         >
@@ -186,7 +189,20 @@
             language="javascript"
             :code="JSON.stringify(extensionTransactionForSign.messageScrt || extensionTransactionForSign.transaction).replaceAll(',', ', \n').replaceAll('{', '{ \n').replaceAll('}', '\n}')"
           />
-        </pre>
+        </pre> -->
+
+        <pre
+          class="item-tx"
+          v-if="showTx && extensionTransactionForSign?.transaction"
+          >{{
+            JSON.stringify(
+              extensionTransactionForSign.messageScrt ||
+                extensionTransactionForSign.transaction,
+              null,
+              2
+            ).trim()
+          }}</pre
+        >
         <div
           v-if="
             signerWallet &&
@@ -244,7 +260,7 @@
         </div>
         <div class="item mt30">
           <div class="item-tx">
-            <highlightjs
+            <!-- <highlightjs
               language="javascript"
               :code="
                 JSON.stringify(messageForSign.message)
@@ -252,7 +268,10 @@
                   .replaceAll('{', '{ \n')
                   .replaceAll('}', '\n}')
               "
-            />
+            /> -->
+            <pre>{{
+              JSON.stringify(messageForSign.message, null, 2).trim()
+            }}</pre>
           </div>
         </div>
         <div v-if="msgSuccessSignature" class="item">
@@ -364,6 +383,7 @@ export default {
     const snip20TokenFee = ref(null);
     const snip20Token = ref({});
     const showCreateVkModal = ref(false);
+    const showConfirmModalLoading = ref(false);
 
     const { wallets: walletsList } = useWallets();
 
@@ -999,6 +1019,7 @@ export default {
           extensionTransactionForSign.value.type ===
             extensionsSocketTypes.types.execute
         ) {
+          showConfirmModalLoading.value = true;
           // execute contract
           const response = await citadel.executeContract(
             signerWallet.value.id,
@@ -1011,7 +1032,6 @@ export default {
               ...extensionTransactionForSign.value.messageScrt,
             }
           );
-
           // send success message to app
           if (response?.data) {
             confirmModalDisabled.value = false;
@@ -1019,6 +1039,7 @@ export default {
             successTx.value = response.data;
             confirmModalDisabled.value = false;
             confirmModalCloseHandler();
+            showConfirmModalLoading.value = false;
             showSuccessModal.value = true;
             store.dispatch('extensions/sendCustomMsg', {
               token: currentAppInfo.value.token,
@@ -1035,6 +1056,7 @@ export default {
             confirmModalDisabled.value = false;
             showLedgerConnect.value = false;
             confirmModalDisabled.value = false;
+            showConfirmModalLoading.value = false;
             confirmModalCloseHandler();
             notify({
               type: 'warning',
@@ -1140,6 +1162,7 @@ export default {
       closeCreateVkModal,
       showCreateVkModal,
       showExtensionTransactionModal,
+      showConfirmModalLoading,
     };
   },
 };
@@ -1332,6 +1355,17 @@ export default {
         margin-top: 30px;
       }
     }
+  }
+
+  .loader {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    background: white;
+    z-index: 10;
   }
 }
 </style>
