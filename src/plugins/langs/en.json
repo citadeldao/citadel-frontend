@@ -1284,5 +1284,6 @@
         }
     },
     "dontHaveEnoughFoundsForFee": "You do not have enough funds to pay the transaction fee.",
-    "asset": "asset"
+    "asset": "asset",
+    "noSelfSendError": "Transfer wallet cannot be the same as receiving wallet."
 }

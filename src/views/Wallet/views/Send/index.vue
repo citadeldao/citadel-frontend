@@ -856,11 +856,11 @@ export default {
       // for networks that has not selfSend
       if (
         toAddress.value &&
-        !props.currentWallet.selfSend &&
+        props.currentWallet.noSelfSend &&
         toAddress.value.toLowerCase() ===
           props.currentWallet.address.toLowerCase()
       ) {
-        return t('messages.incorrectAddress');
+        return t('noSelfSendError');
       }
 
       // validate if switch another network
