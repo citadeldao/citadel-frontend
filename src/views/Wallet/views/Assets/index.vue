@@ -66,10 +66,7 @@
           :key="`${item.name}-${index}`"
           :balance="item.tokenBalance"
           :item="item"
-          :is-not-linked="
-            isNotLinkedSnip20(item) &&
-            stateCurrentWallet.type !== WALLET_TYPES.KEPLR
-          "
+          :is-not-linked="isNotLinkedSnip20(item)"
           :is-active="item.net === currentWallet.net"
           @click="setCurrentToken(item)"
         />
@@ -230,11 +227,7 @@ export default {
           wallet: store.getters['wallets/walletByAddress'](route.params),
           root: true,
         });
-      } else if (
-        isNotLinkedSnip20(token) &&
-        !token.linked &&
-        stateCurrentWallet.value.type !== WALLET_TYPES.KEPLR
-      ) {
+      } else if (isNotLinkedSnip20(token) && !token.linked) {
         mainIsLoading.value = true;
         snip20TokenFee.value =
           (await token.getFees(token.id, token.net))?.data?.high?.fee || 0.2;
