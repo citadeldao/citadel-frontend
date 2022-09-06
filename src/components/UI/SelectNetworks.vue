@@ -130,7 +130,7 @@ export default {
     const checkedNetYetAdded = [];
     const clickHandler = () => {
       const checkedNets = checkedItems.value.map(
-        (index) => networks.value[index].net
+        (index) => networks.value.find((network) => network.id === index).net
       );
       let polkadotCondition;
       const oneSeedZeroLastIndexWalletsList = wallets.value
@@ -196,6 +196,7 @@ export default {
       prepareRemoveItem,
       onCheck,
       networksAmount,
+      isDisabledBtn,
     };
   },
 };
