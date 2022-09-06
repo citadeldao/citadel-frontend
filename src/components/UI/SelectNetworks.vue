@@ -41,7 +41,7 @@
       </template>
       <PrimaryButton
         data-qa="Get-started"
-        :disabled="!checkedItems.length"
+        :disabled="!checkedItems.length || isDisabledBtn"
         @click="clickHandler"
       >
         {{ $t('addToOneSeed.getStartedBtn') }}
@@ -62,6 +62,7 @@ import { onMounted } from 'vue';
 import Input from '@/components/UI/Input';
 import { netsPositionPriority } from '@/config/netsPositionPriority.js';
 import useWallets from '@/compositions/useWallets';
+import useCreateWallets from '@/compositions/useCreateWallets';
 import { WALLET_TYPES } from '@/config/walletType.js';
 export default {
   name: 'SelectNetworks',
@@ -72,7 +73,7 @@ export default {
     const networksAmount = ref(6);
     const networksList = store.getters['networks/networksList'];
     const { wallets } = useWallets();
-
+    const { isUserMnemonic } = useCreateWallets();
     const networks = computed(() =>
       networksList.map((network, index) => ({
         id: index,
@@ -85,6 +86,7 @@ export default {
     );
 
     const keyword = ref('');
+    const isDisabledBtn = ref(false);
     const displayData = computed(() => {
       const preferredOrder = [
         ...netsPositionPriority,
@@ -172,9 +174,15 @@ export default {
         addItem(displayData.value[key].id);
       }
     };
+    const disabledAllItems = () => {
+      if (checkedNetYetAdded.length === displayData.value.length) {
+        isDisabledBtn.value = true;
+      }
+    };
     onMounted(() => {
       prepareSelectedItems();
-      showAllNetworks();
+      disabledAllItems();
+      if (isUserMnemonic.value) showAllNetworks();
     });
     return {
       displayData,
