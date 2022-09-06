@@ -551,18 +551,18 @@ export default {
       href: 'https://www.coingecko.com/en/coins/evmos',
     },
   },
-  crescent: {
+  polygon: {
     web: {
-      title: 'crescent.network',
-      href: 'https://crescent.network/',
+      title: 'polygon.technology',
+      href: 'https://polygon.technology/',
     },
     twitter: {
-      title: '@CrescentHub',
-      href: 'CrescentHub',
+      title: '@0xPolygon',
+      href: '0xPolygon',
     },
     landing: {
       title: 'Coingecko',
-      href: 'https://www.coingecko.com/en/coins/crescent-network',
+      href: 'https://www.coingecko.com/en/coins/polygon',
     },
   },
   oasis: {
