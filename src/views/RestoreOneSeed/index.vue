@@ -94,9 +94,8 @@ export default {
   border-radius: 25px;
   padding: 0 44px;
   flex-grow: 1;
-  min-height: calc(100% - 38px);
+  height: 100%;
   @include lg {
-    min-height: calc(100% - 38px);
     padding: 0 40px;
   }
   @include md {

@@ -62,7 +62,7 @@ export default {
   padding: 50px 0 0;
   box-sizing: border-box;
   min-height: 100vh;
-  height: 100vh;
+  //height: 100vh;
   overflow-y: auto;
   background: linear-gradient(255.4deg, #f0f2fc 0%, #edf2fc 100%);
 
@@ -108,16 +108,18 @@ export default {
   &__wrap {
     width: 1140px;
     transition: none;
+    margin-bottom: 8px;
+    min-height: 788px;
+    height: 100%;
     @include md {
       width: 100%;
     }
 
     &.menu-item {
       margin-top: 38px;
-      min-height: calc(100% - 38px);
     }
     &:deep > div {
-      min-height: calc(100% - 38px);
+      min-height: inherit;
     }
   }
 }
