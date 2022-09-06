@@ -901,7 +901,7 @@
         "confirmModalDesc2": "Your tokens will be unpledged"
     },
     "minAmmount": "Amount must be high than 1",
-    "maxFloatDigits": "No more than two digits after the decimal point",
+    "maxFloatDigits": "No more than {amount} digits after the decimal point",
     "emptyPassword": "Empty password",
     "accruedDaily": "Accrued daily from 6-7 pm UTC",
     "extensions": {
@@ -1279,5 +1279,6 @@
         }
     },
     "dontHaveEnoughFoundsForFee": "You do not have enough funds to pay the transaction fee.",
-    "asset": "asset"
+    "asset": "asset",
+    "minAmountError": "Minimum amount is {minAmount} {code}"
 }
