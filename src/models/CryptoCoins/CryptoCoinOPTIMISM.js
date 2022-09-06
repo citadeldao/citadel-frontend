@@ -1,5 +1,5 @@
 import CryptoCoin from '../CryptoCoin';
-export default class CryptoCoinPOLYGON extends CryptoCoin {
+export default class CryptoCoinOPTIMISM extends CryptoCoin {
   constructor(opts) {
     super(opts);
     this.hideMemo = true;

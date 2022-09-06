@@ -35,6 +35,8 @@ export const ledgerNets = [
   'mantle',
   'crescent',
   'orai',
+  'optimism',
+  'arbitrum',
   'polygon',
   'oasis',
   // 'evmos',
