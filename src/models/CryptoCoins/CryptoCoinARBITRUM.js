@@ -5,6 +5,5 @@ export default class CryptoCoinARBITRUM extends CryptoCoin {
     this.hideMemo = true;
     this.privateKeyEncoded = opts.privateKeyEncoded || null;
     this.publicKey = opts.publicKey || null;
-    this.showFrozenBalance = false;
   }
 }

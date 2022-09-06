@@ -1145,6 +1145,16 @@
             "title": "Arbitrum",
             "description": "",
             "shortDescription": ""
+        },
+        "polygon": {
+            "title": "Polygon",
+            "description": "",
+            "shortDescription": ""
+        },
+        "oasis": {
+            "title": "Oasis 网络\n",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "运行时间",

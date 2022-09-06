@@ -40,6 +40,8 @@ import CryptoCoinCRESCENT from './CryptoCoins/CryptoCoinCRESCENT';
 import CryptoCoinORAI from './CryptoCoins/CryptoCoinORAI';
 import CryptoCoinOPTIMISM from './CryptoCoins/CryptoCoinOPTIMISM';
 import CryptoCoinARBITRUM from './CryptoCoins/CryptoCoinARBITRUM';
+import CryptoCoinPOLYGON from './CryptoCoins/CryptoCoinPOLYGON';
+import CryptoCoinOASIS from './CryptoCoins/CryptoCoinOASIS';
 
 export default {
   // nets
@@ -85,4 +87,6 @@ export default {
   ORAI: CryptoCoinORAI,
   OPTIMISM: CryptoCoinOPTIMISM,
   ARBITRUM: CryptoCoinARBITRUM,
+  POLYGON: CryptoCoinPOLYGON,
+  OASIS: CryptoCoinOASIS,
 };
