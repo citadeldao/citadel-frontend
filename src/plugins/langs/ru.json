@@ -901,7 +901,7 @@
         "confirmModalDesc2": "Ваши активы будут возвращены"
     },
     "minAmmount": "Значение должно быть больше 1",
-    "maxFloatDigits": "Не более двух знаков после запятой",
+    "maxFloatDigits": "Не более {amount} знаков после запятой",
     "emptyPassword": "Поле пароля пусто",
     "accruedDaily": "Начисляется ежедневно с 18:00 до 19:00 UTC",
     "extensions": {
@@ -929,6 +929,7 @@
         "notFound": "Вы не установили Metamask для вашего браузера",
         "changeNetwork": "Пожалуйста, выберите другую сеть в Metamask\n",
         "cancel": "Отменить",
+        "confirm": "",
         "importWallet": "Импортировать кошелек",
         "allreadyAdded": "Адрес уже добавлен",
         "titleModal": "Импортировать Metamask",
