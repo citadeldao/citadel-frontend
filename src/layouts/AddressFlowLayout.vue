@@ -108,8 +108,7 @@ export default {
   &__wrap {
     width: 1140px;
     transition: none;
-    margin-bottom: 8px;
-    min-height: 788px;
+    min-height: 796px;
     height: 100%;
     @include md {
       width: 100%;
