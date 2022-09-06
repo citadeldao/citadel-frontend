@@ -901,7 +901,7 @@
         "confirmModalDesc2": "Your tokens will be unpledged"
     },
     "minAmmount": "Amount must be high than 1",
-    "maxFloatDigits": "No more than two digits after the decimal point",
+    "maxFloatDigits": "No more than {amount} digits after the decimal point",
     "emptyPassword": "Empty password",
     "accruedDaily": "Accrued daily from 6-7 pm UTC",
     "extensions": {
@@ -1140,6 +1140,11 @@
             "title": "Polygon",
             "description": "Polygon is a decentralized layer-2 scaling solution and a multi-chain Ethereum ecosystem, called Ethereum's Internet of Blockchains. Polygon aims to overcome the limitations of Ethereum and enable developers to build scalable and user-friendly dApps with lower gas fees and faster transactions",
             "shortDescription": "Polygon is a decentralized Ethereum layer-2 scaling solution aims to enable developers to build scalable and user-friendly dApps with lower gas fees and faster transactions"
+        },
+        "oasis": {
+            "title": "Oasis Network",
+            "description": "The Oasis Network is the first privacy-enabled blockchain platform for open finance and a responsible data economy. Combined with its high throughput and secure architecture, the Oasis Network is able to power private, scalable DeFi, revolutionizing Open Finance and expanding it beyond traders and early adopters to a mass market. Its unique privacy features can not only redefine DeFi, but also create a new type of digital asset called Tokenized Data that can enable users to take control of the data they generate and earn rewards for staking it with applications — creating the first ever responsible data economy.",
+            "shortDescription": "The Oasis Network is a privacy-enabled blockchain platform for open finance and a responsible data economy."
         }
     },
     "uptime": "Uptime",
@@ -1284,5 +1289,6 @@
         }
     },
     "dontHaveEnoughFoundsForFee": "You do not have enough funds to pay the transaction fee.",
-    "asset": "asset"
+    "asset": "asset",
+    "minAmountError": "Minimum amount is {minAmount} {code}"
 }

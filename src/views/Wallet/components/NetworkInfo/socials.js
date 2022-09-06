@@ -565,4 +565,18 @@ export default {
       href: 'https://www.coingecko.com/en/coins/polygon',
     },
   },
+  oasis: {
+    web: {
+      title: 'oasisprotocol.org',
+      href: 'https://oasisprotocol.org/',
+    },
+    twitter: {
+      title: '@OasisProtocol',
+      href: 'oasisprotocol',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/oasis-network',
+    },
+  },
 };
