@@ -87,6 +87,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .restore-one-seed {
+  margin-bottom: 8px;
   display: flex;
   flex-direction: column;
   background: $white;
