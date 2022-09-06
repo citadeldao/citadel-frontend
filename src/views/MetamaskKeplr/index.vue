@@ -64,7 +64,7 @@ export default {
   border-radius: 25px;
   padding: 0 44px 40px;
   flex-grow: 1;
-  height: calc(100% - 38px);
+  height: 100%;
   @include md {
     box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
   }

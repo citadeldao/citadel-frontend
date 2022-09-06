@@ -204,7 +204,7 @@ export default {
           /* await */ store.dispatch('transactions/getMempool');
           const { wallets } = useWallets();
 
-          redirectToWallet({
+          await redirectToWallet({
             wallet: wallets?.value[0],
             root: true,
           });
