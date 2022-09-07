@@ -479,7 +479,7 @@ export default {
     const prepareBuildTransaction = ref({});
 
     const {
-      fees,
+      formatedFee: fees,
       feesError,
       getFees,
       balance,
