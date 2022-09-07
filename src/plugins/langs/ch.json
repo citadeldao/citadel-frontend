@@ -340,7 +340,8 @@
         "claimTo": "提取至",
         "amountToClaim": "可提取金额",
         "confirmModalTitle": "确认提取奖励",
-        "confirmModalDesc": "您将在可用余额中查看应计奖励"
+        "confirmModalDesc": "您将在可用余额中查看应计奖励",
+        "claimSuccessfuly": ""
     },
     "exportWallet": {
         "card1Info": "导出关联助记词",
@@ -929,11 +930,11 @@
         "notFound": "您的浏览器未找到 Metamask 钱包",
         "changeNetwork": "在 Metamask 中切换网络",
         "cancel": "取消",
-        "confirm": "",
         "importWallet": "导入钱包",
         "allreadyAdded": "地址已添加",
         "titleModal": "导入 Metamask 钱包",
-        "descModal": "在 Metamask 中切换地址或网络"
+        "descModal": "在 Metamask 中切换地址或网络",
+        "confirm": ""
     },
     "netInfo": {
         "akash": {
@@ -1138,6 +1139,26 @@
         },
         "tron": {
             "title": "Tron 网络",
+            "description": "",
+            "shortDescription": ""
+        },
+        "optimism": {
+            "title": "Optimism",
+            "description": "",
+            "shortDescription": ""
+        },
+        "arbitrum": {
+            "title": "Arbitrum",
+            "description": "",
+            "shortDescription": ""
+        },
+        "polygon": {
+            "title": "Polygon",
+            "description": "",
+            "shortDescription": ""
+        },
+        "oasis": {
+            "title": "Oasis 网络\n",
             "description": "",
             "shortDescription": ""
         }

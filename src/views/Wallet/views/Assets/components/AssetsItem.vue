@@ -14,7 +14,9 @@
         :net="item.net"
         class="assets-item__icon"
       />
-      <span class="assets-item__name">{{ item?.name }}</span>
+      <span class="assets-item__name">{{
+        item.nativeTokenName || item?.name
+      }}</span>
     </div>
     <div
       v-if="isNotLinked"

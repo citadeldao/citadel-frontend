@@ -261,7 +261,7 @@
         "chooseNodeModalDesc": "Кликните на список валидаторов чтобы выбрать на кого заделегировать",
         "chooseNodeModalDesc1": "Чтобы застейкать свои активы, выберите ноды и укажите нужную сумму делегации. Обратите внимание, что период анстейкинга {net} составляет <span style='color: #0A2778; font-weight: bold;'>{perioud} days</span>.",
         "chooseNodeModalDescWithFrom": "Чтобы застейкать свои активы, выберите ноды и укажите нужную сумму делегации. Обратите внимание, что период анстейкинга {net} длится от <span style='color: #0A2778; font-weight: bold;'>from {perioudFrom} до {perioudTo} дней</span>. Чтобы проверить длительность анстейкинга на текущий момент, перейдите по ссылке:  <a href='{link}' style='color: #0A2778; font-weight: bold;text-decoration:none'>link</a>.",
-        "Stake": "Стейкинг",
+        "Stake": "Стейкать",
         "staking": "Стейкинг",
         "searchNode": "Поиск ноды",
         "searchInputPlaceholder": "Начните печатать название ноды",
@@ -340,7 +340,8 @@
         "claimTo": "Получить на",
         "amountToClaim": "Количество для получения",
         "confirmModalTitle": "Подтвердите получение вознаграждений",
-        "confirmModalDesc": "Вы увидите начисленные вознаграждения в разделе доступного баланса"
+        "confirmModalDesc": "Вы увидите начисленные вознаграждения в разделе доступного баланса",
+        "claimSuccessfuly": ""
     },
     "exportWallet": {
         "card1Info": "Экспортировать мнемоническую фразу для этого адреса",
@@ -472,7 +473,7 @@
     "sendTo": "Отправить на",
     "sendFrom": "Отправить с ",
     "unstake": "Анстейкать",
-    "Stake": "Стейкать ",
+    "Stake": "Стейкинг",
     "receive": "Получить ",
     "fee": "Комиссия",
     "comment": "Комментарий",
@@ -901,7 +902,7 @@
         "confirmModalDesc2": "Ваши активы будут возвращены"
     },
     "minAmmount": "Значение должно быть больше 1",
-    "maxFloatDigits": "Не более двух знаков после запятой",
+    "maxFloatDigits": "Не более {amount} знаков после запятой",
     "emptyPassword": "Поле пароля пусто",
     "accruedDaily": "Начисляется ежедневно с 18:00 до 19:00 UTC",
     "extensions": {
@@ -929,11 +930,11 @@
         "notFound": "Вы не установили Metamask для вашего браузера",
         "changeNetwork": "Пожалуйста, выберите другую сеть в Metamask\n",
         "cancel": "Отменить",
-        "confirm": "",
         "importWallet": "Импортировать кошелек",
         "allreadyAdded": "Адрес уже добавлен",
         "titleModal": "Импортировать Metamask",
-        "descModal": "Измените свой адрес или выберите другую сеть в Metamask"
+        "descModal": "Измените свой адрес или выберите другую сеть в Metamask",
+        "confirm": "Подтвердить"
     },
     "netInfo": {
         "akash": {
@@ -1138,6 +1139,26 @@
         },
         "tron": {
             "title": "Сеть Tron",
+            "description": "",
+            "shortDescription": ""
+        },
+        "optimism": {
+            "title": "Optimism",
+            "description": "",
+            "shortDescription": ""
+        },
+        "arbitrum": {
+            "title": "Arbitrum",
+            "description": "",
+            "shortDescription": ""
+        },
+        "polygon": {
+            "title": "Polygon",
+            "description": "",
+            "shortDescription": ""
+        },
+        "oasis": {
+            "title": "Сеть Oasis",
             "description": "",
             "shortDescription": ""
         }

@@ -414,6 +414,7 @@ import { useI18n } from 'vue-i18n';
 import AddressItem from '@/layouts/AddAddressLayout/components/CutomLists/components/AddressItem';
 import { keplrNetworksProtobufFormat } from '@/config/availableNets';
 import { getDecorateLabel } from '@/config/decorators';
+import amountInputValidation from '@/helpers/amountInputValidation';
 
 export default {
   name: 'Send',
@@ -478,7 +479,7 @@ export default {
     const prepareBuildTransaction = ref({});
 
     const {
-      fees,
+      formatedFee: fees,
       feesError,
       getFees,
       balance,
@@ -816,35 +817,13 @@ export default {
     );
 
     // Error Handlers
-    const insufficientFunds = computed(
-      () => {
-        if (amount.value) {
-          if (
-            props.currentWallet.minSendAmount &&
-            props.currentWallet.minSendAmount > +amount.value
-          ) {
-            return t('minSendAmountError', {
-              code: props.currentWallet.code,
-              minAmount: props.currentWallet.minSendAmount,
-            });
-          }
-
-          if (+amount.value > +maxAmount.value) {
-            return 'Insufficient funds';
-          }
-        }
-
-        return false;
-      }
-      //  !!amount.value && amount.value ?
-      //   amount.value < props.currentWallet.minSendAmount ?
-      //   'The minimum transaction amount is 1 DOT.' ?
-      //     amount.value > maxAmount.value ?
-      //     'Insufficient funds' : ''
-      // const insufficientFunds = computed(
-      //   () =>
-      //     !!amount.value && +amount.value > +maxAmount.value &&
-      //     'Insufficient funds',
+    const insufficientFunds = computed(() =>
+      amountInputValidation({
+        amount: amount.value,
+        wallet: props.currentWallet,
+        maxAmount: +maxAmount.value,
+        type: 'send',
+      })
     );
 
     const networksConfig = computed(() => store.getters['networks/config']);
@@ -913,7 +892,7 @@ export default {
           requestsError.value ||
           insufficientFunds.value ||
           incorrectAddress.value ||
-          !amount.value ||
+          !+amount.value ||
           !toAddress.value
         )
     );
@@ -1344,7 +1323,6 @@ export default {
   &__switch {
     width: 49.5%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     margin-right: 20px;
 
@@ -1361,6 +1339,7 @@ export default {
       font-size: 18px;
       line-height: 30px;
       font-family: 'Panton_Bold';
+      margin-right: 1.5rem;
       @include md {
         font-size: 16px;
       }
