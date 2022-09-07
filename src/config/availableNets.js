@@ -42,7 +42,7 @@ export const ledgerNets = [
   // 'evmos',
 ];
 
-export const metamaskNets = ['bsc', 'eth', 'polygon'];
+export const metamaskNets = ['bsc', 'eth', 'polygon', 'optimism', 'arbitrum'];
 
 export const trezorNets = ['btc', 'eth', 'bsc', 'tez'];
 
