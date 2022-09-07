@@ -14,7 +14,8 @@ export default ({ amount, wallet, maxAmount, type }) => {
     ) {
       return t('minAmountError', {
         code: wallet.code,
-        minAmount: wallet.minSendAmount,
+        minAmount:
+          type === 'send' ? wallet.minSendAmount : wallet.minStakingAmount,
       });
     }
     if (getDecimalCount(amount) > +wallet.config.decimals) {

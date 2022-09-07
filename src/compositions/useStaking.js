@@ -296,7 +296,7 @@ export default function useStaking(stakeNodes, list) {
           amount: amount.value,
           wallet: currentWallet.value,
           maxAmount: +maxAmount.value,
-          type: 'stake',
+          type: activeTab.value,
         })
   );
   provide('insufficientFunds', insufficientFunds);
