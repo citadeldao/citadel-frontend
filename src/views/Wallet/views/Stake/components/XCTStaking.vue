@@ -219,6 +219,7 @@ import useLedger from '@/compositions/useLedger';
 import useTrezor from '@/compositions/useTrezor';
 import useWallets from '@/compositions/useWallets';
 import notify from '@/plugins/notify';
+import amountInputValidation from '@/helpers/amountInputValidation';
 
 export default {
   name: 'XCTStaking',
@@ -358,11 +359,12 @@ export default {
     });
     provide('maxAmount', maxAmount);
 
-    const insufficientFunds = computed(
-      () =>
-        !!amount.value &&
-        amount.value > maxAmount.value &&
-        t('insufficientFunds')
+    const insufficientFunds = computed(() =>
+      amountInputValidation({
+        amount: amount.value,
+        wallet: props.currentWallet,
+        maxAmount: +maxAmount.value,
+      })
     );
     provide('insufficientFunds', insufficientFunds);
 

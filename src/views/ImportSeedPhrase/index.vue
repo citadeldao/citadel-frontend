@@ -101,7 +101,7 @@ export default {
             walletOpts: {
               ...data,
               importedFromSeed: walletOpts.importedFromSeed,
-              mnemonicEncoded: wallet.mnemonicEncoded,
+              mnemonic: walletOpts.mnemonic,
               privateKeyEncoded: wallet.privateKeyEncoded,
             },
             password: walletOpts.password,

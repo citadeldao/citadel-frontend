@@ -580,7 +580,11 @@ export default {
           [6, 7].includes(selectedApp.value.id)
         ) {
           const metamaskNet =
-            metamaskConnector.value.chainId === 56 ? 'bsc' : 'eth';
+            metamaskConnector.value.chainId === 56
+              ? 'bsc'
+              : metamaskConnector.value.chainId === 1
+              ? 'eth'
+              : 'polygon';
           const metamaskAddress = newV[0] && newV[0].toLowerCase();
 
           const findWallet = walletsList.value.find(

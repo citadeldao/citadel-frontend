@@ -16,8 +16,6 @@ export default class CryptoToken extends CryptoCoin {
     this.hasTransfer = opts?.actions?.transfer || false;
     this.fee_key = opts.fee_key;
     this.hasXCT = opts.hasXCT || false;
-    this.showFrozenBalance = !!opts?.actions?.stake;
-    this.hasUnstakeingPerioud = false;
     this.savedViewingKey = opts.savedViewingKey || null;
     this.hasTransactionComment = opts?.config?.hasTransactionComment;
     this.messages = {
