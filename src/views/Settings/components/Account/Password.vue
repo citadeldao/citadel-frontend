@@ -1,5 +1,5 @@
 <template>
-  <div class="change-password-card" :class="visibleClass">
+  <div class="change-password-card">
     <h5 class="change-password-card__title">
       {{ $t('settings.changePassword.title') }}
       <Tooltip :text="$t('settings.changePassword.tooltip')">

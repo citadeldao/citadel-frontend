@@ -216,6 +216,7 @@ import { shareInValue } from '@/helpers';
 import useStaking from '@/compositions/useStaking';
 import { useStore } from 'vuex';
 import useLedger from '@/compositions/useLedger';
+import useTrezor from '@/compositions/useTrezor';
 import useWallets from '@/compositions/useWallets';
 import notify from '@/plugins/notify';
 import amountInputValidation from '@/helpers/amountInputValidation';
@@ -441,6 +442,9 @@ export default {
       ledgerErrorHandler,
       isLedgerWallet,
     } = useLedger();
+
+    const { isTrezorWallet } = useTrezor();
+
     const store = useStore();
     const txComment = ref('');
     const successClickHandler = async () => {
@@ -529,11 +533,15 @@ export default {
 
       isLoading.value = true;
 
-      if (isLedgerWallet.value) {
+      if (isLedgerWallet.value || isTrezorWallet.value) {
         isLoading.value = false;
         showConfirmTransaction.value = false;
+
         clearLedgerModals();
-        showConfirmLedgerModal.value = true;
+
+        if (isLedgerWallet.value) {
+          showConfirmLedgerModal.value = true;
+        }
 
         const res = await props.currentWallet.signAndSendMulti({
           walletId: props.currentWallet.id,
