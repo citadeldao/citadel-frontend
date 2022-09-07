@@ -59,6 +59,7 @@
           is-native-token
           :is-active="currentWallet.net === stateCurrentWallet.net"
           @click="setCurrentToken(stateCurrentWallet)"
+          :class="{ 'assets-single__item': !displayData.length }"
         />
         <AssetsItem
           v-for="(item, index) in displayData"
@@ -212,14 +213,6 @@ export default {
     ]);
     const filterValue = ref(filterList.value[3].value);
 
-    // const stateCurrentWalletPrice = computed(() => {
-    //   console.log(props.currentWallet, stateCurrentWallet, 'test');
-    //   if (props.currentWallet.net === stateCurrentWallet.value.net) {
-    //     return store.getters['profile/rates'][props.currentWallet.net].USD;
-    //   }
-    //   return props.currentWallet.tokenBalance.price.USD;
-    // });
-
     const isNotLinkedSnip20 = (token) => {
       const isSnip20 = computed(
         () => token.config.standard === TOKEN_STANDARDS.SNIP_20
@@ -271,7 +264,7 @@ export default {
       const data = [...filteredTokensList.value].sort(
         (a, b) => isNotLinkedSnip20(b) - isNotLinkedSnip20(a)
       );
-      const byAlphabet = sortByAlphabet(data, 'code').sort(
+      const byAlphabet = sortByAlphabet(data, 'name').sort(
         (a, b) => isNotLinkedSnip20(b) - isNotLinkedSnip20(a)
       );
       const byValue = data
@@ -471,7 +464,9 @@ export default {
   border-radius: 16px;
   background: $white;
   padding: 24px 0 11px 0;
-
+  &-single__item {
+    margin-bottom: 0;
+  }
   &__header {
     display: flex;
     align-items: center;

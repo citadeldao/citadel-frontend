@@ -312,7 +312,7 @@ export default {
           store.dispatch('rewards/getRewards');
           /* await */ store.dispatch('transactions/getMempool');
 
-          redirectToWallet({
+          await redirectToWallet({
             wallet: wallets?.value[0],
             root: true,
           });
