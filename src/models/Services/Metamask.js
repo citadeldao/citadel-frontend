@@ -6,6 +6,8 @@ export default class MetamaskConnector {
       1: 'eth',
       56: 'bsc',
       137: 'polygon',
+      10: 'optimism',
+      42161: 'arbitrum',
     };
     this.accounts = [];
     this.web3 = new Web3(Web3.givenProvider);
