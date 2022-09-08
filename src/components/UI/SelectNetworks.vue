@@ -124,8 +124,12 @@ export default {
         );
         return displayedNet.net === findedCheckedNetYetAdded;
       });
-      if (nonRemovableItem) return removeItem(id, true);
+      if (nonRemovableItem) {
+        removeItem(id, true);
+        return checkedItemStatus();
+      }
       removeItem(id);
+      checkedItemStatus();
     };
     const checkedNetYetAdded = [];
     const clickHandler = () => {
@@ -139,8 +143,8 @@ export default {
             polkadotCondition = wallet.derivationPath;
           if (
             (WALLET_TYPES.ONE_SEED &&
-              wallet.derivationPath[wallet.derivationPath.length - 1] ===
-                '0') ||
+              polkadotCondition &&
+              polkadotCondition[polkadotCondition.length - 1] === '0') ||
             !polkadotCondition
           ) {
             return wallet;
@@ -156,6 +160,7 @@ export default {
     };
     const onCheck = (e) => {
       addItem(e);
+      checkedItemStatus();
     };
     const prepareSelectedItems = () => {
       for (const key in displayData.value) {
@@ -167,17 +172,17 @@ export default {
           checkedNetYetAdded.push(displayData.value[key].net);
         }
       }
-      for (const key in displayData.value.slice(
-        0,
-        netsPositionPriority.length
-      )) {
-        addItem(displayData.value[key].id);
-      }
     };
     const disabledAllItems = () => {
-      if (checkedNetYetAdded.length === displayData.value.length) {
+      if (checkedNetYetAdded.length === checkedItems.value.length) {
         isDisabledBtn.value = true;
       }
+    };
+    const checkedItemStatus = () => {
+      if (checkedNetYetAdded.length === checkedItems.value.length) {
+        return (isDisabledBtn.value = true);
+      }
+      isDisabledBtn.value = false;
     };
     onMounted(() => {
       prepareSelectedItems();
