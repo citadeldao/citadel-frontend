@@ -57,7 +57,7 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: flex-end;
   position: relative;
   padding: 50px 0 0;
   box-sizing: border-box;
