@@ -41,8 +41,6 @@ export default {
     const languages = computed(() => store.getters['i18n/locales']);
     const currentLanguage = ref(store.getters['i18n/locale']);
 
-    console.log('languages', languages);
-
     const changeLanguage = async (value) => {
       await store.dispatch('i18n/setLocale', value);
     };

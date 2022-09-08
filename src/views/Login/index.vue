@@ -461,8 +461,6 @@ export default {
       });
 
       const initialize = async (walletType) => {
-        confirmedAddress.value = true;
-
         const { error } = await store.dispatch('profile/getInfo');
 
         if (!error) {
@@ -499,11 +497,13 @@ export default {
             );
           }
           createWallets(walletType, false);
+          confirmedAddress.value = true;
+        } else {
+          await redirectToWallet({
+            wallet: { address, net },
+            root: true,
+          });
         }
-        // await redirectToWallet({
-        //   wallet: { address, net },
-        //   root: true,
-        // });
       };
 
       if (loginWith.value === 'metamask') {
@@ -758,7 +758,7 @@ export default {
   }
 
   &__question-info {
-    margin-top: -5px;
+    margin-top: 5px;
     margin-bottom: 15px;
     cursor: pointer;
     display: inline-block;

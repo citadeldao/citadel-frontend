@@ -163,7 +163,7 @@ export default {
     color: #00a3ff;
 
     .icon {
-      width: 60px;
+      width: 70px;
     }
 
     div {
