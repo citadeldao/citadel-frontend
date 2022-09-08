@@ -56,9 +56,11 @@
       :is-full-screen="showFullScreen"
       :app-logo="currentApp?.logo"
       :show-filter="!currentApp && !loading"
+      :filter-items="filterItems"
       :app="selectedApp"
       @close="closeApp()"
       @search="onSearchHandler"
+      @selectTags="onSelectTags"
     />
     <div v-if="!currentApp && !loading" class="extensions__apps">
       <AppBlock
@@ -349,6 +351,7 @@ export default {
     const showLedgerConnect = ref(false);
     const ledgerError = ref('');
     const msgSuccessSignature = ref('');
+    const selectedTags = ref([]);
     const fullScreenAppIds = ref([
       6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 21, 22, 23,
     ]);
@@ -367,6 +370,20 @@ export default {
     const extensionsList = computed(
       () => store.getters['extensions/extensionsList']
     );
+
+    const filterItems = computed(() => {
+      return extensionsList.value
+        .map((app) => {
+          return app.tags.map((tag) => tag.name);
+        })
+        .filter((tags) => tags.length)
+        .reduce((prev, curr) => {
+          return prev.concat(curr);
+        }, [])
+        .filter((item, pos, arr) => {
+          return arr.indexOf(item) == pos;
+        });
+    });
 
     if (!extensionsList.value.length) {
       store.dispatch('extensions/fetchExtensionsList');
@@ -413,6 +430,10 @@ export default {
 
     const onSearchHandler = (str) => {
       searchStr.value = str;
+    };
+
+    const onSelectTags = (tags) => {
+      selectedTags.value = tags;
     };
 
     const launchApp = () => {};
@@ -521,7 +542,9 @@ export default {
     if (route.params.name) {
       selectedApp.value = Object.assign(
         {},
-        extensionsList.value.find((a) => a.name === route.params.name)
+        extensionsList.value.find(
+          (a) => a.name.toLowerCase() === route.params.name.toLowerCase()
+        )
       );
 
       if (!selectedApp.value.id) {
@@ -554,11 +577,36 @@ export default {
 
     const appsFiltered = computed(() => {
       if (!searchStr.value.length) {
-        return extensionsList.value;
+        if (!selectedTags.value.length) return extensionsList.value;
+
+        return extensionsList.value.filter((app) => {
+          let findTag;
+          app.tags.forEach((tag) => {
+            if (selectedTags.value.includes(tag.name)) {
+              findTag = true;
+            }
+          });
+          return findTag;
+        });
+      }
+
+      if (!selectedTags.value.length) {
+        return extensionsList.value.filter((app) =>
+          app.name.toLowerCase().includes(searchStr.value)
+        );
       }
 
       return extensionsList.value.filter((app) => {
-        return app.name.toLowerCase().includes(searchStr.value);
+        let findTag;
+        app.tags.forEach((tag) => {
+          if (
+            selectedTags.value.includes(tag.name) &&
+            app.name.toLowerCase().includes(searchStr.value)
+          ) {
+            findTag = true;
+          }
+        });
+        return findTag;
       });
     });
 
@@ -964,6 +1012,7 @@ export default {
       closeApp,
       appsFiltered,
       onSearchHandler,
+      onSelectTags,
       password,
       currentApp,
       extensionTransactionForSign,
@@ -974,6 +1023,7 @@ export default {
       confirmModalCloseHandler,
       confirmModalCloseHandlerWithRequest,
       confirmClickHandler,
+      filterItems,
 
       //ledgers
       showLedgerConnect,
