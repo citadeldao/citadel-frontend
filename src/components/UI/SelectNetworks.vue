@@ -170,6 +170,10 @@ export default {
         if (foundItem) {
           addItem(+displayData.value[key].id);
           checkedNetYetAdded.push(displayData.value[key].net);
+        } else if (
+          netsPositionPriority.indexOf(displayData.value[key].abbr) !== -1
+        ) {
+          addItem(displayData.value[key].id);
         }
       }
     };
