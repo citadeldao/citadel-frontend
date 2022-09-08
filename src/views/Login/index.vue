@@ -151,6 +151,7 @@ import { parseHash, findAddressWithNet } from '@/helpers';
 import { WALLET_TYPES } from '@/config/walletType';
 import { keplrNetworks } from '@/config/availableNets';
 import useCreateWallets from '@/compositions/useCreateWallets';
+import { useI18n } from 'vue-i18n';
 
 const WALLET_MENU_TYPE = {
   social: 'sosical',
@@ -177,6 +178,7 @@ export default {
     SelectLanguage,
   },
   setup() {
+    const { t } = useI18n();
     const router = useRouter();
     const store = useStore();
     const isLoading = ref(false);
@@ -445,6 +447,14 @@ export default {
       if (loginWith.value === 'metamask') {
         address = metamaskConnector.value.accounts[0];
         net = metamaskConnector.value.network;
+
+        if (!net || !['bsc', 'eth'].includes(net)) {
+          notify({
+            type: 'warning',
+            text: t('metamask.changeNetwork'),
+          });
+          return;
+        }
       }
 
       if (loginWith.value === 'keplr') {
