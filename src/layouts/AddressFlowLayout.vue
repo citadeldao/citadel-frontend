@@ -110,6 +110,18 @@ export default {
     transition: none;
     min-height: 796px;
     height: 100%;
+    @media (max-height: 944px) {
+      min-height: 84vh;
+    }
+    @media (max-height: 880px) {
+      min-height: 83vh;
+    }
+    @media (max-height: 828px) {
+      min-height: 82vh;
+    }
+    @media (max-height: 782px) {
+      min-height: 81vh;
+    }
     @include md {
       width: 100%;
     }
