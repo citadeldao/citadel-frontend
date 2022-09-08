@@ -340,7 +340,8 @@
         "claimTo": "Получить на",
         "amountToClaim": "Количество для получения",
         "confirmModalTitle": "Подтвердите получение вознаграждений",
-        "confirmModalDesc": "Вы увидите начисленные вознаграждения в разделе доступного баланса"
+        "confirmModalDesc": "Вы увидите начисленные вознаграждения в разделе доступного баланса",
+        "claimSuccessfuly": ""
     },
     "exportWallet": {
         "card1Info": "Экспортировать мнемоническую фразу для этого адреса",
@@ -472,7 +473,7 @@
     "sendTo": "Отправить на",
     "sendFrom": "Отправить с ",
     "unstake": "Анстейкать",
-    "Stake": "Стейкать ",
+    "Stake": "Стейкинг",
     "receive": "Получить ",
     "fee": "Комиссия",
     "comment": "Комментарий",
@@ -527,9 +528,9 @@
         "part4": "день",
         "part5": " "
     },
-    "frozen": "Замороженные",
+    "frozen": "Заморожено",
     "available": "Доступно",
-    "staked": "Застейканный",
+    "staked": "Застейкано",
     "balance": "Баланс",
     "transactions": "транзакции",
     "send": "Отправить",
@@ -901,13 +902,13 @@
         "confirmModalDesc2": "Ваши активы будут возвращены"
     },
     "minAmmount": "Значение должно быть больше 1",
-    "maxFloatDigits": "Не более двух знаков после запятой",
+    "maxFloatDigits": "Не более {amount} знаков после запятой",
     "emptyPassword": "Поле пароля пусто",
     "accruedDaily": "Начисляется ежедневно с 18:00 до 19:00 UTC",
     "extensions": {
         "showLabel": "Показать",
         "headerTitle": "Приложения",
-        "headerDescription": "Используйте ваши любимые приложения DeFi и другие расширения не покидая Citadel.one!",
+        "headerDescription": "Используйте ваши любимые приложения DeFi и другие приложения не покидая Citadel.one!",
         "readMore": "Узнать больше",
         "networks": "Сети",
         "guide": "Инструкция",
@@ -932,7 +933,8 @@
         "importWallet": "Импортировать кошелек",
         "allreadyAdded": "Адрес уже добавлен",
         "titleModal": "Импортировать Metamask",
-        "descModal": "Измените свой адрес или выберите другую сеть в Metamask"
+        "descModal": "Измените свой адрес или выберите другую сеть в Metamask",
+        "confirm": "Подтвердить"
     },
     "netInfo": {
         "akash": {
@@ -1134,6 +1136,26 @@
             "title": "Oraichain",
             "description": "Являясь первым в мире оракулом на базе ИИ и экосистемой на блокчейне, Oraichain становится продвинутым ИИ первого уровня для Data Economy и сервисов Oracle, который служит основой для создания нового поколения смарт-контрактов, Dapps и создания полной экосистемы ИИ на блокчейне.",
             "shortDescription": "Oraichain - это первое в мире интеллектуальное и безопасное решение для развивающихся Web3, масштабируемых Dapps и децентрализованного AI."
+        },
+        "optimism": {
+            "title": "Optimism",
+            "description": "",
+            "shortDescription": ""
+        },
+        "arbitrum": {
+            "title": "Arbitrum",
+            "description": "",
+            "shortDescription": ""
+        },
+        "polygon": {
+            "title": "Polygon",
+            "description": "",
+            "shortDescription": ""
+        },
+        "oasis": {
+            "title": "Сеть Oasis",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "Подтверждено блоков",
@@ -1270,7 +1292,7 @@
         "subtitle": "Вы можете совершить обмен на Citadel.one или пополнить депозит с помощью биржи.",
         "card1": {
             "title": "Обмен на Citadel.one",
-            "action": "расширения"
+            "action": "приложения"
         },
         "card2": {
             "title": "Депозит с ",

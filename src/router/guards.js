@@ -16,7 +16,11 @@ export default async (to, from, next) => {
     return next({ name: 'Login' });
   }
 
-  if (to.meta.guard === 'guest' && isAuthenticated) {
+  if (
+    to.meta.guard === 'guest' &&
+    isAuthenticated &&
+    !store.getters['wallets/wallets'].length
+  ) {
     return next({ name: 'AddAddress' });
   }
 

@@ -103,7 +103,8 @@ export default {
           });
         }
       })
-      .catch(() => {
+      .catch((e) => {
+        console.error(e);
         router.push({ name: 'Login' });
       })
       .finally(() => {
@@ -124,7 +125,7 @@ export default {
           params.net !== oldParams.net ||
           params.address?.toLowerCase() !== oldParams.address?.toLowerCase()
         ) {
-          setCurrentWallet(params);
+          await setCurrentWallet(params);
         }
 
         if (!params.token) {

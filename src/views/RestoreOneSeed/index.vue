@@ -87,6 +87,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .restore-one-seed {
+  margin-bottom: 8px;
   display: flex;
   flex-direction: column;
   background: $white;
@@ -94,9 +95,8 @@ export default {
   border-radius: 25px;
   padding: 0 44px;
   flex-grow: 1;
-  height: calc(100% + 50px); // calc(100vh - 114px);
+  height: 100%;
   @include lg {
-    height: calc(100% + 50px); // calc(100vh - 114px);
     padding: 0 40px;
   }
   @include md {

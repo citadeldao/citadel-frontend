@@ -349,7 +349,9 @@ export default {
     const showLedgerConnect = ref(false);
     const ledgerError = ref('');
     const msgSuccessSignature = ref('');
-    const fullScreenAppIds = ref([6, 7, 10, 12, 14, 15]);
+    const fullScreenAppIds = ref([
+      6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 21, 22, 23,
+    ]);
 
     const { wallets: walletsList } = useWallets();
 
@@ -578,7 +580,11 @@ export default {
           [6, 7].includes(selectedApp.value.id)
         ) {
           const metamaskNet =
-            metamaskConnector.value.chainId === 56 ? 'bsc' : 'eth';
+            metamaskConnector.value.chainId === 56
+              ? 'bsc'
+              : metamaskConnector.value.chainId === 1
+              ? 'eth'
+              : 'polygon';
           const metamaskAddress = newV[0] && newV[0].toLowerCase();
 
           const findWallet = walletsList.value.find(

@@ -126,7 +126,6 @@ export default {
 .add-address {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   width: 1140px;
   height: 100vh;

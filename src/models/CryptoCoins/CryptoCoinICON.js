@@ -5,14 +5,11 @@ export default class CryptoCoinICON extends CryptoCoin {
     super(opts);
     this.privateKeyEncoded = opts.privateKeyEncoded || null;
     this.publicKey = opts.publicKey || null;
-    this.showFrozenBalance = true;
     this.messages = {
       frozenBalance: 'balanceTooltipInfo.frozenBalanceBalanceInfo1',
       unstakeingPrefix: 'unstaking.customPrefix',
     };
     this.hasRedelegation = true;
-    this.unstakePerioudFrom = '5';
-    this.unstakePerioudTo = '20';
     this.unstakePerioudLink = 'https://icxstakr.io/';
     this.hideCustomFee = true;
   }
