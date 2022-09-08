@@ -55,7 +55,7 @@ export default function usePledge() {
     } else if (amount.value && amount.value < 1) {
       return t('minAmmount');
     } else if (amount.value && symbolCount > 2) {
-      return t('maxFloatDigits');
+      return t('maxFloatDigits', { amount: 2 });
     }
 
     return '';

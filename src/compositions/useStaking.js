@@ -6,6 +6,7 @@ import useWallets from '@/compositions/useWallets';
 import { OUR_NODE } from '@/config/walletType';
 import BigNumber from 'bignumber.js';
 import { useStore } from 'vuex';
+import amountInputValidation from '@/helpers/amountInputValidation';
 
 export default function useStaking(stakeNodes, list) {
   const { t } = useI18n();
@@ -290,9 +291,13 @@ export default function useStaking(stakeNodes, list) {
   })
   provide('maxAdditionalFee', maxAdditionalFee)
 
-  const insufficientFunds = computed(
-    () =>
-      !!amount.value && +amount.value > +maxAmount.value && t('insufficientFunds'),
+  const insufficientFunds = computed(() =>
+         amountInputValidation({
+          amount: amount.value,
+          wallet: currentWallet.value,
+          maxAmount: +maxAmount.value,
+          type: activeTab.value,
+        })
   );
   provide('insufficientFunds', insufficientFunds);
 

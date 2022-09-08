@@ -927,7 +927,7 @@
         "confirmModalDesc2": "Your tokens will be unpledged"
     },
     "minAmmount": "Amount must be high than 1",
-    "maxFloatDigits": "No more than two digits after the decimal point",
+    "maxFloatDigits": "No more than {amount} digits after the decimal point",
     "emptyPassword": "Empty password",
     "accruedDaily": "Accrued daily from 6-7 pm UTC",
     "extensions": {
@@ -1161,6 +1161,26 @@
             "title": "Oraichain",
             "description": "As the world’s first AI-powered oracle and ecosystem for blockchains, Oraichain now transforms itself to become an advanced AI Layer 1 for Data Economy and Oracle services that serves as a foundational layer for the creation of a new generation of smart contracts and Dapps and create a complete AI Ecosystem on blockchain.",
             "shortDescription": "Oraichain is the world's first intelligent and secure solution for emerging Web3, scalable Dapps, and decentralized AI."
+        },
+        "optimism": {
+            "title": "Optimism",
+            "description": "Optimism is a Layer 2 scaling solution for Ethereum. Optimism uses advanced data compression techniques called Optimistic Rollups to speed up and cut the costs of Ethereum transactions.",
+            "shortDescription": "Optimism is a Layer 2 scaling solution for Ethereum that uses advanced data compression techniques to speed up and cut the costs of Ethereum transactions."
+        },
+        "arbitrum": {
+            "title": "Arbitrum",
+            "description": "Arbitrum is a Layer 2 scaling solution for Ethereum that enhances the capabilities of Ethereum’s smart contracts. It aims to speed up transaction times and cut fees on the Ethereum blockchain by Optimistic Rollup technology.",
+            "shortDescription": "Arbitrum is a Layer 2 scaling solution for Ethereum that enhances the capabilities of Ethereum’s smart contracts."
+        },
+        "polygon": {
+            "title": "Polygon",
+            "description": "Polygon is a decentralized layer-2 scaling solution and a multi-chain Ethereum ecosystem, called Ethereum's Internet of Blockchains. Polygon aims to overcome the limitations of Ethereum and enable developers to build scalable and user-friendly dApps with lower gas fees and faster transactions",
+            "shortDescription": "Polygon is a decentralized Ethereum layer-2 scaling solution aims to enable developers to build scalable and user-friendly dApps with lower gas fees and faster transactions"
+        },
+        "oasis": {
+            "title": "Oasis Network",
+            "description": "The Oasis Network is the first privacy-enabled blockchain platform for open finance and a responsible data economy. Combined with its high throughput and secure architecture, the Oasis Network is able to power private, scalable DeFi, revolutionizing Open Finance and expanding it beyond traders and early adopters to a mass market. Its unique privacy features can not only redefine DeFi, but also create a new type of digital asset called Tokenized Data that can enable users to take control of the data they generate and earn rewards for staking it with applications — creating the first ever responsible data economy.",
+            "shortDescription": "The Oasis Network is a privacy-enabled blockchain platform for open finance and a responsible data economy."
         }
     },
     "uptime": "Uptime",
@@ -1305,5 +1325,6 @@
         }
     },
     "dontHaveEnoughFoundsForFee": "You do not have enough funds to pay the transaction fee.",
-    "asset": "asset"
+    "asset": "asset",
+    "minAmountError": "Minimum amount is {minAmount} {code}"
 }
