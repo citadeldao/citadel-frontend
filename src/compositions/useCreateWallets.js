@@ -84,7 +84,7 @@ export default function useCreateWallets() {
     );
   };
 
-  const createWallets = async (type) => {
+  const createWallets = async (type, stopRoute = true) => {
     const newWalletType = type || walletOpts.type;
 
     try {
@@ -145,7 +145,10 @@ export default function useCreateWallets() {
           type: 'warning',
           text: errorMessage,
         });
-        router.push({ name: 'AddAddress' });
+
+        if (!stopRoute) {
+          router.push({ name: 'AddAddress' });
+        }
         showModal.value = false;
         showLoader.value = false;
 

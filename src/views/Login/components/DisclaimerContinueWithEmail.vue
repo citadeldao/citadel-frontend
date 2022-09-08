@@ -24,7 +24,11 @@
     </div>
     <div class="disclaimer-with-email__guide">
       {{ $t('login.disclaimerMailGuide') }}
-      <span>{{ $t('login.disclaimerMailGuide1') }}</span>
+      <a
+        target="blank"
+        href="https://medium.com/citadel-one/how-to-log-in-to-citadel-one-anonymously-d1e0ce1d16a3"
+        >{{ $t('login.disclaimerMailGuide1') }}</a
+      >
     </div>
     <PrimaryButton
       class="disclaimer-with-email__btn"
@@ -105,6 +109,11 @@ export default {
     text-align: left;
     width: 120%;
     margin-top: 15px;
+
+    a {
+      color: #00a3ff;
+      text-decoration: none;
+    }
 
     span {
       color: #00a3ff;

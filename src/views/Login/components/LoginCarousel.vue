@@ -167,7 +167,19 @@ export default {
     }
 
     &__indicator {
-      padding: 6px;
+      // padding: 6px;
+      border: 1px solid transparent;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      margin: 0 3px;
+
+      &.is-active {
+        border: 1px solid $white;
+      }
 
       &:hover {
         button {
@@ -182,8 +194,8 @@ export default {
 
       & button {
         position: relative;
-        width: 10px;
-        height: 10px;
+        width: 13px;
+        height: 13px;
         border-radius: 50%;
         background-color: $light-green;
         opacity: 1;

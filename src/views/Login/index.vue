@@ -6,7 +6,7 @@
   </transition>
   <div v-else class="login">
     <div class="left">
-      <header class="login__header">
+      <header :class="{ confirmedAddress }" class="login__header">
         <div class="login__logo">
           <citadelLogo />
         </div>
@@ -194,14 +194,19 @@ export default {
     const loginWith = ref('');
     const connectedToWeb3 = ref(false);
     const confirmedAddress = ref(false);
+    const newAddress = ref('');
+    const newAddressNet = ref('');
 
     const { setNets, setAddress, setPublicKey, createWallets } =
       useCreateWallets();
 
     const { wallets } = useWallets();
 
-    const onAccountCreate = () => {
-      window.location.reload();
+    const onAccountCreate = async () => {
+      await redirectToWallet({
+        wallet: { address: newAddress.value, net: newAddressNet.value },
+        root: true,
+      });
     };
 
     const metamaskConnector = computed(
@@ -430,6 +435,8 @@ export default {
       connectedToWeb3.value = false;
       keplrConnector.value.disconnect();
       metamaskConnector.value.disconnect();
+
+      onUseEmail();
     };
 
     const onWeb3AddressConfirm = async () => {
@@ -441,10 +448,12 @@ export default {
       }
 
       if (loginWith.value === 'keplr') {
-        address = metamaskConnector.value.accounts[0];
         address = keplrConnector.value.accounts[0].address;
         net = keplrNetworks[0].net;
       }
+
+      newAddress.value = address;
+      newAddressNet.value = net;
 
       const { data, error, res } = await store.dispatch('auth/authWeb3', {
         address,
@@ -470,15 +479,31 @@ export default {
           store.dispatch('transactions/getMempool');
         }
 
-        setAddress(address);
-        setNets([net]);
+        const searchLoginAddress = store.getters['wallets/wallets'].find(
+          (w) => {
+            return (
+              w.address.toLowerCase() === address.toLowerCase() && w.net === net
+            );
+          }
+        );
 
-        if (walletType === WALLET_TYPES.KEPLR) {
-          setPublicKey(
-            Buffer.from(keplrConnector.value.accounts[0].pubkey).toString('hex')
-          );
+        if (!searchLoginAddress) {
+          setAddress(address);
+          setNets([net]);
+
+          if (walletType === WALLET_TYPES.KEPLR) {
+            setPublicKey(
+              Buffer.from(keplrConnector.value.accounts[0].pubkey).toString(
+                'hex'
+              )
+            );
+          }
+          createWallets(walletType, false);
         }
-        createWallets(walletType);
+        // await redirectToWallet({
+        //   wallet: { address, net },
+        //   root: true,
+        // });
       };
 
       if (loginWith.value === 'metamask') {
@@ -596,22 +621,26 @@ export default {
   display: flex;
   align-items: center;
 
+  &__header {
+    &.confirmedAddress {
+      width: 100%;
+    }
+  }
+
   .left {
-    width: 50%;
+    width: 100%;
     box-sizing: border-box;
     background-image: url('~@/assets/icons/login_bg.png');
     // background-color: #5030A0;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 50%;
-    width: 100%;
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
 
     .langs {
-      width: 700px;
       height: calc(100vh - 50px);
       background-image: url('~@/assets/icons/newLogin/langs.png');
       background-size: cover;
@@ -658,6 +687,7 @@ export default {
 
   &__form {
     width: 600px;
+    margin: 0 auto;
 
     @include lg {
       width: 500px;

@@ -166,11 +166,11 @@ export default {
 
 <style lang="scss" scoped>
 .verification {
-  width: 600px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 55px 60px 60px 60px;
+  // padding: 55px 60px 60px 60px;
   background: $white;
   // box-shadow: -10px 4px 50px rgba(0, 0, 0, 0.1);
   border-radius: 25px;
@@ -179,8 +179,8 @@ export default {
     margin-bottom: 30px;
   }
   @include md {
-    padding: 36px 36px 42px 36px;
-    width: 552px;
+    // padding: 36px 36px 42px 36px;
+    // width: 552px;
     margin-bottom: 30px;
   }
 

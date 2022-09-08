@@ -29,7 +29,7 @@
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import Select from '@/components/UI/Select';
 import { useStore } from 'vuex';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 export default {
   components: {
@@ -38,8 +38,10 @@ export default {
   },
   setup(_, { emit }) {
     const store = useStore();
-    const languages = store.getters['i18n/locales'];
+    const languages = computed(() => store.getters['i18n/locales']);
     const currentLanguage = ref(store.getters['i18n/locale']);
+
+    console.log('languages', languages);
 
     const changeLanguage = async (value) => {
       await store.dispatch('i18n/setLocale', value);

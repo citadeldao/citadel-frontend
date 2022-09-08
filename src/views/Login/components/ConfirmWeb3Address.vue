@@ -6,7 +6,9 @@
         v-html="
           isKeplr
             ? $t('login.confirmAddressTitleKeplr')
-            : $t('login.confirmAddressTitleMetamask')
+            : network === 'eth'
+            ? $t('login.confirmAddressTitleMetamaskEth')
+            : $t('login.confirmAddressTitleMetamaskBSC')
         "
       />
     </div>
