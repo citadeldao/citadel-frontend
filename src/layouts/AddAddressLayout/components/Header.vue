@@ -152,6 +152,14 @@ export default {
     const showPrivacy = ref(false);
     const showTerms = ref(false);
 
+    const metamaskConnector = computed(
+      () => store.getters['metamask/metamaskConnector']
+    );
+
+    const keplrConnector = computed(
+      () => store.getters['keplr/keplrConnector']
+    );
+
     store.dispatch('extensions/fetchExtensionsList');
     const extensionsList = computed(
       () => store.getters['extensions/extensionsList']
@@ -218,8 +226,13 @@ export default {
           removeStorage(keyStorage.value);
         }
 
+        keplrConnector.value.disconnect();
+        metamaskConnector.value.disconnect();
         router.push({ name: 'Login' });
-        window.location.reload();
+        setTimeout(() => {
+          store.dispatch('app/setLoader', false);
+        }, 1500);
+        // window.location.reload();
       }
     };
 
