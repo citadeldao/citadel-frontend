@@ -38,6 +38,19 @@
       </template>
     </div>
     <div v-if="showFilter" class="extensions__head-filter">
+      <div v-click-away="resetFilter" v-if="openFilter" class="filter-wrap">
+        <div
+          v-for="(tag, ndx) in filterItems"
+          :key="ndx"
+          class="filter-wrap__item"
+          @click="onSelectTag(tag)"
+        >
+          <div class="icon">
+            <checkSvg v-if="selectedTags.includes(tag)" />
+          </div>
+          <div class="title">{{ tag }}</div>
+        </div>
+      </div>
       <div :class="{ mobile: showMobileSearch }" class="wrap-input">
         <keep-alive class="icon">
           <component :is="searchIcon" />
@@ -63,7 +76,7 @@
           <component :is="searchIcon" />
         </keep-alive>
       </div>
-      <div v-if="false" class="filter">
+      <div class="filter" @click="openFilter = true">
         <keep-alive>
           <component :is="filterIcon" />
         </keep-alive>
@@ -74,11 +87,15 @@
 <script>
 import { ref, markRaw, watch } from 'vue';
 import closeIcon from '@/assets/icons/addAddressV2/close.svg';
+import checkSvg from '@/assets/icons/extensions/check.svg';
 
 export default {
   name: 'ExtensionsHead',
-  components: { closeIcon },
+  components: { closeIcon, checkSvg },
   props: {
+    filterItems: {
+      required: true,
+    },
     appLogo: {
       type: String,
     },
@@ -94,13 +111,28 @@ export default {
       default: false,
     },
   },
-  setup(props) {
+  setup(props, { emit }) {
     const appsIcon = ref();
     const filterIcon = ref();
     const searchIcon = ref();
     const searchAppStr = ref('');
     const showAppLogo = ref(false);
     const showMobileSearch = ref(false);
+    const selectedTags = ref([]);
+    const openFilter = ref(false);
+
+    const resetFilter = () => {
+      openFilter.value = false;
+    };
+
+    const onSelectTag = (tg) => {
+      if (selectedTags.value.includes(tg)) {
+        selectedTags.value = selectedTags.value.filter((tag) => tag !== tg);
+      } else {
+        selectedTags.value.push(tg);
+      }
+      emit('selectTags', selectedTags.value);
+    };
 
     watch(
       () => props.appLogo,
@@ -132,6 +164,10 @@ export default {
       filterIcon,
       showAppLogo,
       showMobileSearch,
+      selectedTags,
+      openFilter,
+      resetFilter,
+      onSelectTag,
     };
   },
 };
@@ -214,6 +250,56 @@ export default {
 .extensions__head-filter {
   display: flex;
   align-items: center;
+  position: relative;
+
+  .filter-wrap {
+    position: absolute;
+    right: 0;
+    top: 55px;
+    min-width: 172px;
+    min-height: 48px;
+    background: #ffffff;
+    z-index: 10;
+    padding: 10px 15px;
+    box-shadow: 0px 15px 50px rgba(80, 100, 124, 0.1),
+      0px 10px 15px rgba(80, 100, 124, 0.16);
+    border-radius: 8px;
+
+    &__item {
+      display: flex;
+      align-items: center;
+      height: 32px;
+      margin-bottom: 5px;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        background: #b8e5ff;
+        width: 16px;
+        height: 16px;
+
+        svg {
+          margin-top: -7px;
+          margin-left: 2px;
+        }
+      }
+
+      .title {
+        font-size: 14px;
+        margin-left: 10px;
+      }
+    }
+  }
 
   .wrap-input {
     position: relative;
@@ -277,9 +363,17 @@ export default {
     width: 48px;
     height: 48px;
 
+    svg {
+      fill: #f0f3fd;
+    }
+
     &:hover {
+      background: $white;
       cursor: pointer;
-      opacity: 0.7;
+
+      svg {
+        fill: #6a4bff;
+      }
     }
   }
 }
