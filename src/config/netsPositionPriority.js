@@ -1,8 +1,8 @@
 export const netsPositionPriority = [
-  'BTC',
-  'BNB',
-  'ETH',
-  'ATOM',
-  'OSMO',
-  'SCRT',
+  'btc',
+  'bsc',
+  'eth',
+  'cosmos',
+  'osmosis',
+  'secret',
 ];

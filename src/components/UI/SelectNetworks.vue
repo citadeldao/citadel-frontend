@@ -91,11 +91,11 @@ export default {
       const preferredOrder = [
         ...netsPositionPriority,
         ...networks.value
-          .filter((e) => netsPositionPriority.indexOf(e.abbr) === -1)
-          .map((e) => e.abbr),
+          .filter((e) => netsPositionPriority.indexOf(e.net) === -1)
+          .map((e) => e.net),
       ];
       let nets = networks.value.sort((a, b) => {
-        return preferredOrder.indexOf(a.abbr) - preferredOrder.indexOf(b.abbr);
+        return preferredOrder.indexOf(a.net) - preferredOrder.indexOf(b.net);
       });
       if (!keyword.value) {
         return nets;
