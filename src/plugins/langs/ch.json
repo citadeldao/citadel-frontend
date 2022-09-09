@@ -1141,6 +1141,26 @@
             "title": "Oraichain",
             "description": "作为全球首个人工智能驱动的区块链预言机和生态系统，Oraichain 现在转型为数据经济和预言机服务的高级 AI Layer 1，作为创建新一代智能合约和 Dapps 的基础层，并致力于创建一个完整的区块链人工智能生态系统。",
             "shortDescription": "Oraichain 是全球首个专注于 web3.0、规模化 dapp、去中心化 AI 的智能安全解决方案。"
+        },
+        "optimism": {
+            "title": "Optimism",
+            "description": "",
+            "shortDescription": ""
+        },
+        "arbitrum": {
+            "title": "Arbitrum",
+            "description": "",
+            "shortDescription": ""
+        },
+        "polygon": {
+            "title": "Polygon",
+            "description": "",
+            "shortDescription": ""
+        },
+        "oasis": {
+            "title": "Oasis 网络\n",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "运行时间",

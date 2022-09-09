@@ -907,7 +907,7 @@
         "confirmModalDesc2": "Ваши активы будут возвращены"
     },
     "minAmmount": "Значение должно быть больше 1",
-    "maxFloatDigits": "Не более двух знаков после запятой",
+    "maxFloatDigits": "Не более {amount} знаков после запятой",
     "emptyPassword": "Поле пароля пусто",
     "accruedDaily": "Начисляется ежедневно с 18:00 до 19:00 UTC",
     "extensions": {
@@ -1141,6 +1141,26 @@
             "title": "Oraichain",
             "description": "Являясь первым в мире оракулом на базе ИИ и экосистемой на блокчейне, Oraichain становится продвинутым ИИ первого уровня для Data Economy и сервисов Oracle, который служит основой для создания нового поколения смарт-контрактов, Dapps и создания полной экосистемы ИИ на блокчейне.",
             "shortDescription": "Oraichain - это первое в мире интеллектуальное и безопасное решение для развивающихся Web3, масштабируемых Dapps и децентрализованного AI."
+        },
+        "optimism": {
+            "title": "Optimism",
+            "description": "",
+            "shortDescription": ""
+        },
+        "arbitrum": {
+            "title": "Arbitrum",
+            "description": "",
+            "shortDescription": ""
+        },
+        "polygon": {
+            "title": "Polygon",
+            "description": "",
+            "shortDescription": ""
+        },
+        "oasis": {
+            "title": "Сеть Oasis",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "Подтверждено блоков",

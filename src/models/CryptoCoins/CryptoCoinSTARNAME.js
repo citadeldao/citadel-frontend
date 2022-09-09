@@ -5,8 +5,6 @@ export default class CryptoCoinSTARNAME extends CryptoCoin {
     super(opts);
     this.privateKeyEncoded = opts.privateKeyEncoded || null;
     this.publicKey = opts.publicKey || null;
-    this.showFrozenBalance = true;
-    this.unstakeingPerioud = '21';
     this.hasRedelegation = true;
   }
 

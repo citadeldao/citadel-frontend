@@ -551,18 +551,60 @@ export default {
       href: 'https://www.coingecko.com/en/coins/evmos',
     },
   },
-  crescent: {
+  polygon: {
     web: {
-      title: 'crescent.network',
-      href: 'https://crescent.network/',
+      title: 'polygon.technology',
+      href: 'https://polygon.technology/',
     },
     twitter: {
-      title: '@CrescentHub',
-      href: 'CrescentHub',
+      title: '@0xPolygon',
+      href: '0xPolygon',
     },
     landing: {
       title: 'Coingecko',
-      href: 'https://www.coingecko.com/en/coins/crescent-network',
+      href: 'https://www.coingecko.com/en/coins/polygon',
+    },
+  },
+  oasis: {
+    web: {
+      title: 'oasisprotocol.org',
+      href: 'https://oasisprotocol.org/',
+    },
+    twitter: {
+      title: '@OasisProtocol',
+      href: 'oasisprotocol',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/oasis-network',
+    },
+  },
+  arbitrum: {
+    web: {
+      title: 'portal.arbitrum.one',
+      href: 'https://portal.arbitrum.one/',
+    },
+    twitter: {
+      title: '@arbitrum',
+      href: 'arbitrum',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/ethereum',
+    },
+  },
+  optimism: {
+    web: {
+      title: 'optimism.io',
+      href: 'https://www.optimism.io/',
+    },
+    twitter: {
+      title: '@optimismFND',
+      href: 'optimismFND',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/ethereum',
     },
   },
 };

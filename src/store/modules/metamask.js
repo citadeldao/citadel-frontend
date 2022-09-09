@@ -1,4 +1,5 @@
 import MetamaskConnector from '@/models/Services/Metamask';
+import { metamaskNets } from '@/config/availableNets';
 
 export default {
   namespaced: true,
@@ -16,7 +17,7 @@ export default {
     async connectToMetamask({ state }) {
       await state.metamaskConnector.connect();
 
-      if (!['bsc', 'eth'].includes(state.metamaskConnector.network)) {
+      if (!metamaskNets.includes(state.metamaskConnector.network)) {
         await state.metamaskConnector.changeNetwork();
       }
     },
