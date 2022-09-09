@@ -184,6 +184,10 @@ export default {
   border-radius: 16px 16px 0px 0px;
   min-height: 80px;
 
+  &.isFullScreen {
+    padding: 0;
+  }
+
   .extensions__close {
     display: flex;
     align-items: center;
@@ -195,7 +199,7 @@ export default {
     border: 3px solid #fff;
     background: #6b93c0;
     position: absolute;
-    right: 30px;
+    right: -2px;
     top: 25px;
     z-index: 100;
 

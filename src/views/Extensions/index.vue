@@ -449,7 +449,8 @@ export default {
     };
 
     const appBackground = computed(() =>
-      currentApp.value && !fullScreenAppIds.value.includes(selectedApp.value.id)
+      currentApp.value &&
+      !fullScreenAppIds.value.includes(+selectedApp.value.id)
         ? currentApp.value.background
         : null
     );
@@ -477,7 +478,7 @@ export default {
       showAppInfoModal.value = false;
       currentApp.value = null;
 
-      if (fullScreenAppIds.value.includes(selectedApp.value.id)) {
+      if (fullScreenAppIds.value.includes(+selectedApp.value.id)) {
         showFullScreen.value = true;
         hideArtefactsForFullScreen();
       }
@@ -586,7 +587,7 @@ export default {
               findTag = true;
             }
           });
-          return findTag;
+          return !findTag;
         });
       }
 
@@ -1055,7 +1056,7 @@ export default {
     border-radius: 16px;
 
     &__app-wrap {
-      margin-top: 35px;
+      // margin-top: 35px;
       position: relative;
       border-radius: 20px;
 
