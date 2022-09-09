@@ -27,6 +27,7 @@
       <!-- CONFIRM RESOTRE ONESEED -->
       <Modal v-if="showAppInfoModal">
         <ModalContent
+          show-success-icon
           v-click-away="
             () => {
               showAppInfoModal ? (showAppInfoModal = false) : null;
@@ -577,38 +578,52 @@ export default {
     };
 
     const appsFiltered = computed(() => {
-      if (!searchStr.value.length) {
-        if (!selectedTags.value.length) return extensionsList.value;
-
-        return extensionsList.value.filter((app) => {
-          let findTag;
-          app.tags.forEach((tag) => {
-            if (selectedTags.value.includes(tag.name)) {
-              findTag = true;
-            }
-          });
-          return !findTag;
+      const baseList = extensionsList.value.filter((app) => {
+        let findTag;
+        app.tags.forEach((tag) => {
+          if (filterItems.value.includes(tag.name)) {
+            findTag = true;
+          }
         });
+        return !findTag;
+      });
+
+      if (!searchStr.value.length) {
+        if (!selectedTags.value.length) {
+          return baseList;
+        }
+
+        return extensionsList.value
+          .filter((app) => {
+            let findTag;
+            app.tags.forEach((tag) => {
+              if (filterItems.value.includes(tag.name)) {
+                findTag = true;
+              }
+            });
+            return findTag;
+          })
+          .concat(baseList);
       }
 
       if (!selectedTags.value.length) {
-        return extensionsList.value.filter((app) =>
+        return baseList.filter((app) =>
           app.name.toLowerCase().includes(searchStr.value)
         );
       }
 
-      return extensionsList.value.filter((app) => {
-        let findTag;
-        app.tags.forEach((tag) => {
-          if (
-            selectedTags.value.includes(tag.name) &&
-            app.name.toLowerCase().includes(searchStr.value)
-          ) {
-            findTag = true;
-          }
-        });
-        return findTag;
-      });
+      return extensionsList.value
+        .filter((app) => {
+          let findTag;
+          app.tags.forEach((tag) => {
+            if (filterItems.value.includes(tag.name)) {
+              findTag = true;
+            }
+          });
+          return findTag;
+        })
+        .concat(baseList)
+        .filter((app) => app.name.toLowerCase().includes(searchStr.value));
     });
 
     /* watch(() => messageForSign.value, async () => {

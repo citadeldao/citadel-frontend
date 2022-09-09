@@ -906,6 +906,7 @@
     "emptyPassword": "Empty password",
     "accruedDaily": "Accrued daily from 6-7 pm UTC",
     "extensions": {
+        "showMore": "Show more",
         "showLabel": "Show",
         "headerTitle": "Extensions Store",
         "headerDescription": "Use your favorite dApps, DeFi applications and extensions natively!",

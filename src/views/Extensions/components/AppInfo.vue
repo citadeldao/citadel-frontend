@@ -5,13 +5,34 @@
         <div class="rows">
           <div class="column">
             <div class="title">
-              {{ $t('extensions.networks') }}
+              <div v-if="showAllNetworks" class="networks-wrap">
+                <div
+                  v-for="(network, ndx) in app.networks.slice(6)"
+                  :key="ndx"
+                  class="network-item"
+                >
+                  {{
+                    $store.getters['networks/configByNet'](
+                      network.toLowerCase()
+                    ).name
+                  }}
+                </div>
+              </div>
+              <div class="label">{{ $t('extensions.networks') }}</div>
+              <span
+                v-if="app.networks.length > 6"
+                class="showmore"
+                @mouseover="onMouseOver"
+                @mouseleave="onMouseLeave"
+              >
+                {{ $t('extensions.showMore') }}
+              </span>
             </div>
             <Networks :coins="app.networks" />
           </div>
           <div class="column mt-20">
             <div class="title">
-              {{ $t('extensions.description') }}
+              <div class="label">{{ $t('extensions.description') }}</div>
             </div>
             <div
               class="description"
@@ -22,7 +43,7 @@
       </div>
       <div v-if="app.url_video" class="column mt-20">
         <div class="title">
-          {{ $t('extensions.guide') }}
+          <div class="label">{{ $t('extensions.guide') }}</div>
         </div>
         <div class="video">
           <iframe
@@ -39,7 +60,7 @@
     <div v-if="app.what_you_can" class="main-info mt-15">
       <div class="column">
         <div class="title">
-          {{ $t('extensions.youCan') }}
+          <div class="label">{{ $t('extensions.youCan') }}</div>
         </div>
         <YouCan :items="[app.what_you_can]" />
       </div>
@@ -74,13 +95,25 @@ export default {
   },
   setup() {
     const successIcon = ref();
+    const showAllNetworks = ref(false);
 
     import(`@/assets/icons/extensions/success.svg`).then((val) => {
       successIcon.value = markRaw(val.default);
     });
 
+    const onMouseOver = () => {
+      showAllNetworks.value = true;
+    };
+
+    const onMouseLeave = () => {
+      showAllNetworks.value = false;
+    };
+
     return {
       successIcon,
+      showAllNetworks,
+      onMouseOver,
+      onMouseLeave,
     };
   },
 };
@@ -128,10 +161,61 @@ export default {
       }
 
       .title {
+        position: relative;
+        width: 500px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         margin-bottom: 15px;
-        font-family: 'Panton_SemiBold';
-        font-size: 20px;
-        color: $black;
+
+        .networks-wrap {
+          position: absolute;
+          z-index: 10;
+          right: 0;
+          top: 30px;
+          background: #ffffff;
+          box-shadow: 0px 4px 25px rgba(63, 54, 137, 0.25);
+          border-radius: 6px;
+          width: 287px;
+          display: flex;
+          flex-wrap: wrap;
+          min-height: 135px;
+          max-height: 320px;
+          padding: 10px;
+          box-sizing: border-box;
+
+          .network-item {
+            width: 130px;
+            color: #0a2778;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+
+            &:before {
+              content: '';
+              display: inline-block;
+              width: 2px;
+              height: 2px;
+              border-radius: 50%;
+              background: #0a2778;
+              margin: 0 10px;
+            }
+          }
+        }
+
+        .label {
+          font-family: 'Panton_SemiBold';
+          font-size: 20px;
+          color: $black;
+        }
+
+        .showmore {
+          color: #54478f;
+          font-size: 14px;
+          border-bottom: 1px dashed #54478f;
+          cursor: pointer;
+        }
       }
 
       .description {
