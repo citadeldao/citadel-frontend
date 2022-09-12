@@ -27,7 +27,7 @@
         :current-page="currentPage"
         @current-change="setCurrentPage"
       /> -->
-      <template v-if="networksAmount !== displayData.length">
+      <template v-if="networksAmount !== displayData.length && !isUserMnemonic">
         <div class="more" @click="showAllNetworks">
           <div>{{ $t('addToOneSeed.moreNetworks') }}</div>
           <BackButton :is-down="true" data-qa="More networks" />
@@ -85,15 +85,17 @@ export default {
       }))
     );
 
-    const keyword = ref('');
+    const keyword = ref(''); //search networks
     const isDisabledBtn = ref(false);
     const displayData = computed(() => {
+      //сначала идут названия сетей определённые в netsPositionPriority, затем оставшиеся
       const preferredOrder = [
         ...netsPositionPriority,
         ...networks.value
           .filter((e) => netsPositionPriority.indexOf(e.net) === -1)
           .map((e) => e.net),
       ];
+      //сортировка по алфавиту
       let nets = networks.value.sort((a, b) => {
         return preferredOrder.indexOf(a.net) - preferredOrder.indexOf(b.net);
       });
@@ -112,6 +114,7 @@ export default {
     };
     const { checked, addItem, removeItem, checkedItems } = useCheckItem();
     const prepareRemoveItem = (id) => {
+      //удаляем или нет элемент, удаляем если не добавлен(даже если выбран по умолчанию)
       const nonRemovableItem = displayData.value.find((displayedNet) => {
         const findedCheckedNetYetAdded = checkedNetYetAdded.find(
           (findedCheckedNetYetAddedItem) => {
@@ -163,6 +166,7 @@ export default {
       checkedItemStatus();
     };
     const prepareSelectedItems = () => {
+      //добавляем айтемы по умолчанию из массива сеток
       for (const key in displayData.value) {
         const foundItem = wallets.value.find(
           (e) => e.net === displayData.value[key].net
@@ -183,10 +187,9 @@ export default {
         isDisabledBtn.value = true;
       }
     };
+    //состояние кнопки
     const checkedItemStatus = () => {
-      if (checkedNetYetAdded.length === checkedItems.value.length) {
-        return (isDisabledBtn.value = true);
-      }
+      disabledAllItems();
       isDisabledBtn.value = false;
     };
     onMounted(() => {
@@ -207,6 +210,7 @@ export default {
       onCheck,
       networksAmount,
       isDisabledBtn,
+      isUserMnemonic,
     };
   },
 };
