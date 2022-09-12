@@ -189,7 +189,9 @@ export default {
     };
     //состояние кнопки
     const checkedItemStatus = () => {
-      disabledAllItems();
+      if (checkedNetYetAdded.length === checkedItems.value.length) {
+        return (isDisabledBtn.value = true);
+      }
       isDisabledBtn.value = false;
     };
     onMounted(() => {
