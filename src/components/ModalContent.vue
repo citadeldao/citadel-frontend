@@ -46,6 +46,7 @@
               :bg-color="primaryMainBgColor"
               :hover-bg-color="primaryMainHoverBgColor"
               :disabled="disabled"
+              :loading="loading"
               @click.stop="clickHandler"
             >
               {{ buttonText }}
@@ -54,6 +55,7 @@
             <PrimaryButton
               v-else
               :disabled="disabled"
+              :loading="loading"
               @click.stop="clickHandler"
             >
               {{ buttonText }}
@@ -78,6 +80,7 @@
             v-if="submitButton"
             ref="primaryButton"
             :disabled="disabled"
+            :loading="loading"
             :data-qa="`${$t(buttonText).replace(' ', '-')}`"
             @click.stop="clickHandler"
           >
@@ -103,6 +106,10 @@ export default {
   components: { PrimaryButton, TextButton, closeIcon, successIcon },
   props: {
     hideClose: {
+      type: Boolean,
+      default: false,
+    },
+    loading: {
       type: Boolean,
       default: false,
     },

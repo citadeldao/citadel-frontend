@@ -128,6 +128,7 @@
         type="action"
         :internal-icon="selectedApp.logo"
         :disabled="confirmModalDisabled"
+        :loading="signLoading"
         class="modal-content"
         @close="confirmModalCloseHandlerWithRequest"
         @buttonClick="confirmClickHandler"
@@ -328,6 +329,7 @@ export default {
     Input,
   },
   setup() {
+    const signLoading = ref(false);
     const showFullScreen = ref(false);
     const assetsDomain = ref('https://extensions-admin-test.3ahtim54r.ru/api/');
     const store = useStore();
@@ -812,6 +814,8 @@ export default {
     };
 
     const confirmClickHandler = async () => {
+      signLoading.value = true;
+
       if (
         signerWallet.value &&
         signerWallet.value.type === WALLET_TYPES.KEPLR
@@ -831,12 +835,13 @@ export default {
             signerWallet.value.address,
             { preferNoSetFee: true }
           );
+          signLoading.value = false;
         } catch (err) {
           notify({
             type: 'warning',
             text: JSON.stringify(err),
           });
-
+          signLoading.value = false;
           return;
         }
 
@@ -894,8 +899,10 @@ export default {
           confirmModalDisabled.value = false;
           confirmModalCloseHandler();
           showSuccessModal.value = true;
+          signLoading.value = false;
           sendSuccessMSG();
         } else {
+          signLoading.value = false;
           notify({
             type: 'warning',
             text: data.error,
@@ -924,7 +931,9 @@ export default {
             message: extensionsSocketTypes.messages.failed,
             type: extensionsSocketTypes.types.transaction,
           });
+          signLoading.value = false;
         } else {
+          signLoading.value = false;
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;
           successTx.value = [metamaskResult.txHash];
@@ -949,6 +958,7 @@ export default {
         ) &&
         incorrectPassword.value
       ) {
+        signLoading.value = false;
         return;
       }
 
@@ -973,6 +983,7 @@ export default {
           typeof result.data[0] === 'string' &&
           [64, 66].includes(result.data[0].length)
         ) {
+          signLoading.value = false;
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;
           successTx.value = result.data;
@@ -981,6 +992,7 @@ export default {
           showSuccessModal.value = true;
           sendSuccessMSG();
         } else {
+          signLoading.value = false;
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;
           confirmModalDisabled.value = false;
@@ -991,6 +1003,7 @@ export default {
           });
         }
       } catch (e) {
+        signLoading.value = false;
         store.dispatch('extensions/sendCustomMsg', {
           token: currentAppInfo.value.token,
           message: extensionsSocketTypes.messages.failed,
@@ -1040,6 +1053,7 @@ export default {
       confirmModalCloseHandlerWithRequest,
       confirmClickHandler,
       filterItems,
+      signLoading,
 
       //ledgers
       showLedgerConnect,
