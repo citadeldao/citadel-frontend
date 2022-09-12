@@ -228,10 +228,14 @@ export default {
 
         keplrConnector.value.disconnect();
         metamaskConnector.value.disconnect();
-        router.push({ name: 'Login' });
+
+        setTimeout(() => {
+          router.push({ name: 'Login' });
+        }, 1500);
+
         setTimeout(() => {
           store.dispatch('app/setLoader', false);
-        }, 1500);
+        }, 1000);
         // window.location.reload();
       }
     };

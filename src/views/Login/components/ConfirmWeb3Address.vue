@@ -1,10 +1,17 @@
 <template>
   <div class="confirm-web3-address">
     <div class="confirm-web3-address__notify">
-      <warningSvg width="40" height="40" class="icon" />
+      <warningSvg
+        width="40"
+        height="40"
+        :class="{ wrongNetwork: !supportNetworks.includes(network) }"
+        class="icon"
+      />
       <div
         v-html="
-          isKeplr
+          !supportNetworks.includes(network)
+            ? $t('metamask.changeNetwork')
+            : isKeplr
             ? $t('login.confirmAddressTitleKeplr')
             : network === 'eth'
             ? $t('login.confirmAddressTitleMetamaskEth')
@@ -13,13 +20,18 @@
       />
     </div>
     <div class="confirm-web3-address__address">
-      <div v-if="rerenderIcon" class="icon">
+      <div
+        v-if="rerenderIcon && supportNetworks.includes(network)"
+        class="icon"
+      >
         <keep-alive>
           <component :is="icon" />
         </keep-alive>
       </div>
       <div class="info">
-        <div class="network">{{ name }}</div>
+        <div class="network">
+          {{ supportNetworks.includes(network) ? name : '' }}
+        </div>
         <div class="address">{{ address }}</div>
       </div>
       <div v-if="isKeplr" class="refresh" @click="$emit('refreshKeplr')">
@@ -65,6 +77,7 @@ export default {
   setup(props) {
     const icon = ref();
     const rerenderIcon = ref(true);
+    const supportNetworks = ref(['eth', 'bsc']);
 
     import(`@/assets/icons/token/${props.network}.svg`).then((val) => {
       icon.value = markRaw(val.default);
@@ -82,6 +95,7 @@ export default {
     return {
       icon,
       rerenderIcon,
+      supportNetworks,
     };
   },
 };
@@ -164,6 +178,10 @@ export default {
 
     .icon {
       width: 70px;
+
+      &.wrongNetwork {
+        width: 45px;
+      }
     }
 
     div {
