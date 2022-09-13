@@ -1022,18 +1022,32 @@ export default {
             extensionsSocketTypes.types.execute
         ) {
           showConfirmModalLoading.value = true;
-          // execute contract
-          const response = await citadel.executeContract(
-            signerWallet.value.id,
-            {
+
+          let response = null;
+          if (Array.isArray(extensionTransactionForSign.value.messageScrt)) {
+            response = await citadel.executeMessageCollection(
+              signerWallet.value.id,
+              extensionTransactionForSign.value.messageScrt,
+              {
+                privateKey:
+                  password.value &&
+                  signerWallet.value.getPrivateKeyDecoded(password.value),
+                derivationPath: signerWallet.value.derivationPath,
+              }
+            );
+            // execute message collections
+          } else {
+            // execute contract
+            response = await citadel.executeContract(signerWallet.value.id, {
               privateKey:
                 password.value &&
                 signerWallet.value.getPrivateKeyDecoded(password.value),
               proxy: false,
               derivationPath: signerWallet.value.derivationPath,
               ...extensionTransactionForSign.value.messageScrt,
-            }
-          );
+            });
+          }
+
           // send success message to app
           if (response?.data) {
             confirmModalDisabled.value = false;

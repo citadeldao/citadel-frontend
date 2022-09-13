@@ -65,7 +65,7 @@ export async function socketEventHandler({ eventName, data }) {
           'extensions/SET_TRANSACTION_FOR_SIGN',
           {
             transaction: {},
-            address: data.message.sender,
+            address: data.message.sender || data.message[0]?.sender,
             net: 'secret',
             messageScrt: data.message,
             type: data.type,
