@@ -35,7 +35,7 @@
           </div>
           <div>{{ address }}</div>
         </div>
-        <div class="field">
+        <div class="field" v-if="!isKeplrWallet">
           <div class="fieldName">
             {{ $t('fee') }}
           </div>
@@ -72,7 +72,7 @@
           {{ $t(`confirm`) }}
         </PrimaryButton>
       </div>
-      <div class="goToImportVk">
+      <div class="goToImportVk" v-if="!isKeplrWallet">
         {{ $t('viewingKey.iHaveVk') }}
         &nbsp;
         <span @click="goToImportVk">{{ $t('import') }}</span>
