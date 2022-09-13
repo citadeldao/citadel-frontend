@@ -185,7 +185,11 @@
         </div>
       </div>
       <div class="send__button">
-        <PrimaryButton :disabled="disabledSend" data-qa="send__send-button">
+        <PrimaryButton
+          :loading="prepareLoading"
+          :disabled="disabledSend"
+          data-qa="send__send-button"
+        >
           {{ $t('send') }}
         </PrimaryButton>
       </div>
@@ -461,6 +465,7 @@ export default {
   },
   emits: ['prepareClaim', 'prepareXctClaim'],
   setup(props) {
+    const loadingSign = ref(false);
     const showSuccessModal = ref(false);
     const { t } = useI18n();
     const isSendToAnotherNetwork = ref(false);
@@ -979,6 +984,7 @@ export default {
           clearTxData();
         }
       }
+      loadingSign.value = true;
 
       // metamask, ...
       if (currentWalletType.value === WALLET_TYPES.METAMASK) {
@@ -987,11 +993,13 @@ export default {
           await metamaskConnector.value.sendMetamaskTransaction(rawTx.value);
 
         if (metamaskResult.error) {
+          loadingSign.value = false;
           notify({
             type: 'warning',
             text: metamaskResult.error,
           });
         } else {
+          loadingSign.value = false;
           showConfirmModal.value = false;
           showSuccessModal.value = true;
           txHash.value = [metamaskResult.txHash];
@@ -1014,7 +1022,9 @@ export default {
             props.currentWallet.address,
             { preferNoSetFee: true }
           );
+          loadingSign.value = false;
         } catch (err) {
+          loadingSign.value = false;
           notify({
             type: 'warning',
             text: JSON.stringify(err),
@@ -1071,11 +1081,13 @@ export default {
         });
 
         if (data.ok) {
+          loadingSign.value = false;
           isLoading.value = false;
           showConfirmModal.value = false;
           showSuccessModal.value = true;
           txHash.value = [data.data.txhash];
         } else {
+          loadingSign.value = false;
           notify({
             type: 'warning',
             text: data.error,
@@ -1112,7 +1124,9 @@ export default {
             showConfirmLedgerModal.value = false;
             showConfirmModal.value = false;
             showSuccessModal.value = true;
+            loadingSign.value = false;
           } catch (e) {
+            loadingSign.value = false;
             if (!showConfirmModal.value) {
               ledgerErrorHandler(e);
               showConfirmLedgerModal.value = false;
@@ -1125,12 +1139,14 @@ export default {
           await signAndSendTransfer(tx, password.value, {
             currentToken: props.currentToken,
           });
+          loadingSign.value = false;
           password.value = '';
           showConfirmModal.value = false;
           showSuccessModal.value = true;
           isLoading.value = false;
         }
       } catch (e) {
+        loadingSign.value = false;
         console.error(e);
       }
     };
@@ -1269,6 +1285,7 @@ export default {
       iostFee,
       adding,
       currentWalletType,
+      prepareLoading,
       // bridge
       selectBridgeNetwork,
       bridgeTargetNet,
