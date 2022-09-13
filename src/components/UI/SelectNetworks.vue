@@ -3,7 +3,7 @@
     <div class="select-networks__networks">
       <Input
         id="assetsSearch"
-        v-model="keyword"
+        @input="handleKeyword"
         :label="$t('searchNetworks')"
         type="text"
         icon="loop"
@@ -27,8 +27,8 @@
         :current-page="currentPage"
         @current-change="setCurrentPage"
       /> -->
-      <template v-if="networksAmount !== displayData.length && !isUserMnemonic">
-        <div class="more" @click="showAllNetworks">
+      <template v-if="networksAmount !== displayData.length">
+        <div v-if="!keyword" class="more" @click="handleClickMore">
           <div>{{ $t('addToOneSeed.moreNetworks') }}</div>
           <BackButton :is-down="true" data-qa="More networks" />
         </div>
@@ -86,6 +86,7 @@ export default {
     );
 
     const keyword = ref(''); //search networks
+    let isShowMoreClicked = false; //чтобы не сбрасывалось networksAmount при поиске
     const isDisabledBtn = ref(false);
     const displayData = computed(() => {
       //сначала идут названия сетей определённые в netsPositionPriority, затем оставшиеся
@@ -194,6 +195,20 @@ export default {
       }
       isDisabledBtn.value = false;
     };
+    const handleClickMore = () => {
+      showAllNetworks();
+      isShowMoreClicked = true;
+    };
+    const handleKeyword = (value) => {
+      keyword.value = value;
+      if (value) {
+        showAllNetworks();
+      } else if (!isUserMnemonic.value && !isShowMoreClicked) {
+        networksAmount.value = 6;
+      } else {
+        showAllNetworks();
+      }
+    };
     onMounted(() => {
       prepareSelectedItems();
       disabledAllItems();
@@ -210,9 +225,10 @@ export default {
       showAllNetworks,
       prepareRemoveItem,
       onCheck,
+      handleClickMore,
+      handleKeyword,
       networksAmount,
       isDisabledBtn,
-      isUserMnemonic,
     };
   },
 };
