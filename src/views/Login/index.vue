@@ -518,7 +518,7 @@ export default {
 
       if (loginWith.value === 'metamask') {
         const metamaskResult = await metamaskConnector.value.signMessage(
-          res,
+          res.message,
           address
         );
 
@@ -542,7 +542,7 @@ export default {
       if (loginWith.value === 'keplr') {
         if (data) {
           const keplrResult = await keplrConnector.value.sendKeplrTransaction(
-            res,
+            res.message,
             address,
             {
               preferNoSetFee: true,
