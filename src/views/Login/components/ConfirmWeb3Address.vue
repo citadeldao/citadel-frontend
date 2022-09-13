@@ -4,12 +4,12 @@
       <warningSvg
         width="40"
         height="40"
-        :class="{ wrongNetwork: !supportNetworks.includes(network) }"
+        :class="{ wrongNetwork: !supportNetworks }"
         class="icon"
       />
       <div
         v-html="
-          !supportNetworks.includes(network)
+          !supportNetworks
             ? $t('metamask.changeNetwork')
             : isKeplr
             ? $t('login.confirmAddressTitleKeplr')
@@ -20,17 +20,14 @@
       />
     </div>
     <div class="confirm-web3-address__address">
-      <div
-        v-if="rerenderIcon && supportNetworks.includes(network)"
-        class="icon"
-      >
+      <div v-if="rerenderIcon && supportNetworks" class="icon">
         <keep-alive>
           <component :is="icon" />
         </keep-alive>
       </div>
       <div class="info">
         <div class="network">
-          {{ supportNetworks.includes(network) ? name : '' }}
+          {{ supportNetworks ? name : '' }}
         </div>
         <div class="address">{{ address }}</div>
       </div>
@@ -49,7 +46,7 @@
   </div>
 </template>
 <script>
-import { markRaw, ref, watch } from 'vue';
+import { markRaw, ref, watch, computed } from 'vue';
 import warningSvg from '@/assets/icons/newLogin/warning.svg';
 import refreshSvg from '@/assets/icons/newLogin/refresh.svg';
 import PrimaryButton from '@/components/UI/PrimaryButton';
@@ -77,7 +74,14 @@ export default {
   setup(props) {
     const icon = ref();
     const rerenderIcon = ref(true);
-    const supportNetworks = ref(['eth', 'bsc']);
+    const metamaskNetworks = ref(['eth', 'bsc']);
+
+    const supportNetworks = computed(() => {
+      if (props.address.startsWith('0x') && props.address.length === 42) {
+        return metamaskNetworks.value.includes(props.network);
+      }
+      return true;
+    });
 
     import(`@/assets/icons/token/${props.network}.svg`).then((val) => {
       icon.value = markRaw(val.default);
