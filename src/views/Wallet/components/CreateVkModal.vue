@@ -296,15 +296,15 @@ export default {
       isConfirmModalLoading.value = true;
       let isError = false;
 
-      if (
-        passwordError.value &&
-        !isHardwareWallet(props.currentWallet.type) &&
-        !isKeplrWallet.value
-      ) {
-        inputError.value = passwordError.value;
-        isConfirmModalLoading.value = false;
-        isError = true;
-      }
+      // if (
+      //   passwordError.value &&
+      //   !isHardwareWallet(props.currentWallet.type) &&
+      //   !isKeplrWallet.value
+      // ) {
+      //   inputError.value = passwordError.value;
+      //   isConfirmModalLoading.value = false;
+      //   isError = true;
+      // }
 
       if (!ivk.value) {
         ivkInputError.value = t('viewingKey.incorrectKey');
