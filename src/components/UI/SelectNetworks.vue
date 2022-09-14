@@ -128,12 +128,17 @@ export default {
         );
         return displayedNet.net === findedCheckedNetYetAdded;
       });
-      if (nonRemovableItem) {
+      if (
+        nonRemovableItem &&
+        wallets.value.find((e) => e.net === nonRemovableItem.net).type ===
+          WALLET_TYPES.ONE_SEED
+      ) {
         removeItem(id, true);
-        return checkedItemStatus();
+        return checkedBtnStatus();
       }
       removeItem(id);
-      checkedItemStatus();
+      checkedBtnStatus();
+      // disabledAllItems();
     };
     const checkedNetYetAdded = [];
     const clickHandler = () => {
@@ -164,7 +169,7 @@ export default {
     };
     const onCheck = (e) => {
       addItem(e);
-      checkedItemStatus();
+      checkedBtnStatus();
     };
     const prepareSelectedItems = () => {
       //добавляем айтемы по умолчанию из массива сеток
@@ -173,8 +178,16 @@ export default {
           (e) => e.net === displayData.value[key].net
         );
         if (foundItem) {
-          addItem(+displayData.value[key].id);
-          checkedNetYetAdded.push(displayData.value[key].net);
+          if (
+            foundItem.type === WALLET_TYPES.PUBLIC_KEY &&
+            netsPositionPriority.indexOf(displayData.value[key].net) !== -1
+          ) {
+            addItem(displayData.value[key].id);
+            checkedNetYetAdded.push(displayData.value[key].net);
+          } else if (foundItem.type !== WALLET_TYPES.PUBLIC_KEY) {
+            addItem(displayData.value[key].id);
+            checkedNetYetAdded.push(displayData.value[key].net);
+          }
         } else if (
           netsPositionPriority.indexOf(displayData.value[key].net) !== -1 &&
           !wallets.value.length
@@ -183,17 +196,23 @@ export default {
         }
       }
     };
-    const disabledAllItems = () => {
-      if (checkedNetYetAdded.length === checkedItems.value.length) {
-        isDisabledBtn.value = true;
-      }
-    };
     //состояние кнопки
-    const checkedItemStatus = () => {
-      if (checkedNetYetAdded.length === checkedItems.value.length) {
-        return (isDisabledBtn.value = true);
+    const checkedBtnStatus = () => {
+      const checkedItemsNets = [];
+      for (const displayItem of displayData.value) {
+        if (checkedItems.value.findIndex((e) => e === displayItem.id) !== -1) {
+          if (checkedItemsNets.length >= checkedNetYetAdded.length) {
+            return (isDisabledBtn.value = false);
+          }
+          checkedItemsNets.push(displayItem.net);
+        }
       }
-      isDisabledBtn.value = false;
+      for (const iterator of checkedNetYetAdded) {
+        if (checkedItemsNets.findIndex((e) => e === iterator) === -1) {
+          return (isDisabledBtn.value = false);
+        }
+      }
+      return (isDisabledBtn.value = true);
     };
     const handleClickMore = () => {
       showAllNetworks();
@@ -211,7 +230,7 @@ export default {
     };
     onMounted(() => {
       prepareSelectedItems();
-      disabledAllItems();
+      checkedBtnStatus();
       if (isUserMnemonic.value) showAllNetworks();
     });
     return {
