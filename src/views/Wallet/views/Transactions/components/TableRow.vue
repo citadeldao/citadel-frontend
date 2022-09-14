@@ -16,10 +16,7 @@
           v-if="transaction.view && transaction.view.length > 1"
           class="table-row__type-block-inner-amount"
         >
-          {{
-            transaction.view.filter((t) => t.components && t.components.length)
-              .length
-          }}
+          {{ transaction.view.length }}
         </div>
       </div>
     </td>
@@ -227,18 +224,28 @@ export default {
     });
     const formatedValue = computed(() => {
       if (!props.transaction.view) return 0;
-      const findType = props.transaction.view[0].components.find(
-        (w) => w.type === 'amount'
-      );
+      let findType = 0;
+      props.transaction.view.forEach((v) => {
+        v.components.forEach((w) => {
+          if (w.type === 'amount') {
+            findType = w;
+          }
+        });
+      });
       return BigNumber(findType?.value?.text || 0).toNumber();
     });
 
     const formatedValueSymbol = computed(() => {
       if (!props.transaction.view) return '';
-      const findType = props.transaction.view[0].components.find(
-        (w) => w.type === 'amount'
-      );
-      return findType.value.symbol;
+      let findType = 0;
+      props.transaction.view.forEach((v) => {
+        v.components.forEach((w) => {
+          if (w.type === 'amount') {
+            findType = w;
+          }
+        });
+      });
+      return findType?.value?.symbol || '';
     });
 
     const currentTransaction = ref({

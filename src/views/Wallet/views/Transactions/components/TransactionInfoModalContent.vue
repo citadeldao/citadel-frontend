@@ -9,7 +9,7 @@
         :class="{ empty: !item.components?.length }"
         class="inner-tx__view-item"
       >
-        <template v-if="item.components && item.components.length">
+        <template v-if="item.components">
           <div class="icon-type">
             <claimIcon
               v-if="item.type.toLowerCase() === 'claim'"
@@ -193,7 +193,7 @@ $blue-dark: #262b61;
       &.empty {
         border: none;
         padding: 0;
-        margin: 0;
+        margin: 20px 0;
       }
 
       .title {

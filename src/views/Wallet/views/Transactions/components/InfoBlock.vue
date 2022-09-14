@@ -93,10 +93,16 @@ export default {
 
     const formatedValueSymbol = computed(() => {
       if (!props.info.view) return '';
-      const findType = props.info.view[0].components.find(
-        (w) => w.type === 'amount'
-      );
-      return findType.value.symbol;
+
+      let findType = 0;
+      props.info.view.forEach((v) => {
+        v.components.forEach((w) => {
+          if (w.type === 'amount') {
+            findType = w;
+          }
+        });
+      });
+      return findType?.value?.symbol || '';
     });
 
     const setComment = async () => {
