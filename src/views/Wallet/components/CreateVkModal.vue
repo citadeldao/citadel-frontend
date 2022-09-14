@@ -400,8 +400,16 @@ export default {
         } else {
           isConfirmModalLoading.value = false;
           showConfirmModal.value = false;
-          clearLedgerModals();
+          // clearLedgerModals();
           showConfirmLedgerModal.value = true;
+          // for ledger catch sign finish event and then show loader until set VK is completed
+          citadel.addEventListener('ledgerSignFinished', () => {
+            showConfirmModal.value = true;
+            showConfirmLedgerModal.value = false;
+            isConfirmModalLoading.value = true;
+            // remove listener
+            citadel.addEventListener('ledgerSignFinished', () => {});
+          });
         }
 
         const { error: resError, data } = await citadel.setViewingKey(
@@ -414,7 +422,7 @@ export default {
           }
         );
 
-        showConfirmLedgerModal.value = false;
+        // showConfirmLedgerModal.value = false;
         error = resError;
         transactionHash = data?.transactionHash;
         vk = data?.viewingKey;
