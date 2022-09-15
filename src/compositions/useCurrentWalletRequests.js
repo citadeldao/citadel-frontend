@@ -2,6 +2,7 @@ import { ref, computed } from 'vue';
 import store from '@/store';
 import { pickKeys } from '@/utils/object';
 import CryptoCoin from '@/models/CryptoCoin';
+import BigNumber from 'bignumber.js';
 
 export default function useCurrentWalletRequests() {
   const currentWallet = computed(() => store.getters['wallets/currentWallet']);
@@ -12,6 +13,7 @@ export default function useCurrentWalletRequests() {
   const iostFee = ref();
   const adding = ref();
   const resMaxAmount = ref();
+  const l1Fee = ref(0);
 
   const getFees = async () => {
     if (wallet.value.hasFee) {
@@ -34,6 +36,16 @@ export default function useCurrentWalletRequests() {
     }
   };
 
+  const formatedFee = computed(() => {
+    const data = { ...fees.value };
+    for (const item in data) {
+      fees.value[item].fee = BigNumber(fees.value[item].fee)
+        .plus(l1Fee.value || 0)
+        .toNumber();
+    }
+    return data;
+  });
+
   const balance = ref(null);
   const balanceError = ref(null);
   const getDelegationBalance = async () => {
@@ -54,6 +66,7 @@ export default function useCurrentWalletRequests() {
       walletId: wallet.value.id,
       options,
     });
+    l1Fee.value = data.l1Fee || 0;
     rawTx.value = data;
     rawTxError.value = error;
   };
@@ -86,7 +99,7 @@ export default function useCurrentWalletRequests() {
   };
 
   return {
-    fees,
+    formatedFee,
     feesError,
     getFees,
     balance,

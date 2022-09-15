@@ -139,7 +139,7 @@ export default {
     min-width: 240px;
   }
 
-  @include laptop-l {
+  @include laptop-app {
     flex: 0 0 33%;
   }
 
