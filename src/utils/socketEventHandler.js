@@ -116,21 +116,6 @@ export async function socketEventHandler({ eventName, data }) {
         );
 
         if (wallet) {
-          // // send cached balance
-          // if (wallet.subtokensList?.find) {
-          //   const token = wallet.subtokensList.find((t) => t.net === tokenKey);
-
-          //   token &&
-          //     store.dispatch('extensions/sendCustomMsg', {
-          //       token: store.getters['extensions/currentAppInfo'].token,
-          //       message: {
-          //         balance: token.tokenBalance.calculatedBalance,
-          //         tokenContract,
-          //       },
-          //       type: data.type,
-          //     });
-          // }
-
           // update balance (by SVK, keplr etc)
           const { data: balance, error } = await citadel.getBalanceById(
             wallet.id,

@@ -45,8 +45,6 @@ export default {
       (state) =>
       (wallet = {}) =>
         findWalletInArray(state.wallets, wallet),
-    walletById: (state) => (walletId) =>
-      state.wallets.find(({ id }) => +id === +walletId),
     currentWallet: (state) => state.currentWallet,
     loaded: (state) => state.loaded,
     customWalletsList: (state) =>
