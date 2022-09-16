@@ -407,7 +407,7 @@ import { useRoute } from 'vue-router';
 import { useStore } from 'vuex';
 import useCheckPassword from '@/compositions/useCheckPassword';
 import Loading from '@/components/Loading';
-import { WALLET_TYPES /* , TOKEN_STANDARDS */ } from '@/config/walletType';
+import { WALLET_TYPES, TOKEN_STANDARDS } from '@/config/walletType';
 import { screenWidths } from '@/config/sreenWidthThresholds';
 import Tooltip from '@/components/Tooltip';
 import useApi from '@/api/useApi';
@@ -1010,7 +1010,10 @@ export default {
         return;
       }
 
-      if (props.currentWallet.type === WALLET_TYPES.KEPLR) {
+      if (
+        props.currentWallet.type === WALLET_TYPES.KEPLR &&
+        props.currentWallet?.config?.standard !== TOKEN_STANDARDS.SNIP_20
+      ) {
         const tx = isSendToAnotherNetwork.value
           ? prepareBuildTransaction.value.data
           : rawTx.value;
@@ -1098,7 +1101,11 @@ export default {
         }
       }
 
-      if (passwordError.value && !isHardwareWallet.value) {
+      if (
+        passwordError.value &&
+        !isHardwareWallet.value &&
+        !props.currentWallet.type === WALLET_TYPES.KEPLR
+      ) {
         inputError.value = passwordError.value;
 
         return;

@@ -24,7 +24,7 @@
           />
         </ModalContent>
       </Modal>
-      <!-- CONFIRM RESOTRE ONESEED -->
+      <!-- CONFIRM RESTORE ONESEED -->
       <Modal v-if="showAppInfoModal">
         <ModalContent
           show-success-icon
@@ -114,13 +114,7 @@
         @close="connectLedgerCloseHandler"
       />
     </Modal>
-    <Modal
-      v-if="
-        !showLedgerConnect &&
-        extensionTransactionForSign &&
-        !extensionTransactionForSign.error_type
-      "
-    >
+    <Modal v-if="showExtensionTransactionModal">
       <ModalContent
         :title="selectedApp.name"
         :desc="selectedApp.short_description"
@@ -133,6 +127,9 @@
         @close="confirmModalCloseHandlerWithRequest"
         @buttonClick="confirmClickHandler"
       >
+        <div v-if="showConfirmModalLoading" class="loader">
+          <Loading />
+        </div>
         <div class="item mt30">
           <div class="label">{{ $t('extensions.typeOperation') }}</div>
           <span class="red">{{ extensionTransactionForSign?.type }}</span>
@@ -188,15 +185,28 @@
             </keep-alive>
           </div>
         </div>
-        <pre
+        <!-- <pre
           v-if="showTx && extensionTransactionForSign?.transaction"
           class="item-tx"
         >
           <highlightjs
             language="javascript"
-            :code="JSON.stringify(extensionTransactionForSign.transaction).replaceAll(',', ', \n').replaceAll('{', '{ \n').replaceAll('}', '\n}')"
+            :code="JSON.stringify(extensionTransactionForSign.messageScrt || extensionTransactionForSign.transaction).replaceAll(',', ', \n').replaceAll('{', '{ \n').replaceAll('}', '\n}')"
           />
-        </pre>
+        </pre> -->
+
+        <pre
+          class="item-tx"
+          v-if="showTx && extensionTransactionForSign?.transaction"
+          >{{
+            JSON.stringify(
+              extensionTransactionForSign.messageScrt ||
+                extensionTransactionForSign.transaction,
+              null,
+              2
+            ).trim()
+          }}</pre
+        >
         <div
           v-if="
             signerWallet &&
@@ -221,6 +231,20 @@
         </div>
       </ModalContent>
     </Modal>
+    <!-- CREATE VK MODAL FOR SECRET APP-->
+    <teleport v-if="showCreateVkModal" to="body">
+      <CreateVkModal
+        :address="signerWallet.address"
+        :token="snip20Token"
+        :token-fee="snip20TokenFee"
+        :current-wallet="signerWallet"
+        :app-name="selectedApp.name"
+        :app-icon="selectedApp.logo"
+        :redirect="false"
+        @close="closeCreateVkModal({ success: false })"
+        @success="closeCreateVkModal({ success: true })"
+      />
+    </teleport>
     <Modal v-if="messageForSign && !showLedgerConnect">
       <ModalContent
         :title="selectedApp.name"
@@ -240,7 +264,7 @@
         </div>
         <div class="item mt30">
           <div class="item-tx">
-            <highlightjs
+            <!-- <highlightjs
               language="javascript"
               :code="
                 JSON.stringify(messageForSign.message)
@@ -248,7 +272,10 @@
                   .replaceAll('{', '{ \n')
                   .replaceAll('}', '\n}')
               "
-            />
+            /> -->
+            <pre>{{
+              JSON.stringify(messageForSign.message, null, 2).trim()
+            }}</pre>
           </div>
         </div>
         <div v-if="msgSuccessSignature" class="item">
@@ -291,6 +318,7 @@ import {
 import Loading from '@/components/Loading';
 import { ref, markRaw, computed, watch } from 'vue';
 import Modal from '@/components/Modal';
+import CreateVkModal from '@/views/Wallet/components/CreateVkModal.vue';
 import linkIcon from '@/assets/icons/link.svg';
 import linkIconHovered from '@/assets/icons/link_hovered.svg';
 import ModalContent from '@/components/ModalContent';
@@ -311,12 +339,14 @@ import extensionsSocketTypes from '@/config/extensionsSocketTypes';
 
 import useApi from '@/api/useApi';
 import { keplrNetworksProtobufFormat } from '@/config/availableNets';
+import citadel from '@citadeldao/lib-citadel';
 
 export default {
   name: 'Extensions',
   components: {
     ConnectLedgerModal,
     ConfirmLedgerModal,
+    CreateVkModal,
     Head,
     AppBlock,
     linkIcon,
@@ -354,6 +384,10 @@ export default {
     const showLedgerConnect = ref(false);
     const ledgerError = ref('');
     const msgSuccessSignature = ref('');
+    const snip20TokenFee = ref(null);
+    const snip20Token = ref({});
+    const showCreateVkModal = ref(false);
+    const showConfirmModalLoading = ref(false);
     const selectedTags = ref([]);
     const fullScreenAppIds = ref([
       6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 21, 22, 23,
@@ -471,6 +505,16 @@ export default {
     const extensionTransactionForSign = computed(
       () => store.getters['extensions/extensionTransactionForSign']
     );
+
+    const showExtensionTransactionModal = computed(
+      () =>
+        !showLedgerConnect.value &&
+        extensionTransactionForSign.value &&
+        !extensionTransactionForSign.value?.error_type &&
+        extensionTransactionForSign.value?.type !==
+          extensionsSocketTypes.types.generateVK
+    );
+
     const metamaskConnector = computed(
       () => store.getters['metamask/metamaskConnector']
     );
@@ -676,7 +720,7 @@ export default {
       }
     );
 
-    watch(extensionTransactionForSign, () => {
+    watch(extensionTransactionForSign, async () => {
       if (extensionTransactionForSign?.value?.transaction) {
         const currentAddress = extensionTransactionForSign.value.address;
         const currentNet = extensionTransactionForSign.value.net;
@@ -708,6 +752,35 @@ export default {
           );
         } else {
           metamaskSigner.value = null;
+        }
+
+        // FOR SECRET DEV: set viewingKey
+        if (
+          extensionTransactionForSign?.value?.type ===
+          extensionsSocketTypes.types.generateVK
+        ) {
+          // set token
+          const { data: tokens } = citadel.getTokensById(signerWallet.value.id);
+          // get config
+          const tokenConfig = Object.values(tokens).find(
+            ({ address }) =>
+              address === extensionTransactionForSign.value.messageScrt.contract
+          );
+          snip20Token.value = {
+            ...tokenConfig,
+            // for txURL
+            id: signerWallet.value.id,
+            getTxUrl: signerWallet.value.getTxUrl,
+          };
+
+          // get fee
+          snip20TokenFee.value = (
+            await signerWallet.value.getFees(
+              signerWallet.value.id,
+              snip20Token.value.net
+            )
+          )?.data?.medium?.fee;
+          showCreateVkModal.value = true;
         }
       }
     });
@@ -765,6 +838,56 @@ export default {
       store.commit('extensions/SET_MESSAGE_FOR_SIGN', null, { root: true });
     };
 
+    // for secret dev
+    const closeCreateVkModal = async ({ success } = {}) => {
+      if (!extensionTransactionForSign.value) {
+        return;
+      }
+      try {
+        // close modals
+        showCreateVkModal.value = false;
+        // set default values
+
+        // send success or cancel message
+        store.dispatch('extensions/sendCustomMsg', {
+          token: currentAppInfo.value.token,
+          message: success
+            ? extensionsSocketTypes.messages.success
+            : extensionsSocketTypes.messages.canceled,
+          type: extensionsSocketTypes.types.message,
+        });
+
+        // if success, send new balance (move to app)
+        const { data } = await citadel.getBalanceById(
+          signerWallet.value.id,
+          snip20Token.value.net
+        );
+
+        data &&
+          store.dispatch('extensions/sendCustomMsg', {
+            token: currentAppInfo.value.token,
+            message: {
+              balance: data.calculatedBalance,
+              tokenContract: snip20Token.value.address,
+            },
+            type: extensionsSocketTypes.types.balance,
+          });
+
+        snip20TokenFee.value = null;
+        snip20Token.value = null;
+      } catch (error) {
+        store.dispatch('extensions/sendCustomMsg', {
+          token: currentAppInfo.value.token,
+          message: extensionsSocketTypes.messages.failed,
+          type: extensionsSocketTypes.types.transaction,
+        });
+      } finally {
+        store.commit('extensions/SET_TRANSACTION_FOR_SIGN', null, {
+          root: true,
+        });
+      }
+    };
+
     const signMessage = async () => {
       confirmPassword.value = true;
 
@@ -820,7 +943,8 @@ export default {
 
       if (
         signerWallet.value &&
-        signerWallet.value.type === WALLET_TYPES.KEPLR
+        signerWallet.value.type === WALLET_TYPES.KEPLR &&
+        !extensionTransactionForSign.value.messageScrt
       ) {
         let keplrResult;
         const signType =
@@ -971,6 +1095,73 @@ export default {
       let result;
 
       try {
+        // FOR SECRET DEV: EXECUTE CONTRACT
+        if (
+          extensionTransactionForSign.value.messageScrt &&
+          extensionTransactionForSign.value.type ===
+            extensionsSocketTypes.types.execute
+        ) {
+          showConfirmModalLoading.value = true;
+
+          let response = null;
+          if (Array.isArray(extensionTransactionForSign.value.messageScrt)) {
+            response = await citadel.executeMessageCollection(
+              signerWallet.value.id,
+              extensionTransactionForSign.value.messageScrt,
+              {
+                privateKey:
+                  password.value &&
+                  signerWallet.value.getPrivateKeyDecoded(password.value),
+                derivationPath: signerWallet.value.derivationPath,
+              }
+            );
+            // execute message collections
+          } else {
+            // execute contract
+            response = await citadel.executeContract(signerWallet.value.id, {
+              privateKey:
+                password.value &&
+                signerWallet.value.getPrivateKeyDecoded(password.value),
+              proxy: false,
+              derivationPath: signerWallet.value.derivationPath,
+              ...extensionTransactionForSign.value.messageScrt,
+            });
+          }
+
+          // send success message to app
+          if (response?.data) {
+            confirmModalDisabled.value = false;
+            showLedgerConnect.value = false;
+            successTx.value = response.data;
+            confirmModalDisabled.value = false;
+            confirmModalCloseHandler();
+            showConfirmModalLoading.value = false;
+            showSuccessModal.value = true;
+            store.dispatch('extensions/sendCustomMsg', {
+              token: currentAppInfo.value.token,
+              message: extensionsSocketTypes.messages.success,
+              type: extensionsSocketTypes.types.execute,
+            });
+          } else {
+            // send failed message to app
+            store.dispatch('extensions/sendCustomMsg', {
+              token: currentAppInfo.value.token,
+              message: extensionsSocketTypes.messages.failed,
+              type: extensionsSocketTypes.types.execute,
+            });
+            confirmModalDisabled.value = false;
+            showLedgerConnect.value = false;
+            confirmModalDisabled.value = false;
+            showConfirmModalLoading.value = false;
+            confirmModalCloseHandler();
+            notify({
+              type: 'warning',
+              text: response?.error,
+            });
+          }
+          return;
+        }
+
         result = await signerWallet.value.signAndSendTransfer({
           walletId: signerWallet.value.id,
           rawTransaction: extensionTransactionForSign.value,
@@ -1015,7 +1206,8 @@ export default {
         showLedgerConnect.value = false;
       }
     };
-/* eslint-disable */
+
+    /* eslint-disable */
     return {
       showFullScreen,
       showTx,
@@ -1067,202 +1259,215 @@ export default {
       msgSuccessSignature,
       closeSignMessageModal,
       signMessage,
+      snip20TokenFee,
+      snip20Token,
+      closeCreateVkModal,
+      showCreateVkModal,
+      showExtensionTransactionModal,
+      showConfirmModalLoading,
     };
   },
 };
 </script>
 <style lang="scss" scoped>
-  .extensions {
-    max-width: 1628px;
-    width: 100%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+.extensions {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 16px;
+
+  &__app-wrap {
+    margin-top: 35px;
     position: relative;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    border-radius: 16px;
+    border-radius: 20px;
 
-    &__app-wrap {
-      // margin-top: 35px;
-      position: relative;
-      border-radius: 20px;
-
-      &.fullScreen {
-        width: 100%;
-        box-sizing: border-box;
-        // padding: 0 35px;
-      }
-
-      .close-icon {
-        position: absolute;
-        top: 0px;
-        right: -40px;
-
-        &:hover {
-          cursor: pointer;
-          opacity: .7;
-        }
-      }
-    }
-
-    &__apps {
+    &.fullScreen {
       width: 100%;
-      display: flex;
-      align-items: flex-start;
-      justify-content: flex-start;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-      padding: 25px;
       box-sizing: border-box;
-      z-index: 0;
-      float: left;
-      background: $white;
-      border-radius: 0 0 16px 16px;
+      padding: 0 35px;
     }
 
-    .label.description {
-      margin: 25px 0 0 0;
-      width: 100%;
-      text-align: left;
-      font-weight: 700;
-    }
-
-    &__loading {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #fff;
-      border-radius: 15px;
-      width: 100%;
-      height: 100vh;
-      // margin-top: 150px;
-      z-index: 10;
-    }
-
-    &__app {
-      width: 140px;
-      height: 45px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #fff;
-      margin: 0 10px;
-      z-index: 10;
+    .close-icon {
+      position: absolute;
+      top: 0px;
+      right: -40px;
 
       &:hover {
         cursor: pointer;
-        background: #6A4BFF;
-        color: #fff;
-      }
-    }
-
-    &__frame {
-      border-radius: 20px;
-      border: none;
-      outline: none;
-      z-index: 1;
-    }
-
-    .modal-content {
-      .password-wrap {
-        border-top: 1px solid #BCC2D8;
-        width: 100%;
-        height: 90px;
-        margin-top: 20px;
-        padding-top: 20px;
-      }
-
-      div.code {
-        white-space: pre;
-      }
-
-      .item-tx {
-        overflow: auto;
-        width: 100%;
-        margin-top: 0; // -35px;
-        max-height: 260px;
-      }
-
-      .item {
-        margin: 10px 0;
-        width: 100%;
-        display: flex;
-
-        .signature {
-          word-break: break-word;
-        }
-
-        span {
-          text-align: right;
-        }
-
-        align-items: center;
-        justify-content: space-between;
-
-        a {
-          text-decoration: none;
-          text-decoration: underline;
-          color: #437FEC;
-
-          .link-icon {
-            width: 18px;
-            height: 16px;
-            margin-left: 5px;
-
-            &.hovered {
-              display: none;
-            }
-          }
-
-          &:hover {
-            color: pointer;
-            color: #756AA8;
-
-            .link-icon {
-              display: none;
-
-              &.hovered {
-                display: initial;
-              }
-            }
-          }
-        }
-
-        .arrow-icon {
-          &.open {
-            transform: rotate(180deg);
-          }
-        }
-
-        .show {
-          z-index: 0;
-          color: #6B93C0;
-          border-bottom: 1px dotted #6B93C0;
-          text-transform: lowercase;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-
-          svg {
-            margin-top: 2px;
-            margin-left: 4px;
-          }
-        }
-
-        .red {
-          color: $red;
-        }
-
-        &.mt30 {
-          margin-top: 30px;
-        }
+        opacity: 0.7;
       }
     }
   }
 
+  &__apps {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    padding: 25px;
+    box-sizing: border-box;
+    z-index: 0;
+    float: left;
+    background: $white;
+    border-radius: 0 0 16px 16px;
+  }
+
+  .label.description {
+    margin: 25px 0 0 0;
+    width: 100%;
+    text-align: left;
+    font-weight: 700;
+  }
+
+  &__loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border-radius: 15px;
+    width: 100%;
+    height: 100vh;
+    // margin-top: 150px;
+    z-index: 10;
+  }
+
+  &__app {
+    width: 140px;
+    height: 45px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    margin: 0 10px;
+    z-index: 10;
+
+    &:hover {
+      cursor: pointer;
+      background: #6a4bff;
+      color: #fff;
+    }
+  }
+
+  &__frame {
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    z-index: 1;
+  }
+
+  .modal-content {
+    .password-wrap {
+      border-top: 1px solid #bcc2d8;
+      width: 100%;
+      height: 90px;
+      margin-top: 20px;
+      padding-top: 20px;
+    }
+
+    div.code {
+      white-space: pre;
+    }
+
+    .item-tx {
+      overflow: auto;
+      width: 100%;
+      margin-top: 0; // -35px;
+      max-height: 260px;
+    }
+
+    .item {
+      margin: 10px 0;
+      width: 100%;
+      display: flex;
+
+      .signature {
+        word-break: break-word;
+      }
+
+      span {
+        text-align: right;
+      }
+
+      align-items: center;
+      justify-content: space-between;
+
+      a {
+        text-decoration: none;
+        text-decoration: underline;
+        color: #437fec;
+
+        .link-icon {
+          width: 18px;
+          height: 16px;
+          margin-left: 5px;
+
+          &.hovered {
+            display: none;
+          }
+        }
+
+        &:hover {
+          color: pointer;
+          color: #756aa8;
+
+          .link-icon {
+            display: none;
+
+            &.hovered {
+              display: initial;
+            }
+          }
+        }
+      }
+
+      .arrow-icon {
+        &.open {
+          transform: rotate(180deg);
+        }
+      }
+
+      .show {
+        z-index: 0;
+        color: #6b93c0;
+        border-bottom: 1px dotted #6b93c0;
+        text-transform: lowercase;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+
+        svg {
+          margin-top: 2px;
+          margin-left: 4px;
+        }
+      }
+
+      .red {
+        color: $red;
+      }
+
+      &.mt30 {
+        margin-top: 30px;
+      }
+    }
+  }
+
+  .loader {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    background: white;
+    z-index: 10;
+  }
+}
 </style>
