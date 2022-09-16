@@ -228,6 +228,9 @@ export default {
           root: true,
         });
       } else if (isNotLinkedSnip20(token) && !token.linked) {
+        if (stateCurrentWallet.value.type === WALLET_TYPES.PUBLIC_KEY) {
+          return;
+        }
         mainIsLoading.value = true;
         snip20TokenFee.value =
           (await token.getFees(token.id, token.net))?.data?.high?.fee || 0.2;

@@ -46,6 +46,7 @@ import ModalContent from '@/components/ModalContent';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import AddressAlreadyAdded from '@/components/Modals/AddressAlreadyAdded';
 import { INPUT_TYPE_ICON } from '@/config/newWallets';
+import { metamaskNets } from '@/config/availableNets';
 import Header from '../AddAddress/components/Header';
 
 import { i18n } from '@/plugins/i18n';
@@ -121,7 +122,7 @@ export default {
         return;
       }
 
-      if (!['bsc', 'eth'].includes(metamaskConnector.value.network)) {
+      if (!metamaskNets.includes(metamaskConnector.value.network)) {
         notify({
           type: 'warning',
           text: t('metamask.changeNetwork'),
@@ -140,7 +141,7 @@ export default {
           showLoader.value = false;
         }
 
-        if (['eth', 'bsc'].includes(network)) {
+        if (metamaskNets.includes(network)) {
           import(`@/assets/icons/networks/${network}.svg`).then((val) => {
             currentIcon.value = markRaw(val.default);
           });
@@ -155,7 +156,7 @@ export default {
       (newV) => {
         const network = newV;
 
-        if (['eth', 'bsc'].includes(network)) {
+        if (metamaskNets.includes(network)) {
           import(`@/assets/icons/networks/${network}.svg`).then((val) => {
             currentIcon.value = markRaw(val.default);
           });
@@ -171,7 +172,7 @@ export default {
       store.commit('newWallets/setLoader', true);
       const { network, accounts } = metamaskConnector.value;
 
-      if (!['bsc', 'eth'].includes(metamaskConnector.value.network)) {
+      if (!metamaskNets.includes(metamaskConnector.value.network)) {
         notify({
           type: 'warning',
           text: t('metamask.changeNetwork'),

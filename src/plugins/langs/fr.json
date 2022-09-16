@@ -902,7 +902,7 @@
         "confirmModalDesc2": "Vos jetons ne seront pas mis en gage"
     },
     "minAmmount": "Le montant doit être supérieur à 1",
-    "maxFloatDigits": "Pas plus de deux chiffres après la virgule",
+    "maxFloatDigits": "",
     "emptyPassword": "Mot de passe vide",
     "accruedDaily": "Accumulé quotidiennement de 6 à 7 heures UTC",
     "extensions": {
@@ -1136,6 +1136,26 @@
             "title": "Oraichain",
             "description": "En tant que premier oracle et écosystème alimenté par l'IA pour les blockchains, Oraichain se transforme maintenant pour devenir une couche 1 avancée d'IA pour l'économie des données et les services Oracle qui sert de couche fondamentale pour la création d'une nouvelle génération de contrats intelligents et de Dapps et créer un écosystème d'IA complet sur blockchain.",
             "shortDescription": "Oraichain est la première solution intelligente et sécurisée au monde pour le Web3 émergent, les Dapps évolutives et l'IA décentralisée."
+        },
+        "optimism": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "arbitrum": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "polygon": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "oasis": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "Disponibilité",
@@ -1280,5 +1300,6 @@
         }
     },
     "dontHaveEnoughFoundsForFee": "Vous n'avez pas assez de fonds pour payer les frais de transaction.",
-    "asset": "actif"
+    "asset": "actif",
+    "minAmountError": ""
 }

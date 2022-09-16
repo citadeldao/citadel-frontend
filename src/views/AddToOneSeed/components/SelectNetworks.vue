@@ -118,7 +118,7 @@ export default {
   flex-direction: column;
   align-items: center;
   flex-grow: 1;
-  padding-top: 32px;
+  padding: 32px 0;
   overflow-y: auto;
   // padding-left: 6px;
   // @include lg {

@@ -27,6 +27,7 @@
       <!-- CONFIRM RESTORE ONESEED -->
       <Modal v-if="showAppInfoModal">
         <ModalContent
+          show-success-icon
           v-click-away="
             () => {
               showAppInfoModal ? (showAppInfoModal = false) : null;
@@ -56,9 +57,11 @@
       :is-full-screen="showFullScreen"
       :app-logo="currentApp?.logo"
       :show-filter="!currentApp && !loading"
+      :filter-items="filterItems"
       :app="selectedApp"
       @close="closeApp()"
       @search="onSearchHandler"
+      @selectTags="onSelectTags"
     />
     <div v-if="!currentApp && !loading" class="extensions__apps">
       <AppBlock
@@ -119,6 +122,7 @@
         type="action"
         :internal-icon="selectedApp.logo"
         :disabled="confirmModalDisabled"
+        :loading="signLoading"
         class="modal-content"
         @close="confirmModalCloseHandlerWithRequest"
         @buttonClick="confirmClickHandler"
@@ -355,6 +359,7 @@ export default {
     Input,
   },
   setup() {
+    const signLoading = ref(false);
     const showFullScreen = ref(false);
     const assetsDomain = ref('https://extensions-admin-test.3ahtim54r.ru/api/');
     const store = useStore();
@@ -383,6 +388,7 @@ export default {
     const snip20Token = ref({});
     const showCreateVkModal = ref(false);
     const showConfirmModalLoading = ref(false);
+    const selectedTags = ref([]);
     const fullScreenAppIds = ref([
       6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 21, 22, 23,
     ]);
@@ -401,6 +407,20 @@ export default {
     const extensionsList = computed(
       () => store.getters['extensions/extensionsList']
     );
+
+    const filterItems = computed(() => {
+      return extensionsList.value
+        .map((app) => {
+          return app.tags.map((tag) => tag.name);
+        })
+        .filter((tags) => tags.length)
+        .reduce((prev, curr) => {
+          return prev.concat(curr);
+        }, [])
+        .filter((item, pos, arr) => {
+          return arr.indexOf(item) == pos;
+        });
+    });
 
     if (!extensionsList.value.length) {
       store.dispatch('extensions/fetchExtensionsList');
@@ -449,6 +469,10 @@ export default {
       searchStr.value = str;
     };
 
+    const onSelectTags = (tags) => {
+      selectedTags.value = tags;
+    };
+
     const launchApp = () => {};
     const closeApp = (stopRedirect) => {
       currentApp.value = null;
@@ -462,7 +486,8 @@ export default {
     };
 
     const appBackground = computed(() =>
-      currentApp.value && !fullScreenAppIds.value.includes(selectedApp.value.id)
+      currentApp.value &&
+      !fullScreenAppIds.value.includes(+selectedApp.value.id)
         ? currentApp.value.background
         : null
     );
@@ -500,7 +525,7 @@ export default {
       showAppInfoModal.value = false;
       currentApp.value = null;
 
-      if (fullScreenAppIds.value.includes(selectedApp.value.id)) {
+      if (fullScreenAppIds.value.includes(+selectedApp.value.id)) {
         showFullScreen.value = true;
         hideArtefactsForFullScreen();
       }
@@ -565,7 +590,9 @@ export default {
     if (route.params.name) {
       selectedApp.value = Object.assign(
         {},
-        extensionsList.value.find((a) => a.name === route.params.name)
+        extensionsList.value.find(
+          (a) => a.name.toLowerCase() === route.params.name.toLowerCase()
+        )
       );
 
       if (!selectedApp.value.id) {
@@ -597,13 +624,52 @@ export default {
     };
 
     const appsFiltered = computed(() => {
+      const baseList = extensionsList.value.filter((app) => {
+        let findTag;
+        app.tags.forEach((tag) => {
+          if (filterItems.value.includes(tag.name)) {
+            findTag = true;
+          }
+        });
+        return !findTag;
+      });
+
       if (!searchStr.value.length) {
-        return extensionsList.value;
+        if (!selectedTags.value.length) {
+          return baseList;
+        }
+
+        return extensionsList.value
+          .filter((app) => {
+            let findTag;
+            app.tags.forEach((tag) => {
+              if (filterItems.value.includes(tag.name)) {
+                findTag = true;
+              }
+            });
+            return findTag;
+          })
+          .concat(baseList);
       }
 
-      return extensionsList.value.filter((app) => {
-        return app.name.toLowerCase().includes(searchStr.value);
-      });
+      if (!selectedTags.value.length) {
+        return baseList.filter((app) =>
+          app.name.toLowerCase().includes(searchStr.value)
+        );
+      }
+
+      return extensionsList.value
+        .filter((app) => {
+          let findTag;
+          app.tags.forEach((tag) => {
+            if (filterItems.value.includes(tag.name)) {
+              findTag = true;
+            }
+          });
+          return findTag;
+        })
+        .concat(baseList)
+        .filter((app) => app.name.toLowerCase().includes(searchStr.value));
     });
 
     /* watch(() => messageForSign.value, async () => {
@@ -624,7 +690,11 @@ export default {
           [6, 7].includes(selectedApp.value.id)
         ) {
           const metamaskNet =
-            metamaskConnector.value.chainId === 56 ? 'bsc' : 'eth';
+            metamaskConnector.value.chainId === 56
+              ? 'bsc'
+              : metamaskConnector.value.chainId === 1
+              ? 'eth'
+              : 'polygon';
           const metamaskAddress = newV[0] && newV[0].toLowerCase();
 
           const findWallet = walletsList.value.find(
@@ -867,6 +937,8 @@ export default {
     };
 
     const confirmClickHandler = async () => {
+      signLoading.value = true;
+
       if (
         signerWallet.value &&
         signerWallet.value.type === WALLET_TYPES.KEPLR &&
@@ -887,12 +959,13 @@ export default {
             signerWallet.value.address,
             { preferNoSetFee: true }
           );
+          signLoading.value = false;
         } catch (err) {
           notify({
             type: 'warning',
             text: JSON.stringify(err),
           });
-
+          signLoading.value = false;
           return;
         }
 
@@ -950,8 +1023,10 @@ export default {
           confirmModalDisabled.value = false;
           confirmModalCloseHandler();
           showSuccessModal.value = true;
+          signLoading.value = false;
           sendSuccessMSG();
         } else {
+          signLoading.value = false;
           notify({
             type: 'warning',
             text: data.error,
@@ -980,7 +1055,9 @@ export default {
             message: extensionsSocketTypes.messages.failed,
             type: extensionsSocketTypes.types.transaction,
           });
+          signLoading.value = false;
         } else {
+          signLoading.value = false;
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;
           successTx.value = [metamaskResult.txHash];
@@ -1005,6 +1082,7 @@ export default {
         ) &&
         incorrectPassword.value
       ) {
+        signLoading.value = false;
         return;
       }
 
@@ -1096,6 +1174,7 @@ export default {
           typeof result.data[0] === 'string' &&
           [64, 66].includes(result.data[0].length)
         ) {
+          signLoading.value = false;
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;
           successTx.value = result.data;
@@ -1104,6 +1183,7 @@ export default {
           showSuccessModal.value = true;
           sendSuccessMSG();
         } else {
+          signLoading.value = false;
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;
           confirmModalDisabled.value = false;
@@ -1114,6 +1194,7 @@ export default {
           });
         }
       } catch (e) {
+        signLoading.value = false;
         store.dispatch('extensions/sendCustomMsg', {
           token: currentAppInfo.value.token,
           message: extensionsSocketTypes.messages.failed,
@@ -1152,6 +1233,7 @@ export default {
       closeApp,
       appsFiltered,
       onSearchHandler,
+      onSelectTags,
       password,
       currentApp,
       extensionTransactionForSign,
@@ -1162,6 +1244,8 @@ export default {
       confirmModalCloseHandler,
       confirmModalCloseHandlerWithRequest,
       confirmClickHandler,
+      filterItems,
+      signLoading,
 
       //ledgers
       showLedgerConnect,
