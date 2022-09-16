@@ -274,7 +274,7 @@ import ConnectLedgerModal from '@/components/Modals/Ledger/ConnectLedgerModal';
 import OpenAppLedgerModal from '@/components/Modals/Ledger/OpenAppLedgerModal';
 import RejectLedgerModal from '@/components/Modals/Ledger/RejectLedgerModal';
 import { useStore } from 'vuex';
-import { computed, inject, onMounted, provide, ref, watch } from 'vue';
+import { computed, onMounted, provide, ref, watch } from 'vue';
 import useWallets from '@/compositions/useWallets';
 import useCheckPassword from '@/compositions/useCheckPassword';
 import useKtAddresses from '@/compositions/useKtAddresses';
@@ -314,7 +314,6 @@ export default {
     KiChainStub,
   },
   setup() {
-    const citadel = inject('citadel');
     const { t } = useI18n();
     const store = useStore();
     const route = useRoute();
@@ -376,7 +375,6 @@ export default {
               }
             }
           }
-          await citadel.loadKeplrSnip20Balances(currentWallet.value.id);
         } catch (err) {
           console.log(err);
         }
