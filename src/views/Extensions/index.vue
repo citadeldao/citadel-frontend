@@ -375,17 +375,19 @@ export default {
     );
 
     const filterItems = computed(() => {
-      return extensionsList.value
-        .map((app) => {
-          return app.tags.map((tag) => tag.name);
-        })
-        .filter((tags) => tags.length)
-        .reduce((prev, curr) => {
-          return prev.concat(curr);
-        }, [])
-        .filter((item, pos, arr) => {
-          return arr.indexOf(item) == pos;
-        });
+      return (
+        extensionsList.value
+          .map((app) => {
+            return app.tags.map((tag) => (tag.isInternal ? tag.name : ''));
+          })
+          // .filter((tags) => tags.length)
+          .reduce((prev, curr) => {
+            return prev.concat(curr);
+          }, [])
+          .filter((item, pos, arr) => {
+            return !!item && arr.indexOf(item) == pos;
+          })
+      );
     });
 
     if (!extensionsList.value.length) {
