@@ -64,6 +64,7 @@ import { netsPositionPriority } from '@/config/netsPositionPriority.js';
 import useWallets from '@/compositions/useWallets';
 import useCreateWallets from '@/compositions/useCreateWallets';
 import { WALLET_TYPES } from '@/config/walletType.js';
+import { checkDerivationPath } from '@/helpers';
 export default {
   name: 'SelectNetworks',
   components: { NetworkCard, PrimaryButton, BackButton, Input },
@@ -74,6 +75,8 @@ export default {
     const networksList = store.getters['networks/networksList'];
     const { wallets } = useWallets();
     const { isUserMnemonic } = useCreateWallets();
+    const { checked, addItem, removeItem, checkedItems } = useCheckItem();
+
     const networks = computed(() =>
       networksList.map((network, index) => ({
         id: index,
@@ -113,7 +116,6 @@ export default {
     const showAllNetworks = () => {
       networksAmount.value = displayData.value.length;
     };
-    const { checked, addItem, removeItem, checkedItems } = useCheckItem();
     const prepareRemoveItem = (id) => {
       //удаляем или нет элемент, удаляем если не добавлен(даже если выбран по умолчанию)
       const nonRemovableItem = displayData.value.find((displayedNet) => {
@@ -128,10 +130,16 @@ export default {
         );
         return displayedNet.net === findedCheckedNetYetAdded;
       });
+      const walletsFoundedItem = wallets.value.find(
+        (e) => e.net === nonRemovableItem?.net
+      );
       if (
         nonRemovableItem &&
-        wallets.value.find((e) => e.net === nonRemovableItem.net).type ===
-          WALLET_TYPES.ONE_SEED
+        walletsFoundedItem.type === WALLET_TYPES.ONE_SEED &&
+        checkDerivationPath({
+          derivationPath: walletsFoundedItem.derivationPath,
+          net: walletsFoundedItem.net,
+        })
       ) {
         removeItem(id, true);
         return checkedBtnStatus();
@@ -145,17 +153,9 @@ export default {
       const checkedNets = checkedItems.value.map(
         (index) => networks.value.find((network) => network.id === index).net
       );
-      let polkadotCondition;
       const oneSeedZeroLastIndexWalletsList = wallets.value
         .filter((wallet) => {
-          if (wallet.net === 'polkadot')
-            polkadotCondition = wallet.derivationPath;
-          if (
-            (WALLET_TYPES.ONE_SEED &&
-              polkadotCondition &&
-              polkadotCondition[polkadotCondition.length - 1] === '0') ||
-            !polkadotCondition
-          ) {
+          if (wallet.type === WALLET_TYPES.ONE_SEED) {
             return wallet;
           }
         })
@@ -174,23 +174,33 @@ export default {
     const prepareSelectedItems = () => {
       //добавляем айтемы по умолчанию из массива сеток
       for (const key in displayData.value) {
+        //TODO displayData.value ->wallets.value
         const foundItem = wallets.value.find(
           (e) => e.net === displayData.value[key].net
         );
+        // const isFoundItemPublicKey =
+        //   foundItem?.type === WALLET_TYPES.PUBLIC_KEY;
+        const isFoundItemOneSeed = foundItem?.type === WALLET_TYPES.ONE_SEED;
+        const isDisplayedItemExistAtNetsPositionPriority =
+          netsPositionPriority.indexOf(displayData.value[key].net) !== -1;
+
+        const addDisplayItem = () => {
+          addItem(displayData.value[key].id);
+          checkedNetYetAdded.push(displayData.value[key].net);
+        };
+
         if (foundItem) {
-          if (
-            foundItem.type === WALLET_TYPES.PUBLIC_KEY &&
-            netsPositionPriority.indexOf(displayData.value[key].net) !== -1
+          if (isFoundItemOneSeed) {
+            addDisplayItem();
+          } else if (
+            !isUserMnemonic.value &&
+            isDisplayedItemExistAtNetsPositionPriority
           ) {
             addItem(displayData.value[key].id);
-            checkedNetYetAdded.push(displayData.value[key].net);
-          } else if (foundItem.type !== WALLET_TYPES.PUBLIC_KEY) {
-            addItem(displayData.value[key].id);
-            checkedNetYetAdded.push(displayData.value[key].net);
           }
         } else if (
-          netsPositionPriority.indexOf(displayData.value[key].net) !== -1 &&
-          !wallets.value.length
+          !isUserMnemonic.value &&
+          isDisplayedItemExistAtNetsPositionPriority
         ) {
           addItem(displayData.value[key].id);
         }
@@ -199,14 +209,21 @@ export default {
     //состояние кнопки
     const checkedBtnStatus = () => {
       const checkedItemsNets = [];
+      //fillCheckedItems заполнение выбранных актуальных айтемов
       for (const displayItem of displayData.value) {
         if (checkedItems.value.findIndex((e) => e === displayItem.id) !== -1) {
           if (checkedItemsNets.length >= checkedNetYetAdded.length) {
+            //для оптимизации
             return (isDisabledBtn.value = false);
           }
-          checkedItemsNets.push(displayItem.net);
+          if (
+            netsPositionPriority.findIndex((e) => e.net === displayItem.net) ===
+            -1
+          )
+            checkedItemsNets.push(displayItem.net);
         }
       }
+      //checkNetChanges проверка изменений актуальных выбранных сеток и которые были выбраны изначально
       for (const iterator of checkedNetYetAdded) {
         if (checkedItemsNets.findIndex((e) => e === iterator) === -1) {
           return (isDisabledBtn.value = false);
