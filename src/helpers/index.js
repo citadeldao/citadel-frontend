@@ -156,7 +156,10 @@ export const checkDerivationPath = (wallet) => {
     if (!wallet.derivationPath) {
       return false;
     }
-  } else if (wallet.derivationPath.slice(-2).replace(/\D/g, '') === 0) {
+  } else if (
+    wallet.derivationPath.slice(-2).replace(/\D/g, '') === 0 ||
+    !wallet.derivationPath
+  ) {
     return false;
   }
   return true;

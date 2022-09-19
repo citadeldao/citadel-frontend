@@ -130,17 +130,18 @@ export default {
         );
         return displayedNet.net === findedCheckedNetYetAdded;
       });
-      const walletsFoundedItem = wallets.value.find(
-        (e) => e.net === nonRemovableItem?.net
-      );
-      if (
-        nonRemovableItem &&
-        walletsFoundedItem.type === WALLET_TYPES.ONE_SEED &&
-        checkDerivationPath({
-          derivationPath: walletsFoundedItem.derivationPath,
-          net: walletsFoundedItem.net,
-        })
-      ) {
+      const walletsFoundedItem = wallets.value.find((e) => {
+        return (
+          e.net === nonRemovableItem?.net &&
+          e.type === WALLET_TYPES.ONE_SEED &&
+          !e.derivationPath &&
+          checkDerivationPath({
+            derivationPath: e.derivationPath,
+            net: e.net,
+          })
+        );
+      });
+      if (nonRemovableItem && walletsFoundedItem) {
         removeItem(id, true);
         return checkedBtnStatus();
       }
