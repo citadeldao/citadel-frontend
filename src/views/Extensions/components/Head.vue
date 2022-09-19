@@ -85,7 +85,7 @@
   </div>
 </template>
 <script>
-import { ref, markRaw, watch } from 'vue';
+import { ref, markRaw, watch, onMounted } from 'vue';
 import closeIcon from '@/assets/icons/addAddressV2/close.svg';
 import checkSvg from '@/assets/icons/extensions/check.svg';
 
@@ -125,6 +125,12 @@ export default {
       openFilter.value = false;
     };
 
+    onMounted(() => {
+      const localData = localStorage.getItem('appTags');
+      selectedTags.value = localData ? JSON.parse(localData) : [];
+      emit('selectTags', selectedTags.value);
+    });
+
     const onSelectTag = (tg) => {
       if (selectedTags.value.includes(tg)) {
         selectedTags.value = selectedTags.value.filter((tag) => tag !== tg);
@@ -132,6 +138,7 @@ export default {
         selectedTags.value.push(tg);
       }
       emit('selectTags', selectedTags.value);
+      localStorage.setItem('appTags', JSON.stringify(selectedTags.value));
     };
 
     watch(
@@ -184,6 +191,10 @@ export default {
   border-radius: 16px 16px 0px 0px;
   min-height: 80px;
 
+  &.isFullScreen {
+    padding: 0;
+  }
+
   .extensions__close {
     display: flex;
     align-items: center;
@@ -195,7 +206,7 @@ export default {
     border: 3px solid #fff;
     background: #6b93c0;
     position: absolute;
-    right: 30px;
+    right: -2px;
     top: 25px;
     z-index: 100;
 

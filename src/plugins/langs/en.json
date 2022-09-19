@@ -477,6 +477,7 @@
     "totalAmount": "Total amount",
     "sendTo": "Send to",
     "sendFrom": "Send from",
+    "app": "App",
     "unstake": "Unstake",
     "Stake": "Stake",
     "receive": "Receive",
@@ -911,6 +912,7 @@
     "emptyPassword": "Empty password",
     "accruedDaily": "Accrued daily from 6-7 pm UTC",
     "extensions": {
+        "showMore": "Show more",
         "showLabel": "Show",
         "headerTitle": "Extensions Store",
         "headerDescription": "Use your favorite dApps, DeFi applications and extensions natively!",
@@ -926,7 +928,8 @@
         "transactionFee": "Transaction fee",
         "signMessage": "Sign message",
         "searchPlaceholder": "Start typing the app name",
-        "typeOperation": "Type operation"
+        "typeOperation": "Type operation",
+        "execute": "execute"
     },
     "tokenDescriptionComdex": "Comdex is a decentralized synthetic assets protocol built on the Cosmos. ",
     "tokenDescriptionJuno": "Juno is a Cosmos-based chain that provides an environment for the deployment of interoperable smart contracts.",

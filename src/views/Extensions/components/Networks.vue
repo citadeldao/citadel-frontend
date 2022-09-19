@@ -1,27 +1,21 @@
 <template>
   <div class="networks">
-    <div v-for="(item, ndx) in coins" :key="ndx" class="item">
-      <img
-        width="16"
-        height="16"
-        :src="
-          getTokenIcon(
-            store.getters['networks/configByNet'](
-              item.toLowerCase()
-            ).code.toLowerCase()
-          )
-        "
-      />
-      {{ store.getters['networks/configByNet'](item.toLowerCase()).name }}
+    <div v-for="(item, ndx) in coins.slice(0, 6)" :key="ndx" class="item">
+      <NetworkItem :icon="item" />
+      <div>
+        {{ store.getters['networks/configByNet'](item.toLowerCase()).name }}
+      </div>
     </div>
   </div>
 </template>
 <script>
 import { useStore } from 'vuex';
 import { getTokenIcon } from '@/helpers';
+import NetworkItem from './NetworkItem.vue';
 
 export default {
   name: 'ActualNetworks',
+  components: { NetworkItem },
   props: {
     coins: {
       type: Array,
@@ -41,13 +35,18 @@ export default {
 <style lang="scss" scoped>
 .networks {
   display: flex;
+  width: 600px;
+  flex-wrap: wrap;
 
   .item {
+    width: 180px;
     display: flex;
+    justify-content: flex-start;
+    align-items: center;
     color: #6b93c0;
     font-size: 14px;
     font-family: 'Panton_Regular';
-    margin: 0 15px 15px;
+    margin-bottom: 20px;
 
     &:first-child {
       margin-left: 0;
