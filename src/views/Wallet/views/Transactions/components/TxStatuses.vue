@@ -2,14 +2,20 @@
   <div class="tx-statuses">
     <div class="tx-statuses__item">
       <div class="icon">
-        <success v-if="info?.formatedStatus?.title === 'confirmed'" />
+        <success
+          v-if="!info.error && info?.formatedStatus?.title === 'confirmed'"
+        />
         <pending v-if="false" />
-        <error v-if="false" />
+        <error v-if="info.error === 'Failed'" />
       </div>
       <div class="status">
         <div class="label">{{ $t('status') }}</div>
-        <div :style="{ color: info?.formatedStatus?.color }" class="value stat">
-          {{ info?.formatedStatus?.title }}
+        <div
+          :class="{ failed: info.error }"
+          :style="{ color: info?.formatedStatus?.color }"
+          class="value stat"
+        >
+          {{ info.error || info?.formatedStatus?.title }}
         </div>
       </div>
     </div>
@@ -31,7 +37,7 @@
         </Tooltip>
       </div>
     </div>
-    <div class="tx-statuses__item">
+    <div v-if="info.fee" class="tx-statuses__item">
       <div class="icon">
         <fee />
       </div>
@@ -109,6 +115,10 @@ export default {
         text-transform: capitalize;
         font-weight: 700;
         color: $waitingStatus;
+
+        &.failed {
+          color: $red !important;
+        }
       }
 
       .fee {

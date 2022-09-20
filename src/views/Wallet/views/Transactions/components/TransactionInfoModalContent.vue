@@ -11,21 +11,7 @@
       >
         <template v-if="item.components">
           <div class="icon-type">
-            <claimIcon
-              v-if="item.type.toLowerCase() === 'claim'"
-              width="32"
-              height="32"
-            />
-            <stakeIcon
-              v-if="item.type.toLowerCase() === 'stake'"
-              width="32"
-              height="32"
-            />
-            <receivedIcon
-              v-if="item.type.toLowerCase() === 'received'"
-              width="32"
-              height="32"
-            />
+            <img width="32" height="32" :src="item.icon" />
             <div>{{ item.type }}</div>
           </div>
           <div
@@ -108,9 +94,6 @@
 import { ref, onMounted } from 'vue';
 // import Textarea from '@/components/UI/Textarea';
 // import comment from '@/assets/icons/comment.svg';
-import claimIcon from '@/assets/icons/transactions/claim.svg';
-import stakeIcon from '@/assets/icons/transactions/stake.svg';
-import receivedIcon from '@/assets/icons/transactions/received.svg';
 import InfoBlock from './InfoBlock.vue';
 import TxStatuses from './TxStatuses';
 
@@ -121,9 +104,6 @@ export default {
     // comment,
     // Textarea,
     TxStatuses,
-    claimIcon,
-    stakeIcon,
-    receivedIcon,
   },
   props: {
     info: {
@@ -185,6 +165,10 @@ $blue-dark: #262b61;
         left: 0;
         top: -40px;
 
+        img {
+          // margin-bottom: 10px;
+        }
+
         div {
           margin-left: 10px;
         }
@@ -193,7 +177,7 @@ $blue-dark: #262b61;
       &.empty {
         border: none;
         padding: 0;
-        margin: 20px 0;
+        margin: 10px 0;
       }
 
       .title {

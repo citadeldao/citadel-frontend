@@ -6,9 +6,10 @@
   >
     <td class="table-row__type">
       <div class="table-row__type-block">
-        <keep-alive>
+        <img width="32" height="32" :src="transaction.view[0].icon" />
+        <!-- <keep-alive>
           <component :is="icon" :width="32" :height="32" />
-        </keep-alive>
+        </keep-alive> -->
         <span class="table-row__type-block-type">
           {{ type.title }}
         </span>
@@ -24,9 +25,10 @@
       <div class="table-row__status-info">
         <span
           :style="{ color: status.color }"
+          :class="{ failed: transaction.error }"
           class="table-row__status-info-status"
         >
-          {{ $t(status.title) }}
+          {{ transaction.error || $t(status.title) }}
         </span>
       </div>
     </td>
@@ -95,13 +97,7 @@
 import { computed, markRaw, ref } from 'vue';
 import moment from 'moment';
 import BigNumber from 'bignumber.js';
-import EditButton from '@/components/UI/EditButton';
-import curveArrow from '@/assets/icons/transactions/curve-arrow.svg';
-import comment from '@/assets/icons/transactions/comment.svg';
-import inIcon from '@/assets/icons/transactions/in.svg';
-import out from '@/assets/icons/transactions/out.svg';
 import useTransaction from '@/compositions/useTransaction';
-import Loading from '@/components/Loading.vue';
 import defaultDate from '@/helpers/date.js';
 import linkIcon from '@/assets/icons/link.svg';
 import Tooltip from '@/components/UI/Tooltip';
@@ -110,13 +106,7 @@ import { useI18n } from 'vue-i18n';
 export default {
   name: 'TableRow',
   components: {
-    inIcon,
     Tooltip,
-    out,
-    comment,
-    curveArrow,
-    EditButton,
-    Loading,
     linkIcon,
   },
   props: {
@@ -339,6 +329,10 @@ export default {
   &__type-block {
     display: flex;
     align-items: center;
+
+    img {
+      margin-right: 10px;
+    }
     @include lg {
       align-items: center;
     }
@@ -361,6 +355,10 @@ export default {
     font-family: 'Panton_Bold';
     font-size: 16px;
     line-height: 19px;
+
+    &.failed {
+      color: $red !important;
+    }
   }
 
   &__type-block-inner-amount {

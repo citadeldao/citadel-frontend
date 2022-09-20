@@ -134,6 +134,7 @@ export default {
 .info-block {
   display: flex;
   flex-direction: column;
+  margin-bottom: 10px;
   &__line {
     display: flex;
     justify-content: space-between;
