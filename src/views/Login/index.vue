@@ -815,7 +815,7 @@ export default {
   &__link {
     font-weight: 700;
     font-size: 16px;
-    line-height: 23px;
+    line-height: 30px;
     text-align: center;
     text-transform: uppercase;
     color: #c3ceeb;
