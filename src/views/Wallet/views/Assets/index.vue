@@ -284,10 +284,11 @@ export default {
         (e) => e.net === OUR_TOKEN
       );
       if (indexXCT !== -1) {
-        [filteredTokens.value[0], filteredTokens.value[indexXCT]] = [
-          filteredTokens.value[indexXCT],
-          filteredTokens.value[0],
-        ];
+        const xctItem = filteredTokens.value[indexXCT];
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+        filteredTokens.value.splice(indexXCT, 1);
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+        filteredTokens.value.splice(0, 0, xctItem);
       }
       if (!keyword.value) {
         return filteredTokens.value;

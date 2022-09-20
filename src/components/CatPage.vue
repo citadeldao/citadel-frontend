@@ -18,7 +18,7 @@
       </div>
       <div v-if="data" class="cat-page__addresses">
         <template
-          v-for="(wallet, index) in data"
+          v-for="(wallet, index) in sortByAlphabet(data, 'net')"
           :key="`${wallet.address}_${wallet.net}`"
         >
           <div class="cat-page__address">
@@ -62,7 +62,7 @@ import PrimaryButton from '@/components/UI/PrimaryButton';
 import Input from '@/components/UI/Input';
 import catIcon from '@/assets/icons/cat-icon.svg';
 import { INPUT_TYPE_ICON } from '@/config/newWallets';
-import { findAddressWithNet } from '@/helpers';
+import { findAddressWithNet, sortByAlphabet } from '@/helpers';
 
 export default {
   name: 'CatPage',
@@ -125,7 +125,7 @@ export default {
       disabled.value = false;
     };
 
-    return { aliases, disabled, clickHandler, icons };
+    return { aliases, disabled, clickHandler, sortByAlphabet, icons };
   },
 };
 </script>

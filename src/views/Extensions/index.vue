@@ -1271,6 +1271,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 .extensions {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1628px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -1282,14 +1285,14 @@ export default {
   border-radius: 16px;
 
   &__app-wrap {
-    margin-top: 35px;
+    // margin-top: 35px;
     position: relative;
     border-radius: 20px;
 
     &.fullScreen {
       width: 100%;
       box-sizing: border-box;
-      padding: 0 35px;
+      // padding: 0 35px;
     }
 
     .close-icon {
