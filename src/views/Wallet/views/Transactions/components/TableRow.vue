@@ -166,7 +166,11 @@ export default {
         };
       }
 
-      if (props.transaction.isCanceled || props.transaction.type === 'unvote') {
+      if (
+        props.transaction.error ||
+        props.transaction.isCanceled ||
+        props.transaction.type === 'unvote'
+      ) {
         return {
           title: 'fail',
           color: '#FA3B33',
