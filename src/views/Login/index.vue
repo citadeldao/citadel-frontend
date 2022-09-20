@@ -1,4 +1,6 @@
 <template>
+  <PrivacyModal v-if="showPrivacy" @close="showPrivacy = false" />
+  <TermsModal v-if="showTerms" @close="showTerms = false" />
   <transition v-if="isLoading" name="fade">
     <Modal>
       <img src="@/assets/gif/loader.gif" alt="" />
@@ -13,6 +15,10 @@
         <div class="langs" v-if="confirmedAddress" />
         <LoginCarousel v-if="!syncMode && !confirmedAddress" />
         <SyncCarousel v-if="syncMode && !confirmedAddress" />
+        <div class="rights__container">
+          <p class="rights__link" @click="showPrivacy = true">Privacy policy</p>
+          <p class="rights__link" @click="showTerms = true">Terms of service</p>
+        </div>
       </header>
     </div>
     <div class="right">
@@ -106,12 +112,12 @@
               :error="verificationError"
               @change="onChangeVerification"
               @verification="verification"
-              @sendVerificationCode="sendVerificationCode"
               @cancelVerification="
                 () => {
                   userName = '';
                 }
               "
+              @sendVerificationCode="sendVerificationCode"
             />
           </template>
         </div>
@@ -152,7 +158,8 @@ import { WALLET_TYPES } from '@/config/walletType';
 import { keplrNetworks } from '@/config/availableNets';
 import useCreateWallets from '@/compositions/useCreateWallets';
 import { useI18n } from 'vue-i18n';
-
+import PrivacyModal from '@/components/Modals/Privacy';
+import TermsModal from '@/components/Modals/Terms';
 const WALLET_MENU_TYPE = {
   social: 'sosical',
   web3: 'web3',
@@ -176,12 +183,17 @@ export default {
     DisclaimerApproveWeb3,
     ConfirmWeb3Address,
     SelectLanguage,
+    PrivacyModal,
+    TermsModal,
   },
   setup() {
     const { t } = useI18n();
     const router = useRouter();
     const store = useStore();
     const isLoading = ref(false);
+    const showPrivacy = ref(false);
+    const showTerms = ref(false);
+
     const formDisabled = ref(false);
     const showEmailModal = ref(false);
     const citadel = inject('citadel');
@@ -585,6 +597,8 @@ export default {
     };
 
     return {
+      showPrivacy,
+      showTerms,
       WALLET_MENU_TYPE,
       onLoginSocial,
       onLoginWeb3,
@@ -779,6 +793,33 @@ export default {
     .bold {
       font-weight: bold;
     }
+  }
+}
+.rights {
+  &__container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-right: 190px;
+
+    @include lg {
+      width: 500px;
+      margin-right: 63px;
+    }
+
+    @include md {
+      width: 400px;
+      margin-right: 27px;
+    }
+  }
+  &__link {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 23px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #c3ceeb;
+    border-bottom: 1px dashed #c3ceeb;
   }
 }
 </style>
