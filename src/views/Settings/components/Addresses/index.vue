@@ -33,6 +33,7 @@ import Dropdown from './components/Dropdown';
 import useWallets from '@/compositions/useWallets';
 import DeleteSeedModal from './components/Dropdown/components/DeleteSeedModal';
 import { WALLET_TYPES } from '@/config/walletType';
+import { sortByAlphabet } from '@/helpers';
 const netsWithVisibleButton = ['Secret'];
 
 export default {
@@ -54,7 +55,6 @@ export default {
 
     const groupWalletsByNet = computed(() => {
       const resultObj = {};
-
       wallets.value.map((wallet) => {
         if (!resultObj[wallet.net]) {
           resultObj[wallet.net] = {
@@ -67,7 +67,7 @@ export default {
         }
       });
 
-      return Object.values(resultObj);
+      return sortByAlphabet(Object.values(resultObj), 'net');
     });
 
     const exportWallet = (val) => {

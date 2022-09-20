@@ -27,6 +27,7 @@
         <div class="modal_content__block-header-text">
           <h4 class="modal_content__block-header-title">
             {{ title }}
+            <successIcon v-if="showSuccessIcon" />
           </h4>
           <span
             v-if="desc"
@@ -45,6 +46,7 @@
               :bg-color="primaryMainBgColor"
               :hover-bg-color="primaryMainHoverBgColor"
               :disabled="disabled"
+              :loading="loading"
               @click.stop="clickHandler"
             >
               {{ buttonText }}
@@ -53,6 +55,7 @@
             <PrimaryButton
               v-else
               :disabled="disabled"
+              :loading="loading"
               @click.stop="clickHandler"
             >
               {{ buttonText }}
@@ -77,6 +80,7 @@
             v-if="submitButton"
             ref="primaryButton"
             :disabled="disabled"
+            :loading="loading"
             :data-qa="`${$t(buttonText).replace(' ', '-')}`"
             @click.stop="clickHandler"
           >
@@ -95,12 +99,21 @@ import closeIcon from '@/assets/icons/close-icon.svg';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import TextButton from '@/components/UI/TextButton';
 import { markRaw, ref } from '@vue/reactivity';
+import successIcon from '@/assets/icons/extensions/success.svg';
 
 export default {
   name: 'ModalContent',
-  components: { PrimaryButton, TextButton, closeIcon },
+  components: { PrimaryButton, TextButton, closeIcon, successIcon },
   props: {
     hideClose: {
+      type: Boolean,
+      default: false,
+    },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+    showSuccessIcon: {
       type: Boolean,
       default: false,
     },
@@ -330,7 +343,7 @@ export default {
     margin: 0;
     font-family: 'Panton_Bold';
     // width: 507px;
-    margin-bottom: 10px;
+    margin-top: 5px;
   }
   &__block-header-desc {
     font-size: 14px;

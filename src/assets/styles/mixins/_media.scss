@@ -28,6 +28,12 @@
   }
 }
 
+@mixin laptop-app {
+  @media (min-width: 1024.98px) and (max-width: 1600px) {
+    @content;
+  }
+}
+
 
 
 @mixin md {
