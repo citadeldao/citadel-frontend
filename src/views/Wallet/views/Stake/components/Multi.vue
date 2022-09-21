@@ -129,7 +129,7 @@
               {{ $t('unstake') }}
             </PrimaryButton>
           </div>
-          <PrimaryButton data-qa="Stake" @click="toStake">
+          <PrimaryButton data-qa="Stake" :loading="isLoading" @click="toStake">
             {{ $t('Stake') }}
           </PrimaryButton>
         </div>
@@ -194,6 +194,7 @@
           width="600px"
           :button-text="chooseNodeModalData.button"
           :disabled="disabled"
+          :loading="isLoading"
           data-qa="staking"
           @close="modalCloseHandler"
           @buttonClick="prepareDelegation"
@@ -232,6 +233,7 @@
           :desc="actionModalData.desc"
           button-text="confirm"
           type="action"
+          :loading="isLoading"
           :disabled="!!inputError"
           data-qa="staking-confirm"
           @close="modalCloseHandler"
