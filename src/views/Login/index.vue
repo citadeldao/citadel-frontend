@@ -118,6 +118,16 @@
         <WhyCitadel v-if="showEmailModal" @close="showEmailModal = false" />
       </main>
     </div>
+    <InvisibleRecaptcha
+      :style="'display: none'"
+      sitekey="6LcpPNohAAAAAAjgV2kbQCps_nMLFodkdEH6aYXs"
+      :callback="getToken"
+      class="btn btn-danger"
+      type="submit"
+      id="do-something-btn"
+    >
+      Do something!
+    </InvisibleRecaptcha>
   </div>
 </template>
 
@@ -152,6 +162,7 @@ import { WALLET_TYPES } from '@/config/walletType';
 import { keplrNetworks } from '@/config/availableNets';
 import useCreateWallets from '@/compositions/useCreateWallets';
 import { useI18n } from 'vue-i18n';
+import InvisibleRecaptcha from 'vue-invisible-recaptcha';
 
 const WALLET_MENU_TYPE = {
   social: 'sosical',
@@ -161,6 +172,7 @@ const WALLET_MENU_TYPE = {
 export default {
   name: 'Login',
   components: {
+    InvisibleRecaptcha,
     citadelLogo,
     LoginForm,
     Verification,
@@ -198,6 +210,7 @@ export default {
     const confirmedAddress = ref(false);
     const newAddress = ref('');
     const newAddressNet = ref('');
+    const captchaToken = ref('');
 
     const { setNets, setAddress, setPublicKey, createWallets } =
       useCreateWallets();
@@ -209,6 +222,11 @@ export default {
         wallet: { address: newAddress.value, net: newAddressNet.value },
         root: true,
       });
+    };
+
+    const getToken = async (e) => {
+      captchaToken.value = e;
+      console.log('captchaToken.value', captchaToken.value);
     };
 
     const metamaskConnector = computed(
@@ -517,57 +535,77 @@ export default {
       };
 
       if (loginWith.value === 'metamask') {
-        const metamaskResult = await metamaskConnector.value.signMessage(
-          res.message,
-          address
-        );
+        const auth = async () => {
+          const metamaskResult = await metamaskConnector.value.signMessage(
+            res.message,
+            address
+          );
 
-        const { data, error } = await store.dispatch('auth/confirmWeb3', {
-          address,
-          net,
-          sign: metamaskResult,
-          pubKey: '',
-        });
-
-        if (data) {
-          initialize(WALLET_TYPES.PUBLIC_KEY);
-        } else {
-          notify({
-            type: 'warning',
-            text: error,
+          const { data, error } = await store.dispatch('auth/confirmWeb3', {
+            address,
+            net,
+            sign: metamaskResult,
+            captchaResKey: captchaToken.value,
+            pubKey: '',
           });
+
+          if (data) {
+            initialize(WALLET_TYPES.PUBLIC_KEY);
+          } else {
+            notify({
+              type: 'warning',
+              text: error,
+            });
+          }
+        };
+
+        if (res.isNeedCaptcha) {
+          window.document.querySelector('#do-something-btn').click();
+          auth();
+        } else {
+          auth();
         }
       }
 
+      const authKeplr = async () => {
+        const keplrResult = await keplrConnector.value.sendKeplrTransaction(
+          res.message,
+          address,
+          {
+            preferNoSetFee: true,
+            preferNoSetMemo: true,
+          }
+        );
+
+        if (keplrResult.signature) {
+          const { data, error } = await store.dispatch('auth/confirmWeb3', {
+            address,
+            net,
+            sign: keplrResult.signature,
+            captchaResKey: captchaToken.value,
+            pubKey: Buffer.from(
+              keplrConnector.value.accounts[0].pubkey
+            ).toString('hex'),
+          });
+
+          if (data) {
+            initialize(WALLET_TYPES.KEPLR);
+          } else {
+            notify({
+              type: 'warning',
+              text: error,
+            });
+          }
+        }
+      };
+
       if (loginWith.value === 'keplr') {
         if (data) {
-          const keplrResult = await keplrConnector.value.sendKeplrTransaction(
-            res.message,
-            address,
-            {
-              preferNoSetFee: true,
-              preferNoSetMemo: true,
-            }
-          );
-
-          if (keplrResult.signature) {
-            const { data, error } = await store.dispatch('auth/confirmWeb3', {
-              address,
-              net,
-              sign: keplrResult.signature,
-              pubKey: Buffer.from(
-                keplrConnector.value.accounts[0].pubkey
-              ).toString('hex'),
-            });
-
-            if (data) {
-              initialize(WALLET_TYPES.KEPLR);
-            } else {
-              notify({
-                type: 'warning',
-                text: error,
-              });
-            }
+          if (res.isNeedCaptcha) {
+            window.document.querySelector('#do-something-btn').click();
+            authKeplr();
+          } else {
+            authKeplr();
           }
         } else {
           notify({
@@ -585,6 +623,7 @@ export default {
     };
 
     return {
+      getToken,
       WALLET_MENU_TYPE,
       onLoginSocial,
       onLoginWeb3,
