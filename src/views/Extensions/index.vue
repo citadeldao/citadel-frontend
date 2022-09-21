@@ -1147,7 +1147,7 @@ export default {
           }
           // remove listeners
           citadel.addEventListener('ledgerSigningFinished', () => {});
-          citadel.addEventListener('ledgerSignFinished', () => {});
+          citadel.addEventListener('ledgerSigningStarted', () => {});
           // send success message to app
           if (response?.data) {
             confirmModalDisabled.value = false;
