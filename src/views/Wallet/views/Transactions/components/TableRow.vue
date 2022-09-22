@@ -11,7 +11,7 @@
           <component :is="icon" :width="32" :height="32" />
         </keep-alive> -->
         <span class="table-row__type-block-type">
-          {{ type.title }}
+          {{ transaction.view[0]?.type || type.title }}
         </span>
         <div
           v-if="transaction.view && transaction.view.length > 1"
