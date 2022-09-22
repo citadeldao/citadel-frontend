@@ -152,14 +152,7 @@ export const getDecimalCount = (num) => {
   return 0;
 };
 export const checkDerivationPath = (wallet) => {
-  if (wallet.net !== 'polkadot') {
-    if (!wallet.derivationPath) {
-      return false;
-    }
-  } else if (
-    wallet.derivationPath.slice(-2).replace(/\D/g, '') === 0 ||
-    !wallet.derivationPath
-  ) {
+  if (wallet?.derivationPath?.slice(-2).replace(/\D/g, '') === 0) {
     return false;
   }
   return true;

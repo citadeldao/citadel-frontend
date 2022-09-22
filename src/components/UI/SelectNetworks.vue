@@ -132,13 +132,7 @@ export default {
       });
       const walletsFoundedItem = wallets.value.find((e) => {
         return (
-          e.net === nonRemovableItem?.net &&
-          e.type === WALLET_TYPES.ONE_SEED &&
-          !e.derivationPath &&
-          checkDerivationPath({
-            derivationPath: e.derivationPath,
-            net: e.net,
-          })
+          e.net === nonRemovableItem?.net && e.type === WALLET_TYPES.ONE_SEED
         );
       });
       if (nonRemovableItem && walletsFoundedItem) {
@@ -175,35 +169,34 @@ export default {
     const prepareSelectedItems = () => {
       //добавляем айтемы по умолчанию из массива сеток
       for (const key in displayData.value) {
-        //TODO displayData.value ->wallets.value
-        const foundItem = wallets.value.find(
-          (e) => e.net === displayData.value[key].net
+        const displayItem = displayData.value[key];
+        const foundItemOneSeed = wallets.value.find(
+          (e) => e.net === displayItem.net && e.type === WALLET_TYPES.ONE_SEED
         );
-        // const isFoundItemPublicKey =
-        //   foundItem?.type === WALLET_TYPES.PUBLIC_KEY;
-        const isFoundItemOneSeed = foundItem?.type === WALLET_TYPES.ONE_SEED;
-        const isDisplayedItemExistAtNetsPositionPriority =
-          netsPositionPriority.indexOf(displayData.value[key].net) !== -1;
-
-        const addDisplayItem = () => {
-          addItem(displayData.value[key].id);
-          checkedNetYetAdded.push(displayData.value[key].net);
-        };
-
-        if (foundItem) {
-          if (isFoundItemOneSeed) {
-            addDisplayItem();
-          } else if (
-            !isUserMnemonic.value &&
-            isDisplayedItemExistAtNetsPositionPriority
-          ) {
-            addItem(displayData.value[key].id);
+        if (foundItemOneSeed) {
+          if (foundItemOneSeed.net !== 'polkadot') {
+            addItem(displayItem.id);
+            checkedNetYetAdded.push(displayItem.net);
+          } else {
+            if (foundItemOneSeed.net === 'polkadot') {
+              if (foundItemOneSeed && !foundItemOneSeed.derivationPath) {
+                addItem(displayItem.id);
+                checkedNetYetAdded.push(displayItem.net);
+              }
+            } else if (
+              foundItemOneSeed &&
+              foundItemOneSeed.derivationPath &&
+              !checkDerivationPath(foundItemOneSeed)
+            ) {
+              addItem(displayItem.id);
+              checkedNetYetAdded.push(displayItem.net);
+            }
           }
         } else if (
           !isUserMnemonic.value &&
-          isDisplayedItemExistAtNetsPositionPriority
+          netsPositionPriority.findIndex((e) => e === displayItem.net) !== -1
         ) {
-          addItem(displayData.value[key].id);
+          addItem(displayItem.id);
         }
       }
     };
