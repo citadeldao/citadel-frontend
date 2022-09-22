@@ -39,7 +39,8 @@ export const ledgerNets = [
   'arbitrum',
   'polygon',
   'oasis',
-  // 'evmos',
+  'evmos',
+  'injective',
 ];
 
 export const metamaskNets = ['bsc', 'eth', 'polygon', 'optimism', 'arbitrum'];
