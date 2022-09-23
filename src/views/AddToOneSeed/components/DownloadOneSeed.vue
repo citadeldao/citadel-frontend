@@ -13,6 +13,7 @@
       {{ $t('addToOneSeed.backUp.h3') }}
     </h3>
     <Checkbox
+      disabled
       id="downloadCheck"
       :value="downloadCheck"
       :label="$t('migration.download')"
@@ -39,7 +40,7 @@ export default {
   setup(props, { emit }) {
     const store = useStore();
     const nextStep = inject('nextStep');
-    const downloadCheck = ref(true);
+    const downloadCheck = ref(false);
     const icon = ref();
     const keyStorage = computed(
       () => `user_${store.getters['profile/info'].id}`
