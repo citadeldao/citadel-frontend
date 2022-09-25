@@ -72,7 +72,7 @@
           {{ $t(`confirm`) }}
         </PrimaryButton>
       </div>
-      <div class="goToImportVk" v-if="!isKeplrWallet">
+      <div class="goToImportVk">
         {{ $t('viewingKey.iHaveVk') }}
         &nbsp;
         <span @click="goToImportVk">{{ $t('import') }}</span>
