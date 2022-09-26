@@ -39,6 +39,8 @@ export const ledgerNets = [
   'arbitrum',
   'polygon',
   'oasis',
+  'stafi',
+  'stride',
   // 'evmos',
   'tron',
 ];
@@ -93,4 +95,6 @@ export const keplrNetworks = [
   },
   { label: 'AssetMantle', key: 'mantle-1', net: 'mantle' },
   { label: 'Crescent', key: 'crescent-1', net: 'crescent' },
+  { label: 'Stride', key: 'stride-1', net: 'stride' },
+  { label: 'Stafi', key: 'stafihub-1', net: 'stafi' },
 ];
