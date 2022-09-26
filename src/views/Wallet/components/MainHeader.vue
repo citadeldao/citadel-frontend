@@ -51,7 +51,7 @@
         active-class="main-header__active"
         class="main-header__tabs-item"
         :to="{
-          name: !['tez', 'polkadot'].includes($route.params.net)
+          name: !['polkadot'].includes($route.params.net)
             ? 'WalletTransactions'
             : 'WalletTransactionsOld',
           params: { ...$route.params },
