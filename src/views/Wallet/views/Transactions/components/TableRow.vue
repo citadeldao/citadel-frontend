@@ -6,10 +6,15 @@
   >
     <td class="table-row__type">
       <div class="table-row__type-block">
-        <img width="32" height="32" :src="transaction.view[0].icon" />
-        <!-- <keep-alive>
+        <img
+          v-if="transaction?.view[0]?.icon"
+          width="32"
+          height="32"
+          :src="transaction?.view[0]?.icon"
+        />
+        <keep-alive v-else>
           <component :is="icon" :width="32" :height="32" />
-        </keep-alive> -->
+        </keep-alive>
         <span class="table-row__type-block-type">
           {{ transaction.view[0]?.type || type.title }}
         </span>
@@ -138,7 +143,7 @@ export default {
       type = data.type;
     }
 
-    if (type.value.title === '???') {
+    if (type.value?.title === '???') {
       // eslint-disable-next-line
       type.value.title = props.transaction.view[0].type;
       type.value.icon = 'unknown';

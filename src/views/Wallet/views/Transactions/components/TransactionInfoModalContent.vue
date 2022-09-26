@@ -10,7 +10,13 @@
         class="inner-tx__view-item"
       >
         <template v-if="item.components">
-          <div class="icon-type">
+          <div
+            :class="{
+              empty: !item.components?.length,
+              last: info.view.length - 1 === ndx,
+            }"
+            class="icon-type"
+          >
             <img width="32" height="32" :src="item.icon" />
             <div>{{ item.type }}</div>
           </div>
@@ -164,6 +170,12 @@ $blue-dark: #262b61;
         position: absolute;
         left: 0;
         top: -40px;
+
+        &.empty {
+          &.last {
+            top: -5px;
+          }
+        }
 
         img {
           // margin-bottom: 10px;

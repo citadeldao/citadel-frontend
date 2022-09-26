@@ -52,7 +52,10 @@
         <fileExport />
         <span>CSV {{ $t('export') }}</span>
       </div>
-      <div class="transactions__pagination">
+      <div
+        :class="{ column: (currentPage - 1) * pageLimit + 1 > 1000 }"
+        class="transactions__pagination"
+      >
         <div v-if="transactions?.length" class="transactions__item-count">
           <span class="transactions__current-amount">
             {{ (currentPage - 1) * pageLimit + 1 }} </span
@@ -254,6 +257,8 @@ export default {
 
       return isLastPage ? total.value : pageLimit.value * currentPage.value;
     });
+
+    console.log('lastItemOnPage', total.value, pageLimit.value);
 
     getTransactions(props.currentWallet.id, currentPage.value, pageLimit.value);
 
@@ -499,6 +504,15 @@ export default {
   &__pagination {
     display: flex;
     align-items: center;
+
+    &.column {
+      flex-direction: column;
+      align-items: flex-end;
+
+      .transactions__item-count {
+        margin-right: 5px;
+      }
+    }
   }
   &__dropdown {
     width: 80px;
