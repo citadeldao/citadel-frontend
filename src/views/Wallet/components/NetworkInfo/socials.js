@@ -551,6 +551,20 @@ export default {
       href: 'https://www.coingecko.com/en/coins/evmos',
     },
   },
+  tron: {
+    web: {
+      title: 'tron.network',
+      href: 'https://tron.network/',
+    },
+    twitter: {
+      title: '@trondao',
+      href: 'trondao',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/tron',
+    },
+  },
   polygon: {
     web: {
       title: 'polygon.technology',
