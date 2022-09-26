@@ -185,7 +185,11 @@
         </div>
       </div>
       <div class="send__button">
-        <PrimaryButton :disabled="disabledSend" data-qa="send__send-button">
+        <PrimaryButton
+          :loading="prepareLoading"
+          :disabled="disabledSend"
+          data-qa="send__send-button"
+        >
           {{ $t('send') }}
         </PrimaryButton>
       </div>
@@ -403,7 +407,7 @@ import { useRoute } from 'vue-router';
 import { useStore } from 'vuex';
 import useCheckPassword from '@/compositions/useCheckPassword';
 import Loading from '@/components/Loading';
-import { WALLET_TYPES /* , TOKEN_STANDARDS */ } from '@/config/walletType';
+import { WALLET_TYPES, TOKEN_STANDARDS } from '@/config/walletType';
 import { screenWidths } from '@/config/sreenWidthThresholds';
 import Tooltip from '@/components/Tooltip';
 import useApi from '@/api/useApi';
@@ -414,6 +418,7 @@ import { useI18n } from 'vue-i18n';
 import AddressItem from '@/layouts/AddAddressLayout/components/CutomLists/components/AddressItem';
 import { keplrNetworksProtobufFormat } from '@/config/availableNets';
 import { getDecorateLabel } from '@/config/decorators';
+import amountInputValidation from '@/helpers/amountInputValidation';
 
 export default {
   name: 'Send',
@@ -460,6 +465,7 @@ export default {
   },
   emits: ['prepareClaim', 'prepareXctClaim'],
   setup(props) {
+    const loadingSign = ref(false);
     const showSuccessModal = ref(false);
     const { t } = useI18n();
     const isSendToAnotherNetwork = ref(false);
@@ -478,7 +484,7 @@ export default {
     const prepareBuildTransaction = ref({});
 
     const {
-      fees,
+      formatedFee: fees,
       feesError,
       getFees,
       balance,
@@ -816,35 +822,13 @@ export default {
     );
 
     // Error Handlers
-    const insufficientFunds = computed(
-      () => {
-        if (amount.value) {
-          if (
-            props.currentWallet.minSendAmount &&
-            props.currentWallet.minSendAmount > +amount.value
-          ) {
-            return t('minSendAmountError', {
-              code: props.currentWallet.code,
-              minAmount: props.currentWallet.minSendAmount,
-            });
-          }
-
-          if (+amount.value > +maxAmount.value) {
-            return 'Insufficient funds';
-          }
-        }
-
-        return false;
-      }
-      //  !!amount.value && amount.value ?
-      //   amount.value < props.currentWallet.minSendAmount ?
-      //   'The minimum transaction amount is 1 DOT.' ?
-      //     amount.value > maxAmount.value ?
-      //     'Insufficient funds' : ''
-      // const insufficientFunds = computed(
-      //   () =>
-      //     !!amount.value && +amount.value > +maxAmount.value &&
-      //     'Insufficient funds',
+    const insufficientFunds = computed(() =>
+      amountInputValidation({
+        amount: amount.value,
+        wallet: props.currentWallet,
+        maxAmount: +maxAmount.value,
+        type: 'send',
+      })
     );
 
     const networksConfig = computed(() => store.getters['networks/config']);
@@ -903,7 +887,7 @@ export default {
           requestsError.value ||
           insufficientFunds.value ||
           incorrectAddress.value ||
-          !amount.value ||
+          !+amount.value ||
           !toAddress.value
         )
     );
@@ -1000,6 +984,7 @@ export default {
           clearTxData();
         }
       }
+      loadingSign.value = true;
 
       // metamask, ...
       if (currentWalletType.value === WALLET_TYPES.METAMASK) {
@@ -1008,11 +993,13 @@ export default {
           await metamaskConnector.value.sendMetamaskTransaction(rawTx.value);
 
         if (metamaskResult.error) {
+          loadingSign.value = false;
           notify({
             type: 'warning',
             text: metamaskResult.error,
           });
         } else {
+          loadingSign.value = false;
           showConfirmModal.value = false;
           showSuccessModal.value = true;
           txHash.value = [metamaskResult.txHash];
@@ -1023,7 +1010,10 @@ export default {
         return;
       }
 
-      if (props.currentWallet.type === WALLET_TYPES.KEPLR) {
+      if (
+        props.currentWallet.type === WALLET_TYPES.KEPLR &&
+        props.currentWallet?.config?.standard !== TOKEN_STANDARDS.SNIP_20
+      ) {
         const tx = isSendToAnotherNetwork.value
           ? prepareBuildTransaction.value.data
           : rawTx.value;
@@ -1035,7 +1025,9 @@ export default {
             props.currentWallet.address,
             { preferNoSetFee: true }
           );
+          loadingSign.value = false;
         } catch (err) {
+          loadingSign.value = false;
           notify({
             type: 'warning',
             text: JSON.stringify(err),
@@ -1092,11 +1084,13 @@ export default {
         });
 
         if (data.ok) {
+          loadingSign.value = false;
           isLoading.value = false;
           showConfirmModal.value = false;
           showSuccessModal.value = true;
           txHash.value = [data.data.txhash];
         } else {
+          loadingSign.value = false;
           notify({
             type: 'warning',
             text: data.error,
@@ -1107,7 +1101,11 @@ export default {
         }
       }
 
-      if (passwordError.value && !isHardwareWallet.value) {
+      if (
+        passwordError.value &&
+        !isHardwareWallet.value &&
+        !props.currentWallet.type === WALLET_TYPES.KEPLR
+      ) {
         inputError.value = passwordError.value;
 
         return;
@@ -1133,7 +1131,9 @@ export default {
             showConfirmLedgerModal.value = false;
             showConfirmModal.value = false;
             showSuccessModal.value = true;
+            loadingSign.value = false;
           } catch (e) {
+            loadingSign.value = false;
             if (!showConfirmModal.value) {
               ledgerErrorHandler(e);
               showConfirmLedgerModal.value = false;
@@ -1146,12 +1146,14 @@ export default {
           await signAndSendTransfer(tx, password.value, {
             currentToken: props.currentToken,
           });
+          loadingSign.value = false;
           password.value = '';
           showConfirmModal.value = false;
           showSuccessModal.value = true;
           isLoading.value = false;
         }
       } catch (e) {
+        loadingSign.value = false;
         console.error(e);
       }
     };
@@ -1290,6 +1292,7 @@ export default {
       iostFee,
       adding,
       currentWalletType,
+      prepareLoading,
       // bridge
       selectBridgeNetwork,
       bridgeTargetNet,
@@ -1334,7 +1337,6 @@ export default {
   &__switch {
     width: 49.5%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     margin-right: 20px;
 
@@ -1351,6 +1353,7 @@ export default {
       font-size: 18px;
       line-height: 30px;
       font-family: 'Panton_Bold';
+      margin-right: 1.5rem;
       @include md {
         font-size: 16px;
       }

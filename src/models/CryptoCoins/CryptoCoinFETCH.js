@@ -4,8 +4,6 @@ export default class CryptoCoinFETCH extends CryptoCoin {
     super(opts);
     this.privateKeyEncoded = opts.privateKeyEncoded || null;
     this.publicKey = opts.publicKey || null;
-    this.showFrozenBalance = true;
-    this.unstakeingPerioud = '28';
     this.hasRedelegation = true;
   }
 

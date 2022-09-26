@@ -5,7 +5,6 @@ export default class CryptoCoinTEZ extends CryptoCoin {
     super(opts);
     this.privateKeyEncoded = opts.privateKeyEncoded || null;
     this.publicKey = opts.publicKey || null;
-    this.hasUnstakeingPerioud = false;
     this.hideMemo = true;
     this.messages = {
       frozenBalance: 'balanceTooltipInfo.frozenBalanceBalanceInfo1',

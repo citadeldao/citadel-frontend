@@ -101,7 +101,7 @@ export default {
             walletOpts: {
               ...data,
               importedFromSeed: walletOpts.importedFromSeed,
-              mnemonicEncoded: wallet.mnemonicEncoded,
+              mnemonic: walletOpts.mnemonic,
               privateKeyEncoded: wallet.privateKeyEncoded,
             },
             password: walletOpts.password,
@@ -147,6 +147,7 @@ export default {
   padding: 0 44px 40px;
   flex-grow: 1;
   margin-bottom: 8px;
+  height: 100%;
 
   @include lg {
     padding: 0 40px 40px;

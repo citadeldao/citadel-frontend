@@ -136,6 +136,7 @@
       </div>
       <PrimaryButton
         :disabled="!selectedAddress || !selectedContract"
+        :loading="loadingClaim"
         class="claim-btn"
         @click="prepareClaim"
       >
@@ -150,6 +151,7 @@
           :disabled="confirmModalDisabled"
           :submit-button="false"
           type="action"
+          :loading="loadingSign"
           :title="$t('multisigBalance.confirmModalTitle')"
           :desc="$t('multisigBalance.confirmModalDescription')"
           :button-text="$t('confirm')"
@@ -310,6 +312,8 @@ export default {
     const store = useStore();
     const searchAddress = ref('');
     const searchContract = ref('');
+    const loadingClaim = ref(false);
+    const loadingSign = ref(false);
 
     const selectedAddress = ref('');
     const selectedContract = ref('');
@@ -385,14 +389,16 @@ export default {
       { id: 4, title: 'Team' },
     ]);
 
-    const selectAddress = (address) => {
+    const selectAddress = async (address) => {
       selectedAddress.value = address;
 
       if (address && selectedContract.value) {
-        store.dispatch('investors/getPrivateSaleInfo', {
+        loadingClaim.value = true;
+        await store.dispatch('investors/getPrivateSaleInfo', {
           address: selectedAddress.value,
           category: selectedContract.value,
         });
+        loadingClaim.value = false;
       }
 
       if (address) {
@@ -403,15 +409,17 @@ export default {
       }
     };
 
-    const selectContract = (contract) => {
+    const selectContract = async (contract) => {
       // formatted param
       selectedContract.value = contract.replace(' ', '').toLowerCase();
 
       if (contract && selectedAddress.value) {
-        store.dispatch('investors/getPrivateSaleInfo', {
+        loadingClaim.value = true;
+        await store.dispatch('investors/getPrivateSaleInfo', {
           address: selectedAddress.value,
           category: selectedContract.value,
         });
+        loadingClaim.value = false;
       }
     };
 
@@ -422,15 +430,17 @@ export default {
     };
 
     const prepareClaim = async () => {
+      loadingClaim.value = true;
       showClaimModal.value = true;
       await store.dispatch('investors/getPreparePrivateClaim', {
         address: selectedAddress.value,
         category: selectedContract.value,
       });
+      loadingClaim.value = false;
     };
 
     const confirmClaim = async () => {
-      console.log('signerWallet.value', signerWallet.value);
+      loadingSign.value = true;
       if (
         signerWallet.value.type === WALLET_TYPES.PUBLIC_KEY &&
         selectedAddress.value &&
@@ -443,11 +453,13 @@ export default {
           );
 
         if (metamaskResult.error) {
+          loadingSign.value = false;
           notify({
             type: 'warning',
             text: metamaskResult.error,
           });
         } else {
+          loadingSign.value = false;
           confirmModalDisabled.value = false;
           store.commit('investors/SET_PREPARE_PRIVATE_CLAIM', null, {
             root: true,
@@ -483,6 +495,7 @@ export default {
       });
 
       if (result.error) {
+        loadingSign.value = false;
         confirmModalDisabled.value = false;
         store.commit('investors/SET_PREPARE_PRIVATE_CLAIM', null, {
           root: true,
@@ -497,6 +510,7 @@ export default {
         return;
       }
 
+      loadingSign.value = false;
       confirmModalDisabled.value = false;
       store.commit('investors/SET_PREPARE_PRIVATE_CLAIM', null, { root: true });
       showClaimModal.value = false;
@@ -528,6 +542,8 @@ export default {
     };
 
     return {
+      loadingSign,
+      loadingClaim,
       txComment,
       successClickHandler,
       preparePrivateClaim,

@@ -112,6 +112,7 @@
           :desc="$t('claim.confirmModalDesc')"
           button-text="confirm"
           type="action"
+          :loading="isLoading"
           :disabled="!!inputError"
           @close="claimModalCloseHandler"
           @buttonClick="claim"
@@ -134,6 +135,7 @@
           v-click-away="claimModalCloseHandler"
           :title="$t('claim.confirmModalTitle')"
           :desc="$t('claim.confirmModalDesc')"
+          :loading="isLoading"
           button-text="confirm"
           type="action"
           @close="claimModalCloseHandler"
@@ -156,6 +158,7 @@
           button-text="restake"
           type="action"
           :disabled="disabled"
+          :loading="isLoading"
           :has-slot="true"
           @close="claimModalCloseHandler"
           @buttonClick="restakeXctRewards"
@@ -660,9 +663,17 @@ export default {
             showConfirmUnstakedClaim.value = false;
             showClaimSuccessModal.value = true;
             isLoading.value = false;
+            notify({
+              type: 'success',
+              text: t('claim.claimSuccessfuly'),
+            });
           } else {
             claimModalCloseHandler();
             isLoading.value = false;
+            notify({
+              type: 'warning',
+              text: res.error,
+            });
           }
         }
       }

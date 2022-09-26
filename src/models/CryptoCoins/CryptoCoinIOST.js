@@ -6,9 +6,7 @@ export default class CryptoCoinIOST extends CryptoCoin {
     this.privateKeyEncoded = opts.privateKeyEncoded || null;
     this.publicKey = opts.publicKey || null;
     this.hasPledged = true;
-    this.showFrozenBalance = true;
     this.hasFee = false;
-    this.unstakeingPerioud = '3';
   }
 
   static hasAccount = true;

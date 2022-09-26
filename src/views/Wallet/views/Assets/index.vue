@@ -59,16 +59,14 @@
           is-native-token
           :is-active="currentWallet.net === stateCurrentWallet.net"
           @click="setCurrentToken(stateCurrentWallet)"
+          :class="{ 'assets-single__item': !displayData.length }"
         />
         <AssetsItem
           v-for="(item, index) in displayData"
           :key="`${item.name}-${index}`"
           :balance="item.tokenBalance"
           :item="item"
-          :is-not-linked="
-            isNotLinkedSnip20(item) &&
-            stateCurrentWallet.type !== WALLET_TYPES.KEPLR
-          "
+          :is-not-linked="isNotLinkedSnip20(item)"
           :is-active="item.net === currentWallet.net"
           @click="setCurrentToken(item)"
         />
@@ -212,14 +210,6 @@ export default {
     ]);
     const filterValue = ref(filterList.value[3].value);
 
-    // const stateCurrentWalletPrice = computed(() => {
-    //   console.log(props.currentWallet, stateCurrentWallet, 'test');
-    //   if (props.currentWallet.net === stateCurrentWallet.value.net) {
-    //     return store.getters['profile/rates'][props.currentWallet.net].USD;
-    //   }
-    //   return props.currentWallet.tokenBalance.price.USD;
-    // });
-
     const isNotLinkedSnip20 = (token) => {
       const isSnip20 = computed(
         () => token.config.standard === TOKEN_STANDARDS.SNIP_20
@@ -237,11 +227,10 @@ export default {
           wallet: store.getters['wallets/walletByAddress'](route.params),
           root: true,
         });
-      } else if (
-        isNotLinkedSnip20(token) &&
-        !token.linked &&
-        stateCurrentWallet.value.type !== WALLET_TYPES.KEPLR
-      ) {
+      } else if (isNotLinkedSnip20(token) && !token.linked) {
+        if (stateCurrentWallet.value.type === WALLET_TYPES.PUBLIC_KEY) {
+          return;
+        }
         mainIsLoading.value = true;
         snip20TokenFee.value =
           (await token.getFees(token.id, token.net))?.data?.high?.fee || 0.2;
@@ -271,7 +260,7 @@ export default {
       const data = [...filteredTokensList.value].sort(
         (a, b) => isNotLinkedSnip20(b) - isNotLinkedSnip20(a)
       );
-      const byAlphabet = sortByAlphabet(data, 'code').sort(
+      const byAlphabet = sortByAlphabet(data, 'name').sort(
         (a, b) => isNotLinkedSnip20(b) - isNotLinkedSnip20(a)
       );
       const byValue = data
@@ -295,10 +284,11 @@ export default {
         (e) => e.net === OUR_TOKEN
       );
       if (indexXCT !== -1) {
-        [filteredTokens.value[0], filteredTokens.value[indexXCT]] = [
-          filteredTokens.value[indexXCT],
-          filteredTokens.value[0],
-        ];
+        const xctItem = filteredTokens.value[indexXCT];
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+        filteredTokens.value.splice(indexXCT, 1);
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+        filteredTokens.value.splice(0, 0, xctItem);
       }
       if (!keyword.value) {
         return filteredTokens.value;
@@ -471,7 +461,9 @@ export default {
   border-radius: 16px;
   background: $white;
   padding: 24px 0 11px 0;
-
+  &-single__item {
+    margin-bottom: 0;
+  }
   &__header {
     display: flex;
     align-items: center;

@@ -5,6 +5,7 @@ import citadel from '@citadeldao/lib-citadel';
 import { i18n } from '@/plugins/i18n';
 import store from '@/store';
 import router from '@/router';
+import BigNumber from 'bignumber.js';
 
 const { t } = i18n.global;
 const CryptoJS = require('crypto-js');
@@ -36,16 +37,22 @@ export default class CryptoCoin {
     this.hasClaim = opts?.config?.methods?.claim || false;
     this.hasPledged = false;
     this.hasFee = true;
-    this.showFrozenBalance = false;
     this.importedFromSeed = opts?.importedFromSeed || false;
     this.decimals = opts?.config?.decimals;
     this.hasCustomFee = opts?.config?.fee_key === 'fee';
+    this.minAmount = BigNumber(0.1)
+      .exponentiatedBy(opts?.config?.decimals)
+      .toNumber()
+      .toFixed(opts?.config?.decimals);
+    this.unstakeingPerioud = opts?.config?.unstakeingPerioud;
 
-    this.hasUnstakeingPerioud = true;
     this.messages = {
       frozenBalance: 'balanceTooltipInfo.frozenBalanceBalanceInfo2',
     };
     this.isCosmosNetwork = cosmosNetworks.includes(this.net);
+    opts.config.nativeTokenName
+      ? (this.nativeTokenName = opts.config.nativeTokenName)
+      : '';
   }
 
   getScannerLink() {

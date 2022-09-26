@@ -57,12 +57,12 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: flex-end;
   position: relative;
   padding: 50px 0 0;
   box-sizing: border-box;
   min-height: 100vh;
-  height: 100vh;
+  //height: 100vh;
   overflow-y: auto;
   background: linear-gradient(255.4deg, #f0f2fc 0%, #edf2fc 100%);
 
@@ -108,16 +108,29 @@ export default {
   &__wrap {
     width: 1140px;
     transition: none;
+    min-height: 796px;
+    height: 100%;
+    @media (max-height: 944px) {
+      min-height: 84vh;
+    }
+    @media (max-height: 880px) {
+      min-height: 83vh;
+    }
+    @media (max-height: 828px) {
+      min-height: 82vh;
+    }
+    @media (max-height: 782px) {
+      min-height: 81vh;
+    }
     @include md {
       width: 100%;
     }
 
     &.menu-item {
       margin-top: 38px;
-      height: calc(100% - 38px);
     }
     &:deep > div {
-      height: calc(100% - 38px);
+      min-height: inherit;
     }
   }
 }
