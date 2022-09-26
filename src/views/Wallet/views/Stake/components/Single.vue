@@ -421,7 +421,7 @@ export default {
       isLoading.value = true;
       const { rawTxs, ok } = await props.currentWallet.prepareDelegation({
         walletId: props.currentWallet.id,
-        nodeAddress: selectedNode.value.address,
+        nodeAdresses: selectedNode.value.address,
         kt: currentKtAddress.value ? currentKtAddress.value.address : undefined,
       });
 
