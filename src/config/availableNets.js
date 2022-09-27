@@ -93,3 +93,5 @@ export const keplrNetworks = [
   { label: 'AssetMantle', key: 'mantle-1', net: 'mantle' },
   { label: 'Crescent', key: 'crescent-1', net: 'crescent' },
 ];
+
+export const showAssetsExep = ['secret', 'bsc'];
