@@ -1089,6 +1089,7 @@ export default {
           showConfirmModal.value = false;
           showSuccessModal.value = true;
           txHash.value = [data.data.txhash];
+          return;
         } else {
           loadingSign.value = false;
           notify({
