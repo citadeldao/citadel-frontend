@@ -965,8 +965,13 @@ export default {
       }
 
       prepareLoading.value = true;
-      await prepareTransfer(transferParams.value);
-      prepareLoading.value = false;
+      try {
+        await prepareTransfer(transferParams.value);
+        prepareLoading.value = false;
+      } catch (err) {
+        prepareLoading.value = false;
+        return;
+      }
 
       if (!rawTxError.value) {
         showConnectLedgerModal.value = false;
