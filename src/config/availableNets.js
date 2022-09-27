@@ -39,9 +39,10 @@ export const ledgerNets = [
   'arbitrum',
   'polygon',
   'oasis',
+  'evmos',
+  // 'injective',
   'stafi',
   'stride',
-  // 'evmos',
   'tron',
 ];
 
