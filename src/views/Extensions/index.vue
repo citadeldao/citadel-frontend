@@ -1150,6 +1150,7 @@ export default {
           citadel.addEventListener('ledgerSigningStarted', () => {});
           // send success message to app
           if (response?.data) {
+            signLoading.value = false;
             confirmModalDisabled.value = false;
             showLedgerConnect.value = false;
             successTx.value = response.data;
