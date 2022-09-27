@@ -212,6 +212,7 @@ export default {
     };
     const logout = async () => {
       store.dispatch('app/setLoader', true);
+      await store.dispatch('profile/getInfo');
       const { data } = await store.dispatch('auth/logout');
 
       if (data) {
@@ -228,9 +229,10 @@ export default {
 
         keplrConnector.value.disconnect();
         metamaskConnector.value.disconnect();
+        window.location.reload();
 
-        setTimeout(() => {
-          router.push({ name: 'Login' });
+        setTimeout(async () => {
+          await router.push({ name: 'Login' });
         }, 1500);
 
         setTimeout(() => {
