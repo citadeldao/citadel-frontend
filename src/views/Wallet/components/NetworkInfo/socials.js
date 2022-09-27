@@ -632,7 +632,7 @@ export default {
     },
     landing: {
       title: 'Coingecko',
-      href: 'hhttps://www.coingecko.com/en/coins/stafi',
+      href: 'https://www.coingecko.com/en/coins/stafi',
     },
   },
   stride: {
