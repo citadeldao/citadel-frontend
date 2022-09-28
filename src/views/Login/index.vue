@@ -465,7 +465,6 @@ export default {
     const addLoading = ref(false);
 
     const onWeb3AddressConfirm = async () => {
-      addLoading.value = true;
       let address = '';
       let net = '';
       if (loginWith.value === 'metamask') {
@@ -480,6 +479,7 @@ export default {
           return;
         }
       }
+      addLoading.value = true;
 
       if (loginWith.value === 'keplr') {
         address = keplrConnector.value.accounts[0].address;
