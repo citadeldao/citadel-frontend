@@ -837,6 +837,16 @@ export default {
     // const parseNetworkLength = parseNetwork.length + 1;
 
     const incorrectAddress = computed(() => {
+      // for networks that has not selfSend
+      if (
+        toAddress.value &&
+        props.currentWallet.noSelfSend &&
+        toAddress.value.toLowerCase() ===
+          props.currentWallet.address.toLowerCase()
+      ) {
+        return t('noSelfSendError');
+      }
+
       // validate if switch another network
       const validateAddress = (address, validateNetwork) => {
         const regExp = new RegExp(
