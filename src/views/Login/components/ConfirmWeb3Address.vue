@@ -37,6 +37,7 @@
     </div>
     <PrimaryButton
       class="confirm-web3-address__confirm"
+      :loading="loading"
       @click="$emit('confirm')"
       >{{ $t('confirm') }}</PrimaryButton
     >
@@ -58,6 +59,10 @@ export default {
     PrimaryButton,
   },
   props: {
+    loading: {
+      type: Boolean,
+      default: false,
+    },
     isKeplr: {
       type: Boolean,
     },

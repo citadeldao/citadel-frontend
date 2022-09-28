@@ -76,6 +76,7 @@
               :is-keplr="!!keplrConnector.accounts[0].address"
               :name="keplrNetworks[0].label"
               :network="keplrNetworks[0].net"
+              :loading="addLoading"
               :address="keplrConnector.accounts[0].address"
               @cancel="onWeb3AddressCancel"
               @confirm="onWeb3AddressConfirm"
@@ -90,6 +91,7 @@
                   : 'Ethereum'
               "
               :network="metamaskConnector.network"
+              :loading="addLoading"
               :address="metamaskConnector.accounts[0]"
               @cancel="onWeb3AddressCancel"
               @confirm="onWeb3AddressConfirm"
@@ -98,7 +100,7 @@
             <SelectLanguage
               v-if="confirmedAddress"
               @accountCreate="onAccountCreate"
-              @cancel="confirmedAddress = false"
+              @cancel="onAccountCreate"
             />
 
             <Verification
@@ -218,6 +220,7 @@ export default {
     const { wallets } = useWallets();
 
     const onAccountCreate = async () => {
+      window.localStorage.setItem('setLang', true);
       await redirectToWallet({
         wallet: { address: newAddress.value, net: newAddressNet.value },
         root: true,
@@ -459,7 +462,10 @@ export default {
       onUseEmail();
     };
 
+    const addLoading = ref(false);
+
     const onWeb3AddressConfirm = async () => {
+      addLoading.value = true;
       let address = '';
       let net = '';
       if (loginWith.value === 'metamask') {
@@ -505,13 +511,21 @@ export default {
           store.dispatch('transactions/getMempool');
         }
 
-        const searchLoginAddress = store.getters['wallets/wallets'].find(
-          (w) => {
+        let searchLoginAddress = store.getters['wallets/wallets'].find((w) => {
+          return (
+            w.address.toLowerCase() === address.toLowerCase() &&
+            w.net === net &&
+            w.type !== WALLET_TYPES.PUBLIC_KEY
+          );
+        });
+
+        if (loginWith.value === 'metamask') {
+          searchLoginAddress = store.getters['wallets/wallets'].find((w) => {
             return (
               w.address.toLowerCase() === address.toLowerCase() && w.net === net
             );
-          }
-        );
+          });
+        }
 
         if (!searchLoginAddress) {
           setAddress(address);
@@ -524,8 +538,12 @@ export default {
               )
             );
           }
-          createWallets(walletType, false);
+          await createWallets(walletType, false);
           confirmedAddress.value = true;
+          await redirectToWallet({
+            wallet: { address, net },
+            root: true,
+          });
         } else {
           await redirectToWallet({
             wallet: { address, net },
@@ -562,8 +580,10 @@ export default {
         if (res.isNeedCaptcha) {
           window.document.querySelector('#do-something-btn').click();
           auth();
+          addLoading.value = false;
         } else {
           auth();
+          addLoading.value = false;
         }
       }
 
@@ -589,12 +609,13 @@ export default {
           });
 
           if (data) {
-            initialize(WALLET_TYPES.KEPLR);
+            await initialize(WALLET_TYPES.KEPLR);
           } else {
             notify({
               type: 'warning',
               text: error,
             });
+            addLoading.value = false;
           }
         }
       };
@@ -603,9 +624,11 @@ export default {
         if (data) {
           if (res.isNeedCaptcha) {
             window.document.querySelector('#do-something-btn').click();
-            authKeplr();
+            await authKeplr();
+            addLoading.value = false;
           } else {
-            authKeplr();
+            await authKeplr();
+            addLoading.value = false;
           }
         } else {
           notify({
@@ -643,6 +666,7 @@ export default {
       confirmedAddress,
       userName,
       onAccountCreate,
+      addLoading,
 
       syncMode,
       showSyncBlock,

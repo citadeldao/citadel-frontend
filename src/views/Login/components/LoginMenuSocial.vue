@@ -87,7 +87,15 @@ export default {
     display: flex;
     justify-content: center;
 
+    svg {
+      fill: #1a53f0;
+    }
+
     &:hover {
+      svg {
+        fill: #000;
+      }
+
       box-shadow: 0px 15px 50px rgba(80, 100, 124, 0.1),
         0px 10px 15px rgba(80, 100, 124, 0.16);
 
