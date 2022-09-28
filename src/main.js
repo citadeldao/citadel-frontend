@@ -12,7 +12,7 @@ import prettyNumber from '@/directives/prettyNumber';
 import 'vue3-resize/dist/vue3-resize.css';
 import Vue3Resize from 'vue3-resize';
 import citadel from '@citadeldao/lib-citadel';
-import hljsVuePlugin from '@highlightjs/vue-plugin';
+// import hljsVuePlugin from '@highlightjs/vue-plugin';
 import * as Sentry from '@sentry/vue';
 import { Integrations } from '@sentry/tracing';
 import Vue from 'vue';
@@ -37,7 +37,7 @@ if (process.env.VUE_APP_SENTRY_DSN) {
 
 app
   .directive('pretty-number', prettyNumber)
-  .use(hljsVuePlugin)
+  // .use(hljsVuePlugin)
   .use(i18n)
   .use(VueClickAway)
   .use(store)
