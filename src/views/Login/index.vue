@@ -219,8 +219,10 @@ export default {
 
     const { wallets } = useWallets();
 
-    const onAccountCreate = async () => {
-      window.localStorage.setItem('setLang', true);
+    const onAccountCreate = async (isChangeLang) => {
+      if (isChangeLang) {
+        window.localStorage.setItem('setLang', true);
+      }
       await redirectToWallet({
         wallet: { address: newAddress.value, net: newAddressNet.value },
         root: true,
@@ -540,10 +542,6 @@ export default {
           }
           await createWallets(walletType, false);
           confirmedAddress.value = true;
-          await redirectToWallet({
-            wallet: { address, net },
-            root: true,
-          });
         } else {
           await redirectToWallet({
             wallet: { address, net },
@@ -553,11 +551,17 @@ export default {
       };
 
       if (loginWith.value === 'metamask') {
+        addLoading.value = true;
         const auth = async () => {
-          const metamaskResult = await metamaskConnector.value.signMessage(
-            res.message,
-            address
-          );
+          let metamaskResult;
+          try {
+            metamaskResult = await metamaskConnector.value.signMessage(
+              res.message,
+              address
+            );
+          } catch (err) {
+            addLoading.value = false;
+          }
 
           const { data, error } = await store.dispatch('auth/confirmWeb3', {
             address,
@@ -568,8 +572,10 @@ export default {
           });
 
           if (data) {
-            initialize(WALLET_TYPES.PUBLIC_KEY);
+            await initialize(WALLET_TYPES.PUBLIC_KEY);
+            addLoading.value = false;
           } else {
+            addLoading.value = false;
             notify({
               type: 'warning',
               text: error,
@@ -579,10 +585,10 @@ export default {
 
         if (res.isNeedCaptcha) {
           window.document.querySelector('#do-something-btn').click();
-          auth();
+          await auth();
           addLoading.value = false;
         } else {
-          auth();
+          await auth();
           addLoading.value = false;
         }
       }
