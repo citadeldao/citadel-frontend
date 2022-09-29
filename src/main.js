@@ -35,14 +35,6 @@ if (process.env.VUE_APP_SENTRY_DSN) {
   });
 }
 
-if (window.navigator && navigator.serviceWorker) {
-  navigator.serviceWorker.getRegistrations().then((registrations) => {
-    for (const registration of registrations) {
-      registration.unregister();
-    }
-  });
-}
-
 app
   .directive('pretty-number', prettyNumber)
   .use(hljsVuePlugin)

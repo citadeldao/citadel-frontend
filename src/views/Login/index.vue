@@ -82,6 +82,7 @@
               :is-keplr="!!keplrConnector.accounts[0].address"
               :name="keplrNetworks[0].label"
               :network="keplrNetworks[0].net"
+              :loading="addLoading"
               :address="keplrConnector.accounts[0].address"
               @cancel="onWeb3AddressCancel"
               @confirm="onWeb3AddressConfirm"
@@ -96,6 +97,7 @@
                   : 'Ethereum'
               "
               :network="metamaskConnector.network"
+              :loading="addLoading"
               :address="metamaskConnector.accounts[0]"
               @cancel="onWeb3AddressCancel"
               @confirm="onWeb3AddressConfirm"
@@ -104,7 +106,7 @@
             <SelectLanguage
               v-if="confirmedAddress"
               @accountCreate="onAccountCreate"
-              @cancel="confirmedAddress = false"
+              @cancel="onAccountCreate"
             />
 
             <Verification
@@ -124,6 +126,16 @@
         <WhyCitadel v-if="showEmailModal" @close="showEmailModal = false" />
       </main>
     </div>
+    <InvisibleRecaptcha
+      :style="'display: none'"
+      sitekey="6LcpPNohAAAAAAjgV2kbQCps_nMLFodkdEH6aYXs"
+      :callback="getToken"
+      class="btn btn-danger"
+      type="submit"
+      id="do-something-btn"
+    >
+      Do something!
+    </InvisibleRecaptcha>
   </div>
 </template>
 
@@ -158,8 +170,10 @@ import { WALLET_TYPES } from '@/config/walletType';
 import { keplrNetworks } from '@/config/availableNets';
 import useCreateWallets from '@/compositions/useCreateWallets';
 import { useI18n } from 'vue-i18n';
+
 import PrivacyModal from '@/components/Modals/Privacy';
 import TermsModal from '@/components/Modals/Terms';
+import InvisibleRecaptcha from 'vue-invisible-recaptcha';
 const WALLET_MENU_TYPE = {
   social: 'sosical',
   web3: 'web3',
@@ -168,6 +182,7 @@ const WALLET_MENU_TYPE = {
 export default {
   name: 'Login',
   components: {
+    InvisibleRecaptcha,
     citadelLogo,
     LoginForm,
     Verification,
@@ -210,17 +225,26 @@ export default {
     const confirmedAddress = ref(false);
     const newAddress = ref('');
     const newAddressNet = ref('');
+    const captchaToken = ref('');
 
     const { setNets, setAddress, setPublicKey, createWallets } =
       useCreateWallets();
 
     const { wallets } = useWallets();
 
-    const onAccountCreate = async () => {
+    const onAccountCreate = async (isChangeLang) => {
+      if (isChangeLang) {
+        window.localStorage.setItem('setLang', true);
+      }
       await redirectToWallet({
         wallet: { address: newAddress.value, net: newAddressNet.value },
         root: true,
       });
+    };
+
+    const getToken = async (e) => {
+      captchaToken.value = e;
+      console.log('captchaToken.value', captchaToken.value);
     };
 
     const metamaskConnector = computed(
@@ -453,6 +477,8 @@ export default {
       onUseEmail();
     };
 
+    const addLoading = ref(false);
+
     const onWeb3AddressConfirm = async () => {
       let address = '';
       let net = '';
@@ -468,6 +494,7 @@ export default {
           return;
         }
       }
+      addLoading.value = true;
 
       if (loginWith.value === 'keplr') {
         address = keplrConnector.value.accounts[0].address;
@@ -499,13 +526,21 @@ export default {
           store.dispatch('transactions/getMempool');
         }
 
-        const searchLoginAddress = store.getters['wallets/wallets'].find(
-          (w) => {
+        let searchLoginAddress = store.getters['wallets/wallets'].find((w) => {
+          return (
+            w.address.toLowerCase() === address.toLowerCase() &&
+            w.net === net &&
+            w.type !== WALLET_TYPES.PUBLIC_KEY
+          );
+        });
+
+        if (loginWith.value === 'metamask') {
+          searchLoginAddress = store.getters['wallets/wallets'].find((w) => {
             return (
               w.address.toLowerCase() === address.toLowerCase() && w.net === net
             );
-          }
-        );
+          });
+        }
 
         if (!searchLoginAddress) {
           setAddress(address);
@@ -518,7 +553,7 @@ export default {
               )
             );
           }
-          createWallets(walletType, false);
+          await createWallets(walletType, false);
           confirmedAddress.value = true;
         } else {
           await redirectToWallet({
@@ -529,57 +564,90 @@ export default {
       };
 
       if (loginWith.value === 'metamask') {
-        const metamaskResult = await metamaskConnector.value.signMessage(
-          res.message,
-          address
-        );
+        addLoading.value = true;
+        const auth = async () => {
+          let metamaskResult;
+          try {
+            metamaskResult = await metamaskConnector.value.signMessage(
+              res.message,
+              address
+            );
+          } catch (err) {
+            addLoading.value = false;
+          }
 
-        const { data, error } = await store.dispatch('auth/confirmWeb3', {
-          address,
-          net,
-          sign: metamaskResult,
-          pubKey: '',
-        });
-
-        if (data) {
-          initialize(WALLET_TYPES.PUBLIC_KEY);
-        } else {
-          notify({
-            type: 'warning',
-            text: error,
+          const { data, error } = await store.dispatch('auth/confirmWeb3', {
+            address,
+            net,
+            sign: metamaskResult,
+            captchaResKey: captchaToken.value,
+            pubKey: '',
           });
+
+          if (data) {
+            await initialize(WALLET_TYPES.PUBLIC_KEY);
+            addLoading.value = false;
+          } else {
+            addLoading.value = false;
+            notify({
+              type: 'warning',
+              text: error,
+            });
+          }
+        };
+
+        if (res.isNeedCaptcha) {
+          window.document.querySelector('#do-something-btn').click();
+          await auth();
+          addLoading.value = false;
+        } else {
+          await auth();
+          addLoading.value = false;
         }
       }
 
+      const authKeplr = async () => {
+        const keplrResult = await keplrConnector.value.sendKeplrTransaction(
+          res.message,
+          address,
+          {
+            preferNoSetFee: true,
+            preferNoSetMemo: true,
+          }
+        );
+
+        if (keplrResult.signature) {
+          const { data, error } = await store.dispatch('auth/confirmWeb3', {
+            address,
+            net,
+            sign: keplrResult.signature,
+            captchaResKey: captchaToken.value,
+            pubKey: Buffer.from(
+              keplrConnector.value.accounts[0].pubkey
+            ).toString('hex'),
+          });
+
+          if (data) {
+            await initialize(WALLET_TYPES.KEPLR);
+          } else {
+            notify({
+              type: 'warning',
+              text: error,
+            });
+            addLoading.value = false;
+          }
+        }
+      };
+
       if (loginWith.value === 'keplr') {
         if (data) {
-          const keplrResult = await keplrConnector.value.sendKeplrTransaction(
-            res.message,
-            address,
-            {
-              preferNoSetFee: true,
-              preferNoSetMemo: true,
-            }
-          );
-
-          if (keplrResult.signature) {
-            const { data, error } = await store.dispatch('auth/confirmWeb3', {
-              address,
-              net,
-              sign: keplrResult.signature,
-              pubKey: Buffer.from(
-                keplrConnector.value.accounts[0].pubkey
-              ).toString('hex'),
-            });
-
-            if (data) {
-              initialize(WALLET_TYPES.KEPLR);
-            } else {
-              notify({
-                type: 'warning',
-                text: error,
-              });
-            }
+          if (res.isNeedCaptcha) {
+            window.document.querySelector('#do-something-btn').click();
+            await authKeplr();
+            addLoading.value = false;
+          } else {
+            await authKeplr();
+            addLoading.value = false;
           }
         } else {
           notify({
@@ -599,6 +667,7 @@ export default {
     return {
       showPrivacy,
       showTerms,
+      getToken,
       WALLET_MENU_TYPE,
       onLoginSocial,
       onLoginWeb3,
@@ -618,6 +687,7 @@ export default {
       confirmedAddress,
       userName,
       onAccountCreate,
+      addLoading,
 
       syncMode,
       showSyncBlock,

@@ -40,13 +40,21 @@ export default {
     const store = useStore();
     const languages = computed(() => store.getters['i18n/locales']);
     const currentLanguage = ref(store.getters['i18n/locale']);
+    const updateLangValue = ref('');
+    const initialLang = currentLanguage.value;
 
     const changeLanguage = async (value) => {
+      updateLangValue.value = value;
       await store.dispatch('i18n/setLocale', value);
     };
 
     const next = () => {
-      emit('accountCreate');
+      emit(
+        'accountCreate',
+        updateLangValue.value && updateLangValue.value !== initialLang
+          ? true
+          : false
+      );
     };
 
     return {

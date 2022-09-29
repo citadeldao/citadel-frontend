@@ -87,11 +87,12 @@ export default {
         };
       }
     },
-    async confirmWeb3(_, { address, sign, pubKey, net }) {
+    async confirmWeb3(_, { address, sign, captchaResKey, pubKey, net }) {
       try {
         const { ok, error } = await api.confirmWeb3({
           address,
           sign,
+          captchaResKey,
           pubKey,
           net,
         });
