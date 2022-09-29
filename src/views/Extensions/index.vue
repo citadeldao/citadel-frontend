@@ -33,7 +33,7 @@
               showAppInfoModal ? (showAppInfoModal = false) : null;
             }
           "
-          width="900px"
+          width="600px"
           :title="selectedApp.name"
           :desc="selectedApp.short_description"
           :internal-icon="selectedApp.logo"
