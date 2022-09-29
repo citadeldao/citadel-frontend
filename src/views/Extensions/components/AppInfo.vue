@@ -50,7 +50,7 @@
             :src="app.url_video"
             frameBorder="0"
             width="100%"
-            height="450"
+            height="350"
             align="left"
             class="extensions__frame"
           />
@@ -120,7 +120,7 @@ export default {
 </script>
 <style scoped lang="scss">
 .app-info {
-  width: 900px;
+  width: 600px;
   display: flex;
   box-sizing: border-box;
   flex-direction: column;

@@ -72,7 +72,7 @@
           {{ $t(`confirm`) }}
         </PrimaryButton>
       </div>
-      <div class="goToImportVk" v-if="!isKeplrWallet">
+      <div class="goToImportVk">
         {{ $t('viewingKey.iHaveVk') }}
         &nbsp;
         <span @click="goToImportVk">{{ $t('import') }}</span>
@@ -402,13 +402,17 @@ export default {
           showConfirmModal.value = false;
           // clearLedgerModals();
           showConfirmLedgerModal.value = true;
-          // for ledger catch sign finish event and then show loader until set VK is completed
-          citadel.addEventListener('ledgerSignFinished', () => {
+          // for ledger catch sign finish and start event and then show loader until sign is completed
+          citadel.addEventListener('ledgerSigningFinished', () => {
             showConfirmModal.value = true;
             showConfirmLedgerModal.value = false;
             isConfirmModalLoading.value = true;
-            // remove listener
-            citadel.addEventListener('ledgerSignFinished', () => {});
+          });
+
+          citadel.addEventListener('ledgerSigningStarted', () => {
+            showConfirmModal.value = false;
+            showConfirmLedgerModal.value = true;
+            isConfirmModalLoading.value = false;
           });
         }
 
@@ -421,6 +425,9 @@ export default {
             fee: props.tokenFee,
           }
         );
+        // remove listeners
+        citadel.addEventListener('ledgerSigningFinished', () => {});
+        citadel.addEventListener('ledgerSigningStarted', () => {});
 
         // showConfirmLedgerModal.value = false;
         error = resError;

@@ -230,6 +230,7 @@
           :wallet="currentWallet"
           :amount="amount"
           :max-amount="maxAmount"
+          :confirm-clicked="confirmClicked"
           :total-amount="totalAmount"
           :fees="fees"
           :memo="memo"
@@ -837,6 +838,16 @@ export default {
     // const parseNetworkLength = parseNetwork.length + 1;
 
     const incorrectAddress = computed(() => {
+      // for networks that has not selfSend
+      if (
+        toAddress.value &&
+        props.currentWallet.noSelfSend &&
+        toAddress.value.toLowerCase() ===
+          props.currentWallet.address.toLowerCase()
+      ) {
+        return t('noSelfSendError');
+      }
+
       // validate if switch another network
       const validateAddress = (address, validateNetwork) => {
         const regExp = new RegExp(
@@ -891,15 +902,18 @@ export default {
           !toAddress.value
         )
     );
+    const confirmClicked = ref(false);
 
     // Check Password
     const { password, passwordError, inputError } = useCheckPassword();
     provide('inputError', inputError);
-    const confirmModalDisabled = computed(
-      () =>
+    const confirmModalDisabled = computed(() => {
+      return (
         (!isHardwareWallet.value && !!inputError.value) ||
-        insufficientFunds.value
-    );
+        insufficientFunds.value ||
+        (confirmClicked.value && passwordError.value === 'Incorrect password')
+      );
+    });
     const currentKtAddress = inject('currentKtAddress');
     // Prepare and Send tx
     const transferParams = computed(() => ({
@@ -955,8 +969,13 @@ export default {
       }
 
       prepareLoading.value = true;
-      await prepareTransfer(transferParams.value);
-      prepareLoading.value = false;
+      try {
+        await prepareTransfer(transferParams.value);
+        prepareLoading.value = false;
+      } catch (err) {
+        prepareLoading.value = false;
+        return;
+      }
 
       if (!rawTxError.value) {
         showConnectLedgerModal.value = false;
@@ -1089,6 +1108,7 @@ export default {
           showConfirmModal.value = false;
           showSuccessModal.value = true;
           txHash.value = [data.data.txhash];
+          return;
         } else {
           loadingSign.value = false;
           notify({
@@ -1101,13 +1121,19 @@ export default {
         }
       }
 
+      confirmClicked.value = true;
+
       if (
-        passwordError.value &&
-        !isHardwareWallet.value &&
-        !props.currentWallet.type === WALLET_TYPES.KEPLR
+        !password.value ||
+        (passwordError.value &&
+          !isHardwareWallet.value &&
+          !props.currentWallet.type === WALLET_TYPES.KEPLR)
       ) {
         inputError.value = passwordError.value;
+        return;
+      }
 
+      if (passwordError.value === 'Incorrect password' && password.value) {
         return;
       }
 
@@ -1132,7 +1158,9 @@ export default {
             showConfirmModal.value = false;
             showSuccessModal.value = true;
             loadingSign.value = false;
+            confirmClicked.value = false;
           } catch (e) {
+            confirmClicked.value = false;
             loadingSign.value = false;
             if (!showConfirmModal.value) {
               ledgerErrorHandler(e);
@@ -1148,12 +1176,17 @@ export default {
           });
           loadingSign.value = false;
           password.value = '';
+          inputError.value = '';
+          confirmClicked.value = false;
           showConfirmModal.value = false;
           showSuccessModal.value = true;
           isLoading.value = false;
         }
       } catch (e) {
         loadingSign.value = false;
+        confirmClicked.value = false;
+        password.value = '';
+        inputError.value = '';
         console.error(e);
       }
     };
@@ -1300,6 +1333,7 @@ export default {
       showNetworkTargetWallets,
       setAddress,
       showSuccessModal,
+      confirmClicked,
     };
   },
 };
