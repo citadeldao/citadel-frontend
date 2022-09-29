@@ -551,6 +551,20 @@ export default {
       href: 'https://www.coingecko.com/en/coins/evmos',
     },
   },
+  tron: {
+    web: {
+      title: 'tron.network',
+      href: 'https://tron.network/',
+    },
+    twitter: {
+      title: '@trondao',
+      href: 'trondao',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/tron',
+    },
+  },
   polygon: {
     web: {
       title: 'polygon.technology',
@@ -605,6 +619,34 @@ export default {
     landing: {
       title: 'Coingecko',
       href: 'https://www.coingecko.com/en/coins/ethereum',
+    },
+  },
+  stafi: {
+    web: {
+      title: 'stafihub.io',
+      href: 'https://www.stafihub.io/',
+    },
+    twitter: {
+      title: '@StaFiHub_',
+      href: 'StaFiHub_',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/stafi',
+    },
+  },
+  stride: {
+    web: {
+      title: 'stride.zone',
+      href: 'https://stride.zone/',
+    },
+    twitter: {
+      title: '@stride_zone',
+      href: 'stride_zone',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/stride',
     },
   },
 };

@@ -472,6 +472,7 @@
     "totalAmount": "Total amount",
     "sendTo": "Send to",
     "sendFrom": "Send from",
+    "app": "App",
     "unstake": "Unstake",
     "Stake": "Stake",
     "receive": "Receive",
@@ -906,6 +907,7 @@
     "emptyPassword": "Empty password",
     "accruedDaily": "Accrued daily from 6-7 pm UTC",
     "extensions": {
+        "showMore": "Show more",
         "showLabel": "Show",
         "headerTitle": "Extensions Store",
         "headerDescription": "Use your favorite dApps, DeFi applications and extensions natively!",
@@ -921,7 +923,8 @@
         "transactionFee": "Transaction fee",
         "signMessage": "Sign message",
         "searchPlaceholder": "Start typing the app name",
-        "typeOperation": "Type operation"
+        "typeOperation": "Type operation",
+        "execute": "execute"
     },
     "tokenDescriptionComdex": "Comdex is a decentralized synthetic assets protocol built on the Cosmos. ",
     "tokenDescriptionJuno": "Juno is a Cosmos-based chain that provides an environment for the deployment of interoperable smart contracts.",
@@ -1137,6 +1140,11 @@
             "description": "As the world’s first AI-powered oracle and ecosystem for blockchains, Oraichain now transforms itself to become an advanced AI Layer 1 for Data Economy and Oracle services that serves as a foundational layer for the creation of a new generation of smart contracts and Dapps and create a complete AI Ecosystem on blockchain.",
             "shortDescription": "Oraichain is the world's first intelligent and secure solution for emerging Web3, scalable Dapps, and decentralized AI."
         },
+        "tron": {
+            "title": "Tron network",
+            "description": "TRON is a decentralized blockchain platform for supporting smart contracts. TRON's mission is to accelerate the decentralization of the Internet via blockchain technology and decentralized applications (dApps) and build Web 4.0 with a global free content entertainment system, where people can create, own and share content without third parties.",
+            "shortDescription": "TRON is a decentralized blockchain platform that aims to accelerate the decentralization of the Internet via blockchain technology and decentralized applications (dApps). The project's main mission is to build Web 4.0 with a global free content entertainment system."
+        },
         "optimism": {
             "title": "Optimism",
             "description": "Optimism is a Layer 2 scaling solution for Ethereum. Optimism uses advanced data compression techniques called Optimistic Rollups to speed up and cut the costs of Ethereum transactions.",
@@ -1301,5 +1309,6 @@
     },
     "dontHaveEnoughFoundsForFee": "You do not have enough funds to pay the transaction fee.",
     "asset": "asset",
+    "noSelfSendError": "Transfer wallet cannot be the same as receiving wallet.",
     "minAmountError": "Minimum amount is {minAmount} {code}"
 }

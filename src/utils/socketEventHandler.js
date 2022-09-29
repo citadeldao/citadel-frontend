@@ -1,7 +1,9 @@
 import store from '@/store/index';
 import useWallets from '@/compositions/useWallets';
 import { WALLET_TYPES } from '@/config/walletType';
+import extensionsSocketTypes from '@/config/extensionsSocketTypes';
 import notify from '@/plugins/notify';
+import citadel from '@citadeldao/lib-citadel';
 
 export async function socketEventHandler({ eventName, data }) {
   // this.socket.on('transaction-events-client', (tx) => {
@@ -58,45 +60,85 @@ export async function socketEventHandler({ eventName, data }) {
     //   }
     // });
     case 'message-from-app':
-      if (data.type === 'view-scrt-balance') {
+      if (data.type === extensionsSocketTypes.types.execute) {
+        store.commit(
+          'extensions/SET_TRANSACTION_FOR_SIGN',
+          {
+            transaction: {},
+            address: data.message.sender || data.message[0]?.sender,
+            net: 'secret',
+            messageScrt: data.message,
+            type: data.type,
+            meta_info: data.meta_info,
+          },
+          { root: true }
+        );
+      }
+
+      if (data.type === extensionsSocketTypes.types.generateVK) {
+        store.commit(
+          'extensions/SET_TRANSACTION_FOR_SIGN',
+          {
+            transaction: {},
+            address: data.message.address,
+            net: 'secret',
+            messageScrt: data.message,
+            type: data.type,
+            meta_info: data.meta_info,
+          },
+          { root: true }
+        );
+      }
+
+      if (data.type === extensionsSocketTypes.types.balance) {
+        if (!data?.message) {
+          return;
+        }
         const secretAddress = data.message.address;
-        const sSecretContract = data.message.tokenContract;
+        const tokenContract = data.message.tokenContract;
+        const tokenKey = data.message.net;
 
         const sendErrorMsg = () => {
           store.dispatch('extensions/sendCustomMsg', {
             token: store.getters['extensions/currentAppInfo'].token,
             message: {
               balance: 'Viewingkey not found, balance: ?',
-              tokenContract: sSecretContract,
+              tokenContract,
             },
             type: data.type,
           });
         };
 
         const { wallets } = useWallets();
-        const wallet = wallets.value
-          .filter((w) => w.type !== WALLET_TYPES.WALLET_TYPES)
-          .find((w) => w.address === secretAddress);
+        const wallet = wallets.value.find(
+          (w) =>
+            w.type !== WALLET_TYPES.PUBLIC_KEY && w.address === secretAddress
+        );
 
         if (wallet) {
-          store.dispatch('wallets/setCurrentWallet', wallet);
-          const searchToken = store.getters['subtokens/formatedSubtokens'](
-            'myTokens',
-            wallet
+          // update balance (by SVK, keplr etc)
+          const { data: balance, error } = await citadel.getBalanceById(
+            wallet.id,
+            tokenKey
           );
-
-          if (searchToken[0] && searchToken[0].tokenBalance) {
-            store.dispatch('extensions/sendCustomMsg', {
-              token: store.getters['extensions/currentAppInfo'].token,
-              message: {
-                balance: searchToken[0].tokenBalance.calculatedBalance,
-                tokenContract: sSecretContract,
-              },
-              type: data.type,
-            });
-          } else {
+          if (error) {
             sendErrorMsg();
+            error.code === 1 &&
+              notify({
+                type: 'warning',
+                text: error.message,
+              });
+            return;
           }
+          store.dispatch('extensions/sendCustomMsg', {
+            token: store.getters['extensions/currentAppInfo'].token,
+            message: {
+              balance: balance.calculatedBalance,
+              tokenContract,
+            },
+            type: data.type,
+          });
+          return;
         }
       }
 

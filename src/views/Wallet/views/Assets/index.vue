@@ -7,7 +7,7 @@
       v-if="
         stateCurrentWallet.balance.calculatedBalance ||
         stateCurrentWallet.subtokenBalanceUSD ||
-        stateCurrentWallet.net === 'secret' ||
+        showAssetsExep.includes(stateCurrentWallet.net) ||
         currentToken
       "
     >
@@ -66,10 +66,7 @@
           :key="`${item.name}-${index}`"
           :balance="item.tokenBalance"
           :item="item"
-          :is-not-linked="
-            isNotLinkedSnip20(item) &&
-            stateCurrentWallet.type !== WALLET_TYPES.KEPLR
-          "
+          :is-not-linked="isNotLinkedSnip20(item)"
           :is-active="item.net === currentWallet.net"
           @click="setCurrentToken(item)"
         />
@@ -162,6 +159,7 @@ import RoundArrowButton from '@/components/UI/RoundArrowButton';
 import Card from '@/components/UI/Card';
 import useWallets from '@/compositions/useWallets';
 import { OUR_TOKEN, WALLET_TYPES } from '@/config/walletType';
+import { showAssetsExep } from '@/config/availableNets';
 
 export default {
   name: 'AssetsBlock',
@@ -230,11 +228,10 @@ export default {
           wallet: store.getters['wallets/walletByAddress'](route.params),
           root: true,
         });
-      } else if (
-        isNotLinkedSnip20(token) &&
-        !token.linked &&
-        stateCurrentWallet.value.type !== WALLET_TYPES.KEPLR
-      ) {
+      } else if (isNotLinkedSnip20(token) && !token.linked) {
+        if (stateCurrentWallet.value.type === WALLET_TYPES.PUBLIC_KEY) {
+          return;
+        }
         mainIsLoading.value = true;
         snip20TokenFee.value =
           (await token.getFees(token.id, token.net))?.data?.high?.fee || 0.2;
@@ -288,10 +285,11 @@ export default {
         (e) => e.net === OUR_TOKEN
       );
       if (indexXCT !== -1) {
-        [filteredTokens.value[0], filteredTokens.value[indexXCT]] = [
-          filteredTokens.value[indexXCT],
-          filteredTokens.value[0],
-        ];
+        const xctItem = filteredTokens.value[indexXCT];
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+        filteredTokens.value.splice(indexXCT, 1);
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+        filteredTokens.value.splice(0, 0, xctItem);
       }
       if (!keyword.value) {
         return filteredTokens.value;
@@ -393,6 +391,7 @@ export default {
       balanceUSD,
       balanceAvailableUSD,
       WALLET_TYPES,
+      showAssetsExep,
     };
   },
 };

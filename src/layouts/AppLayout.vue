@@ -35,14 +35,8 @@ export default {
     );
     const { walletByAddress, wallets } = useWallets();
 
-    // for browser ext
-    const localHashInfo = localStorage.getItem('hashInfo');
     const hashInfo = ref('');
-
-    if (localHashInfo) {
-      hashInfo.value = parseHash(localHashInfo);
-      window.localStorage.removeItem('hashInfo');
-    }
+    const startTimeout = ref(false);
 
     const setCurrentWallet = async ({ net, address } = {}) => {
       if (net && address) {
@@ -132,25 +126,36 @@ export default {
           await store.dispatch('subtokens/setCurrentToken', null);
         }
 
-        if (hashInfo.value) {
-          const hashWallet = findAddressWithNet(wallets.value, {
-            address: hashInfo.value.address,
-            net: hashInfo.value.net,
-          });
-          if (hashWallet && hashWallet.type !== WALLET_TYPES.PUBLIC_KEY) {
-            await router.push({
-              name: 'WalletStake',
-              params: {
-                net: hashInfo.value.net,
-                address: hashInfo.value.address,
-              },
-            });
-            hashInfo.value = '';
-          } else {
-            localStorage.setItem('openSync', true);
-            router.push({ name: 'Settings' });
+        setTimeout(async () => {
+          const localHashInfo = localStorage.getItem('hashInfo');
+          if (localHashInfo) {
+            hashInfo.value = parseHash(localHashInfo);
           }
-        }
+
+          if (hashInfo.value && !startTimeout.value) {
+            startTimeout.value = true;
+
+            window.localStorage.removeItem('hashInfo');
+            const hashWallet = findAddressWithNet(wallets.value, {
+              address: hashInfo.value.address,
+              net: hashInfo.value.net,
+            });
+
+            if (hashWallet && hashWallet.type !== WALLET_TYPES.PUBLIC_KEY) {
+              await router.push({
+                name: 'WalletStake',
+                params: {
+                  net: hashInfo.value.net,
+                  address: hashInfo.value.address,
+                },
+              });
+              hashInfo.value = '';
+            } else {
+              localStorage.setItem('openSync', true);
+              router.push({ name: 'Settings' });
+            }
+          }
+        }, 1500);
       }
     );
 
