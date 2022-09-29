@@ -99,3 +99,5 @@ export const keplrNetworks = [
   { label: 'Stride', key: 'stride-1', net: 'stride' },
   { label: 'Stafi', key: 'stafihub-1', net: 'stafi' },
 ];
+
+export const showAssetsExep = ['secret', 'bsc'];
