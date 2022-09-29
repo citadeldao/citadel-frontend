@@ -389,9 +389,7 @@ export default {
     const showCreateVkModal = ref(false);
     const showConfirmModalLoading = ref(false);
     const selectedTags = ref([]);
-    const fullScreenAppIds = ref([
-      6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 21, 22, 23, 25,
-    ]);
+    const fullScreenAppIds = ref([6, 7, 9, 10, 12, 13, 14, 15, 21]);
 
     const { wallets: walletsList } = useWallets();
 
