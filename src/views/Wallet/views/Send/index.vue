@@ -1134,7 +1134,7 @@ export default {
       confirmClicked.value = true;
 
       if (
-        !password.value ||
+        (!isLedgerWallet.value && !password.value) ||
         (passwordError.value &&
           !isHardwareWallet.value &&
           !props.currentWallet.type === WALLET_TYPES.KEPLR)
