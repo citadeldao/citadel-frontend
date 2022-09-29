@@ -908,11 +908,11 @@ export default {
     const { password, passwordError, inputError } = useCheckPassword();
     provide('inputError', inputError);
     const confirmModalDisabled = computed(() => {
-      return (
-        (!isHardwareWallet.value && !!inputError.value) ||
-        insufficientFunds.value ||
-        (confirmClicked.value && passwordError.value === 'Incorrect password')
-      );
+      return false;
+      // return (
+      //   (!isHardwareWallet.value && !!inputError.value) ||
+      //   insufficientFunds.value
+      // );
     });
     const currentKtAddress = inject('currentKtAddress');
     // Prepare and Send tx
@@ -1194,6 +1194,8 @@ export default {
     const confirmModalCloseHandler = () => {
       password.value = '';
       inputError.value = false;
+      passwordError.value = '';
+      confirmClicked.value = false;
       feeType.value = 'medium';
       customFee.value = 0;
       showSuccessModal.value = false;
