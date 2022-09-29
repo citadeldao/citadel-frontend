@@ -229,8 +229,8 @@
           :to="toAddress"
           :wallet="currentWallet"
           :amount="amount"
-          :max-amount="maxAmount"
           :confirm-clicked="confirmClicked"
+          :max-amount="maxAmount"
           :total-amount="totalAmount"
           :fees="fees"
           :memo="memo"
@@ -248,6 +248,7 @@
           :adding="adding"
           @select-fee="openFeeSelectModal"
           @submitSend="confirmClickHandler"
+          @update:password="onChangePassword"
         />
         <!-- Changing Amount Modals -->
         <Modal v-if="showChangingAmountModal">
@@ -907,13 +908,22 @@ export default {
     // Check Password
     const { password, passwordError, inputError } = useCheckPassword();
     provide('inputError', inputError);
+
+    const disableBtn = ref(false);
+
     const confirmModalDisabled = computed(() => {
-      return false;
-      // return (
-      //   (!isHardwareWallet.value && !!inputError.value) ||
-      //   insufficientFunds.value
-      // );
+      return (
+        (!isHardwareWallet.value && !!inputError.value) ||
+        insufficientFunds.value ||
+        disableBtn.value
+      );
     });
+
+    const onChangePassword = () => {
+      confirmClicked.value = false;
+      disableBtn.value = false;
+    };
+
     const currentKtAddress = inject('currentKtAddress');
     // Prepare and Send tx
     const transferParams = computed(() => ({
@@ -1130,10 +1140,12 @@ export default {
           !props.currentWallet.type === WALLET_TYPES.KEPLR)
       ) {
         inputError.value = passwordError.value;
+        disableBtn.value = true;
         return;
       }
 
       if (passwordError.value === 'Incorrect password' && password.value) {
+        disableBtn.value = true;
         return;
       }
 
@@ -1158,9 +1170,11 @@ export default {
             showConfirmModal.value = false;
             showSuccessModal.value = true;
             loadingSign.value = false;
+            disableBtn.value = false;
             confirmClicked.value = false;
           } catch (e) {
             confirmClicked.value = false;
+            disableBtn.value = false;
             loadingSign.value = false;
             if (!showConfirmModal.value) {
               ledgerErrorHandler(e);
@@ -1178,6 +1192,7 @@ export default {
           password.value = '';
           inputError.value = '';
           confirmClicked.value = false;
+          disableBtn.value = false;
           showConfirmModal.value = false;
           showSuccessModal.value = true;
           isLoading.value = false;
@@ -1185,6 +1200,7 @@ export default {
       } catch (e) {
         loadingSign.value = false;
         confirmClicked.value = false;
+        disableBtn.value = false;
         password.value = '';
         inputError.value = '';
         console.error(e);
@@ -1196,6 +1212,7 @@ export default {
       inputError.value = false;
       passwordError.value = '';
       confirmClicked.value = false;
+      disableBtn.value = false;
       feeType.value = 'medium';
       customFee.value = 0;
       showSuccessModal.value = false;
@@ -1336,6 +1353,7 @@ export default {
       setAddress,
       showSuccessModal,
       confirmClicked,
+      onChangePassword,
     };
   },
 };
