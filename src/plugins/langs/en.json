@@ -80,6 +80,7 @@
         "info": "Add your address to explore Citadel.one analytical functionality"
     },
     "addAddress": {
+        "addressLimits": "Exceeded the limit of 20 addresses in the network",
         "cardTitle1": "Add networks to One-seed",
         "cardTitle2": "Create one seed",
         "cardDescP1": "Citadel One-seed wallet enables users to create addresses for all the networks integrated into the platform using only one",
