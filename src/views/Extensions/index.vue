@@ -6,7 +6,7 @@
         <!-- SHOW SUCCESS MODAL -->
         <ModalContent
           v-click-away="closeSuccessModal"
-          title="Success"
+          :title="$t('success')"
           desc="It may take some time for the transaction to complete"
           button-text="ok"
           type="success"
@@ -98,15 +98,6 @@
         class="extensions__frame"
       />
     </div>
-    <!--Confirm Ledger Modals-->
-    <!-- <Modal v-if="showLedgerConnect">
-      <ConnectLedgerModal
-        v-click-away="connectLedgerCloseHandler"
-        :error="ledgerError"
-        @close="connectLedgerCloseHandler"
-        @buttonClick="connectLedgerClickHandler"
-      />
-    </Modal> -->
     <Modal v-if="showLedgerConnect">
       <ConfirmLedgerModal
         v-if="showLedgerConnect"
@@ -130,105 +121,19 @@
         <div v-if="showConfirmModalLoading" class="loader">
           <Loading />
         </div>
-        <div class="item mt30">
-          <div class="label">{{ $t('extensions.typeOperation') }}</div>
-          <span class="red">{{ extensionTransactionForSign?.type }}</span>
-        </div>
-        <div
-          v-for="(meta, ndx) in extensionTransactionForSign.meta_info"
-          :key="ndx"
-          class="item"
-        >
-          <template v-if="typeof meta.value === 'string'">
-            <div class="label">
-              {{ meta.title }}
-            </div>
-            <span>{{ meta.value }}</span>
-          </template>
-          <!-- object link + text -->
-          <template v-if="typeof meta.value === 'object'">
-            <div class="label">
-              {{ meta.title }}
-            </div>
-            <a target="_blank" :href="meta.value.url"
-              >{{ meta.value.text }}
-              <linkIcon class="link-icon" /><linkIconHovered
-                class="link-icon hovered"
-            /></a>
-          </template>
-        </div>
-        <div v-if="extensionTransactionForSign.fee" class="item">
-          <div class="label">
-            {{ $t('extensions.transactionFee') }}
-          </div>
-          <div>
-            <span
-              v-pretty-number="{
-                value: extensionTransactionForSign.fee,
-                currency: (signerWallet || metamaskSigner)?.code,
-              }"
-            />{{ (signerWallet || metamaskSigner)?.code }}
-          </div>
-        </div>
-        <div class="item">
-          <div class="label">
-            {{ $t('extensions.transactionData') }}
-          </div>
-          <div class="show" @click="showTx = !showTx">
-            {{ $t('extensions.showLabel') }}
-            <keep-alive>
-              <component
-                :is="arrowDownIcon"
-                :class="{ open: showTx }"
-                class="arrow-icon"
-              />
-            </keep-alive>
-          </div>
-        </div>
-        <!-- <pre
-          v-if="showTx && extensionTransactionForSign?.transaction"
-          class="item-tx"
-        >
-          <highlightjs
-            language="javascript"
-            :code="JSON.stringify(extensionTransactionForSign.messageScrt || extensionTransactionForSign.transaction).replaceAll(',', ', \n').replaceAll('{', '{ \n').replaceAll('}', '\n}')"
-          />
-        </pre> -->
-
-        <pre
-          class="item-tx"
-          v-if="showTx && extensionTransactionForSign?.transaction"
-          >{{
-            JSON.stringify(
-              extensionTransactionForSign.messageScrt ||
-                extensionTransactionForSign.transaction,
-              null,
-              2
-            ).trim()
-          }}</pre
-        >
-        <div
-          v-if="
-            signerWallet &&
-            [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(
-              signerWallet.type
-            )
+        <TransactionInfo
+          v-else
+          :extension-transaction-for-sign="extensionTransactionForSign"
+          :metamask-signer="metamaskSigner"
+          :signer-wallet="signerWallet"
+          :incorrect-password="incorrectPassword"
+          :confirm-password="confirmPassword"
+          @changePassword="
+            (pass) => {
+              password = pass;
+            }
           "
-          class="password-wrap"
-        >
-          <Input
-            id="password"
-            v-model="password"
-            :show-error-text="!!incorrectPassword && confirmPassword"
-            :error="
-              incorrectPassword && confirmPassword ? 'Incorrect password' : ''
-            "
-            :label="$t('enterPassword')"
-            :placeholder="$t('password')"
-            type="password"
-            icon="key"
-          />
-        </div>
+        />
       </ModalContent>
     </Modal>
     <!-- CREATE VK MODAL FOR SECRET APP-->
@@ -264,15 +169,6 @@
         </div>
         <div class="item mt30">
           <div class="item-tx">
-            <!-- <highlightjs
-              language="javascript"
-              :code="
-                JSON.stringify(messageForSign.message)
-                  .replaceAll(',', ', \n')
-                  .replaceAll('{', '{ \n')
-                  .replaceAll('}', '\n}')
-              "
-            /> -->
             <pre>{{
               JSON.stringify(messageForSign.message, null, 2).trim()
             }}</pre>
@@ -319,8 +215,6 @@ import Loading from '@/components/Loading';
 import { ref, markRaw, computed, watch } from 'vue';
 import Modal from '@/components/Modal';
 import CreateVkModal from '@/views/Wallet/components/CreateVkModal.vue';
-import linkIcon from '@/assets/icons/link.svg';
-import linkIconHovered from '@/assets/icons/link_hovered.svg';
 import ModalContent from '@/components/ModalContent';
 import Input from '@/components/UI/Input';
 import { useStore } from 'vuex';
@@ -340,6 +234,7 @@ import extensionsSocketTypes from '@/config/extensionsSocketTypes';
 import useApi from '@/api/useApi';
 import { keplrNetworksProtobufFormat } from '@/config/availableNets';
 import citadel from '@citadeldao/lib-citadel';
+import TransactionInfo from './components/TransactionInfo';
 
 export default {
   name: 'Extensions',
@@ -349,14 +244,13 @@ export default {
     CreateVkModal,
     Head,
     AppBlock,
-    linkIcon,
-    linkIconHovered,
     AppInfo,
     SuccessModalContent,
     Loading,
     Modal,
     ModalContent,
     Input,
+    TransactionInfo,
   },
   setup() {
     const signLoading = ref(false);
@@ -374,13 +268,11 @@ export default {
     const showAppInfoModal = ref(false);
     const selectedApp = ref(null);
     const closeIcon = ref();
-    const arrowDownIcon = ref();
     const successTx = ref('');
     const confirmPassword = ref(false);
     const signerWallet = ref(null);
     const metamaskSigner = ref(null);
     const txComment = ref('');
-    const showTx = ref(false);
     const showLedgerConnect = ref(false);
     const ledgerError = ref('');
     const msgSuccessSignature = ref('');
@@ -462,9 +354,6 @@ export default {
 
     import(`@/assets/icons/extensions/close.svg`).then((val) => {
       closeIcon.value = markRaw(val.default);
-    });
-    import(`@/assets/icons/extensions/arrow_down.svg`).then((val) => {
-      arrowDownIcon.value = markRaw(val.default);
     });
 
     const onSearchHandler = (str) => {
@@ -1231,10 +1120,8 @@ export default {
     /* eslint-disable */
     return {
       showFullScreen,
-      showTx,
       router,
       assetsDomain,
-      arrowDownIcon,
       appBackground,
       WALLET_TYPES,
       txComment,
@@ -1405,81 +1292,6 @@ export default {
       width: 100%;
       margin-top: 0; // -35px;
       max-height: 260px;
-    }
-
-    .item {
-      margin: 10px 0;
-      width: 100%;
-      display: flex;
-
-      .signature {
-        word-break: break-word;
-      }
-
-      span {
-        text-align: right;
-      }
-
-      align-items: center;
-      justify-content: space-between;
-
-      a {
-        text-decoration: none;
-        text-decoration: underline;
-        color: #437fec;
-
-        .link-icon {
-          width: 18px;
-          height: 16px;
-          margin-left: 5px;
-
-          &.hovered {
-            display: none;
-          }
-        }
-
-        &:hover {
-          color: pointer;
-          color: #756aa8;
-
-          .link-icon {
-            display: none;
-
-            &.hovered {
-              display: initial;
-            }
-          }
-        }
-      }
-
-      .arrow-icon {
-        &.open {
-          transform: rotate(180deg);
-        }
-      }
-
-      .show {
-        z-index: 0;
-        color: #6b93c0;
-        border-bottom: 1px dotted #6b93c0;
-        text-transform: lowercase;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-
-        svg {
-          margin-top: 2px;
-          margin-left: 4px;
-        }
-      }
-
-      .red {
-        color: $red;
-      }
-
-      &.mt30 {
-        margin-top: 30px;
-      }
     }
   }
 
