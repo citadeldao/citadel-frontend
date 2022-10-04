@@ -182,10 +182,6 @@ export default {
       prettyNumber,
       disableStake,
       isViewOnly,
-    };
-  },
-  data() {
-    return {
       STAKE: 'stake',
       SWAP: 'swap',
       TRANSACTIONS: 'transactions',
