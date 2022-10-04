@@ -80,24 +80,12 @@
     <div v-if="loading" class="extensions__loading">
       <Loading />
     </div>
-    <div
+    <FrameApp
       v-if="currentApp"
-      :class="{ fullScreen: showFullScreen }"
-      class="extensions__app-wrap"
-    >
-      <keep-alive v-if="!showFullScreen">
-        <component :is="closeIcon" class="close-icon" @click="closeApp()" />
-      </keep-alive>
-      <iframe
-        :src="currentApp.url"
-        frameBorder="0"
-        :width="showFullScreen ? '100%' : 550"
-        height="710"
-        align="left"
-        name="target"
-        class="extensions__frame"
-      />
-    </div>
+      :current-app="currentApp"
+      :show-full-screen="showFullScreen"
+      @close="closeApp()"
+    />
     <Modal v-if="showLedgerConnect">
       <ConfirmLedgerModal
         v-if="showLedgerConnect"
@@ -212,7 +200,7 @@ import {
   showArtefactsForNormalScreen,
 } from '@/helpers/fullScreen';
 import Loading from '@/components/Loading';
-import { ref, markRaw, computed, watch } from 'vue';
+import { ref, computed, watch } from 'vue';
 import Modal from '@/components/Modal';
 import CreateVkModal from '@/views/Wallet/components/CreateVkModal.vue';
 import ModalContent from '@/components/ModalContent';
@@ -225,7 +213,6 @@ import SuccessModalContent from '@/views/Wallet/views/Send/components/SuccessMod
 import { WALLET_TYPES } from '../../config/walletType';
 import { sha3_256 } from 'js-sha3';
 import { useRouter, useRoute } from 'vue-router';
-import ConnectLedgerModal from '@/components/Modals/Ledger/ConnectLedgerModal';
 import ConfirmLedgerModal from '@/components/Modals/Ledger/ConfirmLedgerModal';
 import notify from '@/plugins/notify';
 import useWallets from '@/compositions/useWallets';
@@ -235,11 +222,11 @@ import useApi from '@/api/useApi';
 import { keplrNetworksProtobufFormat } from '@/config/availableNets';
 import citadel from '@citadeldao/lib-citadel';
 import TransactionInfo from './components/TransactionInfo';
+import FrameApp from './components/FrameApp.vue';
 
 export default {
   name: 'Extensions',
   components: {
-    ConnectLedgerModal,
     ConfirmLedgerModal,
     CreateVkModal,
     Head,
@@ -251,6 +238,7 @@ export default {
     ModalContent,
     Input,
     TransactionInfo,
+    FrameApp,
   },
   setup() {
     const signLoading = ref(false);
@@ -267,7 +255,6 @@ export default {
     const searchStr = ref('');
     const showAppInfoModal = ref(false);
     const selectedApp = ref(null);
-    const closeIcon = ref();
     const successTx = ref('');
     const confirmPassword = ref(false);
     const signerWallet = ref(null);
@@ -351,10 +338,6 @@ export default {
         type: extensionsSocketTypes.types.transaction,
       });
     };
-
-    import(`@/assets/icons/extensions/close.svg`).then((val) => {
-      closeIcon.value = markRaw(val.default);
-    });
 
     const onSearchHandler = (str) => {
       searchStr.value = str;
@@ -1126,7 +1109,6 @@ export default {
       WALLET_TYPES,
       txComment,
       extensionsList,
-      closeIcon,
       confirmPassword,
       signerWallet,
       metamaskSigner,
@@ -1192,29 +1174,6 @@ export default {
   background-repeat: no-repeat;
   border-radius: 16px;
 
-  &__app-wrap {
-    // margin-top: 35px;
-    position: relative;
-    border-radius: 20px;
-
-    &.fullScreen {
-      width: 100%;
-      box-sizing: border-box;
-      // padding: 0 35px;
-    }
-
-    .close-icon {
-      position: absolute;
-      top: 0px;
-      right: -40px;
-
-      &:hover {
-        cursor: pointer;
-        opacity: 0.7;
-      }
-    }
-  }
-
   &__apps {
     width: 100%;
     display: flex;
@@ -1265,13 +1224,6 @@ export default {
       background: #6a4bff;
       color: #fff;
     }
-  }
-
-  &__frame {
-    border-radius: 20px;
-    border: none;
-    outline: none;
-    z-index: 1;
   }
 
   .modal-content {
