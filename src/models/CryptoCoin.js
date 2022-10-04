@@ -174,12 +174,12 @@ export default class CryptoCoin {
   }
 
   async prepareDelegation({ walletId, ...options }) {
-    const formatedNodeAdresses = Array.isArray(options.nodeAdresses)
-      ? options.nodeAdresses.map((item) => item.address)
-      : [options.nodeAdresses];
+    const formatedNodeAddresses = Array.isArray(options.nodeAddresses)
+      ? options.nodeAddresses.map((item) => item.address)
+      : [options.nodeAddresses];
     const { data, error } = await citadel.prepareDelegation(walletId, {
       ...options,
-      nodeAdresses: formatedNodeAdresses,
+      nodeAddresses: formatedNodeAddresses,
     });
 
     if (!error) {
