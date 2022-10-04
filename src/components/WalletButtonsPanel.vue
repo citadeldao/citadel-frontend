@@ -1,9 +1,9 @@
 <template>
   <div
     v-if="
-      (type === 'stake' || button2 !== 'swap' || currentWallet.hasClaim) &&
+      (type === STAKE || button2 !== SWAP || currentWallet.hasClaim) &&
       !isViewOnly &&
-      type !== 'transactions'
+      type !== TRANSACTIONS
     "
     class="wallet-buttons-panel"
   >
@@ -16,7 +16,7 @@
       {{ $t('redelegation.redelegate') }}
     </button>
     <button
-      v-if="type === 'stake'"
+      v-if="type === STAKE"
       class="wallet-buttons-panel__button wallet-buttons-panel__button1"
       :data-qa="dataQa && `${dataQa}__${button1.toLowerCase()}-button`"
       @click.prevent="$emit('button1click', $event)"
@@ -25,7 +25,7 @@
       {{ $t(button1) }}
     </button>
     <button
-      v-if="button2 !== 'swap'"
+      v-if="button2 !== SWAP"
       :disabled="disabledSend || disableStake"
       class="wallet-buttons-panel__button wallet-buttons-panel__button2"
       :data-qa="dataQa && `${dataQa}__${button2.toLowerCase()}-button`"
@@ -36,7 +36,7 @@
     </button>
     <transition name="fade">
       <button
-        v-if="currentWallet.hasClaim && ['stake', 'rewards'].includes(type)"
+        v-if="currentWallet.hasClaim && [STAKE, 'rewards'].includes(type)"
         class="wallet-buttons-panel__button wallet-buttons-panel__button-rewards"
         :data-qa="
           dataQa &&
@@ -79,6 +79,7 @@ import { computed, inject } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
 import { prettyNumber } from '@/helpers/prettyNumber';
+import { WALLET_TYPES } from '@/config/walletType';
 
 export default {
   name: 'WalletButtonsPanel',
@@ -169,7 +170,9 @@ export default {
       }
     };
 
-    const isViewOnly = computed(() => props.currentToken?.type === 'publicKey');
+    const isViewOnly = computed(
+      () => props.currentToken?.type === WALLET_TYPES.PUBLIC_KEY
+    );
 
     return {
       currentWalletInfo,
@@ -179,6 +182,13 @@ export default {
       prettyNumber,
       disableStake,
       isViewOnly,
+    };
+  },
+  data() {
+    return {
+      STAKE: 'stake',
+      SWAP: 'swap',
+      TRANSACTIONS: 'transactions',
     };
   },
 };
