@@ -390,7 +390,7 @@ export default {
     const showConfirmModalLoading = ref(false);
     const selectedTags = ref([]);
     const fullScreenAppIds = ref([
-      6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 21, 22, 23, 25,
+      6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 21, 22, 23, 24, 25,
     ]);
 
     const { wallets: walletsList } = useWallets();
