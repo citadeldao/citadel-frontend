@@ -649,4 +649,14 @@ export default {
       href: 'https://www.coingecko.com/en/coins/stride',
     },
   },
+  crescent: {
+    twitter: {
+      title: '@CrescentHub',
+      href: 'CrescentHub',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/crescent-network',
+    },
+  },
 };
