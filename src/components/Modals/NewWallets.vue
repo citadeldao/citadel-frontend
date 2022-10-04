@@ -61,6 +61,7 @@ export default {
       store.commit('newWallets/setLoader', false);
       store.commit('newWallets/setAlreadyAddedModal', false);
       store.commit('newWallets/setNewWalletsList', []);
+      store.commit('SET_ACTIVE_LIST', 'all');
     };
     return {
       newWalletList,
