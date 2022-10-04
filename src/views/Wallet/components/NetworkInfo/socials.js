@@ -650,6 +650,10 @@ export default {
     },
   },
   crescent: {
+    web: {
+      title: 'crescent.network',
+      href: 'https://crescent.network/',
+    },
     twitter: {
       title: '@CrescentHub',
       href: 'CrescentHub',
