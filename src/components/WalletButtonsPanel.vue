@@ -36,7 +36,7 @@
     </button>
     <transition name="fade">
       <button
-        v-if="currentWallet.hasClaim && [STAKE, 'rewards'].includes(type)"
+        v-if="currentWallet.hasClaim && [STAKE, REWARDS].includes(type)"
         class="wallet-buttons-panel__button wallet-buttons-panel__button-rewards"
         :data-qa="
           dataQa &&
@@ -189,6 +189,7 @@ export default {
       STAKE: 'stake',
       SWAP: 'swap',
       TRANSACTIONS: 'transactions',
+      REWARDS: 'rewards',
     };
   },
 };
