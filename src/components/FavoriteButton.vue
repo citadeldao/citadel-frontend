@@ -2,7 +2,7 @@
   <svg
     class="favorite-button"
     :class="{
-      'favorite-button__active': isActive,
+      'favorite-button__active': value,
       'favorite-button__disabled': isDisabled,
     }"
     @click="clickHandler"
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 
 export default {
   name: 'FavoriteButton',
@@ -36,26 +36,16 @@ export default {
   },
   emits: ['value', 'change'],
   setup(props, { emit }) {
-    const isActive = ref(false);
     const isDisabled = ref(false);
 
-    watch(
-      () => props.value,
-      (val) => {
-        isActive.value = val ? true : false;
-      },
-      { immediate: true }
-    );
-
-    const clickHandler = (e) => {
-      if (e.target.classList.contains('favorite-button__disabled')) return;
+    const clickHandler = () => {
+      if (isDisabled.value) return;
       isDisabled.value = true;
       emit('change', !props.value);
       setTimeout(() => (isDisabled.value = false), 1200);
     };
 
     return {
-      isActive,
       isDisabled,
       clickHandler,
     };
