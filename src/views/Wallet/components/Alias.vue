@@ -2,7 +2,7 @@
   <div class="alias">
     <div class="alias__info">
       <div class="alias__first-line">
-        <FavouriteButton
+        <FavoriteButton
           :value="isFavorite"
           data-qa="wallet__favourite"
           @change="toggleFavorite"
@@ -96,7 +96,7 @@ import qr from '@/assets/icons/qr.svg';
 import copy from '@/assets/icons/copy.svg';
 import WalletTypeCard from '@/components/WalletTypeCard';
 import EditButton from '@/components/UI/EditButton';
-import FavouriteButton from '@/components/FavouriteButton';
+import FavoriteButton from '@/components/FavoriteButton';
 import copyToClipboard from '@/helpers/copyToClipboard';
 import { computed, nextTick, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
@@ -110,7 +110,7 @@ export default {
   name: 'Alias',
   components: {
     EditButton,
-    FavouriteButton,
+    FavoriteButton,
     WalletTypeCard,
     copy,
     qr,
