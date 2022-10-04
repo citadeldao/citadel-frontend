@@ -187,6 +187,8 @@ export default function useCreateWallets() {
       const success = !![...newWallets.value].filter((w) => w).length;
       showModal.value = false;
       showLoader.value = false;
+      store.commit('SET_ACTIVE_LIST', 'all');
+
       if (success) {
         showModal.value = true;
       }
