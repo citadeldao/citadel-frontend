@@ -1,6 +1,10 @@
 <template>
   <div
-    v-if="type === 'stake' || button2 !== 'swap' || currentWallet.hasClaim"
+    v-if="
+      (type === 'stake' || button2 !== 'swap' || currentWallet.hasClaim) &&
+      !isViewOnly &&
+      type !== 'transactions'
+    "
     class="wallet-buttons-panel"
   >
     <button
@@ -32,7 +36,7 @@
     </button>
     <transition name="fade">
       <button
-        v-if="currentWallet.hasClaim"
+        v-if="currentWallet.hasClaim && ['stake', 'rewards'].includes(type)"
         class="wallet-buttons-panel__button wallet-buttons-panel__button-rewards"
         :data-qa="
           dataQa &&
@@ -165,6 +169,8 @@ export default {
       }
     };
 
+    const isViewOnly = computed(() => props.currentToken?.type === 'publicKey');
+
     return {
       currentWalletInfo,
       rewardCount,
@@ -172,6 +178,7 @@ export default {
       claimButtonHandler,
       prettyNumber,
       disableStake,
+      isViewOnly,
     };
   },
 };
