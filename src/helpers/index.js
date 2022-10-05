@@ -50,7 +50,8 @@ export const addressTextWidth = (text, fontFamily, fontSize) => {
   const span = document.createElement('span');
   document.body.appendChild(span);
   span.style.font = fontFamily;
-  span.style.fontSize = `${fontSize + 5}px`; // + 1 = Shit
+  span.style.fontSize = `${fontSize}px`; // + 1 = Shit
+  span.style.fontWeight = '';
   span.style.height = 'auto';
   span.style.width = 'auto';
   span.style.position = 'absolute';

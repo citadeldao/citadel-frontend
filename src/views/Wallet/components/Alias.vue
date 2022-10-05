@@ -19,15 +19,15 @@
             @blur="focus = false"
             @keyup.enter="setAlias()"
           />
-          <h4
+          <span
             v-else
             ref="nameRef"
             :style="maxNameWidth"
             class="alias__wallet-name"
           >
-            <resize-observer :show-trigger="true" @notify="handleNameResize" />
+            <!-- <resize-observer :show-trigger="true" @notify="handleNameResize" /> -->
             {{ currentWallet.title || formattedWalletName }}
-          </h4>
+          </span>
           <EditButton @click="clickHandler">
             {{ editMode ? $t('save') : $t('edit') }}
           </EditButton>
@@ -49,7 +49,7 @@
             @mouseenter="showAddressTooltip = true"
             @mouseleave="showAddressTooltip = false"
           >
-            <resize-observer :show-trigger="true" @notify="handleResize" />
+            <!-- <resize-observer :show-trigger="true" @notify="handleResize" /> -->
             {{ formattedAddress }}
           </span>
           <div
@@ -137,6 +137,7 @@ export default {
       wrapperWidth.value = width;
     };
     const handleNameResize = ({ width }) => {
+      console.log(width, 'width');
       wrapperNameWidth.value = width;
     };
 
@@ -160,12 +161,21 @@ export default {
           props.currentWallet.title.length >= props.currentWallet.address.length
         ) {
           textArg = props.currentWallet.address;
+          console.log(textArg, 1, 'hi');
         } else {
           textArg = props.currentWallet.title;
+          console.log(textArg, 2, 'hi');
         }
       } else {
         textArg = props.currentWallet.address;
+        console.log(textArg, 3, 'hi');
       }
+      console.log(
+        textArg,
+        props.currentWallet.title,
+        props.currentWallet.address,
+        'textArg'
+      );
 
       return {
         maxWidth: `${addressTextWidth(
@@ -173,6 +183,8 @@ export default {
           'Panton_Bold',
           fontSizes.value.name
         )}px`,
+        // overflow: 'hidden',
+        // textOverflow: 'ellipsis',
       };
     });
 
@@ -208,6 +220,7 @@ export default {
     });
 
     const formattedWalletName = computed(() => {
+      console.log(props.currentWallet?.title, 'formattedWalletAddress');
       return formattedWalletAddress(
         props.currentWallet?.address,
         +wrapperNameWidth.value,
@@ -215,7 +228,7 @@ export default {
         fontSizes.value.name
       );
     });
-
+    console.log(maxNameWidth, 'maxNameWidth');
     const editMode = ref(false);
     const titleInput = ref(null);
     const alias = ref('');
@@ -245,6 +258,7 @@ export default {
       } else {
         setAlias();
       }
+      handleNameResize(nameRef.value.offsetWidth);
     };
 
     const onClickAway = () => {
@@ -342,11 +356,13 @@ export default {
 
     // set wrapper width default
     onMounted(() => {
+      console.log(wrapperNameWidth.value, nameRef.value, 'span');
       wrapperWidth.value = addressRef.value.offsetWidth;
       wrapperNameWidth.value = nameRef.value.offsetWidth;
     });
 
     return {
+      addressTextWidth,
       copyToClipboard,
       editMode,
       clickHandler,
@@ -424,6 +440,7 @@ export default {
     display: flex;
     align-items: center;
     margin-bottom: 8px;
+    width: fit-content;
   }
 
   &__wallet-name {
@@ -438,6 +455,7 @@ export default {
     text-overflow: ellipsis;
     overflow: hidden;
     max-width: 525px;
+    width: fit-content;
 
     @include lg {
       max-width: 396px;
@@ -488,8 +506,8 @@ export default {
     line-height: 27px;
     color: $mid-blue;
     margin-right: 15px;
+    white-space: nowrap;
     // overflow: hidden;
-    // white-space: nowrap;
     // text-overflow: ellipsis;
     cursor: pointer;
     // max-width: 495px;
