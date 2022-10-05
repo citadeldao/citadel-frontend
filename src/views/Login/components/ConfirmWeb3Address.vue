@@ -10,7 +10,7 @@
       <div
         v-html="
           !supportNetworks
-            ? $t('metamask.changeNetwork')
+            ? $t('login.confirmAddressTitleAnother')
             : isKeplr
             ? $t('login.confirmAddressTitleKeplr')
             : network === 'eth'

@@ -489,7 +489,7 @@ export default {
         if (!net || !['bsc', 'eth'].includes(net)) {
           notify({
             type: 'warning',
-            text: t('metamask.changeNetwork'),
+            text: t('login.confirmAddressTitleAnother'),
           });
           return;
         }
