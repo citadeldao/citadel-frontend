@@ -26,11 +26,13 @@ import AddressSpecifications from './components/AddressSpecifications';
 import useCurrentStep from '@/compositions/useCurrentStep';
 import { getSteps } from '@/static/importPrivateKey';
 import useCreateWallets from '@/compositions/useCreateWallets';
+import useWallets from '@/compositions/useWallets';
 import { WALLET_TYPES } from '../../config/walletType';
 import { onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 import { INPUT_TYPE_ICON } from '@/config/newWallets';
+import notify from '@/plugins/notify';
 
 export default {
   name: 'ImportPrivateKey',
@@ -58,6 +60,7 @@ export default {
       2,
       getSteps(isPasswordHash.value)
     );
+    const { wallets } = useWallets();
     const { t } = useI18n();
     const store = useStore();
     onMounted(() => {
@@ -68,6 +71,18 @@ export default {
       });
     });
     const finalStep = ({ net, privateKey, account }) => {
+      const hasWalletsFromNet = wallets.value.filter(
+        (w) => w.net === net
+      ).length;
+
+      if (hasWalletsFromNet >= 20) {
+        notify({
+          type: 'warning',
+          text: t('addAddress.addressLimits'),
+        });
+        return;
+      }
+
       store.commit('newWallets/setLoader', true);
       setPrivateKey(privateKey);
       setNets([net]);
