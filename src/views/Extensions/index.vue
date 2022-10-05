@@ -7,7 +7,7 @@
         <ModalContent
           v-click-away="closeSuccessModal"
           :title="$t('success')"
-          desc="It may take some time for the transaction to complete"
+          :desc="$t('txWaitTitle')"
           button-text="ok"
           type="success"
           icon="success"
@@ -152,44 +152,18 @@
         @buttonClick2="closeSignMessageModal"
         @buttonClick="signMessage"
       >
-        <div class="label description">
-          {{ $t('extensions.signMessage') }}
-        </div>
-        <div class="item mt30">
-          <div class="item-tx">
-            <pre>{{
-              JSON.stringify(messageForSign.message, null, 2).trim()
-            }}</pre>
-          </div>
-        </div>
-        <div v-if="msgSuccessSignature" class="item">
-          <div class="label signature">
-            {{ msgSuccessSignature }}
-          </div>
-        </div>
-        <div
-          v-if="
-            !msgSuccessSignature &&
-            signerWallet &&
-            [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(
-              signerWallet.type
-            )
+        <MessageInfo
+          :msg-success-signature="msgSuccessSignature"
+          :signer-wallet="signerWallet"
+          :message-for-sign="messageForSign"
+          :incorrect-password="incorrectPassword"
+          :confirm-password="confirmPassword"
+          @changePassword="
+            (pass) => {
+              password = pass;
+            }
           "
-          class="password-wrap"
-        >
-          <Input
-            id="password-msg"
-            v-model="password"
-            :show-error-text="!!incorrectPassword && confirmPassword"
-            :error="
-              incorrectPassword && confirmPassword ? 'Incorrect password' : ''
-            "
-            :label="$t('enterPassword')"
-            :placeholder="$t('password')"
-            type="password"
-            icon="key"
-          />
-        </div>
+        />
       </ModalContent>
     </Modal>
   </div>
@@ -204,7 +178,6 @@ import { ref, computed, watch } from 'vue';
 import Modal from '@/components/Modal';
 import CreateVkModal from '@/views/Wallet/components/CreateVkModal.vue';
 import ModalContent from '@/components/ModalContent';
-import Input from '@/components/UI/Input';
 import { useStore } from 'vuex';
 import Head from './components/Head';
 import AppBlock from './components/AppBlock';
@@ -222,6 +195,7 @@ import useApi from '@/api/useApi';
 import { keplrNetworksProtobufFormat } from '@/config/availableNets';
 import citadel from '@citadeldao/lib-citadel';
 import TransactionInfo from './components/TransactionInfo';
+import MessageInfo from './components/MessageInfo';
 import FrameApp from './components/FrameApp.vue';
 
 export default {
@@ -236,8 +210,8 @@ export default {
     Loading,
     Modal,
     ModalContent,
-    Input,
     TransactionInfo,
+    MessageInfo,
     FrameApp,
   },
   setup() {
@@ -369,10 +343,7 @@ export default {
       () => store.getters['extensions/currentAppInfo']
     );
 
-    // const privateWallets = computed(() => store.getters['wallets/wallets'].filter(w => w.type !== WALLET_TYPES.PUBLIC_KEY));
-    const messageForSign = false; // computed(() => store.getters['extensions/extensionMessageForSign']);
-
-    // const walletsList = computed(() => store.getters['wallets/wallets']);
+    const messageForSign = ref(''); // computed(() => store.getters['extensions/extensionMessageForSign']);
 
     const extensionTransactionForSign = computed(
       () => store.getters['extensions/extensionTransactionForSign']
@@ -1189,13 +1160,6 @@ export default {
     border-radius: 0 0 16px 16px;
   }
 
-  .label.description {
-    margin: 25px 0 0 0;
-    width: 100%;
-    text-align: left;
-    font-weight: 700;
-  }
-
   &__loading {
     display: flex;
     align-items: center;
@@ -1223,27 +1187,6 @@ export default {
       cursor: pointer;
       background: #6a4bff;
       color: #fff;
-    }
-  }
-
-  .modal-content {
-    .password-wrap {
-      border-top: 1px solid #bcc2d8;
-      width: 100%;
-      height: 90px;
-      margin-top: 20px;
-      padding-top: 20px;
-    }
-
-    div.code {
-      white-space: pre;
-    }
-
-    .item-tx {
-      overflow: auto;
-      width: 100%;
-      margin-top: 0; // -35px;
-      max-height: 260px;
     }
   }
 

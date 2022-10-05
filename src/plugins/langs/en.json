@@ -455,6 +455,7 @@
     "notifications": "Notifications",
     "swap": "Swap",
     "insufficientFunds": "Insufficient funds",
+    "txWaitTitle": "It may take some time for the transaction to complete",
     "changeNode": "Change node",
     "startStaking": "Start staking",
     "this": "this",
