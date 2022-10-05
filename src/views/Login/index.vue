@@ -15,7 +15,7 @@
         <div class="langs" v-if="confirmedAddress" />
         <LoginCarousel v-if="!syncMode && !confirmedAddress" />
         <SyncCarousel v-if="syncMode && !confirmedAddress" />
-        <div class="rights__container">
+        <div v-if="!confirmedAddress" class="rights__container">
           <p class="rights__link" @click="showPrivacy = true">Privacy policy</p>
           <p class="rights__link" @click="showTerms = true">Terms of service</p>
         </div>

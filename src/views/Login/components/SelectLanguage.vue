@@ -18,11 +18,8 @@
       class="login-menu-changelang__input"
     />
     <PrimaryButton class="login-menu-changelang__btn" @click="next">
-      {{ $t('confirm') }}
+      {{ $t('login.continue') }}
     </PrimaryButton>
-    <div class="login-menu-changelang__cancel" @click="next">
-      {{ $t('login.back') }}
-    </div>
   </div>
 </template>
 <script>
