@@ -25,7 +25,7 @@
         <th class="header" />
       </tr>
 
-      <template v-if="currentPage === 1">
+      <!-- <template v-if="currentPage === 1">
         <TableRow
           v-for="tx in txsFromMempool"
           :key="tx.hash"
@@ -35,7 +35,7 @@
           @showTransactionInfo="showTransactionInfo"
           @editComment="editComment"
         />
-      </template>
+      </template> -->
 
       <TableRow
         v-for="item in transactions"
