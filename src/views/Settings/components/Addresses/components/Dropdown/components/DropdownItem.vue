@@ -90,10 +90,6 @@ export default {
       type: Boolean,
       default: false,
     },
-    hasVisibleButton: {
-      type: Boolean,
-      default: false,
-    },
   },
   emits: ['exportWallet', 'toggle-hidden', 'deleteSeedModal'],
   setup(props, { emit }) {
