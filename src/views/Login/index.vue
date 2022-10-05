@@ -889,6 +889,7 @@ export default {
     text-align: center;
     text-transform: uppercase;
     color: #c3ceeb;
+    cursor: pointer;
     border-bottom: 1px dashed #c3ceeb;
   }
 }
