@@ -1,5 +1,5 @@
 <template>
-  <div :style="{ backgroundImage: `url(${appBackground})` }" class="extensions">
+  <div class="extensions">
     <!-- <img class="" :src="currentApp && currentApp.bg" /> -->
     <teleport to="body">
       <Modal v-if="showSuccessModal">
@@ -242,9 +242,6 @@ export default {
     const showCreateVkModal = ref(false);
     const showConfirmModalLoading = ref(false);
     const selectedTags = ref([]);
-    const fullScreenAppIds = ref([
-      6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 21, 22, 23, 24, 25,
-    ]);
 
     const { wallets: walletsList } = useWallets();
 
@@ -333,12 +330,6 @@ export default {
       }
     };
 
-    const appBackground = computed(() =>
-      currentApp.value &&
-      !fullScreenAppIds.value.includes(+selectedApp.value.id)
-        ? currentApp.value.background
-        : null
-    );
     const currentAppInfo = computed(
       () => store.getters['extensions/currentAppInfo']
     );
@@ -369,11 +360,8 @@ export default {
     const selectApp = async () => {
       showAppInfoModal.value = false;
       currentApp.value = null;
-
-      if (fullScreenAppIds.value.includes(+selectedApp.value.id)) {
-        showFullScreen.value = true;
-        hideArtefactsForFullScreen();
-      }
+      showFullScreen.value = true;
+      hideArtefactsForFullScreen();
 
       await store.dispatch('extensions/fetchExtensionInfo', {
         appId: selectedApp.value.id,
@@ -1076,7 +1064,6 @@ export default {
       showFullScreen,
       router,
       assetsDomain,
-      appBackground,
       WALLET_TYPES,
       txComment,
       extensionsList,
