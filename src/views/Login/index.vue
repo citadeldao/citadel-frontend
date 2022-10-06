@@ -101,6 +101,7 @@
               :address="metamaskConnector.accounts[0]"
               @cancel="onWeb3AddressCancel"
               @confirm="onWeb3AddressConfirm"
+              @refreshMetamask="onRefreshWeb3Metamask"
             />
 
             <SelectLanguage
@@ -565,6 +566,8 @@ export default {
 
       if (loginWith.value === 'metamask') {
         addLoading.value = true;
+        let timer = null;
+
         const auth = async () => {
           let metamaskResult;
           try {
@@ -574,6 +577,10 @@ export default {
             );
           } catch (err) {
             addLoading.value = false;
+          }
+
+          if (!metamaskResult) {
+            return;
           }
 
           const { data, error } = await store.dispatch('auth/confirmWeb3', {
@@ -598,8 +605,13 @@ export default {
 
         if (res.isNeedCaptcha) {
           window.document.querySelector('#do-something-btn').click();
-          await auth();
-          addLoading.value = false;
+          timer = setInterval(async () => {
+            if (captchaToken.value) {
+              clearInterval(timer);
+              await auth();
+              addLoading.value = false;
+            }
+          }, 1000);
         } else {
           await auth();
           addLoading.value = false;
@@ -640,11 +652,17 @@ export default {
       };
 
       if (loginWith.value === 'keplr') {
+        let timer = null;
         if (data) {
           if (res.isNeedCaptcha) {
             window.document.querySelector('#do-something-btn').click();
-            await authKeplr();
-            addLoading.value = false;
+            timer = setInterval(async () => {
+              if (captchaToken.value) {
+                clearInterval(timer);
+                await authKeplr();
+                addLoading.value = false;
+              }
+            }, 1000);
           } else {
             await authKeplr();
             addLoading.value = false;
@@ -662,6 +680,11 @@ export default {
 
     const onRefreshWeb3Keplr = async () => {
       await store.dispatch('keplr/connectToKeplr', keplrNetworks[0].key);
+    };
+
+    const onRefreshWeb3Metamask = async () => {
+      metamaskConnector.value.disconnect();
+      await store.dispatch('metamask/connectToMetamask');
     };
 
     return {
@@ -684,6 +707,7 @@ export default {
       onWeb3AddressCancel,
       onWeb3AddressConfirm,
       onRefreshWeb3Keplr,
+      onRefreshWeb3Metamask,
       confirmedAddress,
       userName,
       onAccountCreate,

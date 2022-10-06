@@ -34,6 +34,9 @@
       <div v-if="isKeplr" class="refresh" @click="$emit('refreshKeplr')">
         <refreshSvg />
       </div>
+      <div v-if="!isKeplr" class="refresh" @click="$emit('refreshMetamask')">
+        <refreshSvg />
+      </div>
     </div>
     <PrimaryButton
       class="confirm-web3-address__confirm"
