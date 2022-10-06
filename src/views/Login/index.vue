@@ -80,6 +80,7 @@
             <ConfirmWeb3Address
               v-if="
                 !confirmedAddress &&
+                loginWith === 'keplr' &&
                 connectedToWeb3 &&
                 keplrConnector?.accounts[0]
               "
@@ -96,6 +97,7 @@
             <ConfirmWeb3Address
               v-if="
                 !confirmedAddress &&
+                loginWith === 'metamask' &&
                 connectedToWeb3 &&
                 metamaskConnector?.accounts[0]
               "
@@ -482,6 +484,7 @@ export default {
       connectedToWeb3.value = false;
       keplrConnector.value.disconnect();
       metamaskConnector.value.disconnect();
+      addLoading.value = false;
 
       onUseEmail();
     };
@@ -491,6 +494,7 @@ export default {
     const onWeb3AddressConfirm = async () => {
       let address = '';
       let net = '';
+
       if (loginWith.value === 'metamask') {
         address = metamaskConnector.value.accounts[0];
         net = metamaskConnector.value.network;
@@ -588,6 +592,10 @@ export default {
           }
 
           if (!metamaskResult) {
+            return;
+          }
+
+          if (!connectedToWeb3.value) {
             return;
           }
 
