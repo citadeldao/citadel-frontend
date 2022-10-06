@@ -1,7 +1,6 @@
 import router from '@/router';
 import { prettyNumber } from '@/helpers/prettyNumber';
 import citadel from '@citadeldao/lib-citadel';
-
 const types = {
   SET_INFO: 'SET_INFO',
   SET_SUBSCRIBE_REWARDS: 'SET_SUBSCRIBE_REWARDS',
@@ -9,7 +8,6 @@ const types = {
   SET_RATES: 'SET_RATES',
   SET_CURRENT_WALLET_MARKETCAP: 'SET_CURRENT_WALLET_MARKETCAP',
 };
-
 export default {
   namespaced: true,
   state: {

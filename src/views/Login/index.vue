@@ -605,7 +605,6 @@ export default {
           addLoading.value = false;
         }
       }
-
       const authKeplr = async () => {
         const keplrResult = await keplrConnector.value.sendKeplrTransaction(
           res.message,

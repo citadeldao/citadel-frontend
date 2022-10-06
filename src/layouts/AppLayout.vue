@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { ref, computed, watch, markRaw, onUnmounted } from 'vue';
+import { ref, computed, watch, markRaw, onUnmounted, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import Modal from '@/components/Modal';
@@ -65,45 +65,6 @@ export default {
         }
       }
     };
-
-    // load main data
-    store
-      .dispatch('app/initDefaultState')
-      .then(async () => {
-        //intervalId.value = setInterval(()=> { store.dispatch('wallets/getNewWallets','lazy'); }, 10000);
-        const { address, net, token } = route.params;
-
-        await setCurrentWallet({ address, net });
-        await setCurrentToken(address, net, token);
-
-        if (address && net) {
-          const hasTokenInWallet = store.getters['subtokens/formatedSubtokens'](
-            false,
-            store.getters['wallets/currentWallet']
-          ).some((t) => t.net === token);
-
-          if (
-            !findAddressWithNet(wallets.value, { address, net }) ||
-            (token && !hasTokenInWallet)
-          ) {
-            router.push({ name: 'AddAddress' });
-
-            return;
-          }
-
-          redirectToWallet({
-            wallet: store.getters['wallets/currentWallet'],
-            token: store.getters['subtokens/currentToken'],
-          });
-        }
-      })
-      .catch((e) => {
-        console.error(e);
-        router.push({ name: 'Login' });
-      })
-      .finally(() => {
-        store.dispatch('app/setLoader', false);
-      });
 
     const layout = ref();
     const getLayout = async (lyt) => {
@@ -170,7 +131,47 @@ export default {
         }
       }
     );
+    onMounted(() => {
+      // load main data
+      store
+        .dispatch('app/initDefaultState')
+        .then(async () => {
+          //intervalId.value = setInterval(()=> { store.dispatch('wallets/getNewWallets','lazy'); }, 10000);
+          const { address, net, token } = route.params;
 
+          await setCurrentWallet({ address, net });
+          await setCurrentToken(address, net, token);
+
+          if (address && net) {
+            const hasTokenInWallet = store.getters[
+              'subtokens/formatedSubtokens'
+            ](false, store.getters['wallets/currentWallet']).some(
+              (t) => t.net === token
+            );
+
+            if (
+              !findAddressWithNet(wallets.value, { address, net }) ||
+              (token && !hasTokenInWallet)
+            ) {
+              router.push({ name: 'AddAddress' });
+
+              return;
+            }
+
+            redirectToWallet({
+              wallet: store.getters['wallets/currentWallet'],
+              token: store.getters['subtokens/currentToken'],
+            });
+          }
+        })
+        .catch(async (e) => {
+          console.error(e);
+          router.push({ name: 'Login' });
+        })
+        .finally(() => {
+          store.dispatch('app/setLoader', false);
+        });
+    });
     onUnmounted(() => clearInterval(intervalId.value));
 
     return { layout, showLoader };
