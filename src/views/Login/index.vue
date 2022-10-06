@@ -483,8 +483,6 @@ export default {
       keplrConnector.value.disconnect();
       metamaskConnector.value.disconnect();
 
-      console.log('cancel');
-
       onUseEmail();
     };
 
