@@ -78,7 +78,11 @@
             />
 
             <ConfirmWeb3Address
-              v-if="!confirmedAddress && keplrConnector?.accounts[0]"
+              v-if="
+                !confirmedAddress &&
+                connectedToWeb3 &&
+                keplrConnector?.accounts[0]
+              "
               :is-keplr="!!keplrConnector.accounts[0].address"
               :name="keplrNetworks[0].label"
               :network="keplrNetworks[0].net"
@@ -90,7 +94,11 @@
             />
 
             <ConfirmWeb3Address
-              v-if="!confirmedAddress && metamaskConnector?.accounts[0]"
+              v-if="
+                !confirmedAddress &&
+                connectedToWeb3 &&
+                metamaskConnector?.accounts[0]
+              "
               :name="
                 metamaskConnector.network === 'bsc'
                   ? 'Binance Smart Chain'
@@ -474,6 +482,8 @@ export default {
       connectedToWeb3.value = false;
       keplrConnector.value.disconnect();
       metamaskConnector.value.disconnect();
+
+      console.log('cancel');
 
       onUseEmail();
     };
