@@ -13,11 +13,10 @@
       {{ $t('addToOneSeed.backUp.h3') }}
     </h3>
     <Checkbox
-      disabled
       id="downloadCheck"
-      :value="downloadCheck"
+      :value="isDownloadSeed"
       :label="$t('migration.download')"
-      @input="downloadCheck = !downloadCheck"
+      @input="$emit('update:isDownloadSeed', !isDownloadSeed)"
     />
     <PrimaryButton data-qa="Ok" @click="clickHandler">
       {{ $t('ok') }}
@@ -29,15 +28,20 @@ import { ref, markRaw, computed, inject } from 'vue';
 import { useStore } from 'vuex';
 import Checkbox from '@/components/UI/Checkbox';
 import PrimaryButton from '@/components/UI/PrimaryButton';
-import exportPrivateKeys from '@/helpers/exportPrivateKeys';
 export default {
   name: 'DownloadOneSeed',
   components: {
     Checkbox,
     PrimaryButton,
   },
-  emits: ['downloadedFile'],
-  setup(props, { emit }) {
+  props: {
+    isDownloadSeed: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  emits: ['update:isDownloadSeed'],
+  setup() {
     const store = useStore();
     const nextStep = inject('nextStep');
     const downloadCheck = ref(false);
@@ -49,11 +53,6 @@ export default {
       icon.value = markRaw(val.default);
     });
     const clickHandler = async () => {
-      if (downloadCheck.value) {
-        exportPrivateKeys(keyStorage.value);
-
-        emit('downloadedFile');
-      }
       nextStep();
     };
     return { icon, downloadCheck, keyStorage, clickHandler };
