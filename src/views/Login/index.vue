@@ -481,6 +481,10 @@ export default {
     };
 
     const onWeb3AddressCancel = () => {
+      if (addLoading.value) {
+        return;
+      }
+
       connectedToWeb3.value = false;
       keplrConnector.value.disconnect();
       metamaskConnector.value.disconnect();
