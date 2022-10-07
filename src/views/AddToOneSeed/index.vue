@@ -23,11 +23,11 @@
         v-if="currentStep === 3"
         :mnemonic="walletOpts.mnemonic"
       />
-      <DownloadOneSeed
+      <!-- <DownloadOneSeed
         v-if="currentStep === 4"
         v-model:isDownloadSeed="isDownloadSeed"
-      />
-      <SelectNetworks v-if="currentStep === 5" @selectNets="finalStep" />
+      /> -->
+      <SelectNetworks v-if="currentStep === 4" @selectNets="finalStep" />
     </div>
   </div>
 </template>
@@ -36,7 +36,7 @@
 import { computed, onMounted, ref } from 'vue';
 import ConfirmOneSeed from './components/ConfirmOneSeed';
 import CreateOneSeed from './components/CreateOneSeed';
-import DownloadOneSeed from './components/DownloadOneSeed';
+// import DownloadOneSeed from './components/DownloadOneSeed';
 import SelectNetworks from '@/components/UI/SelectNetworks';
 import Header from '../AddAddress/components/Header';
 import EnterPassword from './components/EnterPassword';
@@ -59,7 +59,7 @@ export default {
     SelectNetworks,
     CreateOneSeed,
     ConfirmOneSeed,
-    DownloadOneSeed,
+    // DownloadOneSeed,
   },
   setup() {
     const isDownloadSeed = ref(false);
