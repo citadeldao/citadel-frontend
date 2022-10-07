@@ -7,7 +7,7 @@
       v-if="
         stateCurrentWallet.balance.calculatedBalance ||
         stateCurrentWallet.subtokenBalanceUSD ||
-        stateCurrentWallet.net === 'secret' ||
+        showAssetsExep.includes(stateCurrentWallet.net) ||
         currentToken
       "
     >
@@ -159,6 +159,7 @@ import RoundArrowButton from '@/components/UI/RoundArrowButton';
 import Card from '@/components/UI/Card';
 import useWallets from '@/compositions/useWallets';
 import { OUR_TOKEN, WALLET_TYPES } from '@/config/walletType';
+import { showAssetsExep } from '@/config/availableNets';
 
 export default {
   name: 'AssetsBlock',
@@ -390,6 +391,7 @@ export default {
       balanceUSD,
       balanceAvailableUSD,
       WALLET_TYPES,
+      showAssetsExep,
     };
   },
 };

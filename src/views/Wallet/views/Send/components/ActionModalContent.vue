@@ -109,7 +109,7 @@
         type="password"
         icon="key"
         :placeholder="$t('password')"
-        :error="inputError"
+        :error="confirmClicked && (inputError || passwordError)"
         @input="$emit('update:password', $event)"
         @keyup.enter="$emit('submitSend')"
       />
@@ -127,6 +127,10 @@ export default {
   name: 'ActionModalContent',
   components: { Input, Fees, SendDirection },
   props: {
+    confirmClicked: {
+      type: Boolean,
+      default: false,
+    },
     hideFee: {
       type: Boolean,
       default: false,
