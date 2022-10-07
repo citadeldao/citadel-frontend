@@ -47,6 +47,10 @@ export const steps1 = [
   },
   {
     id: 4,
+    status: 'inactive',
+  },
+  {
+    id: 5,
     stepDesc: t('steps.selectNetworks'),
     icon: 'squares',
     headerTitle: t('steps.selectNetworks'),

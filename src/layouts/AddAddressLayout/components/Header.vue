@@ -159,7 +159,7 @@ export default {
 
     const rewards = computed(() => store.getters['rewards/rewards']);
     const keyStorage = computed(
-      () => `user_${store.getters['profile/info']?.id}`
+      () => `user_${store.getters['profile/info'].id}`
     );
     const hasWallets = computed(() => !!wallets.value.length);
 
