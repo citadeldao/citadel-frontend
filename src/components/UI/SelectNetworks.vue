@@ -32,7 +32,10 @@
           <div>{{ $t('addToOneSeed.moreNetworks') }}</div>
           <BackButton :is-down="true" data-qa="More networks" />
         </div>
-        <div class="title">
+        <div
+          class="title"
+          v-if="!isUserMnemonic && route.name !== 'RestoreOneSeed'"
+        >
           {{ $t('addToOneSeed.walletCreated') }}
         </div>
         <div class="desc">
@@ -65,11 +68,13 @@ import useWallets from '@/compositions/useWallets';
 import useCreateWallets from '@/compositions/useCreateWallets';
 import { WALLET_TYPES } from '@/config/walletType.js';
 import { checkDerivationPath } from '@/helpers';
+import { useRoute } from 'vue-router';
 export default {
   name: 'SelectNetworks',
   components: { NetworkCard, PrimaryButton, BackButton, Input },
   emits: ['selectNets'],
   setup(props, { emit }) {
+    const route = useRoute();
     const store = useStore();
     const networksAmount = ref(6);
     const networksList = store.getters['networks/networksList'];
@@ -245,6 +250,7 @@ export default {
       if (isUserMnemonic.value) showAllNetworks();
     });
     return {
+      route,
       displayData,
       checked,
       addItem,
@@ -259,6 +265,7 @@ export default {
       handleKeyword,
       networksAmount,
       isDisabledBtn,
+      isUserMnemonic,
     };
   },
 };
