@@ -8,7 +8,6 @@ import router from '@/router';
 import BigNumber from 'bignumber.js';
 
 const { t } = i18n.global;
-const CryptoJS = require('crypto-js');
 export default class CryptoCoin {
   constructor(opts) {
     // common properties of wallets
@@ -445,13 +444,11 @@ export default class CryptoCoin {
   }
 
   static encodeMnemonic(mnemonic, password) {
-    return CryptoJS.AES.encrypt(mnemonic, password).toString();
+    return citadel.encodeMnemonicByPassword(mnemonic, password);
   }
 
   static decodeMnemonic(encodeMnemonic, password) {
-    return CryptoJS.AES.decrypt(encodeMnemonic, password).toString(
-      CryptoJS.enc.Utf8
-    );
+    return citadel.decodeMnemonicByPassword(encodeMnemonic, password);
   }
 
   static validateMnemonic(mnemonic) {
