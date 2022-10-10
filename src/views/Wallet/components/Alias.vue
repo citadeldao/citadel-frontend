@@ -19,18 +19,10 @@
             @blur="focus = false"
             @keyup.enter="setAlias()"
           />
-          <span
-            v-else
-            ref="nameRef"
-            :style="maxNameWidth"
-            class="alias__wallet-name"
-          >
+          <span v-else ref="nameRef" class="alias__wallet-name">
             <!-- <resize-observer :show-trigger="true" @notify="handleNameResize" /> -->
-            {{ currentWallet.title || formattedWalletName }}
+            {{ currentWallet.title || currentWallet.address }}
           </span>
-          <EditButton @click="clickHandler">
-            {{ editMode ? $t('save') : $t('edit') }}
-          </EditButton>
         </div>
       </div>
       <div class="alias__second-line">
@@ -45,30 +37,35 @@
             id="address"
             ref="addressRef"
             class="alias__address"
-            :style="{ maxWidth: `${maxWidth}px` }"
             @mouseenter="showAddressTooltip = true"
             @mouseleave="showAddressTooltip = false"
           >
-            <!-- <resize-observer :show-trigger="true" @notify="handleResize" /> -->
-            {{ formattedAddress }}
+            {{ currentWallet.address }}
           </span>
-          <div
-            class="alias__copy-icon"
-            data-qa="wallet__copy-address-button"
-            @click="copyAddress(currentWallet.address)"
-          >
-            <transition name="fade1">
-              <span v-if="isCopied" class="alias__tooltip">
-                {{ $t('copiedToClipboard') }}
-              </span>
-            </transition>
-            <copy />
-          </div>
-          <div class="alias__scanner-icon">
-            <a :title="scannerLink" :href="scannerLink" target="_blank">
-              <linkIcon />
-            </a>
-          </div>
+        </div>
+      </div>
+    </div>
+    <div class="alias__actions">
+      <EditButton @click="clickHandler">
+        {{ editMode ? $t('save') : $t('edit') }}
+      </EditButton>
+      <div style="display: flex">
+        <div
+          class="alias__copy-icon"
+          data-qa="wallet__copy-address-button"
+          @click="copyAddress(currentWallet.address)"
+        >
+          <transition name="fade1">
+            <span v-if="isCopied" class="alias__tooltip">
+              {{ $t('copiedToClipboard') }}
+            </span>
+          </transition>
+          <copy />
+        </div>
+        <div class="alias__scanner-icon">
+          <a :title="scannerLink" :href="scannerLink" target="_blank">
+            <linkIcon />
+          </a>
         </div>
       </div>
     </div>
@@ -98,12 +95,10 @@ import WalletTypeCard from '@/components/WalletTypeCard';
 import EditButton from '@/components/UI/EditButton';
 import FavouriteButton from '@/components/FavouriteButton';
 import copyToClipboard from '@/helpers/copyToClipboard';
-import { computed, nextTick, onMounted, ref } from 'vue';
+import { computed, nextTick, ref } from 'vue';
 import { useStore } from 'vuex';
-import { addressTextWidth, formattedWalletAddress } from '@/helpers';
+import { addressTextWidth } from '@/helpers';
 import { findAddressWithNet } from '@/helpers';
-import { useWindowSize } from 'vue-window-size';
-import { screenWidths } from '@/config/sreenWidthThresholds';
 import { WALLET_TYPES } from '@/config/walletType';
 import { useRouter } from 'vue-router';
 export default {
@@ -125,69 +120,8 @@ export default {
   emits: ['qrClick'],
   setup(props) {
     const router = useRouter();
-    const { width } = useWindowSize();
-    const addressRef = ref(null);
-    const nameRef = ref(null);
-    const wrapperWidth = ref();
-    const wrapperNameWidth = ref();
 
     const scannerLink = computed(() => props.currentWallet.getScannerLink());
-
-    const handleResize = ({ width }) => {
-      wrapperWidth.value = width;
-    };
-    const handleNameResize = ({ width }) => {
-      console.log(width, 'width');
-      wrapperNameWidth.value = width;
-    };
-
-    const fontSizes = computed(() => {
-      return width.value < screenWidths.lg
-        ? { name: 16, address: 14 }
-        : { name: 20, address: 16 };
-    });
-
-    const maxWidth = computed(() =>
-      addressTextWidth(
-        props.currentWallet?.address,
-        'Panton_Regular',
-        fontSizes.value.address
-      )
-    );
-    const maxNameWidth = computed(() => {
-      let textArg;
-      if (props.currentWallet.title.length) {
-        if (
-          props.currentWallet.title.length >= props.currentWallet.address.length
-        ) {
-          textArg = props.currentWallet.address;
-          console.log(textArg, 1, 'hi');
-        } else {
-          textArg = props.currentWallet.title;
-          console.log(textArg, 2, 'hi');
-        }
-      } else {
-        textArg = props.currentWallet.address;
-        console.log(textArg, 3, 'hi');
-      }
-      console.log(
-        textArg,
-        props.currentWallet.title,
-        props.currentWallet.address,
-        'textArg'
-      );
-
-      return {
-        maxWidth: `${addressTextWidth(
-          textArg,
-          'Panton_Bold',
-          fontSizes.value.name
-        )}px`,
-        // overflow: 'hidden',
-        // textOverflow: 'ellipsis',
-      };
-    });
-
     const metamaskConnector = computed(
       () => store.getters['metamask/metamaskConnector']
     );
@@ -209,26 +143,6 @@ export default {
 
       return props.currentWallet.type;
     });
-
-    const formattedAddress = computed(() => {
-      return formattedWalletAddress(
-        props.currentWallet?.address,
-        +wrapperWidth.value,
-        'Panton_Regular',
-        fontSizes.value.address
-      );
-    });
-
-    const formattedWalletName = computed(() => {
-      console.log(props.currentWallet?.title, 'formattedWalletAddress');
-      return formattedWalletAddress(
-        props.currentWallet?.address,
-        +wrapperNameWidth.value,
-        'Panton_Bold',
-        fontSizes.value.name
-      );
-    });
-    console.log(maxNameWidth, 'maxNameWidth');
     const editMode = ref(false);
     const titleInput = ref(null);
     const alias = ref('');
@@ -258,7 +172,6 @@ export default {
       } else {
         setAlias();
       }
-      handleNameResize(nameRef.value.offsetWidth);
     };
 
     const onClickAway = () => {
@@ -354,13 +267,6 @@ export default {
 
     const showAddressTooltip = ref(false);
 
-    // set wrapper width default
-    onMounted(() => {
-      console.log(wrapperNameWidth.value, nameRef.value, 'span');
-      wrapperWidth.value = addressRef.value.offsetWidth;
-      wrapperNameWidth.value = nameRef.value.offsetWidth;
-    });
-
     return {
       addressTextWidth,
       copyToClipboard,
@@ -375,18 +281,8 @@ export default {
       focus,
       isFavorite,
       toggleFavorite,
-      formattedAddress,
-      formattedWalletName,
-      wrapperWidth,
-      wrapperNameWidth,
-      handleResize,
-      handleNameResize,
-      maxWidth,
-      maxNameWidth,
       showAddressTooltip,
       currentWalletType,
-      addressRef,
-      nameRef,
       scannerLink,
     };
   },
@@ -395,7 +291,6 @@ export default {
 
 <style lang="scss" scoped>
 .alias {
-  flex: 1;
   height: 150px;
   padding: 0 45px;
   align-items: center;
@@ -421,19 +316,26 @@ export default {
     border-radius: 8px;
     padding: 0 20px;
   }
-
+  &__actions {
+    height: 68px;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+  }
   &__info {
     display: flex;
     flex-direction: column;
-    max-width: 86%;
-    flex: 1;
-    margin-right: 20px;
+    max-width: 80%;
+    @media (max-width: 1496px) {
+      max-width: 74%;
+    }
   }
 
   &__edit {
     display: flex;
-    flex: 1;
     align-items: center;
+    width: 100%;
+    max-width: 100%;
   }
 
   &__first-line {
@@ -441,28 +343,31 @@ export default {
     align-items: center;
     margin-bottom: 8px;
     width: fit-content;
+    width: 100%;
+    max-width: 100%;
   }
 
   &__wallet-name {
     position: relative;
-    flex: 1;
     margin: 0;
     font-family: 'Panton_Bold';
-    margin-right: 16px;
     font-size: 20px;
     line-height: 30px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    max-width: 525px;
+    max-width: calc(100% - 3vw);
+    //max-width: 525px;
     width: fit-content;
 
     @include lg {
-      max-width: 396px;
+      max-width: calc(100% - 3vw);
     }
-
+    @media (max-width: 1486px) {
+      max-width: calc(100% - 5vw);
+    }
     @include md {
-      max-width: 318px;
+      max-width: 390px;
       font-size: 16px;
       line-height: 19px;
     }
@@ -484,6 +389,9 @@ export default {
   &__second-line {
     display: flex;
     align-items: center;
+    width: fit-content;
+    width: 100%;
+    max-width: 100%;
   }
 
   &__wallet-type {
@@ -495,12 +403,14 @@ export default {
 
   &__address-wrapper {
     display: flex;
-    flex: 1;
     align-items: center;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &__address {
-    flex: 1;
     position: relative;
     font-size: 16px;
     line-height: 27px;
@@ -510,14 +420,17 @@ export default {
     // overflow: hidden;
     // text-overflow: ellipsis;
     cursor: pointer;
-    // max-width: 495px;
+    //max-width: 440px;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
     @include lg {
       // max-width: 335px;
     }
     @include md {
       font-size: 14px;
       line-height: 27px;
-      margin-right: 10px;
       // max-width: 260px;
     }
   }
@@ -532,7 +445,7 @@ export default {
     justify-content: center;
     cursor: pointer;
     flex-shrink: 0;
-
+    margin-left: 20px;
     & svg {
       width: 43px;
       height: 43px;
@@ -619,6 +532,44 @@ export default {
       top: 82px;
       left: 176px;
     }
+  }
+}
+@media (max-width: 1204px) {
+  .alias {
+    &__address {
+      max-width: 333px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    &__info {
+      max-width: 80%;
+    }
+  }
+}
+@media (max-width: 1168px) {
+  .alias__wallet-name {
+    //max-width: 86%;
+  }
+}
+@media (min-width: 1024px) and (max-width: 1167px) {
+  .alias {
+    &__edit {
+      width: 100%;
+    }
+    &__wallet-name {
+      max-width: calc(100% - 4vw);
+    }
+    &__first-line {
+      width: 100%;
+    }
+    &__info {
+      max-width: 35vw;
+    }
+  }
+}
+@media (min-width: 1024px) and (max-width: 1111px) {
+  .alias__info {
+    max-width: 30vw;
   }
 }
 </style>
