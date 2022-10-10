@@ -352,7 +352,7 @@ export default {
           ).key;
           await window.keplr.enable(chain);
           const accounts = await window.keplr
-            .getOfflineSigner(chain)
+            .getOfflineSignerAuto(chain)
             .getAccounts();
           const keplrAddress = accounts && accounts[0].address;
           const pubkey = Buffer.from(accounts && accounts[0].pubkey).toString(
