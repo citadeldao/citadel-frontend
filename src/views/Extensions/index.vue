@@ -33,7 +33,7 @@
               showAppInfoModal ? (showAppInfoModal = false) : null;
             }
           "
-          width="900px"
+          width="600px"
           :title="selectedApp.name"
           :desc="selectedApp.short_description"
           :internal-icon="selectedApp.logo"
@@ -390,7 +390,7 @@ export default {
     const showConfirmModalLoading = ref(false);
     const selectedTags = ref([]);
     const fullScreenAppIds = ref([
-      6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 21, 22, 23,
+      6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 21, 22, 23, 24, 25,
     ]);
 
     const { wallets: walletsList } = useWallets();
@@ -1101,7 +1101,22 @@ export default {
           extensionTransactionForSign.value.type ===
             extensionsSocketTypes.types.execute
         ) {
-          showConfirmModalLoading.value = true;
+          if (signerWallet.value.type !== WALLET_TYPES.LEDGER) {
+            showConfirmModalLoading.value = true;
+          } else {
+            showConfirmModalLoading.value = false;
+
+            // for ledger catch sign finish and start event and then show loader until sign is completed
+            citadel.addEventListener('ledgerSigningFinished', () => {
+              showLedgerConnect.value = false;
+              showConfirmModalLoading.value = true;
+            });
+
+            citadel.addEventListener('ledgerSigningStarted', () => {
+              showConfirmModalLoading.value = false;
+              showLedgerConnect.value = true;
+            });
+          }
 
           let response = null;
           if (Array.isArray(extensionTransactionForSign.value.messageScrt)) {
@@ -1115,6 +1130,7 @@ export default {
                 derivationPath: signerWallet.value.derivationPath,
               }
             );
+
             // execute message collections
           } else {
             // execute contract
@@ -1126,10 +1142,15 @@ export default {
               derivationPath: signerWallet.value.derivationPath,
               ...extensionTransactionForSign.value.messageScrt,
             });
+            // remove listener
+            citadel.addEventListener('ledgerSigningFinished', () => {});
           }
-
+          // remove listeners
+          citadel.addEventListener('ledgerSigningFinished', () => {});
+          citadel.addEventListener('ledgerSigningStarted', () => {});
           // send success message to app
           if (response?.data) {
+            signLoading.value = false;
             confirmModalDisabled.value = false;
             showLedgerConnect.value = false;
             successTx.value = response.data;
