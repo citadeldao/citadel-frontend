@@ -105,7 +105,7 @@
         :desc="$t('transactionsPage.editCommentModalDesc')"
         button-text="save"
         type="action"
-        @buttonClick="saveComment"
+        @buttonClick="modalCloseHandler"
         @close="modalCloseHandler"
       >
         <template #default>
@@ -318,19 +318,6 @@ export default {
       txComment.value = transaction.note;
       nextTick(() => document.getElementById('prevComment').focus());
     };
-    const saveComment = async () => {
-      await store.dispatch('transactions/postTransactionNote', {
-        network: route.params.token || route.params.net,
-        hash: currentTransaction.value.hash,
-        text: txComment.value,
-      });
-      await getTransactions(
-        props.currentWallet.id,
-        currentPage.value,
-        pageLimit.value
-      );
-      modalCloseHandler();
-    };
     const showTransactionInfo = async (transaction) => {
       currentTransaction.value = transaction;
       txComment.value = transaction.note;
@@ -342,11 +329,7 @@ export default {
       }
     };
     const infoModalSubmit = async () => {
-      if (currentTransaction.value.note !== txComment.value) {
-        saveComment();
-      } else {
-        modalCloseHandler();
-      }
+      modalCloseHandler();
     };
 
     return {
@@ -366,7 +349,6 @@ export default {
       showEditCommentModal,
       modalCloseHandler,
       txComment,
-      saveComment,
       showTransactionInfoModal,
       currentTransaction,
       infoModalSubmit,
