@@ -1049,13 +1049,17 @@ export default {
         let keplrResult;
 
         try {
+          loadingSign.value = true;
+          isLoading.value = true;
           keplrResult = await keplrConnector.value.sendKeplrTransaction(
             tx,
             props.currentWallet.address,
             { preferNoSetFee: true }
           );
           loadingSign.value = false;
+          isLoading.value = false;
         } catch (err) {
+          isLoading.value = false;
           loadingSign.value = false;
           notify({
             type: 'warning',
@@ -1134,7 +1138,9 @@ export default {
       confirmClicked.value = true;
 
       if (
-        (!isHardwareWallet.value && !password.value) ||
+        (!isHardwareWallet.value &&
+          !password.value &&
+          props.currentWallet.type !== WALLET_TYPES.KEPLR) ||
         (passwordError.value &&
           !isHardwareWallet.value &&
           !props.currentWallet.type === WALLET_TYPES.KEPLR)
