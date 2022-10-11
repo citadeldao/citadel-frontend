@@ -166,7 +166,7 @@ export default {
         })
         .catch(async (e) => {
           console.error(e);
-          router.push({ name: 'Login' });
+          // router.push({ name: 'Login' });
         })
         .finally(() => {
           store.dispatch('app/setLoader', false);

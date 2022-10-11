@@ -1,4 +1,3 @@
-import router from '@/router';
 import { prettyNumber } from '@/helpers/prettyNumber';
 import citadel from '@citadeldao/lib-citadel';
 const types = {
@@ -70,7 +69,7 @@ export default {
       }
 
       dispatch('auth/setIsAuthenticated', false, { root: true });
-      router.push({ name: 'Login' });
+      // router.push({ name: 'Login' });
 
       return { error };
     },

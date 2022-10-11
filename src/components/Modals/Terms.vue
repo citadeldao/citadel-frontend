@@ -6,7 +6,7 @@
         :button-text="$t('ok')"
         :submit-button="false"
         style="width: 1000px"
-        @close="close"
+        @close="$router.push('/')"
       >
         <div class="terms">
           <h1>Terms and Conditions</h1>
@@ -517,23 +517,10 @@
 <script>
 import Modal from '@/components/Modal';
 import ModalContent from '@/components/ModalContent';
-import { useRouter } from 'vue-router';
 export default {
   components: {
     Modal,
     ModalContent,
-  },
-  emits: ['close'],
-  setup(props, { emit }) {
-    const router = useRouter();
-    const close = () => {
-      router.push('/');
-      emit('close');
-    };
-    return {
-      close,
-      router,
-    };
   },
 };
 </script>

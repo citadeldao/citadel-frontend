@@ -1,6 +1,6 @@
 <template>
-  <PrivacyModal v-if="showPrivacy" @close="showPrivacy = false" />
-  <TermsModal v-if="showTerms" @close="showTerms = false" />
+  <PrivacyModal v-if="showPrivacy" />
+  <TermsModal v-if="showTerms" />
   <transition v-if="isLoading" name="fade">
     <Modal>
       <img src="@/assets/gif/loader.gif" alt="" />

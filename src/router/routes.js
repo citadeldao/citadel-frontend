@@ -326,7 +326,6 @@ export default [
     component: () => import('@/components/Modals/Terms'),
     meta: {
       layout: 'DefaultLayout',
-      // guard: 'public',
     },
   },
   {
@@ -335,7 +334,6 @@ export default [
     component: () => import('@/components/Modals/Privacy'),
     meta: {
       layout: 'DefaultLayout',
-      // guard: 'public',
     },
   },
 ];
