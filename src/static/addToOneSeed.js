@@ -45,6 +45,10 @@ export const steps1 = [
     headerInfo: t('steps.addToOneSeed.step2HeaderInfo'),
     status: 'inactive',
   },
+  // {
+  //   id: 4,
+  //   status: 'inactive',
+  // },
   {
     id: 4,
     stepDesc: t('steps.selectNetworks'),

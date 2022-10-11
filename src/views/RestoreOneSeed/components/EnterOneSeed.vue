@@ -46,7 +46,7 @@ import PrimaryButton from '@/components/UI/PrimaryButton';
 import CryptoCoin from '@/models/CryptoCoin';
 import error from '@/assets/icons/input/error.svg';
 import { useI18n } from 'vue-i18n';
-import { ref, inject, nextTick, computed } from 'vue';
+import { ref, inject, nextTick, computed, watch } from 'vue';
 
 export default {
   name: 'EnterOneSeed',
@@ -54,10 +54,16 @@ export default {
     PrimaryButton,
     error,
   },
+  props: {
+    importedMnemonic: {
+      type: String,
+      default: '',
+    },
+  },
   emits: ['confirmMnemonic'],
   setup(props, { emit }) {
     const { t } = useI18n();
-    const mnemonic = ref('');
+    const mnemonic = ref(props.importedMnemonic || '');
 
     const showPlaceholder = ref('true');
 
@@ -123,6 +129,16 @@ export default {
       emit('confirmMnemonic', mnemonic.value);
       nextStep();
     };
+
+    watch(
+      () => props.importedMnemonic,
+      (value) => {
+        if (value) {
+          clickHanadler();
+        }
+      },
+      { immediate: true }
+    );
 
     return {
       mnemonic,
