@@ -9,21 +9,22 @@
         "
         :button-text="$t('ok')"
         :submit-button="false"
-        style="width: 900px"
+        style="width: 1000px"
         @close="$emit('close')"
       >
         <div class="policy">
-          <h1>PRIVACY POLICY</h1>
+          <h1>Privacy policy</h1>
           <p>
+            <b style="color: #59779a">Last updated: </b>
+            <b style="color: #6a4bff">June 16, 2020</b>
+          </p>
+          <p style="margin-bottom: 16px">
             This Privacy Policy describes Our policies and procedures on the
             collection, use and disclosure of Your information when You use the
             Service and tells You about Your privacy rights and how the law
-            protects You.
-          </p>
-          <p>
-            We use Your Personal data to provide and improve the Service. By
-            using the Service, You agree to the collection and use of
-            information in accordance with this Privacy Policy.
+            protects You. We use Your Personal data to provide and improve the
+            Service. By using the Service, You agree to the collection and use
+            of information in accordance with this Privacy Policy.
           </p>
           <h2>Interpretation and Definitions</h2>
           <h3>Interpretation</h3>
@@ -36,7 +37,7 @@
             whether they appear in singular or in plural.
           </p>
           <h3>Definitions</h3>
-          <p>For the purposes of this Privacy Policy:</p>
+          <h4>For the purposes of this Privacy Policy:</h4>
           <ul>
             <li>
               <p>
@@ -129,8 +130,8 @@
             </li>
           </ul>
           <h2>Collecting and Using Your Personal Data</h2>
-          <h2>Types of Data Collected</h2>
-          <h3>Personal Data</h3>
+          <h3>Types of Data Collected</h3>
+          <h4>Personal Data</h4>
           <p>
             While using Our Service, We may ask You to provide Us with certain
             personally identifiable information that can be used to contact or
@@ -141,7 +142,7 @@
             <li>Email address</li>
             <li>Usage Data</li>
           </ul>
-          <h3>Usage Data</h3>
+          <h4>Usage Data</h4>
           <p>Usage Data is collected automatically when using the Service.</p>
           <p>
             Usage Data may include information such as Your Device's Internet
@@ -163,7 +164,7 @@
             visit our Service or when You access the Service by or through a
             mobile device.
           </p>
-          <h3>Tracking Technologies and Cookies</h3>
+          <h4>Tracking Technologies and Cookies</h4>
           <p>
             We use Cookies and similar tracking technologies to track the
             activity on Our Service and store certain information. Tracking
@@ -188,9 +189,9 @@
           </p>
           <ul>
             <li>
-              <p class="bold">Necessary / Essential Cookies</p>
-              <p>Type: Session Cookies</p>
-              <p>Administered by: Us</p>
+              <h4 class="bold">Necessary / Essential Cookies</h4>
+              <p>Type: <b class="type">Session Cookies</b></p>
+              <p>Administered by: <b class="administered">Us</b></p>
               <p>
                 Purpose: These Cookies are essential to provide You with
                 services available through the Website and to enable You to use
@@ -201,18 +202,18 @@
               </p>
             </li>
             <li>
-              <p class="bold">Cookies Policy / Notice Acceptance Cookies</p>
-              <p>Type: Persistent Cookies</p>
-              <p>Administered by: Us</p>
+              <h4 class="bold">Cookies Policy / Notice Acceptance Cookies</h4>
+              <p>Type: <b class="type">Persistent Cookies</b></p>
+              <p>Administered by: <b class="administered">Us</b></p>
               <p>
                 Purpose: These Cookies identify if users have accepted the use
                 of cookies on the Website.
               </p>
             </li>
             <li>
-              <p class="bold">Functionality Cookies</p>
-              <p>Type: Persistent Cookies</p>
-              <p>Administered by: Us</p>
+              <h4 class="bold">Functionality Cookies</h4>
+              <p>Type: <b class="type">Persistent Cookies</b></p>
+              <p>Administered by: <b class="administered">Us</b></p>
               <p>
                 Purpose: These Cookies allow us to remember choices You make
                 when You use the Website, such as remembering your login details
@@ -223,9 +224,9 @@
               </p>
             </li>
             <li>
-              <p class="bold">Tracking and Performance Cookies</p>
-              <p>Type: Persistent Cookies</p>
-              <p>Administered by: Third-Parties</p>
+              <h4 class="bold">Tracking and Performance Cookies</h4>
+              <p>Type: <b class="type">Persistent Cookies</b></p>
+              <p>Administered by: <b class="administered">Third-Parties</b></p>
               <p>
                 Purpose: These Cookies are used to track information about
                 traffic to the Website and how users use the Website. The
@@ -243,7 +244,7 @@
             For more information about the cookies we use and your choices
             regarding cookies, please visit our Cookies Policy.
           </p>
-          <h2>Use of Your Personal Data</h2>
+          <h3>Use of Your Personal Data</h3>
           <p>The Company may use Personal Data for the following purposes:</p>
           <ul>
             <li>
@@ -324,7 +325,7 @@
               communicate with You and view Your profile.
             </li>
           </ul>
-          <h2>Retention of Your Personal Data</h2>
+          <h3>Retention of Your Personal Data</h3>
           <p>
             The Company will retain Your Personal Data only for as long as is
             necessary for the purposes set out in this Privacy Policy. We will
@@ -340,7 +341,7 @@
             improve the functionality of Our Service, or We are legally
             obligated to retain this data for longer time periods.
           </p>
-          <h2>Transfer of Your Personal Data</h2>
+          <h3>Transfer of Your Personal Data</h3>
           <p>
             Your information, including Personal Data, is processed at the
             Company's operating offices and in any other places where the
@@ -362,22 +363,22 @@
             place including the security of Your data and other personal
             information.
           </p>
-          <h2>Disclosure of Your Personal Data</h2>
-          <h3>Business Transactions</h3>
+          <h3>Disclosure of Your Personal Data</h3>
+          <h4>Business Transactions</h4>
           <p>
             If the Company is involved in a merger, acquisition or asset sale,
             Your Personal Data may be transferred. We will provide notice before
             Your Personal Data is transferred and becomes subject to a different
             Privacy Policy.
           </p>
-          <h3>Law enforcement</h3>
+          <h4>Law enforcement</h4>
           <p>
             Under certain circumstances, the Company may be required to disclose
             Your Personal Data if required to do so by law or in response to
             valid requests by public authorities (e.g. a court or a government
             agency).
           </p>
-          <h3>Other legal requirements</h3>
+          <h4>Other legal requirements</h4>
           <p>
             The Company may disclose Your Personal Data in the good faith belief
             that such action is necessary to:
@@ -402,41 +403,39 @@
             commercially acceptable means to protect Your Personal Data, We
             cannot guarantee its absolute security.
           </p>
-          <h2>Data deletion</h2>
-          <p>
-            User email is stored by Citadel.one unless the account is deleted.
-            User has an option to erase all the private information by deleting
-            the account in Citadel.one Application settings. After confirmation
-            of deletion, no private information of the user will remain stored.
-          </p>
-          <h2>Detailed Information on the Processing of Your Personal Data</h2>
+          <h2 style="margin-top: 20px; margin-bottom: 12px">
+            Detailed Information on the Processing of Your Personal Data
+          </h2>
           <p>
             Service Providers have access to Your Personal Data only to perform
             their tasks on Our behalf and are obligated not to disclose or use
             it for any other purpose.
           </p>
-          <h2>Analytics</h2>
+          <h3>Types of Data Collected</h3>
+          <h4>Analytics</h4>
           <p>
             We may use third-party Service providers to monitor and analyze the
             use of our Service.
           </p>
-          <ul>
-            <li>
-              <p class="bold">Mixpanel</p>
-              <p>Mixpanel is provided by Mixpanel Inc.</p>
-              <p>
-                You can prevent Mixpanel from using your information for
-                analytics purposes by opting-out. To opt-out of Mixpanel
-                service, please visit this page: https://mixpanel.com/optout/
-              </p>
-              <p>
-                For more information on what type of information Mixpanel
-                collects, please visit the Terms of Use page of Mixpanel:
-                https://mixpanel.com/terms/
-              </p>
-            </li>
-          </ul>
-          <h2>Children's Privacy</h2>
+          <p class="bold">Mixpanel</p>
+          <p>Mixpanel is provided by Mixpanel Inc.</p>
+          <p>
+            You can prevent Mixpanel from using your information for analytics
+            purposes by opting-out. To opt-out of Mixpanel service, please visit
+            this page: https://mixpanel.com/optout/
+          </p>
+          <p>
+            For more information on what type of information Mixpanel collects,
+            please visit the Terms of Use page of Mixpanel:
+            <a
+              href="https://mixpanel.com/terms/"
+              style="text-decoration: none; color: #00a3ff; font-weight: 600"
+              >https://mixpanel.com/terms/</a
+            >
+          </p>
+          <h2 style="margin-top: 20px; margin-bottom: 12px">
+            Children's Privacy
+          </h2>
           <p>
             Our Service does not address anyone under the age of 13. We do not
             knowingly collect personally identifiable information from anyone
@@ -452,7 +451,9 @@
             require Your parent's consent before We collect and use that
             information.
           </p>
-          <h2>Links to Other Websites</h2>
+          <h2 style="margin-top: 20px; margin-bottom: 12px">
+            Links to Other Websites
+          </h2>
           <p>
             Our Service may contain links to other websites that are not
             operated by Us. If You click on a third party link, You will be
@@ -464,7 +465,9 @@
             content, privacy policies or practices of any third party sites or
             services.
           </p>
-          <h2>Changes to this Privacy Policy</h2>
+          <h2 style="margin-top: 20px; margin-bottom: 12px">
+            Changes to this Privacy Policy
+          </h2>
           <p>
             We may update our Privacy Policy from time to time. We will notify
             You of any changes by posting the new Privacy Policy on this page.
@@ -479,12 +482,19 @@
             changes. Changes to this Privacy Policy are effective when they are
             posted on this page.
           </p>
-          <h2>Contact Us</h2>
+          <h2 style="margin-top: 20px; margin-bottom: 12px">Contact Us</h2>
           <p>
             If you have any questions about this Privacy Policy, You can contact
             us:
           </p>
-          <p>By email: support@citadel.one</p>
+          <p>
+            By email:
+            <a
+              style="color: #6a4bff; font-weight: 600; text-decoration: none"
+              href="mailto:support@citadel.one"
+              >support@citadel.one</a
+            >
+          </p>
         </div>
       </ModalContent>
     </Modal>
@@ -513,13 +523,41 @@ export default {
   box-sizing: border-box;
   height: 500px;
   overflow-y: auto;
-
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 30px;
+  color: #59779a;
+  h1 {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 30px;
+    color: #000000;
+    margin-bottom: 9px;
+  }
+  h1,
   h2,
-  h3 {
+  h3,
+  h4 {
     font-family: Panton_Bold;
+    margin: 0;
+  }
+  h2 {
+    color: #1a53f0;
+    text-transform: uppercase;
+    font-size: 18px;
+  }
+  h3 {
+    color: #00a3ff;
+    margin-bottom: 8px;
+    margin-top: 10px;
+  }
+  h4 {
+    color: #4b4c63;
+    font-weight: 700;
   }
 
   p {
+    margin: 0;
     .bold {
       font-family: Panton_Bold;
     }
@@ -528,5 +566,30 @@ export default {
   .bold {
     font-family: Panton_Bold;
   }
+}
+ul {
+  padding-left: 30px;
+  margin-top: 0;
+  li p .bold {
+    color: #4f70cf;
+  }
+  li h4 .bold {
+    font-weight: 700;
+    font-size: 16px;
+    color: #000000 !important;
+  }
+  li {
+    .type {
+      color: #1a53f0;
+    }
+    .administered {
+      color: #ff5722;
+    }
+  }
+}
+ul li::marker {
+  color: #2970ff;
+  font-size: 24px;
+  line-height: 1;
 }
 </style>

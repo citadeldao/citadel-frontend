@@ -73,7 +73,7 @@ export default {
     margin: 25px 0 10px;
     font-size: 35px;
     line-height: 1.3;
-    color: $dark-blue;
+    color: $white;
     font-family: 'Panton_Bold';
 
     @include lg {
@@ -94,6 +94,7 @@ export default {
     font-size: 22px;
     line-height: 1.6;
     letter-spacing: 0.25px;
+    color: #b5a3f7;
 
     @include lg {
       font-size: 18px;

@@ -29,10 +29,14 @@ import CreatePassword from './components/CreatePassword';
 import useCurrentStep from '@/compositions/useCurrentStep';
 import { getSteps } from '@/static/importSeedPhrase';
 import useCreateWallets from '@/compositions/useCreateWallets';
+import useWallets from '@/compositions/useWallets';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import citadel from '@citadeldao/lib-citadel';
 import { onMounted } from 'vue';
+import notify from '@/plugins/notify';
+import { useI18n } from 'vue-i18n';
+
 export default {
   name: 'ImportSeedPhrase',
   components: {
@@ -45,6 +49,7 @@ export default {
   setup() {
     const store = useStore();
     const router = useRouter();
+    const { t } = useI18n();
 
     const {
       setPassword,
@@ -68,6 +73,8 @@ export default {
       getSteps(isPasswordHash.value)
     );
 
+    const { wallets } = useWallets();
+
     const setOpts = ({ net, mnemonic, passphrase }) => {
       setNets([net]);
       setMnemonic(mnemonic);
@@ -79,6 +86,18 @@ export default {
       });
     });
     const finalStep = async (wallet) => {
+      const hasWalletsFromNet = wallets.value.filter(
+        (w) => w.net === wallet.net
+      ).length;
+
+      if (hasWalletsFromNet >= 20) {
+        notify({
+          type: 'warning',
+          text: t('addAddress.addressLimits'),
+        });
+        return;
+      }
+
       store.commit('newWallets/setLoader', true);
       setImportedFromSeed();
       const { data, error } = await await citadel.addCreatedWallet({
