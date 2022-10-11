@@ -16,9 +16,7 @@ export default class keplrConnector {
       }
 
       await window.keplr.enable(this.chainId);
-      this.offlineSigner = await window.keplr.getOfflineSignerAuto(
-        this.chainId
-      );
+      this.offlineSigner = await window.keplr.getOfflineSigner(this.chainId);
       this.accounts = await this.offlineSigner.getAccounts();
 
       return this.accounts;
