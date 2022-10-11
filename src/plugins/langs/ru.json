@@ -683,7 +683,16 @@
             "inputLabel": "Ваш e-mail",
             "inputPlaceHolder": "e-mail",
             "button": "Изменить",
-            "comingSoon": "Скоро"
+            "comingSoon": "Скоро",
+            "changeModalTitle": "Изменить",
+            "changeModalDescription": "Измените адрес электронной почты, связанный с вашей учетной записью",
+            "oldEmail": "Старый e-mail",
+            "newEmail": "Новый e-email",
+            "emailPlaceholder": "Введите e-mail адрес",
+            "validFormatError": "Пожалуйста, введите свой адрес электронной почты в правильном формате",
+            "lastStep": "Один последний шаг!",
+            "lastStepDescription":"Пожалуйста, проверьте  <span style='font-family: \"Panton_Bold\";'> КАК </span> cтарый, так и новый адреса электронной почты, чтобы завершить обновление электронной почты.",
+            "resend": "Отправить снова"
         },
         "language": {
             "title": "Язык",
