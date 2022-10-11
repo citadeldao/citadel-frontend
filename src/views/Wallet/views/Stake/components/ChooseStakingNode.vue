@@ -88,6 +88,7 @@
     </div>
     <div v-if="showInput" class="choose-staking-node__amount-input">
       <Input
+        :disabled="activeInput"
         id="amount"
         :value="amount"
         :label="$t('amount')"
@@ -97,7 +98,7 @@
         icon="coins"
         placeholder="0.0"
         :error="insufficientFunds"
-        show-set-max
+        :show-set-max="!activeInput"
         data-qa="staking__amount-field"
         @input="updateAmount"
         @keyup.enter="$emit('nextStep')"
@@ -175,13 +176,15 @@ export default {
     const maxAmount = inject('maxAmount');
     const insufficientFunds = inject('insufficientFunds');
 
+    const checkActiveTab = (targetTab) => {
+      return mode.value === targetTab || props.activeTab === targetTab;
+    };
+
     const showAmount = computed(() => {
       if (
         insufficientFunds.value ||
-        mode.value === 'unstake' ||
-        props.activeTab === 'unstake' ||
-        mode.value === 'redelegate' ||
-        props.activeTab === 'redelegate'
+        checkActiveTab('unstake') ||
+        checkActiveTab('redelegate')
       ) {
         return false;
       }
@@ -194,6 +197,13 @@ export default {
       }
 
       return true;
+    });
+
+    const activeInput = computed(() => {
+      if (checkActiveTab('redelegate')) {
+        return !selectedNodeForRedelegation.value;
+      }
+      return false;
     });
 
     return {
@@ -210,6 +220,7 @@ export default {
       selectedNodeForRedelegation,
       updateRedelegationDirection,
       isWithoutDelegation,
+      activeInput,
     };
   },
 };
