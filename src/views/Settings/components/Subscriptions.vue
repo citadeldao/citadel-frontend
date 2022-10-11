@@ -61,9 +61,11 @@ export default {
       newsletter: false,
     });
 
-    store.dispatch('subscriptions/getSubscriptions').then(() => {
-      subscriptions.value = store.getters['subscriptions/subscriptions'];
-    });
+    if (store.getters['profile/info'].login) {
+      store.dispatch('subscriptions/getSubscriptions').then(() => {
+        subscriptions.value = store.getters['subscriptions/subscriptions'];
+      });
+    }
 
     const changeSubscriptionState = async (key) => {
       const msg = key == 'rewardsDigest' ? 'Rewards' : 'Newsletter';

@@ -1,4 +1,5 @@
 const Web3 = require('web3');
+import notify from '@/plugins/notify';
 
 export default class MetamaskConnector {
   constructor() {
@@ -49,6 +50,11 @@ export default class MetamaskConnector {
           this.accounts = [];
         });
       }
+    } else {
+      notify({
+        type: 'warning',
+        text: 'Metamask extension not found',
+      });
     }
   }
 
@@ -56,6 +62,13 @@ export default class MetamaskConnector {
     await window.ethereum.request({
       method: 'wallet_switchEthereumChain',
       params: [{ chainId: network || '0x1' }], // chainId must be in hexadecimal numbers
+    });
+  }
+
+  async signMessage(message, signer) {
+    return await window.ethereum.request({
+      method: 'personal_sign',
+      params: [signer, this.web3.utils.utf8ToHex(message)],
     });
   }
 
@@ -121,5 +134,9 @@ export default class MetamaskConnector {
     } catch (err) {
       return { error: 'Metamask sign tx error' };
     }
+  }
+
+  disconnect() {
+    this.accounts = [];
   }
 }
