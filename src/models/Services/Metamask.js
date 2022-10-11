@@ -1,4 +1,5 @@
 const Web3 = require('web3');
+import notify from '@/plugins/notify';
 
 export default class MetamaskConnector {
   constructor() {
@@ -49,6 +50,11 @@ export default class MetamaskConnector {
           this.accounts = [];
         });
       }
+    } else {
+      notify({
+        type: 'warning',
+        text: 'Metamask extension not found',
+      });
     }
   }
 

@@ -10,7 +10,7 @@
       <div
         v-html="
           !supportNetworks
-            ? $t('metamask.changeNetwork')
+            ? $t('login.confirmAddressTitleAnother')
             : isKeplr
             ? $t('login.confirmAddressTitleKeplr')
             : network === 'eth'
@@ -32,6 +32,9 @@
         <div class="address">{{ address }}</div>
       </div>
       <div v-if="isKeplr" class="refresh" @click="$emit('refreshKeplr')">
+        <refreshSvg />
+      </div>
+      <div v-if="!isKeplr" class="refresh" @click="$emit('refreshMetamask')">
         <refreshSvg />
       </div>
     </div>

@@ -15,15 +15,17 @@
         "approveKeplrTitle": "Approve via Keplr",
         "approveMetamaskTitle": "Approve via Metamask",
         "approveDescription": "A pop-up browser extension will appear to approve the wallet connection.",
-        "confirmAddressTitleMetamaskEth": "The login is proceed via the chosen Metamask account. Make sure to use it for future logins.<br>Note: You can use any preferred network for login.",
-        "confirmAddressTitleMetamaskBSC": "The login is proceed via the chosen Metamask account. Make sure to use it for future logins.<br>Note: You can use any preferred network for login.",
-        "confirmAddressTitleKeplr": "The login is proceed via the chosen Keplr account. Make sure to use it for future logins.<br>Note: You can use any preferred network for login.",
+        "confirmAddressTitleAnother": "At the moment, we don't support the selected network.<br>Change Ethereum or BSC network in Metamask",
+        "confirmAddressTitleMetamaskEth": "The login is proceed via the chosen Metamask account. Make sure to use it for future logins.<br>You can use only Ethereum or BSC network for login.",
+        "confirmAddressTitleMetamaskBSC": "The login is proceed via the chosen Metamask account. Make sure to use it for future logins.<br>You can use only Ethereum or BSC network for login.",
+        "confirmAddressTitleKeplr": "The login is proceed via the chosen Keplr account. Make sure to use it for future logins.<br>You can use only Cosmos network for login.",
         "changeLangTitle": "Language selection",
         "changeLangDescription": "Choose the most convenient language for you to interact with <span style='font-weight: bold; font-family: Panton_Bold;'>Citadel.one</span> platform",
         "KeplrNotFound": "Keplr extension not found",
         "MetamaskNotFound": "Metamask extension not found",
         "language": "Language",
         "back": "Back",
+        "continue": "Continue",
         "with": "With",
         "login": "Log in",
         "signup": "Sign up",
@@ -105,6 +107,7 @@
         "info": "Add your address to explore Citadel.one analytical functionality"
     },
     "addAddress": {
+        "addressLimits": "Exceeded the limit of 20 addresses in the network",
         "cardTitle1": "Add networks to One-seed",
         "cardTitle2": "Create one seed",
         "cardDescP1": "Citadel One-seed wallet enables users to create addresses for all the networks integrated into the platform using only one",
@@ -1165,6 +1168,11 @@
             "description": "As the world’s first AI-powered oracle and ecosystem for blockchains, Oraichain now transforms itself to become an advanced AI Layer 1 for Data Economy and Oracle services that serves as a foundational layer for the creation of a new generation of smart contracts and Dapps and create a complete AI Ecosystem on blockchain.",
             "shortDescription": "Oraichain is the world's first intelligent and secure solution for emerging Web3, scalable Dapps, and decentralized AI."
         },
+        "tron": {
+            "title": "Tron network",
+            "description": "TRON is a decentralized blockchain platform for supporting smart contracts. TRON's mission is to accelerate the decentralization of the Internet via blockchain technology and decentralized applications (dApps) and build Web 4.0 with a global free content entertainment system, where people can create, own and share content without third parties.",
+            "shortDescription": "TRON is a decentralized blockchain platform that aims to accelerate the decentralization of the Internet via blockchain technology and decentralized applications (dApps). The project's main mission is to build Web 4.0 with a global free content entertainment system."
+        },
         "optimism": {
             "title": "Optimism",
             "description": "Optimism is a Layer 2 scaling solution for Ethereum. Optimism uses advanced data compression techniques called Optimistic Rollups to speed up and cut the costs of Ethereum transactions.",
@@ -1329,5 +1337,6 @@
     },
     "dontHaveEnoughFoundsForFee": "You do not have enough funds to pay the transaction fee.",
     "asset": "asset",
+    "noSelfSendError": "Transfer wallet cannot be the same as receiving wallet.",
     "minAmountError": "Minimum amount is {minAmount} {code}"
 }
