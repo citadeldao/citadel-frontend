@@ -22,7 +22,6 @@ export async function socketEventHandler({ eventName, data }) {
         const wallet = wallets.value.find(
           (wallet) => data.message.address === wallet.address
         );
-        console.log('>>> wallet', wallet);
         if (!wallet || wallet.type !== WALLET_TYPES.KEPLR) {
           return;
         }
