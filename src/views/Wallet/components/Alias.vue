@@ -20,10 +20,9 @@
               @blur="focus = false"
               @keyup.enter="setAlias()"
             />
-            <span v-else ref="nameRef" class="alias__wallet-name">
-              <!-- <resize-observer :show-trigger="true" @notify="handleNameResize" /> -->
+            <p v-else ref="nameRef" class="alias__wallet-name">
               {{ currentWallet.title || currentWallet.address }}
-            </span>
+            </p>
           </div>
         </div>
         <div class="alias__second-line">
@@ -302,29 +301,14 @@ export default {
   box-shadow: $card-shadow;
   border-radius: 25px;
   position: relative;
+  width: 100%;
   @include xl {
-    max-width: calc(100% - 360px);
-  }
-  @include lg {
-    width: 100%;
-    height: 126px;
-    padding: 0 24px 0 29px;
-  }
-  @include md {
-    width: 100%;
-    height: 98px;
-    padding: 0 24px;
-    border-radius: 16px;
-  }
-
-  @include laptop {
-    border-radius: 8px;
-    padding: 0 20px;
+    width: calc(100% - 360px);
   }
   &__lines {
     display: flex;
     flex-direction: column;
-    max-width: 100%;
+    width: 100%;
   }
   &__actions {
     height: 68px;
@@ -335,26 +319,23 @@ export default {
   }
   &__info {
     display: flex;
-    max-width: 80%;
-    @media (max-width: 1496px) {
-      max-width: 74%;
+    @include xl {
+      width: auto;
+    }
+    @media (max-width: 2336px) {
+      width: calc(100% - 160px);
     }
   }
 
   &__edit {
-    display: flex;
     align-items: center;
-    width: 100%;
-    max-width: 100%;
+    width: calc(100% - 46px);
   }
 
   &__first-line {
     display: flex;
     align-items: center;
     margin-bottom: 8px;
-    width: fit-content;
-    width: 100%;
-    max-width: 100%;
   }
 
   &__wallet-name {
@@ -363,24 +344,8 @@ export default {
     font-family: 'Panton_Bold';
     font-size: 20px;
     line-height: 30px;
-    white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    max-width: calc(100% - 3vw);
-    //max-width: 525px;
-    width: fit-content;
-
-    @include lg {
-      max-width: calc(100% - 3vw);
-    }
-    @media (max-width: 1486px) {
-      max-width: calc(100% - 5vw);
-    }
-    @include md {
-      max-width: 390px;
-      font-size: 16px;
-      line-height: 19px;
-    }
   }
 
   &__input {
@@ -399,9 +364,6 @@ export default {
   &__second-line {
     display: flex;
     align-items: center;
-    width: fit-content;
-    width: 100%;
-    max-width: 100%;
   }
 
   &__wallet-type {
@@ -414,10 +376,7 @@ export default {
   &__address-wrapper {
     display: flex;
     align-items: center;
-    width: 100%;
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    width: calc(100% - 113px);
   }
 
   &__address {
@@ -425,23 +384,10 @@ export default {
     font-size: 16px;
     line-height: 27px;
     color: $mid-blue;
-    white-space: nowrap;
-    // overflow: hidden;
-    // text-overflow: ellipsis;
     cursor: pointer;
-    //max-width: 440px;
-    width: 100%;
-    max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
-    @include lg {
-      // max-width: 335px;
-    }
-    @include md {
-      font-size: 14px;
-      line-height: 27px;
-      // max-width: 260px;
-    }
+    white-space: nowrap;
   }
 
   &__qr {
@@ -541,44 +487,6 @@ export default {
       top: 82px;
       left: 176px;
     }
-  }
-}
-@media (max-width: 1204px) {
-  .alias {
-    &__address {
-      max-width: 333px;
-      text-overflow: ellipsis;
-      overflow: hidden;
-    }
-    &__info {
-      max-width: 80%;
-    }
-  }
-}
-@media (max-width: 1168px) {
-  .alias__wallet-name {
-    //max-width: 86%;
-  }
-}
-@media (min-width: 1024px) and (max-width: 1167px) {
-  .alias {
-    &__edit {
-      width: 100%;
-    }
-    &__wallet-name {
-      max-width: calc(100% - 4vw);
-    }
-    &__first-line {
-      width: 100%;
-    }
-    &__info {
-      max-width: 35vw;
-    }
-  }
-}
-@media (min-width: 1024px) and (max-width: 1111px) {
-  .alias__info {
-    max-width: 30vw;
   }
 }
 </style>
