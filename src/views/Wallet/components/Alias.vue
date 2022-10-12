@@ -305,6 +305,18 @@ export default {
   @include xl {
     width: calc(100% - 360px);
   }
+
+  @include md {
+    height: 98px;
+    padding: 0 24px;
+    border-radius: 16px;
+  }
+
+  @include laptop {
+    border-radius: 8px;
+    padding: 0 20px;
+  }
+
   &__lines {
     display: flex;
     flex-direction: column;
@@ -336,6 +348,7 @@ export default {
     display: flex;
     align-items: center;
     margin-bottom: 8px;
+    height: 30px;
   }
 
   &__wallet-name {
@@ -346,6 +359,11 @@ export default {
     line-height: 30px;
     text-overflow: ellipsis;
     overflow: hidden;
+    @include md {
+      max-width: 390px;
+      font-size: 16px;
+      line-height: 19px;
+    }
   }
 
   &__input {
@@ -388,6 +406,10 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    @include md {
+      font-size: 14px;
+      line-height: 27px;
+    }
   }
 
   &__qr {
