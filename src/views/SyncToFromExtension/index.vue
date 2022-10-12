@@ -333,9 +333,6 @@ export default {
           syncLoading.value = false;
         }
 
-        syncLoading.value = false;
-        showSyncFromModal.value = false;
-
         let wallet = {};
 
         const result =
@@ -369,13 +366,17 @@ export default {
           ));
 
         if (syncResult && result.every((res) => !!res)) {
+          syncLoading.value = false;
+          showSyncFromModal.value = false;
+          console.log('ADDRESS FOR NEW LIST', wallet);
           if (wallet.address) {
             store.commit('newWallets/setNewWalletsList', [wallet]);
           }
           store.commit('newWallets/setModal', true);
-          syncLoading.value = false;
           password.value = '';
           importedFromWallets.value = syncResult;
+        } else {
+          syncLoading.value = false;
         }
       }
     };
