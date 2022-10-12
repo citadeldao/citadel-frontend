@@ -290,6 +290,7 @@ export default {
     };
 
     const onSuccessFromSyncClose = () => {
+      console.log('closeModal');
       store.commit('newWallets/setModal', false);
       showSyncFromModal.value = false;
       emit('close');
@@ -332,6 +333,11 @@ export default {
           syncLoading.value = false;
         }
 
+        syncLoading.value = false;
+        showSyncFromModal.value = false;
+
+        let wallet = {};
+
         const result =
           syncResult &&
           (await Promise.all(
@@ -355,6 +361,7 @@ export default {
                 await store.dispatch('wallets/pushWallets', {
                   wallets: [newInstance],
                 });
+                wallet = newInstance;
               }
 
               return res.result === 'success';
@@ -362,6 +369,9 @@ export default {
           ));
 
         if (syncResult && result.every((res) => !!res)) {
+          if (wallet.address) {
+            store.commit('newWallets/setNewWalletsList', [wallet]);
+          }
           store.commit('newWallets/setModal', true);
           syncLoading.value = false;
           password.value = '';
