@@ -331,7 +331,7 @@ export default {
     justify-content: space-between;
     display: flex;
     flex-direction: column;
-    margin-left: 15px;
+    margin-left: 5px;
   }
   &__info {
     display: flex;
