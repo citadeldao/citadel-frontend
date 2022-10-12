@@ -16,10 +16,15 @@ export default class keplrConnector {
       }
 
       await window.keplr.enable(this.chainId);
-      this.offlineSigner = window.keplr.getOfflineSigner(this.chainId);
+      this.offlineSigner = await window.keplr.getOfflineSigner(this.chainId);
       this.accounts = await this.offlineSigner.getAccounts();
 
       return this.accounts;
+    } else {
+      notify({
+        type: 'warning',
+        text: 'Keplr extension not found',
+      });
     }
   }
 
@@ -59,8 +64,6 @@ export default class keplrConnector {
           type: 'warning',
           text: keplrErrors[err.message],
         });
-
-        // return false;
       }
 
       return { error: err };
@@ -68,4 +71,7 @@ export default class keplrConnector {
   }
 
   async changeNetwork() {}
+  disconnect() {
+    this.accounts = [];
+  }
 }

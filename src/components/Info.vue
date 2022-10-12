@@ -3,55 +3,35 @@
     <h4 class="info__title">
       {{ $t(title) }}
     </h4>
+
     <span class="info__note">
       {{ $t('wallet.info.note') }}
     </span>
+
     <div class="info__wrapper">
-      <div class="info__block">
+      <div class="info__block" v-for="info in blockInfo" :key="info">
         <div class="info__block-icon-md">
-          <placeholderKey />
+          <component :is="info.component" />
         </div>
         <div class="info__block-section">
-          <h2 class="info__block-title">
-            {{ $t('wallet.info.block1Title') }}
-          </h2>
-          <span class="info__block-info">
-            {{ $t('wallet.info.block1Info') }}
-          </span>
-          <div>
-            <div class="info__block-icon">
-              <placeholderKey />
-            </div>
-            <PrimaryButton
-              :data-qa="dataQa && `${dataQa}__import-address-button`"
-              @click="toAddAddress"
-            >
-              {{ $t('importAddress') }}
-            </PrimaryButton>
+          <div class="info__block-text">
+            <h2 class="info__block-title">
+              {{ $t(info.title) }}
+            </h2>
+            <span class="info__block-info">
+              {{ $t(info.description) }}
+            </span>
           </div>
-        </div>
-      </div>
-      <div class="info__divider" />
-      <div class="info__block">
-        <div class="info__block-icon-md">
-          <placeholderQuestion />
-        </div>
-        <div class="info__block-section">
-          <h2 class="info__block-title">
-            {{ $t('wallet.info.block2Title') }}
-          </h2>
-          <span class="info__block-info">
-            {{ $t('wallet.info.block2Info') }}
-          </span>
           <div>
             <div class="info__block-icon">
-              <placeholderQuestion />
+              <component :is="info.component" />
             </div>
             <PrimaryButton
-              :disabled="true"
-              :data-qa="dataQa && `${dataQa}__learn-how-button`"
+              :disabled="info.buttonDisabled"
+              :data-qa="dataQa && `${dataQa}${info.buttonPostfix}`"
+              @click="info.button === 'importAddress' ? toAddAddress : ''"
             >
-              {{ $t('learnHow') }}
+              {{ $t(info.button) }}
             </PrimaryButton>
           </div>
         </div>
@@ -83,8 +63,29 @@ export default {
     const toAddAddress = () => {
       router.push({ name: 'AddAddress' });
     };
-
     return { toAddAddress };
+  },
+  data() {
+    return {
+      blockInfo: [
+        {
+          component: placeholderKey,
+          title: 'wallet.info.block1Title',
+          description: 'wallet.info.block1Info',
+          buttonDisabled: false,
+          button: 'importAddress',
+          buttonPostfix: '__import-address-button',
+        },
+        {
+          component: placeholderQuestion,
+          title: 'wallet.info.block2Title',
+          description: 'wallet.info.block2Info',
+          buttonDisabled: true,
+          button: 'learnHow',
+          buttonPostfix: '__learn-how-button',
+        },
+      ],
+    };
   },
 };
 </script>
@@ -95,21 +96,13 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 64px 0 78px 0;
-  align-self: center;
-  @include lg {
-    padding: 27px 0 40px 0;
-  }
-  @include md {
-    width: 470px;
-    padding: 23px 0 32px 0;
-  }
+  padding: 60px 0 100px;
+
   &__title {
     font-size: 30px;
     line-height: 30px;
     font-family: 'Panton_Bold';
-    margin: 0;
-    margin-bottom: 11px;
+    margin: 0 0 11px;
     text-align: center;
     width: 100%;
 
@@ -120,7 +113,6 @@ export default {
     @include md {
       font-size: 20px;
       margin-bottom: 4px;
-      text-align: left;
     }
   }
   &__note {
@@ -134,12 +126,11 @@ export default {
       font-size: 16px;
       line-height: 24px;
       margin-bottom: 33px;
-      width: 550px;
+      max-width: 550px;
     }
     @include md {
       font-size: 16px;
       line-height: 24px;
-      text-align: left;
       margin-bottom: 24px;
     }
   }
@@ -147,35 +138,50 @@ export default {
     display: flex;
     width: 100%;
     justify-content: center;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 1px;
+      border-right: 1px dashed $gray;
+      margin: auto;
+    }
+
     @include md {
       flex-direction: column;
+      &::after {
+        height: 1px;
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px dashed $gray;
+      }
     }
   }
-  &__divider {
-    border-left: 1px dashed $gray;
-    margin: 0 24px;
-    @include lg {
-      margin: 0 16px;
-    }
-    @include md {
-      width: 100%;
-      border-bottom: 1px dashed $gray;
-      border-left: none;
-      margin: 32px 0;
-    }
-  }
+
   &__block {
+    flex: 0 48%;
+    padding: 0 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 440px;
-    @include lg {
-      width: 260px;
-    }
+    width: 100%;
+    max-width: 550px;
     @include md {
-      width: 100%;
+      flex: 1 100%;
       flex-direction: row;
-      align-items: flex-start;
+      align-items: center;
+      max-width: 100%;
+      &:not(:last-child) {
+        padding-bottom: 25px;
+      }
+      &:last-child {
+        padding-top: 25px;
+      }
     }
   }
   &__block-section {
@@ -192,16 +198,32 @@ export default {
       height: 100%;
     }
     @include md {
-      align-items: flex-start;
+      align-items: center;
+      flex-direction: row;
+    }
+
+    .info__block-text {
+      text-align: center;
+      @include md {
+        text-align: left;
+        margin-right: 20px;
+      }
     }
   }
+  &__block-title,
+  &__block-info {
+    color: $too-dark-blue;
+    text-align: center;
+    @include md {
+      text-align: left;
+    }
+  }
+
   &__block-title {
     margin: 0;
     font-size: 20px;
     line-height: 30px;
     font-family: 'Panton_Bold';
-    color: $too-dark-blue;
-    text-align: center;
     @include lg {
       font-size: 16px;
       line-height: 24px;
@@ -214,8 +236,6 @@ export default {
   &__block-info {
     font-size: 16px;
     line-height: 30px;
-    color: $too-dark-blue;
-    text-align: center;
     margin-bottom: 15px;
     padding: 0 15px;
     @include lg {
@@ -226,11 +246,11 @@ export default {
     @include md {
       font-size: 14px;
       line-height: 24px;
-      text-align: left;
       margin-bottom: 21px;
       padding: 0;
     }
   }
+
   &__block-icon {
     display: flex;
     justify-content: center;
@@ -241,14 +261,17 @@ export default {
       display: none;
     }
   }
+
   &__block-icon-md {
     display: none;
     margin-right: 12px;
     & svg {
       width: 80px;
-      height: 86px;
+      height: 80px;
     }
     @include md {
+      width: 80px;
+      height: 80px;
       display: initial;
     }
   }

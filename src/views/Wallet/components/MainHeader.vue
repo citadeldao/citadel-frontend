@@ -97,6 +97,7 @@ export default {
     display: flex;
     position: absolute;
     top: 37px;
+    width: 100%;
     @include lg {
       top: 28px;
     }
@@ -105,27 +106,25 @@ export default {
     }
   }
   &__tabs-item {
+    flex: 1 20%;
     text-decoration: none;
     font-size: 20px;
     line-height: 30px;
     text-transform: uppercase;
     color: $mid-gray;
     border-bottom: 6px solid transparent;
-    margin-right: 37px;
     padding-bottom: 25px;
+    margin: 0 5px;
     font-family: 'Panton_Bold';
+    text-align: center;
     @include lg {
       font-size: 17px;
       padding-bottom: 10px;
     }
+
     @include md {
       padding-bottom: 9px;
       font-size: 14px;
-      line-height: 30px;
-      margin-right: 24px;
-    }
-    &:last-child {
-      margin-right: 0;
     }
   }
   &__active {

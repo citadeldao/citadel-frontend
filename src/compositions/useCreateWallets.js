@@ -84,7 +84,7 @@ export default function useCreateWallets() {
     );
   };
 
-  const createWallets = async (type) => {
+  const createWallets = async (type, stopRoute = true) => {
     const newWalletType = type || walletOpts.type;
 
     try {
@@ -145,7 +145,10 @@ export default function useCreateWallets() {
           type: 'warning',
           text: errorMessage,
         });
-        router.push({ name: 'AddAddress' });
+
+        if (!stopRoute) {
+          router.push({ name: 'AddAddress' });
+        }
         showModal.value = false;
         showLoader.value = false;
 
@@ -187,6 +190,7 @@ export default function useCreateWallets() {
       const success = !![...newWallets.value].filter((w) => w).length;
       showModal.value = false;
       showLoader.value = false;
+
       if (success) {
         showModal.value = true;
       }
@@ -200,6 +204,7 @@ export default function useCreateWallets() {
 
   const router = useRouter();
   const redirectToNewWallet = async () => {
+    store.commit('wallets/SET_ACTIVE_LIST', 'all');
     await redirectToWallet({
       wallet: newWallets.value[0],
       root: true,

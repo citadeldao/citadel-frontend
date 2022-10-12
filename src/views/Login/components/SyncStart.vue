@@ -38,6 +38,7 @@ export default {
 <style lang="scss" scoped>
 .sync-start {
   padding: 70px 50px;
+  min-height: 450px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -46,7 +47,6 @@ export default {
   width: 100%;
   height: 100%;
   background: $white;
-  box-shadow: -10px 4px 50px rgba(0, 0, 0, 0.1);
   border-radius: 25px;
 
   &__title {
@@ -62,6 +62,10 @@ export default {
     color: #6b93c0;
     text-align: center;
     line-height: 27px;
+  }
+
+  &__icon {
+    margin-bottom: 10px;
   }
 }
 </style>

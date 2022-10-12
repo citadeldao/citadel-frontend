@@ -115,7 +115,12 @@
         "walletCreated": "您的钱包已创建！",
         "walletCreatedDescription": "如果您希望查看可用的网络列表，请在勾选框选择",
         "errorConfirmWords1": "请检查输入的词语",
-        "errorConfirmWords2": "如果您写下的助记词有误，请返回上一步检查，确保您的记录无误。"
+        "errorConfirmWords2": "如果您写下的助记词有误，请返回上一步检查，确保您的记录无误。",
+        "backUp": {
+            "h1": "",
+            "h2": "",
+            "h3": ""
+        }
     },
     "importExistingAddress": {
         "card1Title": "助记词",
@@ -1136,6 +1141,11 @@
             "title": "Oraichain",
             "description": "作为全球首个人工智能驱动的区块链预言机和生态系统，Oraichain 现在转型为数据经济和预言机服务的高级 AI Layer 1，作为创建新一代智能合约和 Dapps 的基础层，并致力于创建一个完整的区块链人工智能生态系统。",
             "shortDescription": "Oraichain 是全球首个专注于 web3.0、规模化 dapp、去中心化 AI 的智能安全解决方案。"
+        },
+        "tron": {
+            "title": "Tron 网络",
+            "description": "",
+            "shortDescription": ""
         },
         "optimism": {
             "title": "Optimism",
