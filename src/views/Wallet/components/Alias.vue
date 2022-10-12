@@ -1,71 +1,73 @@
 <template>
   <div class="alias">
     <div class="alias__info">
-      <div class="alias__first-line">
-        <FavouriteButton
-          :value="isFavorite"
-          data-qa="wallet__favourite"
-          @change="toggleFavorite"
-        />
-        <div v-click-away="onClickAway" class="alias__edit">
-          <input
-            v-if="editMode"
-            ref="titleInput"
-            v-model="alias"
-            type="text"
-            class="alias__input"
-            spellcheck="false"
-            @focus="focus = true"
-            @blur="focus = false"
-            @keyup.enter="setAlias()"
+      <div class="alias__lines">
+        <div class="alias__first-line">
+          <FavouriteButton
+            :value="isFavorite"
+            data-qa="wallet__favourite"
+            @change="toggleFavorite"
           />
-          <span v-else ref="nameRef" class="alias__wallet-name">
-            <!-- <resize-observer :show-trigger="true" @notify="handleNameResize" /> -->
-            {{ currentWallet.title || currentWallet.address }}
-          </span>
-        </div>
-      </div>
-      <div class="alias__second-line">
-        <div class="alias__wallet-type">
-          <WalletTypeCard
-            :type="currentWalletType"
-            data-qa="wallet__adding-type"
-          />
-        </div>
-        <div class="alias__address-wrapper">
-          <span
-            id="address"
-            ref="addressRef"
-            class="alias__address"
-            @mouseenter="showAddressTooltip = true"
-            @mouseleave="showAddressTooltip = false"
-          >
-            {{ currentWallet.address }}
-          </span>
-        </div>
-      </div>
-    </div>
-    <div class="alias__actions">
-      <EditButton @click="clickHandler">
-        {{ editMode ? $t('save') : $t('edit') }}
-      </EditButton>
-      <div style="display: flex">
-        <div
-          class="alias__copy-icon"
-          data-qa="wallet__copy-address-button"
-          @click="copyAddress(currentWallet.address)"
-        >
-          <transition name="fade1">
-            <span v-if="isCopied" class="alias__tooltip">
-              {{ $t('copiedToClipboard') }}
+          <div v-click-away="onClickAway" class="alias__edit">
+            <input
+              v-if="editMode"
+              ref="titleInput"
+              v-model="alias"
+              type="text"
+              class="alias__input"
+              spellcheck="false"
+              @focus="focus = true"
+              @blur="focus = false"
+              @keyup.enter="setAlias()"
+            />
+            <span v-else ref="nameRef" class="alias__wallet-name">
+              <!-- <resize-observer :show-trigger="true" @notify="handleNameResize" /> -->
+              {{ currentWallet.title || currentWallet.address }}
             </span>
-          </transition>
-          <copy />
+          </div>
         </div>
-        <div class="alias__scanner-icon">
-          <a :title="scannerLink" :href="scannerLink" target="_blank">
-            <linkIcon />
-          </a>
+        <div class="alias__second-line">
+          <div class="alias__wallet-type">
+            <WalletTypeCard
+              :type="currentWalletType"
+              data-qa="wallet__adding-type"
+            />
+          </div>
+          <div class="alias__address-wrapper">
+            <span
+              id="address"
+              ref="addressRef"
+              class="alias__address"
+              @mouseenter="showAddressTooltip = true"
+              @mouseleave="showAddressTooltip = false"
+            >
+              {{ currentWallet.address }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="alias__actions">
+        <EditButton @click="clickHandler">
+          {{ editMode ? $t('save') : $t('edit') }}
+        </EditButton>
+        <div style="display: flex">
+          <div
+            class="alias__copy-icon"
+            data-qa="wallet__copy-address-button"
+            @click="copyAddress(currentWallet.address)"
+          >
+            <transition name="fade1">
+              <span v-if="isCopied" class="alias__tooltip">
+                {{ $t('copiedToClipboard') }}
+              </span>
+            </transition>
+            <copy />
+          </div>
+          <div class="alias__scanner-icon">
+            <a :title="scannerLink" :href="scannerLink" target="_blank">
+              <linkIcon />
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -300,6 +302,9 @@ export default {
   box-shadow: $card-shadow;
   border-radius: 25px;
   position: relative;
+  @include xl {
+    max-width: calc(100% - 360px);
+  }
   @include lg {
     width: 100%;
     height: 126px;
@@ -316,15 +321,20 @@ export default {
     border-radius: 8px;
     padding: 0 20px;
   }
+  &__lines {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+  }
   &__actions {
     height: 68px;
     justify-content: space-between;
     display: flex;
     flex-direction: column;
+    margin-left: 15px;
   }
   &__info {
     display: flex;
-    flex-direction: column;
     max-width: 80%;
     @media (max-width: 1496px) {
       max-width: 74%;
@@ -415,7 +425,6 @@ export default {
     font-size: 16px;
     line-height: 27px;
     color: $mid-blue;
-    margin-right: 15px;
     white-space: nowrap;
     // overflow: hidden;
     // text-overflow: ellipsis;
