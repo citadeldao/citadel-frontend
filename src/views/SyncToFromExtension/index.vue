@@ -332,7 +332,6 @@ export default {
           syncLoading.value = false;
         }
         const newWallets = syncResult;
-        console.log('newWallets', newWallets);
         const result =
           syncResult &&
           (await Promise.all(
@@ -366,7 +365,7 @@ export default {
           syncLoading.value = false;
           showSyncFromModal.value = false;
 
-          store.commit('newWallets/setNewWalletsList', [newWallets]);
+          store.commit('newWallets/setNewWalletsList', newWallets);
           store.commit('newWallets/setModal', true);
           password.value = '';
           importedFromWallets.value = syncResult;
