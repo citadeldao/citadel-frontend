@@ -34,6 +34,7 @@
   <WalletButtonsPanel
     :current-token="currentToken"
     :current-wallet="currentWallet"
+    type="rewards"
     button2="manage"
     @prepareClaim="$emit('prepareClaim')"
     @button2click="startAddressAssigning"

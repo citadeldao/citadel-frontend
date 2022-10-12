@@ -12,7 +12,6 @@
         :key="group.net"
         :data="group"
         :hidden-wallets="hiddenWallets"
-        :has-visible-button="hasVisibleButton(group)"
         @deleteSeedModal="onDeleteSeed"
         @toggle-hidden="toggleWalletHidden"
         @exportWallet="exportWallet"
@@ -34,7 +33,6 @@ import useWallets from '@/compositions/useWallets';
 import DeleteSeedModal from './components/Dropdown/components/DeleteSeedModal';
 import { WALLET_TYPES } from '@/config/walletType';
 import { sortByAlphabet } from '@/helpers';
-const netsWithVisibleButton = ['Secret'];
 
 export default {
   name: 'Addresses',
@@ -91,8 +89,6 @@ export default {
     const toggleWalletHidden = (wallet) => {
       store.dispatch('wallets/toggleHiddenWallet', wallet);
     };
-    const hasVisibleButton = (group) =>
-      netsWithVisibleButton.includes(group.net);
 
     return {
       onDeleteSeed,
@@ -101,7 +97,6 @@ export default {
       hiddenWallets,
       toggleWalletHidden,
       exportWallet,
-      hasVisibleButton,
       removeSeed,
     };
   },
