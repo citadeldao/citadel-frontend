@@ -137,9 +137,9 @@ export default {
       showError.value = false;
     };
 
-    const changeEmailRequest = async () => {
-      const checkMail = () => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newEmail.value);
+    const checkMail = () => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newEmail.value);
 
+    const changeEmailRequest = async () => {
       if (!checkMail()) {
         return (showError.value = true);
       }
