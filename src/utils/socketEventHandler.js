@@ -1,9 +1,7 @@
 import store from '@/store/index';
 import useWallets from '@/compositions/useWallets';
-import { WALLET_TYPES } from '@/config/walletType';
 import extensionsSocketTypes from '@/config/extensionsSocketTypes';
 import notify from '@/plugins/notify';
-import citadel from '@citadeldao/lib-citadel';
 
 export async function socketEventHandler({ eventName, data }) {
   // this.socket.on('transaction-events-client', (tx) => {
@@ -88,58 +86,6 @@ export async function socketEventHandler({ eventName, data }) {
           },
           { root: true }
         );
-      }
-
-      if (data.type === extensionsSocketTypes.types.balance) {
-        if (!data?.message) {
-          return;
-        }
-        const secretAddress = data.message.address;
-        const tokenContract = data.message.tokenContract;
-        const tokenKey = data.message.net;
-
-        const sendErrorMsg = () => {
-          store.dispatch('extensions/sendCustomMsg', {
-            token: store.getters['extensions/currentAppInfo'].token,
-            message: {
-              balance: 'Viewingkey not found, balance: ?',
-              tokenContract,
-            },
-            type: data.type,
-          });
-        };
-
-        const { wallets } = useWallets();
-        const wallet = wallets.value.find(
-          (w) =>
-            w.type !== WALLET_TYPES.PUBLIC_KEY && w.address === secretAddress
-        );
-
-        if (wallet) {
-          // update balance (by SVK, keplr etc)
-          const { data: balance, error } = await citadel.getBalanceById(
-            wallet.id,
-            tokenKey
-          );
-          if (error) {
-            sendErrorMsg();
-            error.code === 1 &&
-              notify({
-                type: 'warning',
-                text: error.message,
-              });
-            return;
-          }
-          store.dispatch('extensions/sendCustomMsg', {
-            token: store.getters['extensions/currentAppInfo'].token,
-            message: {
-              balance: balance.calculatedBalance,
-              tokenContract,
-            },
-            type: data.type,
-          });
-          return;
-        }
       }
 
       if (data.type === 'sign-message') {

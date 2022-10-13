@@ -364,6 +364,9 @@ export default {
       font-size: 16px;
       line-height: 19px;
     }
+    @include laptop {
+      max-width: 280px !important;
+    }
   }
 
   &__input {
