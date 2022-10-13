@@ -444,11 +444,13 @@ export default class CryptoCoin {
   }
 
   static encodeMnemonic(mnemonic, password) {
-    return citadel.encodeMnemonicByPassword(mnemonic, password);
+    const { data } = citadel.encodeMnemonicByPassword(mnemonic, password);
+    return data;
   }
 
   static decodeMnemonic(encodeMnemonic, password) {
-    return citadel.decodeMnemonicByPassword(encodeMnemonic, password);
+    const { data } = citadel.decodeMnemonicByPassword(encodeMnemonic, password);
+    return data;
   }
 
   static validateMnemonic(mnemonic) {
