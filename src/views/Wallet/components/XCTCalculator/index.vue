@@ -203,7 +203,7 @@ export default {
     padding: 25px 24px 25px 24px;
   }
   @include md {
-    height: 208px;
+    max-height: 245px;
     padding: 17px 16px 18px 16px;
   }
   &::before {

@@ -38,6 +38,7 @@
         :is="currentIcon"
         class="input__icon"
         :class="{ 'input__icon--disabled': disabled }"
+        :data-icon="dataQa && `${dataQa}__icon`"
         @click="$emit('iconClick')"
       />
     </keep-alive>
@@ -410,6 +411,10 @@ export default {
     left: 15px;
     z-index: 1;
     font-family: 'Panton_SemiBold';
+    @include laptop {
+      font-size: 12px;
+      top: 8px;
+    }
   }
 
   &__label-info {
@@ -466,6 +471,11 @@ export default {
 
     &--disabled {
       fill: $mid-blue !important;
+    }
+    &[data-icon='sidebar__search-field__icon'] {
+      @include laptop {
+        bottom: 13px;
+      }
     }
   }
 
