@@ -1,15 +1,15 @@
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const BundleAnalyzerPlugin =
-  require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin =
+//   require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const p = require('path');
 
 module.exports = {
-  pluginOptions: {
-    webpackBundleAnalyzer: {
-      openAnalyzer: false,
-    },
-  },
+  // pluginOptions: {
+  //   webpackBundleAnalyzer: {
+  //     openAnalyzer: false,
+  //   },
+  // },
 
   parallel: false,
   lintOnSave: process.env.NODE_ENV !== 'production',
@@ -37,7 +37,7 @@ module.exports = {
       new NodePolyfillPlugin(),
       // remove comments from chunks
       new TerserPlugin(),
-      new BundleAnalyzerPlugin(),
+      // new BundleAnalyzerPlugin(),
     ],
     module: {
       rules: [
