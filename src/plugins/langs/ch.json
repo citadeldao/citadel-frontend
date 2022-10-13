@@ -1310,5 +1310,8 @@
         }
     },
     "dontHaveEnoughFoundsForFee": "您的余额不足，无法支付交易手续费",
-    "asset": "资产"
+    "asset": "资产",
+    "errors": {
+        "notEnoughFounds": "没有足够的{code}来支付交易费用"
+    }
 }
