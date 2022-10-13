@@ -122,7 +122,7 @@ import terms from '@/assets/icons/terms.svg';
 import exportPrivateKeys from '@/helpers/exportPrivateKeys';
 import PrivacyModal from '@/components/Modals/Privacy';
 import TermsModal from '@/components/Modals/Terms';
-import { XCT_GOVERNANCE_APP } from '@/config/walletType';
+import { XCT_GOVERNANCE_APP, WALLET_TYPES } from '@/config/walletType';
 
 export default {
   name: 'Header',
@@ -169,7 +169,10 @@ export default {
     const keyStorage = computed(
       () => `user_${store.getters['profile/info'].id}`
     );
-    const hasWallets = computed(() => !!wallets.value.length);
+    const hasWallets = computed(
+      () =>
+        wallets.value.filter((w) => w.type !== WALLET_TYPES.PUBLIC_KEY).length
+    );
 
     const logoutOptions = reactive({
       erase: false,
