@@ -440,13 +440,16 @@ export default {
     max-width: 525px;
 
     @include lg {
-      max-width: 396px;
+      max-width: 396px !important;
     }
 
     @include md {
-      max-width: 318px;
+      max-width: 318px !important;
       font-size: 16px;
       line-height: 19px;
+    }
+    @include laptop {
+      max-width: 280px !important;
     }
   }
 
