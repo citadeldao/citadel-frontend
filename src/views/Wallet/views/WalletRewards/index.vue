@@ -553,7 +553,7 @@ export default {
 .wallet-rewards {
   width: 100%;
   min-height: 311px;
-  padding: 50px 0 158px 0;
+  padding: 50px 0 145px 0;
   display: flex;
   justify-content: center;
 
@@ -563,10 +563,10 @@ export default {
   }
 
   @include lg {
-    padding: 25px 0 28px 0;
+    padding: 25px 0 80px 0;
   }
   @include md {
-    padding: 23px 0 30px 0;
+    padding: 23px 0 78px 0;
   }
 
   &__content {
