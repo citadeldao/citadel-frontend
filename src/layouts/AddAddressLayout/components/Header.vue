@@ -152,6 +152,14 @@ export default {
     const showPrivacy = ref(false);
     const showTerms = ref(false);
 
+    const metamaskConnector = computed(
+      () => store.getters['metamask/metamaskConnector']
+    );
+
+    const keplrConnector = computed(
+      () => store.getters['keplr/keplrConnector']
+    );
+
     store.dispatch('extensions/fetchExtensionsList');
     const extensionsList = computed(
       () => store.getters['extensions/extensionsList']
@@ -159,7 +167,7 @@ export default {
 
     const rewards = computed(() => store.getters['rewards/rewards']);
     const keyStorage = computed(
-      () => `user_${store.getters['profile/info']?.id}`
+      () => `user_${store.getters['profile/info'].id}`
     );
     const hasWallets = computed(() => !!wallets.value.length);
 
@@ -204,6 +212,7 @@ export default {
     };
     const logout = async () => {
       store.dispatch('app/setLoader', true);
+      await store.dispatch('profile/getInfo');
       const { data } = await store.dispatch('auth/logout');
 
       if (data) {
@@ -218,8 +227,18 @@ export default {
           removeStorage(keyStorage.value);
         }
 
-        router.push({ name: 'Login' });
+        keplrConnector.value.disconnect();
+        metamaskConnector.value.disconnect();
         window.location.reload();
+
+        setTimeout(async () => {
+          await router.push({ name: 'Login' });
+        }, 1500);
+
+        setTimeout(() => {
+          store.dispatch('app/setLoader', false);
+        }, 1000);
+        // window.location.reload();
       }
     };
 

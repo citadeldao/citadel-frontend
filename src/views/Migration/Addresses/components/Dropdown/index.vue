@@ -22,7 +22,6 @@
         <DropdownItem
           :wallet="wallet"
           :hidden="isWalletHidden(wallet)"
-          :has-visible-button="hasVisibleButton"
           @toggle-hidden="$emit('toggle-hidden', wallet)"
           @exportWallet="exportWallet"
         />
@@ -48,10 +47,6 @@ export default {
     hiddenWallets: {
       type: Array,
       default: () => [],
-    },
-    hasVisibleButton: {
-      type: Boolean,
-      default: false,
     },
   },
   emits: ['exportWallet', 'toggle-hidden'],

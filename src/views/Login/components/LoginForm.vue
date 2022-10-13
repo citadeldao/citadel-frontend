@@ -20,6 +20,7 @@
         @blur="blurHandler"
       />
     </div>
+    <slot />
     <PrimaryButton :disabled="disabled" data-qa="login__sign-in-button">
       {{ $t('login.signIn') }}
     </PrimaryButton>
@@ -30,7 +31,7 @@
           {{ $t('login.withSocial') }}
         </span>
       </div>
-      <div class="login-form-social__buttons">
+      <div v-if="false" class="login-form-social__buttons">
         <SocialButton
           v-for="item in socialButtons"
           :key="item.icon"
@@ -120,8 +121,6 @@ export default {
   flex-direction: column;
   align-items: center;
   padding: 55px 60px 10px 60px;
-  background: $white;
-  box-shadow: -10px 4px 50px rgba(0, 0, 0, 0.1);
   border-radius: 25px;
   margin-bottom: 15px;
   @include lg {
@@ -168,7 +167,7 @@ export default {
       position: relative;
       display: flex;
       justify-content: center;
-      margin: 31px 0 20px;
+      margin: 20px 0 -5px;
 
       span {
         color: $mid-blue;

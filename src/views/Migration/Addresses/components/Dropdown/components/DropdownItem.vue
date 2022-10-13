@@ -11,13 +11,6 @@
       }}
     </div>
     <div
-      v-if="hasVisibleButton"
-      class="dropdown-item__btn dropdown-item__btn--vision"
-      @click="$emit('toggle-hidden', wallet.address)"
-    >
-      <visionIcon />
-    </div>
-    <div
       v-if="
         [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(
           wallet.type
@@ -26,7 +19,7 @@
       class="dropdown-item__btn dropdown-item__btn--export"
       @click="exportWallet"
     >
-      <exportIcon />
+      <keyIcon />
     </div>
   </div>
 </template>
@@ -37,17 +30,13 @@ import removeIcon from '@/assets/icons/settings/remove.svg';
 import { WALLET_TYPES } from '@/config/walletType';
 import keyIcon from '@/assets/icons/settings/key.svg';
 import notificationIcon from '@/assets/icons/settings/notification.svg';
-import exportIcon from '@/assets/icons/settings/export.svg';
-import visionIcon from '@/assets/icons/input/vision.svg';
 
 export default {
   name: 'DropdownItem',
   components: {
     keyIcon,
     notificationIcon,
-    exportIcon,
     removeIcon,
-    visionIcon,
   },
   props: {
     wallet: {
@@ -55,10 +44,6 @@ export default {
       required: true,
     },
     hidden: {
-      type: Boolean,
-      default: false,
-    },
-    hasVisibleButton: {
       type: Boolean,
       default: false,
     },

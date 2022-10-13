@@ -222,6 +222,7 @@ export default {
     @include input;
     width: 52px;
     padding: inherit;
+    margin: 0 3px;
     font-size: 30px;
     line-height: 36px;
     text-align: center;
