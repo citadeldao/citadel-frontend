@@ -1,5 +1,32 @@
 {
     "login": {
+        "loginInWith": "Login in with",
+        "socialAccount": "Social account",
+        "web3wallet": "Web3 Wallet",
+        "web3TitleMenu": "Log in with Web3",
+        "web3DescriptionMenu": "Connect your Web3 wallet to enter your account",
+        "socialTitleMenu": "Log in with Social",
+        "socialDescriptionMenu": "Use your social network to enter your account",
+        "disclaimerMailTitle": "Are you sure you want to continue without email?",
+        "disclaimerMailGuide": "If you want to register anonymously, use our",
+        "disclaimerMailGuide1": "guide",
+        "useEmailBtn": "Use email",
+        "continueWithoutEmail": "Continue without email",
+        "approveKeplrTitle": "Approve via Keplr",
+        "approveMetamaskTitle": "Approve via Metamask",
+        "approveDescription": "A pop-up browser extension will appear to approve the wallet connection.",
+        "confirmAddressTitleAnother": "At the moment, we don't support the selected network.<br>Change Ethereum or BSC network in Metamask",
+        "confirmAddressTitleMetamaskEth": "The login is proceed via the chosen Metamask account. Make sure to use it for future logins.<br>You can use only Ethereum or BSC network for login.",
+        "confirmAddressTitleMetamaskBSC": "The login is proceed via the chosen Metamask account. Make sure to use it for future logins.<br>You can use only Ethereum or BSC network for login.",
+        "confirmAddressTitleKeplr": "The login is proceed via the chosen Keplr account. Make sure to use it for future logins.<br>You can use only Cosmos network for login.",
+        "changeLangTitle": "Language selection",
+        "changeLangDescription": "Choose the most convenient language for you to interact with <span style='font-weight: bold; font-family: Panton_Bold;'>Citadel.one</span> platform",
+        "KeplrNotFound": "Keplr extension not found",
+        "MetamaskNotFound": "Metamask extension not found",
+        "language": "Language",
+        "back": "Back",
+        "continue": "Continue",
+        "with": "With",
         "login": "Log in",
         "signup": "Sign up",
         "formInfo": "Enter your email to receive a verification code",
@@ -1316,5 +1343,8 @@
     "dontHaveEnoughFoundsForFee": "You do not have enough funds to pay the transaction fee.",
     "asset": "asset",
     "noSelfSendError": "Transfer wallet cannot be the same as receiving wallet.",
-    "minAmountError": "Minimum amount is {minAmount} {code}"
+    "minAmountError": "Minimum amount is {minAmount} {code}",
+    "errors": {
+        "notEnoughFounds": "Not enough {code} to pay the transaction fee"
+    }
 }

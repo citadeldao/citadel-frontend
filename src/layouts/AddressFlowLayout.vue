@@ -65,7 +65,9 @@ export default {
   //height: 100vh;
   overflow-y: auto;
   background: linear-gradient(255.4deg, #f0f2fc 0%, #edf2fc 100%);
-
+  @include xl {
+    justify-content: flex-start;
+  }
   &__header {
     width: 1140px;
     justify-content: space-between;

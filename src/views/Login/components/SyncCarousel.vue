@@ -154,7 +154,18 @@ export default {
     }
 
     &__indicator {
-      padding: 6px;
+      border: 1px solid transparent;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      margin: 0 3px;
+
+      &.is-active {
+        border: 1px solid $white;
+      }
 
       &:hover {
         button {
@@ -169,10 +180,10 @@ export default {
 
       & button {
         position: relative;
-        width: 10px;
-        height: 10px;
+        width: 13px;
+        height: 13px;
         border-radius: 50%;
-        background-color: $too-ligth-blue;
+        background-color: $light-green;
         opacity: 1;
 
         &::after {
@@ -184,14 +195,18 @@ export default {
           border-radius: 50%;
           transform: translate(-50%, -50%);
           box-shadow: 0 5px 10px #00000029;
-          background-color: $white;
+          background-color: $light-green;
           z-index: -1;
         }
       }
 
       &.is-active {
         button {
-          background-color: $dark-blue;
+          background-color: $white;
+          border: 1px solid $white;
+          padding: 3px;
+          box-sizing: border-box;
+          border-radius: 50%;
 
           &::after {
             content: '';
@@ -202,7 +217,7 @@ export default {
             width: 20px;
             height: 20px;
             transform: translate(-50%, -50%);
-            border: 1px solid $dark-blue;
+            border: 1px solid $white;
           }
         }
       }

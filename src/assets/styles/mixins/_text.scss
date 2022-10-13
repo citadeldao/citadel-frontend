@@ -7,4 +7,10 @@
   font-size: 14px;
   line-height: 17px;
   font-family: "Panton_SemiBold";
+
+  @include laptop {
+    &#walletSearch {
+      padding: 25px 25px 10px 36px;
+    }
+  }
 }
