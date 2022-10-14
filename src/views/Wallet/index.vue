@@ -359,20 +359,14 @@ export default {
             'hex'
           );
 
-          if (keplrAddress && keplrAddress !== currentWallet.value.address) {
-            notify({
-              type: 'warning',
-              text: 'Please change account in Keplr to sign transaction',
-            });
-          } else {
-            if (keplrAddress === currentWallet.value.address) {
-              const walletPublicKey = currentWallet.value.publicKey;
-              if (walletPublicKey !== pubkey) {
-                await store.dispatch('wallets/pushWallets', {
-                  wallets: [{ ...currentWallet.value, publicKey: pubkey }],
-                });
-                window.location.reload();
-              }
+          if (keplrAddress === currentWallet.value.address) {
+            const walletPublicKey = currentWallet.value.publicKey;
+
+            if (walletPublicKey !== pubkey) {
+              await store.dispatch('wallets/pushWallets', {
+                wallets: [{ ...currentWallet.value, publicKey: pubkey }],
+              });
+              window.location.reload();
             }
           }
         } catch (err) {

@@ -197,6 +197,7 @@ import citadel from '@citadeldao/lib-citadel';
 import TransactionInfo from './components/TransactionInfo';
 import MessageInfo from './components/MessageInfo';
 import FrameApp from './components/FrameApp.vue';
+import { parseTagsList, filteredApps } from './components/helpers';
 
 export default {
   name: 'Extensions',
@@ -258,21 +259,7 @@ export default {
       () => store.getters['extensions/extensionsList']
     );
 
-    const filterItems = computed(() => {
-      return (
-        extensionsList.value
-          .map((app) => {
-            return app.tags.map((tag) => (tag.isInternal ? tag.name : ''));
-          })
-          // .filter((tags) => tags.length)
-          .reduce((prev, curr) => {
-            return prev.concat(curr);
-          }, [])
-          .filter((item, pos, arr) => {
-            return !!item && arr.indexOf(item) == pos;
-          })
-      );
-    });
+    const filterItems = computed(() => parseTagsList(extensionsList.value));
 
     if (!extensionsList.value.length) {
       store.dispatch('extensions/fetchExtensionsList');
@@ -457,52 +444,12 @@ export default {
     };
 
     const appsFiltered = computed(() => {
-      const baseList = extensionsList.value.filter((app) => {
-        let findTag;
-        app.tags.forEach((tag) => {
-          if (filterItems.value.includes(tag.name)) {
-            findTag = true;
-          }
-        });
-        return !findTag;
-      });
-
-      if (!searchStr.value.length) {
-        if (!selectedTags.value.length) {
-          return baseList;
-        }
-
-        return extensionsList.value
-          .filter((app) => {
-            let findTag;
-            app.tags.forEach((tag) => {
-              if (filterItems.value.includes(tag.name)) {
-                findTag = true;
-              }
-            });
-            return findTag;
-          })
-          .concat(baseList);
-      }
-
-      if (!selectedTags.value.length) {
-        return baseList.filter((app) =>
-          app.name.toLowerCase().includes(searchStr.value)
-        );
-      }
-
-      return extensionsList.value
-        .filter((app) => {
-          let findTag;
-          app.tags.forEach((tag) => {
-            if (filterItems.value.includes(tag.name)) {
-              findTag = true;
-            }
-          });
-          return findTag;
-        })
-        .concat(baseList)
-        .filter((app) => app.name.toLowerCase().includes(searchStr.value));
+      return filteredApps(
+        extensionsList.value,
+        selectedTags.value,
+        filterItems.value,
+        searchStr.value
+      );
     });
 
     /* watch(() => messageForSign.value, async () => {
