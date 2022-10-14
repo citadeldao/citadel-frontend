@@ -1,6 +1,11 @@
 import router from '@/router';
+import useApi from '@/api/useApi';
 import { prettyNumber } from '@/helpers/prettyNumber';
+
 import citadel from '@citadeldao/lib-citadel';
+import notify from '@/plugins/notify';
+
+const api = useApi('auth');
 
 const types = {
   SET_INFO: 'SET_INFO',
@@ -139,6 +144,25 @@ export default {
       }
 
       return { ok: false, error: res.error };
+    },
+
+    async changeEmail(_, newEmail) {
+      try {
+        const { ok, error } = await api.changeEmail({ newEmail });
+
+        if (ok) {
+          return { ok: true };
+        }
+
+        notify({
+          type: 'warning',
+          text: error,
+        });
+
+        return { ok: false };
+      } catch (error) {
+        return { ok: false, error };
+      }
     },
   },
 };
