@@ -569,7 +569,7 @@ export default {
       isLoading.value = true;
       const { rawTxs, ok } = await props.currentWallet.prepareDelegation({
         walletId: props.currentWallet.id,
-        nodeAddress: isMultiple.value
+        nodeAddresses: isMultiple.value
           ? selectedNode.value || props.list
           : selectedNode.value?.address,
         amount: amount.value,

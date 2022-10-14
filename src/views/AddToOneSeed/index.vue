@@ -23,16 +23,21 @@
         v-if="currentStep === 3"
         :mnemonic="walletOpts.mnemonic"
       />
+      <!-- <DownloadOneSeed
+        v-if="currentStep === 4"
+        v-model:isDownloadSeed="isDownloadSeed"
+      /> -->
       <SelectNetworks v-if="currentStep === 4" @selectNets="finalStep" />
     </div>
   </div>
 </template>
 
 <script>
-import { onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import ConfirmOneSeed from './components/ConfirmOneSeed';
 import CreateOneSeed from './components/CreateOneSeed';
-import SelectNetworks from './components/SelectNetworks';
+// import DownloadOneSeed from './components/DownloadOneSeed';
+import SelectNetworks from '@/components/UI/SelectNetworks';
 import Header from '../AddAddress/components/Header';
 import EnterPassword from './components/EnterPassword';
 import CreatePassword from './components/CreatePassword';
@@ -44,7 +49,7 @@ import {
 import useCreateWallets from '@/compositions/useCreateWallets';
 import { WALLET_TYPES } from '../../config/walletType';
 import { useStore } from 'vuex';
-
+import { downLoadWallets } from '@/helpers/exportPrivateKeys';
 export default {
   name: 'AddToOneSeed',
   components: {
@@ -54,8 +59,10 @@ export default {
     SelectNetworks,
     CreateOneSeed,
     ConfirmOneSeed,
+    // DownloadOneSeed,
   },
   setup() {
+    const isDownloadSeed = ref(false);
     const {
       setPassword,
       setMnemonic,
@@ -77,16 +84,19 @@ export default {
       });
     });
 
-    const finalStep = (nets) => {
+    const finalStep = (checkedNets) => {
       store.commit('newWallets/setLoader', true);
       isUserMnemonic.value && setMnemonic();
-      setNets(nets);
-      setType('oneSeed');
+      setNets(checkedNets);
+      setType(WALLET_TYPES.ONE_SEED);
       createWallets(WALLET_TYPES.ONE_SEED).then(async (success) => {
         if (success) {
           !isUserMnemonic.value && saveMnemonic();
           !isPasswordHash.value && savePassword();
           await redirectToNewWallet();
+          if (isDownloadSeed.value) {
+            downloadFile();
+          }
           store.commit('newWallets/setNewWalletsList', newWallets.value);
           store.commit('newWallets/setModal', true);
           store.commit('newWallets/setLoader', false);
@@ -99,6 +109,16 @@ export default {
       isUserMnemonic.value ? stepsOneSeed : stepsOneSeed1
     );
 
+    const passwordHash = computed(() => store.getters['crypto/passwordHash']);
+    const mnemonic = computed(() => store.getters['crypto/encodeUserMnemonic']);
+    const downloadFile = () => {
+      downLoadWallets(
+        JSON.stringify({
+          mnemonic: mnemonic.value,
+          passwordHash: passwordHash.value,
+        })
+      );
+    };
     return {
       steps,
       currentStep,
@@ -109,6 +129,7 @@ export default {
       setMnemonic,
       newWallets,
       finalStep,
+      isDownloadSeed,
     };
   },
 };
@@ -140,6 +161,7 @@ export default {
     overflow: hidden;
     display: flex;
     flex-grow: 1;
+    justify-content: center;
   }
 }
 </style>
