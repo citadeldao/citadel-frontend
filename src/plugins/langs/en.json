@@ -1222,7 +1222,8 @@
     },
     "faq": {
         "privacyPolicy": "Privacy policy",
-        "termsOfService": "Terms of service"
+        "termsOfService": "Terms of service",
+        "guide": "Guide"
     },
     "dontHaveEnoughFounds": "You do not have enough funds to pay the transaction fee.",
     "transactionsSocket": {
