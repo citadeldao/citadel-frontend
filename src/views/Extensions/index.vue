@@ -1,13 +1,13 @@
 <template>
-  <div :style="{ backgroundImage: `url(${appBackground})` }" class="extensions">
+  <div class="extensions">
     <!-- <img class="" :src="currentApp && currentApp.bg" /> -->
     <teleport to="body">
       <Modal v-if="showSuccessModal">
         <!-- SHOW SUCCESS MODAL -->
         <ModalContent
           v-click-away="closeSuccessModal"
-          title="Success"
-          desc="It may take some time for the transaction to complete"
+          :title="$t('success')"
+          :desc="$t('txWaitTitle')"
           button-text="ok"
           type="success"
           icon="success"
@@ -80,33 +80,12 @@
     <div v-if="loading" class="extensions__loading">
       <Loading />
     </div>
-    <div
+    <FrameApp
       v-if="currentApp"
-      :class="{ fullScreen: showFullScreen }"
-      class="extensions__app-wrap"
-    >
-      <keep-alive v-if="!showFullScreen">
-        <component :is="closeIcon" class="close-icon" @click="closeApp()" />
-      </keep-alive>
-      <iframe
-        :src="currentApp.url"
-        frameBorder="0"
-        :width="showFullScreen ? '100%' : 550"
-        height="710"
-        align="left"
-        name="target"
-        class="extensions__frame"
-      />
-    </div>
-    <!--Confirm Ledger Modals-->
-    <!-- <Modal v-if="showLedgerConnect">
-      <ConnectLedgerModal
-        v-click-away="connectLedgerCloseHandler"
-        :error="ledgerError"
-        @close="connectLedgerCloseHandler"
-        @buttonClick="connectLedgerClickHandler"
-      />
-    </Modal> -->
+      :current-app="currentApp"
+      :show-full-screen="showFullScreen"
+      @close="closeApp()"
+    />
     <Modal v-if="showLedgerConnect">
       <ConfirmLedgerModal
         v-if="showLedgerConnect"
@@ -130,105 +109,19 @@
         <div v-if="showConfirmModalLoading" class="loader">
           <Loading />
         </div>
-        <div class="item mt30">
-          <div class="label">{{ $t('extensions.typeOperation') }}</div>
-          <span class="red">{{ extensionTransactionForSign?.type }}</span>
-        </div>
-        <div
-          v-for="(meta, ndx) in extensionTransactionForSign.meta_info"
-          :key="ndx"
-          class="item"
-        >
-          <template v-if="typeof meta.value === 'string'">
-            <div class="label">
-              {{ meta.title }}
-            </div>
-            <span>{{ meta.value }}</span>
-          </template>
-          <!-- object link + text -->
-          <template v-if="typeof meta.value === 'object'">
-            <div class="label">
-              {{ meta.title }}
-            </div>
-            <a target="_blank" :href="meta.value.url"
-              >{{ meta.value.text }}
-              <linkIcon class="link-icon" /><linkIconHovered
-                class="link-icon hovered"
-            /></a>
-          </template>
-        </div>
-        <div v-if="extensionTransactionForSign.fee" class="item">
-          <div class="label">
-            {{ $t('extensions.transactionFee') }}
-          </div>
-          <div>
-            <span
-              v-pretty-number="{
-                value: extensionTransactionForSign.fee,
-                currency: (signerWallet || metamaskSigner)?.code,
-              }"
-            />{{ (signerWallet || metamaskSigner)?.code }}
-          </div>
-        </div>
-        <div class="item">
-          <div class="label">
-            {{ $t('extensions.transactionData') }}
-          </div>
-          <div class="show" @click="showTx = !showTx">
-            {{ $t('extensions.showLabel') }}
-            <keep-alive>
-              <component
-                :is="arrowDownIcon"
-                :class="{ open: showTx }"
-                class="arrow-icon"
-              />
-            </keep-alive>
-          </div>
-        </div>
-        <!-- <pre
-          v-if="showTx && extensionTransactionForSign?.transaction"
-          class="item-tx"
-        >
-          <highlightjs
-            language="javascript"
-            :code="JSON.stringify(extensionTransactionForSign.messageScrt || extensionTransactionForSign.transaction).replaceAll(',', ', \n').replaceAll('{', '{ \n').replaceAll('}', '\n}')"
-          />
-        </pre> -->
-
-        <pre
-          class="item-tx"
-          v-if="showTx && extensionTransactionForSign?.transaction"
-          >{{
-            JSON.stringify(
-              extensionTransactionForSign.messageScrt ||
-                extensionTransactionForSign.transaction,
-              null,
-              2
-            ).trim()
-          }}</pre
-        >
-        <div
-          v-if="
-            signerWallet &&
-            [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(
-              signerWallet.type
-            )
+        <TransactionInfo
+          v-else
+          :extension-transaction-for-sign="extensionTransactionForSign"
+          :metamask-signer="metamaskSigner"
+          :signer-wallet="signerWallet"
+          :incorrect-password="incorrectPassword"
+          :confirm-password="confirmPassword"
+          @changePassword="
+            (pass) => {
+              password = pass;
+            }
           "
-          class="password-wrap"
-        >
-          <Input
-            id="password"
-            v-model="password"
-            :show-error-text="!!incorrectPassword && confirmPassword"
-            :error="
-              incorrectPassword && confirmPassword ? 'Incorrect password' : ''
-            "
-            :label="$t('enterPassword')"
-            :placeholder="$t('password')"
-            type="password"
-            icon="key"
-          />
-        </div>
+        />
       </ModalContent>
     </Modal>
     <!-- CREATE VK MODAL FOR SECRET APP-->
@@ -259,53 +152,18 @@
         @buttonClick2="closeSignMessageModal"
         @buttonClick="signMessage"
       >
-        <div class="label description">
-          {{ $t('extensions.signMessage') }}
-        </div>
-        <div class="item mt30">
-          <div class="item-tx">
-            <!-- <highlightjs
-              language="javascript"
-              :code="
-                JSON.stringify(messageForSign.message)
-                  .replaceAll(',', ', \n')
-                  .replaceAll('{', '{ \n')
-                  .replaceAll('}', '\n}')
-              "
-            /> -->
-            <pre>{{
-              JSON.stringify(messageForSign.message, null, 2).trim()
-            }}</pre>
-          </div>
-        </div>
-        <div v-if="msgSuccessSignature" class="item">
-          <div class="label signature">
-            {{ msgSuccessSignature }}
-          </div>
-        </div>
-        <div
-          v-if="
-            !msgSuccessSignature &&
-            signerWallet &&
-            [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(
-              signerWallet.type
-            )
+        <MessageInfo
+          :msg-success-signature="msgSuccessSignature"
+          :signer-wallet="signerWallet"
+          :message-for-sign="messageForSign"
+          :incorrect-password="incorrectPassword"
+          :confirm-password="confirmPassword"
+          @changePassword="
+            (pass) => {
+              password = pass;
+            }
           "
-          class="password-wrap"
-        >
-          <Input
-            id="password-msg"
-            v-model="password"
-            :show-error-text="!!incorrectPassword && confirmPassword"
-            :error="
-              incorrectPassword && confirmPassword ? 'Incorrect password' : ''
-            "
-            :label="$t('enterPassword')"
-            :placeholder="$t('password')"
-            type="password"
-            icon="key"
-          />
-        </div>
+        />
       </ModalContent>
     </Modal>
   </div>
@@ -316,13 +174,10 @@ import {
   showArtefactsForNormalScreen,
 } from '@/helpers/fullScreen';
 import Loading from '@/components/Loading';
-import { ref, markRaw, computed, watch } from 'vue';
+import { ref, computed, watch } from 'vue';
 import Modal from '@/components/Modal';
 import CreateVkModal from '@/views/Wallet/components/CreateVkModal.vue';
-import linkIcon from '@/assets/icons/link.svg';
-import linkIconHovered from '@/assets/icons/link_hovered.svg';
 import ModalContent from '@/components/ModalContent';
-import Input from '@/components/UI/Input';
 import { useStore } from 'vuex';
 import Head from './components/Head';
 import AppBlock from './components/AppBlock';
@@ -331,7 +186,6 @@ import SuccessModalContent from '@/views/Wallet/views/Send/components/SuccessMod
 import { WALLET_TYPES } from '../../config/walletType';
 import { sha3_256 } from 'js-sha3';
 import { useRouter, useRoute } from 'vue-router';
-import ConnectLedgerModal from '@/components/Modals/Ledger/ConnectLedgerModal';
 import ConfirmLedgerModal from '@/components/Modals/Ledger/ConfirmLedgerModal';
 import notify from '@/plugins/notify';
 import useWallets from '@/compositions/useWallets';
@@ -340,23 +194,26 @@ import extensionsSocketTypes from '@/config/extensionsSocketTypes';
 import useApi from '@/api/useApi';
 import { keplrNetworksProtobufFormat } from '@/config/availableNets';
 import citadel from '@citadeldao/lib-citadel';
+import TransactionInfo from './components/TransactionInfo';
+import MessageInfo from './components/MessageInfo';
+import FrameApp from './components/FrameApp.vue';
+import { parseTagsList, filteredApps } from './components/helpers';
 
 export default {
   name: 'Extensions',
   components: {
-    ConnectLedgerModal,
     ConfirmLedgerModal,
     CreateVkModal,
     Head,
     AppBlock,
-    linkIcon,
-    linkIconHovered,
     AppInfo,
     SuccessModalContent,
     Loading,
     Modal,
     ModalContent,
-    Input,
+    TransactionInfo,
+    MessageInfo,
+    FrameApp,
   },
   setup() {
     const signLoading = ref(false);
@@ -373,14 +230,11 @@ export default {
     const searchStr = ref('');
     const showAppInfoModal = ref(false);
     const selectedApp = ref(null);
-    const closeIcon = ref();
-    const arrowDownIcon = ref();
     const successTx = ref('');
     const confirmPassword = ref(false);
     const signerWallet = ref(null);
     const metamaskSigner = ref(null);
     const txComment = ref('');
-    const showTx = ref(false);
     const showLedgerConnect = ref(false);
     const ledgerError = ref('');
     const msgSuccessSignature = ref('');
@@ -389,9 +243,6 @@ export default {
     const showCreateVkModal = ref(false);
     const showConfirmModalLoading = ref(false);
     const selectedTags = ref([]);
-    const fullScreenAppIds = ref([
-      6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18, 21, 22, 23, 24, 25,
-    ]);
 
     const { wallets: walletsList } = useWallets();
 
@@ -408,21 +259,7 @@ export default {
       () => store.getters['extensions/extensionsList']
     );
 
-    const filterItems = computed(() => {
-      return (
-        extensionsList.value
-          .map((app) => {
-            return app.tags.map((tag) => (tag.isInternal ? tag.name : ''));
-          })
-          // .filter((tags) => tags.length)
-          .reduce((prev, curr) => {
-            return prev.concat(curr);
-          }, [])
-          .filter((item, pos, arr) => {
-            return !!item && arr.indexOf(item) == pos;
-          })
-      );
-    });
+    const filterItems = computed(() => parseTagsList(extensionsList.value));
 
     if (!extensionsList.value.length) {
       store.dispatch('extensions/fetchExtensionsList');
@@ -460,13 +297,6 @@ export default {
       });
     };
 
-    import(`@/assets/icons/extensions/close.svg`).then((val) => {
-      closeIcon.value = markRaw(val.default);
-    });
-    import(`@/assets/icons/extensions/arrow_down.svg`).then((val) => {
-      arrowDownIcon.value = markRaw(val.default);
-    });
-
     const onSearchHandler = (str) => {
       searchStr.value = str;
     };
@@ -487,20 +317,11 @@ export default {
       }
     };
 
-    const appBackground = computed(() =>
-      currentApp.value &&
-      !fullScreenAppIds.value.includes(+selectedApp.value.id)
-        ? currentApp.value.background
-        : null
-    );
     const currentAppInfo = computed(
       () => store.getters['extensions/currentAppInfo']
     );
 
-    // const privateWallets = computed(() => store.getters['wallets/wallets'].filter(w => w.type !== WALLET_TYPES.PUBLIC_KEY));
-    const messageForSign = false; // computed(() => store.getters['extensions/extensionMessageForSign']);
-
-    // const walletsList = computed(() => store.getters['wallets/wallets']);
+    const messageForSign = ref(''); // computed(() => store.getters['extensions/extensionMessageForSign']);
 
     const extensionTransactionForSign = computed(
       () => store.getters['extensions/extensionTransactionForSign']
@@ -526,11 +347,8 @@ export default {
     const selectApp = async () => {
       showAppInfoModal.value = false;
       currentApp.value = null;
-
-      if (fullScreenAppIds.value.includes(+selectedApp.value.id)) {
-        showFullScreen.value = true;
-        hideArtefactsForFullScreen();
-      }
+      showFullScreen.value = true;
+      hideArtefactsForFullScreen();
 
       await store.dispatch('extensions/fetchExtensionInfo', {
         appId: selectedApp.value.id,
@@ -626,52 +444,12 @@ export default {
     };
 
     const appsFiltered = computed(() => {
-      const baseList = extensionsList.value.filter((app) => {
-        let findTag;
-        app.tags.forEach((tag) => {
-          if (filterItems.value.includes(tag.name)) {
-            findTag = true;
-          }
-        });
-        return !findTag;
-      });
-
-      if (!searchStr.value.length) {
-        if (!selectedTags.value.length) {
-          return baseList;
-        }
-
-        return extensionsList.value
-          .filter((app) => {
-            let findTag;
-            app.tags.forEach((tag) => {
-              if (filterItems.value.includes(tag.name)) {
-                findTag = true;
-              }
-            });
-            return findTag;
-          })
-          .concat(baseList);
-      }
-
-      if (!selectedTags.value.length) {
-        return baseList.filter((app) =>
-          app.name.toLowerCase().includes(searchStr.value)
-        );
-      }
-
-      return extensionsList.value
-        .filter((app) => {
-          let findTag;
-          app.tags.forEach((tag) => {
-            if (filterItems.value.includes(tag.name)) {
-              findTag = true;
-            }
-          });
-          return findTag;
-        })
-        .concat(baseList)
-        .filter((app) => app.name.toLowerCase().includes(searchStr.value));
+      return filteredApps(
+        extensionsList.value,
+        selectedTags.value,
+        filterItems.value,
+        searchStr.value
+      );
     });
 
     /* watch(() => messageForSign.value, async () => {
@@ -1231,15 +1009,11 @@ export default {
     /* eslint-disable */
     return {
       showFullScreen,
-      showTx,
       router,
       assetsDomain,
-      arrowDownIcon,
-      appBackground,
       WALLET_TYPES,
       txComment,
       extensionsList,
-      closeIcon,
       confirmPassword,
       signerWallet,
       metamaskSigner,
@@ -1305,29 +1079,6 @@ export default {
   background-repeat: no-repeat;
   border-radius: 16px;
 
-  &__app-wrap {
-    // margin-top: 35px;
-    position: relative;
-    border-radius: 20px;
-
-    &.fullScreen {
-      width: 100%;
-      box-sizing: border-box;
-      // padding: 0 35px;
-    }
-
-    .close-icon {
-      position: absolute;
-      top: 0px;
-      right: -40px;
-
-      &:hover {
-        cursor: pointer;
-        opacity: 0.7;
-      }
-    }
-  }
-
   &__apps {
     width: 100%;
     display: flex;
@@ -1341,13 +1092,6 @@ export default {
     float: left;
     background: $white;
     border-radius: 0 0 16px 16px;
-  }
-
-  .label.description {
-    margin: 25px 0 0 0;
-    width: 100%;
-    text-align: left;
-    font-weight: 700;
   }
 
   &__loading {
@@ -1377,109 +1121,6 @@ export default {
       cursor: pointer;
       background: #6a4bff;
       color: #fff;
-    }
-  }
-
-  &__frame {
-    border-radius: 20px;
-    border: none;
-    outline: none;
-    z-index: 1;
-  }
-
-  .modal-content {
-    .password-wrap {
-      border-top: 1px solid #bcc2d8;
-      width: 100%;
-      height: 90px;
-      margin-top: 20px;
-      padding-top: 20px;
-    }
-
-    div.code {
-      white-space: pre;
-    }
-
-    .item-tx {
-      overflow: auto;
-      width: 100%;
-      margin-top: 0; // -35px;
-      max-height: 260px;
-    }
-
-    .item {
-      margin: 10px 0;
-      width: 100%;
-      display: flex;
-
-      .signature {
-        word-break: break-word;
-      }
-
-      span {
-        text-align: right;
-      }
-
-      align-items: center;
-      justify-content: space-between;
-
-      a {
-        text-decoration: none;
-        text-decoration: underline;
-        color: #437fec;
-
-        .link-icon {
-          width: 18px;
-          height: 16px;
-          margin-left: 5px;
-
-          &.hovered {
-            display: none;
-          }
-        }
-
-        &:hover {
-          color: pointer;
-          color: #756aa8;
-
-          .link-icon {
-            display: none;
-
-            &.hovered {
-              display: initial;
-            }
-          }
-        }
-      }
-
-      .arrow-icon {
-        &.open {
-          transform: rotate(180deg);
-        }
-      }
-
-      .show {
-        z-index: 0;
-        color: #6b93c0;
-        border-bottom: 1px dotted #6b93c0;
-        text-transform: lowercase;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-
-        svg {
-          margin-top: 2px;
-          margin-left: 4px;
-        }
-      }
-
-      .red {
-        color: $red;
-      }
-
-      &.mt30 {
-        margin-top: 30px;
-      }
     }
   }
 
