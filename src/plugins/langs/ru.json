@@ -1191,7 +1191,8 @@
     },
     "faq": {
         "privacyPolicy": "Политика конфиденциальности",
-        "termsOfService": "Условия обслуживания"
+        "termsOfService": "Условия обслуживания",
+        "guide": ""
     },
     "dontHaveEnoughFounds": "У вас недостаточно средств для оплаты комиссии за транзакцию.",
     "transactionsSocket": {

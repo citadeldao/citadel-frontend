@@ -302,8 +302,10 @@ export default {
   border-radius: 25px;
   position: relative;
   width: 100%;
-  @include xl {
-    width: calc(100% - 360px);
+  &-xl {
+    @include xl {
+      width: calc(100% - 360px);
+    }
   }
 
   @include md {

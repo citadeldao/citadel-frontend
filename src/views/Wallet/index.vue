@@ -2,7 +2,15 @@
   <div v-if="currentWallet" class="wallet">
     <div class="wallet__central-section">
       <div class="wallet__section-wrapper">
-        <Alias :current-wallet="currentWallet" @qrClick="qrClick" />
+        <Alias
+          :current-wallet="currentWallet"
+          @qrClick="qrClick"
+          :class="{
+            'alias-xl': currentToken
+              ? currentToken?.hasClaim
+              : currentWallet.hasClaim,
+          }"
+        />
         <transition name="fade">
           <div
             v-if="
