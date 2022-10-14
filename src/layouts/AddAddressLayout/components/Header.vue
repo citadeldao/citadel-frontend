@@ -363,7 +363,7 @@ export default {
             }
           }
 
-          &:first-child {
+          &:not(&:last-child) {
             border-bottom: 1px solid #f0f3fd;
           }
 
