@@ -290,13 +290,13 @@ export default {
           decodedMnemonick.value = store.getters['crypto/decodeUserMnemonic'](
             password.value
           );
+        } else {
+          // type wallet - private key (oneSeed), and export its oneSeed
+          decodedMnemonick.value = store.getters['crypto/decodeUserMnemonic'](
+            password.value,
+            currentExportWallet.value.importedFromSeed
+          );
         }
-
-        // type wallet - private key (oneSeed), and export its oneSeed
-        decodedMnemonick.value = store.getters['crypto/decodeUserMnemonic'](
-          password.value,
-          currentExportWallet.value.importedFromSeed
-        );
       } else if (currentExportMethod.value === WALLET_TYPES.PRIVATE_KEY) {
         decodedPrivateKey.value =
           currentExportWallet.value.getPrivateKeyDecoded(password.value);
