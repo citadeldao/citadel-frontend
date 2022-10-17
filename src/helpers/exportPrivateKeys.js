@@ -2,7 +2,7 @@ import FileSaver from 'file-saver';
 import { getStorage } from '@/utils/storage';
 import { WALLET_TYPES } from '@/config/walletType';
 
-const downLoadWallets = (backup) => {
+export const downLoadWallets = (backup) => {
   const date = new Date();
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
@@ -15,7 +15,6 @@ const downLoadWallets = (backup) => {
   const blob = new Blob([backup], {
     type: 'text/plain;charset=utf-8',
   });
-
   FileSaver.saveAs(blob, `${filename}.citadel`);
 };
 

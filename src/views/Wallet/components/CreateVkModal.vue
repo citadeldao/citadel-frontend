@@ -522,6 +522,7 @@ export default {
   vertical-align: middle;
   width: 24px;
   height: 24px;
+  margin-right: 10px;
 }
 
 .app-name {

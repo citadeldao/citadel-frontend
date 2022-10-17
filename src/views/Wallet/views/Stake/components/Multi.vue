@@ -292,7 +292,7 @@
           v-if="showSuccessModal"
           v-click-away="finalClose"
           title="Success"
-          desc="It may take some time for the transaction to complete"
+          :desc="$t('txWaitTitle')"
           button-text="ok"
           type="success"
           icon="success"
@@ -569,7 +569,7 @@ export default {
       isLoading.value = true;
       const { rawTxs, ok } = await props.currentWallet.prepareDelegation({
         walletId: props.currentWallet.id,
-        nodeAddress: isMultiple.value
+        nodeAddresses: isMultiple.value
           ? selectedNode.value || props.list
           : selectedNode.value?.address,
         amount: amount.value,

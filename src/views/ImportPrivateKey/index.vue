@@ -89,12 +89,16 @@ export default {
       setType('privateKey');
       account && setAccount(account);
       const success = createWallets(WALLET_TYPES.PRIVATE_KEY);
-      success.then(async () => {
-        !isPasswordHash.value && savePassword();
-        await redirectToNewWallet();
-        store.commit('newWallets/setNewWalletsList', newWallets.value);
-        store.commit('newWallets/setModal', true);
-        store.commit('newWallets/setLoader', false);
+      success.then(async (e) => {
+        if (e) {
+          !isPasswordHash.value && savePassword();
+          await redirectToNewWallet();
+          store.commit('newWallets/setNewWalletsList', newWallets.value);
+          store.commit('newWallets/setModal', true);
+          store.commit('newWallets/setLoader', false);
+        } else {
+          store.commit('newWallets/setLoader', false);
+        }
       });
     };
 

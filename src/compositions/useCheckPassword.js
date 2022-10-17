@@ -7,10 +7,13 @@ export default function useCheckPassword(oldHash) {
   const { t } = useI18n();
   const store = useStore();
   const password = ref('');
-  const hash = oldHash || store.getters['crypto/passwordHash'];
+  const dynamicHash = ref('');
+  const hash = computed(
+    () => oldHash || store.getters['crypto/passwordHash'] || dynamicHash.value
+  );
 
   const passwordIncorrect = computed(() => {
-    return sha3_256(password.value) !== hash;
+    return sha3_256(password.value) !== hash.value;
   });
   const passwordError = computed(
     () => passwordIncorrect.value && t('incorrectPassword')
@@ -31,5 +34,6 @@ export default function useCheckPassword(oldHash) {
     passwordIncorrect,
     passwordError,
     inputError,
+    dynamicHash,
   };
 }
