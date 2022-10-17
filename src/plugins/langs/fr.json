@@ -1181,7 +1181,8 @@
     },
     "faq": {
         "privacyPolicy": "Politique de confidentialité",
-        "termsOfService": "Conditions d'utilisation"
+        "termsOfService": "Conditions d'utilisation",
+        "guide": ""
     },
     "dontHaveEnoughFounds": "Vous n'avez pas assez de fonds pour payer les frais de transaction.",
     "transactionsSocket": {
