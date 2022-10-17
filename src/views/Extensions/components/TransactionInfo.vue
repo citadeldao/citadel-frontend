@@ -87,6 +87,7 @@
         type="password"
         icon="key"
         @input="onChange"
+        @keyup.enter="$emit('confirmInput')"
       />
     </div>
   </div>

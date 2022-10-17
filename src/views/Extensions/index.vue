@@ -116,6 +116,7 @@
           :signer-wallet="signerWallet"
           :incorrect-password="incorrectPassword"
           :confirm-password="confirmPassword"
+          @confirmInput="confirmClickHandler"
           @changePassword="
             (pass) => {
               password = pass;
