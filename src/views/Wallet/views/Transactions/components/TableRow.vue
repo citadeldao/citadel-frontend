@@ -60,13 +60,13 @@
             <span
               v-pretty-number="{
                 value: formatedValue,
-                currency: currentWallet.code,
+                currency: formatedValueSymbol || currentWallet.code,
               }"
               class="table-row__amount-value-value"
               :style="{ color: valueColor }"
             />
             <span class="table-row__amount-value-currency">
-              {{ currentWallet.code }}
+              {{ formatedValueSymbol || currentWallet.code }}
             </span>
           </div>
         </div>
