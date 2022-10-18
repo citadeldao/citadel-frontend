@@ -11,7 +11,7 @@
       <PrimaryButton
         class="change-email__button"
         data-qa="settings__email-button"
-        @click="toggleModal('change', true)"
+        @click="toggleModal(currentStage, true)"
       >
         {{ $t('settings.changeEmail.button') }}
       </PrimaryButton>
@@ -119,6 +119,14 @@ export default {
     const showChange = ref(false);
     const showTimer = ref(false);
 
+    const currentStage = computed(
+      () => store.getters['profile/changeEmailStage']
+    );
+
+    if (!currentStage.value) {
+      store.commit('profile/SET_CHANGE_EMAIL_STAGE', 'change');
+    }
+
     const toggleModal = (target, state = false) => {
       switch (target) {
         case 'change':
@@ -126,7 +134,11 @@ export default {
           break;
         case 'timer':
           showTimer.value = state;
-          if (state) countDownTimer();
+
+          if (state && countDown.value === MINUTE) {
+            countDownTimer();
+          }
+
           break;
         default:
           break;
@@ -160,8 +172,11 @@ export default {
       }
 
       loading.value = false;
+
       toggleModal('change', false);
       toggleModal('timer', true);
+
+      store.commit('profile/SET_CHANGE_EMAIL_STAGE', 'timer');
     };
 
     const countDownTimer = () => {
@@ -179,6 +194,7 @@ export default {
 
     const resend = async () => {
       loading.value = true;
+
       const { ok } = await changeEmailRequest();
 
       if (!ok) {
@@ -212,6 +228,7 @@ export default {
 
       currentEmail,
       newEmail,
+      currentStage,
     };
   },
 };
