@@ -83,7 +83,10 @@
           {{ $t('settings.changeEmail.resend') }}
         </PrimaryButton>
 
-        <p v-if="countDown > 0" class="count-down">00:{{ countDown }}</p>
+        <p v-if="countDown > 0" class="count-down">
+          <span>00</span>
+          <span>{{ countDown }}</span>
+        </p>
       </div>
     </ModalContent>
   </Modal>
@@ -288,18 +291,32 @@ export default {
   }
 
   .count-down {
+    position: relative;
     color: $mid-blue;
     font-size: $h4-size;
     font-family: 'Panton_Bold';
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 64px;
+    justify-content: space-between;
+    width: 72px;
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
     margin: auto;
+    span {
+      display: inline-block;
+      width: 32px;
+    }
+    &::after {
+      content: ':';
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: fit-content;
+      height: 40px;
+    }
   }
   .primary-button {
     margin: 25px auto 0;
