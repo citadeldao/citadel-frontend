@@ -181,7 +181,7 @@ export default {
     });
 
     watchEffect(() => {
-      if (windowSize.value <= 1440) {
+      if (windowSize.value <= 1666) {
         currentAddress.value = `${currentAddress.value.slice(
           0,
           6
@@ -215,7 +215,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
+  flex-wrap: no-wrap;
   height: 65px;
   margin-bottom: 8px;
   border-radius: 8px;
@@ -239,12 +239,15 @@ export default {
   &__address {
     text-align: left;
     @include text-default;
-    width: 50%;
+    width: 60%;
     margin-left: 15px;
     margin-right: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   &__btn_group {
-    width: 35%;
+    max-width: 35%;
+    width: fit-content;
     display: flex;
     align-items: center;
     justify-content: flex-end;
