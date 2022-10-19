@@ -292,7 +292,7 @@
           v-if="showSuccessModal"
           v-click-away="finalClose"
           title="Success"
-          desc="It may take some time for the transaction to complete"
+          :desc="$t('txWaitTitle')"
           button-text="ok"
           type="success"
           icon="success"

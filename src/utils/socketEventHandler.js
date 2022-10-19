@@ -180,5 +180,12 @@ export async function socketEventHandler({ eventName, data }) {
       await store.dispatch('profile/updateCurrentWalletMarketcap', data);
 
       break;
+
+    case 'change-email-client':
+      if (data.msg.new === true && data.msg.old === true) {
+        await store.dispatch('auth/logout');
+        window.location.reload();
+      }
+      break;
   }
 }

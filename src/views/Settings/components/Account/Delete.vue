@@ -90,6 +90,7 @@ import ModalContent from '@/components/ModalContent';
 import exportPrivateKeys from '@/helpers/exportPrivateKeys';
 import { removeStorage } from '@/utils/storage';
 import useWallets from '@/compositions/useWallets';
+import { WALLET_TYPES } from '@/config/walletType';
 
 export default {
   name: 'DeleteAccount',
@@ -108,7 +109,10 @@ export default {
     const phrase = ref('');
     const needSaveBackup = ref(true);
     const { wallets } = useWallets();
-    const hasWallets = computed(() => !!wallets.value.length);
+    const hasWallets = computed(
+      () =>
+        wallets.value.filter((w) => w.type !== WALLET_TYPES.PUBLIC_KEY).length
+    );
     const isButtonDisabled = computed(() => phrase.value !== 'delete');
     const userId = computed(() => store.getters['profile/info']?.id);
     const keyStorage = computed(() => `user_${userId.value}`);

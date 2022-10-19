@@ -20,7 +20,7 @@
         </div>
 
         <div class="column">
-          <ChangeEmail :visibleClass="'comingSoon'" />
+          <ChangeEmail />
           <ChangePassword />
         </div>
 
@@ -411,9 +411,6 @@ export default {
     .column {
       display: flex;
       flex-direction: column;
-      div:first-child {
-        margin-bottom: $card-margin;
-      }
     }
     @include laptop-l {
       & .cross-chain-card {
