@@ -1,6 +1,11 @@
 import router from '@/router';
+import useApi from '@/api/useApi';
 import { prettyNumber } from '@/helpers/prettyNumber';
+
 import citadel from '@citadeldao/lib-citadel';
+import notify from '@/plugins/notify';
+
+const api = useApi('auth');
 
 const types = {
   SET_INFO: 'SET_INFO',
@@ -8,6 +13,7 @@ const types = {
   SET_MARKETCAPS: 'SET_MARKETCAPS',
   SET_RATES: 'SET_RATES',
   SET_CURRENT_WALLET_MARKETCAP: 'SET_CURRENT_WALLET_MARKETCAP',
+  SET_CHANGE_EMAIL_STAGE: 'SET_CHANGE_EMAIL_STAGE',
 };
 
 export default {
@@ -19,6 +25,7 @@ export default {
       rates: {},
       currentWalletMarketcap: {},
     },
+    changeEmailStage: null,
   },
   getters: {
     info: (state) => state.info,
@@ -27,6 +34,7 @@ export default {
     marketcaps: (state) => state.marketcaps,
     rates: (state) => state.rates,
     currentWalletMarketcap: (state) => state.currentWalletMarketcap,
+    changeEmailStage: (state) => state.changeEmailStage,
   },
   mutations: {
     [types.SET_INFO](state, info) {
@@ -43,6 +51,9 @@ export default {
     },
     [types.SET_CURRENT_WALLET_MARKETCAP](state, value) {
       state.currentWalletMarketcap = value;
+    },
+    [types.SET_CHANGE_EMAIL_STAGE](state, value) {
+      state.changeEmailStage = value;
     },
   },
   actions: {
@@ -140,6 +151,25 @@ export default {
       }
 
       return { ok: false, error: res.error };
+    },
+
+    async changeEmail(_, newEmail) {
+      try {
+        const { ok, error } = await api.changeEmail({ newEmail });
+
+        if (ok) {
+          return { ok: true };
+        }
+
+        notify({
+          type: 'warning',
+          text: error,
+        });
+
+        return { ok: false };
+      } catch (error) {
+        return { ok: false, error };
+      }
     },
   },
 };

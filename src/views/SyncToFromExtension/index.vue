@@ -331,7 +331,7 @@ export default {
         } catch (err) {
           syncLoading.value = false;
         }
-
+        const newWallets = syncResult;
         const result =
           syncResult &&
           (await Promise.all(
@@ -362,10 +362,15 @@ export default {
           ));
 
         if (syncResult && result.every((res) => !!res)) {
-          store.commit('newWallets/setModal', true);
           syncLoading.value = false;
+          showSyncFromModal.value = false;
+
+          store.commit('newWallets/setNewWalletsList', newWallets);
+          store.commit('newWallets/setModal', true);
           password.value = '';
           importedFromWallets.value = syncResult;
+        } else {
+          syncLoading.value = false;
         }
       }
     };
