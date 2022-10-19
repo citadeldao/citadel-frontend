@@ -31,6 +31,17 @@
               <terms />
               <div>{{ $t('faq.termsOfService') }}</div>
             </div>
+            <div class="faq-item">
+              <guide />
+              <div>
+                <a
+                  style="text-decoration: none; color: inherit"
+                  href="https://www.notion.so/600cfeaeb06a4d78b9578f3c19117246"
+                  >{{ $t('faq.guide') }}
+                </a>
+              </div>
+              <!-- <div>{{ $t('faq.termsOfService') }}</div> -->
+            </div>
           </div>
         </button>
         <button v-if="false" class="header__menu-button">
@@ -119,10 +130,11 @@ import user from '@/assets/icons/user.svg';
 import faq from '@/assets/icons/faq.svg';
 import privacy from '@/assets/icons/privacy.svg';
 import terms from '@/assets/icons/terms.svg';
+import guide from '@/assets/icons/guide.svg';
 import exportPrivateKeys from '@/helpers/exportPrivateKeys';
 import PrivacyModal from '@/components/Modals/Privacy';
 import TermsModal from '@/components/Modals/Terms';
-import { XCT_GOVERNANCE_APP } from '@/config/walletType';
+import { XCT_GOVERNANCE_APP, WALLET_TYPES } from '@/config/walletType';
 
 export default {
   name: 'Header',
@@ -136,6 +148,7 @@ export default {
     faq,
     privacy,
     terms,
+    guide,
     HeaderTooltip,
     LogoutModal,
     Breadcrumbs,
@@ -169,7 +182,10 @@ export default {
     const keyStorage = computed(
       () => `user_${store.getters['profile/info'].id}`
     );
-    const hasWallets = computed(() => !!wallets.value.length);
+    const hasWallets = computed(
+      () =>
+        wallets.value.filter((w) => w.type !== WALLET_TYPES.PUBLIC_KEY).length
+    );
 
     const logoutOptions = reactive({
       erase: false,
@@ -347,12 +363,16 @@ export default {
             }
           }
 
-          &:first-child {
+          &:not(&:last-child) {
             border-bottom: 1px solid #f0f3fd;
           }
 
           div {
             margin-left: 5px;
+          }
+          svg {
+            width: initial;
+            height: initial;
           }
         }
       }

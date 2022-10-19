@@ -2,6 +2,7 @@ import CryptoCoin from '../CryptoCoin';
 import citadel from '@citadeldao/lib-citadel';
 import notify from '@/plugins/notify';
 import { i18n } from '@/plugins/i18n';
+import customErrors from '@/helpers/customErrors';
 
 const { t } = i18n.global;
 
@@ -25,6 +26,22 @@ export default class CryptoToken extends CryptoCoin {
     };
   }
 
+  getCustomMessage(error) {
+    const message = {
+      type: 'warning',
+      text: error,
+    };
+
+    for (const key in customErrors) {
+      if (customErrors[key].find((check) => error.message.includes(check))) {
+        const code = this?.parentCoin?.code || this.code;
+        message.text = t(key, { code });
+        return message;
+      }
+    }
+    return message;
+  }
+
   async prepareTransfer({ walletId, options }) {
     const { error, data } = await citadel.prepareTokenAction(
       walletId,
@@ -37,10 +54,10 @@ export default class CryptoToken extends CryptoCoin {
       return { data: data, error };
     }
 
-    notify({
-      type: 'warning',
-      text: error,
-    });
+    const message = this.getCustomMessage(error);
+
+    notify(message);
+
     console.error(error);
 
     return { data, error };
@@ -61,10 +78,10 @@ export default class CryptoToken extends CryptoCoin {
       return res;
     }
 
-    notify({
-      type: 'warning',
-      text: res.error,
-    });
+    const message = this.getCustomMessage(res.error);
+
+    notify(message);
+
     console.error(res.error);
 
     return res;
@@ -88,10 +105,9 @@ export default class CryptoToken extends CryptoCoin {
       return { ok: true, rawTxs: res.data, resFee: res.data.fee };
     }
 
-    notify({
-      type: 'warning',
-      text: res.error,
-    });
+    const message = this.getCustomMessage(res.error);
+
+    notify(message);
 
     return { ok: false };
   }

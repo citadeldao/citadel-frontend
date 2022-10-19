@@ -487,6 +487,7 @@
     "notifications": "Notifications",
     "swap": "Swap",
     "insufficientFunds": "Insufficient funds",
+    "txWaitTitle": "It may take some time for the transaction to complete",
     "changeNode": "Change node",
     "startStaking": "Start staking",
     "this": "this",
@@ -717,7 +718,16 @@
             "inputLabel": "Your e-mail",
             "inputPlaceHolder": "e-mail",
             "button": "Change",
-            "comingSoon": "COMING SOON"
+            "comingSoon": "COMING SOON",
+            "changeModalTitle": "Email change",
+            "changeModalDescription": "Change an email associated with your account",
+            "oldEmail": "Old Email",
+            "newEmail": "New Email",
+            "emailPlaceholder": "Input email",
+            "validFormatError": "Please type your email in valid format",
+            "lastStep": "One last step!",
+            "lastStepDescription":"Please, check <span style='font-family: \"Panton_Bold\";'> BOTH </span> old and new email addresses to finalize the email update.",
+            "resend": "Resend"
         },
         "language": {
             "title": "Language",
@@ -1222,7 +1232,8 @@
     },
     "faq": {
         "privacyPolicy": "Privacy policy",
-        "termsOfService": "Terms of service"
+        "termsOfService": "Terms of service",
+        "guide": "Guide"
     },
     "dontHaveEnoughFounds": "You do not have enough funds to pay the transaction fee.",
     "transactionsSocket": {
@@ -1343,5 +1354,8 @@
     "dontHaveEnoughFoundsForFee": "You do not have enough funds to pay the transaction fee.",
     "asset": "asset",
     "noSelfSendError": "Transfer wallet cannot be the same as receiving wallet.",
-    "minAmountError": "Minimum amount is {minAmount} {code}"
+    "minAmountError": "Minimum amount is {minAmount} {code}",
+    "errors": {
+        "notEnoughFounds": "Not enough {code} to pay the transaction fee"
+    }
 }

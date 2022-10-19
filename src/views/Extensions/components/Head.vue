@@ -207,7 +207,7 @@ export default {
     background: #6b93c0;
     position: absolute;
     right: -2px;
-    top: 25px;
+    top: 18px;
     z-index: 100;
 
     &:hover {
