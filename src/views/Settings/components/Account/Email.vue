@@ -11,7 +11,7 @@
       <PrimaryButton
         class="change-email__button"
         data-qa="settings__email-button"
-        @click="toggleModal('change', true)"
+        @click="toggleModal(currentStage, true)"
       >
         {{ $t('settings.changeEmail.button') }}
       </PrimaryButton>
@@ -83,7 +83,10 @@
           {{ $t('settings.changeEmail.resend') }}
         </PrimaryButton>
 
-        <p v-if="countDown > 0" class="count-down">00:{{ countDown }}</p>
+        <p v-if="countDown > 0" class="count-down">
+          <span>00</span>
+          <span>{{ countDown }}</span>
+        </p>
       </div>
     </ModalContent>
   </Modal>
@@ -119,6 +122,14 @@ export default {
     const showChange = ref(false);
     const showTimer = ref(false);
 
+    const currentStage = computed(
+      () => store.getters['profile/changeEmailStage']
+    );
+
+    if (!currentStage.value) {
+      store.commit('profile/SET_CHANGE_EMAIL_STAGE', 'change');
+    }
+
     const toggleModal = (target, state = false) => {
       switch (target) {
         case 'change':
@@ -126,7 +137,11 @@ export default {
           break;
         case 'timer':
           showTimer.value = state;
-          if (state) countDownTimer();
+
+          if (state && countDown.value === MINUTE) {
+            countDownTimer();
+          }
+
           break;
         default:
           break;
@@ -160,8 +175,11 @@ export default {
       }
 
       loading.value = false;
+
       toggleModal('change', false);
       toggleModal('timer', true);
+
+      store.commit('profile/SET_CHANGE_EMAIL_STAGE', 'timer');
     };
 
     const countDownTimer = () => {
@@ -179,6 +197,7 @@ export default {
 
     const resend = async () => {
       loading.value = true;
+
       const { ok } = await changeEmailRequest();
 
       if (!ok) {
@@ -212,6 +231,7 @@ export default {
 
       currentEmail,
       newEmail,
+      currentStage,
     };
   },
 };
@@ -271,18 +291,32 @@ export default {
   }
 
   .count-down {
+    position: relative;
     color: $mid-blue;
     font-size: $h4-size;
     font-family: 'Panton_Bold';
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 64px;
+    justify-content: space-between;
+    width: 72px;
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
     margin: auto;
+    span {
+      display: inline-block;
+      width: 32px;
+    }
+    &::after {
+      content: ':';
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: fit-content;
+      height: 40px;
+    }
   }
   .primary-button {
     margin: 25px auto 0;
