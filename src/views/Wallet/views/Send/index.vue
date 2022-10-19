@@ -198,6 +198,7 @@
       :current-token="currentToken"
       :current-wallet="currentWallet"
       :disabled-send="disabledSend"
+      type="send"
       button2="send"
       data-qa="send"
       @button2click="submitHandler"

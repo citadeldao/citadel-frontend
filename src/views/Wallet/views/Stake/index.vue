@@ -1,5 +1,5 @@
 <template>
-  <div class="stake">
+  <div class="stake" :class="{ 'stake-view-only': isViewOnly }">
     <div v-if="isLoading" class="stake__loader">
       <Loading />
     </div>
@@ -70,6 +70,7 @@ import BigNumber from 'bignumber.js';
 import { useRoute } from 'vue-router';
 import { onMounted } from 'vue';
 import redirectToWallet from '@/router/helpers/redirectToWallet';
+import { WALLET_TYPES } from '@/config/walletType';
 
 export default {
   name: 'Stake',
@@ -188,6 +189,10 @@ export default {
       { deep: true }
     );
 
+    const isViewOnly = computed(
+      () => props.currentWallet.type === WALLET_TYPES.PUBLIC_KEY
+    );
+
     return {
       isLoading,
       showModal,
@@ -196,6 +201,7 @@ export default {
       list,
       stakeNodes,
       totalStake,
+      isViewOnly,
     };
   },
 };
@@ -211,6 +217,9 @@ export default {
   }
   @include md {
     padding-bottom: 63px;
+    &-view-only {
+      padding-bottom: 0;
+    }
   }
 }
 </style>

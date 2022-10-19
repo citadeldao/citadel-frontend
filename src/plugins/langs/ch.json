@@ -115,7 +115,12 @@
         "walletCreated": "您的钱包已创建！",
         "walletCreatedDescription": "如果您希望查看可用的网络列表，请在勾选框选择",
         "errorConfirmWords1": "请检查输入的词语",
-        "errorConfirmWords2": "如果您写下的助记词有误，请返回上一步检查，确保您的记录无误。"
+        "errorConfirmWords2": "如果您写下的助记词有误，请返回上一步检查，确保您的记录无误。",
+        "backUp": {
+            "h1": "",
+            "h2": "",
+            "h3": ""
+        }
     },
     "importExistingAddress": {
         "card1Title": "助记词",
@@ -1186,7 +1191,8 @@
     },
     "faq": {
         "privacyPolicy": "隐私条款",
-        "termsOfService": "服务条款"
+        "termsOfService": "服务条款",
+        "guide": ""
     },
     "dontHaveEnoughFounds": "您的余额不足，无法支付交易手续费",
     "transactionsSocket": {
@@ -1305,5 +1311,8 @@
         }
     },
     "dontHaveEnoughFoundsForFee": "您的余额不足，无法支付交易手续费",
-    "asset": "资产"
+    "asset": "资产",
+    "errors": {
+        "notEnoughFounds": "没有足够的{code}来支付交易费用"
+    }
 }
