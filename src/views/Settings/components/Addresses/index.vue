@@ -51,6 +51,7 @@ export default {
     const store = useStore();
     const { wallets } = useWallets();
     const showSeedModal = ref(false);
+    // const confirmModalDelete = ref(false)
     const showDeleteAddressesModal = ref(true);
     const hiddenWallets = computed(
       () => store.getters['wallets/hiddenWallets']
