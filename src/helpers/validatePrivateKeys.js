@@ -19,7 +19,9 @@ const validateHex = (privateKey) => {
 };
 
 const validateIost = (privateKey) => {
-  return /^[0-9a-zA-Z]+$/.test(privateKey) && [87].includes(privateKey.length);
+  return (
+    /^[0-9a-zA-Z]+$/.test(privateKey) && [87, 88].includes(privateKey.length)
+  );
 };
 
 const validateTezos = (privateKey) => {
