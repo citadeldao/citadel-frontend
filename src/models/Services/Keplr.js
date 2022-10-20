@@ -16,7 +16,7 @@ export default class keplrConnector {
       }
 
       await window.keplr.enable(this.chainId);
-      this.offlineSigner = window.keplr.getOfflineSigner(this.chainId);
+      this.offlineSigner = await window.keplr.getOfflineSigner(this.chainId);
       this.accounts = await this.offlineSigner.getAccounts();
 
       return this.accounts;
@@ -29,9 +29,8 @@ export default class keplrConnector {
   }
 
   async sendKeplrTransaction(rawTx, signer, advancedParams = {}) {
+    const data = rawTx.transaction || rawTx;
     try {
-      const data = rawTx.transaction || rawTx;
-
       if (data.direct && data.json.memo.toLowerCase().includes('permission')) {
         const res = await window.keplr.signDirect(
           data.chain_id || data.json.chain_id,
@@ -59,10 +58,13 @@ export default class keplrConnector {
 
       return { signature, signedTx: res.signed, fullResponse: res };
     } catch (err) {
+      // const accs = await this.connect(data.json.chain_id);
+      // ${accs && accs[0] && accs[0].address}
+
       if (keplrErrors[err.message]) {
         notify({
           type: 'warning',
-          text: keplrErrors[err.message],
+          text: `${keplrErrors[err.message]}`,
         });
       }
 

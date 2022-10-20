@@ -10,7 +10,6 @@
           :key="group.net"
           :data="group"
           :hidden-wallets="hiddenWallets"
-          :has-visible-button="hasVisibleButton(group)"
           @toggle-hidden="toggleWalletHidden"
           @exportWallet="exportWallet"
         />
@@ -23,8 +22,6 @@
 import { computed } from 'vue';
 import { useStore } from 'vuex';
 import Dropdown from './components/Dropdown';
-
-const netsWithVisibleButton = ['Secret'];
 
 export default {
   name: 'Addresses',
@@ -50,14 +47,11 @@ export default {
     const toggleWalletHidden = (wallet) => {
       store.dispatch('wallets/toggleHiddenWallet', wallet);
     };
-    const hasVisibleButton = (group) =>
-      netsWithVisibleButton.includes(group.net);
 
     return {
       hiddenWallets,
       toggleWalletHidden,
       exportWallet,
-      hasVisibleButton,
     };
   },
 };

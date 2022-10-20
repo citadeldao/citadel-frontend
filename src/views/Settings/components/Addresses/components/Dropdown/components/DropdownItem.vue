@@ -16,7 +16,7 @@
         class="dropdown-item__btn dropdown-item__btn--key"
         @click="openViewingKeyManager"
       >
-        <keyIcon />
+        <visionIcon />
       </div>
       <div
         v-if="false"
@@ -25,14 +25,6 @@
         @click="toggleNotification"
       >
         <notificationIcon />
-      </div>
-      <div
-        v-if="hasVisibleButton"
-        class="dropdown-item__btn dropdown-item__btn--vision"
-        data-qa="settings__address__vision-button"
-        @click="$emit('toggle-hidden', wallet.address)"
-      >
-        <visionIcon />
       </div>
       <div
         v-if="
@@ -44,7 +36,7 @@
         data-qa="settings__address__export-button"
         @click="exportWallet"
       >
-        <exportIcon />
+        <keyIcon />
       </div>
       <div
         class="dropdown-item__btn dropdown-item__btn--remove"
@@ -95,10 +87,6 @@ export default {
       required: true,
     },
     hidden: {
-      type: Boolean,
-      default: false,
-    },
-    hasVisibleButton: {
       type: Boolean,
       default: false,
     },
