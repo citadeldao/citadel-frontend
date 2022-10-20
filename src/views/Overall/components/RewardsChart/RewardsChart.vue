@@ -190,13 +190,13 @@ export default {
       () => width.value,
       async () => {
         nextTick(async () => {
-          const { rewardsChart } = await store.dispatch(storeAction, {
-            list: customList.value,
-          });
+          // const { rewardsChart } = await store.dispatch(storeAction, {
+          //   list: customList.value,
+          // });
           await renderRewardsChart(
-            rewardsChart,
+            rewardsChart.value,
             createDatasetForRewardsChart(
-              rewardsChart,
+              rewardsChart.value,
               currentTab.value,
               MAX_ITEMS_IN_PREVIEW
             ),

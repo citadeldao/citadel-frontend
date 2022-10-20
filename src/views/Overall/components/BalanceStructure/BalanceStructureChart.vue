@@ -109,14 +109,14 @@ export default {
         renderBalanceStructChart(balanceStructure);
       }
     });
-    watch(
-      () => balanceStructure.value,
-      async () => {
-        if (!isEmpty.value) {
-          await renderBalanceStructChart(balanceStructure);
-        }
-      }
-    );
+    // watch(
+    //   () => balanceStructure.value,
+    //   async () => {
+    //     if (!isEmpty.value) {
+    //       await renderBalanceStructChart(balanceStructure);
+    //     }
+    //   }
+    // );
     watch(
       () => width.value,
       async () => {

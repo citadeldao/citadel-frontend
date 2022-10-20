@@ -2,7 +2,15 @@
   <div v-if="currentWallet" class="wallet">
     <div class="wallet__central-section">
       <div class="wallet__section-wrapper">
-        <Alias :current-wallet="currentWallet" @qrClick="qrClick" />
+        <Alias
+          :current-wallet="currentWallet"
+          @qrClick="qrClick"
+          :class="{
+            'alias-xl': currentToken
+              ? currentToken?.hasClaim
+              : currentWallet.hasClaim,
+          }"
+        />
         <transition name="fade">
           <div
             v-if="
@@ -191,7 +199,7 @@
           v-else-if="showClaimSuccessModal"
           v-click-away="claimModalCloseHandler"
           title="Success"
-          desc="It may take some time for the transaction to complete"
+          :desc="$t('txWaitTitle')"
           button-text="ok"
           type="success"
           icon="success"
@@ -359,20 +367,14 @@ export default {
             'hex'
           );
 
-          if (keplrAddress && keplrAddress !== currentWallet.value.address) {
-            notify({
-              type: 'warning',
-              text: 'Please change account in Keplr to sign transaction',
-            });
-          } else {
-            if (keplrAddress === currentWallet.value.address) {
-              const walletPublicKey = currentWallet.value.publicKey;
-              if (walletPublicKey !== pubkey) {
-                await store.dispatch('wallets/pushWallets', {
-                  wallets: [{ ...currentWallet.value, publicKey: pubkey }],
-                });
-                window.location.reload();
-              }
+          if (keplrAddress === currentWallet.value.address) {
+            const walletPublicKey = currentWallet.value.publicKey;
+
+            if (walletPublicKey !== pubkey) {
+              await store.dispatch('wallets/pushWallets', {
+                wallets: [{ ...currentWallet.value, publicKey: pubkey }],
+              });
+              window.location.reload();
             }
           }
         } catch (err) {
