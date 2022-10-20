@@ -3,9 +3,12 @@
     <h5 class="addresses__title">
       {{ $t('settings.addresses.title') }}
     </h5>
-    <span class="addresses__description">
-      {{ $t('settings.addresses.description') }}
-    </span>
+    <div class="addresses__description">
+      <p>
+        {{ $t('settings.addresses.description') }}
+      </p>
+      <p @click="showDeleteAddressesModal = true">Delete addresses</p>
+    </div>
     <div class="addresses__content">
       <Dropdown
         v-for="group in groupWalletsByNet"
@@ -22,6 +25,10 @@
       @confirm="removeSeed"
       @close="showSeedModal = false"
     />
+    <DeleteAddressesModal
+      v-show="showDeleteAddressesModal"
+      @delete="deleteAddreses"
+    />
   </div>
 </template>
 
@@ -31,18 +38,20 @@ import { useStore } from 'vuex';
 import Dropdown from './components/Dropdown';
 import useWallets from '@/compositions/useWallets';
 import DeleteSeedModal from './components/Dropdown/components/DeleteSeedModal';
+import DeleteAddressesModal from './components/Dropdown/components/DeleteAddressesModal.vue';
 import { WALLET_TYPES } from '@/config/walletType';
 import { sortByAlphabet } from '@/helpers';
 
 export default {
   name: 'Addresses',
-  components: { Dropdown, DeleteSeedModal },
+  components: { Dropdown, DeleteSeedModal, DeleteAddressesModal },
   props: {},
   emits: ['exportWallet'],
   setup(props, { emit }) {
     const store = useStore();
     const { wallets } = useWallets();
     const showSeedModal = ref(false);
+    const showDeleteAddressesModal = ref(true);
     const hiddenWallets = computed(
       () => store.getters['wallets/hiddenWallets']
     );
@@ -90,14 +99,17 @@ export default {
       store.dispatch('wallets/toggleHiddenWallet', wallet);
     };
 
+    const deleteAddreses = () => {};
     return {
       onDeleteSeed,
+      showDeleteAddressesModal,
       showSeedModal,
       groupWalletsByNet,
       hiddenWallets,
       toggleWalletHidden,
       exportWallet,
       removeSeed,
+      deleteAddreses,
     };
   },
 };
@@ -111,6 +123,10 @@ export default {
 
   &__content {
     overflow-y: auto;
+  }
+  &__description {
+    display: flex;
+    justify-content: space-between;
   }
 }
 </style>

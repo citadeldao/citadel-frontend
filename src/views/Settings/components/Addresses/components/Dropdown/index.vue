@@ -23,11 +23,13 @@
         class="dropdown__item"
       >
         <DropdownItem
+          :selectable="selectable"
           :wallet="wallet"
           :hidden="isWalletHidden(wallet)"
           @toggle-hidden="$emit('toggle-hidden', wallet)"
           @deleteSeedModal="$emit('deleteSeedModal')"
           @exportWallet="exportWallet"
+          @selectItem="selectItem"
         />
       </div>
     </div>
@@ -38,7 +40,7 @@
 import arrowUp from '@/assets/icons/arrow-up.svg';
 import arrowDown from '@/assets/icons/arrow-down.svg';
 import DropdownItem from './components/DropdownItem';
-import { ref, markRaw } from 'vue';
+import { ref, markRaw, onMounted } from 'vue';
 
 export default {
   name: 'Dropdown',
@@ -52,12 +54,19 @@ export default {
       type: Array,
       default: () => [],
     },
+    selectable: {
+      type: Boolean,
+      default: false,
+    },
+    preopened: {
+      type: Boolean,
+      default: false,
+    },
   },
-  emits: ['exportWallet', 'toggle-hidden', 'deleteSeedModal'],
+  emits: ['exportWallet', 'toggle-hidden', 'deleteSeedModal', 'selectItem'],
   setup(props, { emit }) {
     const isOpen = ref(false);
     const currentIcon = ref();
-
     if (props.data) {
       import(`@/assets/icons/networks/${props.data.icon}.svg`).then((val) => {
         currentIcon.value = markRaw(val.default);
@@ -74,13 +83,21 @@ export default {
 
     const isWalletHidden = ({ address, net }) =>
       props.hiddenWallets.includes(`${net}_${address}`);
-
+    const selectItem = (selectedItem) => {
+      emit('selectItem', selectedItem);
+    };
+    onMounted(() => {
+      if (props.preopened) {
+        clickHandler();
+      }
+    });
     return {
       currentIcon,
       isOpen,
       isWalletHidden,
       clickHandler,
       exportWallet,
+      selectItem,
     };
   },
 };
