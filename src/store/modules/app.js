@@ -89,8 +89,6 @@ export default {
           networksList.some((network) => network.net === net)
         );
       await citadel.setWalletList(walletsList, options);
-      // get wallet list immediately, because walletListUpdated event will come with a 1 sec delay after last event
-      await dispatch('wallets/getNewWallets', 'lazy', { root: true });
       commit('crypto/setPrivateWallets', [], { root: true });
     },
   },
