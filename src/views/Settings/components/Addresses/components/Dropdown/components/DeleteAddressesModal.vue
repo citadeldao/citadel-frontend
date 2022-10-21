@@ -42,28 +42,17 @@
         box-shadow="0px 0px 25px rgba(106, 75, 255, 0.3)"
         class="delete-address-modal__primary-button"
         data-qa="Delete"
-        @click="
-          $emit('delete');
-          isShowDeleteModal = true;
-        "
+        @click="$emit('delete')"
+        :disabled="!selectedItems.size"
       >
         {{ 'Delete' }}
       </PrimaryButton>
-      <teleport to="body">
-        <DeleteAddressModal
-          v-click-away="closeDeleteModal"
-          :show="isShowDeleteModal"
-          :is-loading="isLoading"
-          @confirm="removeWallet"
-          @close="closeDeleteModal"
-        />
-      </teleport>
     </ModalContent>
   </Modal>
 </template>
 
 <script>
-import { computed, reactive, ref } from 'vue';
+import { computed, reactive } from 'vue';
 import useWallets from '@/compositions/useWallets';
 import { useStore } from 'vuex';
 import Modal from '@/components/Modal.vue';
@@ -105,7 +94,6 @@ export default {
     const hiddenWallets = computed(
       () => store.getters['wallets/hiddenWallets']
     );
-    const isShowDeleteModal = ref(false);
     const groupWalletsByNet = computed(() => {
       const resultObj = {};
       wallets.value.map((wallet) => {
@@ -142,42 +130,13 @@ export default {
 
       // showSeedModal.value = false;
     };
-    const removeWallet = async () => {
-      // isLoading.value = true;
-      const hasOneSeedWallet = wallets.value.filter(
-        (w) => w.type === WALLET_TYPES.ONE_SEED
-      );
-      const showSeedModal =
-        hasOneSeedWallet.length === 1 &&
-        props.wallet.type === WALLET_TYPES.ONE_SEED;
-
-      if (showSeedModal) {
-        emit('deleteSeedModal');
-      }
-
-      await store.dispatch('wallets/removeWallet', {
-        wallet: props.wallet,
-        walletId: props.wallet.id,
-      });
-
-      await store.dispatch('wallets/getCustomWalletsList');
-
-      // isLoading.value = false;
-
-      // if (
-      //   currentList.value !== 'all' &&
-      //   !customWalletsList.value.find((item) => item.name === currentList.value)
-      // ) {
-      //   store.commit('wallets/SET_ACTIVE_LIST', 'all');
-      // }
-    };
     const toggleWalletHidden = (wallet) => {
       store.dispatch('wallets/toggleHiddenWallet', wallet);
     };
     const selectItem = (selectedItem) => {
       if (selectedItem.isCheck) selectedItems.add(selectedItem.id);
       else selectedItems.delete(selectedItem.id);
-      // emit('selectItem', selectedItem ? props.wallet : null);
+      emit('getSelectedItemsList', selectedItems);
     };
     return {
       onDeleteSeed,
@@ -188,8 +147,6 @@ export default {
       removeSeed,
       selectItem,
       selectedItems,
-      isShowDeleteModal,
-      removeWallet,
     };
   },
 };
