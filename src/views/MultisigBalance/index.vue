@@ -363,7 +363,7 @@ export default {
     const addresses = computed(() =>
       wallets.value
         .concat([mergeWallet.value])
-        .filter((w) => w?.net === 'bsc')
+        .filter((w) => w?.net === 'bsc' && w?.type !== WALLET_TYPES.PUBLIC_KEY)
         .map((w) => ({
           id: w.address,
           title: w.address,
