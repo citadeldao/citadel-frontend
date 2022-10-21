@@ -320,4 +320,20 @@ export default [
       guard: 'private',
     },
   },
+  {
+    path: '/terms',
+    name: 'modalTerms',
+    component: () => import('@/components/Modals/Terms'),
+    meta: {
+      layout: 'DefaultLayout',
+    },
+  },
+  {
+    path: '/privacy',
+    name: 'modalPrivacy',
+    component: () => import('@/components/Modals/Privacy'),
+    meta: {
+      layout: 'DefaultLayout',
+    },
+  },
 ];

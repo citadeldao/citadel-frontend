@@ -1,4 +1,3 @@
-import router from '@/router';
 import useApi from '@/api/useApi';
 import { prettyNumber } from '@/helpers/prettyNumber';
 
@@ -15,7 +14,6 @@ const types = {
   SET_CURRENT_WALLET_MARKETCAP: 'SET_CURRENT_WALLET_MARKETCAP',
   SET_CHANGE_EMAIL_STAGE: 'SET_CHANGE_EMAIL_STAGE',
 };
-
 export default {
   namespaced: true,
   state: {
@@ -83,7 +81,7 @@ export default {
       }
 
       dispatch('auth/setIsAuthenticated', false, { root: true });
-      router.push({ name: 'Login' });
+      // router.push({ name: 'Login' });
 
       return { error };
     },
