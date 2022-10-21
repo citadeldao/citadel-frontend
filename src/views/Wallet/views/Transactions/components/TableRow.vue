@@ -392,6 +392,8 @@ export default {
 
   &__status-info-status {
     text-transform: capitalize;
+    width: 120px;
+    overflow: hidden;
 
     @include lg {
       // margin-top: 11px;

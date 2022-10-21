@@ -25,17 +25,17 @@
         <th class="header" />
       </tr>
 
-      <!-- <template v-if="currentPage === 1">
+      <template v-if="currentPage === 1">
         <TableRow
           v-for="tx in txsFromMempool"
           :key="tx.hash"
           :transaction="tx"
-          :current-wallet="currentWallet"
           from-mempool
+          :current-wallet="currentWallet"
           @showTransactionInfo="showTransactionInfo"
           @editComment="editComment"
         />
-      </template> -->
+      </template>
 
       <TableRow
         v-for="item in transactions"
@@ -213,13 +213,9 @@ export default {
       return mempool.value
         .filter((tx) => {
           const hasFrom =
-            tx.from.toLowerCase() === currentAddress.value?.toLowerCase();
-          const hasTo =
-            tx.to.toLowerCase() === currentAddress.value?.toLowerCase();
-          const txBelongToWallet =
-            (hasFrom || hasTo) && tx.net === props.currentWallet.net;
-
-          return txBelongToWallet;
+            tx.holder.toLowerCase() === currentAddress.value?.toLowerCase();
+          // const hasTo = tx.to.toLowerCase() === currentAddress.value?.toLowerCase();
+          return hasFrom && tx.network === props.currentWallet.net;
         })
         .sort((a, b) => (a.date > b.date ? -1 : 1));
     });

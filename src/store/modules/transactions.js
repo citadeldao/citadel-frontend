@@ -135,6 +135,7 @@ export default {
     async getMempool({ commit }) {
       try {
         const data = await api.getMempool();
+        console.log('DATATA', data);
 
         if (!data.ok) {
           throw data.error;
