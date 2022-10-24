@@ -1191,7 +1191,8 @@
     },
     "faq": {
         "privacyPolicy": "隐私条款",
-        "termsOfService": "服务条款"
+        "termsOfService": "服务条款",
+        "guide": ""
     },
     "dontHaveEnoughFounds": "您的余额不足，无法支付交易手续费",
     "transactionsSocket": {

@@ -2,15 +2,11 @@
   <teleport to="body">
     <Modal>
       <ModalContent
-        v-click-away="
-          () => {
-            $emit('close');
-          }
-        "
+        v-click-away="close"
         :button-text="$t('ok')"
         :submit-button="false"
         style="width: 1000px"
-        @close="$emit('close')"
+        @close="close"
       >
         <div class="terms">
           <h1>Terms and Conditions</h1>
@@ -519,15 +515,27 @@
   </teleport>
 </template>
 <script>
+import { useRouter } from 'vue-router';
 import Modal from '@/components/Modal';
 import ModalContent from '@/components/ModalContent';
-
 export default {
   components: {
     Modal,
     ModalContent,
   },
   emits: ['close'],
+  setup(props, { emit }) {
+    const router = useRouter();
+    const close = () => {
+      emit('close');
+      if (router.currentRoute.value.name === 'modalTerms') {
+        router.push('/');
+      }
+    };
+    return {
+      close,
+    };
+  },
 };
 </script>
 <style lang="scss" scoped>
