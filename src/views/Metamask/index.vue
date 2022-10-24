@@ -105,7 +105,7 @@ export default {
       () =>
         store.getters['networks/networksList'].find(
           (e) => e.net === metamaskConnector.value.network
-        ).name
+        )?.name
     );
     // metamaskConnector.value.changeNetwork();
 
@@ -169,7 +169,6 @@ export default {
     const router = useRouter();
 
     const importWallet = async () => {
-      store.commit('newWallets/setLoader', true);
       const { network, accounts } = metamaskConnector.value;
 
       if (!metamaskNets.includes(metamaskConnector.value.network)) {
@@ -184,6 +183,8 @@ export default {
       if (!accounts[0]) {
         return;
       }
+
+      store.commit('newWallets/setLoader', true);
 
       existAddressInMetamask.value = wallets.value.find(
         (wallet) =>
