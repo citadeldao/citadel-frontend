@@ -1207,6 +1207,16 @@
             "title": "Oasis Network",
             "description": "The Oasis Network is the first privacy-enabled blockchain platform for open finance and a responsible data economy. Combined with its high throughput and secure architecture, the Oasis Network is able to power private, scalable DeFi, revolutionizing Open Finance and expanding it beyond traders and early adopters to a mass market. Its unique privacy features can not only redefine DeFi, but also create a new type of digital asset called Tokenized Data that can enable users to take control of the data they generate and earn rewards for staking it with applications — creating the first ever responsible data economy.",
             "shortDescription": "The Oasis Network is a privacy-enabled blockchain platform for open finance and a responsible data economy."
+        },
+        "stafi": {
+            "title": "Stafihub",
+            "description": "StaFiHub is a Layer 1 chain built on Cosmos SDK and a cross-chain staking derivatives platform aims to provide liquid staking solutions for assets through the IBC Protocol",
+            "shortDescription": "StaFiHub is a cross-chain staking derivatives platform built on Cosmos and provides liquid staking through IBC"
+        },
+        "stride": {
+            "title": "Stride",
+            "description": "Stride is a blockchain ('zone') that allows to liquid stake any IBC-compatible tokens and earn both staking and DeFi yields across the Cosmos ecosystem.",
+            "shortDescription": "Stride is a liquid staking zone in Cosmos, enabling users to earn both staking and DeFi yields"
         }
     },
     "uptime": "Uptime",

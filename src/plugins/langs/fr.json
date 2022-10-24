@@ -1156,6 +1156,16 @@
             "title": "",
             "description": "",
             "shortDescription": ""
+        },
+        "stafi": {
+            "title": "Stafihub",
+            "description": "",
+            "shortDescription": ""
+        },
+        "stride": {
+            "title": "Stride",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "Disponibilité",

@@ -1166,6 +1166,16 @@
             "title": "Oasis 网络\n",
             "description": "",
             "shortDescription": ""
+        },
+        "stafi": {
+            "title": "Stafihub",
+            "description": "",
+            "shortDescription": ""
+        },
+        "stride": {
+            "title": "Stride",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "运行时间",
