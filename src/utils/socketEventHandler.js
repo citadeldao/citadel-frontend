@@ -187,11 +187,15 @@ export async function socketEventHandler({ eventName, data }) {
         const isSubtoken = data.net.includes('_');
         const wallet = wallets.value.find((w) => {
           if (isSubtoken) {
-            return data.holder.toLowerCase() === w.address.toLowerCase();
+            return (
+              (data.holder || data.from).toLowerCase() ===
+              w.address.toLowerCase()
+            );
           } else {
             return (
               w.net === data.net &&
-              data.holder.toLowerCase() === w.address.toLowerCase()
+              (data.holder || data.from).toLowerCase() ===
+                w.address.toLowerCase()
             );
           }
         });
