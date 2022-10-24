@@ -257,7 +257,7 @@
         <ModalContent
           v-click-away="closeSuccessModal"
           title="Success"
-          desc="It may take some time for the transaction to complete"
+          :desc="$t('txWaitTitle')"
           button-text="ok"
           type="success"
           icon="success"
@@ -362,8 +362,8 @@ export default {
 
     const addresses = computed(() =>
       wallets.value
+        .filter((w) => w?.net === 'bsc' && w?.type !== WALLET_TYPES.PUBLIC_KEY)
         .concat([mergeWallet.value])
-        .filter((w) => w?.net === 'bsc')
         .map((w) => ({
           id: w.address,
           title: w.address,

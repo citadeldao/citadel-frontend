@@ -85,7 +85,7 @@
       </span>
     </div>
 
-    <span class="send-direction__line-title">
+    <span class="send-direction__line-title flex-column">
       <div v-for="item in txUrl" :key="item" class="send-direction__line">
         {{ $t('viewTranscasction')
         }}<a :href="item" target="_blank">
@@ -264,6 +264,11 @@ export default {
     color: $gray;
     display: flex;
     align-items: center;
+
+    &.flex-column {
+      align-items: flex-start;
+      flex-direction: column;
+    }
   }
 
   &__link-icon {

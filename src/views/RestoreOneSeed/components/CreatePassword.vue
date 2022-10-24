@@ -30,6 +30,13 @@
       <PrimaryButton :disabled="!!inputError" data-qa="Create">
         {{ $t('create') }}
       </PrimaryButton>
+
+      <span
+        class="enter-password__import-file"
+        @click="$emit('updateShowImportModal')"
+      >
+        {{ $t('steps.importFileExp') }}
+      </span>
     </form>
   </div>
 </template>
@@ -47,7 +54,13 @@ export default {
     Input,
     PrimaryButton,
   },
-  emits: ['createPassword'],
+  props: {
+    fileImportMode: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  emits: ['createPassword', 'updateShowImportModal'],
   setup(props, { emit }) {
     const nextStep = inject('nextStep');
 
@@ -124,6 +137,12 @@ export default {
     @include md {
       width: 483px;
     }
+  }
+  &__import-file {
+    margin-top: 20px;
+    color: $royalblue1;
+    text-decoration: underline;
+    cursor: pointer;
   }
 }
 </style>

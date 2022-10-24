@@ -669,6 +669,11 @@ export default {
     @include md {
       max-width: calc(#{$sidebar-max-width-md} - 50px);
     }
+    @include laptop {
+      min-height: 56px;
+      max-width: calc(#{$sidebar-max-width-laptop} - 50px);
+      width: calc(#{$sidebar-max-width-laptop} - 50px);
+    }
   }
 
   &__addresses-addresses {

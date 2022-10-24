@@ -2,24 +2,23 @@
   <teleport to="body">
     <Modal>
       <ModalContent
-        v-click-away="
-          () => {
-            $emit('close');
-          }
-        "
+        v-click-away="close"
         :button-text="$t('ok')"
         :submit-button="false"
-        style="width: 900px"
-        @close="$emit('close')"
+        style="width: 1000px"
+        @close="close"
       >
         <div class="terms">
-          <h1>TERMS AND CONDITIONS</h1>
-          <p>Last updated: June 16, 2020</p>
+          <h1>Terms and Conditions</h1>
+          <p>
+            <b style="color: #59779a">Last updated: </b>
+            <b style="color: #6a4bff">June 16, 2020</b>
+          </p>
           <p>
             Please read these terms and conditions carefully before using Our
             Service.
           </p>
-          <h2>Interpretation and Definitions</h2>
+          <h2 style="margin-top: 10px">Interpretation and Definitions</h2>
           <h3>Interpretation</h3>
           <p>
             The words of which the initial letter is capitalized have meanings
@@ -81,7 +80,10 @@
             <li>
               <p>
                 <span class="bold">Website</span> refers to Citadel.One,
-                accessible from https://citadel.one
+                accessible from
+                <a style="color: #00a3ff" href="https://citadel.one"
+                  >https://citadel.one</a
+                >
               </p>
             </li>
             <li>
@@ -93,7 +95,7 @@
               </p>
             </li>
           </ul>
-          <h2>Acknowledgement</h2>
+          <h2 style="margin-bottom: 8px">Acknowledgement</h2>
           <p>
             These are the Terms and Conditions governing the use of this Service
             and the agreement that operates between You and the Company. These
@@ -124,7 +126,9 @@
             rights and how the law protects You. Please read Our Privacy Policy
             carefully before using Our Service.
           </p>
-          <h2>Links to Other Websites</h2>
+          <h2 style="margin-top: 16px; margin-bottom: 16px">
+            Links to Other Websites
+          </h2>
           <p>
             Our Service may contain links to third-party web sites or services
             that are not owned or controlled by the Company.
@@ -142,7 +146,7 @@
             We strongly advise You to read the terms and conditions and privacy
             policies of any third-party web sites or services that You visit.
           </p>
-          <h2>Termination</h2>
+          <h2 style="margin-top: 16px; margin-bottom: 16px">Termination</h2>
           <p>
             We may terminate or suspend Your access immediately, without prior
             notice or liability, for any reason whatsoever, including without
@@ -152,7 +156,9 @@
             Upon termination, Your right to use the Service will cease
             immediately.
           </p>
-          <h2>Limitation of Liability</h2>
+          <h2 style="margin-top: 16px; margin-bottom: 16px">
+            Limitation of Liability
+          </h2>
           <p>
             Notwithstanding any damages that You might incur, the entire
             liability of the Company and any of its suppliers under any
@@ -181,7 +187,9 @@
             these states, each party's liability will be limited to the greatest
             extent permitted by law.
           </p>
-          <h2>"AS IS" and "AS AVAILABLE" Disclaimer</h2>
+          <h2 style="margin-top: 16px; margin-bottom: 16px">
+            "AS IS" and "AS AVAILABLE" Disclaimer
+          </h2>
           <p>
             The Service is provided to You "AS IS" and "AS AVAILABLE" and with
             all faults and defects without warranty of any kind. To the maximum
@@ -221,26 +229,32 @@
             set forth in this section shall be applied to the greatest extent
             enforceable under applicable law.
           </p>
-          <h2>Governing Law</h2>
+          <h2 style="margin-top: 16px; margin-bottom: 16px">Governing Law</h2>
           <p>
             The laws of the Country, excluding its conflicts of law rules, shall
             govern this Terms and Your use of the Service. Your use of the
             Application may also be subject to other local, state, national, or
             international laws.
           </p>
-          <h2>Disputes Resolution</h2>
+          <h2 style="margin-top: 16px; margin-bottom: 16px">
+            Disputes Resolution
+          </h2>
           <p>
             If You have any concern or dispute about the Service, You agree to
             first try to resolve the dispute informally by contacting the
             Company.
           </p>
-          <h2>For European Union (EU) Users</h2>
+          <h2 style="margin-top: 16px; margin-bottom: 16px">
+            For European Union (EU) Users
+          </h2>
           <p>
             If You are a European Union consumer, you will benefit from any
             mandatory provisions of the law of the country in which you are
             resident in.
           </p>
-          <h2>United States Legal Compliance</h2>
+          <h2 style="margin-top: 16px; margin-bottom: 16px">
+            United States Legal Compliance
+          </h2>
           <p>
             You represent and warrant that (i) You are not located in a country
             that is subject to the United States government embargo, or that has
@@ -248,8 +262,10 @@
             supporting" country, and (ii) You are not listed on any United
             States government list of prohibited or restricted parties.
           </p>
-          <h2>Severability and Waiver</h2>
-          <h2>Severability</h2>
+          <h2 style="margin-top: 16px; margin-bottom: 16px">
+            Severability and Waiver
+          </h2>
+          <h3>Severability</h3>
           <p>
             If any provision of these Terms is held to be unenforceable or
             invalid, such provision will be changed and interpreted to
@@ -257,7 +273,7 @@
             possible under applicable law and the remaining provisions will
             continue in full force and effect.
           </p>
-          <h2>Waiver</h2>
+          <h3>Waiver</h3>
           <p>
             Except as provided herein, the failure to exercise a right or to
             require performance of an obligation under this Terms shall not
@@ -265,7 +281,9 @@
             performance at any time thereafter nor shall be the waiver of a
             breach constitute a waiver of any subsequent breach.
           </p>
-          <h2>Translation Interpretation</h2>
+          <h2 style="margin-top: 16px; margin-bottom: 16px">
+            Translation Interpretation
+          </h2>
           <p>
             These Terms and Conditions may have been translated if We have made
             them available to You on our Service.
@@ -274,7 +292,9 @@
             You agree that the original English text shall prevail in the case
             of a dispute.
           </p>
-          <h2>Changes to These Terms and Conditions</h2>
+          <h2 style="margin-top: 16px; margin-bottom: 16px">
+            Changes to These Terms and Conditions
+          </h2>
           <p>
             We reserve the right, at Our sole discretion, to modify or replace
             these Terms at any time. If a revision is material We will make
@@ -288,17 +308,32 @@
             do not agree to the new terms, in whole or in part, please stop
             using the website and the Service.
           </p>
-          <h2>Contact Us</h2>
-          <p>
+          <h2 style="margin-top: 16px; margin-bottom: 16px">Contact Us</h2>
+          <p style="color: #4b4c63; font-weight: 700">
             If you have any questions about these Terms and Conditions, You can
             contact us:
           </p>
-          <p>By email: support@citadel.one</p>
-          <p>Citadel.One PTE. LTD.</p>
-          <p>Terms and Conditions of https://citadel.one</p>
-          <p>
-            Terms and Conditions Last updated: June 16, 2020 Please read these
-            terms and conditions carefully before using Our Service.
+          <p style="font-weight: 600">
+            By email:
+            <a
+              style="color: #ff5722; font-weight: 600; text-decoration: none"
+              href="mailto:support@citadel.one"
+              >support@citadel.one</a
+            >
+          </p>
+          <p style="font-weight: 600">Citadel.One PTE. LTD.</p>
+          <p style="font-weight: 600">
+            Terms and Conditions of
+            <a style="color: #00a3ff" href="https://citadel.one"
+              >https://citadel.one</a
+            >
+          </p>
+          <p style="font-weight: 600; margin-bottom: 30px">
+            Terms and Conditions Last updated:
+            <b style="color: #54478f"
+              >June 16, 2020 Please read these terms and conditions carefully
+              before using Our Service.
+            </b>
           </p>
           <p>
             Interpretation and Definitions Interpretation The words of which the
@@ -397,7 +432,7 @@
             limitations may not apply. In these states, each party's liability
             will be limited to the greatest extent permitted by law.
           </p>
-          <p>
+          <p style="margin-bottom: 30px">
             "AS IS" and "AS AVAILABLE" Disclaimer The Service is provided to You
             "AS IS" and "AS AVAILABLE" and with all faults and defects without
             warranty of any kind. To the maximum extent permitted under
@@ -441,14 +476,14 @@
             mandatory provisions of the law of the country in which you are
             resident in. United States Legal Compliance
           </p>
-          <p>
+          <p style="margin-bottom: 30px">
             You represent and warrant that (i) You are not located in a country
             that is subject to the United States government embargo, or that has
             been designated by the United States government as a "terrorist
             supporting" country, and (ii) You are not listed on any United
             States government list of prohibited or restricted parties.
           </p>
-          <p>
+          <p style="margin-bottom: 30px">
             Severability and Waiver Severability If any provision of these Terms
             is held to be unenforceable or invalid, such provision will be
             changed and interpreted to accomplish the objectives of such
@@ -474,27 +509,33 @@
             terms. If You do not agree to the new terms, in whole or in part,
             please stop using the website and the Service.
           </p>
-          <p>Contact Us</p>
-          <p>
-            If you have any questions about these Terms and Conditions, You can
-            contact us:
-          </p>
-          <p>By email: support@citadel.one</p>
         </div>
       </ModalContent>
     </Modal>
   </teleport>
 </template>
 <script>
+import { useRouter } from 'vue-router';
 import Modal from '@/components/Modal';
 import ModalContent from '@/components/ModalContent';
-
 export default {
   components: {
     Modal,
     ModalContent,
   },
   emits: ['close'],
+  setup(props, { emit }) {
+    const router = useRouter();
+    const close = () => {
+      emit('close');
+      if (router.currentRoute.value.name === 'modalTerms') {
+        router.push('/');
+      }
+    };
+    return {
+      close,
+    };
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -508,13 +549,41 @@ export default {
   box-sizing: border-box;
   height: 500px;
   overflow-y: auto;
-
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 30px;
+  color: #59779a;
+  h1 {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 30px;
+    color: #000000;
+    margin-bottom: 9px;
+  }
+  h1,
   h2,
-  h3 {
+  h3,
+  h4 {
     font-family: Panton_Bold;
+    margin: 0;
+  }
+  h2 {
+    color: #1a53f0;
+    text-transform: uppercase;
+    font-size: 18px;
+  }
+  h3 {
+    color: #00a3ff;
+    margin-bottom: 8px;
+    margin-top: 10px;
+  }
+  h4 {
+    color: #4b4c63;
+    font-weight: 700;
   }
 
   p {
+    margin: 0;
     .bold {
       font-family: Panton_Bold;
     }
@@ -523,5 +592,30 @@ export default {
   .bold {
     font-family: Panton_Bold;
   }
+}
+ul {
+  padding-left: 30px;
+  margin-top: 0;
+  li p .bold {
+    color: #4f70cf;
+  }
+  li h4 .bold {
+    font-weight: 700;
+    font-size: 16px;
+    color: #000000 !important;
+  }
+  li {
+    .type {
+      color: #1a53f0;
+    }
+    .administered {
+      color: #ff5722;
+    }
+  }
+}
+ul li::marker {
+  color: #2970ff;
+  font-size: 24px;
+  line-height: 1;
 }
 </style>

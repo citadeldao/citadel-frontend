@@ -1,54 +1,152 @@
 <template>
+  <PrivacyModal v-if="showPrivacy" @close="closePrivacy" />
+  <TermsModal v-if="showTerms" @close="closeTerms" />
   <transition v-if="isLoading" name="fade">
     <Modal>
       <img src="@/assets/gif/loader.gif" alt="" />
     </Modal>
   </transition>
   <div v-else class="login">
-    <header class="login__header">
-      <div class="login__logo">
-        <citadelLogo />
-      </div>
-    </header>
-
-    <main class="login__content">
-      <LoginCarousel v-if="!syncMode" />
-      <SyncCarousel v-else />
-
-      <div class="login__form">
-        <SyncStart v-if="showSyncBlock" @sync="sync" />
-        <template v-else>
-          <LoginForm
-            v-if="currentStep === 1 && !showSyncBlock"
-            :disabled="formDisabled"
-            @formSubmit="formSubmit"
-            @socialClick="socialClick"
-          />
-          <Verification
-            v-if="currentStep === 2 && !showSyncBlock"
-            :error="verificationError"
-            @change="onChangeVerification"
-            @verification="verification"
-            @sendVerificationCode="sendVerificationCode"
-          />
-        </template>
-        <div
-          v-if="currentStep === 1 && !showSyncBlock"
-          class="login__question"
-          @click="showEmailModal = true"
-        >
-          <div class="login__question-info">
-            <conversation />
-            <span
-              >{{ $t('login.questionText1') }} <b>{{ $t('Citadel.one') }}</b>
-              {{ $t('login.questionText2') }}</span
-            >
-          </div>
-          <RoundArrowButton />
+    <div class="left">
+      <header :class="{ confirmedAddress }" class="login__header">
+        <div class="login__logo">
+          <citadelLogo />
         </div>
-      </div>
-      <WhyCitadel v-if="showEmailModal" @close="showEmailModal = false" />
-    </main>
+        <div class="langs" v-if="confirmedAddress" />
+        <LoginCarousel v-if="!syncMode && !confirmedAddress" />
+        <SyncCarousel v-if="syncMode && !confirmedAddress" />
+        <div v-if="!confirmedAddress" class="rights__container">
+          <p class="rights__link" @click="showPrivacy = true">Privacy policy</p>
+          <p class="rights__link" @click="showTerms = true">Terms of service</p>
+        </div>
+      </header>
+    </div>
+    <div class="right">
+      <main class="login__content">
+        <div class="login__form">
+          <SyncStart v-if="showSyncBlock" @sync="sync" />
+          <template v-else>
+            <template v-if="!walletMenuType">
+              <LoginForm
+                v-if="currentStep === 1 && !showSyncBlock"
+                :disabled="formDisabled"
+                @formSubmit="formSubmit"
+                @socialClick="socialClick"
+              >
+                <div
+                  v-if="currentStep === 1 && !showSyncBlock"
+                  class="login__question-info"
+                  @click="showEmailModal = true"
+                >
+                  <div>
+                    {{ $t('login.questionText1') }}
+                    <span class="bold">{{ $t('Citadel.one') }}</span>
+                    {{ $t('login.questionText2') }}
+                  </div>
+                </div>
+              </LoginForm>
+              <LoginMenu
+                v-if="!userName"
+                @loginSocial="onLoginSocial"
+                @loginWeb3="onLoginWeb3"
+              />
+            </template>
+            <LoginMenuWeb3
+              v-if="!loginWith && walletMenuType === WALLET_MENU_TYPE.web3"
+              @loginWith="onLoginWith"
+              @cancel="walletMenuType = ''"
+            />
+            <LoginMenuSocial
+              v-if="!loginWith && walletMenuType === WALLET_MENU_TYPE.social"
+              @loginWith="onLoginWith"
+              @cancel="walletMenuType = ''"
+            />
+            <DisclaimerContinueWithEmail
+              v-if="!connectedToWeb3 && loginWith"
+              @useEmail="onUseEmail"
+              @continue="continueLogin"
+            />
+            <DisclaimerApproveWeb3
+              :is-metamask="loginWith === 'metamask'"
+              @cancel="onApproveCancel"
+              v-if="
+                !keplrConnector?.accounts[0] &&
+                !metamaskConnector?.accounts[0] &&
+                connectedToWeb3 &&
+                ['metamask', 'keplr'].includes(loginWith)
+              "
+            />
+
+            <ConfirmWeb3Address
+              v-if="
+                !confirmedAddress &&
+                loginWith === 'keplr' &&
+                connectedToWeb3 &&
+                keplrConnector?.accounts[0]
+              "
+              :is-keplr="!!keplrConnector.accounts[0].address"
+              :name="keplrNetworks[0].label"
+              :network="keplrNetworks[0].net"
+              :loading="addLoading"
+              :address="keplrConnector.accounts[0].address"
+              @cancel="onWeb3AddressCancel"
+              @confirm="onWeb3AddressConfirm"
+              @refreshKeplr="onRefreshWeb3Keplr"
+            />
+
+            <ConfirmWeb3Address
+              v-if="
+                !confirmedAddress &&
+                loginWith === 'metamask' &&
+                connectedToWeb3 &&
+                metamaskConnector?.accounts[0]
+              "
+              :name="
+                metamaskConnector.network === 'bsc'
+                  ? 'Binance Smart Chain'
+                  : 'Ethereum'
+              "
+              :network="metamaskConnector.network"
+              :loading="addLoading"
+              :address="metamaskConnector.accounts[0]"
+              @cancel="onWeb3AddressCancel"
+              @confirm="onWeb3AddressConfirm"
+              @refreshMetamask="onRefreshWeb3Metamask"
+            />
+
+            <SelectLanguage
+              v-if="confirmedAddress"
+              @accountCreate="onAccountCreate"
+              @cancel="onAccountCreate"
+            />
+
+            <Verification
+              v-if="currentStep === 2 && !showSyncBlock"
+              :error="verificationError"
+              @change="onChangeVerification"
+              @verification="verification"
+              @cancelVerification="
+                () => {
+                  userName = '';
+                }
+              "
+              @sendVerificationCode="sendVerificationCode"
+            />
+          </template>
+        </div>
+        <WhyCitadel v-if="showEmailModal" @close="showEmailModal = false" />
+      </main>
+    </div>
+    <InvisibleRecaptcha
+      :style="'display: none'"
+      sitekey="6LcpPNohAAAAAAjgV2kbQCps_nMLFodkdEH6aYXs"
+      :callback="getToken"
+      class="btn btn-danger"
+      type="submit"
+      id="do-something-btn"
+    >
+      Do something!
+    </InvisibleRecaptcha>
   </div>
 </template>
 
@@ -64,7 +162,14 @@ import LoginForm from './components/LoginForm';
 import LoginCarousel from './components/LoginCarousel';
 import SyncCarousel from './components/SyncCarousel';
 import SyncStart from './components/SyncStart';
-import citadelLogo from '@/assets/icons/citadelLogo.svg';
+import LoginMenu from './components/LoginMenu';
+import LoginMenuWeb3 from './components/LoginMenuWeb3';
+import LoginMenuSocial from './components/LoginMenuSocial';
+import DisclaimerContinueWithEmail from './components/DisclaimerContinueWithEmail';
+import DisclaimerApproveWeb3 from './components/DisclaimerApproveWeb3';
+import ConfirmWeb3Address from './components/ConfirmWeb3Address';
+import SelectLanguage from './components/SelectLanguage';
+import citadelLogo from '@/assets/icons/citadelLogoWhite.svg';
 import initPersistedstate from '@/plugins/persistedstate';
 // import { SocketManager } from '@/utils/socket';
 import { socketEventHandler } from '@/utils/socketEventHandler';
@@ -73,15 +178,23 @@ import WhyCitadel from './components/WhyCitadel';
 import redirectToWallet from '@/router/helpers/redirectToWallet';
 import { parseHash, findAddressWithNet } from '@/helpers';
 import { WALLET_TYPES } from '@/config/walletType';
-import RoundArrowButton from '@/components/UI/RoundArrowButton';
-import conversation from '@/assets/icons/conversation.svg';
+import { keplrNetworks } from '@/config/availableNets';
+import useCreateWallets from '@/compositions/useCreateWallets';
+import { useI18n } from 'vue-i18n';
+
+import PrivacyModal from '@/components/Modals/Privacy';
+import TermsModal from '@/components/Modals/Terms';
+import InvisibleRecaptcha from 'vue-invisible-recaptcha';
+const WALLET_MENU_TYPE = {
+  social: 'sosical',
+  web3: 'web3',
+};
 
 export default {
   name: 'Login',
   components: {
+    InvisibleRecaptcha,
     citadelLogo,
-    RoundArrowButton,
-    conversation,
     LoginForm,
     Verification,
     Modal,
@@ -89,11 +202,24 @@ export default {
     SyncCarousel,
     SyncStart,
     WhyCitadel,
+    LoginMenu,
+    LoginMenuWeb3,
+    LoginMenuSocial,
+    DisclaimerContinueWithEmail,
+    DisclaimerApproveWeb3,
+    ConfirmWeb3Address,
+    SelectLanguage,
+    PrivacyModal,
+    TermsModal,
   },
   setup() {
+    const { t } = useI18n();
     const router = useRouter();
     const store = useStore();
     const isLoading = ref(false);
+    const showPrivacy = ref(false);
+    const showTerms = ref(false);
+
     const formDisabled = ref(false);
     const showEmailModal = ref(false);
     const citadel = inject('citadel');
@@ -103,6 +229,42 @@ export default {
     const showSyncBlock = ref(false);
 
     const hashInfo = ref('');
+
+    const walletMenuType = ref('');
+    const loginWith = ref('');
+    const connectedToWeb3 = ref(false);
+    const confirmedAddress = ref(false);
+    const newAddress = ref('');
+    const newAddressNet = ref('');
+    const captchaToken = ref('');
+
+    const { setNets, setAddress, setPublicKey, createWallets } =
+      useCreateWallets();
+
+    const { wallets } = useWallets();
+
+    const onAccountCreate = async (isChangeLang) => {
+      if (isChangeLang) {
+        window.localStorage.setItem('setLang', true);
+      }
+      await redirectToWallet({
+        wallet: { address: newAddress.value, net: newAddressNet.value },
+        root: true,
+      });
+    };
+
+    const getToken = async (e) => {
+      captchaToken.value = e;
+      console.log('captchaToken.value', captchaToken.value);
+    };
+
+    const metamaskConnector = computed(
+      () => store.getters['metamask/metamaskConnector']
+    );
+
+    const keplrConnector = computed(
+      () => store.getters['keplr/keplrConnector']
+    );
 
     if (syncMode.value) {
       hashInfo.value = parseHash(localHashInfo);
@@ -137,6 +299,7 @@ export default {
         const { error, data } = await sendVerificationCode();
 
         if (error) {
+          userName.value = '';
           setCurrentStep(1);
         }
 
@@ -202,7 +365,6 @@ export default {
           store.dispatch('wallets/getCustomWalletsList');
           store.dispatch('rewards/getRewards');
           /* await */ store.dispatch('transactions/getMempool');
-          const { wallets } = useWallets();
 
           await redirectToWallet({
             wallet: wallets?.value[0],
@@ -279,7 +441,304 @@ export default {
       }
     };
 
+    const onLoginSocial = () => {
+      walletMenuType.value = WALLET_MENU_TYPE.social;
+    };
+
+    const onLoginWeb3 = () => {
+      walletMenuType.value = WALLET_MENU_TYPE.web3;
+    };
+
+    const onLoginWith = (type) => {
+      loginWith.value = type;
+    };
+
+    const onUseEmail = () => {
+      walletMenuType.value = '';
+      loginWith.value = '';
+    };
+
+    const continueLogin = async () => {
+      if (['apple', 'google', 'linkedin'].includes(loginWith.value)) {
+        await store.dispatch('auth/loginSocial', { social: loginWith.value });
+      } else {
+        connectedToWeb3.value = true;
+
+        if (loginWith.value === 'keplr') {
+          await store.dispatch('keplr/connectToKeplr', keplrNetworks[0].key);
+        }
+
+        if (loginWith.value === 'metamask') {
+          await store.dispatch('metamask/connectToMetamask');
+        }
+      }
+    };
+
+    const onApproveCancel = () => {
+      walletMenuType.value = '';
+      loginWith.value = '';
+      connectedToWeb3.value = false;
+    };
+
+    const onWeb3AddressCancel = () => {
+      if (addLoading.value) {
+        return;
+      }
+
+      connectedToWeb3.value = false;
+      keplrConnector.value.disconnect();
+      metamaskConnector.value.disconnect();
+      addLoading.value = false;
+
+      onUseEmail();
+    };
+
+    const addLoading = ref(false);
+
+    const onWeb3AddressConfirm = async () => {
+      let address = '';
+      let net = '';
+
+      if (loginWith.value === 'metamask') {
+        address = metamaskConnector.value.accounts[0];
+        net = metamaskConnector.value.network;
+
+        if (!net || !['bsc', 'eth'].includes(net)) {
+          notify({
+            type: 'warning',
+            text: t('login.confirmAddressTitleAnother'),
+          });
+          return;
+        }
+      }
+      addLoading.value = true;
+
+      if (loginWith.value === 'keplr') {
+        address = keplrConnector.value.accounts[0].address;
+        net = keplrNetworks[0].net;
+      }
+
+      newAddress.value = address;
+      newAddressNet.value = net;
+
+      const { data, error, res } = await store.dispatch('auth/authWeb3', {
+        address,
+        net,
+      });
+
+      const initialize = async (walletType) => {
+        const { error } = await store.dispatch('profile/getInfo');
+
+        if (!error) {
+          await store.dispatch('networks/loadConfig');
+          initPersistedstate(store);
+
+          citadel.addEventListener('socketEvent', socketEventHandler);
+          citadel.addEventListener('walletListUpdated', async () => {
+            await store.dispatch('wallets/getNewWallets', 'lazy');
+          });
+          await store.dispatch('app/setWallets');
+          store.dispatch('wallets/getCustomWalletsList');
+          store.dispatch('rewards/getRewards');
+          store.dispatch('transactions/getMempool');
+        }
+
+        let searchLoginAddress = store.getters['wallets/wallets'].find((w) => {
+          return (
+            w.address.toLowerCase() === address.toLowerCase() &&
+            w.net === net &&
+            w.type !== WALLET_TYPES.PUBLIC_KEY
+          );
+        });
+
+        if (loginWith.value === 'metamask') {
+          searchLoginAddress = store.getters['wallets/wallets'].find((w) => {
+            return (
+              w.address.toLowerCase() === address.toLowerCase() && w.net === net
+            );
+          });
+        }
+
+        if (!searchLoginAddress) {
+          setAddress(address);
+          setNets([net]);
+
+          if (walletType === WALLET_TYPES.KEPLR) {
+            setPublicKey(
+              Buffer.from(keplrConnector.value.accounts[0].pubkey).toString(
+                'hex'
+              )
+            );
+          }
+          await createWallets(walletType, false);
+          confirmedAddress.value = true;
+        } else {
+          await redirectToWallet({
+            wallet: { address, net },
+            root: true,
+          });
+        }
+      };
+
+      if (loginWith.value === 'metamask') {
+        addLoading.value = true;
+        let timer = null;
+
+        const auth = async () => {
+          let metamaskResult;
+          try {
+            metamaskResult = await metamaskConnector.value.signMessage(
+              res.message,
+              address
+            );
+          } catch (err) {
+            addLoading.value = false;
+          }
+
+          if (!metamaskResult) {
+            return;
+          }
+
+          if (!connectedToWeb3.value) {
+            return;
+          }
+
+          const { data, error } = await store.dispatch('auth/confirmWeb3', {
+            address,
+            net,
+            sign: metamaskResult,
+            captchaResKey: captchaToken.value,
+            pubKey: '',
+          });
+
+          if (data) {
+            await initialize(WALLET_TYPES.PUBLIC_KEY);
+            addLoading.value = false;
+          } else {
+            addLoading.value = false;
+            notify({
+              type: 'warning',
+              text: error,
+            });
+          }
+        };
+
+        if (res.isNeedCaptcha) {
+          window.document.querySelector('#do-something-btn').click();
+          timer = setInterval(async () => {
+            if (captchaToken.value) {
+              clearInterval(timer);
+              await auth();
+              addLoading.value = false;
+            }
+          }, 1000);
+        } else {
+          await auth();
+          addLoading.value = false;
+        }
+      }
+      const authKeplr = async () => {
+        const keplrResult = await keplrConnector.value.sendKeplrTransaction(
+          res.message,
+          address,
+          {
+            preferNoSetFee: true,
+            preferNoSetMemo: true,
+          }
+        );
+
+        if (keplrResult.signature) {
+          const { data, error } = await store.dispatch('auth/confirmWeb3', {
+            address,
+            net,
+            sign: keplrResult.signature,
+            captchaResKey: captchaToken.value,
+            pubKey: Buffer.from(
+              keplrConnector.value.accounts[0].pubkey
+            ).toString('hex'),
+          });
+
+          if (data) {
+            await initialize(WALLET_TYPES.KEPLR);
+          } else {
+            notify({
+              type: 'warning',
+              text: error,
+            });
+            addLoading.value = false;
+          }
+        }
+      };
+
+      if (loginWith.value === 'keplr') {
+        let timer = null;
+        if (data) {
+          if (res.isNeedCaptcha) {
+            window.document.querySelector('#do-something-btn').click();
+            timer = setInterval(async () => {
+              if (captchaToken.value) {
+                clearInterval(timer);
+                await authKeplr();
+                addLoading.value = false;
+              }
+            }, 1000);
+          } else {
+            await authKeplr();
+            addLoading.value = false;
+          }
+        } else {
+          notify({
+            type: 'warning',
+            text: error,
+          });
+          return;
+        }
+      }
+      // confirmedAddress.value = true;
+    };
+
+    const onRefreshWeb3Keplr = async () => {
+      await store.dispatch('keplr/connectToKeplr', keplrNetworks[0].key);
+    };
+
+    const onRefreshWeb3Metamask = async () => {
+      metamaskConnector.value.disconnect();
+      await store.dispatch('metamask/connectToMetamask');
+    };
+    const closePrivacy = () => {
+      showPrivacy.value = false;
+    };
+    const closeTerms = () => {
+      showTerms.value = false;
+    };
     return {
+      closePrivacy,
+      closeTerms,
+      showPrivacy,
+      showTerms,
+      getToken,
+      WALLET_MENU_TYPE,
+      onLoginSocial,
+      onLoginWeb3,
+      walletMenuType,
+      onLoginWith,
+      loginWith,
+      continueLogin,
+      onUseEmail,
+      connectedToWeb3,
+      onApproveCancel,
+      metamaskConnector,
+      keplrConnector,
+      keplrNetworks,
+      onWeb3AddressCancel,
+      onWeb3AddressConfirm,
+      onRefreshWeb3Keplr,
+      onRefreshWeb3Metamask,
+      confirmedAddress,
+      userName,
+      onAccountCreate,
+      addLoading,
+
       syncMode,
       showSyncBlock,
       sync,
@@ -302,18 +761,55 @@ export default {
 .login {
   position: relative;
   min-height: 100vh;
-  padding: 100px;
-  background-image: url('~@/assets/icons/login_bg.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: 50%;
+  // padding: 100px;
+  display: flex;
+  align-items: center;
+
+  &__header {
+    &.confirmedAddress {
+      width: 100%;
+    }
+  }
+
+  .left {
+    width: 100%;
+    box-sizing: border-box;
+    background-image: url('~@/assets/icons/login_bg.png');
+    // background-color: #5030A0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .langs {
+      height: calc(100vh - 50px);
+      background-image: url('~@/assets/icons/newLogin/langs.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: 0 20px;
+    }
+  }
+
+  .right {
+    width: 50%;
+    box-sizing: border-box;
+    background-color: #fff;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   @include lg {
-    padding: 50px;
+    // padding: 50px;
   }
 
   @include md {
-    padding: 40px;
+    // padding: 40px;
   }
 
   &::after {
@@ -335,6 +831,7 @@ export default {
 
   &__form {
     width: 600px;
+    margin: 0 auto;
 
     @include lg {
       width: 500px;
@@ -347,13 +844,14 @@ export default {
 
   &__logo {
     display: flex;
-    margin-bottom: 62px;
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    transform: scale(0.9);
 
     @include lg {
-      margin-bottom: 40px;
-    }
-    @include md {
-      margin-bottom: 30px;
+      top: 20px;
+      left: 20px;
     }
 
     // & span {
@@ -403,34 +901,46 @@ export default {
     }
   }
 
-  &__question {
-    display: flex;
-    height: 80px;
-    border-radius: 16px;
-    align-items: center;
-    justify-content: space-between;
-    background: $paleturquoise;
-    padding: 0 24px 0 32px;
+  &__question-info {
+    margin-top: 5px;
+    margin-bottom: 15px;
     cursor: pointer;
+    display: inline-block;
+    align-items: center;
+    color: #1a53f0;
+    border-bottom: 1px dashed #1a53f0;
 
-    &:hover {
-      background: $white;
-      box-shadow: 0 15px 50px rgba(80, 100, 124, 0.1),
-        0 10px 15px rgba(80, 100, 124, 0.16);
+    .bold {
+      font-weight: bold;
+    }
+  }
+}
+.rights {
+  &__container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-right: 190px;
+
+    @include lg {
+      width: 500px;
+      margin-right: 63px;
     }
 
     @include md {
-      padding: 0 16px 0 32px;
+      width: 400px;
+      margin-right: 27px;
     }
   }
-
-  &__question-info {
-    display: flex;
-    align-items: center;
-
-    & svg {
-      margin-right: 15px;
-    }
+  &__link {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 30px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #c3ceeb;
+    cursor: pointer;
+    border-bottom: 1px dashed #c3ceeb;
   }
 }
 </style>

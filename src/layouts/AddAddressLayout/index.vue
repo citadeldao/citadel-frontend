@@ -1,7 +1,14 @@
 <template>
   <div class="add-address-layout">
     <Sidebar v-if="!hideSidebarRoutes.includes($route.name)" />
-    <main id="main" class="add-address-layout__main">
+    <main
+      id="main"
+      :class="{
+        noMargin: $route.name === 'Extensions' && $route.params.name,
+        noPadding: $route.name === 'Extensions' && $route.params.name,
+      }"
+      class="add-address-layout__main"
+    >
       <Header />
       <slot />
     </main>
@@ -29,6 +36,10 @@ export default {
       () => store.getters['auth/isAuthenticated']
     );
     const hideSidebarRoutes = ['multisigBalance', 'multisigSend'];
+    if (window.localStorage.getItem('setLang')) {
+      window.localStorage.removeItem('setLang');
+      window.location.reload();
+    }
 
     return { hideSidebarRoutes, isAuthenticated };
   },
@@ -64,6 +75,14 @@ export default {
     }
     @include mobile {
       overflow: auto;
+    }
+
+    &.noMargin {
+      margin-left: 0 !important;
+    }
+
+    &.noPadding {
+      padding-top: 0 !important;
     }
   }
 }

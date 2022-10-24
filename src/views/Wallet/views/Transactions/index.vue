@@ -90,6 +90,7 @@
   <WalletButtonsPanel
     :current-token="currentToken"
     :current-wallet="currentWallet"
+    type="transactions"
     button2="swap"
     data-qa="transactions"
     @prepareClaim="$emit('prepareClaim')"
@@ -370,7 +371,7 @@ export default {
     margin: 34px 0 38px 0;
   }
   @include md {
-    margin: 23px 0 63px 0;
+    margin: 23px 0;
   }
   &__table-xl {
     display: none;
