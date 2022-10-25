@@ -1,4 +1,3 @@
-import router from '@/router';
 import useApi from '@/api/useApi';
 import { prettyNumber } from '@/helpers/prettyNumber';
 
@@ -13,8 +12,8 @@ const types = {
   SET_MARKETCAPS: 'SET_MARKETCAPS',
   SET_RATES: 'SET_RATES',
   SET_CURRENT_WALLET_MARKETCAP: 'SET_CURRENT_WALLET_MARKETCAP',
+  SET_CHANGE_EMAIL_STAGE: 'SET_CHANGE_EMAIL_STAGE',
 };
-
 export default {
   namespaced: true,
   state: {
@@ -24,6 +23,7 @@ export default {
       rates: {},
       currentWalletMarketcap: {},
     },
+    changeEmailStage: null,
   },
   getters: {
     info: (state) => state.info,
@@ -32,6 +32,7 @@ export default {
     marketcaps: (state) => state.marketcaps,
     rates: (state) => state.rates,
     currentWalletMarketcap: (state) => state.currentWalletMarketcap,
+    changeEmailStage: (state) => state.changeEmailStage,
   },
   mutations: {
     [types.SET_INFO](state, info) {
@@ -48,6 +49,9 @@ export default {
     },
     [types.SET_CURRENT_WALLET_MARKETCAP](state, value) {
       state.currentWalletMarketcap = value;
+    },
+    [types.SET_CHANGE_EMAIL_STAGE](state, value) {
+      state.changeEmailStage = value;
     },
   },
   actions: {
@@ -77,7 +81,7 @@ export default {
       }
 
       dispatch('auth/setIsAuthenticated', false, { root: true });
-      router.push({ name: 'Login' });
+      // router.push({ name: 'Login' });
 
       return { error };
     },
