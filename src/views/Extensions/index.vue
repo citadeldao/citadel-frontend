@@ -468,7 +468,7 @@ export default {
           newV &&
           newV[0] &&
           selectedApp.value &&
-          [6, 7].includes(selectedApp.value.id)
+          [6, 7].includes(+selectedApp.value.id)
         ) {
           const metamaskNet =
             metamaskConnector.value.chainId === 56
