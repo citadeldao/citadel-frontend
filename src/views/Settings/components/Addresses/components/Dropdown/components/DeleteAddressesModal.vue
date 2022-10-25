@@ -32,10 +32,9 @@
           @deleteSeedModal="onDeleteSeed"
           @toggle-hidden="toggleWalletHidden"
           @exportWallet="exportWallet"
-          @selectItem="selectItem"
         />
       </div>
-      <p>You select {{ selectedItems.size }} addresses</p>
+      <p>You select {{ selectedWallets.length }} addresses</p>
       <PrimaryButton
         color="#FFFFFF"
         bg-color="#6A4BFF"
@@ -43,8 +42,8 @@
         box-shadow="0px 0px 25px rgba(106, 75, 255, 0.3)"
         class="delete-address-modal__primary-button"
         data-qa="Delete"
-        @click="$emit('delete')"
-        :disabled="!selectedItems.size"
+        @click="$emit('delete', selectedWallets)"
+        :disabled="!selectedWallets.length"
       >
         {{ 'Delete' }}
       </PrimaryButton>
@@ -53,7 +52,7 @@
 </template>
 
 <script>
-import { ref, computed, reactive } from 'vue';
+import { ref, computed, inject } from 'vue';
 import useWallets from '@/compositions/useWallets';
 import { useStore } from 'vuex';
 import Modal from '@/components/Modal.vue';
@@ -87,11 +86,11 @@ export default {
       default: false,
     },
   },
-  emits: ['confirm', 'close', 'getSelectedItemsList', 'delete'],
+  emits: ['confirm', 'close', 'delete'],
   setup(props, { emit }) {
     const store = useStore();
     const { wallets } = useWallets();
-    const selectedItems = reactive(new Set());
+    const selectedWallets = inject('selectedWallets');
     const dropdown = ref(null);
     const hiddenWallets = computed(
       () => store.getters['wallets/hiddenWallets']
@@ -135,11 +134,6 @@ export default {
     const toggleWalletHidden = (wallet) => {
       store.dispatch('wallets/toggleHiddenWallet', wallet);
     };
-    const selectItem = (selectedItem) => {
-      if (selectedItem.isCheck) selectedItems.add(selectedItem.id);
-      else selectedItems.delete(selectedItem.id);
-      emit('getSelectedItemsList', selectedItems);
-    };
     const setCheckboxesValue = (value) => {
       for (const dropList of dropdown.value) {
         for (const dropItem of dropList.dropdownItem) {
@@ -148,28 +142,23 @@ export default {
       }
     };
     const selectAll = () => {
-      for (const iterator of wallets.value) {
-        selectItem({ id: iterator.id, isCheck: true });
-      }
+      selectedWallets.value = wallets.value;
       setCheckboxesValue(true);
     };
 
     const unselectAll = () => {
-      for (const iterator of wallets.value) {
-        selectItem({ id: iterator.id, isCheck: false });
-      }
+      selectedWallets.value = [];
       setCheckboxesValue(false);
     };
     return {
+      selectedWallets,
       dropdown,
-      onDeleteSeed,
       groupWalletsByNet,
       hiddenWallets,
+      onDeleteSeed,
       toggleWalletHidden,
       exportWallet,
       removeSeed,
-      selectItem,
-      selectedItems,
       selectAll,
       unselectAll,
     };

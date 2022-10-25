@@ -30,7 +30,6 @@
           @toggle-hidden="$emit('toggle-hidden', wallet)"
           @deleteSeedModal="$emit('deleteSeedModal')"
           @exportWallet="exportWallet"
-          @selectItem="selectItem"
         />
       </div>
     </div>
@@ -64,7 +63,7 @@ export default {
       default: false,
     },
   },
-  emits: ['exportWallet', 'toggle-hidden', 'deleteSeedModal', 'selectItem'],
+  emits: ['exportWallet', 'toggle-hidden', 'deleteSeedModal', 'changeItem'],
   setup(props, { emit }) {
     const dropdownItem = ref(null);
     const isOpen = ref(false);
@@ -85,9 +84,6 @@ export default {
 
     const isWalletHidden = ({ address, net }) =>
       props.hiddenWallets.includes(`${net}_${address}`);
-    const selectItem = (selectedItem) => {
-      emit('selectItem', selectedItem);
-    };
     onMounted(() => {
       if (props.preopened) {
         clickHandler();
@@ -100,7 +96,6 @@ export default {
       isWalletHidden,
       clickHandler,
       exportWallet,
-      selectItem,
     };
   },
 };

@@ -106,7 +106,7 @@ export default {
       default: false,
     },
   },
-  emits: ['exportWallet', 'toggle-hidden', 'deleteSeedModal', 'selectItem'],
+  emits: ['exportWallet', 'toggle-hidden', 'deleteSeedModal', 'changeItem'],
   setup(props, { emit }) {
     const store = useStore();
     const { wallets } = useWallets();
@@ -124,10 +124,11 @@ export default {
           .length
       // store.getters['snip20Subtokens/availableSnip20TokenList'][props.wallet.address]?.length,
     );
+    const updateSelectedWallets = inject('updateSelectedWallets');
     const change = (e) => {
       isItemChecked.value = e;
-      emit('selectItem', {
-        id: props.wallet.id,
+      updateSelectedWallets({
+        wallet: props.wallet,
         isCheck: isItemChecked.value ? true : false,
       });
     };

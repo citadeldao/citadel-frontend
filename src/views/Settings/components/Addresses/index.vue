@@ -27,8 +27,7 @@
     />
     <DeleteAddressesModal
       v-show="showDeleteAddressesModal"
-      @delete="showConfirmDeleteModal = true"
-      @getSelectedItemsList="setSelectedItems"
+      @delete="openConfirmDeleteModal"
       @close="closeAddressesModal"
     />
     <DeleteAddressModal
@@ -42,7 +41,7 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue';
+import { computed, ref, provide } from 'vue';
 import { useStore } from 'vuex';
 import Dropdown from './components/Dropdown';
 import useWallets from '@/compositions/useWallets';
@@ -67,12 +66,15 @@ export default {
     const { t } = useI18n();
     const store = useStore();
     const { wallets } = useWallets();
-    let text = t('settings.addresses.deleteModalTitle');
-    const selectedItems = [];
+    const text = t('settings.addresses.deleteModalTitle');
+    // selectedWallets.length >= 2
+    //   ? t('settings.addresses.deleteAddresses')
+    //   : t('settings.addresses.deleteModalTitle');
     const isLoading = ref(false);
     const showSeedModal = ref(false);
     const showConfirmDeleteModal = ref(false);
     const showDeleteAddressesModal = ref(false);
+    const selectedWallets = ref([]);
     const hiddenWallets = computed(
       () => store.getters['wallets/hiddenWallets']
     );
@@ -137,21 +139,27 @@ export default {
     };
     const deleteAddreses = () => {
       isLoading.value = true;
-      const deletedAddreses = wallets.value.filter(
-        (e) => selectedItems.value.findIndex((e1) => e.id === e1) > -1
+      Promise.all(selectedWallets.value.map((e) => removeWallet(e))).then(
+        () => {
+          isLoading.value = false;
+          showConfirmDeleteModal.value = false;
+          showDeleteAddressesModal.value = false;
+        }
       );
-      Promise.all(deletedAddreses.map((e) => removeWallet(e))).then(() => {
-        isLoading.value = false;
-        showConfirmDeleteModal.value = false;
-        showDeleteAddressesModal.value = false;
-      });
     };
-    const setSelectedItems = (selectedWallets) => {
-      selectedItems.value = Array.from(selectedWallets);
-      if (wallets.value.filter((e) => selectedWallets.has(e.id)).length >= 2)
-        text = t('settings.addresses.deleteAddresses');
-      else text = t('settings.addresses.deleteModalTitle');
+    const openConfirmDeleteModal = () => {
+      showConfirmDeleteModal.value = true;
     };
+    const updateSelectedWallets = ({ wallet, isCheck }) => {
+      if (isCheck) selectedWallets.value.push(wallet);
+      else
+        selectedWallets.value.splice(
+          selectedWallets.value.findIndex((e) => e.id === wallet.id),
+          1
+        );
+    };
+    provide('selectedWallets', selectedWallets);
+    provide('updateSelectedWallets', updateSelectedWallets);
     return {
       onDeleteSeed,
       showConfirmDeleteModal,
@@ -161,13 +169,14 @@ export default {
       hiddenWallets,
       text,
       isLoading,
+      updateSelectedWallets,
       toggleWalletHidden,
       exportWallet,
       removeSeed,
       deleteAddreses,
       closeDeleteModal,
       closeAddressesModal,
-      setSelectedItems,
+      openConfirmDeleteModal,
     };
   },
 };
