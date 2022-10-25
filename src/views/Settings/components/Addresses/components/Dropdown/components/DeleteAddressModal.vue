@@ -1,27 +1,28 @@
 <template>
   <Modal v-if="show">
     <ModalContent type="warning" :submit-button="false" @close="$emit('close')">
+      <h4 class="delete-address-modal__title">
+        {{ text || $t('settings.addresses.deleteModalTitle') }}
+      </h4>
       <div v-if="isLoading" class="delete-address-modal__loader">
         <Loading />
       </div>
-
-      <h4 class="delete-address-modal__title">
-        {{ $t('settings.addresses.deleteModalTitle') }}
-      </h4>
-      <PrimaryButton
-        color="#FFFFFF"
-        bg-color="#FA3B33"
-        hover-bg-color="#fc0800"
-        box-shadow="0 0 25px rgba(219, 71, 60, 0.3)"
-        class="delete-address-modal__primary-button"
-        data-qa="Yes"
-        @click="$emit('confirm')"
-      >
-        {{ $t('yes') }}
-      </PrimaryButton>
-      <TextButton @click="$emit('close')">
-        {{ $t('no') }}
-      </TextButton>
+      <template v-else>
+        <PrimaryButton
+          color="#FFFFFF"
+          bg-color="#FA3B33"
+          hover-bg-color="#fc0800"
+          box-shadow="0 0 25px rgba(219, 71, 60, 0.3)"
+          class="delete-address-modal__primary-button"
+          data-qa="Yes"
+          @click="$emit('confirm')"
+        >
+          {{ $t('yes') }}
+        </PrimaryButton>
+        <TextButton @click="$emit('close')">
+          {{ $t('no') }}
+        </TextButton>
+      </template>
     </ModalContent>
   </Modal>
 </template>

@@ -17,11 +17,12 @@
         content="Если вы уверены, что хотите удалить, то тут текст чтобы пользователь сохранил приватный ключ или мнемоническую фрауз если импортировал через такой вид"
       />
       <div class="select__actions">
-        <span>Select all</span>
-        <span>Unselect all</span>
+        <span @click="selectAll">Select all</span>
+        <span @click="unselectAll">Unselect all</span>
       </div>
       <div class="addresses__content">
         <Dropdown
+          ref="dropdown"
           selectable
           preopened
           v-for="group in groupWalletsByNet"
@@ -52,7 +53,7 @@
 </template>
 
 <script>
-import { computed, reactive } from 'vue';
+import { ref, computed, reactive } from 'vue';
 import useWallets from '@/compositions/useWallets';
 import { useStore } from 'vuex';
 import Modal from '@/components/Modal.vue';
@@ -86,11 +87,12 @@ export default {
       default: false,
     },
   },
-  emits: ['confirm', 'close'],
+  emits: ['confirm', 'close', 'getSelectedItemsList', 'delete'],
   setup(props, { emit }) {
     const store = useStore();
     const { wallets } = useWallets();
     const selectedItems = reactive(new Set());
+    const dropdown = ref(null);
     const hiddenWallets = computed(
       () => store.getters['wallets/hiddenWallets']
     );
@@ -138,7 +140,28 @@ export default {
       else selectedItems.delete(selectedItem.id);
       emit('getSelectedItemsList', selectedItems);
     };
+    const setCheckboxesValue = (value) => {
+      for (const dropList of dropdown.value) {
+        for (const dropItem of dropList.dropdownItem) {
+          dropItem.isItemChecked = value;
+        }
+      }
+    };
+    const selectAll = () => {
+      for (const iterator of wallets.value) {
+        selectItem({ id: iterator.id, isCheck: true });
+      }
+      setCheckboxesValue(true);
+    };
+
+    const unselectAll = () => {
+      for (const iterator of wallets.value) {
+        selectItem({ id: iterator.id, isCheck: false });
+      }
+      setCheckboxesValue(false);
+    };
     return {
+      dropdown,
       onDeleteSeed,
       groupWalletsByNet,
       hiddenWallets,
@@ -147,6 +170,8 @@ export default {
       removeSeed,
       selectItem,
       selectedItems,
+      selectAll,
+      unselectAll,
     };
   },
 };
@@ -195,6 +220,19 @@ export default {
   width: 100%;
   justify-content: space-between;
   font-size: 14px;
+  & span {
+    color: #00a3ff;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    &:first-child {
+      border-bottom: 1px dashed #00a3ff;
+    }
+    &:last-child {
+      color: #fa3b33;
+      border-bottom: 1px dashed #fa3b33;
+    }
+  }
 }
 .addresses__content {
   width: 100%;

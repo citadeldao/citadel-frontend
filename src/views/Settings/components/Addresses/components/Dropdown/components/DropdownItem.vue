@@ -6,7 +6,10 @@
       :value="isItemChecked"
       @change="change"
     />
-    <div class="dropdown-item__icon">
+    <div
+      class="dropdown-item__icon"
+      :class="{ 'dropdown-item__icon--selectable': selectable }"
+    >
       <component :is="currentIcon" />
     </div>
     <div class="dropdown-item__address">
@@ -16,7 +19,7 @@
           : currentAddress
       }}
     </div>
-    <div class="dropdown-item__btn_group">
+    <div class="dropdown-item__btn_group" v-if="!selectable">
       <div
         v-if="isSnip20"
         class="dropdown-item__btn dropdown-item__btn--key"
@@ -105,7 +108,6 @@ export default {
   },
   emits: ['exportWallet', 'toggle-hidden', 'deleteSeedModal', 'selectItem'],
   setup(props, { emit }) {
-    console.log(props.wallet, 'checkbox');
     const store = useStore();
     const { wallets } = useWallets();
     const manageVkWallets = inject('manageVkWallets');
@@ -123,7 +125,6 @@ export default {
       // store.getters['snip20Subtokens/availableSnip20TokenList'][props.wallet.address]?.length,
     );
     const change = (e) => {
-      console.log(e, props.wallet, 'wallet');
       isItemChecked.value = e;
       emit('selectItem', {
         id: props.wallet.id,
@@ -256,6 +257,9 @@ export default {
       fill: white;
       height: 22px;
       width: fit-content;
+    }
+    &--selectable {
+      zoom: 0.67;
     }
   }
 

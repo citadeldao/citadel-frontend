@@ -23,6 +23,7 @@
         class="dropdown__item"
       >
         <DropdownItem
+          ref="dropdownItem"
           :selectable="selectable"
           :wallet="wallet"
           :hidden="isWalletHidden(wallet)"
@@ -65,6 +66,7 @@ export default {
   },
   emits: ['exportWallet', 'toggle-hidden', 'deleteSeedModal', 'selectItem'],
   setup(props, { emit }) {
+    const dropdownItem = ref(null);
     const isOpen = ref(false);
     const currentIcon = ref();
     if (props.data) {
@@ -92,6 +94,7 @@ export default {
       }
     });
     return {
+      dropdownItem,
       currentIcon,
       isOpen,
       isWalletHidden,
