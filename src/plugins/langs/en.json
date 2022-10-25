@@ -1217,6 +1217,11 @@
             "title": "Stride",
             "description": "Stride is a blockchain ('zone') that allows to liquid stake any IBC-compatible tokens and earn both staking and DeFi yields across the Cosmos ecosystem.",
             "shortDescription": "Stride is a liquid staking zone in Cosmos, enabling users to earn both staking and DeFi yields"
+        },
+        "jackal": {
+            "title": "Jackaldao",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "Uptime",
