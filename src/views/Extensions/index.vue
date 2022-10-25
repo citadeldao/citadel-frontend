@@ -419,7 +419,7 @@ export default {
 
     const startKeplrSecretChecker = async () => {
       // shade
-      if ([22].includes(+selectedApp.value?.id)) {
+      if ([17, 22].includes(+selectedApp.value?.id)) {
         keplrTimer = setInterval(async () => {
           await store.dispatch('keplr/connectToKeplr', 'secret-4');
           const secretAddress = keplrConnector.value.accounts[0];
