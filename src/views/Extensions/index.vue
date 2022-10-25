@@ -175,7 +175,7 @@ import {
   showArtefactsForNormalScreen,
 } from '@/helpers/fullScreen';
 import Loading from '@/components/Loading';
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onBeforeUnmount } from 'vue';
 import Modal from '@/components/Modal';
 import CreateVkModal from '@/views/Wallet/components/CreateVkModal.vue';
 import ModalContent from '@/components/ModalContent';
@@ -245,6 +245,13 @@ export default {
     const showConfirmModalLoading = ref(false);
     const selectedTags = ref([]);
 
+    let keplrTimer = null;
+    const scrtAddress = ref('');
+
+    onBeforeUnmount(() => {
+      clearTimeout(keplrTimer);
+    });
+
     const { wallets: walletsList } = useWallets();
 
     const connectLedgerCloseHandler = () => {
@@ -308,6 +315,7 @@ export default {
 
     const launchApp = () => {};
     const closeApp = (stopRedirect) => {
+      clearInterval(keplrTimer);
       currentApp.value = null;
       selectedApp.value = null;
 
@@ -389,6 +397,7 @@ export default {
           .map((w) => ({
             address: w.address,
             net: w.net,
+            type: w.type,
             publicKey:
               (w.getPublicKeyDecoded && w.getPublicKeyDecoded()) || null,
           }));
@@ -408,6 +417,17 @@ export default {
       }
     };
 
+    const startKeplrSecretChecker = async () => {
+      // shade
+      if ([22].includes(+selectedApp.value?.id)) {
+        keplrTimer = setInterval(async () => {
+          await store.dispatch('keplr/connectToKeplr', 'secret-4');
+          const secretAddress = keplrConnector.value.accounts[0];
+          scrtAddress.value = secretAddress;
+        }, 5000);
+      }
+    };
+
     if (route.params.name) {
       selectedApp.value = Object.assign(
         {},
@@ -415,6 +435,7 @@ export default {
           (a) => a.name.toLowerCase() === route.params.name.toLowerCase()
         )
       );
+      startKeplrSecretChecker();
 
       if (!selectedApp.value.id) {
         router.push({ name: 'Extensions' });
@@ -460,6 +481,24 @@ export default {
         signerWallet.value = privateWallets.value.find(w => w.address.toLowerCase() === currentAddress.toLowerCase() && nets.includes(w.net.toLowerCase()));
       }
     }); */
+
+    watch(
+      () => scrtAddress.value,
+      (newV) => {
+        if (newV?.address) {
+          const win = window.frames.target;
+          win &&
+            win.postMessage(
+              {
+                from: 'keplr',
+                address: newV.address,
+                net: 'secret',
+              },
+              selectedApp.value.url
+            );
+        }
+      }
+    );
 
     watch(
       () => metamaskConnector.value.accounts,
@@ -578,6 +617,7 @@ export default {
         if (selectedApp.value.id) {
           selectApp();
         }
+        startKeplrSecretChecker();
       }
     });
 
