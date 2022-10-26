@@ -141,11 +141,11 @@ export default {
       () => width.value,
       async () => {
         nextTick(async () => {
-          const { balanceHistory } = await store.dispatch(storeAction, {
-            list: customList.value,
-          });
+          // const { balanceHistory } = await store.dispatch(storeAction, {
+          //   list: customList.value,
+          // });
           await renderBalanceHistoryChart(
-            balanceHistory,
+            balanceHistory.value,
             currentTab.value,
             canvasElement
           );
