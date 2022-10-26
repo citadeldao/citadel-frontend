@@ -680,7 +680,14 @@
             "deleteModalTitle": "您确定删除该地址吗？",
             "deleteSeedTitle": "您确定删除通用助记词信息吗？",
             "deleteSeedDesc": "您可以删除所有保存在本地的通用助记词",
-            "deleteSeedInfo": "提示：当您确认此操作后，您通用助记词钱包的所有信息将被移除。"
+            "deleteSeedInfo": "提示：当您确认此操作后，您通用助记词钱包的所有信息将被移除。",
+            "modalTitle":"",
+            "modalSubtitle":"",
+            "bannerContent":"",
+            "selectAll":"",
+            "unselectAll":"",
+            "selectedWalletsLength":"",
+            "delete":""
         },
         "changeEmail": {
             "title": "您的邮箱",

@@ -675,7 +675,14 @@
             "deleteModalTitle": "Voulez-vous supprimer l'adresse ?",
             "deleteSeedTitle": "Voulez-vous supprimer l'information de One-Seed ?",
             "deleteSeedDesc": "Vous pouvez supprimer toutes les données stockées localement sur votre One-Seed",
-            "deleteSeedInfo": "Remarque : après confirmation de cette action, toutes les données associées à votre portefeuille One-Seed seront supprimées."
+            "deleteSeedInfo": "Remarque : après confirmation de cette action, toutes les données associées à votre portefeuille One-Seed seront supprimées.",
+            "modalTitle":"",
+            "modalSubtitle":"",
+            "bannerContent":"",
+            "selectAll":"",
+            "unselectAll":"",
+            "selectedWalletsLength":"",
+            "delete":""
         },
         "changeEmail": {
             "title": "Votre email",
