@@ -1,28 +1,29 @@
 <template>
   <Modal v-if="show">
-    <ModalContent type="warning" :submit-button="false" @close="$emit('close')">
+    <ModalContent
+      type="warning"
+      :submit-button="false"
+      @close="$emit('close')"
+      v-click-away="() => $emit('close')"
+    >
       <h4 class="delete-address-modal__title">
         {{ text || $t('settings.addresses.deleteModalTitle') }}
       </h4>
-      <div v-if="isLoading" class="delete-address-modal__loader">
-        <Loading />
-      </div>
-      <template v-else>
-        <PrimaryButton
-          color="#FFFFFF"
-          bg-color="#FA3B33"
-          hover-bg-color="#fc0800"
-          box-shadow="0 0 25px rgba(219, 71, 60, 0.3)"
-          class="delete-address-modal__primary-button"
-          data-qa="Yes"
-          @click="$emit('confirm')"
-        >
-          {{ $t('yes') }}
-        </PrimaryButton>
-        <TextButton @click="$emit('close')">
-          {{ $t('no') }}
-        </TextButton>
-      </template>
+      <PrimaryButton
+        color="#FFFFFF"
+        bg-color="#FA3B33"
+        hover-bg-color="#fc0800"
+        box-shadow="0 0 25px rgba(219, 71, 60, 0.3)"
+        class="delete-address-modal__primary-button"
+        data-qa="Yes"
+        @click="$emit('confirm')"
+        :loading="isLoading"
+      >
+        {{ $t('yes') }}
+      </PrimaryButton>
+      <TextButton @click="$emit('close')">
+        {{ $t('no') }}
+      </TextButton>
     </ModalContent>
   </Modal>
 </template>
@@ -32,7 +33,6 @@ import Modal from '@/components/Modal.vue';
 import ModalContent from '@/components/ModalContent.vue';
 import PrimaryButton from '@/components/UI/PrimaryButton.vue';
 import TextButton from '@/components/UI/TextButton.vue';
-import Loading from '@/components/Loading';
 
 export default {
   name: 'DeleteAddressModal',
@@ -41,7 +41,6 @@ export default {
     ModalContent,
     PrimaryButton,
     TextButton,
-    Loading,
   },
   props: {
     show: {

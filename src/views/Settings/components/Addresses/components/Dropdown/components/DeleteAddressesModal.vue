@@ -1,32 +1,38 @@
 <template>
   <Modal>
-    <ModalContent :submit-button="false" @close="$emit('close')">
+    <ModalContent
+      :submit-button="false"
+      @close="$emit('close')"
+      v-click-away="() => $emit('close')"
+    >
       <div v-if="isLoading" class="delete-address-modal__loader">
         <Loading />
       </div>
 
       <h4 class="delete-address-modal__title">
-        {{ 'Delete addresses' }}
+        {{ $t('settings.addresses.modalTitle') }}
       </h4>
       <h5 class="delete-address-modal__subtitle">
-        {{ 'Choose addresses that you want to delete' }}
+        {{ $t('settings.addresses.modalSubtitle') }}
       </h5>
       <dottedLine style="margin: 23px 0; height: 6px" />
       <InfoBanner
         icon="exclamation"
-        content="Если вы уверены, что хотите удалить, то тут текст чтобы пользователь сохранил приватный ключ или мнемоническую фрауз если импортировал через такой вид"
+        :content="$t('settings.addresses.bannerContent')"
       />
       <div class="select__actions">
-        <span @click="selectAll">Select all</span>
-        <span @click="unselectAll">Unselect all</span>
+        <span @click="selectAll">{{ $t('settings.addresses.selectAll') }}</span>
+        <span @click="unselectAll">{{
+          $t('settings.addresses.unselectAll')
+        }}</span>
       </div>
       <div class="addresses__content">
         <Dropdown
           ref="dropdown"
           selectable
           preopened
-          v-for="group in groupWalletsByNet"
-          :key="group.net"
+          v-for="(group, i) in groupWalletsByNet"
+          :key="i"
           :data="group"
           :hidden-wallets="hiddenWallets"
           @deleteSeedModal="onDeleteSeed"
@@ -34,7 +40,13 @@
           @exportWallet="exportWallet"
         />
       </div>
-      <p>You select {{ selectedWallets.length }} addresses</p>
+      <p>
+        {{
+          $t('settings.addresses.selectedWalletsLength', {
+            selectedWalletsLength: selectedWallets.length,
+          })
+        }}
+      </p>
       <PrimaryButton
         color="#FFFFFF"
         bg-color="#6A4BFF"
@@ -45,7 +57,7 @@
         @click="$emit('delete', selectedWallets)"
         :disabled="!selectedWallets.length"
       >
-        {{ 'Delete' }}
+        {{ $t('settings.addresses.delete') }}
       </PrimaryButton>
     </ModalContent>
   </Modal>
@@ -189,6 +201,7 @@ export default {
     font-size: 20px;
     line-height: 24px;
     margin-bottom: 24px;
+    cursor: pointer;
   }
   &__loader {
     position: absolute;
@@ -214,6 +227,7 @@ export default {
     font-weight: 600;
     font-size: 14px;
     line-height: 17px;
+    cursor: pointer;
     &:first-child {
       border-bottom: 1px dashed #00a3ff;
     }

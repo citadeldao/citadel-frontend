@@ -7,7 +7,9 @@
       <p>
         {{ $t('settings.addresses.description') }}
       </p>
-      <p @click="showDeleteAddressesModal = true">Delete addresses</p>
+      <p @click="showDeleteAddressesModal = true" class="addresses-delete">
+        Delete addresses
+      </p>
     </div>
     <div class="addresses__content">
       <Dropdown
@@ -194,6 +196,11 @@ export default {
   &__description {
     display: flex;
     justify-content: space-between;
+  }
+  &-delete {
+    cursor: pointer;
+    color: #fa3b33;
+    border-bottom: 1px dashed #fa3b33;
   }
 }
 </style>
