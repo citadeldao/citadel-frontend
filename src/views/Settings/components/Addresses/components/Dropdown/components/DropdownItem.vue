@@ -1,5 +1,9 @@
 <template>
-  <div class="dropdown-item">
+  <div
+    class="dropdown-item"
+    @click.stop="change(!isItemChecked)"
+    :class="{ 'dropdown-item--selectable': selectable }"
+  >
     <Checkbox
       v-if="selectable"
       :id="wallet.id"
@@ -246,6 +250,9 @@ export default {
   border-radius: 8px;
   border: 1px solid $too-ligth-gray;
   padding: 0 10px;
+  &--selectable {
+    cursor: pointer;
+  }
   &__icon {
     width: 36px;
     height: 36px;
