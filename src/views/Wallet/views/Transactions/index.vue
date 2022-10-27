@@ -214,7 +214,8 @@ export default {
       return mempool.value
         .filter((tx) => {
           const hasFrom =
-            tx.holder.toLowerCase() === currentAddress.value?.toLowerCase();
+            (tx.to || tx.holder).toLowerCase() ===
+            currentAddress.value?.toLowerCase();
           // const hasTo = tx.to.toLowerCase() === currentAddress.value?.toLowerCase();
           return hasFrom && tx.network === props.currentWallet.net;
         })
