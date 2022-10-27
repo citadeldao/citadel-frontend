@@ -33,7 +33,9 @@
           :class="{ failed: transaction.error }"
           class="table-row__status-info-status"
         >
-          {{ transaction.error || $t(status.title) }}
+          {{
+            transaction.error ? $t('transactionsPage.failed') : $t(status.title)
+          }}
         </span>
       </div>
     </td>

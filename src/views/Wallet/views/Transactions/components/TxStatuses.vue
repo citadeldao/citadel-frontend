@@ -15,7 +15,11 @@
           :style="{ color: info?.formatedStatus?.color }"
           class="value stat"
         >
-          {{ info.error || info?.formatedStatus?.title }}
+          {{
+            info.error
+              ? $t('transactionsPage.failed')
+              : info?.formatedStatus?.title
+          }}
         </div>
       </div>
     </div>

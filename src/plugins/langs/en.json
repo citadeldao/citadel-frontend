@@ -246,6 +246,7 @@
         "frozenBalanceTooltipTitle": "Your tokens will become available in"
     },
     "transactionsPage": {
+        "failed": "Failed",
         "modalSuccessHeader": "Transaction Successful!",
         "modalSuccessDescription": "Your transaction was completed.",
         "modalPendingHeader": "Transaction Pending!",
