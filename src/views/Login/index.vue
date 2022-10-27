@@ -1,6 +1,6 @@
 <template>
-  <PrivacyModal v-if="showPrivacy" @close="showPrivacy = false" />
-  <TermsModal v-if="showTerms" @close="showTerms = false" />
+  <PrivacyModal v-if="showPrivacy" @close="closePrivacy" />
+  <TermsModal v-if="showTerms" @close="closeTerms" />
   <transition v-if="isLoading" name="fade">
     <Modal>
       <img src="@/assets/gif/loader.gif" alt="" />
@@ -637,7 +637,6 @@ export default {
           addLoading.value = false;
         }
       }
-
       const authKeplr = async () => {
         const keplrResult = await keplrConnector.value.sendKeplrTransaction(
           res.message,
@@ -706,8 +705,15 @@ export default {
       metamaskConnector.value.disconnect();
       await store.dispatch('metamask/connectToMetamask');
     };
-
+    const closePrivacy = () => {
+      showPrivacy.value = false;
+    };
+    const closeTerms = () => {
+      showTerms.value = false;
+    };
     return {
+      closePrivacy,
+      closeTerms,
       showPrivacy,
       showTerms,
       getToken,
