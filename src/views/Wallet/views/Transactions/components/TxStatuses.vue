@@ -74,8 +74,7 @@ export default {
       required: true,
     },
   },
-  setup(props) {
-    console.log(1111, props.info);
+  setup() {
     return {
       defaultDate,
       moment,
