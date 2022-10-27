@@ -6,21 +6,30 @@
           v-if="!info.error && info?.formatedStatus?.title === 'confirmed'"
         />
         <pending v-if="false" />
-        <error v-if="info.error === 'Failed'" />
+        <error v-if="info.error" />
       </div>
       <div class="status">
         <div class="label">{{ $t('status') }}</div>
-        <div
-          :class="{ failed: info.error }"
-          :style="{ color: info?.formatedStatus?.color }"
-          class="value stat"
-        >
-          {{
-            info.error
-              ? $t('transactionsPage.failed')
-              : info?.formatedStatus?.title
-          }}
-        </div>
+        <Tooltip>
+          <template #default>
+            <div
+              :class="{ failed: info.error }"
+              :style="{ color: info?.formatedStatus?.color }"
+              class="value stat"
+            >
+              {{
+                info.error
+                  ? $t('transactionsPage.failed')
+                  : info?.formatedStatus?.title
+              }}
+            </div>
+          </template>
+          <template #content>
+            <div class="time">
+              {{ info.error || info?.formatedStatus?.title }}
+            </div>
+          </template>
+        </Tooltip>
       </div>
     </div>
     <div class="tx-statuses__item">
@@ -118,9 +127,11 @@ export default {
         text-transform: capitalize;
         font-weight: 700;
         color: $waitingStatus;
+        margin-left: -5px;
 
         &.failed {
           color: $red !important;
+          border-bottom: 1px dashed $red;
         }
       }
 
