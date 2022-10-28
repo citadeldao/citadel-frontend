@@ -11,7 +11,7 @@
       <h5 class="delete-address-modal__subtitle">
         {{ $t('settings.addresses.modalSubtitle') }}
       </h5>
-      <dottedLine style="margin: 23px 0; height: 6px" />
+      <dottedLine class="line" />
       <InfoBanner
         icon="exclamation"
         :content="$t('settings.addresses.bannerContent')"
@@ -69,7 +69,6 @@ import dottedLine from '@/assets/icons/dotted-line.svg';
 import InfoBanner from '@/components/InfoBanner';
 import Dropdown from '@/views/Settings/components/Addresses/components/Dropdown';
 import { sortByAlphabet } from '@/helpers';
-import { WALLET_TYPES } from '@/config/walletType';
 
 export default {
   name: 'DeleteAddressModal',
@@ -118,19 +117,6 @@ export default {
       return sortByAlphabet(Object.values(resultObj), 'net');
     });
 
-    const removeSeed = () => {
-      const hasPrivateWallets = wallets.value.filter((w) =>
-        [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(w.type)
-      );
-
-      store.commit('crypto/setUserMnemonic', null);
-
-      if (!hasPrivateWallets.length) {
-        store.commit('crypto/setPasswordHash', null);
-      }
-
-      // showSeedModal.value = false;
-    };
     const toggleWalletHidden = (wallet) => {
       store.dispatch('wallets/toggleHiddenWallet', wallet);
     };
@@ -159,7 +145,6 @@ export default {
       groupWalletsByNet,
       hiddenWallets,
       toggleWalletHidden,
-      removeSeed,
       selectAll,
       unselectAll,
       close,
@@ -169,6 +154,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.line {
+  margin: 23px 0;
+  height: 6px;
+}
 .delete-address-modal {
   &__title {
     margin: 0;
