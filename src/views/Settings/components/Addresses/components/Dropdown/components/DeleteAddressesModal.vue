@@ -31,9 +31,7 @@
           :key="i"
           :data="group"
           :hidden-wallets="hiddenWallets"
-          @deleteSeedModal="onDeleteSeed"
           @toggle-hidden="toggleWalletHidden"
-          @exportWallet="exportWallet"
         />
       </div>
       <p>
@@ -119,12 +117,6 @@ export default {
 
       return sortByAlphabet(Object.values(resultObj), 'net');
     });
-    const onDeleteSeed = () => {
-      // showSeedModal.value = true;
-    };
-    const exportWallet = (val) => {
-      emit('exportWallet', val);
-    };
 
     const removeSeed = () => {
       const hasPrivateWallets = wallets.value.filter((w) =>
@@ -166,9 +158,7 @@ export default {
       dropdown,
       groupWalletsByNet,
       hiddenWallets,
-      onDeleteSeed,
       toggleWalletHidden,
-      exportWallet,
       removeSeed,
       selectAll,
       unselectAll,
