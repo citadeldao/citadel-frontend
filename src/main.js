@@ -30,6 +30,7 @@ if (process.env.VUE_APP_SENTRY_DSN) {
         routingInstrumentation: Sentry.vueRouterInstrumentation(router),
       }),
     ],
+    ignoreErrors: ['ChunkLoadError', 'Loading chunk'],
     environment: process.env.NODE_ENV,
     tracesSampleRate: 0.3,
   });
