@@ -407,7 +407,7 @@ export default {
           const { data } = await item.prepareAssignToDaoMessage(item.id);
           const { id } = data;
           const keplrResult = await keplrConnector.value.sendKeplrTransaction(
-            data.message,
+            data.message.originalCosmosMsg || data.message,
             item.address,
             {
               preferNoSetFee: true,
