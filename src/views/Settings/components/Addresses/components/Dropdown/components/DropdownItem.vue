@@ -126,7 +126,6 @@ export default {
         props.wallet.net === SNIP20_PARENT_NET &&
         props.wallet.subtokensList.filter((item) => item.standard === 'snip20')
           .length
-      // store.getters['snip20Subtokens/availableSnip20TokenList'][props.wallet.address]?.length,
     );
     const updateSelectedWallets = inject('updateSelectedWallets');
     const change = (e) => {

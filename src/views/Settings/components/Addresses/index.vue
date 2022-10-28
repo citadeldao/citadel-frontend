@@ -8,7 +8,7 @@
         {{ $t('settings.addresses.description') }}
       </p>
       <p @click="showDeleteAddressesModal = true" class="addresses-delete">
-        Delete addresses
+        {{ $t('settings.addresses.modalTitle') }}
       </p>
     </div>
     <div class="addresses__content">
@@ -69,9 +69,6 @@ export default {
     const store = useStore();
     const { wallets } = useWallets();
     const text = t('settings.addresses.deleteModalTitle');
-    // selectedWallets.length >= 2
-    //   ? t('settings.addresses.deleteAddresses')
-    //   : t('settings.addresses.deleteModalTitle');
     const isLoading = ref(false);
     const showSeedModal = ref(false);
     const showConfirmDeleteModal = ref(false);
@@ -141,13 +138,18 @@ export default {
     };
     const deleteAddreses = () => {
       isLoading.value = true;
-      Promise.all(selectedWallets.value.map((e) => removeWallet(e))).then(
-        () => {
+      Promise.all(selectedWallets.value.map((e) => removeWallet(e)))
+        .then(() => {
           isLoading.value = false;
           showConfirmDeleteModal.value = false;
           showDeleteAddressesModal.value = false;
-        }
-      );
+          if (!wallets.value.length) {
+            showSeedModal.value = true;
+          }
+        })
+        .catch((e) => {
+          console.error(e);
+        });
     };
     const openConfirmDeleteModal = () => {
       showConfirmDeleteModal.value = true;
@@ -196,6 +198,14 @@ export default {
   &__description {
     display: flex;
     justify-content: space-between;
+    margin: 14px 0;
+    @media (max-width: 1819px) {
+      font-size: 1rem;
+    }
+    flex-wrap: wrap;
+    p {
+      margin: 0;
+    }
   }
   &-delete {
     cursor: pointer;

@@ -3,8 +3,8 @@
     <ModalContent
       type="warning"
       :submit-button="false"
-      @close="$emit('close')"
-      v-click-away="() => $emit('close')"
+      @close="close"
+      v-click-away="close"
     >
       <h4 class="delete-address-modal__title">
         {{ text || $t('settings.addresses.deleteModalTitle') }}
@@ -57,6 +57,14 @@ export default {
     },
   },
   emits: ['confirm', 'close'],
+  setup(props, { emit }) {
+    const close = () => {
+      emit('close');
+    };
+    return {
+      close,
+    };
+  },
 };
 </script>
 

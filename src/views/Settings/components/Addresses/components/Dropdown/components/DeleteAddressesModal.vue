@@ -1,10 +1,6 @@
 <template>
   <Modal>
-    <ModalContent
-      :submit-button="false"
-      @close="$emit('close')"
-      v-click-away="() => $emit('close')"
-    >
+    <ModalContent :submit-button="false" @close="close" v-click-away="close">
       <div v-if="isLoading" class="delete-address-modal__loader">
         <Loading />
       </div>
@@ -162,6 +158,9 @@ export default {
       selectedWallets.value = [];
       setCheckboxesValue(false);
     };
+    const close = () => {
+      emit('close');
+    };
     return {
       selectedWallets,
       dropdown,
@@ -173,6 +172,7 @@ export default {
       removeSeed,
       selectAll,
       unselectAll,
+      close,
     };
   },
 };
