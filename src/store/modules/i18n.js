@@ -11,7 +11,7 @@ export default {
       { label: 'English', key: 'en' },
       { label: 'Русский (Russian)', key: 'ru' },
       { label: '中文 (Chinese)', key: 'ch' },
-      // { label: 'Français (French)', key: 'fr' },
+      { label: 'Français (French)', key: 'fr' },
     ],
   }),
 
