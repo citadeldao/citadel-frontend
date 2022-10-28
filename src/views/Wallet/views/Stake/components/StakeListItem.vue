@@ -11,7 +11,7 @@
           />
           <keep-alive
             v-if="!hasLogo"
-            :style="{ fill: item.color || colors[index] }"
+            :style="{ fill: item.color || '#409eff' }"
           >
             <component :is="currentIcon" />
           </keep-alive>
