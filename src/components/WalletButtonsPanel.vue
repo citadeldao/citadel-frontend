@@ -2,7 +2,6 @@
   <div
     v-if="
       (type === STAKE || button2 !== SWAP || currentWallet.hasClaim) &&
-      !isViewOnly &&
       type !== TRANSACTIONS
     "
     class="wallet-buttons-panel"
@@ -79,7 +78,6 @@ import { computed, inject } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
 import { prettyNumber } from '@/helpers/prettyNumber';
-import { WALLET_TYPES } from '@/config/walletType';
 
 export default {
   name: 'WalletButtonsPanel',
@@ -170,10 +168,6 @@ export default {
       }
     };
 
-    const isViewOnly = computed(
-      () => props.currentToken?.type === WALLET_TYPES.PUBLIC_KEY
-    );
-
     return {
       currentWalletInfo,
       rewardCount,
@@ -181,7 +175,6 @@ export default {
       claimButtonHandler,
       prettyNumber,
       disableStake,
-      isViewOnly,
       STAKE: 'stake',
       SWAP: 'swap',
       TRANSACTIONS: 'transactions',
