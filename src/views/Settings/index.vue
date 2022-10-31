@@ -75,6 +75,7 @@
           <ExportModal
             :current-export-method="currentExportMethod"
             :private-key="decodedPrivateKey"
+            :derivation-path="currentExportWallet.derivationPath"
             :mnemonic-phrase="decodedMnemonick"
           />
         </ModalContent>
