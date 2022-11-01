@@ -14,15 +14,17 @@
       class="transactions__table"
     >
       <tr>
-        <th class="radius-th-left header type">{{ $t('type') }}</th>
-        <th class="header status">
+        <th>{{ $t('type') }}</th>
+        <th class="transactions__table-xl">
           {{ $t('status') }}
         </th>
-        <th class="header amount">{{ $t('amount') }}</th>
-        <th class="header">
+        <th class="transactions__table-xl">
           {{ $t('timeDate') }}
         </th>
-        <th class="header" />
+        <th class="transactions__table-xl">
+          {{ $t('address') }}
+        </th>
+        <th>{{ $t('amount') }}</th>
       </tr>
 
       <template v-if="currentPage === 1">
@@ -30,8 +32,8 @@
           v-for="tx in txsFromMempool"
           :key="tx.hash"
           :transaction="tx"
-          from-mempool
           :current-wallet="currentWallet"
+          from-mempool
           @showTransactionInfo="showTransactionInfo"
           @editComment="editComment"
         />
@@ -52,10 +54,7 @@
         <fileExport />
         <span>CSV {{ $t('export') }}</span>
       </div>
-      <div
-        :class="{ column: (currentPage - 1) * pageLimit + 1 > 1000 }"
-        class="transactions__pagination"
-      >
+      <div class="transactions__pagination">
         <div v-if="transactions?.length" class="transactions__item-count">
           <span class="transactions__current-amount">
             {{ (currentPage - 1) * pageLimit + 1 }} </span
@@ -90,7 +89,6 @@
   <WalletButtonsPanel
     :current-token="currentToken"
     :current-wallet="currentWallet"
-    type="transactions"
     button2="swap"
     data-qa="transactions"
     @prepareClaim="$emit('prepareClaim')"
@@ -106,7 +104,7 @@
         :desc="$t('transactionsPage.editCommentModalDesc')"
         button-text="save"
         type="action"
-        @buttonClick="modalCloseHandler"
+        @buttonClick="saveComment"
         @close="modalCloseHandler"
       >
         <template #default>
@@ -134,8 +132,8 @@
       <ModalContent
         v-if="showTransactionInfoModal"
         v-click-away="modalCloseHandler"
-        :title="currentTransaction?.formatedStatus?.headerTitle"
-        :desc="currentTransaction?.formatedStatus?.headerDescription"
+        :title="$t('transactionsPage.transactionInfoModalTitle')"
+        :desc="$t('transactionsPage.transactionInfoModalDesc')"
         button-text="ok"
         data-qa="transaction-info-modal"
         @buttonClick="infoModalSubmit"
@@ -214,10 +212,13 @@ export default {
       return mempool.value
         .filter((tx) => {
           const hasFrom =
-            (tx.to || tx.holder).toLowerCase() ===
-            currentAddress.value?.toLowerCase();
-          // const hasTo = tx.to.toLowerCase() === currentAddress.value?.toLowerCase();
-          return hasFrom && tx.network === props.currentWallet.net;
+            tx.from.toLowerCase() === currentAddress.value?.toLowerCase();
+          const hasTo =
+            tx.to.toLowerCase() === currentAddress.value?.toLowerCase();
+          const txBelongToWallet =
+            (hasFrom || hasTo) && tx.net === props.currentWallet.net;
+
+          return txBelongToWallet;
         })
         .sort((a, b) => (a.date > b.date ? -1 : 1));
     });
@@ -255,8 +256,6 @@ export default {
 
       return isLastPage ? total.value : pageLimit.value * currentPage.value;
     });
-
-    console.log('lastItemOnPage', total.value, pageLimit.value);
 
     getTransactions(props.currentWallet.id, currentPage.value, pageLimit.value);
 
@@ -316,18 +315,31 @@ export default {
       txComment.value = transaction.note;
       nextTick(() => document.getElementById('prevComment').focus());
     };
+    const saveComment = async () => {
+      await store.dispatch('transactions/postTransactionNote', {
+        network: route.params.token || route.params.net,
+        hash: currentTransaction.value.hash,
+        text: txComment.value,
+      });
+      await getTransactions(
+        props.currentWallet.id,
+        currentPage.value,
+        pageLimit.value
+      );
+      modalCloseHandler();
+    };
     const showTransactionInfo = async (transaction) => {
       currentTransaction.value = transaction;
       txComment.value = transaction.note;
       showModal.value = true;
       showTransactionInfoModal.value = true;
-
-      if (props.currentWallet.hasTransactionComment) {
-        // nextTick(() => document.getElementById('comment').focus());
-      }
     };
     const infoModalSubmit = async () => {
-      modalCloseHandler();
+      if (currentTransaction.value.note !== txComment.value) {
+        saveComment();
+      } else {
+        modalCloseHandler();
+      }
     };
 
     return {
@@ -347,6 +359,7 @@ export default {
       showEditCommentModal,
       modalCloseHandler,
       txComment,
+      saveComment,
       showTransactionInfoModal,
       currentTransaction,
       infoModalSubmit,
@@ -372,7 +385,7 @@ export default {
     margin: 34px 0 38px 0;
   }
   @include md {
-    margin: 23px 0;
+    margin: 23px 0 63px 0;
   }
   &__table-xl {
     display: none;
@@ -381,28 +394,15 @@ export default {
     }
   }
   &__table {
-    border-collapse: separate;
-    border-spacing: 0 0.5em;
-    // border-collapse: collapse;
-    // margin-bottom: 30px;
+    border-collapse: collapse;
+    margin-bottom: 30px;
     @include lg {
       margin-bottom: 24px;
     }
     @include md {
       margin-bottom: 16px;
     }
-
-    .radius-th-left {
-      border-top-left-radius: 4px;
-      border-bottom-left-radius: 4px;
-    }
-
-    .radius-th-right {
-      border-top-right-radius: 4px;
-      border-bottom-right-radius: 4px;
-    }
   }
-
   &__table-status {
     display: none;
     font-size: 16px;
@@ -418,29 +418,7 @@ export default {
     padding: 15px 0;
     font-size: 16px;
     line-height: 19px;
-    font-style: normal;
-    font-family: 'Panton_Regular';
-
-    &.header {
-      background: #e1e8fb;
-
-      &.type {
-        padding-right: 180px;
-      }
-
-      &.status {
-        @include md {
-          display: none;
-        }
-      }
-
-      &.amount {
-        @include md {
-          display: none;
-        }
-      }
-    }
-
+    font-family: 'Panton_Bold';
     &:first-child {
       padding-left: 24px;
       @include md {
@@ -484,15 +462,6 @@ export default {
   &__pagination {
     display: flex;
     align-items: center;
-
-    &.column {
-      flex-direction: column;
-      align-items: flex-end;
-
-      .transactions__item-count {
-        margin-right: 5px;
-      }
-    }
   }
   &__dropdown {
     width: 80px;

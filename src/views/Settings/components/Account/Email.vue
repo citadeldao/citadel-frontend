@@ -5,11 +5,10 @@
     </h5>
     <div class="settings-wrap">
       <span class="change-email__description">
-        {{ $t(`settings.changeEmail.comingSoon`) }}
+        {{ $t(`settings.changeEmail.description`) }}
       </span>
 
       <PrimaryButton
-        :disabled="true"
         class="change-email__button"
         data-qa="settings__email-button"
         @click="toggleModal(currentStage, true)"

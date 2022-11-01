@@ -12,6 +12,7 @@
       </keep-alive>
       <AddressSpecifications
         v-if="currentStep === 3"
+        :invalid-private-key="invalidPrivateKey"
         @setSpecifications="finalStep"
       />
     </div>
@@ -28,11 +29,12 @@ import { getSteps } from '@/static/importPrivateKey';
 import useCreateWallets from '@/compositions/useCreateWallets';
 import useWallets from '@/compositions/useWallets';
 import { WALLET_TYPES } from '../../config/walletType';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 import { INPUT_TYPE_ICON } from '@/config/newWallets';
 import notify from '@/plugins/notify';
+import { validatePrivateKey } from '@/helpers/validatePrivateKeys';
 
 export default {
   name: 'ImportPrivateKey',
@@ -63,6 +65,8 @@ export default {
     const { wallets } = useWallets();
     const { t } = useI18n();
     const store = useStore();
+    const invalidPrivateKey = ref(false);
+
     onMounted(() => {
       store.commit('newWallets/setCatPageProps', {
         inputTypeIcon: INPUT_TYPE_ICON.PRIVATE,
@@ -80,6 +84,12 @@ export default {
           type: 'warning',
           text: t('addAddress.addressLimits'),
         });
+        return;
+      }
+
+      invalidPrivateKey.value = false;
+      if (!validatePrivateKey(net, privateKey)) {
+        invalidPrivateKey.value = true;
         return;
       }
 
@@ -111,6 +121,7 @@ export default {
       newWallets,
       finalStep,
       showAlreadyAddedModal,
+      invalidPrivateKey,
     };
   },
 };

@@ -255,7 +255,6 @@ export default {
 
     const getToken = async (e) => {
       captchaToken.value = e;
-      console.log('captchaToken.value', captchaToken.value);
     };
 
     const metamaskConnector = computed(

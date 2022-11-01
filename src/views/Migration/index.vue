@@ -128,8 +128,20 @@
                 migrationError && passwordIncorrect ? 'Incorrect password' : ''
               "
               :show-error-text="true"
-              :style="{ marginTop: '15px' }"
               @input="onChangeMigrationPassword"
+            />
+          </div>
+          <div class="input-wrapper" v-if="privateWalletsMode">
+            <Input
+              id="mainPassword"
+              v-model="password"
+              :label="$t('enterPassword')"
+              :placeholder="$t('password')"
+              type="password"
+              icon="key"
+              :error="inputErrorExport"
+              :show-error-text="true"
+              @input="onChangeMainPassword"
             />
           </div>
           <div
@@ -147,7 +159,7 @@
             <div @click="downLoadOldBackup">Download backup file</div>
           </div>
           <PrimaryButton
-            :disabled="migrationProcess"
+            :disabled="migrationProcess || migrationError"
             :style="{ marginTop: '30px' }"
             @click="importOldWallets"
             data-qa="Agree"
@@ -205,8 +217,9 @@ import Checkbox from '@/components/UI/Checkbox';
 import router from '@/router';
 import { sha3_256 } from 'js-sha3';
 import { useStore } from 'vuex';
-import { computed, provide, ref, markRaw } from '@vue/runtime-core';
+import { computed, provide, ref, markRaw, inject } from '@vue/runtime-core';
 import useWallets from '@/compositions/useWallets';
+import CryptoCoin from '@/models/CryptoCoin';
 
 export default {
   name: 'MigrationLayout',
@@ -232,6 +245,7 @@ export default {
     },
   },
   setup(props) {
+    const citadel = inject('citadel');
     const store = useStore();
     const forgotModalFlag = ref(false);
     const downloadCheck = ref(true);
@@ -370,6 +384,10 @@ export default {
       migrationError.value = false;
     };
 
+    const onChangeMainPassword = () => {
+      migrationError.value = false;
+    };
+
     const importOldWallets = async () => {
       store.commit('newWallets/setLoader', true);
       migrationError.value = false;
@@ -381,14 +399,52 @@ export default {
         return;
       }
 
+      if (passwordError.value && props.privateWalletsMode) {
+        inputErrorExport.value = passwordError.value;
+        migrationError.value = true;
+        store.commit('newWallets/setLoader', false);
+        return;
+      }
+
       // put imported wallets to user settings
 
       for (const wallet of oldWallets.value) {
         if (wallet.net) {
+          let formatedWallet = wallet;
+          if (props.privateWalletsMode) {
+            let privateKeyEncoded;
+            if (wallet.privateKeyEncoded) {
+              const privateKey = citadel.decodePrivateKeyByPassword(
+                wallet.net,
+                wallet.privateKeyEncoded,
+                migrationPassword.value
+              );
+              privateKeyEncoded = citadel.encodePrivateKeyByPassword(
+                wallet.net,
+                privateKey.data,
+                password.value
+              );
+              formatedWallet.privateKeyEncoded = privateKeyEncoded.data;
+            }
+            if (wallet.mnemonicEncoded) {
+              formatedWallet.mnemonicEncoded = privateKeyEncoded.data;
+            }
+            if (wallet.importedFromSeed) {
+              const mnemonic = CryptoCoin.decodeMnemonic(
+                wallet.importedFromSeed,
+                migrationPassword.value
+              );
+              const encodeMnemonic = CryptoCoin.encodeMnemonic(
+                mnemonic,
+                password.value
+              );
+              formatedWallet.importedFromSeed = encodeMnemonic;
+            }
+          }
           // add import wallet to privateWallets
           const newInstance = await store.dispatch(
             'crypto/createNewWalletInstance',
-            { walletOpts: wallet }
+            { walletOpts: formatedWallet }
           );
           await store.dispatch('wallets/pushWallets', {
             wallets: [newInstance],
@@ -432,6 +488,8 @@ export default {
     }
 
     return {
+      onChangeMainPassword,
+      password,
       forgotIcon,
       startForgot,
       forgotModalFlag,
@@ -486,8 +544,8 @@ export default {
 .input-wrapper {
   width: 100%;
   height: 70px;
+  margin-top: 35px;
 }
-
 .forgot-password {
   width: 100%;
   text-align: left;
