@@ -412,6 +412,15 @@ export default {
       .faq-items {
         display: flex;
         flex-direction: column;
+
+        &::after {
+          content: '';
+          position: absolute;
+          top: -20px;
+          right: 0;
+          left: 0;
+          height: 25px;
+        }
       }
 
       & svg.faq {
