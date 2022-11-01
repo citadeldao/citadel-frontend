@@ -134,7 +134,7 @@
             />
           </template>
         </div>
-        <WhyCitadel v-if="showEmailModal" @close="showEmailModal = false" />
+        <WhyCitadel v-if="showEmailModal" @close="onCloseWhyEmail" />
       </main>
     </div>
     <InvisibleRecaptcha
@@ -710,7 +710,13 @@ export default {
     const closeTerms = () => {
       showTerms.value = false;
     };
+
+    const onCloseWhyEmail = () => {
+      showEmailModal.value = false;
+    };
+
     return {
+      onCloseWhyEmail,
       closePrivacy,
       closeTerms,
       showPrivacy,
