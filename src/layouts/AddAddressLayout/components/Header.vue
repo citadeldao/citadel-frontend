@@ -346,7 +346,11 @@ export default {
         border-radius: 8px;
         position: absolute;
         z-index: 10;
-        top: 45px;
+        top: 55px;
+
+        @include md {
+          top: 45px;
+        }
 
         .faq-item {
           padding: 16px 0;
