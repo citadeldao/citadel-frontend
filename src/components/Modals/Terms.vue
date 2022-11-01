@@ -44,12 +44,15 @@
               <p>
                 <span class="bold">Company</span> (referred to as either "the
                 Company", "We", "Us" or "Our" in this Agreement) refers to
-                Citadel.One PTE. LTD., 160 ROBINSON ROAD #24-09 SINGAPORE
-                (068914).
+                Citadel.One PTE. LTD., Intershore Chambers, P.O. Box 4342, Road
+                Town, Tortola, British Virgin Islands.
               </p>
             </li>
             <li>
-              <p><span class="bold">Country</span> refers to: Singapore</p>
+              <p>
+                <span class="bold">Country</span> refers to: British Virgin
+                Islands
+              </p>
             </li>
             <li>
               <p>
@@ -348,17 +351,18 @@
             of 50% or more of the shares, equity interest or other securities
             entitled to vote for election of directors or other managing
             authority. Company (referred to as either "the Company", "We", "Us"
-            or "Our" in this Agreement) refers to Citadel.One PTE. LTD., 160
-            ROBINSON ROAD #24-09 SINGAPORE (068914).
+            or "Our" in this Agreement) refers to Citadel.One PTE. LTD.,
+            Intershore Chambers, P.O. Box 4342, Road Town, Tortola, British
+            Virgin Islands (068914).
           </p>
           <p>
-            Country refers to: Singapore Device means any device that can access
-            the Service such as a computer, a cellphone or a digital tablet.
-            Service refers to the Website. Terms and Conditions (also referred
-            as "Terms") mean these Terms and Conditions that form the entire
-            agreement between You and the Company regarding the use of the
-            Service. This Terms and Conditions agreement is maintained by the
-            Free Terms and Conditions Generator. Third-party Social Media
+            Country refers to: Virgin Islands Device means any device that can
+            access the Service such as a computer, a cellphone or a digital
+            tablet. Service refers to the Website. Terms and Conditions (also
+            referred as "Terms") mean these Terms and Conditions that form the
+            entire agreement between You and the Company regarding the use of
+            the Service. This Terms and Conditions agreement is maintained by
+            the Free Terms and Conditions Generator. Third-party Social Media
             Service means any services or content (including data, information,
             products or services) provided by a third-party that may be
             displayed, included or made available by the Service. Website refers
