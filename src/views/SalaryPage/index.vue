@@ -1,5 +1,11 @@
 <template>
   <div class="salary-page">
+    <div
+      class="salary-page__close"
+      @click="$router.push({ name: 'Extensions' })"
+    >
+      <closeIcon />
+    </div>
     <div class="salary-page__main p15">
       <emptySvg v-if="!membersList.length" class="empty-icon" />
       <div class="salary-members-wrap" v-else>
@@ -269,10 +275,12 @@ import FileSaver from 'file-saver';
 import { sha3_256 } from 'js-sha3';
 import { TABS_CONTROLS } from './config';
 import { useRoute } from 'vue-router';
+import closeIcon from '@/assets/icons/addAddressV2/close.svg';
 
 export default {
   name: 'SalaryPage',
   components: {
+    closeIcon,
     Autocomplete,
     PrimaryButton,
     // Textarea,
@@ -787,6 +795,27 @@ export default {
   justify-content: space-between;
   flex: 1;
   position: relative;
+
+  &__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    background: #6b93c0;
+    position: absolute;
+    left: 10px;
+    top: -60px;
+    z-index: 100;
+
+    &:hover {
+      background: #6a4bff;
+      cursor: pointer;
+    }
+  }
 
   &__controls {
     display: flex;
