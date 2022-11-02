@@ -4,7 +4,7 @@
       class="dropdown__title"
       data-qa="dropdown-address"
       @click="clickHandler"
-      :class="`${isOpen}`"
+      :class="{ true: isOpen, 'dropdown__title--selectable': selectable }"
     >
       <div class="title__icon">
         <component :is="currentIcon" />
@@ -23,6 +23,8 @@
         class="dropdown__item"
       >
         <DropdownItem
+          ref="dropdownItem"
+          :selectable="selectable"
           :wallet="wallet"
           :hidden="isWalletHidden(wallet)"
           @toggle-hidden="$emit('toggle-hidden', wallet)"
@@ -38,7 +40,7 @@
 import arrowUp from '@/assets/icons/arrow-up.svg';
 import arrowDown from '@/assets/icons/arrow-down.svg';
 import DropdownItem from './components/DropdownItem';
-import { ref, markRaw } from 'vue';
+import { ref, markRaw, onMounted } from 'vue';
 
 export default {
   name: 'Dropdown',
@@ -52,12 +54,20 @@ export default {
       type: Array,
       default: () => [],
     },
+    selectable: {
+      type: Boolean,
+      default: false,
+    },
+    preopened: {
+      type: Boolean,
+      default: false,
+    },
   },
-  emits: ['exportWallet', 'toggle-hidden', 'deleteSeedModal'],
+  emits: ['exportWallet', 'toggle-hidden', 'deleteSeedModal', 'changeItem'],
   setup(props, { emit }) {
+    const dropdownItem = ref(null);
     const isOpen = ref(false);
     const currentIcon = ref();
-
     if (props.data) {
       import(`@/assets/icons/networks/${props.data.icon}.svg`).then((val) => {
         currentIcon.value = markRaw(val.default);
@@ -65,7 +75,7 @@ export default {
     }
 
     const clickHandler = () => {
-      isOpen.value = !isOpen.value;
+      if (!props.selectable) isOpen.value = !isOpen.value;
     };
 
     const exportWallet = (val) => {
@@ -74,8 +84,13 @@ export default {
 
     const isWalletHidden = ({ address, net }) =>
       props.hiddenWallets.includes(`${net}_${address}`);
-
+    onMounted(() => {
+      if (props.preopened) {
+        isOpen.value = !isOpen.value;
+      }
+    });
     return {
+      dropdownItem,
       currentIcon,
       isOpen,
       isWalletHidden,
@@ -103,7 +118,6 @@ export default {
     padding: 0 15px 0 10px;
     transition: all 0.3s;
     opacity: 0.8;
-
     &:not(:last-child) {
       margin-bottom: 10px;
     }
@@ -122,28 +136,16 @@ export default {
         }
         &__text {
           background-color: $mid-blue;
-          color: $white;
+          color: $black;
         }
       }
     }
-    &:hover {
-      opacity: 1;
-
-      background-color: $light-blue-1;
-
-      .title {
-        &__icon {
-          border-color: $light-blue-1;
-        }
-        &__arrow {
-          & svg {
-            fill: $white !important;
-          }
-        }
-        &__text {
-          background-color: $light-blue-1;
-          color: $black;
-        }
+    &--selectable {
+      cursor: default;
+      padding-left: 0;
+      background-color: $white !important;
+      & .title__text {
+        background-color: $white !important;
       }
     }
   }
@@ -190,7 +192,7 @@ export default {
       margin-right: auto;
       padding: 0 15px;
       background-color: $light-gray-1;
-      @include title-default;
+      font-size: 18px;
       font-family: 'Panton_SemiBold' !important;
       &::after {
         content: '';

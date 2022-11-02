@@ -716,10 +716,19 @@
         "addresses": {
             "title": "Addresses",
             "description": "Delete your addresses or import seedphrase, private or viewing keys",
-            "deleteModalTitle": "Do you want to delete the address?",
+            "deleteModalTitle": "Are you sure you want to delete the address?",
+            "deleteModalSubtitle": "<b style='color: red;'>Attention!</b> <span style='color: #6b93c0'>The deleting process will take some time.</span>",
+            "deleteAddresses": "Do you want to delete all addresses?",
             "deleteSeedTitle": "Do you want to delete One-Seed info?",
             "deleteSeedDesc": "You can delete all the locally stored data on your One-Seed",
-            "deleteSeedInfo": "Note: After confirmation of this action all the data associated with your One-Seed wallet will be removed."
+            "deleteSeedInfo": "Note: After confirmation of this action all the data associated with your One-Seed wallet will be removed.",
+            "modalTitle":"Delete addresses",
+            "modalSubtitle":"Choose addresses that you want to delete",
+            "bannerContent":"Address deleting causes the loss of seed phrase/private keys. Make sure to save them.",
+            "selectAll":"Select all",
+            "unselectAll":"Unselect all",
+            "selectedWalletsLength":"You select {selectedWalletsLength} addresses",
+            "delete":"Delete"
         },
         "changeEmail": {
             "title": "Your email",

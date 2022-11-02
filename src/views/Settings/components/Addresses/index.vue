@@ -3,9 +3,14 @@
     <h5 class="addresses__title">
       {{ $t('settings.addresses.title') }}
     </h5>
-    <span class="addresses__description">
-      {{ $t('settings.addresses.description') }}
-    </span>
+    <div class="addresses__description">
+      <p>
+        {{ $t('settings.addresses.description') }}
+      </p>
+      <p @click="openDeleteAddressesModal" class="addresses-delete">
+        {{ $t('settings.addresses.modalTitle') }}
+      </p>
+    </div>
     <div class="addresses__content">
       <Dropdown
         v-for="group in groupWalletsByNet"
@@ -22,27 +27,53 @@
       @confirm="removeSeed"
       @close="showSeedModal = false"
     />
+    <DeleteAddressesModal
+      v-if="showDeleteAddressesModal"
+      @delete="openConfirmDeleteModal"
+      @close="closeAddressesModal"
+    />
+    <DeleteAddressModal
+      :isLoading="isLoading"
+      :text="text"
+      :show="showConfirmDeleteModal"
+      @confirm="deleteAddreses"
+      @close="closeDeleteModal"
+    />
   </div>
 </template>
 
 <script>
-import { computed, ref } from 'vue';
+import { computed, ref, provide } from 'vue';
 import { useStore } from 'vuex';
 import Dropdown from './components/Dropdown';
 import useWallets from '@/compositions/useWallets';
 import DeleteSeedModal from './components/Dropdown/components/DeleteSeedModal';
+import DeleteAddressesModal from './components/Dropdown/components/DeleteAddressesModal.vue';
 import { WALLET_TYPES } from '@/config/walletType';
 import { sortByAlphabet } from '@/helpers';
+import DeleteAddressModal from './components/Dropdown/components/DeleteAddressModal.vue';
+import { useI18n } from 'vue-i18n';
 
 export default {
   name: 'Addresses',
-  components: { Dropdown, DeleteSeedModal },
+  components: {
+    Dropdown,
+    DeleteSeedModal,
+    DeleteAddressesModal,
+    DeleteAddressModal,
+  },
   props: {},
   emits: ['exportWallet'],
   setup(props, { emit }) {
+    const { t } = useI18n();
     const store = useStore();
     const { wallets } = useWallets();
+    const text = t('settings.addresses.deleteModalTitle');
+    const isLoading = ref(false);
     const showSeedModal = ref(false);
+    const showConfirmDeleteModal = ref(false);
+    const showDeleteAddressesModal = ref(false);
+    const selectedWallets = ref([]);
     const hiddenWallets = computed(
       () => store.getters['wallets/hiddenWallets']
     );
@@ -89,15 +120,72 @@ export default {
     const toggleWalletHidden = (wallet) => {
       store.dispatch('wallets/toggleHiddenWallet', wallet);
     };
+    const closeDeleteModal = () => {
+      showConfirmDeleteModal.value = false;
+    };
+    const closeAddressesModal = () => {
+      showConfirmDeleteModal.value
+        ? null
+        : ((showDeleteAddressesModal.value = false),
+          (selectedWallets.value = []));
+    };
+    const removeWallet = async (wallet) => {
+      await store.dispatch('wallets/removeWallet', {
+        wallet: wallet,
+        walletId: wallet.id,
+      });
 
+      await store.dispatch('wallets/getCustomWalletsList');
+    };
+    const deleteAddreses = () => {
+      isLoading.value = true;
+      Promise.all(selectedWallets.value.map((e) => removeWallet(e)))
+        .then(() => {
+          isLoading.value = false;
+          showConfirmDeleteModal.value = false;
+          showDeleteAddressesModal.value = false;
+          if (!wallets.value.length) {
+            showSeedModal.value = true;
+          }
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    };
+    const openConfirmDeleteModal = () => {
+      showConfirmDeleteModal.value = true;
+    };
+    const updateSelectedWallets = ({ wallet, isCheck }) => {
+      if (isCheck) selectedWallets.value.push(wallet);
+      else
+        selectedWallets.value.splice(
+          selectedWallets.value.findIndex((e) => e.id === wallet.id),
+          1
+        );
+    };
+    provide('selectedWallets', selectedWallets);
+    provide('updateSelectedWallets', updateSelectedWallets);
+    const openDeleteAddressesModal = () => {
+      showDeleteAddressesModal.value = true;
+    };
     return {
+      openDeleteAddressesModal,
       onDeleteSeed,
+      showConfirmDeleteModal,
+      showDeleteAddressesModal,
       showSeedModal,
       groupWalletsByNet,
       hiddenWallets,
+      text,
+      isLoading,
+      updateSelectedWallets,
       toggleWalletHidden,
       exportWallet,
       removeSeed,
+      deleteAddreses,
+      closeDeleteModal,
+      closeAddressesModal,
+      openConfirmDeleteModal,
     };
   },
 };
@@ -111,6 +199,21 @@ export default {
 
   &__content {
     overflow-y: auto;
+  }
+  &__description {
+    display: flex;
+    justify-content: space-between;
+    margin: 14px 0;
+    font-size: 1rem;
+    flex-wrap: wrap;
+    p {
+      margin: 0;
+    }
+  }
+  &-delete {
+    cursor: pointer;
+    color: #fa3b33;
+    border-bottom: 1px dashed #fa3b33;
   }
 }
 </style>
