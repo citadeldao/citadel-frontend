@@ -16,7 +16,7 @@ export const multisendLocalApp = {
   short_description: 'Your perfect tool for tokens multisend',
   slug: 'multisender',
   tags: [],
-  url: `${process.env.VUE_APP_HOST}/multisender`,
+  url: `https://${process.env.VUE_APP_HOST}/multisender`,
   url_video: '',
   what_you_can: null,
 };
