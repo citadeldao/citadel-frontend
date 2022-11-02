@@ -126,7 +126,8 @@ export default {
     const closeAddressesModal = () => {
       showConfirmDeleteModal.value
         ? null
-        : (showDeleteAddressesModal.value = false);
+        : ((showDeleteAddressesModal.value = false),
+          (selectedWallets.value = []));
     };
     const removeWallet = async (wallet) => {
       await store.dispatch('wallets/removeWallet', {
@@ -203,9 +204,7 @@ export default {
     display: flex;
     justify-content: space-between;
     margin: 14px 0;
-    @media (max-width: 1819px) {
-      font-size: 1rem;
-    }
+    font-size: 1rem;
     flex-wrap: wrap;
     p {
       margin: 0;

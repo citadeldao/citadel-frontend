@@ -673,6 +673,7 @@
             "title": "Adresses",
             "description": "Supprimez vos adresses ou importez des seedphrase, des clés privées ou des clés de visualisation",
             "deleteModalTitle": "Voulez-vous supprimer l'adresse ?",
+            "deleteModalSubtitle": "",
             "deleteSeedTitle": "Voulez-vous supprimer l'information de One-Seed ?",
             "deleteSeedDesc": "Vous pouvez supprimer toutes les données stockées localement sur votre One-Seed",
             "deleteSeedInfo": "Remarque : après confirmation de cette action, toutes les données associées à votre portefeuille One-Seed seront supprimées.",

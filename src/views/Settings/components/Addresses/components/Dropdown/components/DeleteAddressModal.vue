@@ -9,6 +9,7 @@
       <h4 class="delete-address-modal__title">
         {{ text || $t('settings.addresses.deleteModalTitle') }}
       </h4>
+      <h3 v-html="$t('settings.addresses.deleteModalSubtitle')" />
       <PrimaryButton
         color="#FFFFFF"
         bg-color="#FA3B33"
@@ -71,7 +72,7 @@ export default {
 <style lang="scss" scoped>
 .delete-address-modal {
   &__title {
-    margin: 30px 0;
+    margin: 30px 0 10px;
     font-family: 'Panton_Bold';
     font-size: 20px;
     line-height: 30px;
@@ -91,5 +92,10 @@ export default {
     align-items: center;
     background-color: rgba($black, 0.2);
   }
+}
+h3 {
+  font-size: 16px;
+  font-weight: 400;
+  margin-top: 0;
 }
 </style>

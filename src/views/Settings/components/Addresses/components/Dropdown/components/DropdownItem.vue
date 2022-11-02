@@ -2,7 +2,10 @@
   <div
     class="dropdown-item"
     @click.stop="change(!isItemChecked)"
-    :class="{ 'dropdown-item--selectable': selectable }"
+    :class="{
+      'dropdown-item--selectable': selectable,
+      'dropdown-item--checked': isItemChecked,
+    }"
   >
     <Checkbox
       v-if="selectable"
@@ -252,6 +255,10 @@ export default {
   &--selectable {
     cursor: pointer;
   }
+  &--checked {
+    font-weight: 600;
+    color: #000000;
+  }
   &__icon {
     width: 36px;
     height: 36px;
@@ -271,8 +278,8 @@ export default {
   }
 
   &__address {
+    font-size: 14px;
     text-align: left;
-    @include text-default;
     width: 60%;
     margin-left: 15px;
     margin-right: auto;

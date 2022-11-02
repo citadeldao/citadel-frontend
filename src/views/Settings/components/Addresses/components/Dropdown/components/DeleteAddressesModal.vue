@@ -13,6 +13,7 @@
       </h5>
       <dottedLine class="line" />
       <InfoBanner
+        small
         icon="exclamation"
         :content="$t('settings.addresses.bannerContent')"
       />
@@ -34,7 +35,7 @@
           @toggle-hidden="toggleWalletHidden"
         />
       </div>
-      <p>
+      <p class="selected__addresses">
         {{
           $t('settings.addresses.selectedWalletsLength', {
             selectedWalletsLength: selectedWallets.length,
@@ -154,6 +155,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.selected__addresses {
+  font-size: 14px;
+}
 .line {
   margin: 23px 0;
   height: 6px;
