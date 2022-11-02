@@ -18,10 +18,15 @@
         :content="$t('settings.addresses.bannerContent')"
       />
       <div class="select__actions">
-        <span @click="selectAll">{{ $t('settings.addresses.selectAll') }}</span>
-        <span @click="unselectAll">{{
-          $t('settings.addresses.unselectAll')
+        <span class="select" @click="selectAll">{{
+          $t('settings.addresses.selectAll')
         }}</span>
+        <div class="unselect">
+          <span @click="unselectAll"
+            >{{ $t('settings.addresses.unselectAll') }}
+          </span>
+          <close />
+        </div>
       </div>
       <div class="addresses__content">
         <Dropdown
@@ -69,6 +74,7 @@ import Loading from '@/components/Loading';
 import dottedLine from '@/assets/icons/dotted-line.svg';
 import InfoBanner from '@/components/InfoBanner';
 import Dropdown from '@/views/Settings/components/Addresses/components/Dropdown';
+import close from '@/assets/icons/close.svg';
 import { sortByAlphabet } from '@/helpers';
 
 export default {
@@ -81,6 +87,7 @@ export default {
     Loading,
     InfoBanner,
     Dropdown,
+    close,
   },
   props: {
     show: {
@@ -205,16 +212,20 @@ export default {
   width: 100%;
   justify-content: space-between;
   font-size: 14px;
-  & span {
-    color: #00a3ff;
+  &:deep * {
     font-weight: 600;
     font-size: 14px;
     line-height: 17px;
     cursor: pointer;
-    &:first-child {
-      border-bottom: 1px dashed #00a3ff;
-    }
-    &:last-child {
+  }
+  .select {
+    color: #00a3ff;
+    border-bottom: 1px dashed #00a3ff;
+  }
+  .unselect {
+    display: flex;
+    gap: 8px;
+    & span {
       color: #fa3b33;
       border-bottom: 1px dashed #fa3b33;
     }
