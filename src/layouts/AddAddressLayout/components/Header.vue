@@ -5,7 +5,9 @@
     <div
       v-if="
         wallets?.length &&
-        !['multisigBalance', 'multisigSend'].includes($route.name)
+        !['multisigBalance', 'multisigSend', 'multisender'].includes(
+          $route.name
+        )
       "
       class="header__breadcrumbs"
     >
