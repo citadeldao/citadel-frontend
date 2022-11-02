@@ -24,17 +24,17 @@
     </div>
     <div v-if="fee" class="send-direction__line">
       <span class="send-direction__line-title"> {{ $t('fee') }}: </span>
-      <div v-if="wallet.hasPledged">
-        <span
-          v-pretty-number="adding.ram"
-          class="send-direction__line-fee-amount"
-        />
-        <span class="send-direction__line-currency"> iRam, </span>
-        <span
-          v-pretty-number="adding.gas"
-          class="send-direction__line-fee-amount"
-        />
-        <span class="send-direction__line-currency"> iGas </span>
+      <div v-if="wallet.hasResource">
+        <template v-for="item in adding" :key="item.name">
+          <span
+            v-pretty-number="item.value"
+            class="send-direction__line-fee-amount"
+          />
+          <span class="send-direction__line-currency">
+            {{ item.nameForUser }}
+          </span>
+          &nbsp;&nbsp;
+        </template>
       </div>
       <div v-else>
         <span

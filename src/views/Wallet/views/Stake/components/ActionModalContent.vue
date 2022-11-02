@@ -46,33 +46,28 @@
         </div>
         <!-- hide separator when fee receive 0 -->
         <span
-          v-if="wallet.hasPledged || (!wallet.hasPledged && stakingFee)"
+          v-if="wallet.hasResource || (!wallet.hasResource && stakingFee)"
           class="action-modal-content__total-amount-line"
           >/</span
         >
         <div
-          v-if="wallet.hasPledged"
+          v-if="wallet.hasResource"
           class="action-modal-content__total-wrapper"
         >
-          <span
-            v-pretty-number="adding.ram"
-            class="action-modal-content__total-amount-fee"
-          />
-          <span class="action-modal-content__total-amount-currency">
-            iRam
-          </span>
-          &nbsp;&nbsp;
-          <span
-            v-pretty-number="adding.gas"
-            class="action-modal-content__total-amount-fee"
-          />
-          <span class="action-modal-content__total-amount-currency">
-            iGas
-          </span>
+          <template v-for="item in adding" :key="item.name">
+            <span
+              v-pretty-number="item.value"
+              class="action-modal-content__total-amount-fee"
+            />
+            <span class="action-modal-content__total-amount-currency">
+              {{ item.nameForUser }}
+            </span>
+            &nbsp;&nbsp;
+          </template>
         </div>
         <!-- hide when fee receive 0 -->
         <div
-          v-if="!wallet.hasPledged && stakingFee"
+          v-if="!wallet.hasResource && stakingFee"
           class="action-modal-content__total-wrapper"
         >
           <span

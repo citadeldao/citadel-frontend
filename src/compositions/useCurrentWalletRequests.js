@@ -23,7 +23,7 @@ export default function useCurrentWalletRequests() {
       );
       fees.value = pickKeys(data, ['low', 'medium', 'high']);
       feesError.value = error;
-    } else if (wallet.value.hasPledged) {
+    } else if (wallet.value.hasResource) {
       const { resFee, maxAmount, error, resAdding } =
         await wallet.value.getDelegationFee({
           walletId: wallet.value.id,
