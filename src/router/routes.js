@@ -320,6 +320,15 @@ export default [
     },
   },
   {
+    path: '/multisender',
+    name: 'multisender',
+    component: () => import('@/views/SalaryPage'),
+    meta: {
+      layout: 'AddAddressLayout',
+      guard: 'private',
+    },
+  },
+  {
     path: '/multisig',
     name: 'multisigSend',
     component: () => import('@/views/MultisigSend'),

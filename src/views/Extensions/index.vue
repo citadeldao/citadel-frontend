@@ -359,9 +359,11 @@ export default {
       showFullScreen.value = true;
       hideArtefactsForFullScreen();
 
-      await store.dispatch('extensions/fetchExtensionInfo', {
-        appId: selectedApp.value.id,
-      });
+      if (!selectedApp.value.citadelApp) {
+        await store.dispatch('extensions/fetchExtensionInfo', {
+          appId: selectedApp.value.id,
+        });
+      }
 
       const nets = selectedApp.value.networks.map((net) => {
         return net.toLowerCase();
@@ -383,7 +385,7 @@ export default {
         );
       }
 
-      if (currentAppInfo?.value?.token) {
+      if (currentAppInfo?.value?.token || selectedApp.value.citadelApp) {
         const nets = selectedApp.value.networks.map((net) => {
           return net.toLowerCase();
         });
@@ -411,7 +413,7 @@ export default {
         }
 
         selectedApp.value.url += `?token=${
-          currentAppInfo.value.token
+          currentAppInfo.value?.token
         }&wallets=${JSON.stringify(wallets)}`;
         currentApp.value = selectedApp.value;
       }

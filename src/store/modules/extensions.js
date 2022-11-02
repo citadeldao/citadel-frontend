@@ -1,6 +1,7 @@
 import useApi from '@/api/useApi';
 const extensionsApi = useApi('extensions');
 import axios from 'axios';
+import { multisendLocalApp } from '@/views/Extensions/config';
 
 const APP_DOMEN = process.env.VUE_APP_BACKEND_URL_APPS;
 
@@ -58,6 +59,7 @@ export default {
       const { ok, data } = await extensionsApi.getExtensionsList();
 
       if (ok) {
+        data.unshift(multisendLocalApp);
         commit(types.SET_EXTENSIONS_LIST, data);
       }
     },
