@@ -10,5 +10,6 @@ export const i18n = createI18n({
     en: require('./langs/en.json'),
     ru: require('./langs/ru.json'),
     ch: require('./langs/ch.json'),
+    fr: require('./langs/fr.json'),
   },
 });
