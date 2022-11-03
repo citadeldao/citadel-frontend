@@ -164,7 +164,7 @@ export default {
 
       if (wallet.walletInstance) {
         customWallet.value = wallet;
-        addSingleItem(wallet.walletInstance);
+        addSingleItem(wallets.value[0].walletInstance);
         isCustomLoading.value = false;
       } else {
         notify({
