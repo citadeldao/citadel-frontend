@@ -41,15 +41,7 @@
           :submit-button="false"
           @close="showAppInfoModal = false"
         >
-          <AppInfo
-            :app="selectedApp"
-            @launchApp="
-              router.push({
-                name: 'Extensions',
-                params: { name: selectedApp.name },
-              })
-            "
-          />
+          <AppInfo :app="selectedApp" @launchApp="onLaunchApp" />
         </ModalContent>
       </Modal>
     </teleport>
@@ -74,7 +66,7 @@
         :description="app.card_description"
         class="app"
         @openAppInfo="onOpenAppInfo(app.id)"
-        @openApp="onOpenApp(app.id)"
+        @openApp="onOpenApp(app)"
       />
     </div>
     <div v-if="loading" class="extensions__loading">
@@ -244,6 +236,7 @@ export default {
     const showCreateVkModal = ref(false);
     const showConfirmModalLoading = ref(false);
     const selectedTags = ref([]);
+    const localAppMode = ref(false);
 
     let keplrTimer = null;
     const scrtAddress = ref('');
@@ -359,9 +352,11 @@ export default {
       showFullScreen.value = true;
       hideArtefactsForFullScreen();
 
-      await store.dispatch('extensions/fetchExtensionInfo', {
-        appId: selectedApp.value.id,
-      });
+      if (!selectedApp.value.citadelApp) {
+        await store.dispatch('extensions/fetchExtensionInfo', {
+          appId: selectedApp.value.id,
+        });
+      }
 
       const nets = selectedApp.value.networks.map((net) => {
         return net.toLowerCase();
@@ -383,7 +378,7 @@ export default {
         );
       }
 
-      if (currentAppInfo?.value?.token) {
+      if (currentAppInfo?.value?.token || selectedApp.value.citadelApp) {
         const nets = selectedApp.value.networks.map((net) => {
           return net.toLowerCase();
         });
@@ -411,7 +406,7 @@ export default {
         }
 
         selectedApp.value.url += `?token=${
-          currentAppInfo.value.token
+          currentAppInfo.value?.token
         }&wallets=${JSON.stringify(wallets)}`;
         currentApp.value = selectedApp.value;
       }
@@ -447,9 +442,15 @@ export default {
     }
 
     const onOpenApp = (app) => {
+      if (app.citadelApp) {
+        router.push({ name: 'multisender' });
+        localAppMode.value = true;
+        return;
+      }
+      localAppMode.value = false;
       selectedApp.value = Object.assign(
         {},
-        extensionsList.value.find((a) => +a.id === +app)
+        extensionsList.value.find((a) => +a.id === +app.id)
       );
       router.push({
         name: 'Extensions',
@@ -604,6 +605,10 @@ export default {
     });
 
     watch(route, (route) => {
+      if (localAppMode.value) {
+        router.push({ name: 'multisender' });
+        return;
+      }
       if (!route.params.name) {
         closeApp(true);
         showFullScreen.value = false;
@@ -1047,8 +1052,22 @@ export default {
       }
     };
 
+    const onLaunchApp = () => {
+      if (selectedApp.value.citadelApp) {
+        router.push({ name: 'multisender' });
+        localAppMode.value = true;
+        return;
+      }
+
+      router.push({
+        name: 'Extensions',
+        params: { name: selectedApp.value.name },
+      });
+    };
+
     /* eslint-disable */
     return {
+      onLaunchApp,
       showFullScreen,
       router,
       assetsDomain,

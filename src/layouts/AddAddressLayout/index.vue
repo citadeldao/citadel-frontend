@@ -35,7 +35,11 @@ export default {
     const isAuthenticated = computed(
       () => store.getters['auth/isAuthenticated']
     );
-    const hideSidebarRoutes = ['multisigBalance', 'multisigSend'];
+    const hideSidebarRoutes = [
+      'multisigBalance',
+      'multisigSend',
+      'multisender',
+    ];
     if (window.localStorage.getItem('setLang')) {
       window.localStorage.removeItem('setLang');
       window.location.reload();
