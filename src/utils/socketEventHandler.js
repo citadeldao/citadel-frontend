@@ -32,8 +32,8 @@ export async function socketEventHandler({ eventName, data }) {
         // check keplr account
         if (data.message.address !== keplrAddress) {
           const now = Date.now();
-          const NOTIFY_INTEVAL = 5000;
-          if (now - lastTimeAppKeplrNotify < NOTIFY_INTEVAL) {
+          const NOTIFY_INTERVAL = 5000;
+          if (now - lastTimeAppKeplrNotify < NOTIFY_INTERVAL) {
             return;
           }
           notify({
