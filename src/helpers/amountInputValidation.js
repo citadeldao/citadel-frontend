@@ -36,5 +36,9 @@ export default ({ amount, wallet, maxAmount, type }) => {
     }
   }
 
+  if (+maxAmount === 0) {
+    return t('dontHaveEnoughFounds');
+  }
+
   return false;
 };

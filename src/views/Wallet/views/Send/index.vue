@@ -16,7 +16,10 @@
     "
     class="send"
   >
-    <form @submit.prevent="submitHandler">
+    <div v-if="dataLoaded" class="send__loader">
+      <Loading />
+    </div>
+    <form v-if="!dataLoaded" @submit.prevent="submitHandler">
       <div v-if="itemsNetworks.length && bridgeTargetNet" class="send__section">
         <div class="send__switch">
           <span>{{ $t('sendAssetsToAnotherNetwork') }}</span>
@@ -89,16 +92,22 @@
             :currency="currentWallet.code"
             :label="$t('amount')"
             :max="maxAmount"
-            :disabled="isSendToAnotherNetwork && !bridgeTargetNet"
+            :disabled="
+              (isSendToAnotherNetwork && !bridgeTargetNet) || maxAmount === 0
+            "
             placeholder="0.0"
             icon="coins"
             :show-error-text="showErrorText"
             :error="insufficientFunds"
             data-qa="send__amount-field"
-            show-set-max
+            :show-set-max="maxAmount !== 0"
           />
           <transition name="fade">
-            <div v-if="insufficientFunds" class="send__section-error">
+            <div
+              v-if="insufficientFunds"
+              class="send__section-error"
+              :class="{ doNotHaveEnoughFunds: maxAmount === 0 }"
+            >
               <error class="send__section-error-icon" />
               <span class="send__section-error-text">
                 {{ insufficientFunds }}
@@ -109,9 +118,12 @@
           <span v-if="false" class="send__input-note-xl"
             >{{ $t('includingFunds-xl') }}
           </span>
-          <span class="send__input-note">
-            {{ $t('includingFunds') }}
-          </span>
+
+          <transition name="fade">
+            <span v-if="!insufficientFunds" class="send__input-note">
+              {{ $t('includingFunds') }}
+            </span>
+          </transition>
         </div>
       </div>
       <div
@@ -673,10 +685,10 @@ export default {
     };
     const dataLoaded = ref(false);
     const loadData = async () => {
-      dataLoaded.value = false;
+      dataLoaded.value = true;
       await getFees();
       await getDelegationBalance();
-      dataLoaded.value = true;
+      dataLoaded.value = false;
     };
     loadData();
 
@@ -1324,6 +1336,7 @@ export default {
       showFeeSelectModal,
       openFeeSelectModal,
       closeFeeSelectModal,
+      dataLoaded,
       /* onCustomFocus,*/
       feeType,
       showChangingAmountModal,
@@ -1481,22 +1494,36 @@ export default {
     display: flex;
     position: absolute;
     align-items: center;
-    bottom: -20px;
+    bottom: -25px;
 
     @include xl {
       display: none;
+    }
+
+    @include md {
+      &.doNotHaveEnoughFunds {
+        bottom: -30px;
+      }
+
+      bottom: -22px;
     }
   }
 
   &__section-error-icon {
     margin-right: 8px;
+    width: 19px;
   }
 
   &__section-error-text {
     font-size: 14px;
-    line-height: 17px;
     color: $red;
-    font-family: 'Panton_Bold';
+    font-family: 'Panton_Regular';
+    width: fit-content;
+    word-break: break-word;
+
+    @include md {
+      font-size: 12px;
+    }
   }
 
   &__input-note-xl {
@@ -1756,6 +1783,13 @@ export default {
     @include md {
       display: none;
     }
+  }
+
+  &__loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
   }
 }
 
