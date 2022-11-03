@@ -71,7 +71,6 @@ import { useRoute } from 'vue-router';
 import { onMounted } from 'vue';
 import redirectToWallet from '@/router/helpers/redirectToWallet';
 import { WALLET_TYPES } from '@/config/walletType';
-import useWallets from '@/compositions/useWallets';
 
 export default {
   name: 'Stake',
@@ -107,7 +106,6 @@ export default {
     const store = useStore();
     const isLoading = ref(false);
     const route = useRoute();
-    const { currentWallet: stateCurrentWallet } = useWallets();
 
     onMounted(() => {
       if (!props.currentWallet.hasStake) {
@@ -192,28 +190,9 @@ export default {
     );
 
     const isViewOnly = computed(
-      () => currentWalletType.value === WALLET_TYPES.PUBLIC_KEY
+      () => props.currentWallet.type === WALLET_TYPES.PUBLIC_KEY
     );
-    const metamaskConnector = computed(
-      () => store.getters['metamask/metamaskConnector']
-    );
-    const currentWalletType = computed(() => {
-      const metamaskNet = metamaskConnector.value.network;
-      const metamaskAddress =
-        metamaskConnector.value.accounts[0] &&
-        metamaskConnector.value.accounts[0].toLowerCase();
-      const { address, net, type } = stateCurrentWallet.value;
 
-      if (
-        address.toLowerCase() === metamaskAddress &&
-        net === metamaskNet &&
-        type === WALLET_TYPES.PUBLIC_KEY
-      ) {
-        return WALLET_TYPES.METAMASK;
-      }
-
-      return stateCurrentWallet.value.type;
-    });
     return {
       isLoading,
       showModal,
@@ -223,7 +202,6 @@ export default {
       stakeNodes,
       totalStake,
       isViewOnly,
-      currentWalletType,
     };
   },
 };
