@@ -723,7 +723,6 @@ export default {
       }
     }
 
-
     const closePrivacy = () => {
       showPrivacy.value = false;
     };
