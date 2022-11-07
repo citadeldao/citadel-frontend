@@ -57,9 +57,6 @@ export default {
 
     const closeMobileModal = () => {
       isClosed.value = true;
-      setTimeout(() => {
-        isClosed.value = false;
-      }, 10000);
     };
 
     return {
