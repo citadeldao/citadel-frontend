@@ -438,4 +438,18 @@ export default {
     width: 100%;
   }
 }
+@media (max-width: 1370px) {
+  .settings__right-side:deep {
+    & .container {
+      flex-direction: column;
+    }
+    & .two_in_one,
+    & .column {
+      width: 100%;
+    }
+  }
+  .settings__left-side {
+    width: 63%;
+  }
+}
 </style>

@@ -240,6 +240,7 @@ export default {
 
 <style lang="scss" scoped>
 .change-email {
+  height: 100%;
   @include settings-card-default;
   margin-bottom: $card-margin;
 
