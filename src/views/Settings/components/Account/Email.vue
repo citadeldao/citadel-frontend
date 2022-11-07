@@ -9,6 +9,7 @@
       </span>
 
       <PrimaryButton
+        width="120px"
         class="change-email__button"
         data-qa="settings__email-button"
         @click="toggleModal(currentStage, true)"

@@ -60,6 +60,9 @@ export default {
       type: String,
       default: 'none',
     },
+    width: {
+      type: String,
+    },
     dataQa: {
       type: [String, null],
       default: null,
@@ -79,6 +82,7 @@ export default {
         '--buttonShadow': this.boxShadow,
         '--buttonBorder': this.border,
         '--buttonHoverBorder': this.hoverBorder,
+        '--buttonWidth': this.width,
       };
     },
   },

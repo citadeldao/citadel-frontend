@@ -7,24 +7,34 @@
       'dropdown-item--checked': isItemChecked,
     }"
   >
-    <Checkbox
-      v-if="selectable"
-      :id="wallet.id"
-      :value="isItemChecked"
-      @change="change"
-    />
-    <div
-      class="dropdown-item__icon"
-      :class="{ 'dropdown-item__icon--selectable': selectable }"
-    >
-      <component :is="currentIcon" />
-    </div>
-    <div class="dropdown-item__address">
-      {{
-        hidden
-          ? Array(wallet.address.length).fill('*').join('')
-          : currentAddress
-      }}
+    <div class="dropdown-item__info_wrapper">
+      <Checkbox
+        v-if="selectable"
+        :id="wallet.id"
+        :value="isItemChecked"
+        @change="change"
+      />
+      <div
+        class="dropdown-item__icon"
+        :class="{ 'dropdown-item__icon--selectable': selectable }"
+      >
+        <component :is="currentIcon" />
+      </div>
+      <div class="dropdown-item__info">
+        <span
+          class="dropdown-item__title"
+          @mouseenter="showAddressTooltip = true"
+          @mouseleave="showAddressTooltip = false"
+          >{{ wallet.title || currentAddress }}</span
+        >
+        <span class="dropdown-item__address">
+          {{
+            hidden
+              ? Array(wallet.address.length).fill('*').join('')
+              : currentAddress
+          }}
+        </span>
+      </div>
     </div>
     <div class="dropdown-item__btn_group" v-if="!selectable">
       <div
@@ -71,6 +81,14 @@
         @close="closeDeleteModal"
       />
     </teleport>
+    <span
+      v-if="showAddressTooltip"
+      class="alias__address-tooltip"
+      @mouseenter="showAddressTooltip = true"
+      @mouseleave="showAddressTooltip = false"
+    >
+      {{ wallet.address }}
+    </span>
   </div>
 </template>
 
@@ -123,6 +141,7 @@ export default {
     const isShowDeleteModal = ref(false);
     const isLoading = ref(false);
     const isItemChecked = ref(false);
+    const showAddressTooltip = ref(false);
     // const isLastWallet = computed(() => store.getters['wallets/wallets'].length === 0);
     const isSnip20 = computed(
       () =>
@@ -210,7 +229,7 @@ export default {
     });
 
     watchEffect(() => {
-      if (windowSize.value <= 1666) {
+      if (windowSize.value <= 1280) {
         currentAddress.value = `${currentAddress.value.slice(
           0,
           6
@@ -236,6 +255,7 @@ export default {
       currentAddress,
       isItemChecked,
       change,
+      showAddressTooltip,
     };
   },
 };
@@ -269,7 +289,6 @@ export default {
     justify-content: center;
     & svg {
       fill: white;
-      height: 22px;
       width: fit-content;
     }
     &--selectable {
@@ -277,15 +296,39 @@ export default {
     }
   }
 
-  &__address {
-    font-size: 14px;
-    text-align: left;
-    width: 60%;
-    margin-left: 15px;
-    margin-right: auto;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  &__info {
+    max-width: 60%;
+    color: #4b4c63;
+    display: flex;
+    flex-direction: column;
+    &_wrapper {
+      display: flex;
+      gap: 7px;
+      align-items: center;
+    }
+    @include md {
+      max-width: 400px;
+    }
   }
+  &__title {
+    font-weight: 700;
+    font-size: 14px;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  &__address {
+    width: 100%;
+    text-align: left;
+    margin-right: auto;
+    color: $fieldName;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
   &__btn_group {
     max-width: 35%;
     width: fit-content;
@@ -369,6 +412,35 @@ export default {
         height: 16px;
       }
     }
+  }
+}
+.alias__address-tooltip {
+  background-color: $too-ligth-gray;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 9px;
+  position: absolute;
+  white-space: nowrap;
+  z-index: 1;
+  top: 48%;
+  left: 25%;
+  margin-left: -60px;
+  box-shadow: 0px 4px 25px rgba(63, 54, 137, 0.25);
+  border-radius: 6px;
+  font-size: 12px;
+  line-height: 16px;
+  color: $too-dark-blue;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 98%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-radius: 2px;
+    border-style: solid;
+    border-color: transparent transparent $too-ligth-gray transparent;
   }
 }
 </style>

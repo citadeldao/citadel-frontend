@@ -732,7 +732,7 @@
         },
         "changeEmail": {
             "title": "Your email",
-            "description": "Your account email",
+            "description": "You can change your account email here",
             "inputLabel": "Your e-mail",
             "inputPlaceHolder": "e-mail",
             "button": "Change",
