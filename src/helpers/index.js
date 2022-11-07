@@ -24,6 +24,7 @@ export const findWalletInArray = (arr = [], { address, net } = {}) => {
   return arr.find((w) => {
     const isAddress = w.address?.toLowerCase() === address?.toLowerCase();
     const isNet = w.net?.toLowerCase() === net?.toLowerCase();
+
     return net ? isAddress && isNet : isAddress;
   });
 };
@@ -50,8 +51,7 @@ export const addressTextWidth = (text, fontFamily, fontSize) => {
   const span = document.createElement('span');
   document.body.appendChild(span);
   span.style.font = fontFamily;
-  span.style.fontSize = `${fontSize}px`; // + 1 = Shit
-  span.style.fontWeight = '';
+  span.style.fontSize = `${fontSize + 1}px`; // + 1 = Shit
   span.style.height = 'auto';
   span.style.width = 'auto';
   span.style.position = 'absolute';
@@ -59,6 +59,7 @@ export const addressTextWidth = (text, fontFamily, fontSize) => {
   span.innerHTML = text;
   const width = Math.ceil(span.clientWidth);
   document.body.removeChild(span);
+
   return width;
 };
 
@@ -71,16 +72,17 @@ export const formattedWalletAddress = (
   if (addressTextWidth(address, fontFamily, fontSize) > +wrapperWidth) {
     const addressEnd = `...${address.substr(address.length - 4)}`;
     let addressStart = address.substring(0, address.length - 4);
+
     while (
       addressTextWidth(`${addressStart}${addressEnd}`, fontFamily, fontSize) >
-        +wrapperWidth &&
-      addressStart
+      +wrapperWidth
     ) {
       addressStart = addressStart.substring(0, addressStart.length - 1);
     }
 
     return `${addressStart}${addressEnd}`;
   }
+
   return address;
 };
 
@@ -93,7 +95,6 @@ export const parseHash = (hash) => {
     address: hashArray[2],
   };
 };
-
 export const findAddressWithNet = (list, { address, net }) =>
   list.find(
     (item) =>
