@@ -80,6 +80,7 @@ import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
 import { prettyNumber } from '@/helpers/prettyNumber';
 import { WALLET_TYPES } from '@/config/walletType';
+import useWallets from '@/compositions/useWallets';
 
 export default {
   name: 'WalletButtonsPanel',
@@ -126,6 +127,7 @@ export default {
     'redelegationButtonClick',
   ],
   setup(props, { emit }) {
+    const { currentWallet: stateCurrentWallet } = useWallets();
     // const { walletInfo } = useWallets();
     const store = useStore();
     const router = useRouter();
@@ -134,7 +136,7 @@ export default {
       props.currentToken
         ? store.getters['subtokens/inflationInfoXCT'].yieldPct
         : store.getters['profile/formatYeldByNet'](props.currentWallet.net)
-    );
+    ); //процент для клейма
     const currentWalletInfo = computed(
       () =>
         props.currentToken
@@ -160,7 +162,29 @@ export default {
 
       return false;
     });
+    const isViewOnly = computed(
+      () => currentWalletType.value === WALLET_TYPES.PUBLIC_KEY
+    );
+    const metamaskConnector = computed(
+      () => store.getters['metamask/metamaskConnector']
+    );
+    const currentWalletType = computed(() => {
+      const metamaskNet = metamaskConnector.value.network;
+      const metamaskAddress =
+        metamaskConnector.value.accounts[0] &&
+        metamaskConnector.value.accounts[0].toLowerCase();
+      const { address, net, type } = stateCurrentWallet.value;
 
+      if (
+        address.toLowerCase() === metamaskAddress &&
+        net === metamaskNet &&
+        type === WALLET_TYPES.PUBLIC_KEY
+      ) {
+        return WALLET_TYPES.METAMASK;
+      }
+
+      return stateCurrentWallet.value.type;
+    });
     const claimButtonHandler = () => {
       if (currentWalletInfo.value?.claimableRewards) {
         props.currentToken ? emit('prepareXctClaim') : emit('prepareClaim');
@@ -170,10 +194,6 @@ export default {
       }
     };
 
-    const isViewOnly = computed(
-      () => props.currentToken?.type === WALLET_TYPES.PUBLIC_KEY
-    );
-
     return {
       currentWalletInfo,
       rewardCount,
@@ -182,6 +202,8 @@ export default {
       prettyNumber,
       disableStake,
       isViewOnly,
+      metamaskConnector,
+      currentWalletType,
       STAKE: 'stake',
       SWAP: 'swap',
       TRANSACTIONS: 'transactions',
