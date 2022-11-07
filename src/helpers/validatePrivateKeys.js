@@ -30,10 +30,18 @@ const validateTezos = (privateKey) => {
   );
 };
 
+const validateOasis = (privateKey) => {
+  return (
+    privateKey.length === 88 &&
+    privateKey.split('').reverse().join('').startsWith('==')
+  );
+};
+
 export const validatePrivateKey = (net, privateKey) => {
   const coins = {
     eth: validateEth,
     bsc: validateEth,
+    polygon: validateEth,
     arbitrum: validateEth,
     optimism: validateEth,
 
@@ -41,6 +49,7 @@ export const validatePrivateKey = (net, privateKey) => {
     icon: validateHex,
     iost: validateIost,
     tez: validateTezos,
+    oasis: validateOasis,
   };
 
   return (coins[net] && coins[net](privateKey)) || validateHex(privateKey);
