@@ -123,6 +123,7 @@
             <Verification
               v-if="currentStep === 2 && !showSyncBlock"
               :error="verificationError"
+              :code-from-email="codeFromEmail"
               @change="onChangeVerification"
               @verification="verification"
               @cancelVerification="
@@ -237,6 +238,8 @@ export default {
     const newAddress = ref('');
     const newAddressNet = ref('');
     const captchaToken = ref('');
+
+    const codeFromEmail = ref('');
 
     const { setNets, setAddress, setPublicKey, createWallets } =
       useCreateWallets();
@@ -704,12 +707,30 @@ export default {
       metamaskConnector.value.disconnect();
       await store.dispatch('metamask/connectToMetamask');
     };
+
+    const redirectedFrom = router.currentRoute.value.redirectedFrom;
+
+    if (
+      redirectedFrom &&
+      redirectedFrom.path.startsWith('/auth/verification/')
+    ) {
+      const code = redirectedFrom.params.pathMatch.at(-1);
+
+      if (typeof code === 'string' && code.length === 6) {
+        userName.value = redirectedFrom.query.email.replace(' ', '+');
+        codeFromEmail.value = code;
+        setCurrentStep(2);
+      }
+    }
+
+
     const closePrivacy = () => {
       showPrivacy.value = false;
     };
     const closeTerms = () => {
       showTerms.value = false;
     };
+
     return {
       closePrivacy,
       closeTerms,
@@ -751,6 +772,7 @@ export default {
       formDisabled,
       verificationError,
       showEmailModal,
+      codeFromEmail,
     };
   },
 };
