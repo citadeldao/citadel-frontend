@@ -7,7 +7,7 @@
   </teleport>
   <teleport v-if="showModal" to="body">
     <Modal>
-      <MobileAppModal @close="isClosed = true" />
+      <MobileAppModal @close="closeMobileModal" />
     </Modal>
   </teleport>
   <teleport v-if="newWalletsModalShow" to="body">
@@ -43,7 +43,7 @@ export default {
     const store = useStore();
     const { width } = useWindowSize();
     const showModal = computed(() => {
-      return width.value < screenWidths.md; // !!(width.value < screenWidths.md && !isClosed.value && isMobile)
+      return width.value < screenWidths.md && !isClosed.value; // !!(width.value < screenWidths.md && !isClosed.value && isMobile)
     });
     const newWalletsModalShow = computed(
       () =>
@@ -55,10 +55,18 @@ export default {
       store.dispatch('i18n/init');
     });
 
+    const closeMobileModal = () => {
+      isClosed.value = true;
+      setTimeout(() => {
+        isClosed.value = false;
+      }, 10000);
+    };
+
     return {
       showModal,
       newWalletsModalShow,
       isClosed,
+      closeMobileModal,
     };
   },
 };
