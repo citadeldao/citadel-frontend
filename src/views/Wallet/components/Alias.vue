@@ -45,6 +45,8 @@
           </div>
         </div>
       </div>
+    </div>
+    <div style="width: 100%; display: flex; justify-content: space-between">
       <div class="alias__actions">
         <EditButton @click="clickHandler">
           {{ editMode ? $t('save') : $t('edit') }}
@@ -69,14 +71,15 @@
           </div>
         </div>
       </div>
+      <div
+        class="alias__qr"
+        data-qa="wallet__qr-button"
+        @click="$emit('qrClick')"
+      >
+        <qr />
+      </div>
     </div>
-    <div
-      class="alias__qr"
-      data-qa="wallet__qr-button"
-      @click="$emit('qrClick')"
-    >
-      <qr />
-    </div>
+
     <span
       v-if="showAddressTooltip"
       class="alias__address-tooltip"
@@ -361,6 +364,7 @@ export default {
     line-height: 30px;
     text-overflow: ellipsis;
     overflow: hidden;
+    white-space: nowrap;
     @include md {
       max-width: 390px;
       font-size: 16px;
@@ -408,9 +412,9 @@ export default {
     line-height: 27px;
     color: $mid-blue;
     cursor: pointer;
-    overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
     @include md {
       font-size: 14px;
       line-height: 27px;
