@@ -8,7 +8,7 @@
         {{ $t('settings.addresses.description') }}
       </p>
       <p @click="openDeleteAddressesModal" class="addresses-delete">
-        {{ $t('settings.addresses.modalTitle') }}
+        <trash /><span>{{ $t('settings.addresses.modalTitle') }}</span>
       </p>
     </div>
     <div class="addresses__content">
@@ -36,8 +36,8 @@
       :isLoading="isLoading"
       :text="text"
       :show="showConfirmDeleteModal"
-      @confirm="deleteAddreses"
       @close="closeDeleteModal"
+      @confirm="deleteAddreses"
     />
   </div>
 </template>
@@ -53,7 +53,7 @@ import { WALLET_TYPES } from '@/config/walletType';
 import { sortByAlphabet } from '@/helpers';
 import DeleteAddressModal from './components/Dropdown/components/DeleteAddressModal.vue';
 import { useI18n } from 'vue-i18n';
-
+import trash from '@/assets/icons/trash-can.svg';
 export default {
   name: 'Addresses',
   components: {
@@ -61,6 +61,7 @@ export default {
     DeleteSeedModal,
     DeleteAddressesModal,
     DeleteAddressModal,
+    trash,
   },
   props: {},
   emits: ['exportWallet'],
@@ -166,6 +167,7 @@ export default {
     provide('selectedWallets', selectedWallets);
     provide('updateSelectedWallets', updateSelectedWallets);
     const openDeleteAddressesModal = () => {
+      selectedWallets.value = [];
       showDeleteAddressesModal.value = true;
     };
     return {
@@ -214,6 +216,14 @@ export default {
     cursor: pointer;
     color: #fa3b33;
     border-bottom: 1px dashed #fa3b33;
+    display: flex;
+    padding: 0 0 3px 0;
+    align-items: center;
+    span {
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 19px;
+    }
   }
 }
 </style>

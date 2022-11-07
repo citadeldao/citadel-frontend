@@ -21,10 +21,8 @@
         <span class="select" @click="selectAll">{{
           $t('settings.addresses.selectAll')
         }}</span>
-        <div class="unselect">
-          <span @click="unselectAll"
-            >{{ $t('settings.addresses.unselectAll') }}
-          </span>
+        <div class="unselect" @click="unselectAll">
+          <span>{{ $t('settings.addresses.unselectAll') }} </span>
           <close />
         </div>
       </div>
@@ -40,13 +38,14 @@
           @toggle-hidden="toggleWalletHidden"
         />
       </div>
-      <p class="selected__addresses">
-        {{
+      <p
+        class="selected__addresses"
+        v-html="
           $t('settings.addresses.selectedWalletsLength', {
             selectedWalletsLength: selectedWallets.length,
           })
-        }}
-      </p>
+        "
+      />
       <PrimaryButton
         color="#FFFFFF"
         bg-color="#6A4BFF"
@@ -78,7 +77,7 @@ import close from '@/assets/icons/close.svg';
 import { sortByAlphabet } from '@/helpers';
 
 export default {
-  name: 'DeleteAddressModal',
+  name: 'DeleteAddressesModal',
   components: {
     Modal,
     ModalContent,
@@ -164,6 +163,7 @@ export default {
 <style lang="scss" scoped>
 .selected__addresses {
   font-size: 14px;
+  color: #6b93c0;
 }
 .line {
   margin: 23px 0;

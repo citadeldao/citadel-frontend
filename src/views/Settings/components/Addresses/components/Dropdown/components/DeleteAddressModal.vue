@@ -22,7 +22,7 @@
       >
         {{ $t('yes') }}
       </PrimaryButton>
-      <TextButton @click="$emit('close')">
+      <TextButton @click="close">
         {{ $t('no') }}
       </TextButton>
     </ModalContent>

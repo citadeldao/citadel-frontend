@@ -252,10 +252,13 @@ export default {
   border-radius: 8px;
   border: 1px solid $too-ligth-gray;
   padding: 0 10px;
-  &--selectable {
+  &--selectable:not(&--checked) {
     cursor: pointer;
+    .dropdown-item__address {
+      color: #756aa8;
+    }
   }
-  &--checked {
+  &--checked:has(&--selectable) {
     font-weight: 600;
     color: #000000;
   }
