@@ -36,11 +36,15 @@
             <span
               id="address"
               ref="addressRef"
+              :style="{ maxWidth: `${maxWidth}px` }"
               class="alias__address"
               @mouseenter="showAddressTooltip = true"
               @mouseleave="showAddressTooltip = false"
             >
-              {{ currentWallet.address }}
+              <resize-observer :show-trigger="true" @notify="handleResize" />
+              {{ formattedAddress }}
+
+              <!-- {{ currentWallet.address }} -->
             </span>
           </div>
         </div>
@@ -99,12 +103,17 @@ import WalletTypeCard from '@/components/WalletTypeCard';
 import EditButton from '@/components/UI/EditButton';
 import FavoriteButton from '@/components/FavoriteButton';
 import copyToClipboard from '@/helpers/copyToClipboard';
-import { computed, nextTick, ref } from 'vue';
+import { computed, nextTick, ref, onMounted } from 'vue';
 import { useStore } from 'vuex';
-import { addressTextWidth } from '@/helpers';
-import { findAddressWithNet } from '@/helpers';
+import {
+  addressTextWidth,
+  formattedWalletAddress,
+  findAddressWithNet,
+} from '@/helpers';
 import { WALLET_TYPES } from '@/config/walletType';
 import { useRouter } from 'vue-router';
+import { useWindowSize } from 'vue-window-size';
+import { screenWidths } from '@/config/sreenWidthThresholds';
 export default {
   name: 'Alias',
   components: {
@@ -123,6 +132,8 @@ export default {
   },
   emits: ['qrClick'],
   setup(props) {
+    const { width } = useWindowSize();
+
     const router = useRouter();
 
     const scannerLink = computed(() => props.currentWallet.getScannerLink());
@@ -268,10 +279,44 @@ export default {
         needSetActiveList: false,
       });
     };
+    const fontSizes = computed(() => {
+      return width.value < screenWidths.lg
+        ? { name: 16, address: 14 }
+        : { name: 20, address: 16 };
+    });
+    const wrapperWidth = ref();
+    const handleResize = ({ width }) => {
+      wrapperWidth.value = width;
+    };
+
+    const addressRef = ref(null);
+    const formattedAddress = computed(() => {
+      return formattedWalletAddress(
+        props.currentWallet?.address,
+        +wrapperWidth.value,
+        'Panton_Regular',
+        fontSizes.value.address
+      );
+    });
+    const maxWidth = computed(() =>
+      addressTextWidth(
+        props.currentWallet?.address,
+        'Panton_Regular',
+        fontSizes.value.address
+      )
+    );
 
     const showAddressTooltip = ref(false);
+    onMounted(() => {
+      wrapperWidth.value = addressRef.value.offsetWidth;
+    });
 
     return {
+      handleResize,
+      maxWidth,
+      formattedAddress,
+      wrapperWidth,
+      addressRef,
       addressTextWidth,
       copyToClipboard,
       editMode,
@@ -412,9 +457,9 @@ export default {
     line-height: 27px;
     color: $mid-blue;
     cursor: pointer;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+    //white-space: nowrap;
+    //text-overflow: ellipsis;
+    //overflow: hidden;
     @include md {
       font-size: 14px;
       line-height: 27px;
