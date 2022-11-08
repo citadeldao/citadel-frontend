@@ -1183,6 +1183,21 @@
             "title": "Сеть Oasis",
             "description": "",
             "shortDescription": ""
+        },
+        "stafi": {
+            "title": "Stafihub",
+            "description": "",
+            "shortDescription": ""
+        },
+        "stride": {
+            "title": "Stride",
+            "description": "",
+            "shortDescription": ""
+        },
+        "jackal": {
+            "title": "Jackaldao",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "Подтверждено блоков",
