@@ -1176,6 +1176,11 @@
             "title": "Stride",
             "description": "",
             "shortDescription": ""
+        },
+        "jackal": {
+            "title": "Jackaldao",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "运行时间",
