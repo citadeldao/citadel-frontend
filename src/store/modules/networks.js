@@ -5,6 +5,9 @@ import citadel from '@citadeldao/lib-citadel';
 const types = {
   SET_CONFIG: 'SET_CONFIG',
 };
+
+const IGNORE_ERROR = 'Request failed with status code 404';
+
 export default {
   namespaced: true,
   state: () => ({
@@ -66,10 +69,12 @@ export default {
         return { data, error: null };
       }
 
-      notify({
-        type: 'warning',
-        text: error,
-      });
+      if (error.message !== IGNORE_ERROR) {
+        notify({
+          type: 'warning',
+          text: error,
+        });
+      }
 
       return { data: null, error: error };
     },

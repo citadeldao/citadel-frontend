@@ -33,5 +33,9 @@ export default {
   .title-text {
     margin: 30px 0 15px;
   }
+  .description-text {
+    max-width: 350px;
+    text-align: center;
+  }
 }
 </style>
