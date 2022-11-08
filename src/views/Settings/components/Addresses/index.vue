@@ -7,7 +7,11 @@
       <p>
         {{ $t('settings.addresses.description') }}
       </p>
-      <p @click="openDeleteAddressesModal" class="addresses-delete">
+      <p
+        @click="openDeleteAddressesModal"
+        class="addresses-delete"
+        v-if="wallets.length"
+      >
         <trash /><span>{{ $t('settings.addresses.modalTitle') }}</span>
       </p>
     </div>
@@ -171,6 +175,7 @@ export default {
       showDeleteAddressesModal.value = true;
     };
     return {
+      wallets,
       openDeleteAddressesModal,
       onDeleteSeed,
       showConfirmDeleteModal,
