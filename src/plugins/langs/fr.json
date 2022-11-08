@@ -1216,6 +1216,21 @@
             "description": "Le réseau Oasis est la première plateforme blockchain permettant le respect de la vie privée pour la finance libre et une économie de données responsable. Combiné à son architecture sécurisée et à haut débit, le réseau Oasis est capable d'alimenter un DeFi privé et évolutif, révolutionnant ainsi la finance libre et l'étendant au-delà des traders et des premiers utilisateurs pour atteindre un marché de masse. Ses caractéristiques uniques en matière de confidentialité peuvent non seulement redéfinir le DeFi, mais aussi créer un nouveau type d'actif numérique appelé Tokenized Data, qui permet aux utilisateurs de prendre le contrôle des données qu'ils génèrent et de gagner des récompenses en les associant à des applications - créant ainsi la toute première économie de données responsable.",
             "shortDescription": "Le réseau Oasis est une plateforme blockchain adaptée à la vie privée pour une finance ouverte et une économie de données responsable."
         },
+        "stafi": {
+            "title": "Stafihub",
+            "description": "",
+            "shortDescription": ""
+        },
+        "stride": {
+            "title": "Stride",
+            "description": "",
+            "shortDescription": ""
+        },
+        "jackal": {
+            "title": "Jackaldao",
+            "description": "",
+            "shortDescription": ""
+        },
         "tron": {
             "title": "Tron network",
             "description": "TRON est une plateforme blockchain décentralisée destinée à supporter les contrats intelligents. La mission de TRON est d'accélérer la décentralisation de l'Internet via la technologie blockchain et les applications décentralisées (dApps) et de construire le Web 4.0 avec un système mondial de divertissement à contenu libre, où les gens peuvent créer, posséder et partager du contenu sans tierce partie.",
