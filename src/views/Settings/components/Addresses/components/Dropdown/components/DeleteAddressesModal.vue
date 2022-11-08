@@ -240,7 +240,7 @@ export default {
 }
 .modal_content {
   &:deep &__content {
-    height: 86vh;
+    max-height: 86vh;
   }
 }
 </style>
