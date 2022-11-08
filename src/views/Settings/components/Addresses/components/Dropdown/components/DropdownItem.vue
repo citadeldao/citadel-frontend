@@ -26,7 +26,7 @@
           :style="{ maxWidth: `${maxWidth}px` }"
           @mouseenter="showAddressTooltip = true"
           @mouseleave="showAddressTooltip = false"
-          >{{ wallet.title || currentAddress }}</span
+          >{{ wallet.title || formattedAddress }}</span
         >
         <span
           class="dropdown-item__address"
@@ -93,7 +93,7 @@
       @mouseenter="showAddressTooltip = true"
       @mouseleave="showAddressTooltip = false"
     >
-      {{ wallet.address }}
+      {{ wallet.title || formattedAddress }}
     </span>
   </div>
 </template>
