@@ -678,9 +678,17 @@
             "title": "Адреса",
             "description": "Удалите ваши адреса, импортированные сид-фразы, приватные ключи или ключи просмотра",
             "deleteModalTitle": "Вы уверены, что хотите удалить этот адрес?",
+            "deleteModalSubtitle": "",
             "deleteSeedTitle": "Вы уверены, что хотите удалить информацию о One-Seed?",
             "deleteSeedDesc": "Вы можете удалить все локально сохраненные данные о One-Seed",
-            "deleteSeedInfo": "Примечание: После подтверждения этого действия все данные, связанные с вашим One-Seed кошельком, будут удалены."
+            "deleteSeedInfo": "Примечание: После подтверждения этого действия все данные, связанные с вашим One-Seed кошельком, будут удалены.",
+            "modalTitle":"",
+            "modalSubtitle":"",
+            "bannerContent":"",
+            "selectAll":"",
+            "unselectAll":"",
+            "selectedWalletsLength":"",
+            "delete":""
         },
         "changeEmail": {
             "title": "Ваш e-mail",

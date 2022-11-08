@@ -678,9 +678,17 @@
             "title": "地址",
             "description": "删除您的地址，或者导入助记词、私钥或查看密钥",
             "deleteModalTitle": "您确定删除该地址吗？",
+            "deleteModalSubtitle": "",
             "deleteSeedTitle": "您确定删除通用助记词信息吗？",
             "deleteSeedDesc": "您可以删除所有保存在本地的通用助记词",
-            "deleteSeedInfo": "提示：当您确认此操作后，您通用助记词钱包的所有信息将被移除。"
+            "deleteSeedInfo": "提示：当您确认此操作后，您通用助记词钱包的所有信息将被移除。",
+            "modalTitle":"",
+            "modalSubtitle":"",
+            "bannerContent":"",
+            "selectAll":"",
+            "unselectAll":"",
+            "selectedWalletsLength":"",
+            "delete":""
         },
         "changeEmail": {
             "title": "您的邮箱",
