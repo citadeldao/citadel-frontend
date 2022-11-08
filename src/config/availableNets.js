@@ -44,6 +44,7 @@ export const ledgerNets = [
   'stafi',
   'stride',
   'tron',
+  'jackal',
 ];
 
 export const metamaskNets = ['bsc', 'eth', 'polygon', 'optimism', 'arbitrum'];
