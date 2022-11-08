@@ -41,15 +41,7 @@
           :submit-button="false"
           @close="showAppInfoModal = false"
         >
-          <AppInfo
-            :app="selectedApp"
-            @launchApp="
-              router.push({
-                name: 'Extensions',
-                params: { name: selectedApp.name },
-              })
-            "
-          />
+          <AppInfo :app="selectedApp" @launchApp="onLaunchApp" />
         </ModalContent>
       </Modal>
     </teleport>
@@ -74,7 +66,7 @@
         :description="app.card_description"
         class="app"
         @openAppInfo="onOpenAppInfo(app.id)"
-        @openApp="onOpenApp(app.id)"
+        @openApp="onOpenApp(app)"
       />
     </div>
     <div v-if="loading" class="extensions__loading">
@@ -175,7 +167,7 @@ import {
   showArtefactsForNormalScreen,
 } from '@/helpers/fullScreen';
 import Loading from '@/components/Loading';
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onBeforeUnmount } from 'vue';
 import Modal from '@/components/Modal';
 import CreateVkModal from '@/views/Wallet/components/CreateVkModal.vue';
 import ModalContent from '@/components/ModalContent';
@@ -244,6 +236,14 @@ export default {
     const showCreateVkModal = ref(false);
     const showConfirmModalLoading = ref(false);
     const selectedTags = ref([]);
+    const localAppMode = ref(false);
+
+    let keplrTimer = null;
+    const scrtAddress = ref('');
+
+    onBeforeUnmount(() => {
+      clearTimeout(keplrTimer);
+    });
 
     const { wallets: walletsList } = useWallets();
 
@@ -308,6 +308,7 @@ export default {
 
     const launchApp = () => {};
     const closeApp = (stopRedirect) => {
+      clearInterval(keplrTimer);
       currentApp.value = null;
       selectedApp.value = null;
 
@@ -351,9 +352,11 @@ export default {
       showFullScreen.value = true;
       hideArtefactsForFullScreen();
 
-      await store.dispatch('extensions/fetchExtensionInfo', {
-        appId: selectedApp.value.id,
-      });
+      if (!selectedApp.value.citadelApp) {
+        await store.dispatch('extensions/fetchExtensionInfo', {
+          appId: selectedApp.value.id,
+        });
+      }
 
       const nets = selectedApp.value.networks.map((net) => {
         return net.toLowerCase();
@@ -375,7 +378,7 @@ export default {
         );
       }
 
-      if (currentAppInfo?.value?.token) {
+      if (currentAppInfo?.value?.token || selectedApp.value.citadelApp) {
         const nets = selectedApp.value.networks.map((net) => {
           return net.toLowerCase();
         });
@@ -389,6 +392,7 @@ export default {
           .map((w) => ({
             address: w.address,
             net: w.net,
+            type: w.type,
             publicKey:
               (w.getPublicKeyDecoded && w.getPublicKeyDecoded()) || null,
           }));
@@ -402,9 +406,20 @@ export default {
         }
 
         selectedApp.value.url += `?token=${
-          currentAppInfo.value.token
+          currentAppInfo.value?.token
         }&wallets=${JSON.stringify(wallets)}`;
         currentApp.value = selectedApp.value;
+      }
+    };
+
+    const startKeplrSecretChecker = async () => {
+      // shade
+      if ([17, 22, 26].includes(+selectedApp.value?.id)) {
+        keplrTimer = setInterval(async () => {
+          await store.dispatch('keplr/connectToKeplr', 'secret-4');
+          const secretAddress = keplrConnector.value.accounts[0];
+          scrtAddress.value = secretAddress;
+        }, 5000);
       }
     };
 
@@ -415,6 +430,7 @@ export default {
           (a) => a.name.toLowerCase() === route.params.name.toLowerCase()
         )
       );
+      startKeplrSecretChecker();
 
       if (!selectedApp.value.id) {
         router.push({ name: 'Extensions' });
@@ -426,9 +442,15 @@ export default {
     }
 
     const onOpenApp = (app) => {
+      if (app.citadelApp) {
+        router.push({ name: 'multisender' });
+        localAppMode.value = true;
+        return;
+      }
+      localAppMode.value = false;
       selectedApp.value = Object.assign(
         {},
-        extensionsList.value.find((a) => +a.id === +app)
+        extensionsList.value.find((a) => +a.id === +app.id)
       );
       router.push({
         name: 'Extensions',
@@ -462,13 +484,31 @@ export default {
     }); */
 
     watch(
+      () => scrtAddress.value,
+      (newV) => {
+        if (newV?.address) {
+          const win = window.frames.target;
+          win &&
+            win.postMessage(
+              {
+                from: 'keplr',
+                address: newV.address,
+                net: 'secret',
+              },
+              selectedApp.value.url
+            );
+        }
+      }
+    );
+
+    watch(
       () => metamaskConnector.value.accounts,
       (newV) => {
         if (
           newV &&
           newV[0] &&
           selectedApp.value &&
-          [6, 7].includes(selectedApp.value.id)
+          [6, 7].includes(+selectedApp.value.id)
         ) {
           const metamaskNet =
             metamaskConnector.value.chainId === 56
@@ -565,6 +605,10 @@ export default {
     });
 
     watch(route, (route) => {
+      if (localAppMode.value) {
+        router.push({ name: 'multisender' });
+        return;
+      }
       if (!route.params.name) {
         closeApp(true);
         showFullScreen.value = false;
@@ -578,6 +622,7 @@ export default {
         if (selectedApp.value.id) {
           selectApp();
         }
+        startKeplrSecretChecker();
       }
     });
 
@@ -1007,8 +1052,22 @@ export default {
       }
     };
 
+    const onLaunchApp = () => {
+      if (selectedApp.value.citadelApp) {
+        router.push({ name: 'multisender' });
+        localAppMode.value = true;
+        return;
+      }
+
+      router.push({
+        name: 'Extensions',
+        params: { name: selectedApp.value.name },
+      });
+    };
+
     /* eslint-disable */
     return {
+      onLaunchApp,
       showFullScreen,
       router,
       assetsDomain,

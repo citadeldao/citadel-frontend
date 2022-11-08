@@ -62,7 +62,34 @@
                 "title": "3. Profitez de vos récompenses de staking !",
                 "text": "Vous pouvez réclamer vos récompenses en quelques clics."
             }
-        }
+        },
+        "loginInWith": "",
+        "socialAccount": "",
+        "web3wallet": "",
+        "web3TitleMenu": "",
+        "web3DescriptionMenu": "",
+        "socialTitleMenu": "",
+        "socialDescriptionMenu": "",
+        "disclaimerMailTitle": "",
+        "disclaimerMailGuide": "",
+        "disclaimerMailGuide1": "",
+        "useEmailBtn": "",
+        "continueWithoutEmail": "",
+        "approveKeplrTitle": "",
+        "approveMetamaskTitle": "",
+        "approveDescription": "",
+        "confirmAddressTitleAnother": "",
+        "confirmAddressTitleMetamaskEth": "",
+        "confirmAddressTitleMetamaskBSC": "",
+        "confirmAddressTitleKeplr": "",
+        "changeLangTitle": "",
+        "changeLangDescription": "",
+        "KeplrNotFound": "",
+        "MetamaskNotFound": "",
+        "language": "",
+        "back": "",
+        "continue": "",
+        "with": ""
     },
     "logout": {
         "modal": {
@@ -96,7 +123,8 @@
         "card3Important": "Note : Vous ne pourrez pas staker ou transférer vos actifs avec cette option",
         "card3Note": "lecture seule",
         "button": "Ajouter une adresse",
-        "invalidDerivationPath": "Chemin de dérivation invalide"
+        "invalidDerivationPath": "Chemin de dérivation invalide",
+        "addressLimits": ""
     },
     "addToOneSeed": {
         "rearrangeWords": "Veuillez réarranger les mots dans l'ordre correct pour confirmer votre phrase mnémotechnique.",
@@ -115,7 +143,12 @@
         "walletCreated": "Votre portefeuille a été créé !",
         "walletCreatedDescription": " Si vous souhaitez accéder à la liste des réseaux disponibles, cochez la case correspondante",
         "errorConfirmWords1": "Veuillez vérifier les mots saisis.",
-        "errorConfirmWords2": "Si vous avez mal noté votre seed-phrase, revenez à l'étape précédente et assurez-vous que vos enregistrements sont corrects."
+        "errorConfirmWords2": "Si vous avez mal noté votre seed-phrase, revenez à l'étape précédente et assurez-vous que vos enregistrements sont corrects.",
+        "backUp": {
+            "h1": "",
+            "h2": "",
+            "h3": ""
+        }
     },
     "importExistingAddress": {
         "card1Title": "Seed - phrase",
@@ -221,7 +254,14 @@
         "editCommentModalTitle": "Modifier le commentaire",
         "editCommentModalDesc": "Vous pouvez ajouter votre commentaire à la transaction ci-dessous",
         "transactionInfoModalTitle": "Informations sur la transaction",
-        "transactionInfoModalDesc": "Voir les détails de la transaction ci-dessous"
+        "transactionInfoModalDesc": "Voir les détails de la transaction ci-dessous",
+        "failed": "",
+        "modalSuccessHeader": "",
+        "modalSuccessDescription": "",
+        "modalPendingHeader": "",
+        "modalPendingDescription": "",
+        "modalFailHeader": "",
+        "modalFailDescription": ""
     },
     "sendModal": {
         "title1": "Confirmez l'envoi du jeton",
@@ -341,7 +381,7 @@
         "amountToClaim": "Montant à claim",
         "confirmModalTitle": "Confirmer la demande de claim des récompenses",
         "confirmModalDesc": "Vous verrez les récompenses accumulées dans le solde disponible",
-        "claimSuccessfuly": ""
+        "claimSuccessfuly": "Claim avec succès"
     },
     "exportWallet": {
         "card1Info": "Exporter la phrase mnémotechnique associée",
@@ -673,9 +713,17 @@
             "title": "Adresses",
             "description": "Supprimez vos adresses ou importez des seedphrase, des clés privées ou des clés de visualisation",
             "deleteModalTitle": "Voulez-vous supprimer l'adresse ?",
+            "deleteModalSubtitle": "",
             "deleteSeedTitle": "Voulez-vous supprimer l'information de One-Seed ?",
             "deleteSeedDesc": "Vous pouvez supprimer toutes les données stockées localement sur votre One-Seed",
-            "deleteSeedInfo": "Remarque : après confirmation de cette action, toutes les données associées à votre portefeuille One-Seed seront supprimées."
+            "deleteSeedInfo": "Remarque : après confirmation de cette action, toutes les données associées à votre portefeuille One-Seed seront supprimées.",
+            "modalTitle":"",
+            "modalSubtitle":"",
+            "bannerContent":"",
+            "selectAll":"",
+            "unselectAll":"",
+            "selectedWalletsLength":"",
+            "delete":""
         },
         "changeEmail": {
             "title": "Votre email",
@@ -683,7 +731,16 @@
             "inputLabel": "Votre e-mail",
             "inputPlaceHolder": "e-mail",
             "button": "Changement",
-            "comingSoon": "BIENTÔT DISPONIBLE"
+            "comingSoon": "BIENTÔT DISPONIBLE",
+            "changeModalTitle": "",
+            "changeModalDescription": "",
+            "oldEmail": "",
+            "newEmail": "",
+            "emailPlaceholder": "",
+            "validFormatError": "",
+            "lastStep": "",
+            "lastStepDescription": "",
+            "resend": ""
         },
         "language": {
             "title": "Langue",
@@ -902,7 +959,7 @@
         "confirmModalDesc2": "Vos jetons ne seront pas mis en gage"
     },
     "minAmmount": "Le montant doit être supérieur à 1",
-    "maxFloatDigits": "",
+    "maxFloatDigits": "Pas plus de {amount} digits après la virgule",
     "emptyPassword": "Mot de passe vide",
     "accruedDaily": "Accumulé quotidiennement de 6 à 7 heures UTC",
     "extensions": {
@@ -921,7 +978,9 @@
         "transactionFee": "Frais de transaction",
         "signMessage": "Signer le message",
         "searchPlaceholder": "Commencez à taper le nom de l'application",
-        "typeOperation": "Type d'opération"
+        "typeOperation": "Type d'opération",
+        "showMore": "Voir plus",
+        "execute": "exécuter"
     },
     "tokenDescriptionComdex": "Comdex est un protocole décentralisé d'actifs synthétiques construit sur Cosmos. ",
     "tokenDescriptionJuno": "Juno est une chaîne basée sur Cosmos qui fournit un environnement pour le déploiement de contrats intelligents interopérables.",
@@ -1138,24 +1197,24 @@
             "shortDescription": "Oraichain est la première solution intelligente et sécurisée au monde pour le Web3 émergent, les Dapps évolutives et l'IA décentralisée."
         },
         "optimism": {
-            "title": "",
-            "description": "",
-            "shortDescription": ""
+            "title": "Optimism",
+            "description": "Optimism est une solution de mise à l'échelle de niveau 2 pour Ethereum. Optimism utilise des techniques avancées de compression de données appelées Optimistic Rollups pour accélérer et réduire les coûts des transactions Ethereum.",
+            "shortDescription": "Optimism est une solution de mise à l'échelle de niveau 2 pour Ethereum qui utilise des techniques avancées de compression des données pour accélérer et réduire les coûts des transactions Ethereum."
         },
         "arbitrum": {
-            "title": "",
-            "description": "",
-            "shortDescription": ""
+            "title": "Arbitrum",
+            "description": "Arbitrum est une solution de mise à l'échelle de niveau 2 pour Ethereum qui améliore les capacités des contrats intelligents d'Ethereum. Elle vise à accélérer les temps de transaction et à réduire les frais sur la blockchain Ethereum grâce à la technologie Optimistic Rollup.",
+            "shortDescription": "Arbitrum est une solution de mise à l'échelle de niveau 2 pour Ethereum qui améliore les capacités des contrats intelligents d'Ethereum."
         },
         "polygon": {
-            "title": "",
-            "description": "",
-            "shortDescription": ""
+            "title": "Polygon",
+            "description": "Polygon est une solution de mise à l'échelle décentralisée de niveau 2 et un écosystème Ethereum multi-chaîne, appelé l'Internet des blockchains d'Ethereum. Polygon vise à surmonter les limites d'Ethereum et à permettre aux développeurs de créer des dApps évolutives et conviviales avec des frais de gaz réduits et des transactions plus rapides.",
+            "shortDescription": "Polygon est une solution décentralisée de mise à l'échelle de la couche 2 d'Ethereum qui vise à permettre aux développeurs de créer des dApps évolutives et conviviales avec des frais de gaz réduits et des transactions plus rapides"
         },
         "oasis": {
-            "title": "",
-            "description": "",
-            "shortDescription": ""
+            "title": "Oasis Network",
+            "description": "Le réseau Oasis est la première plateforme blockchain permettant le respect de la vie privée pour la finance libre et une économie de données responsable. Combiné à son architecture sécurisée et à haut débit, le réseau Oasis est capable d'alimenter un DeFi privé et évolutif, révolutionnant ainsi la finance libre et l'étendant au-delà des traders et des premiers utilisateurs pour atteindre un marché de masse. Ses caractéristiques uniques en matière de confidentialité peuvent non seulement redéfinir le DeFi, mais aussi créer un nouveau type d'actif numérique appelé Tokenized Data, qui permet aux utilisateurs de prendre le contrôle des données qu'ils génèrent et de gagner des récompenses en les associant à des applications - créant ainsi la toute première économie de données responsable.",
+            "shortDescription": "Le réseau Oasis est une plateforme blockchain adaptée à la vie privée pour une finance ouverte et une économie de données responsable."
         },
         "stafi": {
             "title": "Stafihub",
@@ -1171,6 +1230,11 @@
             "title": "Jackaldao",
             "description": "",
             "shortDescription": ""
+        },
+        "tron": {
+            "title": "Tron network",
+            "description": "TRON est une plateforme blockchain décentralisée destinée à supporter les contrats intelligents. La mission de TRON est d'accélérer la décentralisation de l'Internet via la technologie blockchain et les applications décentralisées (dApps) et de construire le Web 4.0 avec un système mondial de divertissement à contenu libre, où les gens peuvent créer, posséder et partager du contenu sans tierce partie.",
+            "shortDescription": "TRON est une plateforme blockchain décentralisée qui vise à accélérer la décentralisation d'Internet via la technologie blockchain et les applications décentralisées (dApps). La mission principale du projet est de construire le Web 4.0 avec un système mondial de divertissement à contenu libre."
         }
     },
     "uptime": "Disponibilité",
@@ -1317,8 +1381,13 @@
     },
     "dontHaveEnoughFoundsForFee": "Vous n'avez pas assez de fonds pour payer les frais de transaction.",
     "asset": "actif",
-    "minAmountError": "",
+    "minAmountError": "Le montant minimum est {minAmount} {code}",
+    "app": "App",
+    "noSelfSendError": "Le portefeuille de transfert ne peut pas être le même que le portefeuille de réception.",
+    "txWaitTitle": "",
+    "addComment": "",
+    "editComment": "",
     "errors": {
-        "notEnoughFounds": "{code} n'est pas suffisant pour payer les frais de transaction"
+        "notEnoughFounds": ""
     }
 }

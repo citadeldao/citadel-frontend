@@ -1,6 +1,22 @@
 <template>
-  <div class="dropdown-item">
-    <div class="dropdown-item__icon">
+  <div
+    class="dropdown-item"
+    @click.stop="change(!isItemChecked)"
+    :class="{
+      'dropdown-item--selectable': selectable,
+      'dropdown-item--checked': isItemChecked,
+    }"
+  >
+    <Checkbox
+      v-if="selectable"
+      :id="wallet.id"
+      :value="isItemChecked"
+      @change="change"
+    />
+    <div
+      class="dropdown-item__icon"
+      :class="{ 'dropdown-item__icon--selectable': selectable }"
+    >
       <component :is="currentIcon" />
     </div>
     <div class="dropdown-item__address">
@@ -10,7 +26,7 @@
           : currentAddress
       }}
     </div>
-    <div class="dropdown-item__btn_group">
+    <div class="dropdown-item__btn_group" v-if="!selectable">
       <div
         v-if="isSnip20"
         class="dropdown-item__btn dropdown-item__btn--key"
@@ -64,6 +80,7 @@ import { useStore } from 'vuex';
 import useWallets from '@/compositions/useWallets';
 import { WALLET_TYPES, SNIP20_PARENT_NET } from '@/config/walletType';
 
+import Checkbox from '@/components/UI/Checkbox';
 import DeleteAddressModal from './DeleteAddressModal.vue';
 import removeIcon from '@/assets/icons/settings/remove.svg';
 import keyIcon from '@/assets/icons/settings/key.svg';
@@ -74,6 +91,7 @@ import visionIcon from '@/assets/icons/input/vision.svg';
 export default {
   name: 'DropdownItem',
   components: {
+    Checkbox,
     DeleteAddressModal,
     keyIcon,
     notificationIcon,
@@ -90,8 +108,12 @@ export default {
       type: Boolean,
       default: false,
     },
+    selectable: {
+      type: Boolean,
+      default: false,
+    },
   },
-  emits: ['exportWallet', 'toggle-hidden', 'deleteSeedModal'],
+  emits: ['exportWallet', 'toggle-hidden', 'deleteSeedModal', 'changeItem'],
   setup(props, { emit }) {
     const store = useStore();
     const { wallets } = useWallets();
@@ -100,15 +122,22 @@ export default {
     const notification = ref(false);
     const isShowDeleteModal = ref(false);
     const isLoading = ref(false);
+    const isItemChecked = ref(false);
     // const isLastWallet = computed(() => store.getters['wallets/wallets'].length === 0);
     const isSnip20 = computed(
       () =>
         props.wallet.net === SNIP20_PARENT_NET &&
         props.wallet.subtokensList.filter((item) => item.standard === 'snip20')
           .length
-      // store.getters['snip20Subtokens/availableSnip20TokenList'][props.wallet.address]?.length,
     );
-
+    const updateSelectedWallets = inject('updateSelectedWallets');
+    const change = (e) => {
+      isItemChecked.value = e;
+      updateSelectedWallets({
+        wallet: props.wallet,
+        isCheck: isItemChecked.value ? true : false,
+      });
+    };
     import(`@/assets/icons/types/${props.wallet.type}.svg`).then((val) => {
       currentIcon.value = markRaw(val.default);
     });
@@ -181,7 +210,7 @@ export default {
     });
 
     watchEffect(() => {
-      if (windowSize.value <= 1440) {
+      if (windowSize.value <= 1666) {
         currentAddress.value = `${currentAddress.value.slice(
           0,
           6
@@ -205,6 +234,8 @@ export default {
       exportWallet,
       openViewingKeyManager,
       currentAddress,
+      isItemChecked,
+      change,
     };
   },
 };
@@ -215,12 +246,22 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
-  height: 65px;
+  flex-wrap: no-wrap;
+  height: 48px;
   margin-bottom: 8px;
   border-radius: 8px;
   border: 1px solid $too-ligth-gray;
   padding: 0 10px;
+  &--selectable:not(&--checked) {
+    cursor: pointer;
+    .dropdown-item__address {
+      color: #756aa8;
+    }
+  }
+  &--checked:has(&--selectable) {
+    font-weight: 600;
+    color: #000000;
+  }
   &__icon {
     width: 36px;
     height: 36px;
@@ -234,17 +275,23 @@ export default {
       height: 22px;
       width: fit-content;
     }
+    &--selectable {
+      zoom: 0.67;
+    }
   }
 
   &__address {
+    font-size: 14px;
     text-align: left;
-    @include text-default;
-    width: 50%;
+    width: 60%;
     margin-left: 15px;
     margin-right: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   &__btn_group {
-    width: 35%;
+    max-width: 35%;
+    width: fit-content;
     display: flex;
     align-items: center;
     justify-content: flex-end;

@@ -21,6 +21,7 @@ import ktAddresses from './modules/ktAddresses';
 import newWallets from './modules/newWallets';
 import metamask from './modules/metamask';
 import keplr from './modules/keplr';
+import salary from './modules/salary';
 
 import subscriptions from './modules/subscriptions';
 
@@ -49,5 +50,6 @@ export default createStore({
     keplr,
     subscriptions,
     newWallets,
+    salary,
   },
 });

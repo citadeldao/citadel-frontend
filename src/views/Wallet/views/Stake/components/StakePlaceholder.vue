@@ -9,7 +9,12 @@
           <span class="card-special-title">
             {{ $t('stakePlaceholder.whatIs') }}
           </span>
-          <span class="card-special-title-staking">
+          <span
+            class="card-special-title-staking"
+            :style="{
+              'font-size': $i18n.locale === 'ru' ? '25px' : '',
+            }"
+          >
             {{ isXct ? 'XCT' : $t('staking.staking') }}
           </span>
           <RoundArrowButton

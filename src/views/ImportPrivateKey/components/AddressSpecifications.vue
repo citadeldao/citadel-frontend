@@ -33,6 +33,7 @@
           :label="$t('enterYourPrivateKey')"
           type="text"
           icon="key"
+          :error="invalidPrivateKey ? 'Invalid private key format' : ''"
           :placeholder="$t('privateKey')"
           data-qa="add-address__existing__private-key__key-field"
         />
@@ -61,6 +62,11 @@ export default {
     Input,
     PrimaryButton,
     Select,
+  },
+  props: {
+    invalidPrivateKey: {
+      required: true,
+    },
   },
   emits: ['setSpecifications'],
   setup(props, { emit }) {

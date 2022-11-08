@@ -3,6 +3,7 @@
     class="input"
     :class="{
       empty: type === 'empty',
+      noIcon: !icon,
       error,
       'input--type--currency': isTypeCurrency,
     }"
@@ -399,6 +400,12 @@ export default {
   height: 100%;
   display: flex;
   position: relative;
+
+  &.noIcon {
+    input {
+      padding-left: 12px;
+    }
+  }
   // & svg {
   //   position: absolute;
   // }
