@@ -1,5 +1,14 @@
 {
     "login": {
+        "continueEmail1": "Email will help you to",
+        "continueEmail2": "easily switch",
+        "continueEmail3": "between web platform and mobile application.",
+        "continueEmail4": "With email we can stay in touch with you",
+        "continueEmail5": "in case of emergency.",
+        "continueEmail6": "There are a lot of situations when we need to deliver you information quickly: a validator has gone offline and you need to transfer your coins; a loan liquidation is approaching, etc. Once the C1 application section is full of various use-cases, this kind of communication will be necessary.",
+        "continueEmail7": "We might also let you know if you are",
+        "continueEmail8": "missing your staking rewards,",
+        "continueEmail9": "so you earn more, but it's optional.",
         "loginInWith": "Login in with",
         "socialAccount": "Social account",
         "web3wallet": "Web3 Wallet",
