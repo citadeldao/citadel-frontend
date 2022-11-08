@@ -1,5 +1,9 @@
 <template>
-  <div :style="{ background }" class="info-banner">
+  <div
+    :style="{ background }"
+    class="info-banner"
+    :class="{ 'info-banner--small': small }"
+  >
     <keep-alive>
       <component :is="currentIcon" class="info-banner__icon" />
     </keep-alive>
@@ -48,6 +52,9 @@ export default {
       type: String,
     },
     guide: {
+      type: Boolean,
+    },
+    small: {
       type: Boolean,
     },
   },
@@ -103,6 +110,13 @@ export default {
   &__description {
     color: rgb(43, 82, 231);
     cursor: pointer;
+  }
+  &--small {
+    padding: 16px 13px;
+    & .info-banner__icon {
+      width: 40px;
+      height: 40px;
+    }
   }
 }
 
