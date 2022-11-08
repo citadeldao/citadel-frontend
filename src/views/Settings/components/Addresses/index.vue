@@ -229,6 +229,9 @@ export default {
       font-size: 16px;
       line-height: 19px;
     }
+    @media (max-width: 1700px) {
+      margin: 16px 0 10px !important;
+    }
   }
 }
 </style>

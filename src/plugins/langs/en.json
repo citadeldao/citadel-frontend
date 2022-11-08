@@ -718,7 +718,7 @@
             "bannerContent":"Address deleting causes the loss of seed phrase/private keys. Make sure to save them.",
             "selectAll":"Select all",
             "unselectAll":"Unselect all",
-            "selectedWalletsLength":"You select <b>{selectedWalletsLength}</b> addresses",
+            "selectedWalletsLength":"You select <b style='font-weight: 600;font-family: \"Panton_Bold\";'>{selectedWalletsLength}</b> addresses",
             "delete":"Delete"
         },
         "changeEmail": {
