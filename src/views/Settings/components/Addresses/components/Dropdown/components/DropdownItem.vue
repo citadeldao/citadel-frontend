@@ -23,15 +23,21 @@
       <div class="dropdown-item__info">
         <span
           class="dropdown-item__title"
+          :style="{ maxWidth: `${maxWidth}px` }"
           @mouseenter="showAddressTooltip = true"
           @mouseleave="showAddressTooltip = false"
           >{{ wallet.title || currentAddress }}</span
         >
-        <span class="dropdown-item__address">
+        <span
+          class="dropdown-item__address"
+          :style="{ maxWidth: `${maxWidth}px` }"
+          id="address"
+          ref="addressRef"
+        >
           {{
             hidden
               ? Array(wallet.address.length).fill('*').join('')
-              : currentAddress
+              : formattedAddress
           }}
         </span>
       </div>
@@ -93,7 +99,7 @@
 </template>
 
 <script>
-import { ref, markRaw, computed, inject, watchEffect } from 'vue';
+import { ref, markRaw, computed, inject, watch, nextTick } from 'vue';
 import { useStore } from 'vuex';
 import useWallets from '@/compositions/useWallets';
 import { WALLET_TYPES, SNIP20_PARENT_NET } from '@/config/walletType';
@@ -105,7 +111,9 @@ import keyIcon from '@/assets/icons/settings/key.svg';
 import notificationIcon from '@/assets/icons/settings/notification.svg';
 import exportIcon from '@/assets/icons/settings/export.svg';
 import visionIcon from '@/assets/icons/input/vision.svg';
-
+import { addressTextWidth, formattedWalletAddress } from '@/helpers';
+import { useWindowSize } from 'vue-window-size';
+import { screenWidths } from '@/config/sreenWidthThresholds';
 export default {
   name: 'DropdownItem',
   components: {
@@ -118,6 +126,10 @@ export default {
     visionIcon,
   },
   props: {
+    isOpen: {
+      type: Boolean,
+      required: false,
+    },
     wallet: {
       type: Object,
       required: true,
@@ -135,6 +147,7 @@ export default {
   setup(props, { emit }) {
     const store = useStore();
     const { wallets } = useWallets();
+    const { width } = useWindowSize();
     const manageVkWallets = inject('manageVkWallets');
     const currentIcon = ref();
     const notification = ref(false);
@@ -228,18 +241,47 @@ export default {
       windowSize.value = window.innerWidth;
     });
 
-    watchEffect(() => {
-      if (windowSize.value <= 1280) {
-        currentAddress.value = `${currentAddress.value.slice(
-          0,
-          6
-        )}***${currentAddress.value.slice(
-          currentAddress.value.length - 6,
-          currentAddress.value.length
-        )}`;
-      }
+    const addressRef = ref(null);
+    const wrapperWidth = ref();
+    const handleResize = ({ width }) => {
+      wrapperWidth.value = width;
+    };
+    const fontSizes = computed(() => {
+      return width.value < screenWidths.lg
+        ? { name: 14, address: 12 }
+        : { name: 14, address: 12 };
     });
+
+    const maxWidth = computed(() =>
+      addressTextWidth(
+        props.wallet?.address,
+        'Panton_Regular',
+        fontSizes.value.address
+      )
+    );
+    const formattedAddress = computed(() => {
+      if (props.isOpen)
+        return formattedWalletAddress(
+          props.wallet?.address,
+          +wrapperWidth.value,
+          'Panton_Regular',
+          fontSizes.value.address
+        );
+      return props.wallet?.address;
+    });
+    watch(
+      () => props.isOpen,
+      (value) => {
+        nextTick(() => {
+          if (value) wrapperWidth.value = addressRef.value.offsetWidth;
+        });
+      }
+    );
     return {
+      addressRef,
+      formattedAddress,
+      maxWidth,
+      handleResize,
       currentIcon,
       notification,
       isSnip20,
@@ -280,6 +322,7 @@ export default {
     color: #000000;
   }
   &__icon {
+    min-width: 36px;
     width: 36px;
     height: 36px;
     border-radius: 4px;
@@ -297,7 +340,7 @@ export default {
   }
 
   &__info {
-    max-width: 60%;
+    max-width: 65%;
     color: #4b4c63;
     display: flex;
     flex-direction: column;
@@ -305,9 +348,8 @@ export default {
       display: flex;
       gap: 7px;
       align-items: center;
-    }
-    @include md {
-      max-width: 400px;
+      width: 65%;
+      flex: 1;
     }
   }
   &__title {
@@ -317,16 +359,16 @@ export default {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    cursor: pointer;
   }
   &__address {
+    flex: 1;
+    position: relative;
     width: 100%;
     text-align: left;
     margin-right: auto;
     color: $fieldName;
     font-size: 12px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
   }
 
   &__btn_group {

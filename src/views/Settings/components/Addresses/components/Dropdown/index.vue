@@ -23,6 +23,7 @@
         class="dropdown__item"
       >
         <DropdownItem
+          :is-open="isOpen"
           ref="dropdownItem"
           :selectable="selectable"
           :wallet="wallet"
