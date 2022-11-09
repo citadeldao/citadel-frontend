@@ -327,6 +327,7 @@ export default {
     const route = useRoute();
     const { currency, currentWallet, isHardwareWallet, currentToken } =
       useWallets();
+    provide('currentToken', currentToken);
     const subtokensIsLoading = ref(false);
     const { loadKtAddresses, ktAddresses } = useKtAddresses();
     const showClaimModal = computed(() => {
