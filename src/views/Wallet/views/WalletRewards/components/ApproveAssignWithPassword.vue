@@ -1,6 +1,6 @@
 <template>
   <div class="approve-assign-with-password">
-    <div class="approve-assign-with-password__password-input">
+    <div v-if="hasSeeds" class="approve-assign-with-password__password-input">
       <Input
         id="password"
         v-model="password"
@@ -22,6 +22,12 @@ export default {
   name: 'ApproveAssignWithPassword',
   components: { Input },
   emits: ['approveAssign'],
+  props: {
+    hasSeeds: {
+      type: Boolean,
+      required: true,
+    },
+  },
   setup() {
     const password = inject('password');
     const inputError = inject('inputError');
