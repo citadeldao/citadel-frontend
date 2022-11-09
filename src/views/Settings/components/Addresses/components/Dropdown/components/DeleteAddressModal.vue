@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO SHIT ON V-CLICK-AWAY -->
   <Modal v-if="show">
     <ModalContent
       type="warning"

@@ -354,8 +354,13 @@ export default {
   }
 
   &__type-block-type {
-    @include lg {
-      // display: none;
+    max-width: 145px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    @include md {
+      max-width: 240px;
     }
   }
 
