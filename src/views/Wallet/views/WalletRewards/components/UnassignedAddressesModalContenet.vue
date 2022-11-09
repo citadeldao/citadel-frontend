@@ -61,6 +61,7 @@ export default {
     };
     const checkAll = () => {
       let list = props.list;
+      if (checkedAddresses.value.length === list.length) return;
       for (const key in list) {
         if (Object.hasOwnProperty.call(list, key)) {
           addItem(list[key]);
