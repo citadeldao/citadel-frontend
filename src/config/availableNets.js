@@ -99,6 +99,7 @@ export const keplrNetworks = [
   { label: 'Crescent', key: 'crescent-1', net: 'crescent' },
   { label: 'Stride', key: 'stride-1', net: 'stride' },
   { label: 'Stafi', key: 'stafihub-1', net: 'stafi' },
+  { label: 'Jackal', key: 'jackal-1', net: 'jackal' },
 ];
 
 export const showAssetsExep = ['secret', 'bsc'];
