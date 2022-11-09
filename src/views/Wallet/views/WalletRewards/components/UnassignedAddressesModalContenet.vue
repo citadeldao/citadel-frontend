@@ -1,10 +1,15 @@
 <template>
   <div class="unassigned-addresses-modal-content">
     <span class="unassigned-addresses-modal-content__list-counter">
-      <span class="unassigned-addresses-modal-content__list-counter-value">
-        {{ checkedAddresses.length }}
+      <span>
+        <span class="unassigned-addresses-modal-content__list-counter-value">
+          {{ checkedAddresses.length }}
+        </span>
+        {{ $t('customLists.walletsCountTitle') }}
       </span>
-      {{ $t('customLists.walletsCountTitle') }}
+      <span class="select-all" @click="checkAll">{{
+        $t('settings.addresses.selectAll')
+      }}</span>
     </span>
     <div class="unassigned-addresses-modal-content__list">
       <AssignAddressItem
@@ -32,7 +37,7 @@ export default {
       default: () => ({}),
     },
   },
-  setup() {
+  setup(props) {
     const checkedAddresses = inject('checkedAddresses');
     const updateCheckedAddresses = inject('updateCheckedAddresses');
 
@@ -54,8 +59,15 @@ export default {
       )),
         updateCheckedAddresses(checkedAddresses.value);
     };
-
-    return { checked, addItem, removeItem, checkedAddresses };
+    const checkAll = () => {
+      let list = props.list;
+      for (const key in list) {
+        if (Object.hasOwnProperty.call(list, key)) {
+          addItem(list[key]);
+        }
+      }
+    };
+    return { checked, checkAll, addItem, removeItem, checkedAddresses };
   },
 };
 </script>
@@ -67,6 +79,9 @@ export default {
   flex-direction: column;
   padding: 22px 0 0 0;
   &__list-counter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-size: 16px;
     line-height: 19px;
     color: $blue;
@@ -81,5 +96,14 @@ export default {
     overflow-y: auto;
     overflow-x: hidden;
   }
+}
+.select-all {
+  cursor: pointer;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  color: #00a3ff;
+  border-bottom: 1px dashed #00a3ff;
 }
 </style>
