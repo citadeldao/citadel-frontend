@@ -62,7 +62,34 @@
                 "title": "3. Profitez de vos récompenses de staking !",
                 "text": "Vous pouvez réclamer vos récompenses en quelques clics."
             }
-        }
+        },
+        "loginInWith": "",
+        "socialAccount": "",
+        "web3wallet": "",
+        "web3TitleMenu": "",
+        "web3DescriptionMenu": "",
+        "socialTitleMenu": "",
+        "socialDescriptionMenu": "",
+        "disclaimerMailTitle": "",
+        "disclaimerMailGuide": "",
+        "disclaimerMailGuide1": "",
+        "useEmailBtn": "Use email",
+        "continueWithoutEmail": "",
+        "approveKeplrTitle": "",
+        "approveMetamaskTitle": "",
+        "approveDescription": "",
+        "confirmAddressTitleAnother": "",
+        "confirmAddressTitleMetamaskEth": "",
+        "confirmAddressTitleMetamaskBSC": "",
+        "confirmAddressTitleKeplr": "",
+        "changeLangTitle": "",
+        "changeLangDescription": "",
+        "KeplrNotFound": "",
+        "MetamaskNotFound": "",
+        "language": "",
+        "back": "",
+        "continue": "",
+        "with": ""
     },
     "logout": {
         "modal": {
@@ -96,7 +123,8 @@
         "card3Important": "Note : Vous ne pourrez pas staker ou transférer vos actifs avec cette option",
         "card3Note": "lecture seule",
         "button": "Ajouter une adresse",
-        "invalidDerivationPath": "Chemin de dérivation invalide"
+        "invalidDerivationPath": "Chemin de dérivation invalide",
+        "addressLimits": ""
     },
     "addToOneSeed": {
         "rearrangeWords": "Veuillez réarranger les mots dans l'ordre correct pour confirmer votre phrase mnémotechnique.",
@@ -115,7 +143,12 @@
         "walletCreated": "Votre portefeuille a été créé !",
         "walletCreatedDescription": " Si vous souhaitez accéder à la liste des réseaux disponibles, cochez la case correspondante",
         "errorConfirmWords1": "Veuillez vérifier les mots saisis.",
-        "errorConfirmWords2": "Si vous avez mal noté votre seed-phrase, revenez à l'étape précédente et assurez-vous que vos enregistrements sont corrects."
+        "errorConfirmWords2": "Si vous avez mal noté votre seed-phrase, revenez à l'étape précédente et assurez-vous que vos enregistrements sont corrects.",
+        "backUp": {
+            "h1": "",
+            "h2": "",
+            "h3": ""
+        }
     },
     "importExistingAddress": {
         "card1Title": "Seed - phrase",
@@ -221,7 +254,14 @@
         "editCommentModalTitle": "Modifier le commentaire",
         "editCommentModalDesc": "Vous pouvez ajouter votre commentaire à la transaction ci-dessous",
         "transactionInfoModalTitle": "Informations sur la transaction",
-        "transactionInfoModalDesc": "Voir les détails de la transaction ci-dessous"
+        "transactionInfoModalDesc": "Voir les détails de la transaction ci-dessous",
+        "failed": "",
+        "modalSuccessHeader": "",
+        "modalSuccessDescription": "",
+        "modalPendingHeader": "",
+        "modalPendingDescription": "",
+        "modalFailHeader": "",
+        "modalFailDescription": ""
     },
     "sendModal": {
         "title1": "Confirmez l'envoi du jeton",
@@ -673,9 +713,17 @@
             "title": "Adresses",
             "description": "Supprimez vos adresses ou importez des seedphrase, des clés privées ou des clés de visualisation",
             "deleteModalTitle": "Voulez-vous supprimer l'adresse ?",
+            "deleteModalSubtitle": "",
             "deleteSeedTitle": "Voulez-vous supprimer l'information de One-Seed ?",
             "deleteSeedDesc": "Vous pouvez supprimer toutes les données stockées localement sur votre One-Seed",
-            "deleteSeedInfo": "Remarque : après confirmation de cette action, toutes les données associées à votre portefeuille One-Seed seront supprimées."
+            "deleteSeedInfo": "Remarque : après confirmation de cette action, toutes les données associées à votre portefeuille One-Seed seront supprimées.",
+            "modalTitle":"",
+            "modalSubtitle":"",
+            "bannerContent":"",
+            "selectAll":"",
+            "unselectAll":"",
+            "selectedWalletsLength":"",
+            "delete":""
         },
         "changeEmail": {
             "title": "Votre email",
@@ -683,7 +731,16 @@
             "inputLabel": "Votre e-mail",
             "inputPlaceHolder": "e-mail",
             "button": "Changement",
-            "comingSoon": "BIENTÔT DISPONIBLE"
+            "comingSoon": "BIENTÔT DISPONIBLE",
+            "changeModalTitle": "",
+            "changeModalDescription": "",
+            "oldEmail": "",
+            "newEmail": "",
+            "emailPlaceholder": "",
+            "validFormatError": "",
+            "lastStep": "",
+            "lastStepDescription": "",
+            "resend": ""
         },
         "language": {
             "title": "Langue",
@@ -1203,7 +1260,8 @@
     },
     "faq": {
         "privacyPolicy": "Politique de confidentialité",
-        "termsOfService": "Conditions d'utilisation"
+        "termsOfService": "Conditions d'utilisation",
+        "guide": ""
     },
     "dontHaveEnoughFounds": "Vous n'avez pas assez de fonds pour payer les frais de transaction.",
     "transactionsSocket": {
@@ -1325,5 +1383,11 @@
     "asset": "actif",
     "minAmountError": "Le montant minimum est {minAmount} {code}",
     "app": "App",
-    "noSelfSendError": "Le portefeuille de transfert ne peut pas être le même que le portefeuille de réception."
+    "noSelfSendError": "Le portefeuille de transfert ne peut pas être le même que le portefeuille de réception.",
+    "txWaitTitle": "",
+    "addComment": "",
+    "editComment": "",
+    "errors": {
+        "notEnoughFounds": ""
+    }
 }
