@@ -414,6 +414,7 @@ export default {
         if (item.type === WALLET_TYPES.KEPLR) {
           const { data } = await item.prepareAssignToDaoMessage(item.id);
           const { id } = data;
+
           const keplrResult = await keplrConnector.value.sendKeplrTransaction(
             data.message.originalCosmosMsg || data.message,
             item.address,
@@ -422,6 +423,15 @@ export default {
               preferNoSetMemo: true,
             }
           );
+
+          if (keplrResult.error) {
+            notify({
+              type: 'warning',
+              text: keplrResult.error,
+            });
+            modalCloseHandler();
+            return;
+          }
           const { error } = await item.sendAssignToDaoMessage(
             props.currentWallet.address,
             id,
