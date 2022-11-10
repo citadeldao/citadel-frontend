@@ -2,6 +2,40 @@ import { i18n } from '@/plugins/i18n';
 const { t } = i18n.global;
 
 export default {
+  // new
+  Received: {
+    icon: 'income',
+    title: t('receive'),
+  },
+  Stake: {
+    icon: 'stake',
+    title: t('Stake'),
+  },
+  Claim: {
+    icon: 'reward',
+    title: 'Rewards',
+  },
+  Unstake: {
+    icon: 'unstake',
+    title: t('unstake'),
+  },
+  Sent: {
+    icon: 'outcome',
+    title: t('send'),
+  },
+  Vote: {
+    icon: 'vote',
+    title: 'Vote',
+  },
+  'IBC send': {
+    icon: 'IBC',
+    title: 'IBC',
+  },
+  'Custom - Update Client': {
+    icon: 'IBC',
+    title: 'Custom',
+  },
+  // old
   income: {
     icon: 'income',
     title: t('receive'),

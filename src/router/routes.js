@@ -10,6 +10,15 @@ export default [
     },
   },
   {
+    path: '/auth/verification/:code',
+    name: 'Login',
+    component: () => import(/* webpackChunkName: 'Login' */ '@/views/Login'),
+    meta: {
+      layout: 'DefaultLayout',
+      guard: 'guest',
+    },
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import(/* webpackChunkName: 'Login' */ '@/views/Login'),
@@ -62,6 +71,14 @@ export default [
         component: () =>
           import(
             /* webpackChunkName: 'Transactions' */ '@/views/Wallet/views/Transactions'
+          ),
+      },
+      {
+        name: 'WalletTransactionsOld',
+        path: 'transactions',
+        component: () =>
+          import(
+            /* webpackChunkName: 'Transactions' */ '@/views/Wallet/views/TransactionsOld'
           ),
       },
     ],
@@ -306,6 +323,15 @@ export default [
     path: '/multisig-balance',
     name: 'multisigBalance',
     component: () => import('@/views/MultisigBalance'),
+    meta: {
+      layout: 'AddAddressLayout',
+      guard: 'private',
+    },
+  },
+  {
+    path: '/multisender',
+    name: 'multisender',
+    component: () => import('@/views/SalaryPage'),
     meta: {
       layout: 'AddAddressLayout',
       guard: 'private',

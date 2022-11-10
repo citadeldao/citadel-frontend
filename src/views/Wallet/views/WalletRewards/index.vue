@@ -98,6 +98,11 @@
         <template #default>
           <ApproveAssignWithPassword
             v-if="showPasswordForAssign"
+            :has-seeds="
+              seedAddresses.some(({ type }) =>
+                [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(type)
+              )
+            "
             @approveAssign="approveAssign"
           />
         </template>
@@ -353,9 +358,8 @@ export default {
     );
     const hardwareAddresses = computed(() =>
       sortByAlphabet(
-        checkedAddresses.value.filter(
-          ({ type }) =>
-            type === WALLET_TYPES.TREZOR || type === WALLET_TYPES.LEDGER
+        checkedAddresses.value.filter(({ type }) =>
+          [WALLET_TYPES.TREZOR, WALLET_TYPES.LEDGER].includes(type)
         ),
         'net'
       )
@@ -389,7 +393,11 @@ export default {
 
     const newAssignedAddresses = ref([]);
     const approveAssign = async () => {
-      if (passwordError.value && showPasswordForAssign.value) {
+      const hasSeeds = seedAddresses.value.some(({ type }) =>
+        [WALLET_TYPES.PRIVATE_KEY, WALLET_TYPES.ONE_SEED].includes(type)
+      );
+
+      if (hasSeeds && passwordError.value && showPasswordForAssign.value) {
         inputError.value = passwordError.value;
 
         return;
@@ -406,14 +414,24 @@ export default {
         if (item.type === WALLET_TYPES.KEPLR) {
           const { data } = await item.prepareAssignToDaoMessage(item.id);
           const { id } = data;
+
           const keplrResult = await keplrConnector.value.sendKeplrTransaction(
-            data.message,
+            data.message.originalCosmosMsg || data.message,
             item.address,
             {
               preferNoSetFee: true,
               preferNoSetMemo: true,
             }
           );
+
+          if (keplrResult.error) {
+            notify({
+              type: 'warning',
+              text: keplrResult.error,
+            });
+            modalCloseHandler();
+            return;
+          }
           const { error } = await item.sendAssignToDaoMessage(
             props.currentWallet.address,
             id,
@@ -544,6 +562,7 @@ export default {
       hardwareAdressesModalClick,
       currentWalletType,
       showPasswordForAssign,
+      seedAddresses,
     };
   },
 };
