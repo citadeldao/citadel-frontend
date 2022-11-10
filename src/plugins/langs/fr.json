@@ -62,34 +62,7 @@
                 "title": "3. Profitez de vos récompenses de staking !",
                 "text": "Vous pouvez réclamer vos récompenses en quelques clics."
             }
-        },
-        "loginInWith": "",
-        "socialAccount": "",
-        "web3wallet": "",
-        "web3TitleMenu": "",
-        "web3DescriptionMenu": "",
-        "socialTitleMenu": "",
-        "socialDescriptionMenu": "",
-        "disclaimerMailTitle": "",
-        "disclaimerMailGuide": "",
-        "disclaimerMailGuide1": "",
-        "useEmailBtn": "Use email",
-        "continueWithoutEmail": "",
-        "approveKeplrTitle": "",
-        "approveMetamaskTitle": "",
-        "approveDescription": "",
-        "confirmAddressTitleAnother": "",
-        "confirmAddressTitleMetamaskEth": "",
-        "confirmAddressTitleMetamaskBSC": "",
-        "confirmAddressTitleKeplr": "",
-        "changeLangTitle": "",
-        "changeLangDescription": "",
-        "KeplrNotFound": "",
-        "MetamaskNotFound": "",
-        "language": "",
-        "back": "",
-        "continue": "",
-        "with": ""
+        }
     },
     "logout": {
         "modal": {
