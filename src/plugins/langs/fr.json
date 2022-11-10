@@ -613,6 +613,7 @@
     "addAnAddress": "Ajouter une adresse",
     "chooseSuitableMethod": "Choisissez une méthode appropriée pour importer une adresse existante",
     "address": "Adresse",
+    "anotherAddress": "",
     "enterAddress": "Entrez l'adresse",
     "import": "Importer",
     "enterMnemonicPhrase": "Entrez une phrase mnémotechnique",

@@ -578,6 +578,7 @@
     "addAnAddress": "添加一个地址",
     "chooseSuitableMethod": "选择合适的方式导入已有地址",
     "address": "地址",
+    "anotherAddress": "",
     "enterAddress": "输入地址",
     "import": "导入",
     "enterMnemonicPhrase": "输入助记词短语",

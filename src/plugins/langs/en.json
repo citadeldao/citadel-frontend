@@ -626,6 +626,7 @@
     "addAnAddress": "Add an address",
     "chooseSuitableMethod": "Choose a suitable method to import an existing address",
     "address": "Address",
+    "anotherAddress": "Another Address",
     "enterAddress": "Enter address",
     "import": "Import",
     "enterMnemonicPhrase": "Enter a mnemonic phrase",

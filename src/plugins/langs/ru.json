@@ -622,6 +622,7 @@
     "addAnAddress": "Добавить адрес",
     "chooseSuitableMethod": "Выбрать подходящий метод для импорта существующего адреса",
     "address": "Адрес",
+    "anotherAddress": "",
     "enterAddress": "Введите адрес",
     "import": "Импорт",
     "enterMnemonicPhrase": "Введите мнемоническую фразу",

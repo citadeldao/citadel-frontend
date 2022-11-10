@@ -13,7 +13,7 @@
       <restoreIconHover v-if="icon === 'restore'" class="hover" />
       <importIcon v-if="icon === 'import'" class="initial" />
       <importIconHover v-if="icon === 'import'" class="hover" />
-      <seedPhraseIcon v-if="icon === 'seedphrase'" class="initial" />
+      <seedPhraseIcon v-if="icon === 'seedphrase'" class="initial seed" />
       <seedPhraseIconHover v-if="icon === 'seedphrase'" class="hover" />
       <privateKeyIcon v-if="icon === 'privatekey'" class="initial" />
       <privateKeyIconHover v-if="icon === 'privatekey'" class="hover" />
@@ -89,7 +89,10 @@ export default {
     position: absolute;
     bottom: 25px;
     right: 15px;
-
+    & .seed {
+      width: 69px;
+      fill: $too-ligth-blue;
+    }
     .hover {
       display: none;
     }
