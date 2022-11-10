@@ -1,6 +1,6 @@
 <template>
   <Modal>
-    <ModalContent :submit-button="false" @close="close">
+    <ModalContent :submit-button="false" @close="close" v-click-away="close">
       <div v-if="isLoading" class="delete-address-modal__loader">
         <Loading />
       </div>
