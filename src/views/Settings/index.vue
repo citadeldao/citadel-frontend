@@ -404,7 +404,7 @@ export default {
         filter: none;
       }
       & > div:not(:last-child) {
-        margin-bottom: $card-margin;
+        margin-bottom: 10px;
       }
     }
 
