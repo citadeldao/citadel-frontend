@@ -420,10 +420,13 @@ export default {
       font-family: 'Panton_Bold';
       margin-right: 5px;
       text-transform: capitalize;
-      @include md {
-        font-size: 16px;
+      @include laptop-standard {
+        font-size: $default-size;
         line-height: 19px;
       }
+    }
+    .tooltip {
+      height: 14px;
     }
   }
 

@@ -339,9 +339,13 @@ export default {
   &__title {
     margin-right: 15px;
     font-weight: 700;
-    font-size: 30px;
+    font-size: $h2-size;
     line-height: 30px;
     flex: 1 1 auto;
+
+    @include laptop-standard {
+      font-size: $h4-size;
+    }
   }
 
   &__icon {

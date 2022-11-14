@@ -241,13 +241,16 @@ export default {
     font-size: 20px;
     line-height: 1.1;
     font-family: 'Panton_SemiBold';
+    width: 100%;
 
     @include lg {
       font-size: 17px;
     }
 
-    @include md {
-      font-size: 14px;
+    @include laptop-standard {
+      font-size: $small-lg;
+      min-width: 130px;
+      max-width: 200px;
     }
   }
 }
