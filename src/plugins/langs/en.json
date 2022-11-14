@@ -766,8 +766,8 @@
             "description": "This operation cannot be reversed",
             "modalDescription": "Please note that this action cannot be reversed. Your assets are safe - you only delete the Citadel.one account",
             "button": "Delete account",
-            "inputLabel": "Type \"Delete account\" to confirm",
-            "placeholder": "Type 'delete'"
+            "inputLabel": "Enter \"delete\" to confirm",
+            "placeholder": "Enter confirmation"
         },
         "changePassword": {
             "btnTitle": "Change password",
