@@ -963,6 +963,7 @@
     "emptyPassword": "Mot de passe vide",
     "accruedDaily": "Accumulé quotidiennement de 6 à 7 heures UTC",
     "extensions": {
+        "emptyList": "",
         "showLabel": "Afficher",
         "headerTitle": "Magasin d'extensions",
         "headerDescription": "Utilisez vos dApps, applications DeFi et extensions préférées en mode natif !",

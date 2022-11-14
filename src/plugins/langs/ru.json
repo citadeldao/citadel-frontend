@@ -973,6 +973,7 @@
     "emptyPassword": "Поле пароля пусто",
     "accruedDaily": "Начисляется ежедневно с 18:00 до 19:00 UTC",
     "extensions": {
+        "emptyList": "",
         "showLabel": "Показать",
         "headerTitle": "Приложения",
         "headerDescription": "Используйте ваши любимые приложения DeFi и другие приложения не покидая Citadel.one!",

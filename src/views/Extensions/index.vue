@@ -55,7 +55,15 @@
       @search="onSearchHandler"
       @selectTags="onSelectTags"
     />
-    <div v-if="!currentApp && !loading" class="extensions__apps">
+    <div
+      :class="{ empty: !appsFiltered.length && searchStr.length }"
+      v-if="!currentApp && !loading"
+      class="extensions__apps"
+    >
+      <EmptyList
+        v-if="!appsFiltered.length && searchStr.length"
+        :title="$t('extensions.emptyList')"
+      />
       <AppBlock
         v-for="(app, ndx) in appsFiltered"
         :key="ndx"
@@ -191,6 +199,7 @@ import TransactionInfo from './components/TransactionInfo';
 import MessageInfo from './components/MessageInfo';
 import FrameApp from './components/FrameApp.vue';
 import { parseTagsList, filteredApps } from './components/helpers';
+import EmptyList from './components/EmptyList';
 
 export default {
   name: 'Extensions',
@@ -207,6 +216,7 @@ export default {
     TransactionInfo,
     MessageInfo,
     FrameApp,
+    EmptyList,
   },
   setup() {
     const signLoading = ref(false);
@@ -1103,6 +1113,7 @@ export default {
       confirmClickHandler,
       filterItems,
       signLoading,
+      searchStr,
 
       //ledgers
       showLedgerConnect,
@@ -1152,6 +1163,13 @@ export default {
     float: left;
     background: $white;
     border-radius: 0 0 16px 16px;
+
+    &.empty {
+      height: calc(100vh - 215px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 
   &__loading {
