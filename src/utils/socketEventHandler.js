@@ -3,6 +3,7 @@ import useWallets from '@/compositions/useWallets';
 import extensionsSocketTypes from '@/config/extensionsSocketTypes';
 import notify from '@/plugins/notify';
 import { WALLET_TYPES } from '@/config/walletType';
+let lastTimeAppKeplrNotify = 0;
 
 export async function socketEventHandler({ eventName, data }) {
   switch (eventName) {
@@ -30,11 +31,17 @@ export async function socketEventHandler({ eventName, data }) {
           ?.bech32Address;
         // check keplr account
         if (data.message.address !== keplrAddress) {
+          const now = Date.now();
+          const NOTIFY_INTERVAL = 5000;
+          if (now - lastTimeAppKeplrNotify < NOTIFY_INTERVAL) {
+            return;
+          }
           notify({
             type: 'warning',
             text: 'Please change Keplr account',
             duration: 3000,
           });
+          lastTimeAppKeplrNotify = now;
         }
       }
 
