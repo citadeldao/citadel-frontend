@@ -727,7 +727,7 @@
         },
         "changeEmail": {
             "title": "Votre email",
-            "description": "Vous pouvez modifier l'adresse e-mail de votre compte ici",
+            "description": "",
             "inputLabel": "Votre e-mail",
             "inputPlaceHolder": "e-mail",
             "button": "Changement",
