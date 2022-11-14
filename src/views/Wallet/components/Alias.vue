@@ -333,6 +333,7 @@ export default {
   }
   &__info {
     display: flex;
+    max-width: 700px;
     @include xl {
       width: auto;
     }

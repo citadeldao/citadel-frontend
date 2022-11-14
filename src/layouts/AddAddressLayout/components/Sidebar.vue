@@ -5,12 +5,8 @@
     @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"
   >
-    <div class="sidebar__logo">
-      <div
-        data-qa="main-logo"
-        class="sidebar__logo-inner-wrapper"
-        @click="setActiveTab('all')"
-      >
+    <div data-qa="main-logo" class="sidebar__logo" @click="setActiveTab('all')">
+      <div class="sidebar__logo-inner-wrapper">
         <citadelLogo class="sidebar__logo-citadel" />
         <onlyLogo class="sidebar__compact-logo-citadel" />
       </div>
@@ -527,10 +523,11 @@ export default {
   }
 
   &__logo {
-    margin: 0 auto 40px;
+    margin: 0 auto 45px;
     max-width: calc(#{$sidebar-max-width} - 50px);
     width: 100%;
     text-align: left;
+    cursor: pointer;
     @include md {
       max-width: calc(#{$sidebar-max-width-md} - 50px);
       margin: 0 auto 20px;
@@ -632,7 +629,7 @@ export default {
     & svg {
       width: 20px;
       height: 20px;
-      fill: $mid-blue;
+      fill: $blue-hyacinth;
       margin-right: 19px;
       cursor: pointer;
 

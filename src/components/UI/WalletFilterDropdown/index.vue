@@ -212,12 +212,29 @@ export default {
   }
 
   &--input {
-    height: 68px;
-    width: 68px;
+    height: 80px;
+    width: 80px;
+
+    min-height: 56px;
+    min-width: 56px;
+
+    max-height: 80px;
+    max-width: 80px;
+
     justify-content: center;
     align-items: center;
     border: 1px solid $too-ligth-blue;
     border-radius: 8px;
+
+    @include md {
+      height: 64px;
+      width: 64px;
+    }
+
+    @include laptop {
+      height: 56px;
+      width: 56px;
+    }
   }
 }
 </style>
