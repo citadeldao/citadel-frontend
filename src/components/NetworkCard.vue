@@ -12,14 +12,14 @@
       </div>
       <div class="network-card__content">
         <span class="network-card__title">
-          {{ network.title }}
+          {{ network?.title || network?.label }}
         </span>
         <div class="network-card__info">
-          <span v-if="network.percent" class="network-card__percent">
-            {{ network.percent }}%
+          <span v-if="network?.percent" class="network-card__percent">
+            {{ network?.percent }}%
           </span>
           <div class="network-card__abbr">
-            {{ network.abbr }}
+            {{ network?.abbr || network?.key }}
           </div>
         </div>
       </div>
@@ -55,17 +55,17 @@ export default {
   emits: ['uncheck', 'check'],
   setup(props, { emit }) {
     const icon = ref();
-    import(`@/assets/icons/${props.iconPath}/${props.network.icon}.svg`).then(
-      (val) => {
-        icon.value = markRaw(val.default);
-      }
-    );
+    const iconName = props.network?.icon || props.network?.net;
+
+    import(`@/assets/icons/${props.iconPath}/${iconName}.svg`).then((val) => {
+      icon.value = markRaw(val.default);
+    });
 
     const toggleChecked = () => {
       if (props.checked) {
-        emit('uncheck', props.network.id);
+        emit('uncheck', props.network.id || props.network);
       } else {
-        emit('check', props.network.id);
+        emit('check', props.network.id || props.network);
       }
     };
 

@@ -6,28 +6,35 @@
     </Modal>
     <div class="keplr__section">
       <div class="controls">
-        <div class="select" @click="selectedCoins = [].concat(chains)">
-          {{ $t('keplr.selectAll') }}
-        </div>
-        <div class="unselect" @click="selectedCoins = []">
-          <p>{{ $t('keplr.unselectAll') }}</p>
-          <closeIcon class="close-icon" />
+        <Input
+          id="chainsSearch"
+          :label="$t('searchNetworks')"
+          @input="onChainsSearch"
+          type="text"
+          icon="loop"
+          clearable
+        />
+        <div class="controls__row">
+          <div class="select" @click="selectedCoins = [].concat(chains)">
+            {{ $t('keplr.selectAll') }}
+          </div>
+          <div class="unselect" @click="selectedCoins = []">
+            <p>{{ $t('keplr.unselectAll') }}</p>
+            <closeIcon class="close-icon" />
+          </div>
         </div>
       </div>
       <div class="chains__selector">
-        <div
-          v-for="(chain, ndx) in chains"
+        <NetworkCard
+          v-for="(chain, ndx) in chainList"
           :key="ndx"
-          class="chains__selector-row"
-        >
-          <CoinItem
-            :chain="chain"
-            :is-active="
-              !!selectedCoins.find((coin) => coin.label === chain.label)
-            "
-            @select="onSelectCoin"
-          />
-        </div>
+          :network="chain"
+          icon-path="networks"
+          :checked="!!selectedCoins.find((coin) => coin.label === chain.label)"
+          @check="onSelectCoin"
+          @uncheck="onSelectCoin"
+        />
+        <!-- </div> -->
       </div>
       <PrimaryButton
         :disabled="!selectedCoins.length"
@@ -43,6 +50,8 @@
 <script>
 import Modal from '@/components/Modal';
 import Loading from '@/components/Loading';
+import NetworkCard from '@/components/NetworkCard';
+import Input from '@/components/UI/Input';
 
 import { ref, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
@@ -52,7 +61,6 @@ import useCreateWallets from '@/compositions/useCreateWallets';
 import { WALLET_TYPES } from '@/config/walletType';
 import { i18n } from '@/plugins/i18n';
 import { keplrNetworks } from '@/config/availableNets';
-import CoinItem from './CoinItem.vue';
 import Header from '../AddAddress/components/Header';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import KeplrConnector from '@/models/Services/Keplr';
@@ -65,11 +73,12 @@ export default {
   name: 'Metamask',
   components: {
     PrimaryButton,
-    CoinItem,
     Modal,
     Header,
     Loading,
     closeIcon,
+    NetworkCard,
+    Input,
   },
   setup() {
     const router = useRouter();
@@ -214,6 +223,25 @@ export default {
       }
     });
 
+    const search = ref('');
+
+    const chainList = computed(() => {
+      if (!search.value) {
+        return chains.value;
+      }
+
+      const filtered = chains.value.filter(
+        (item) =>
+          item.label.toLowerCase().includes(search.value.toLowerCase()) ||
+          item.net.toLowerCase().includes(search.value.toLowerCase()) ||
+          item.key.toLowerCase().includes(search.value.toLowerCase())
+      );
+
+      return filtered;
+    });
+
+    const onChainsSearch = (value) => (search.value = value);
+
     return {
       showSuccess,
       chains,
@@ -225,6 +253,8 @@ export default {
       loadingImport,
       importedAddresses,
       privateWallets,
+      chainList,
+      onChainsSearch,
     };
   },
 };
@@ -260,13 +290,25 @@ export default {
   }
 
   .controls {
-    width: 300px;
-    margin: 40px auto 23px auto;
+    width: 100%;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 600;
-    font-size: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: column;
+    margin: 50px auto 0;
+    max-width: 875px;
+
+    .input {
+      height: 68px;
+    }
+
+    &__row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin: 15px 0 25px;
+    }
     .select {
       color: #00a3ff;
       border-bottom: 1px dotted #00a3ff;
@@ -326,14 +368,23 @@ export default {
 }
 
 .chains__selector {
+  width: 100%;
+  margin: auto;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 310px;
-  margin: 0 auto 30px;
-  height: 300px;
-  box-sizing: border-box;
-  overflow-y: auto;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 7px;
+  margin-bottom: 30px;
+
+  @include lg {
+    gap: 16px;
+  }
+  @include md {
+    gap: 13px;
+  }
+  .network-card {
+    max-width: 290px;
+  }
 }
 .close-icon {
   svg {
