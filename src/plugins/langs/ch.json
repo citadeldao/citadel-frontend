@@ -692,7 +692,7 @@
         },
         "changeEmail": {
             "title": "您的邮箱",
-            "description": "您的账户邮箱",
+            "description": "您可以在此处更改帐户的电子邮件地址",
             "inputLabel": "您的邮箱",
             "inputPlaceHolder": "邮箱",
             "button": "切换",

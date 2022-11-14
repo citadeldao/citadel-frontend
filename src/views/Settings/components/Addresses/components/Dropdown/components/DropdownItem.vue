@@ -309,7 +309,7 @@ export default {
     cursor: pointer;
 
     &:not(:first-child) {
-      margin-left: 3px;
+      margin-left: 8px;
     }
     &:hover {
       background: $too-dark-blue;

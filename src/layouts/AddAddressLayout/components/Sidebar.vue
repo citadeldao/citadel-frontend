@@ -82,9 +82,6 @@
         :class="scrollClass"
         @change="isOverflown($event)"
       >
-        <h4 class="sidebar__addresses-header-title">
-          {{ $t('layouts.addAddressLayout.addresses') }}
-        </h4>
         <SearchPlaceholder />
       </div>
       <div

@@ -737,7 +737,7 @@
         },
         "changeEmail": {
             "title": "Ваш e-mail",
-            "description": "E-mail вашего аккаунта",
+            "description": "Вы можете изменить адрес электронной почты своей учетной записи здесь",
             "inputLabel": "Ваш e-mail",
             "inputPlaceHolder": "e-mail",
             "button": "Изменить",
