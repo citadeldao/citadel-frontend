@@ -25,10 +25,11 @@
         class="vk-item__btn"
         :class="{ 'vk-item__btn--active': !isHidden }"
         @click="toggleIsHidden"
+        title="Show / Hide viewing key"
       >
         <vision class="vk-item__vision-svg" />
       </div>
-      <div class="vk-item__btn" @click="copyValue">
+      <div class="vk-item__btn" @click="copyValue" title="Copy viewing key">
         <transition name="fade1">
           <span v-if="isCopied" class="tooltip">
             {{ $t('copiedToClipboard') }}
@@ -36,7 +37,7 @@
         </transition>
         <copyIcon />
       </div>
-      <div class="vk-item__btn" @click="change">
+      <div class="vk-item__btn" @click="change" title="Change viewing key">
         <lockRefresh />
       </div>
     </div>
@@ -231,7 +232,7 @@ export default {
   top: 110%;
   left: 50%;
   margin-left: -60px;
-  box-shadow: 0px 4px 25px rgba(63, 54, 137, 0.25);
+  box-shadow: 0px 4px 10px rgba(63, 54, 137, 0.25);
   border-radius: 6px;
   font-size: 12px;
   line-height: 16px;
