@@ -199,7 +199,7 @@ import TransactionInfo from './components/TransactionInfo';
 import MessageInfo from './components/MessageInfo';
 import FrameApp from './components/FrameApp.vue';
 import { parseTagsList, filteredApps } from './components/helpers';
-import EmptyList from './components/EmptyList';
+import EmptyList from '@/components/EmptyList';
 
 export default {
   name: 'Extensions',
