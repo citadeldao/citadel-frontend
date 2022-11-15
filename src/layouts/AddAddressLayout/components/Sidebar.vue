@@ -380,13 +380,21 @@ export default {
       timer: null,
     };
   },
+  updated() {
+    setTimeout(this.setShadows, 1000);
+  },
   mounted() {
     if (window.innerWidth <= 1024) {
       document
         .querySelector('#main')
         .addEventListener('click', this.onClickMain);
     }
-    this.onScrollFullList();
+
+    this.setShadows();
+
+    document
+      .querySelector('.sidebar__addresses-addresses-full-list')
+      .addEventListener('scroll', this.onScrollFullList);
   },
   created() {
     window.addEventListener('resize', this.onResize);
@@ -429,42 +437,52 @@ export default {
         clearTimeout(this.timer);
       }
     },
-    onScrollFullList() {
-      const fullList = document.querySelector(
-        '.sidebar__addresses-addresses-full-list'
-      );
-
-      const shadowBottom = document.querySelector('.scroll-shadow--bottom');
+    onScrollFullList(e) {
+      return this.setShadows(e.target);
+    },
+    setShadows(parent) {
       const shadowTop = document.querySelector('.scroll-shadow--top');
+      const shadowBottom = document.querySelector('.scroll-shadow--bottom');
 
-      if (fullList.scrollHeight > fullList.clientHeight) {
+      let fullList = parent;
+
+      if (parent === undefined) {
+        fullList = document.querySelector(
+          '.sidebar__addresses-addresses-full-list'
+        );
+      }
+
+      if (!fullList) return;
+
+      const hasScroll = fullList.scrollHeight > fullList.clientHeight;
+
+      const checkOnBottom =
+        fullList.scrollHeight - fullList.scrollTop === fullList.clientHeight;
+
+      const checkOnTop = fullList.scrollTop === 0;
+
+      if (!hasScroll) {
+        shadowTop.classList.remove('active');
+        shadowBottom.classList.remove('active');
+
+        return;
+      }
+
+      shadowBottom.classList.add('active');
+
+      if (fullList.scrollTop > 0) {
+        shadowTop.classList.add('active');
+      } else if (checkOnTop) {
+        shadowTop.classList.remove('active');
+      }
+
+      if (hasScroll) {
         shadowBottom.classList.add('active');
       }
 
-      fullList.addEventListener('scroll', function (e) {
-        const hasScroll = e.target.scrollHeight > e.target.clientHeight;
-
-        const checkOnBottom =
-          e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-
-        const checkOnTop = e.target.scrollTop === 0;
-
-        if (!hasScroll) return;
-
-        shadowBottom.classList.add('active');
-
-        if (e.target.scrollTop > 0) {
-          shadowTop.classList.add('active');
-        }
-
-        if (checkOnBottom) {
-          shadowBottom.classList.remove('active');
-        }
-
-        if (checkOnTop) {
-          shadowTop.classList.remove('active');
-        }
-      });
+      if (checkOnBottom) {
+        shadowBottom.classList.remove('active');
+      }
     },
   },
 };
