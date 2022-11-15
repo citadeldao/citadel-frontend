@@ -898,7 +898,7 @@ export default {
     const showWarning = () => {
       notify({
         type: 'warning',
-        text: t('insufficientFunds'),
+        text: t('errors.notEnoughFounds', { code: currentWallet.value.code }),
       });
       claimModalCloseHandler();
       isLoading.value = false;

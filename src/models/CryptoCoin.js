@@ -6,6 +6,7 @@ import { i18n } from '@/plugins/i18n';
 import store from '@/store';
 import router from '@/router';
 import BigNumber from 'bignumber.js';
+import customErrors from '@/helpers/customErrors';
 
 const { t } = i18n.global;
 export default class CryptoCoin {
@@ -52,6 +53,23 @@ export default class CryptoCoin {
     opts.config.nativeTokenName
       ? (this.nativeTokenName = opts.config.nativeTokenName)
       : '';
+  }
+
+  getCustomErrorMessage(error) {
+    const message = {
+      type: 'warning',
+      text: error,
+    };
+
+    for (const key in customErrors) {
+      if (customErrors[key].find((check) => error.message.includes(check))) {
+        const code = this.code;
+        message.text = t(key, { code });
+        return message;
+      }
+    }
+
+    return message;
   }
 
   getScannerLink() {
@@ -112,10 +130,11 @@ export default class CryptoCoin {
       return { ok: true, data: Array.isArray(data) ? data : [data] };
     }
 
-    notify({
-      type: 'warning',
-      text: error,
-    });
+    const message = this.getCustomErrorMessage(error);
+
+    notify(message);
+
+    console.error(error);
 
     return { ok: false, error };
   }
@@ -127,10 +146,10 @@ export default class CryptoCoin {
       return res;
     }
 
-    notify({
-      type: 'warning',
-      text: res.error,
-    });
+    const message = this.getCustomErrorMessage(res.error);
+
+    notify(message);
+
     console.error(res.error);
 
     return res;
@@ -143,10 +162,10 @@ export default class CryptoCoin {
       return { data, error };
     }
 
-    notify({
-      type: 'warning',
-      text: error,
-    });
+    const message = this.getCustomErrorMessage(error);
+
+    notify(message);
+
     console.error(error);
 
     return { data, error };
@@ -192,10 +211,11 @@ export default class CryptoCoin {
       return { ok: true, rawTxs: data };
     }
 
-    notify({
-      type: 'warning',
-      text: error,
-    });
+    const message = this.getCustomErrorMessage(error);
+
+    notify(message);
+
+    console.error(error);
 
     return { ok: false };
   }
