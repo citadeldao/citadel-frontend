@@ -1315,7 +1315,7 @@
         "searchPlaceholder": "Start typing the token name",
         "currentAsset": "Current assets"
     },
-    "enterPasswordBackup": "Enter the backup file password to restore Citadel One-seed wallet",
+    "enterPasswordBackup": "Enter the backup file password or press next to restore Citadel One-seed wallet",
     "enterPasswordBackupLabel": "Enter your backup file password",
     "walletsAdding": {
         "mainMenuTitle": "Add an address",
