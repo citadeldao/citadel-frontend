@@ -25,7 +25,7 @@
       <div
         class="add-derivation__card"
         @click="generateNewPath"
-        v-if="wallets.length < maxPaths"
+        v-if="limitOfCards < maxPaths"
       >
         <seedPhraseIcon class="initial-icon" />
 
@@ -57,7 +57,7 @@ import Select from '@/components/UI/Select';
 import DerivationPathCard from '@/components/DerivationPathCard';
 import useCheckItem from '@/compositions/useCheckItem';
 import { useStore } from 'vuex';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { WALLET_TYPES } from '@/config/walletType';
 import CryptoCoin from '@/models/CryptoCoin';
 
@@ -87,6 +87,7 @@ export default {
     const hasPathOptions = computed(() => pathOptions.value.length > 1);
     const numberOfPaths = ref(5);
     const wallets = ref([]);
+    const walletsFromStore = computed(() => store.getters['wallets/wallets']);
     const isInvalid = ref(false);
     const maxPaths = ref(20);
     currentPath.value = pathOptions.value[0].key;
@@ -140,7 +141,6 @@ export default {
           setCustomWallet();
         });
     };
-    setCustomWallet();
 
     const clickHandler = () => {
       emit('selectWallet', checkedItems.value[0]);
@@ -156,12 +156,26 @@ export default {
 
       return !isChecked || isExist || isInvalid.value;
     });
+    const filteredWalletsByCurNetLength = computed(() => {
+      return walletsFromStore.value.filter(
+        (e) => e.name === customWallet.value.walletInstance?.name
+      ).length;
+    });
+    const limitOfCards = computed(
+      () =>
+        numberOfPaths.value +
+        filteredWalletsByCurNetLength.value -
+        wallets.value.filter((e) => e.alreadyExist).length
+    );
     const generateNewPath = () => {
-      if (numberOfPaths.value < maxPaths.value) {
+      if (limitOfCards.value <= maxPaths.value) {
         numberOfPaths.value++;
         selectCustomPathFormat(currentPath.value);
       }
     };
+    onMounted(async () => {
+      await setCustomWallet();
+    });
     return {
       maxPaths,
       generateNewPath,
@@ -178,6 +192,7 @@ export default {
       currentPath,
       pathOptions,
       selectCustomPathFormat,
+      limitOfCards,
     };
   },
 };
