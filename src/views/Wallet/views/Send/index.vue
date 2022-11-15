@@ -106,10 +106,27 @@
             </div>
           </transition>
 
+          <transition name="fade">
+            <div class="send__section-muted" v-if="!insufficientFunds">
+              <span class="send__section-muted-text">
+                {{ $t('transactionFee') }}:
+                <span
+                  class="send__section-muted-amount"
+                  v-pretty-number="{
+                    title: $t('transactionFeeSimulate'),
+                    value: fee.fee || 0,
+                    currency: currentWallet.code,
+                  }"
+                ></span>
+                {{ currentWallet.code }}
+              </span>
+            </div>
+          </transition>
+
           <span v-if="false" class="send__input-note-xl"
             >{{ $t('includingFunds-xl') }}
           </span>
-          <span class="send__input-note">
+          <span class="send__input-note" v-if="!insufficientFunds">
             {{ $t('includingFunds') }}
           </span>
         </div>
@@ -1447,9 +1464,6 @@ export default {
       flex-direction: column;
       margin-bottom: 0;
     }
-    @include laptop {
-      flex-direction: row;
-    }
   }
 
   &__autocomplete {
@@ -1472,12 +1486,10 @@ export default {
       width: 100%;
       margin-bottom: 23px;
     }
-    @include laptop {
-      width: 48%;
-    }
   }
 
-  &__section-error {
+  &__section-error,
+  &__section-muted {
     display: flex;
     position: absolute;
     align-items: center;
@@ -1486,17 +1498,37 @@ export default {
     @include xl {
       display: none;
     }
+    @include md {
+      bottom: -22px;
+    }
+  }
+
+  &__section-muted-amount {
+    color: $ligth-blue;
+    font-family: 'Panton_Bold' !important;
   }
 
   &__section-error-icon {
     margin-right: 8px;
   }
 
+  &__section-muted-text,
   &__section-error-text {
     font-size: 14px;
     line-height: 17px;
     color: $red;
-    font-family: 'Panton_Bold';
+    font-family: 'Panton_Regular';
+    @include lg {
+      display: initial;
+    }
+    @include md {
+      font-size: 12px;
+      line-height: 14px;
+    }
+  }
+
+  &__section-muted-text {
+    color: $mid-gray;
   }
 
   &__input-note-xl {

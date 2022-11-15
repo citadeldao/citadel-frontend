@@ -539,6 +539,7 @@
     "searchAddress": "Rechercher une adresse",
     "save": "Sauvegarder",
     "transactionFee": "Frais de transaction",
+    "transactionFeeSimulate": "",
     "per": "par",
     "price": "Prix",
     "link": "lien",

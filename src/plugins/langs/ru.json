@@ -548,6 +548,7 @@
     "searchAddress": "Поиск адреса",
     "save": "Сохранить",
     "transactionFee": "Комиссия за транзакцию",
+    "transactionFeeSimulate": "",
     "per": "за",
     "price": "Цена",
     "link": "Ссылка",

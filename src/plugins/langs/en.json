@@ -552,6 +552,7 @@
     "searchAddress": "Search address",
     "save": "Save",
     "transactionFee": "Transaction Fee",
+    "transactionFeeSimulate": "We simulate the transaction in advance to estimate the fee. <br> The total may vary. <br> &nbsp",
     "per": "per",
     "price": "Price",
     "link": "link",
