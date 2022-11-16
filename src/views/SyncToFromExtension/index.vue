@@ -394,7 +394,7 @@ export default {
 
       if (window.citadel && !incorrectPassword.value) {
         const citadelPasswordHash = CryptoJS.SHA256(
-          CryptoJS.lib.WordArray.create(passwordExtension.value)
+          passwordExtension.value
         ).toString();
         if (citadelPasswordHash !== extensionPasswordHash) {
           incorrectPasswordExtension.value = true;
