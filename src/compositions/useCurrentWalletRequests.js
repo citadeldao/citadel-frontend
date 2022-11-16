@@ -69,6 +69,10 @@ export default function useCurrentWalletRequests() {
     l1Fee.value = data.l1Fee || 0;
     rawTx.value = data;
     rawTxError.value = error;
+    if (data.resourcesForTx) {
+      iostFee.value = data.resourcesForTx.fee;
+      adding.value = data.resourcesForTx.adding;
+    }
   };
 
   const txHash = ref(null);
