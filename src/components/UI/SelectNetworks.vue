@@ -157,7 +157,9 @@ export default {
         .filter((wallet) => {
           if (
             wallet.type === WALLET_TYPES.ONE_SEED &&
-            isNullDerivationPath(wallet)
+            (wallet.net === 'polkadot'
+              ? !wallet.derivationPath
+              : isNullDerivationPath(wallet))
           ) {
             return wallet;
           }
@@ -179,27 +181,35 @@ export default {
       //добавляем айтемы по умолчанию из массива сеток
       for (const key in displayData.value) {
         const displayItem = displayData.value[key];
-        const foundItemOneSeed = wallets.value.find(
-          (e) =>
-            e.net === displayItem.net &&
-            e.type === WALLET_TYPES.ONE_SEED &&
-            isNullDerivationPath(e)
-        );
-        if (foundItemOneSeed) {
-          if (foundItemOneSeed.net !== 'polkadot') {
+
+        if (displayItem.net === 'polkadot') {
+          const foundItemOneSeed = wallets.value.find(
+            (e) =>
+              e.net === displayItem.net &&
+              e.type === WALLET_TYPES.ONE_SEED &&
+              !e.derivationPath
+          );
+          if (foundItemOneSeed) {
             addItem(displayItem.id);
             checkedNetYetAdded.push(displayItem.net);
-          } else {
-            if (foundItemOneSeed && !foundItemOneSeed.derivationPath) {
-              addItem(displayItem.id);
-              checkedNetYetAdded.push(displayItem.net);
-            }
           }
-        } else if (
-          !isUserMnemonic.value &&
-          netsPositionPriority.findIndex((e) => e === displayItem.net) !== -1
-        ) {
-          addItem(displayItem.id);
+        } else {
+          const foundItemOneSeed = wallets.value.find(
+            (e) =>
+              e.net === displayItem.net &&
+              e.type === WALLET_TYPES.ONE_SEED &&
+              isNullDerivationPath(e)
+          );
+
+          if (foundItemOneSeed) {
+            addItem(displayItem.id);
+            checkedNetYetAdded.push(displayItem.net);
+          } else if (
+            !isUserMnemonic.value &&
+            netsPositionPriority.findIndex((e) => e === displayItem.net) !== -1
+          ) {
+            addItem(displayItem.id);
+          }
         }
       }
     };
