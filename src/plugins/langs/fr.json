@@ -752,8 +752,8 @@
             "description": "Cette opération ne peut être annulée",
             "modalDescription": "Veuillez noter que cette action ne peut être annulée. Vos biens sont en sécurité - vous ne supprimez que le compte Citadel.one",
             "button": "Supprimer le compte",
-            "inputLabel": "Tapez \"Supprimer le compte\" pour confirmer",
-            "placeholder": "Tapez 'supprimer'"
+            "inputLabel": "Entrez \"delete\" pour confirmer",
+            "placeholder": "Entrez la confirmation'"
         },
         "changePassword": {
             "btnTitle": "Modifier le mot de passe",

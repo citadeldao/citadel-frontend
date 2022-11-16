@@ -708,8 +708,8 @@
             "description": "该操作不可逆",
             "modalDescription": "请注意，此操作不可逆。您的资产是安全的，这将只删除您的Citadel.one帐户",
             "button": "删除账户",
-            "inputLabel": "输入“删除”进行确认",
-            "placeholder": "delete"
+            "inputLabel": "输入\"delete\"确认",
+            "placeholder": "输入确认"
         },
         "changePassword": {
             "btnTitle": "更改密码",
