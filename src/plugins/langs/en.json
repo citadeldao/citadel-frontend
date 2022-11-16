@@ -844,7 +844,9 @@
         "apyTooltip": "Annual Percentage Yield is counted as Staking Inflation / Staked",
         "stakingRatioTooltip": "Percentage of eligible tokens that are being staked",
         "dayTradingVol": "24 hour trading vol",
-        "dayTradingVolTooltip": "24-hour trading vol is the number of coins that have exchanged hands during the last 24 hours"
+        "dayTradingVolTooltip": "24-hour trading vol is the number of coins that have exchanged hands during the last 24 hours",
+        "placeholderTitle": "Currently, information about the token is unavailable",
+        "placeholderDescription": "Information about the token and the price history chart will be available soon"
     },
     "viewingKey": {
         "viewingKey": "Viewing key",
@@ -1315,7 +1317,7 @@
         "searchPlaceholder": "Start typing the token name",
         "currentAsset": "Current assets"
     },
-    "enterPasswordBackup": "Enter the backup file password to restore Citadel One-seed wallet",
+    "enterPasswordBackup": "Enter the backup file password or press next to restore Citadel One-seed wallet",
     "enterPasswordBackupLabel": "Enter your backup file password",
     "walletsAdding": {
         "mainMenuTitle": "Add an address",

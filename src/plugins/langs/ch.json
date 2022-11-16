@@ -786,7 +786,9 @@
         "apyTooltip": "年收益率百分比（APY）的计算为 质押通膨 / 质押金额",
         "stakingRatioTooltip": "已质押的符合条件代币的百分比",
         "dayTradingVol": "24小时交易量",
-        "dayTradingVolTooltip": "24小时交易量是指过去24小时内交易的代币数量"
+        "dayTradingVolTooltip": "24小时交易量是指过去24小时内交易的代币数量",
+        "placeholderTitle": "目前，有关令牌的信息不可用",
+        "placeholderDescription": "有关代币和价格历史图表的信息将在不久的将来提供"
     },
     "viewingKey": {
         "viewingKey": "查看密钥",
