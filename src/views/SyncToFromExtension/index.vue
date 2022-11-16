@@ -320,9 +320,7 @@ export default {
         try {
           await window.citadel.setUserId(userId.value);
 
-          const phForChrome = CryptoJS.SHA256(
-            CryptoJS.lib.WordArray.create(password.value)
-          ).toString();
+          const phForChrome = CryptoJS.SHA256(password.value).toString();
 
           syncResult = await window.citadel.syncFromExtension(
             networks,
