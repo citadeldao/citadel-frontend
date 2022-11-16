@@ -830,7 +830,9 @@
         "apyTooltip": "Le rendement annuel en pourcentage est compté dans l’Inflation du staking / staké",
         "stakingRatioTooltip": "Pourcentage de jetons éligibles qui sont stakés",
         "dayTradingVol": "Volume trading 24 heures",
-        "dayTradingVolTooltip": "Le volume de trading sur 24 heures est le nombre de pièces qui ont été échangées au cours des 24 dernières heures"
+        "dayTradingVolTooltip": "Le volume de trading sur 24 heures est le nombre de pièces qui ont été échangées au cours des 24 dernières heures",
+        "placeholderTitle": "Actuellement, les informations sur le jeton ne sont pas disponibles",
+        "placeholderDescription": "Des informations sur le jeton et le graphique de l'historique des prix seront bientôt disponibles"
     },
     "viewingKey": {
         "viewingKey": "Clé de visualisation",
