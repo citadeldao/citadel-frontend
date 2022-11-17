@@ -449,7 +449,7 @@ export default {
         top: -16px;
       }
     }
-    @media (max-width: 1280px) {
+    @media (max-width: 1279px) {
       & .round-arrow-button {
         top: 56px !important;
         right: 35px !important;
