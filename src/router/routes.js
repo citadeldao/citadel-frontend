@@ -10,6 +10,15 @@ export default [
     },
   },
   {
+    path: '/auth/verification/:code',
+    name: 'Login',
+    component: () => import(/* webpackChunkName: 'Login' */ '@/views/Login'),
+    meta: {
+      layout: 'DefaultLayout',
+      guard: 'guest',
+    },
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import(/* webpackChunkName: 'Login' */ '@/views/Login'),

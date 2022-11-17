@@ -7,7 +7,7 @@
   </teleport>
   <teleport v-if="showModal" to="body">
     <Modal>
-      <MobileAppModal @close="isClosed = true" />
+      <MobileAppModal @close="closeMobileModal" />
     </Modal>
   </teleport>
   <teleport v-if="newWalletsModalShow" to="body">
@@ -27,7 +27,7 @@ import Toasts from '@/components/Toasts.vue';
 import AppLayout from './layouts/AppLayout';
 import { useWindowSize } from 'vue-window-size';
 import { screenWidths } from '@/config/sreenWidthThresholds';
-import { isMobile } from 'mobile-device-detect';
+// import { isMobile } from 'mobile-device-detect';
 
 export default {
   name: 'App',
@@ -42,9 +42,9 @@ export default {
     const isClosed = ref(false);
     const store = useStore();
     const { width } = useWindowSize();
-    const showModal = computed(
-      () => !!(width.value < screenWidths.md && !isClosed.value && isMobile)
-    );
+    const showModal = computed(() => {
+      return width.value < screenWidths.md && !isClosed.value; // !!(width.value < screenWidths.md && !isClosed.value && isMobile)
+    });
     const newWalletsModalShow = computed(
       () =>
         store.getters['newWallets/isShowModal'] ||
@@ -55,10 +55,15 @@ export default {
       store.dispatch('i18n/init');
     });
 
+    const closeMobileModal = () => {
+      isClosed.value = true;
+    };
+
     return {
       showModal,
       newWalletsModalShow,
       isClosed,
+      closeMobileModal,
     };
   },
 };

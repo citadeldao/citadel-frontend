@@ -551,5 +551,6 @@ export default {
   justify-content: center;
   align-items: center;
   background-color: rgba($black, 0.2);
+  border-radius: 16px;
 }
 </style>

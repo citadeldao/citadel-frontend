@@ -73,7 +73,7 @@
         "disclaimerMailTitle": "",
         "disclaimerMailGuide": "",
         "disclaimerMailGuide1": "",
-        "useEmailBtn": "",
+        "useEmailBtn": "Use email",
         "continueWithoutEmail": "",
         "approveKeplrTitle": "",
         "approveMetamaskTitle": "",
@@ -713,9 +713,17 @@
             "title": "Adresses",
             "description": "Supprimez vos adresses ou importez des seedphrase, des clés privées ou des clés de visualisation",
             "deleteModalTitle": "Voulez-vous supprimer l'adresse ?",
+            "deleteModalSubtitle": "",
             "deleteSeedTitle": "Voulez-vous supprimer l'information de One-Seed ?",
             "deleteSeedDesc": "Vous pouvez supprimer toutes les données stockées localement sur votre One-Seed",
-            "deleteSeedInfo": "Remarque : après confirmation de cette action, toutes les données associées à votre portefeuille One-Seed seront supprimées."
+            "deleteSeedInfo": "Remarque : après confirmation de cette action, toutes les données associées à votre portefeuille One-Seed seront supprimées.",
+            "modalTitle":"",
+            "modalSubtitle":"",
+            "bannerContent":"",
+            "selectAll":"",
+            "unselectAll":"",
+            "selectedWalletsLength":"",
+            "delete":""
         },
         "changeEmail": {
             "title": "Votre email",
@@ -744,8 +752,8 @@
             "description": "Cette opération ne peut être annulée",
             "modalDescription": "Veuillez noter que cette action ne peut être annulée. Vos biens sont en sécurité - vous ne supprimez que le compte Citadel.one",
             "button": "Supprimer le compte",
-            "inputLabel": "Tapez \"Supprimer le compte\" pour confirmer",
-            "placeholder": "Tapez 'supprimer'"
+            "inputLabel": "Entrez \"delete\" pour confirmer",
+            "placeholder": "Entrez la confirmation"
         },
         "changePassword": {
             "btnTitle": "Modifier le mot de passe",
@@ -957,6 +965,7 @@
     "emptyPassword": "Mot de passe vide",
     "accruedDaily": "Accumulé quotidiennement de 6 à 7 heures UTC",
     "extensions": {
+        "emptyList": "",
         "showLabel": "Afficher",
         "headerTitle": "Magasin d'extensions",
         "headerDescription": "Utilisez vos dApps, applications DeFi et extensions préférées en mode natif !",
@@ -1209,6 +1218,21 @@
             "title": "Oasis Network",
             "description": "Le réseau Oasis est la première plateforme blockchain permettant le respect de la vie privée pour la finance libre et une économie de données responsable. Combiné à son architecture sécurisée et à haut débit, le réseau Oasis est capable d'alimenter un DeFi privé et évolutif, révolutionnant ainsi la finance libre et l'étendant au-delà des traders et des premiers utilisateurs pour atteindre un marché de masse. Ses caractéristiques uniques en matière de confidentialité peuvent non seulement redéfinir le DeFi, mais aussi créer un nouveau type d'actif numérique appelé Tokenized Data, qui permet aux utilisateurs de prendre le contrôle des données qu'ils génèrent et de gagner des récompenses en les associant à des applications - créant ainsi la toute première économie de données responsable.",
             "shortDescription": "Le réseau Oasis est une plateforme blockchain adaptée à la vie privée pour une finance ouverte et une économie de données responsable."
+        },
+        "stafi": {
+            "title": "Stafihub",
+            "description": "",
+            "shortDescription": ""
+        },
+        "stride": {
+            "title": "Stride",
+            "description": "",
+            "shortDescription": ""
+        },
+        "jackal": {
+            "title": "Jackaldao",
+            "description": "",
+            "shortDescription": ""
         },
         "tron": {
             "title": "Tron network",

@@ -67,7 +67,7 @@ import { netsPositionPriority } from '@/config/netsPositionPriority.js';
 import useWallets from '@/compositions/useWallets';
 import useCreateWallets from '@/compositions/useCreateWallets';
 import { WALLET_TYPES } from '@/config/walletType.js';
-import { checkDerivationPath } from '@/helpers';
+import { isNullDerivationPath } from '@/helpers';
 import { useRoute } from 'vue-router';
 export default {
   name: 'SelectNetworks',
@@ -155,11 +155,17 @@ export default {
       );
       const oneSeedZeroLastIndexWalletsList = wallets.value
         .filter((wallet) => {
-          if (wallet.type === WALLET_TYPES.ONE_SEED) {
+          if (
+            wallet.type === WALLET_TYPES.ONE_SEED &&
+            (wallet.net === 'polkadot'
+              ? !wallet.derivationPath
+              : isNullDerivationPath(wallet))
+          ) {
             return wallet;
           }
         })
         .map((e) => e.net);
+
       emit(
         'selectNets',
         checkedNets.filter(
@@ -175,33 +181,35 @@ export default {
       //добавляем айтемы по умолчанию из массива сеток
       for (const key in displayData.value) {
         const displayItem = displayData.value[key];
-        const foundItemOneSeed = wallets.value.find(
-          (e) => e.net === displayItem.net && e.type === WALLET_TYPES.ONE_SEED
-        );
-        if (foundItemOneSeed) {
-          if (foundItemOneSeed.net !== 'polkadot') {
+
+        if (displayItem.net === 'polkadot') {
+          const foundItemOneSeed = wallets.value.find(
+            (e) =>
+              e.net === displayItem.net &&
+              e.type === WALLET_TYPES.ONE_SEED &&
+              !e.derivationPath
+          );
+          if (foundItemOneSeed) {
             addItem(displayItem.id);
             checkedNetYetAdded.push(displayItem.net);
-          } else {
-            if (foundItemOneSeed.net === 'polkadot') {
-              if (foundItemOneSeed && !foundItemOneSeed.derivationPath) {
-                addItem(displayItem.id);
-                checkedNetYetAdded.push(displayItem.net);
-              }
-            } else if (
-              foundItemOneSeed &&
-              foundItemOneSeed.derivationPath &&
-              !checkDerivationPath(foundItemOneSeed)
-            ) {
-              addItem(displayItem.id);
-              checkedNetYetAdded.push(displayItem.net);
-            }
           }
-        } else if (
-          !isUserMnemonic.value &&
-          netsPositionPriority.findIndex((e) => e === displayItem.net) !== -1
-        ) {
-          addItem(displayItem.id);
+        } else {
+          const foundItemOneSeed = wallets.value.find(
+            (e) =>
+              e.net === displayItem.net &&
+              e.type === WALLET_TYPES.ONE_SEED &&
+              isNullDerivationPath(e)
+          );
+
+          if (foundItemOneSeed) {
+            addItem(displayItem.id);
+            checkedNetYetAdded.push(displayItem.net);
+          } else if (
+            !isUserMnemonic.value &&
+            netsPositionPriority.findIndex((e) => e === displayItem.net) !== -1
+          ) {
+            addItem(displayItem.id);
+          }
         }
       }
     };
