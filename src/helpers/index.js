@@ -152,9 +152,6 @@ export const getDecimalCount = (num) => {
   // String Does Not Contain Decimal
   return 0;
 };
-export const checkDerivationPath = (wallet) => {
-  if (wallet?.derivationPath?.slice(-2).replace(/\D/g, '') === 0) {
-    return false;
-  }
-  return true;
+export const isNullDerivationPath = (wallet) => {
+  return wallet?.derivationPath?.slice(-2).replace(/\D/g, '') === '0';
 };

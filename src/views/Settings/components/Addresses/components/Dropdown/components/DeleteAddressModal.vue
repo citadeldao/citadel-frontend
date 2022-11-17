@@ -22,9 +22,9 @@
       >
         {{ $t('yes') }}
       </PrimaryButton>
-      <TextButton @click="close">
+      <button class="text-button" @click.stop="close">
         {{ $t('no') }}
-      </TextButton>
+      </button>
     </ModalContent>
   </Modal>
 </template>
@@ -33,7 +33,6 @@
 import Modal from '@/components/Modal.vue';
 import ModalContent from '@/components/ModalContent.vue';
 import PrimaryButton from '@/components/UI/PrimaryButton.vue';
-import TextButton from '@/components/UI/TextButton.vue';
 
 export default {
   name: 'DeleteAddressModal',
@@ -41,7 +40,6 @@ export default {
     Modal,
     ModalContent,
     PrimaryButton,
-    TextButton,
   },
   props: {
     show: {
@@ -97,5 +95,25 @@ h3 {
   font-size: 16px;
   font-weight: 400;
   margin-top: 0;
+}
+.text-button {
+  font-size: 18px;
+  line-height: 19px;
+  padding: 0;
+  border-bottom: 2px solid $too-dark-blue;
+  color: $too-dark-blue;
+  font-family: 'Panton_Bold';
+  background: transparent;
+
+  &:hover {
+    color: $dark-blue;
+    border-color: $dark-blue;
+  }
+
+  &:disabled,
+  & [disabled] {
+    color: $mid-gray;
+    border-color: $mid-gray;
+  }
 }
 </style>

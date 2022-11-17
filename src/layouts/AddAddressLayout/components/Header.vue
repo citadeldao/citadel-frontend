@@ -348,7 +348,11 @@ export default {
         border-radius: 8px;
         position: absolute;
         z-index: 10;
-        top: 45px;
+        top: 55px;
+
+        @include md {
+          top: 45px;
+        }
 
         .faq-item {
           padding: 16px 0;
@@ -414,6 +418,26 @@ export default {
       .faq-items {
         display: flex;
         flex-direction: column;
+
+        &::after {
+          content: '';
+          position: absolute;
+          top: -20px;
+          right: 0;
+          left: 0;
+          height: 25px;
+        }
+      }
+
+      .header__user-tooltip {
+        &::after {
+          content: '';
+          position: absolute;
+          top: -20px;
+          right: 0;
+          left: 0;
+          height: 25px;
+        }
       }
 
       & svg.faq {
@@ -426,10 +450,12 @@ export default {
     display: none;
     position: absolute;
     z-index: 1001;
+    width: 150px;
     right: 0;
-    top: 45px;
+    top: 55px;
+
     @include md {
-      top: 32px;
+      top: 45px;
     }
   }
 }

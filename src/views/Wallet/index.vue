@@ -482,10 +482,16 @@ export default {
         ok: feeOk,
         resFee,
         enough,
+        error,
       } = await currentWallet.value.getDelegationFee({
         walletId: currentWallet.value.id,
         transactionType: 'claim',
       });
+
+      if (error) {
+        isLoading.value = false;
+        return;
+      }
 
       if (feeOk) {
         if (!enough) {

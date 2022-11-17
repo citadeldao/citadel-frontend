@@ -118,6 +118,7 @@ export default {
             rootGetters['wallets/walletByAddress'](address);
 
           if (walletInstance) {
+            walletInstance.assignedTo = address.assignedTo;
             unassignedAddresses.push(walletInstance);
           }
         }

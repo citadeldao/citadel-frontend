@@ -195,7 +195,8 @@ export default {
       justify-content: space-between;
 
       .comment-btn {
-        width: 100px;
+        padding: 0 10px;
+        max-width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;

@@ -55,7 +55,15 @@
       @search="onSearchHandler"
       @selectTags="onSelectTags"
     />
-    <div v-if="!currentApp && !loading" class="extensions__apps">
+    <div
+      :class="{ empty: !appsFiltered.length && searchStr.length }"
+      v-if="!currentApp && !loading"
+      class="extensions__apps"
+    >
+      <EmptyList
+        v-if="!appsFiltered.length && searchStr.length"
+        :title="$t('extensions.emptyList')"
+      />
       <AppBlock
         v-for="(app, ndx) in appsFiltered"
         :key="ndx"
@@ -191,6 +199,7 @@ import TransactionInfo from './components/TransactionInfo';
 import MessageInfo from './components/MessageInfo';
 import FrameApp from './components/FrameApp.vue';
 import { parseTagsList, filteredApps } from './components/helpers';
+import EmptyList from '@/components/EmptyList';
 
 export default {
   name: 'Extensions',
@@ -207,6 +216,7 @@ export default {
     TransactionInfo,
     MessageInfo,
     FrameApp,
+    EmptyList,
   },
   setup() {
     const signLoading = ref(false);
@@ -239,10 +249,12 @@ export default {
     const localAppMode = ref(false);
 
     let keplrTimer = null;
+    const firstAddressChecked = ref(false);
+
     const scrtAddress = ref('');
 
     onBeforeUnmount(() => {
-      clearTimeout(keplrTimer);
+      clearInterval(keplrTimer);
     });
 
     const { wallets: walletsList } = useWallets();
@@ -416,9 +428,14 @@ export default {
       // shade
       if ([17, 22, 26].includes(+selectedApp.value?.id)) {
         keplrTimer = setInterval(async () => {
-          await store.dispatch('keplr/connectToKeplr', 'secret-4');
+          if (firstAddressChecked.value && !scrtAddress.value) {
+            return;
+          }
+
+          await store.dispatch('keplr/connectToKeplr', { chainId: 'secret-4' });
           const secretAddress = keplrConnector.value.accounts[0];
           scrtAddress.value = secretAddress;
+          firstAddressChecked.value = true;
         }, 5000);
       }
     };
@@ -1103,6 +1120,7 @@ export default {
       confirmClickHandler,
       filterItems,
       signLoading,
+      searchStr,
 
       //ledgers
       showLedgerConnect,
@@ -1152,6 +1170,13 @@ export default {
     float: left;
     background: $white;
     border-radius: 0 0 16px 16px;
+
+    &.empty {
+      height: calc(100vh - 215px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 
   &__loading {
