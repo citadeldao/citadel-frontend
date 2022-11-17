@@ -5,6 +5,7 @@ import citadel from '@citadeldao/lib-citadel';
 import { i18n } from '@/plugins/i18n';
 import store from '@/store';
 import router from '@/router';
+import { getErrorText } from '@/config/errors';
 import BigNumber from 'bignumber.js';
 
 const { t } = i18n.global;
@@ -127,9 +128,11 @@ export default class CryptoCoin {
       return res;
     }
 
+    const errorText = getErrorText(res.error?.message?.toLowerCase());
+
     notify({
       type: 'warning',
-      text: res.error,
+      text: errorText || res.error,
     });
     console.error(res.error);
 
