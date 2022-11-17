@@ -10,9 +10,10 @@
       </div>
 
       <!-- Ссылки на соцсети сеток для 1280 px -->
-      <Socials :socials="socials" class="socials-lg" />
+      <Socials :socials="socials" class="socials-lg" v-if="!isNotFound" />
 
       <div
+        v-if="!isNotFound"
         class="header__icon"
         data-qa="wallet__network-info-modal__expand-button"
         @click="$emit('close', $event)"
@@ -314,7 +315,10 @@ export default {
     });
 
     const isNotFound = computed(
-      () => !isLoading.value && currencyHistory.value === null
+      () =>
+        !isLoading.value &&
+        (currencyHistory.value === null ||
+          JSON.stringify(currencyHistory.value) === '{}')
     );
 
     return {
