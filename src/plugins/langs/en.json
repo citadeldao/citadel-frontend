@@ -1374,6 +1374,8 @@
         "notFound": "Citadel browser extension not found",
         "walletsNotFound": "Not wallets found to sync with browser extension",
         "emptyWallets": "You must setup browser extension before syncing",
+        "extensionBlock": "Chrome extension",
+        "sync": "Sync wallets",
         "syncWithExtension": "Exporting addresses to browser extension",
         "syncingFromTitle": "Importing addresses from  browser extension",
         "syncingFromDescription": "Confirm this operation with a password",
