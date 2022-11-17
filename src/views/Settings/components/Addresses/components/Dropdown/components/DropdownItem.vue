@@ -164,11 +164,13 @@ export default {
     );
     const updateSelectedWallets = inject('updateSelectedWallets');
     const change = (e) => {
-      isItemChecked.value = e;
-      updateSelectedWallets({
-        wallet: props.wallet,
-        isCheck: isItemChecked.value ? true : false,
-      });
+      if (props.selectable) {
+        isItemChecked.value = e;
+        updateSelectedWallets({
+          wallet: props.wallet,
+          isCheck: isItemChecked.value ? true : false,
+        });
+      }
     };
     import(`@/assets/icons/types/${props.wallet.type}.svg`).then((val) => {
       currentIcon.value = markRaw(val.default);
@@ -316,6 +318,9 @@ export default {
   padding: 0 10px;
   &--selectable {
     cursor: pointer;
+    & svg {
+      height: 18px;
+    }
   }
   &--checked {
     font-weight: 600;
@@ -332,6 +337,7 @@ export default {
     justify-content: center;
     & svg {
       fill: white;
+      height: 22px;
       width: fit-content;
     }
     &--selectable {
@@ -464,7 +470,7 @@ export default {
   position: absolute;
   white-space: nowrap;
   z-index: 1;
-  top: 48%;
+  top: 5%;
   left: 25%;
   margin-left: -60px;
   box-shadow: 0px 4px 25px rgba(63, 54, 137, 0.25);
@@ -472,7 +478,17 @@ export default {
   font-size: 12px;
   line-height: 16px;
   color: $too-dark-blue;
-
+  max-width: 50% !important;
+  overflow: auto !important;
+  &::-webkit-scrollbar {
+    max-width: 368px !important;
+    height: 4px; /* width of the entire scrollbar */
+    border-radius: 20px;
+    scrollbar-width: thin;
+  }
+  &::-webkit-scrollbar-track {
+    margin: 4px;
+  }
   &::after {
     content: '';
     position: absolute;

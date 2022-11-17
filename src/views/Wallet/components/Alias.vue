@@ -155,11 +155,13 @@ export default {
       return props.currentWallet.title
         ? {}
         : {
-            maxWidth: `${addressTextWidth(
-              props.currentWallet?.address,
-              'Panton_Bold',
-              fontSizes.value.name
-            )}px`,
+            maxWidth: `${
+              addressTextWidth(
+                props.currentWallet?.address,
+                'Panton_Bold',
+                fontSizes.value.name
+              ) - 30
+            }px`,
           };
     });
 
