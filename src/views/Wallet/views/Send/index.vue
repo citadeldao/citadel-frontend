@@ -109,7 +109,10 @@
           <span v-if="false" class="send__input-note-xl"
             >{{ $t('includingFunds-xl') }}
           </span>
-          <span class="send__input-note">
+          <span
+            class="send__input-note"
+            :class="{ 'send__input-note-laptop': insufficientFunds }"
+          >
             {{ $t('includingFunds') }}
           </span>
         </div>
@@ -1528,6 +1531,12 @@ export default {
       font-size: 12px;
       line-height: 14px;
       bottom: -22px;
+    }
+    &-laptop {
+      @include laptop {
+        left: 25px;
+        bottom: -38px;
+      }
     }
   }
 
