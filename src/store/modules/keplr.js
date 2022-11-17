@@ -14,7 +14,11 @@ export default {
 
   actions: {
     async connectToKeplr({ state }, chainId) {
-      await state.keplrConnector.connect(chainId);
+      if (typeof chainId === 'object') {
+        await state.keplrConnector.connect(chainId.chainId, true);
+      } else {
+        await state.keplrConnector.connect(chainId);
+      }
     },
   },
 };

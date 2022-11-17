@@ -249,10 +249,12 @@ export default {
     const localAppMode = ref(false);
 
     let keplrTimer = null;
+    const firstAddressChecked = ref(false);
+
     const scrtAddress = ref('');
 
     onBeforeUnmount(() => {
-      clearTimeout(keplrTimer);
+      clearInterval(keplrTimer);
     });
 
     const { wallets: walletsList } = useWallets();
@@ -426,9 +428,14 @@ export default {
       // shade
       if ([17, 22, 26].includes(+selectedApp.value?.id)) {
         keplrTimer = setInterval(async () => {
-          await store.dispatch('keplr/connectToKeplr', 'secret-4');
+          if (firstAddressChecked.value && !scrtAddress.value) {
+            return;
+          }
+
+          await store.dispatch('keplr/connectToKeplr', { chainId: 'secret-4' });
           const secretAddress = keplrConnector.value.accounts[0];
           scrtAddress.value = secretAddress;
+          firstAddressChecked.value = true;
         }, 5000);
       }
     };
