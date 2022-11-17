@@ -921,6 +921,7 @@
     "emptyPassword": "密码为空",
     "accruedDaily": "每天下午 6 点至 7 点累积（UTC 时间）",
     "extensions": {
+        "emptyList": "",
         "showLabel": "展示",
         "headerTitle": "拓展程序商店",
         "headerDescription": "便捷使用您最喜欢的 dApp、DeFi app 和扩展程序！",

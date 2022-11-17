@@ -979,6 +979,7 @@
     "emptyPassword": "Empty password",
     "accruedDaily": "Accrued daily from 6-7 pm UTC",
     "extensions": {
+        "emptyList": "Nothing was found for your query",
         "showMore": "Show more",
         "showLabel": "Show",
         "headerTitle": "Extensions Store",
