@@ -77,7 +77,7 @@
             :current-export-method="currentExportMethod"
             :private-key="decodedPrivateKey"
             :derivation-path="currentExportWallet.derivationPath"
-            :mnemonic-phrase="decodedMnemonick"
+            :mnemonic-phrase="decodedMnemonic"
           />
         </ModalContent>
         <ModalContent
@@ -230,7 +230,7 @@ export default {
       currentExportMethod.value = null;
       currentExportWallet.value = null;
       showExportModal.value = false;
-      decodedMnemonick.value = '';
+      decodedMnemonic.value = '';
       inputError.value = false;
       manageVkWallets.value = null;
       changeVk.value = null;
@@ -284,9 +284,9 @@ export default {
 
       return {};
     });
-    const decodedMnemonick = ref('');
+    const decodedMnemonic = ref('');
     const decodedPrivateKey = ref('');
-    const approveExport = () => {
+    const approveExport = async () => {
       if (passwordError.value) {
         inputError.value = passwordError.value;
 
@@ -294,19 +294,23 @@ export default {
       } else if (currentExportMethod.value === WALLET_TYPES.ONE_SEED) {
         if (!currentExportWallet.value.importedFromSeed) {
           // export main account oneSeed
-          decodedMnemonick.value = store.getters['crypto/decodeUserMnemonic'](
-            password.value
+          decodedMnemonic.value = await store.dispatch(
+            'crypto/decodeUserMnemonic',
+            { password: password.value }
           );
         } else {
           // type wallet - private key (oneSeed), and export its oneSeed
-          decodedMnemonick.value = store.getters['crypto/decodeUserMnemonic'](
-            password.value,
-            currentExportWallet.value.importedFromSeed
+          decodedMnemonic.value = await store.dispatch(
+            'crypto/decodeUserMnemonic',
+            {
+              password: password.value,
+              customMnemonic: currentExportWallet.value.importedFromSeed,
+            }
           );
         }
       } else if (currentExportMethod.value === WALLET_TYPES.PRIVATE_KEY) {
         decodedPrivateKey.value =
-          currentExportWallet.value.getPrivateKeyDecoded(password.value);
+          await currentExportWallet.value.getPrivateKeyDecoded(password.value);
       }
 
       showApproveExportModal.value = false;
@@ -326,7 +330,7 @@ export default {
       approveExport,
       showExportModal,
       currentExportMethod,
-      decodedMnemonick,
+      decodedMnemonic,
       exportModalData,
       decodedPrivateKey,
       inputError,

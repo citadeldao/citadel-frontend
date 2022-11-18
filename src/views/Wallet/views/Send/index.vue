@@ -1089,7 +1089,7 @@ export default {
 
         const defaultTx = {
           ...keplrResult.signedTx,
-          publicKey: parentWallet.value.getPublicKeyDecoded(),
+          publicKey: await parentWallet.value.getPublicKeyDecoded(),
           signature: keplrResult.signature,
         };
 

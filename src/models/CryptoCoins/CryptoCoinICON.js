@@ -14,8 +14,8 @@ export default class CryptoCoinICON extends CryptoCoin {
     this.hideCustomFee = true;
   }
 
-  getPublicKeyDecoded(password) {
-    const prvKey = this.getPrivateKeyDecoded(password);
+  async getPublicKeyDecoded(password) {
+    const prvKey = await this.getPrivateKeyDecoded(password);
     const pkBuffer = Buffer.from(prvKey, 'hex');
     const pubKey = secp256k1.publicKeyCreate(pkBuffer, false);
 

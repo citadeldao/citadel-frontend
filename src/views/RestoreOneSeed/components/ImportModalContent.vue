@@ -160,18 +160,19 @@ export default {
       reader.readAsText(file);
     };
 
-    const submitHandler = () => {
+    const submitHandler = async () => {
       if (passwordError.value) {
         inputError.value = passwordError.value;
 
         return;
       }
+      const decodedMnemonic = await CryptoCoin.decodeMnemonic(
+        backup.value?.mnemonic,
+        password.value
+      );
       emit('passwordConfirmed', {
         password: password.value,
-        mnemonic: CryptoCoin.decodeMnemonic(
-          backup.value?.mnemonic,
-          password.value
-        ),
+        mnemonic: decodedMnemonic,
       });
     };
     const { password, passwordError, inputError, dynamicHash } =

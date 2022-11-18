@@ -576,7 +576,7 @@ export default {
 
         const defaultTx = {
           ...keplrResult.signedTx,
-          publicKey: currentWallet.value.getPublicKeyDecoded(),
+          publicKey: await currentWallet.value.getPublicKeyDecoded(),
           signature: keplrResult.signature,
         };
         const defaultSendTx = resRawTxs.value?.transaction || resRawTxs.value;
@@ -660,7 +660,7 @@ export default {
           res = await currentWallet.value.signAndSendMulti({
             walletId: currentWallet.value.id,
             rawTransactions: resRawTxs.value,
-            privateKey: currentWallet.value.getPrivateKeyDecoded(
+            privateKey: await currentWallet.value.getPrivateKeyDecoded(
               password.value
             ),
           });
@@ -961,7 +961,7 @@ export default {
             rawTransactions: restakeAllTxs.value,
             privateKey:
               !isHardwareWallet.value &&
-              currentToken.value.getPrivateKeyDecoded(password.value),
+              (await currentToken.value.getPrivateKeyDecoded(password.value)),
             derivationPath:
               isHardwareWallet.value && currentToken.value.derivationPath,
           });
@@ -979,7 +979,7 @@ export default {
             rawTransactions: restakeXctTxs.value,
             privateKey:
               !isHardwareWallet.value &&
-              currentToken.value.getPrivateKeyDecoded(password.value),
+              (await currentToken.value.getPrivateKeyDecoded(password.value)),
             derivationPath:
               isHardwareWallet.value && currentToken.value.derivationPath,
           });
@@ -997,7 +997,7 @@ export default {
             rawTransactions: restakeDaoTxs.value,
             privateKey:
               !isHardwareWallet.value &&
-              currentToken.value.getPrivateKeyDecoded(password.value),
+              (await currentToken.value.getPrivateKeyDecoded(password.value)),
             derivationPath:
               isHardwareWallet.value && currentToken.value.derivationPath,
           });
@@ -1079,7 +1079,7 @@ export default {
             rawTransactions: claimAllTxs.value,
             privateKey:
               !isHardwareWallet.value &&
-              currentToken.value.getPrivateKeyDecoded(password.value),
+              (await currentToken.value.getPrivateKeyDecoded(password.value)),
             derivationPath:
               isHardwareWallet.value && currentToken.value.derivationPath,
           });
@@ -1097,7 +1097,7 @@ export default {
             rawTransactions: claimXctTxs.value,
             privateKey:
               !isHardwareWallet.value &&
-              currentToken.value.getPrivateKeyDecoded(password.value),
+              (await currentToken.value.getPrivateKeyDecoded(password.value)),
             derivationPath:
               isHardwareWallet.value && currentToken.value.derivationPath,
           });
@@ -1115,7 +1115,7 @@ export default {
             rawTransactions: claimDaoTxs.value,
             privateKey:
               !isHardwareWallet.value &&
-              currentToken.value.getPrivateKeyDecoded(password.value),
+              (await currentToken.value.getPrivateKeyDecoded(password.value)),
             derivationPath:
               isHardwareWallet.value && currentToken.value.derivationPath,
           });
