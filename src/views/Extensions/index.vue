@@ -394,20 +394,22 @@ export default {
         const nets = selectedApp.value.networks.map((net) => {
           return net.toLowerCase();
         });
-        const wallets = walletsList.value
-
-          .filter(
-            (w) =>
-              nets.includes(w.net.toLowerCase()) &&
-              w.type !== WALLET_TYPES.PUBLIC_KEY
-          )
-          .map((w) => ({
-            address: w.address,
-            net: w.net,
-            type: w.type,
-            publicKey:
-              (w.getPublicKeyDecoded && w.getPublicKeyDecoded()) || null,
-          }));
+        const wallets = await Promise.all(
+          walletsList.value
+            .filter(
+              (w) =>
+                nets.includes(w.net.toLowerCase()) &&
+                w.type !== WALLET_TYPES.PUBLIC_KEY
+            )
+            .map(async (w) => ({
+              address: w.address,
+              net: w.net,
+              type: w.type,
+              publicKey:
+                (w.getPublicKeyDecoded && (await w.getPublicKeyDecoded())) ||
+                null,
+            }))
+        );
 
         if (mergeWallet) {
           wallets.push({
@@ -824,7 +826,7 @@ export default {
         const defaultTx = {
           ...keplrResult.signedTx,
           signType,
-          publicKey: signerWallet.value.getPublicKeyDecoded(),
+          publicKey: await signerWallet.value.getPublicKeyDecoded(),
           signature: keplrResult.signature,
         };
         const defaultSendTx = extensionTransactionForSign.value.transaction;
@@ -967,7 +969,9 @@ export default {
               {
                 privateKey:
                   password.value &&
-                  signerWallet.value.getPrivateKeyDecoded(password.value),
+                  (await signerWallet.value.getPrivateKeyDecoded(
+                    password.value
+                  )),
                 derivationPath: signerWallet.value.derivationPath,
               }
             );
@@ -978,7 +982,7 @@ export default {
             response = await citadel.executeContract(signerWallet.value.id, {
               privateKey:
                 password.value &&
-                signerWallet.value.getPrivateKeyDecoded(password.value),
+                (await signerWallet.value.getPrivateKeyDecoded(password.value)),
               proxy: false,
               derivationPath: signerWallet.value.derivationPath,
               ...extensionTransactionForSign.value.messageScrt,
@@ -1029,7 +1033,7 @@ export default {
           rawTransaction: extensionTransactionForSign.value,
           privateKey:
             password.value &&
-            signerWallet.value.getPrivateKeyDecoded(password.value),
+            (await signerWallet.value.getPrivateKeyDecoded(password.value)),
           derivationPath: signerWallet.value.derivationPath,
           proxy: false,
         });

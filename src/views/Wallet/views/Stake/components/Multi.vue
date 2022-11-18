@@ -632,7 +632,7 @@ export default {
 
         const defaultTx = {
           ...keplrResult.signedTx,
-          publicKey: props.currentWallet.getPublicKeyDecoded(),
+          publicKey: await props.currentWallet.getPublicKeyDecoded(),
           signature: keplrResult.signature,
         };
 
@@ -713,7 +713,9 @@ export default {
         res = await props.currentWallet.signAndSendMulti({
           walletId: props.currentWallet.id,
           rawTransactions: resRawTxs.value,
-          privateKey: props.currentWallet.getPrivateKeyDecoded(password.value),
+          privateKey: await props.currentWallet.getPrivateKeyDecoded(
+            password.value
+          ),
         });
       }
 

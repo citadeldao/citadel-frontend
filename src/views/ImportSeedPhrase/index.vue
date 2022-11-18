@@ -99,12 +99,12 @@ export default {
       }
 
       store.commit('newWallets/setLoader', true);
-      setImportedFromSeed();
+      await setImportedFromSeed();
       const { data, error } = await await citadel.addCreatedWallet({
         ...wallet,
         ...wallet.config,
         type:
-          walletOpts.mnemonic === userMnemonic(walletOpts.password) ||
+          walletOpts.mnemonic === (await userMnemonic(walletOpts.password)) ||
           !isUserMnemonic.value
             ? 'oneSeed'
             : 'privateKey',
@@ -113,7 +113,7 @@ export default {
 
       if (!error) {
         !isPasswordHash.value && savePassword();
-        !isUserMnemonic.value && saveMnemonic();
+        !isUserMnemonic.value && (await saveMnemonic());
         const newInstance = await store.dispatch(
           'crypto/createNewWalletInstance',
           {

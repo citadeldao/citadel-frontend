@@ -84,14 +84,14 @@ export default {
       });
     });
 
-    const finalStep = (checkedNets) => {
+    const finalStep = async (checkedNets) => {
       store.commit('newWallets/setLoader', true);
       isUserMnemonic.value && setMnemonic();
       setNets(checkedNets);
       setType(WALLET_TYPES.ONE_SEED);
       createWallets(WALLET_TYPES.ONE_SEED).then(async (success) => {
         if (success) {
-          !isUserMnemonic.value && saveMnemonic();
+          !isUserMnemonic.value && (await saveMnemonic());
           !isPasswordHash.value && savePassword();
           await redirectToNewWallet();
           if (isDownloadSeed.value) {
