@@ -19,13 +19,8 @@
             @blur="focus = false"
             @keyup.enter="setAlias()"
           />
-          <h4
-            v-else
-            ref="nameRef"
-            :style="maxNameWidth"
-            class="alias__wallet-name"
-          >
-            {{ currentWallet.title || formattedWalletName }}
+          <h4 v-else ref="nameRef" class="alias__wallet-name">
+            {{ currentWallet.title || currentWallet.address }}
           </h4>
           <EditButton @click="clickHandler">
             {{ editMode ? $t('save') : $t('edit') }}
@@ -134,9 +129,6 @@ export default {
     const handleResize = ({ width }) => {
       wrapperWidth.value = width;
     };
-    const handleNameResize = ({ width }) => {
-      wrapperNameWidth.value = width;
-    };
 
     const fontSizes = computed(() => {
       return width.value < screenWidths.lg
@@ -151,19 +143,6 @@ export default {
         fontSizes.value.address
       )
     );
-    const maxNameWidth = computed(() => {
-      return props.currentWallet.title
-        ? {}
-        : {
-            maxWidth: `${
-              addressTextWidth(
-                props.currentWallet?.address,
-                'Panton_Bold',
-                fontSizes.value.name
-              ) - 30
-            }px`,
-          };
-    });
 
     const metamaskConnector = computed(
       () => store.getters['metamask/metamaskConnector']
@@ -192,16 +171,8 @@ export default {
         props.currentWallet?.address,
         +wrapperWidth.value,
         'Panton_Regular',
-        fontSizes.value.address
-      );
-    });
-
-    const formattedWalletName = computed(() => {
-      return formattedWalletAddress(
-        props.currentWallet?.address,
-        +wrapperNameWidth.value,
-        'Panton_Bold',
-        fontSizes.value.name
+        fontSizes.value.address,
+        0
       );
     });
 
@@ -339,13 +310,10 @@ export default {
       isFavorite,
       toggleFavorite,
       formattedAddress,
-      formattedWalletName,
       wrapperWidth,
       wrapperNameWidth,
       handleResize,
-      handleNameResize,
       maxWidth,
-      maxNameWidth,
       showAddressTooltip,
       currentWalletType,
       addressRef,

@@ -70,8 +70,8 @@ export const formattedWalletAddress = (
   fontSize
 ) => {
   if (addressTextWidth(address, fontFamily, fontSize) > +wrapperWidth) {
-    const addressEnd = `...${address.substr(address.length - 4)}`;
-    let addressStart = address.substring(0, address.length - 4);
+    const addressEnd = `...${address.substr(address.length - 5)}`;
+    let addressStart = address.substring(0, address.length - 5);
 
     while (
       addressTextWidth(`${addressStart}${addressEnd}`, fontFamily, fontSize) >
