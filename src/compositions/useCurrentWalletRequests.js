@@ -78,7 +78,8 @@ export default function useCurrentWalletRequests() {
     const res = await wallet.value.signAndSendTransfer({
       walletId: wallet.value.id,
       rawTransaction: rawTx,
-      privateKey: password && wallet.value.getPrivateKeyDecoded(password),
+      privateKey:
+        password && (await wallet.value.getPrivateKeyDecoded(password)),
       derivationPath: wallet.value.derivationPath,
     });
     const { data } = res;

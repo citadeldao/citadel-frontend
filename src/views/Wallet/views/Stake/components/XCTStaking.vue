@@ -568,7 +568,9 @@ export default {
         const res = await props.currentWallet.signAndSendMulti({
           walletId: props.currentWallet.id,
           rawTransactions: resRawTxs.value,
-          privateKey: props.currentWallet.getPrivateKeyDecoded(password.value),
+          privateKey: await props.currentWallet.getPrivateKeyDecoded(
+            password.value
+          ),
         });
 
         if (!res.error) {

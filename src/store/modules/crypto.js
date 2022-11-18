@@ -31,18 +31,6 @@ export default {
     privateWallets: (state) => state.privateWallets,
     newMnemonic: (state) => state.newMnemonic,
     encodeUserMnemonic: (state) => state.mnemonic,
-    decodeUserMnemonic: (state) => (password, customMnemonic) => {
-      if (!state.mnemonic) {
-        return null;
-      }
-
-      // export from settings when wallet import from seed
-      if (customMnemonic) {
-        return CryptoCoin.decodeMnemonic(customMnemonic, password);
-      }
-
-      return CryptoCoin.decodeMnemonic(state.mnemonic, password);
-    },
     passwordHash: (state) => state.passwordHash,
   },
 
@@ -68,6 +56,17 @@ export default {
   },
 
   actions: {
+    async decodeUserMnemonic({ state }, { password, customMnemonic }) {
+      if (!state.mnemonic) {
+        return null;
+      }
+      // export from settings when wallet import from seed
+      if (customMnemonic) {
+        return CryptoCoin.decodeMnemonic(customMnemonic, password);
+      }
+
+      return CryptoCoin.decodeMnemonic(state.mnemonic, password);
+    },
     async generateNewMnemonic({ commit }) {
       const { result, data } = await citadel.generateMnemonic();
 
@@ -85,8 +84,11 @@ export default {
       commit('setPasswordHash', passwordHash);
     },
 
-    setAndEncodeUserMnemonic({ commit }, { mnemonic, password }) {
-      const encodeMnemonic = CryptoCoin.encodeMnemonic(mnemonic, password);
+    async setAndEncodeUserMnemonic({ commit }, { mnemonic, password }) {
+      const encodeMnemonic = await CryptoCoin.encodeMnemonic(
+        mnemonic,
+        password
+      );
       commit('setUserMnemonic', encodeMnemonic);
     },
 
@@ -96,21 +98,24 @@ export default {
         walletOpts.privateKeyEncoded = walletOpts.privateKeyEncoded
           ? walletOpts.privateKeyEncoded
           : walletOpts.privateKey
-          ? WalletConstructor.encodePrivateKeyByPassword(
+          ? await WalletConstructor.encodePrivateKeyByPassword(
               walletOpts.net,
               walletOpts.privateKey,
               password
             )
           : null;
-        // walletOpts.mnemonicEncoded = walletOpts.mnemonicEncoded
-        //   ? walletOpts.mnemonicEncoded
-        //   : walletOpts.mnemonic
-        //   ? WalletConstructor.encodePrivateKeyByPassword(
-        //       walletOpts.net,
-        //       walletOpts.mnemonic,
-        //       password
-        //     )
-        //   : null;
+        // For polka
+        if (walletOpts.net === 'polkadot') {
+          walletOpts.mnemonicEncoded = walletOpts.mnemonicEncoded
+            ? walletOpts.mnemonicEncoded
+            : walletOpts.mnemonic
+            ? await WalletConstructor.encodePrivateKeyByPassword(
+                walletOpts.net,
+                walletOpts.mnemonic,
+                password
+              )
+            : null;
+        }
         walletOpts.config = rootGetters['networks/configByNet'](walletOpts.net);
         const { currency } = useWallets(walletOpts);
         walletOpts.balanceUSD = BigNumber(

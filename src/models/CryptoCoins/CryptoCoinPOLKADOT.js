@@ -1,14 +1,15 @@
 import CryptoCoin from '@/models/CryptoCoin';
 
 export default class CryptoCoinPOLKADOT extends CryptoCoin {
-  constructor(opts, password) {
+  constructor(opts) {
     super(opts);
     this.privateKeyEncoded = opts.privateKeyEncoded || null;
-    this.mnemonicEncoded = opts.mnemonicEncoded = opts.mnemonicEncoded
-      ? opts.mnemonicEncoded
-      : opts.mnemonic
-      ? CryptoCoin.encodePrivateKeyByPassword(opts.net, opts.mnemonic, password)
-      : null;
+    this.mnemonicEncoded = opts.mnemonicEncoded;
+    // this.mnemonicEncoded = opts.mnemonicEncoded
+    //   ? opts.mnemonicEncoded
+    //   : opts.mnemonic
+    //   ? await CryptoCoin.encodePrivateKeyByPassword(opts.net, opts.mnemonic, password)
+    //   : null;
     this.publicKey = opts.publicKey || null;
     this.hasFee = true;
     this.hasClaimUnstaked = true;
