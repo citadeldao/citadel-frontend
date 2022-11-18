@@ -308,7 +308,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   cursor: pointer;
   position: relative;
 
@@ -323,7 +323,7 @@ export default {
     flex-direction: row;
   }
   &.custom {
-    width: 340px;
+    width: 365px;
     background-color: $too-ligth-gray;
     .derivation-path-card__checked-icon {
       width: 28px;
@@ -441,6 +441,7 @@ export default {
     }
   }
   &__wrapper1 {
+    width: 100%;
     @include md {
       flex-grow: 1;
       display: flex;
@@ -553,9 +554,10 @@ export default {
     width: 16px;
     height: 16px;
   }
-  .derivation-path-card__icon {
-    @include md {
-      top: 5px;
+  @include md {
+    .derivation-path-card__address {
+      position: relative;
+      bottom: 8px;
     }
   }
 }

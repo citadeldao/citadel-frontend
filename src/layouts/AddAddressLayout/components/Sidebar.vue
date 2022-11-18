@@ -93,6 +93,8 @@
         @scroll="onScrollContent"
       >
         <div class="sidebar__addresses-addresses-full-list">
+          <div class="scroll-shadow scroll-shadow--top"></div>
+          <div class="scroll-shadow scroll-shadow--bottom"></div>
           <transition-group name="drop">
             <AddressItem
               v-for="wallet in displayData"
@@ -378,12 +380,21 @@ export default {
       timer: null,
     };
   },
+  updated() {
+    setTimeout(this.setShadows, 1000);
+  },
   mounted() {
     if (window.innerWidth <= 1024) {
       document
         .querySelector('#main')
         .addEventListener('click', this.onClickMain);
     }
+
+    this.setShadows();
+
+    document
+      .querySelector('.sidebar__addresses-addresses-full-list')
+      .addEventListener('scroll', this.onScrollFullList);
   },
   created() {
     window.addEventListener('resize', this.onResize);
@@ -424,6 +435,53 @@ export default {
     onMouseLeave() {
       if (window.innerWidth <= 1024) {
         clearTimeout(this.timer);
+      }
+    },
+    onScrollFullList(e) {
+      return this.setShadows(e.target);
+    },
+    setShadows(parent) {
+      const shadowTop = document.querySelector('.scroll-shadow--top');
+      const shadowBottom = document.querySelector('.scroll-shadow--bottom');
+
+      let fullList = parent;
+
+      if (parent === undefined) {
+        fullList = document.querySelector(
+          '.sidebar__addresses-addresses-full-list'
+        );
+      }
+
+      if (!fullList) return;
+
+      const hasScroll = fullList.scrollHeight > fullList.clientHeight;
+
+      const checkOnBottom =
+        fullList.scrollHeight - fullList.scrollTop === fullList.clientHeight;
+
+      const checkOnTop = fullList.scrollTop === 0;
+
+      if (!hasScroll) {
+        shadowTop.classList.remove('active');
+        shadowBottom.classList.remove('active');
+
+        return;
+      }
+
+      shadowBottom.classList.add('active');
+
+      if (fullList.scrollTop > 0) {
+        shadowTop.classList.add('active');
+      } else if (checkOnTop) {
+        shadowTop.classList.remove('active');
+      }
+
+      if (hasScroll) {
+        shadowBottom.classList.add('active');
+      }
+
+      if (checkOnBottom) {
+        shadowBottom.classList.remove('active');
       }
     },
   },
@@ -690,58 +748,13 @@ export default {
       flex-direction: column;
       overflow-y: overlay;
       overflow-x: hidden;
-      padding-bottom: 15px;
+      padding: 15px 0;
+      border-radius: 8px;
       @include laptop {
         width: 90%;
         margin: 0 auto;
       }
     }
-
-    // &.bottom::after {
-    //   visibility: hidden;
-    // }
-
-    // &.top::before {
-    //   visibility: hidden;
-    // }
-
-    // &.active::after,
-    // &.active::before {
-    //   visibility: visible;
-    // }
-
-    // &::after,
-    // &::before {
-    //   content: '';
-    //   height: 15px;
-    //   width: calc(#{$sidebar-max-width} - 50px);
-    //   position: absolute;
-    //   padding: 0;
-    //   visibility: hidden;
-    //   @include md {
-    //     width: calc(#{$sidebar-max-width-md} - 50px);
-    //   }
-    // }
-
-    // &::after {
-    //   bottom: 0;
-    //   margin-top: auto;
-    //   background: linear-gradient(to top, rgba(0, 0, 0, 0.2) 40%, transparent);
-    //   z-index: 1;
-    // }
-
-    // &::before {
-    //   top: 0;
-    //   margin-bottom: auto;
-
-    //   background: linear-gradient(
-    //     to bottom,
-    //     rgba(0, 0, 0, 0.2) 40%,
-
-    //     transparent
-    //   );
-    //   z-index: 1;
-    // }
   }
 
   &__address-placeholder {
@@ -824,5 +837,40 @@ export default {
 .drop-leave-to {
   opacity: 0;
   transform: translateY(30px);
+}
+
+.scroll-shadow {
+  position: absolute;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  height: 15px;
+  transition: 0.2s ease-in-out;
+  opacity: 0;
+  box-shadow: none;
+
+  &--top {
+    top: 0;
+    background: -webkit-linear-gradient(
+      270deg,
+      rgba(0, 0, 0, 0.2),
+      transparent
+    );
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.2), transparent);
+    border-radius: 8px 8px 0 0;
+    &.active {
+      opacity: 1;
+    }
+  }
+
+  &--bottom {
+    bottom: 0;
+    background: -webkit-linear-gradient(90deg, rgba(0, 0, 0, 0.2), transparent);
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), transparent);
+    border-radius: 0 0 8px 8px;
+    &.active {
+      opacity: 1;
+    }
+  }
 }
 </style>

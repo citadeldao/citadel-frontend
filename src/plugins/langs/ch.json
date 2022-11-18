@@ -678,9 +678,17 @@
             "title": "地址",
             "description": "删除您的地址，或者导入助记词、私钥或查看密钥",
             "deleteModalTitle": "您确定删除该地址吗？",
+            "deleteModalSubtitle": "",
             "deleteSeedTitle": "您确定删除通用助记词信息吗？",
             "deleteSeedDesc": "您可以删除所有保存在本地的通用助记词",
-            "deleteSeedInfo": "提示：当您确认此操作后，您通用助记词钱包的所有信息将被移除。"
+            "deleteSeedInfo": "提示：当您确认此操作后，您通用助记词钱包的所有信息将被移除。",
+            "modalTitle":"",
+            "modalSubtitle":"",
+            "bannerContent":"",
+            "selectAll":"",
+            "unselectAll":"",
+            "selectedWalletsLength":"",
+            "delete":""
         },
         "changeEmail": {
             "title": "您的邮箱",
@@ -700,8 +708,8 @@
             "description": "该操作不可逆",
             "modalDescription": "请注意，此操作不可逆。您的资产是安全的，这将只删除您的Citadel.one帐户",
             "button": "删除账户",
-            "inputLabel": "输入“删除”进行确认",
-            "placeholder": "delete"
+            "inputLabel": "输入\"delete\"确认",
+            "placeholder": "输入确认"
         },
         "changePassword": {
             "btnTitle": "更改密码",
@@ -778,7 +786,9 @@
         "apyTooltip": "年收益率百分比（APY）的计算为 质押通膨 / 质押金额",
         "stakingRatioTooltip": "已质押的符合条件代币的百分比",
         "dayTradingVol": "24小时交易量",
-        "dayTradingVolTooltip": "24小时交易量是指过去24小时内交易的代币数量"
+        "dayTradingVolTooltip": "24小时交易量是指过去24小时内交易的代币数量",
+        "placeholderTitle": "目前，有关令牌的信息不可用",
+        "placeholderDescription": "有关代币和价格历史图表的信息将在不久的将来提供"
     },
     "viewingKey": {
         "viewingKey": "查看密钥",
@@ -911,6 +921,7 @@
     "emptyPassword": "密码为空",
     "accruedDaily": "每天下午 6 点至 7 点累积（UTC 时间）",
     "extensions": {
+        "emptyList": "",
         "showLabel": "展示",
         "headerTitle": "拓展程序商店",
         "headerDescription": "便捷使用您最喜欢的 dApp、DeFi app 和扩展程序！",
@@ -1174,6 +1185,11 @@
         },
         "stride": {
             "title": "Stride",
+            "description": "",
+            "shortDescription": ""
+        },
+        "jackal": {
+            "title": "Jackaldao",
             "description": "",
             "shortDescription": ""
         }

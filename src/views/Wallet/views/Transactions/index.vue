@@ -14,17 +14,15 @@
       class="transactions__table"
     >
       <tr>
-        <th>{{ $t('type') }}</th>
-        <th class="transactions__table-xl">
+        <th class="radius-th-left header type">{{ $t('type') }}</th>
+        <th class="header status">
           {{ $t('status') }}
         </th>
-        <th class="transactions__table-xl">
+        <th class="header amount">{{ $t('amount') }}</th>
+        <th class="header">
           {{ $t('timeDate') }}
         </th>
-        <th class="transactions__table-xl">
-          {{ $t('address') }}
-        </th>
-        <th>{{ $t('amount') }}</th>
+        <th class="header" />
       </tr>
 
       <template v-if="currentPage === 1">
@@ -32,8 +30,8 @@
           v-for="tx in txsFromMempool"
           :key="tx.hash"
           :transaction="tx"
-          :current-wallet="currentWallet"
           from-mempool
+          :current-wallet="currentWallet"
           @showTransactionInfo="showTransactionInfo"
           @editComment="editComment"
         />
@@ -54,7 +52,10 @@
         <fileExport />
         <span>CSV {{ $t('export') }}</span>
       </div>
-      <div class="transactions__pagination">
+      <div
+        :class="{ column: (currentPage - 1) * pageLimit + 1 > 1000 }"
+        class="transactions__pagination"
+      >
         <div v-if="transactions?.length" class="transactions__item-count">
           <span class="transactions__current-amount">
             {{ (currentPage - 1) * pageLimit + 1 }} </span
@@ -105,7 +106,7 @@
         :desc="$t('transactionsPage.editCommentModalDesc')"
         button-text="save"
         type="action"
-        @buttonClick="saveComment"
+        @buttonClick="modalCloseHandler"
         @close="modalCloseHandler"
       >
         <template #default>
@@ -133,8 +134,8 @@
       <ModalContent
         v-if="showTransactionInfoModal"
         v-click-away="modalCloseHandler"
-        :title="$t('transactionsPage.transactionInfoModalTitle')"
-        :desc="$t('transactionsPage.transactionInfoModalDesc')"
+        :title="currentTransaction?.formatedStatus?.headerTitle"
+        :desc="currentTransaction?.formatedStatus?.headerDescription"
         button-text="ok"
         data-qa="transaction-info-modal"
         @buttonClick="infoModalSubmit"
@@ -213,13 +214,10 @@ export default {
       return mempool.value
         .filter((tx) => {
           const hasFrom =
-            tx.from.toLowerCase() === currentAddress.value?.toLowerCase();
-          const hasTo =
-            tx.to.toLowerCase() === currentAddress.value?.toLowerCase();
-          const txBelongToWallet =
-            (hasFrom || hasTo) && tx.net === props.currentWallet.net;
-
-          return txBelongToWallet;
+            (tx.to || tx.holder).toLowerCase() ===
+            currentAddress.value?.toLowerCase();
+          // const hasTo = tx.to.toLowerCase() === currentAddress.value?.toLowerCase();
+          return hasFrom && tx.network === props.currentWallet.net;
         })
         .sort((a, b) => (a.date > b.date ? -1 : 1));
     });
@@ -257,6 +255,8 @@ export default {
 
       return isLastPage ? total.value : pageLimit.value * currentPage.value;
     });
+
+    console.log('lastItemOnPage', total.value, pageLimit.value);
 
     getTransactions(props.currentWallet.id, currentPage.value, pageLimit.value);
 
@@ -316,31 +316,18 @@ export default {
       txComment.value = transaction.note;
       nextTick(() => document.getElementById('prevComment').focus());
     };
-    const saveComment = async () => {
-      await store.dispatch('transactions/postTransactionNote', {
-        network: route.params.token || route.params.net,
-        hash: currentTransaction.value.hash,
-        text: txComment.value,
-      });
-      await getTransactions(
-        props.currentWallet.id,
-        currentPage.value,
-        pageLimit.value
-      );
-      modalCloseHandler();
-    };
     const showTransactionInfo = async (transaction) => {
       currentTransaction.value = transaction;
       txComment.value = transaction.note;
       showModal.value = true;
       showTransactionInfoModal.value = true;
+
+      if (props.currentWallet.hasTransactionComment) {
+        // nextTick(() => document.getElementById('comment').focus());
+      }
     };
     const infoModalSubmit = async () => {
-      if (currentTransaction.value.note !== txComment.value) {
-        saveComment();
-      } else {
-        modalCloseHandler();
-      }
+      modalCloseHandler();
     };
 
     return {
@@ -360,7 +347,6 @@ export default {
       showEditCommentModal,
       modalCloseHandler,
       txComment,
-      saveComment,
       showTransactionInfoModal,
       currentTransaction,
       infoModalSubmit,
@@ -395,15 +381,28 @@ export default {
     }
   }
   &__table {
-    border-collapse: collapse;
-    margin-bottom: 30px;
+    border-collapse: separate;
+    border-spacing: 0 0.5em;
+    // border-collapse: collapse;
+    // margin-bottom: 30px;
     @include lg {
       margin-bottom: 24px;
     }
     @include md {
       margin-bottom: 16px;
     }
+
+    .radius-th-left {
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+    }
+
+    .radius-th-right {
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
   }
+
   &__table-status {
     display: none;
     font-size: 16px;
@@ -419,7 +418,29 @@ export default {
     padding: 15px 0;
     font-size: 16px;
     line-height: 19px;
-    font-family: 'Panton_Bold';
+    font-style: normal;
+    font-family: 'Panton_Regular';
+
+    &.header {
+      background: #e1e8fb;
+
+      &.type {
+        padding-right: 180px;
+      }
+
+      &.status {
+        @include md {
+          display: none;
+        }
+      }
+
+      &.amount {
+        @include md {
+          display: none;
+        }
+      }
+    }
+
     &:first-child {
       padding-left: 24px;
       @include md {
@@ -463,6 +484,15 @@ export default {
   &__pagination {
     display: flex;
     align-items: center;
+
+    &.column {
+      flex-direction: column;
+      align-items: flex-end;
+
+      .transactions__item-count {
+        margin-right: 5px;
+      }
+    }
   }
   &__dropdown {
     width: 80px;

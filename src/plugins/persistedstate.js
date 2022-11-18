@@ -6,6 +6,7 @@ export default function initPersistedstate(store) {
   createPersistedState({
     key: 'user',
     paths: [
+      'salary.members',
       'crypto.privateWallets',
       'crypto.mnemonic',
       'wallets.wallets',

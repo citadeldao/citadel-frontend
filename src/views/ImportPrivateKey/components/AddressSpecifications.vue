@@ -5,7 +5,9 @@
         <Autocomplete
           id="networks"
           v-model:value="search"
-          :items="networks"
+          :items="
+            networks.filter((c) => !netsWithoutPrivateKeys.includes(c.icon))
+          "
           :label="$t('network')"
           :placeholder="$t('selectNetwork')"
           initial-icon="citadel"
@@ -33,6 +35,7 @@
           :label="$t('enterYourPrivateKey')"
           type="text"
           icon="key"
+          :error="invalidPrivateKey ? 'Invalid private key format' : ''"
           :placeholder="$t('privateKey')"
           data-qa="add-address__existing__private-key__key-field"
         />
@@ -53,6 +56,7 @@ import useSelectNetwork from '@/compositions/useSelectNetwork';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import useIostProps from '@/compositions/useIostProps';
 import models from '@/models';
+import { netsWithoutPrivateKeys } from '@/config/netsWithoutPrivateKeys';
 
 export default {
   name: 'AddressSpecifications',
@@ -62,11 +66,17 @@ export default {
     PrimaryButton,
     Select,
   },
+  props: {
+    invalidPrivateKey: {
+      required: true,
+    },
+  },
   emits: ['setSpecifications'],
   setup(props, { emit }) {
     const privateKey = ref('');
     const search = ref('');
     const { networks, netByTitle } = useSelectNetwork();
+
     const submitHandler = () => {
       if (!privateKey.value.trim()) {
         return;
@@ -111,6 +121,7 @@ export default {
       accounts,
       account,
       networkChangeHandler,
+      netsWithoutPrivateKeys,
     };
   },
 };

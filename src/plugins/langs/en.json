@@ -1,5 +1,14 @@
 {
     "login": {
+        "continueEmail1": "Email will help you to",
+        "continueEmail2": "easily switch",
+        "continueEmail3": "between web platform and mobile application.",
+        "continueEmail4": "With email we can stay in touch with you",
+        "continueEmail5": "in case of emergency.",
+        "continueEmail6": "There are a lot of situations when we need to deliver you information quickly: a validator has gone offline and you need to transfer your coins; a loan liquidation is approaching, etc. Once the C1 application section is full of various use-cases, this kind of communication will be necessary.",
+        "continueEmail7": "We might also let you know if you are",
+        "continueEmail8": "missing your staking rewards,",
+        "continueEmail9": "so you earn more, but it's optional.",
         "loginInWith": "Login in with",
         "socialAccount": "Social account",
         "web3wallet": "Web3 Wallet",
@@ -246,6 +255,13 @@
         "frozenBalanceTooltipTitle": "Your tokens will become available in"
     },
     "transactionsPage": {
+        "failed": "Failed",
+        "modalSuccessHeader": "Transaction Successful!",
+        "modalSuccessDescription": "Your transaction was completed.",
+        "modalPendingHeader": "Transaction Pending!",
+        "modalPendingDescription": "Your transaction was pending.",
+        "modalFailHeader": "Transaction failed!",
+        "modalFailDescription": "It may take some time for the transaction to complete.",
         "placeHolderInfo1": "Your transaction history is empty.",
         "placeHolderInfo2P1": "Deposit some",
         "placeHolderInfo2P2": "to send, stake, and earn rewards.",
@@ -511,6 +527,8 @@
     "Stake": "Stake",
     "receive": "Receive",
     "fee": "Fee",
+    "addComment": "Add comment",
+    "editComment": "Edit comment",
     "comment": "Comment",
     "export": "Export",
     "timeDate": "Time & Data",
@@ -707,10 +725,19 @@
         "addresses": {
             "title": "Addresses",
             "description": "Delete your addresses or import seedphrase, private or viewing keys",
-            "deleteModalTitle": "Do you want to delete the address?",
+            "deleteModalTitle": "Are you sure you want to delete the address?",
+            "deleteModalSubtitle": "<b style='color: red;'>Attention!</b> <span style='color: #6b93c0'>The deleting process will take some time.</span>",
+            "deleteAddresses": "Do you want to delete all addresses?",
             "deleteSeedTitle": "Do you want to delete One-Seed info?",
             "deleteSeedDesc": "You can delete all the locally stored data on your One-Seed",
-            "deleteSeedInfo": "Note: After confirmation of this action all the data associated with your One-Seed wallet will be removed."
+            "deleteSeedInfo": "Note: After confirmation of this action all the data associated with your One-Seed wallet will be removed.",
+            "modalTitle":"Delete addresses",
+            "modalSubtitle":"Choose addresses that you want to delete",
+            "bannerContent":"Address deleting causes the loss of seed phrase/private keys. Make sure to save them.",
+            "selectAll":"Select all",
+            "unselectAll":"Unselect all",
+            "selectedWalletsLength":"You select <b style='font-weight: 600;font-family: \"Panton_Bold\";'>{selectedWalletsLength}</b> addresses",
+            "delete":"Delete"
         },
         "changeEmail": {
             "title": "Your email",
@@ -739,8 +766,8 @@
             "description": "This operation cannot be reversed",
             "modalDescription": "Please note that this action cannot be reversed. Your assets are safe - you only delete the Citadel.one account",
             "button": "Delete account",
-            "inputLabel": "Type \"Delete account\" to confirm",
-            "placeholder": "Type 'delete'"
+            "inputLabel": "Enter \"delete\" to confirm",
+            "placeholder": "Enter confirmation"
         },
         "changePassword": {
             "btnTitle": "Change password",
@@ -817,7 +844,9 @@
         "apyTooltip": "Annual Percentage Yield is counted as Staking Inflation / Staked",
         "stakingRatioTooltip": "Percentage of eligible tokens that are being staked",
         "dayTradingVol": "24 hour trading vol",
-        "dayTradingVolTooltip": "24-hour trading vol is the number of coins that have exchanged hands during the last 24 hours"
+        "dayTradingVolTooltip": "24-hour trading vol is the number of coins that have exchanged hands during the last 24 hours",
+        "placeholderTitle": "Currently, information about the token is unavailable",
+        "placeholderDescription": "Information about the token and the price history chart will be available soon"
     },
     "viewingKey": {
         "viewingKey": "Viewing key",
@@ -950,6 +979,7 @@
     "emptyPassword": "Empty password",
     "accruedDaily": "Accrued daily from 6-7 pm UTC",
     "extensions": {
+        "emptyList": "Nothing was found for your query",
         "showMore": "Show more",
         "showLabel": "Show",
         "headerTitle": "Extensions Store",
@@ -1217,6 +1247,11 @@
             "title": "Stride",
             "description": "Stride is a blockchain ('zone') that allows to liquid stake any IBC-compatible tokens and earn both staking and DeFi yields across the Cosmos ecosystem.",
             "shortDescription": "Stride is a liquid staking zone in Cosmos, enabling users to earn both staking and DeFi yields"
+        },
+        "jackal": {
+            "title": "Jackaldao",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "Uptime",
@@ -1283,7 +1318,7 @@
         "searchPlaceholder": "Start typing the token name",
         "currentAsset": "Current assets"
     },
-    "enterPasswordBackup": "Enter the backup file password to restore Citadel One-seed wallet",
+    "enterPasswordBackup": "Enter the backup file password or press next to restore Citadel One-seed wallet",
     "enterPasswordBackupLabel": "Enter your backup file password",
     "walletsAdding": {
         "mainMenuTitle": "Add an address",
@@ -1339,6 +1374,8 @@
         "notFound": "Citadel browser extension not found",
         "walletsNotFound": "Not wallets found to sync with browser extension",
         "emptyWallets": "You must setup browser extension before syncing",
+        "extensionBlock": "Chrome extension",
+        "sync": "Sync wallets",
         "syncWithExtension": "Exporting addresses to browser extension",
         "syncingFromTitle": "Importing addresses from  browser extension",
         "syncingFromDescription": "Confirm this operation with a password",

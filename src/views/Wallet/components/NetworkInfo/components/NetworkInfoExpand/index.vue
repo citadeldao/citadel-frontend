@@ -1,23 +1,33 @@
 <template>
-  <div class="expand__wrap">
-    <div class="expand__header">
-      <div class="header__title">
+  <div class="expand__wrap" :class="{ expand__border: isNotFound }">
+    <div v-if="isLoading" class="loader">
+      <Loading />
+    </div>
+
+    <div class="expand__header" v-if="!isLoading">
+      <div class="header__title" v-if="!isNotFound">
         {{ currentWallet.name }} {{ $t('Network') }}
       </div>
+
       <!-- Ссылки на соцсети сеток для 1280 px -->
       <Socials :socials="socials" class="socials-lg" />
+
       <div
         class="header__icon"
         data-qa="wallet__network-info-modal__expand-button"
         @click="$emit('close', $event)"
       >
-        <closeIcon />
-        <closeIconHover id="hover" />
+        <constrictIcon class="constrict__icon" />
       </div>
     </div>
 
-    <div id="expand-rate-chart-wrap" class="content__wrap">
-      <div class="expand__content">
+    <ExpandInfoPlaceholder v-if="isNotFound" />
+
+    <div id="expand-rate-chart-wrap" class="content__wrap" v-if="!isNotFound">
+      <div
+        class="expand__content"
+        v-if="!isLoading && currencyHistory !== null"
+      >
         <div class="left-section">
           <!-- Ссылки на соцсети сеток для 1920 px -->
           <Socials :socials="socials" class="socials" />
@@ -189,43 +199,38 @@
         </div>
       </div>
     </div>
-    <!-- div class="expand__button">
-      <PrimaryButton>
-        Learn more
-      </PrimaryButton>
-    </div> -->
   </div>
 </template>
 
 <script>
 import info from '@/assets/icons/info.svg';
-// import PrimaryButton from '@/components/UI/PrimaryButton';
 import DatePicker from '@/components/UI/DatePicker.vue';
 import TabsGroup from '@/components/UI/TabsGroup';
 import Socials from './components/Socials';
 import { tabsList } from '@/static/dateTabs';
 import { computed, ref } from 'vue';
-import closeIcon from '@/assets/icons/network-info/constrict.svg';
-import closeIconHover from '@/assets/icons/network-info/constrict-hover.svg';
+import constrictIcon from '@/assets/icons/network-info/constrict.svg';
 import Tooltip from '@/components/UI/Tooltip';
 import RateHistoryChart from './components/RateHistoryChart';
 import { useStore } from 'vuex';
 import moment from 'moment';
 import { useI18n } from 'vue-i18n';
 import notify from '@/plugins/notify';
+import Loading from '@/components/Loading';
+import ExpandInfoPlaceholder from './components/ExpandPlaceholder.vue';
 
 export default {
   name: 'NetworkInfoExpand',
   components: {
     info,
-    // PrimaryButton,
     DatePicker,
     TabsGroup,
-    closeIcon,
-    closeIconHover,
+    constrictIcon,
     Socials,
     Tooltip,
     RateHistoryChart,
+    Loading,
+    ExpandInfoPlaceholder,
   },
   props: {
     currentWallet: {
@@ -284,14 +289,20 @@ export default {
     const isLoading = ref(false);
     const loadData = async (from, to) => {
       isLoading.value = true;
+
       const data = await store.dispatch('networks/getCurrencyHistoryByRange', {
         from,
         to,
         net: props.currentWallet.net,
       });
-      currencyHistory.value = data.data;
+
+      if (data.data !== null) {
+        currencyHistory.value = data.data;
+      }
+
       isLoading.value = false;
     };
+
     loadData(Date.now() - 86400000 * 31 * currentTab.value, Date.now());
 
     const description = computed(() => {
@@ -302,6 +313,10 @@ export default {
         : t(`netInfo.${props.currentWallet.net}.shortDescription`);
     });
 
+    const isNotFound = computed(
+      () => !isLoading.value && currencyHistory.value === null
+    );
+
     return {
       currentTab,
       tabs,
@@ -310,6 +325,8 @@ export default {
       currentTabChangeHandler,
       currencyHistory,
       description,
+      isLoading,
+      isNotFound,
     };
   },
 };
@@ -345,26 +362,9 @@ export default {
   }
 
   &__icon {
+    margin-left: auto;
     height: auto;
     cursor: pointer;
-
-    svg {
-      display: block;
-    }
-
-    svg + #hover {
-      display: none;
-    }
-
-    &:hover {
-      svg:not(#hover) {
-        display: none;
-      }
-
-      svg + #hover {
-        display: block;
-      }
-    }
   }
 }
 
@@ -377,10 +377,17 @@ export default {
   }
 
   &__wrap {
+    position: relative;
+    min-width: 600px;
+    max-width: 1440px;
+
     background: $white;
     padding: 45px;
     border-radius: 16px;
+
+    min-height: 200px;
     max-height: 80vh;
+
     @include lg {
       padding: 37px;
     }
@@ -417,6 +424,17 @@ export default {
       padding-right: 5px;
       margin-bottom: 24px;
     }
+  }
+
+  &__border::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 15px;
+    background: $dark-blue;
+    border-radius: 16px 16px 0px 0px;
   }
 }
 
@@ -516,5 +534,19 @@ export default {
     width: 100%;
     margin: 0 auto 24px;
   }
+}
+
+.loader {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba($black, 0.2);
+  border-radius: 16px;
 }
 </style>

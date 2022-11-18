@@ -14,6 +14,12 @@
       </div>
     </div>
     <div
+      v-if="derivationPath && currentExportMethod !== WALLET_TYPES.PRIVATE_KEY"
+      class="export-modal__mnemonick-derivation"
+    >
+      Derivation path: <span>{{ derivationPath }}</span>
+    </div>
+    <div
       v-if="currentExportMethod === WALLET_TYPES.PRIVATE_KEY"
       class="export-modal__private-key"
     >
@@ -53,6 +59,10 @@ export default {
       type: String,
       default: '',
     },
+    derivationPath: {
+      type: String,
+      default: '',
+    },
   },
   setup(props) {
     const phrase = computed(() => props.mnemonicPhrase.split(' '));
@@ -77,8 +87,23 @@ export default {
 <style lang="scss" scoped>
 .export-modal {
   display: flex;
+  flex-direction: column;
   position: relative;
   width: 100%;
+
+  &__mnemonick-derivation {
+    margin-top: 20px;
+    color: $black;
+    font-weight: 700;
+    font-size: 18px;
+    font-family: 'Panton_SemiBold';
+
+    span {
+      color: $dark-blue;
+      font-size: 16px;
+    }
+  }
+
   &__mnemonick-phrase {
     display: flex;
     margin-top: 24px;

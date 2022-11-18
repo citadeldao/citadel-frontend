@@ -3,6 +3,7 @@ import types from '@/views/Wallet/views/Transactions/config';
 
 export default function useTransaction(transaction) {
   const type = computed(() => {
+    if (!transaction) return types.unknown;
     if (transaction.direction === 'lost' || !transaction.type) {
       return types.unknown;
     }

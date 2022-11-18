@@ -96,13 +96,18 @@ export default {
   },
 
   actions: {
-    async getTransactions({ commit }, { walletId, ...options }) {
+    async getTransactions({ commit, rootGetters }, { walletId, ...options }) {
       commit(types.SET_TRANSACTIONS, null);
       commit(types.SET_IS_TRANSACTIONS_LOADING, true);
       const { data, error } = await citadel.getTransactionsById(
         walletId,
         options
       );
+      const currentWallet = rootGetters['wallets/currentWallet'];
+
+      if (+walletId !== +currentWallet?.id) {
+        return;
+      }
 
       if (!error) {
         commit(types.SET_TRANSACTIONS, data.list);

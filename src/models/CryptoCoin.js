@@ -8,7 +8,6 @@ import router from '@/router';
 import BigNumber from 'bignumber.js';
 
 const { t } = i18n.global;
-const CryptoJS = require('crypto-js');
 export default class CryptoCoin {
   constructor(opts) {
     // common properties of wallets
@@ -67,12 +66,12 @@ export default class CryptoCoin {
     return txLink;
   }
 
-  getPrivateKeyDecoded(password) {
-    const { error, data } = citadel.decodePrivateKeyByPassword(
+  async getPrivateKeyDecoded(password) {
+    const { error, data } = await citadel.decodePrivateKeyByPassword(
       this.net,
       this.mnemonicEncoded ||
         this.privateKeyEncoded ||
-        store.getters['crypto/encodeUserMnemonic'],
+        (await store.dispatch('crypto/encodeUserMnemonic')),
       password
     );
 
@@ -460,22 +459,25 @@ export default class CryptoCoin {
     return { ok: false };
   }
 
-  static encodeMnemonic(mnemonic, password) {
-    return CryptoJS.AES.encrypt(mnemonic, password).toString();
+  static async encodeMnemonic(mnemonic, password) {
+    const { data } = await citadel.encodeMnemonicByPassword(mnemonic, password);
+    return data;
   }
 
-  static decodeMnemonic(encodeMnemonic, password) {
-    return CryptoJS.AES.decrypt(encodeMnemonic, password).toString(
-      CryptoJS.enc.Utf8
+  static async decodeMnemonic(encodeMnemonic, password) {
+    const { data } = await citadel.decodeMnemonicByPassword(
+      encodeMnemonic,
+      password
     );
+    return data;
   }
 
   static validateMnemonic(mnemonic) {
     return bip39.validateMnemonic(mnemonic);
   }
 
-  static encodePrivateKeyByPassword(net, privateKey, password) {
-    const { data, error } = citadel.encodePrivateKeyByPassword(
+  static async encodePrivateKeyByPassword(net, privateKey, password) {
+    const { data, error } = await citadel.encodePrivateKeyByPassword(
       net,
       privateKey,
       password

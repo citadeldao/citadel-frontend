@@ -85,7 +85,14 @@ export default {
     const numberOfPaths = 5;
     const wallets = ref([]);
     const pathOptions = ref(
-      CryptoCoin.getDerivationPathTemplates(props.net, WALLET_TYPES.LEDGER)
+      props.net === 'evmos'
+        ? [
+            CryptoCoin.getDerivationPathTemplates(
+              props.net,
+              WALLET_TYPES.LEDGER
+            )[0],
+          ]
+        : CryptoCoin.getDerivationPathTemplates(props.net, WALLET_TYPES.LEDGER)
     );
 
     const currentPathDerivation = ref(
@@ -158,6 +165,9 @@ export default {
       if (wallet.walletInstance) {
         customWallet.value = wallet;
         addSingleItem(wallet.walletInstance);
+        if (!customPath) {
+          addSingleItem(wallets.value[0].walletInstance);
+        }
         isCustomLoading.value = false;
       } else {
         notify({
