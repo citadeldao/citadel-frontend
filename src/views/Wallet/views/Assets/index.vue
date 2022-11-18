@@ -432,7 +432,7 @@ export default {
       bottom: 0;
       border-radius: 16px;
     }
-    @media (max-width: 1400px) {
+    @media (min-width: 1280px) and (max-width: 1400px) {
       max-width: 260px;
       width: 100%;
       height: 220px;
@@ -449,8 +449,9 @@ export default {
         top: -16px;
       }
     }
-    @media (max-width: 1280px) {
+    @media (max-width: 1279px) {
       & .round-arrow-button {
+        top: 56px !important;
         right: 35px !important;
       }
     }
@@ -675,6 +676,9 @@ export default {
   button {
     top: 64px;
     right: 75px;
+    @media (min-width: 1280px) and (max-width: 1475px) {
+      right: 55px;
+    }
   }
 }
 </style>
