@@ -57,7 +57,7 @@
         >
           <template v-for="item in adding" :key="item.name">
             <span
-              v-pretty-number="item.value"
+              v-pretty-number="item.current || item.value"
               class="action-modal-content__total-amount-fee"
             />
             <span class="action-modal-content__total-amount-currency">

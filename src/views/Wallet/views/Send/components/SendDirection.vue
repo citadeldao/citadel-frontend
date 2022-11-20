@@ -30,7 +30,7 @@
       <div v-if="wallet.hasResource">
         <template v-for="item in adding" :key="item.name">
           <span
-            v-pretty-number="item.value"
+            v-pretty-number="item.current || item.value"
             class="send-direction__line-fee-amount"
           />
           <span class="send-direction__line-currency">
