@@ -490,7 +490,7 @@ export default {
         rawTransaction: preparePrivateClaim.value.tx,
         privateKey:
           password.value &&
-          signerWallet.value.getPrivateKeyDecoded(password.value),
+          (await signerWallet.value.getPrivateKeyDecoded(password.value)),
         derivationPath: signerWallet.value.derivationPath,
       });
 

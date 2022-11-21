@@ -16,7 +16,7 @@ export default function useCreateWallets() {
   const { wallets } = useWallets();
 
   const isUserMnemonic = computed(
-    () => !!store.getters['crypto/encodeUserMnemonic'],
+    () => !!store.getters['crypto/encodeUserMnemonic']
   );
 
   const isPasswordHash = computed(() => store.getters['crypto/passwordHash']);
@@ -34,15 +34,15 @@ export default function useCreateWallets() {
   const savePassword = () =>
     store.dispatch('crypto/setPassword', walletOpts.password);
 
-  const userMnemonic = (password) =>
-    store.getters['crypto/decodeUserMnemonic'](password);
+  const userMnemonic = async (password) =>
+    await store.dispatch('crypto/decodeUserMnemonic', { password });
 
-  const setMnemonic = (mnemonic) => {
-    walletOpts.mnemonic = mnemonic || userMnemonic(walletOpts.password);
+  const setMnemonic = async (mnemonic) => {
+    walletOpts.mnemonic = mnemonic || (await userMnemonic(walletOpts.password));
   };
 
-  const saveMnemonic = () => {
-    store.dispatch('crypto/setAndEncodeUserMnemonic', walletOpts);
+  const saveMnemonic = async () => {
+    await store.dispatch('crypto/setAndEncodeUserMnemonic', walletOpts);
   };
 
   const setPassphrase = (passphrase) => {
@@ -77,10 +77,10 @@ export default function useCreateWallets() {
     walletOpts.type = type;
   };
 
-  const setImportedFromSeed = () => {
-    walletOpts.importedFromSeed = CryptoCoin.encodeMnemonic(
+  const setImportedFromSeed = async () => {
+    walletOpts.importedFromSeed = await CryptoCoin.encodeMnemonic(
       walletOpts.mnemonic,
-      walletOpts.password,
+      walletOpts.password
     );
   };
 
@@ -99,43 +99,55 @@ export default function useCreateWallets() {
           net,
           mnemonic: walletOpts.mnemonic,
           privateKey: walletOpts.privateKey || null,
-          derivationPath: walletOpts.derivationPath ||
-            `${models[net.toUpperCase()].getDerivationPath(net, store.getters['wallets/freePathIndex']({ net }))}`
-            || '',
+          derivationPath:
+            walletOpts.derivationPath ||
+            `${models[net.toUpperCase()].getDerivationPath(
+              net,
+              store.getters['wallets/freePathIndex']({ net })
+            )}` ||
+            '',
           type: newWalletType,
           account: walletOpts.account,
-          passphrase: walletOpts.passphrase,
+          passphrase: walletOpts.passphrase
         };
       });
 
       if (newWalletType === WALLET_TYPES.ONE_SEED) {
-        const { data, error } = await citadel.addWalletCollectionByMnemonic(newWalletsOptsList);
+        const { data, error } = await citadel.addWalletCollectionByMnemonic(
+          newWalletsOptsList
+        );
         newWalletsList = data;
         errorMessage = error;
       }
 
       if (newWalletType === WALLET_TYPES.KEPLR) {
-        const config = store.getters['networks/configByNet'](walletOpts.nets[0]);
+        const config = store.getters['networks/configByNet'](
+          walletOpts.nets[0]
+        );
         const { data, error } = await citadel.addCreatedWallet({
           ...config,
           net: walletOpts.nets[0],
           address: walletOpts.address,
           type: newWalletType,
           publicKey: walletOpts.publicKey,
-          networkName: config.name,
+          networkName: config.name
         });
         newWalletsList = data ? [data] : [];
         errorMessage = error;
       }
 
       if (newWalletType === WALLET_TYPES.PRIVATE_KEY) {
-        const { data, error } = await citadel.addWalletCollectionByPrivateKey(newWalletsOptsList);
+        const { data, error } = await citadel.addWalletCollectionByPrivateKey(
+          newWalletsOptsList
+        );
         newWalletsList = data;
         errorMessage = error;
       }
 
       if (newWalletType === WALLET_TYPES.PUBLIC_KEY) {
-        const { data, error } = await citadel.addWalletCollectionByPublicKey(newWalletsOptsList);
+        const { data, error } = await citadel.addWalletCollectionByPublicKey(
+          newWalletsOptsList
+        );
         newWalletsList = data;
         errorMessage = error;
       }
@@ -143,7 +155,7 @@ export default function useCreateWallets() {
       if (errorMessage) {
         notify({
           type: 'warning',
-          text: errorMessage,
+          text: errorMessage
         });
 
         if (!stopRoute) {
@@ -159,27 +171,39 @@ export default function useCreateWallets() {
         if (item.error) {
           notify({
             type: 'warning',
-            text: item.error,
+            text: item.error
           });
         } else {
-          const newInstance = await store.dispatch('crypto/createNewWalletInstance', {
-            walletOpts: {
-              ...item,
-              mnemonic: walletOpts.mnemonic,
-              importedFromSeed: walletOpts.importedFromSeed,
-            },
-            password: walletOpts.password,
-          });
+          const newInstance = await store.dispatch(
+            'crypto/createNewWalletInstance',
+            {
+              walletOpts: {
+                ...item,
+                mnemonic: walletOpts.mnemonic,
+                importedFromSeed: walletOpts.importedFromSeed
+              },
+              password: walletOpts.password
+            }
+          );
           newWallets.value.push(newInstance);
-          await store.dispatch('wallets/pushWallets', { wallets: [newInstance] });
+          await store.dispatch('wallets/pushWallets', {
+            wallets: [newInstance]
+          });
         }
       }
 
       // await store.dispatch('wallets/getNewWallets', 'lazy');
       // store.dispatch('wallets/getNewWallets', 'detail');
-      if (!newWallets.value.length && (newWalletType === WALLET_TYPES.PUBLIC_KEY || newWalletType === WALLET_TYPES.KEPLR)) {
+      if (
+        !newWallets.value.length &&
+        (newWalletType === WALLET_TYPES.PUBLIC_KEY ||
+          newWalletType === WALLET_TYPES.KEPLR)
+      ) {
         newWallets.value = newWalletsOptsList.map((item) =>
-          findWalletInArray(wallets.value, { address: item.address, net: item.net })
+          findWalletInArray(wallets.value, {
+            address: item.address,
+            net: item.net
+          })
         );
         showLoader.value = false;
         showAlreadyAddedModal.value = true;
@@ -207,7 +231,7 @@ export default function useCreateWallets() {
     store.commit('wallets/SET_ACTIVE_LIST', 'all');
     await redirectToWallet({
       wallet: newWallets.value[0],
-      root: true,
+      root: true
     });
   };
 
@@ -234,6 +258,6 @@ export default function useCreateWallets() {
     redirectToNewWallet,
     showAlreadyAddedModal,
     setAccount,
-    setPublicKey,
+    setPublicKey
   };
 }

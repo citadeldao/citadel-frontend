@@ -334,7 +334,7 @@ export default {
           syncResult &&
           (await Promise.all(
             syncResult.map(async (wallet) => {
-              const privateKey = citadel.decodePrivateKeyByPassword(
+              const privateKey = await citadel.decodePrivateKeyByPassword(
                 wallet.net,
                 wallet.privateKeyEncoded,
                 password.value
@@ -410,14 +410,24 @@ export default {
         let syncResult = null;
 
         try {
-          syncResult = await window.citadel.syncToExtension(
-            checkedItems.value.map((w) => {
+          const formattedWallets = await Promise.all(
+            checkedItems.value.map(async (w) => {
+              const decodedMnemonic = await store.dispatch(
+                'crypto/decodeUserMnemonic',
+                {
+                  password: password.value,
+                  customMnemonic: w.importedFromSeed || null,
+                }
+              );
+              const decodedPrivateKey =
+                await citadel.decodePrivateKeyByPassword(
+                  w.net,
+                  w.privateKeyEncoded,
+                  password.value
+                ).data;
               return {
                 mnemonic: CryptoJS.AES.encrypt(
-                  store.getters['crypto/decodeUserMnemonic'](
-                    password.value,
-                    w.importedFromSeed || null
-                  ),
+                  decodedMnemonic,
                   passwordExtension.value
                 ).toString(),
                 wallets: [
@@ -425,13 +435,9 @@ export default {
                     type: WALLET_TYPES.ONE_SEED,
                     net: w.net,
                     address: w.address,
-                    privateKeyEncoded: citadel.encodePrivateKeyByPassword(
+                    privateKeyEncoded: await citadel.encodePrivateKeyByPassword(
                       w.net,
-                      citadel.decodePrivateKeyByPassword(
-                        w.net,
-                        w.privateKeyEncoded,
-                        password.value
-                      ).data,
+                      decodedPrivateKey,
                       passwordExtension.value
                     ).data,
                   },
@@ -439,6 +445,7 @@ export default {
               };
             })
           );
+          syncResult = await window.citadel.syncToExtension(formattedWallets);
           syncLoading.value = false;
 
           if (syncResult === true) {

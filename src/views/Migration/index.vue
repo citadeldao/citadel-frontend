@@ -331,7 +331,7 @@ export default {
     provide('updatePassword', updatePassword);
     provide('inputError', inputErrorExport);
 
-    const approveExport = () => {
+    const approveExport = async () => {
       if (sha3_256(password.value) !== oldPasswordHash.value) {
         inputErrorExport.value = passwordError.value;
 
@@ -340,9 +340,8 @@ export default {
 
       showApproveModal.value = false;
       showExportModal.value = true;
-      decodedPrivateKey.value = currentExportWallet.value.getPrivateKeyDecoded(
-        password.value
-      );
+      decodedPrivateKey.value =
+        await currentExportWallet.value.getPrivateKeyDecoded(password.value);
     };
 
     const {
@@ -430,11 +429,11 @@ export default {
               formatedWallet.mnemonicEncoded = privateKeyEncoded.data;
             }
             if (wallet.importedFromSeed) {
-              const mnemonic = CryptoCoin.decodeMnemonic(
+              const mnemonic = await CryptoCoin.decodeMnemonic(
                 wallet.importedFromSeed,
                 migrationPassword.value
               );
-              const encodeMnemonic = CryptoCoin.encodeMnemonic(
+              const encodeMnemonic = await CryptoCoin.encodeMnemonic(
                 mnemonic,
                 password.value
               );
