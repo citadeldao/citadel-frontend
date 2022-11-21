@@ -24,7 +24,7 @@
             v-model="isSendToAnotherNetwork"
             active-color="#6a4bff"
             inactive-color="#dfe9f5"
-            @input="toAddress = ''"
+            @input="switchChangeHandler"
           />
         </div>
         <div
@@ -544,6 +544,12 @@ export default {
       return props.currentWallet.type;
     });
 
+    const switchChangeHandler = async (value) => {
+      if (value) {
+        await getFees(bridgeTargetNet.value);
+      }
+      toAddress.value = '';
+    };
     const { isHardwareWallet, wallets } = useWallets();
 
     const defaultFee = computed(() => fees.value?.medium);
@@ -697,11 +703,11 @@ export default {
       () => route.params,
       (newParams) => {
         if (newParams.net && newParams.address) {
+          isSendToAnotherNetwork.value = false;
           clearState();
           loadData();
           showNetworkTargetWallets.value = false;
           bridgeTargetNet.value = route.params.net;
-          isSendToAnotherNetwork.value = false;
           setCosmosNetworkBridgeToken();
         }
       },
@@ -944,7 +950,8 @@ export default {
     const showModal = ref(false);
     const showConfirmModal = ref(false);
 
-    const selectBridgeNetwork = (key) => {
+    const selectBridgeNetwork = async (key) => {
+      await getFees(key);
       bridgeTargetNet.value = key;
       toAddress.value = '';
     };
@@ -1289,6 +1296,7 @@ export default {
     };
 
     return {
+      switchChangeHandler,
       WALLET_TYPES,
       isHardwareWallet,
       isSendToAnotherNetwork,

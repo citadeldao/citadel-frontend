@@ -16,15 +16,8 @@ export default function useCurrentWalletRequests() {
   const l1Fee = ref(0);
   const isSendToAnotherNetwork = ref(false);
 
-  const getFees = async () => {
-    if (wallet.value.hasFee) {
-      const { data, error } = await wallet.value.getFees(
-        wallet.value.id,
-        currentToken?.value?.net
-      );
-      fees.value = pickKeys(data, ['low', 'medium', 'high']);
-      feesError.value = error;
-    } else if (wallet.value.hasPledged) {
+  const getFees = async (netTo) => {
+    if (wallet.value.hasPledged) {
       const { resFee, maxAmount, error, resAdding } =
         await wallet.value.getDelegationFee({
           walletId: wallet.value.id,
@@ -34,6 +27,22 @@ export default function useCurrentWalletRequests() {
       adding.value = resAdding;
       resMaxAmount.value = maxAmount;
       feesError.value = error;
+    } else if (wallet.value.hasFee) {
+      if (isSendToAnotherNetwork.value) {
+        const { data, error } = await wallet.value.getCrossNetFees(
+          wallet.value.id,
+          netTo
+        );
+        fees.value = pickKeys(data, ['low', 'medium', 'high']);
+        feesError.value = error;
+      } else {
+        const { data, error } = await wallet.value.getFees(
+          wallet.value.id,
+          currentToken?.value?.net
+        );
+        fees.value = pickKeys(data, ['low', 'medium', 'high']);
+        feesError.value = error;
+      }
     }
   };
 
