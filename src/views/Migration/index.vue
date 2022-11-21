@@ -331,7 +331,7 @@ export default {
     provide('updatePassword', updatePassword);
     provide('inputError', inputErrorExport);
 
-    const approveExport = async () => {
+    const approveExport = () => {
       if (sha3_256(password.value) !== oldPasswordHash.value) {
         inputErrorExport.value = passwordError.value;
 
@@ -340,8 +340,9 @@ export default {
 
       showApproveModal.value = false;
       showExportModal.value = true;
-      decodedPrivateKey.value =
-        await currentExportWallet.value.getPrivateKeyDecoded(password.value);
+      decodedPrivateKey.value = currentExportWallet.value.getPrivateKeyDecoded(
+        password.value
+      );
     };
 
     const {
@@ -413,13 +414,12 @@ export default {
           if (props.privateWalletsMode) {
             let privateKeyEncoded;
             if (wallet.privateKeyEncoded) {
-              const privateKey = await citadel.decodePrivateKeyByPassword(
+              const privateKey = citadel.decodePrivateKeyByPassword(
                 wallet.net,
                 wallet.privateKeyEncoded,
                 migrationPassword.value
               );
-              console.log('logs keys', privateKey);
-              privateKeyEncoded = await citadel.encodePrivateKeyByPassword(
+              privateKeyEncoded = citadel.encodePrivateKeyByPassword(
                 wallet.net,
                 privateKey.data,
                 password.value
@@ -430,11 +430,11 @@ export default {
               formatedWallet.mnemonicEncoded = privateKeyEncoded.data;
             }
             if (wallet.importedFromSeed) {
-              const mnemonic = await CryptoCoin.decodeMnemonic(
+              const mnemonic = CryptoCoin.decodeMnemonic(
                 wallet.importedFromSeed,
                 migrationPassword.value
               );
-              const encodeMnemonic = await CryptoCoin.encodeMnemonic(
+              const encodeMnemonic = CryptoCoin.encodeMnemonic(
                 mnemonic,
                 password.value
               );

@@ -339,6 +339,7 @@ export default {
                 wallet.privateKeyEncoded,
                 password.value
               ).data;
+              console.log('keys log', privateKey);
 
               const res = await citadel.addWalletByPrivateKey({
                 net: wallet.net,
