@@ -715,6 +715,7 @@ export default {
           store.dispatch('extensions/sendCustomMsg', {
             token: currentAppInfo.value.token,
             message: {
+              address: signerWallet.value.address,
               balance: data.calculatedBalance,
               tokenContract: snip20Token.value.address,
             },
