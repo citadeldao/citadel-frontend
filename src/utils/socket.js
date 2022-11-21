@@ -50,10 +50,11 @@ export class SocketManager {
           const secretAddress = data.message.address;
           const sSecretContract = data.message.tokenContract;
 
-          const sendErrorMsg = () => {
-            store.dispatch('extensions/sendCustomMsg', {
+          const sendErrorMsg = async (address) => {
+            await store.dispatch('extensions/sendCustomMsg', {
               token: store.getters['extensions/currentAppInfo'].token,
               message: {
+                address,
                 balance: 'Viewingkey not found, balance: ?',
                 tokenContract: sSecretContract,
               },
@@ -74,16 +75,17 @@ export class SocketManager {
             );
 
             if (searchToken[0] && searchToken[0].tokenBalance) {
-              store.dispatch('extensions/sendCustomMsg', {
+              await store.dispatch('extensions/sendCustomMsg', {
                 token: store.getters['extensions/currentAppInfo'].token,
                 message: {
+                  address: secretAddress,
                   balance: searchToken[0].tokenBalance.calculatedBalance,
                   tokenContract: sSecretContract,
                 },
                 type: data.type,
               });
             } else {
-              sendErrorMsg();
+              await sendErrorMsg(secretAddress);
             }
           }
         }
