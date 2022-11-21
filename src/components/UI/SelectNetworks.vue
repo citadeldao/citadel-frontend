@@ -1,14 +1,15 @@
 <template>
   <div class="select-networks">
+    <Input
+      id="assetsSearch"
+      @input="handleKeyword"
+      :label="$t('searchNetworks')"
+      type="text"
+      icon="loop"
+      clearable
+    />
+
     <div class="select-networks__networks">
-      <Input
-        id="assetsSearch"
-        @input="handleKeyword"
-        :label="$t('searchNetworks')"
-        type="text"
-        icon="loop"
-        clearable
-      />
       <NetworkCard
         v-for="network in displayData.slice(0, networksAmount)"
         :key="network.id"
@@ -278,61 +279,28 @@ export default {
   align-items: center;
   flex-grow: 1;
   padding-top: 32px;
-  overflow-y: auto;
-  // padding-left: 6px;
-  // @include lg {
-  //   padding-left: 20px;
-  // }
-  // @include md {
-  //   padding-top: 24px;
-  // }
-  & .input {
+  max-width: 891px;
+  margin: 0 auto 40px;
+
+  .input {
+    min-height: 68px;
     height: 68px;
-    margin: 0 70px;
+    max-width: 891px;
+    margin-bottom: 50px;
   }
-  &__search-input {
-    height: 68px;
-    width: 100%;
-    flex-shrink: 0;
-    padding-left: 31px;
-    @include lg {
-      padding-left: 40px;
-    }
-    @include md {
-      padding-left: 25px;
-    }
-  }
+
   &__networks {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 7px;
-    // align-content: baseline;
-    // overflow-y: auto;
-    // overflow-x: hidden;
-    margin-bottom: 26px;
-    padding: 24px 0px 0px 31px;
-
-    @include lg {
-      gap: 16px;
-      padding: 24px 0px 0px 40px;
-    }
-    @include md {
-      gap: 13px;
-      padding: 16px 0px 0px 25px;
-    }
+    gap: 0 10px;
   }
   &__controls {
-    flex-shrink: 0;
     display: flex;
     flex-direction: column;
-    // justify-content: space-between;
-    justify-content: right;
     align-items: center;
-    margin-bottom: 10px;
-    padding-left: 25px;
-
+    margin: 32px 0 0;
     .more {
       color: #0a2778;
       display: flex;

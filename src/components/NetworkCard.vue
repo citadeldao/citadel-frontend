@@ -90,17 +90,20 @@ export default {
 }
 
 .network-card {
-  margin: 5px;
   display: flex;
   justify-content: space-between;
-  height: 94px;
-  padding: 24px 24px 0 24px;
-  // margin-right: 10px;
+  align-items: center;
+  padding: 0 24px;
+
   border-radius: 8px;
   background-color: $ghostwhite;
   cursor: pointer;
-  width: 290px;
-  // @include getWidth(4, 10px);
+  max-width: 290px;
+  width: 100%;
+  height: 94px;
+  max-height: 94px;
+
+  margin: 8px 0;
 
   &:hover {
     background: $white;
@@ -120,16 +123,9 @@ export default {
     }
   }
 
-  @include lg {
-    width: 277px;
-    // @include getWidth(2, 10px);
-  }
-
   @include md {
-    height: 78px;
-    padding: 10px 10px 0 10px;
-    width: 225px;
-    // @include getWidth(2, 10px);
+    height: 75px;
+    width: 285px;
   }
 
   &--checked,
@@ -244,6 +240,7 @@ export default {
   &__select {
     width: 28px;
     height: 28px;
+    margin-bottom: 19px;
     min-width: 28px;
     display: flex;
     justify-content: center;

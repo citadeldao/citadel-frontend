@@ -265,18 +265,11 @@ export default {
   display: flex;
   flex-direction: column;
   background: $white;
-  box-shadow: -10px 4px 27px rgba(0, 0, 0, 0.1);
+  box-shadow: -10px 4px 50px rgba(0, 0, 0, 0.1);
   border-radius: 25px;
-  padding: 0 44px 40px;
+  padding: 0 40px 43px;
+  margin-bottom: 40px;
   flex-grow: 1;
-
-  @include lg {
-    padding: 0 40px;
-  }
-  @include md {
-    box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
-    padding: 0 31px;
-  }
 
   .confirm {
     width: 200px;
@@ -286,7 +279,6 @@ export default {
   &__section {
     display: flex;
     flex-direction: column;
-    padding-bottom: 40px;
   }
 
   .controls {
@@ -296,7 +288,7 @@ export default {
     justify-content: center;
     flex-direction: column;
     margin: 50px auto 0;
-    max-width: 875px;
+    max-width: 891px;
 
     .input {
       height: 68px;
@@ -373,18 +365,9 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 7px;
+  gap: 0 10px;
   margin-bottom: 30px;
-
-  @include lg {
-    gap: 16px;
-  }
-  @include md {
-    gap: 13px;
-  }
-  .network-card {
-    max-width: 290px;
-  }
+  max-width: 891px;
 }
 .close-icon {
   svg {
