@@ -414,12 +414,12 @@ export default {
           if (props.privateWalletsMode) {
             let privateKeyEncoded;
             if (wallet.privateKeyEncoded) {
-              const privateKey = citadel.decodePrivateKeyByPassword(
+              const privateKey = await citadel.decodePrivateKeyByPassword(
                 wallet.net,
                 wallet.privateKeyEncoded,
                 migrationPassword.value
               );
-              privateKeyEncoded = citadel.encodePrivateKeyByPassword(
+              privateKeyEncoded = await citadel.encodePrivateKeyByPassword(
                 wallet.net,
                 privateKey.data,
                 password.value
