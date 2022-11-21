@@ -274,6 +274,16 @@ export default [
     },
   },
   {
+    path: '/extensions-settings',
+    name: 'ExtensionsSettings',
+    component: () =>
+      import(/* webpackChunkName: 'Extensions' */ '@/views/ExtensionsSettings'),
+    meta: {
+      layout: 'AddAddressLayout',
+      guard: 'private',
+    },
+  },
+  {
     path: '/dao',
     name: 'Dao',
     component: () => import(/* webpackChunkName: 'Dao' */ '@/views/Dao'),

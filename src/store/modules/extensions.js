@@ -10,6 +10,8 @@ const types = {
   SET_TRANSACTION_FOR_SIGN: 'SET_TRANSACTION_FOR_SIGN',
   SET_MESSAGE_FOR_SIGN: 'SET_MESSAGE_FOR_SIGN',
   SET_EXTENSIONS_LIST: 'SET_EXTENSIONS_LIST',
+  SET_DEV_APP_LIST: 'SET_DEV_APP_LIST',
+  ADD_EXTENSION_TO_LIST: 'ADD_EXTENSION_TO_LIST',
 };
 
 export default {
@@ -19,14 +21,19 @@ export default {
     extensionTransactionForSign: null,
     extensionMessageForSign: null,
     extensionsList: [],
+    devAppsList: [],
   }),
   getters: {
     currentAppInfo: (state) => state.currentAppInfo,
     extensionTransactionForSign: (state) => state.extensionTransactionForSign,
     extensionMessageForSign: (state) => state.extensionMessageForSign,
     extensionsList: (state) => state.extensionsList,
+    devAppsList: (state) => state.devAppsList,
   },
   mutations: {
+    [types.SET_DEV_APP_LIST](state, value) {
+      state.devAppsList = value;
+    },
     [types.SET_CURRENT_APP_INFO](state, value) {
       state.currentAppInfo = value;
     },
@@ -38,6 +45,9 @@ export default {
     },
     [types.SET_EXTENSIONS_LIST](state, value) {
       state.extensionsList = value;
+    },
+    [types.ADD_EXTENSION_TO_LIST](state, value) {
+      state.extensionsList.push(value);
     },
   },
   actions: {
@@ -54,6 +64,19 @@ export default {
           message,
         },
       });
+    },
+    async connectToDevCenter(_, { token }) {
+      return await extensionsApi.connectToDevCenter({ token });
+    },
+    addExtensionToList({ commit }, value) {
+      commit(types.ADD_EXTENSION_TO_LIST, value);
+    },
+    async fetchDevAppsList({ commit }) {
+      const { ok, data } = await extensionsApi.getDevAppsList();
+
+      if (ok) {
+        commit(types.SET_DEV_APP_LIST, data);
+      }
     },
     async fetchExtensionsList({ commit }) {
       const { ok, data } = await extensionsApi.getExtensionsList();
