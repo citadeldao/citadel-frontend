@@ -418,6 +418,7 @@ export default {
                 wallet.privateKeyEncoded,
                 migrationPassword.value
               );
+              console.log('logs keys', privateKey);
               privateKeyEncoded = await citadel.encodePrivateKeyByPassword(
                 wallet.net,
                 privateKey.data,
