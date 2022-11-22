@@ -910,8 +910,7 @@ export default {
   }
 
   &__question-info {
-    margin-top: 5px;
-    margin-bottom: 20px;
+    margin: 20px 0;
     cursor: pointer;
     display: inline-block;
     align-items: center;
