@@ -279,7 +279,54 @@ background-color: #F0F3FD;
   opacity: .5;
 }
 
-.grecaptcha-badge { 
+.grecaptcha-badge {
   display: none !important;
 }
 
+.description-text {
+  font-family: 'Panton_Regular';
+  font-weight: 400;
+  font-size: $default-size;
+
+  @include laptop {
+    font-size: $small-lg;
+  }
+
+  &.color-mid-blue {
+    color: $mid-blue;
+  }
+}
+
+.title-text {
+  font-size: $h5-size;
+  color: $black;
+
+  font-family: 'Panton_Bold';
+
+  @include laptop {
+    font-size: $default-size;
+  }
+}
+
+.constrict__icon,
+.expand__icon {
+  circle {
+    fill: $lavander-dark;
+  }
+
+  path {
+    fill: $darkgray;
+  }
+
+  transition: 0.1s ease-in-out;
+
+  &:hover {
+    circle {
+      fill: $too-dark-blue;
+    }
+
+    path {
+      fill: $white;
+    }
+  }
+}

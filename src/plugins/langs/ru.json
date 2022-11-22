@@ -539,6 +539,9 @@
     "overallTitle": "Обзор",
     "days": "дни",
     "copiedToClipboard": "Скопировано в буфер обмена",
+    "copyToClipboardTitle": "",
+    "showHideKeyTitle": "",
+    "changeKeyTitle": "",
     "earn": "Получить",
     "seed": "Сид",
     "learnHow": "Узнать как",
@@ -702,6 +705,13 @@
         "enterPasswordForAllInPrivate": "Добавьте сеть, используя ваш приватный ключ"
     },
     "settings": {
+        "extensions": {
+            "title": "",
+            "description": "",
+            "appsTitle": "",
+            "searchLabel": "",
+            "searchPlaceholder": ""
+        },
         "subscriptions": {
             "title": "Подписки",
             "description": "Подпишитесь на важные обновления",
@@ -763,8 +773,8 @@
             "description": "Эта операция не может быть отменена",
             "modalDescription": "Обратите внимание, что это действие нельзя отменить. Ваши активы в безопасности - вы удаляете только аккаунт Citadel.one",
             "button": "Удалить аккаунт",
-            "inputLabel": "Нажмите «Удалить аккаунт» чтобы подтвердить действие",
-            "placeholder": "Введите 'delete'"
+            "inputLabel": "Введите \"delete\" для подтвердления",
+            "placeholder": "Введите подтверждение"
         },
         "changePassword": {
             "btnTitle": "Изменить пароль",
@@ -841,7 +851,9 @@
         "apyTooltip": "Годовая Процентная Доходность считается как инфляция / количество застейканных активов",
         "stakingRatioTooltip": "Процент токенов, которые застейканы",
         "dayTradingVol": "Объем торгов за 24 часа",
-        "dayTradingVolTooltip": "Объем торговли за 24 часа - это количество монет, которые были в обмене за последние 24 часа."
+        "dayTradingVolTooltip": "Объем торговли за 24 часа - это количество монет, которые были в обмене за последние 24 часа.",
+        "placeholderTitle": "В настоящее время информация о токене недоступна",
+        "placeholderDescription": "Информация о токене и график истории цен будут доступны в ближайшее время"
     },
     "viewingKey": {
         "viewingKey": "Ключ просмотра",
@@ -974,6 +986,7 @@
     "emptyPassword": "Поле пароля пусто",
     "accruedDaily": "Начисляется ежедневно с 18:00 до 19:00 UTC",
     "extensions": {
+        "emptyList": "",
         "showLabel": "Показать",
         "headerTitle": "Приложения",
         "headerDescription": "Используйте ваши любимые приложения DeFi и другие приложения не покидая Citadel.one!",

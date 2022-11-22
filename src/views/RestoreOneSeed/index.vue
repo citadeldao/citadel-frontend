@@ -94,14 +94,14 @@ export default {
       redirectToNewWallet,
     } = useCreateWallets();
     const store = useStore();
-    const finalStep = (nets) => {
+    const finalStep = async (nets) => {
       store.commit('newWallets/setLoader', true);
       setNets(nets);
       setType('oneSeed');
       const success = createWallets();
       success.then(async () => {
         !isPasswordHash.value && savePassword();
-        !isUserMnemonic.value && saveMnemonic();
+        !isUserMnemonic.value && (await saveMnemonic());
         await redirectToNewWallet();
         store.commit('newWallets/setNewWalletsList', newWallets.value);
         store.commit('newWallets/setLoader', false);

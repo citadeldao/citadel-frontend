@@ -543,6 +543,9 @@
     "overallTitle": "Overall",
     "days": "days",
     "copiedToClipboard": "Copied to clipboard",
+    "copyToClipboardTitle": "Copy viewing key",
+    "showHideKeyTitle": "Show / Hide viewing key",
+    "changeKeyTitle": "Change viewing key",
     "earn": "Earn",
     "seed": "Seed",
     "learnHow": "Learn how",
@@ -706,6 +709,13 @@
         "enterPasswordForAllInPrivate": "Add a network using your private key"
     },
     "settings": {
+        "extensions": {
+            "title": "Apps in development",
+            "description": "Enter the code to test preferred application. The code is provided from a dev center.",
+            "appsTitle": "Your apps for testing",
+            "searchLabel": "Application code",
+            "searchPlaceholder": "Enter code"
+        },
         "subscriptions": {
             "title": "Subscriptions",
             "description": "Subscribe to the relevant updates",
@@ -767,8 +777,8 @@
             "description": "This operation cannot be reversed",
             "modalDescription": "Please note that this action cannot be reversed. Your assets are safe - you only delete the Citadel.one account",
             "button": "Delete account",
-            "inputLabel": "Type \"Delete account\" to confirm",
-            "placeholder": "Type 'delete'"
+            "inputLabel": "Enter \"delete\" to confirm",
+            "placeholder": "Enter confirmation"
         },
         "changePassword": {
             "btnTitle": "Change password",
@@ -845,7 +855,9 @@
         "apyTooltip": "Annual Percentage Yield is counted as Staking Inflation / Staked",
         "stakingRatioTooltip": "Percentage of eligible tokens that are being staked",
         "dayTradingVol": "24 hour trading vol",
-        "dayTradingVolTooltip": "24-hour trading vol is the number of coins that have exchanged hands during the last 24 hours"
+        "dayTradingVolTooltip": "24-hour trading vol is the number of coins that have exchanged hands during the last 24 hours",
+        "placeholderTitle": "Currently, information about the token is unavailable",
+        "placeholderDescription": "Information about the token and the price history chart will be available soon"
     },
     "viewingKey": {
         "viewingKey": "Viewing key",
@@ -978,6 +990,7 @@
     "emptyPassword": "Empty password",
     "accruedDaily": "Accrued daily from 6-7 pm UTC",
     "extensions": {
+        "emptyList": "Nothing was found for your query",
         "showMore": "Show more",
         "showLabel": "Show",
         "headerTitle": "Extensions Store",
@@ -1316,7 +1329,7 @@
         "searchPlaceholder": "Start typing the token name",
         "currentAsset": "Current assets"
     },
-    "enterPasswordBackup": "Enter the backup file password to restore Citadel One-seed wallet",
+    "enterPasswordBackup": "Enter the backup file password or press next to restore Citadel One-seed wallet",
     "enterPasswordBackupLabel": "Enter your backup file password",
     "walletsAdding": {
         "mainMenuTitle": "Add an address",
@@ -1372,6 +1385,8 @@
         "notFound": "Citadel browser extension not found",
         "walletsNotFound": "Not wallets found to sync with browser extension",
         "emptyWallets": "You must setup browser extension before syncing",
+        "extensionBlock": "Chrome extension",
+        "sync": "Sync wallets",
         "syncWithExtension": "Exporting addresses to browser extension",
         "syncingFromTitle": "Importing addresses from  browser extension",
         "syncingFromDescription": "Confirm this operation with a password",

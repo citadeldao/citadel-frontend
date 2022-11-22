@@ -243,7 +243,7 @@ $blue-dark: #262b61;
           font-family: 'Panton_Bold';
           word-break: break-all;
           text-align: right;
-          padding-left: 5px;
+          padding-left: 1px;
         }
 
         .value-symbol {
@@ -277,7 +277,7 @@ $blue-dark: #262b61;
 
       .line {
         flex-grow: 1;
-        border: 0.01rem dashed #a18eff;
+        border: 0.01rem dashed #c3ceeb;
         height: 1px;
       }
 

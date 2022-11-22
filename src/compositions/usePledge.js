@@ -136,7 +136,9 @@ export default function usePledge() {
     const res = await currentWallet.value.signAndSendMulti({
       walletId: currentWallet.value.id,
       rawTransactions: resRawTxs.value,
-      privateKey: currentWallet.value.getPrivateKeyDecoded(password.value),
+      privateKey: await currentWallet.value.getPrivateKeyDecoded(
+        password.value
+      ),
     });
 
     if (res.ok) {

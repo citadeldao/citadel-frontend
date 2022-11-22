@@ -246,6 +246,7 @@ export default {
     flex-grow: 1;
     width: 100%;
     position: relative;
+    overflow: auto;
   }
   &__canvas {
     width: 100%;

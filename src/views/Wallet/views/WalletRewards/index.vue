@@ -442,7 +442,7 @@ export default {
           const { error } = await item.assignToDao({
             walletId: item.id,
             holderAddress: props.currentWallet.address,
-            privateKey: item.getPrivateKeyDecoded(password.value),
+            privateKey: await item.getPrivateKeyDecoded(password.value),
           });
           resError = error;
         }
