@@ -7,6 +7,7 @@ import useWallets from '@/compositions/useWallets';
 const api = useApi('transactions');
 const types = {
   SET_TRANSACTIONS: 'SET_TRANSACTIONS',
+  UPDATE_TRANSACTION: 'UPDATE_TRANSACTION',
   SET_IS_TRANSACTIONS_LOADING: 'SET_IS_TRANSACTIONS_LOADING',
   SET_TRANSACTIONS_COUNT: 'SET_TRANSACTIONS_COUNT',
   SET_MEMPOOL: 'SET_MEMPOOL',
@@ -92,6 +93,10 @@ export default {
           !(c.net === tx.net) &&
           !(c.direction === tx.direction)
       );
+    },
+    [types.UPDATE_TRANSACTION](state, obj) {
+      const index = state.transactions.findIndex((e) => e.note === obj.tx.note);
+      state.transactions[index].note = obj.customNote;
     },
   },
 

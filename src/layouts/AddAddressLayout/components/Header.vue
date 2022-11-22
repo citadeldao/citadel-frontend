@@ -39,6 +39,7 @@
                 <a
                   style="text-decoration: none; color: inherit"
                   href="https://www.notion.so/600cfeaeb06a4d78b9578f3c19117246"
+                  target="_blank"
                   >{{ $t('faq.guide') }}
                 </a>
               </div>

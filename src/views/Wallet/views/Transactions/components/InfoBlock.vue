@@ -114,12 +114,12 @@ export default {
             text: customNote.value,
           });
           /* eslint-disable */
+          store.commit('transactions/UPDATE_TRANSACTION', {tx: JSON.parse(JSON.stringify(props.info)), customNote: customNote.value});
           props.info.note = customNote.value;
           activateEdit.value = false;
         }
         return;
       }
-
       // activate input
       activateEdit.value = true;
       nextTick(() => document.getElementById('editComment').focus());
@@ -180,6 +180,10 @@ export default {
     font-size: 14px;
     color: #54478f;
     margin-top: 5px;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   &__line-title {
