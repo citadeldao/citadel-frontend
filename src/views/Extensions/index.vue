@@ -324,6 +324,11 @@ export default {
       currentApp.value = null;
       selectedApp.value = null;
 
+      const apps = store.getters['extensions/extensionsList'].filter(
+        (app) => !app.devCenterApp
+      );
+      store.commit('extensions/SET_EXTENSIONS_LIST', apps);
+
       if (!stopRedirect) {
         showFullScreen.value = false;
         showArtefactsForNormalScreen();
@@ -446,7 +451,7 @@ export default {
       selectedApp.value = Object.assign(
         {},
         extensionsList.value.find(
-          (a) => a.name.toLowerCase() === route.params.name.toLowerCase()
+          (a) => a.slug.toLowerCase() === route.params.name.toLowerCase()
         )
       );
       startKeplrSecretChecker();
@@ -473,7 +478,7 @@ export default {
       );
       router.push({
         name: 'Extensions',
-        params: { name: selectedApp.value.name },
+        params: { name: selectedApp.value.slug },
       });
     };
 
@@ -635,7 +640,7 @@ export default {
       } else {
         selectedApp.value = Object.assign(
           {},
-          extensionsList.value.find((a) => a.name === route.params.name)
+          extensionsList.value.find((a) => a.slug === route.params.name)
         );
 
         if (selectedApp.value.id) {
@@ -710,6 +715,7 @@ export default {
           store.dispatch('extensions/sendCustomMsg', {
             token: currentAppInfo.value.token,
             message: {
+              address: signerWallet.value.address,
               balance: data.calculatedBalance,
               tokenContract: snip20Token.value.address,
             },

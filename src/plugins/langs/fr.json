@@ -530,6 +530,9 @@
     "overallTitle": "En général",
     "days": "jours",
     "copiedToClipboard": "Copié dans le presse-papiers",
+    "copyToClipboardTitle": "",
+    "showHideKeyTitle": "",
+    "changeKeyTitle": "",
     "earn": "Gagner",
     "seed": "Seed",
     "learnHow": "Apprenez comment",
@@ -692,6 +695,13 @@
         "enterPasswordForAllInPrivate": "Ajouter un réseau en utilisant votre clé privée"
     },
     "settings": {
+        "extensions": {
+            "title": "",
+            "description": "",
+            "appsTitle": "",
+            "searchLabel": "",
+            "searchPlaceholder": ""
+        },
         "subscriptions": {
             "title": "Abonnements",
             "description": "Abonnez-vous aux mises à jour pertinentes",

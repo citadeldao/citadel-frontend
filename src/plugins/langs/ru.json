@@ -539,6 +539,9 @@
     "overallTitle": "Обзор",
     "days": "дни",
     "copiedToClipboard": "Скопировано в буфер обмена",
+    "copyToClipboardTitle": "",
+    "showHideKeyTitle": "",
+    "changeKeyTitle": "",
     "earn": "Получить",
     "seed": "Сид",
     "learnHow": "Узнать как",
@@ -701,6 +704,13 @@
         "enterPasswordForAllInPrivate": "Добавьте сеть, используя ваш приватный ключ"
     },
     "settings": {
+        "extensions": {
+            "title": "",
+            "description": "",
+            "appsTitle": "",
+            "searchLabel": "",
+            "searchPlaceholder": ""
+        },
         "subscriptions": {
             "title": "Подписки",
             "description": "Подпишитесь на важные обновления",

@@ -543,6 +543,9 @@
     "overallTitle": "Overall",
     "days": "days",
     "copiedToClipboard": "Copied to clipboard",
+    "copyToClipboardTitle": "Copy viewing key",
+    "showHideKeyTitle": "Show / Hide viewing key",
+    "changeKeyTitle": "Change viewing key",
     "earn": "Earn",
     "seed": "Seed",
     "learnHow": "Learn how",
@@ -705,6 +708,13 @@
         "enterPasswordForAllInPrivate": "Add a network using your private key"
     },
     "settings": {
+        "extensions": {
+            "title": "Apps in development",
+            "description": "Enter the code to test preferred application. The code is provided from a dev center.",
+            "appsTitle": "Your apps for testing",
+            "searchLabel": "Application code",
+            "searchPlaceholder": "Enter code"
+        },
         "subscriptions": {
             "title": "Subscriptions",
             "description": "Subscribe to the relevant updates",

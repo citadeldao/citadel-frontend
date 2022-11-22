@@ -495,6 +495,9 @@
     "overallTitle": "全部",
     "days": "日",
     "copiedToClipboard": "已复制至剪贴板",
+    "copyToClipboardTitle": "",
+    "showHideKeyTitle": "",
+    "changeKeyTitle": "",
     "earn": "赚取",
     "seed": "助记词",
     "learnHow": "学习如何使用",
@@ -657,6 +660,13 @@
         "enterPasswordForAllInPrivate": "使用私钥添加网络"
     },
     "settings": {
+        "extensions": {
+            "title": "",
+            "description": "",
+            "appsTitle": "",
+            "searchLabel": "",
+            "searchPlaceholder": ""
+        },
         "subscriptions": {
             "title": "订阅",
             "description": "订阅相关消息",

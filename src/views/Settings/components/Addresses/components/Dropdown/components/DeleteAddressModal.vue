@@ -14,7 +14,9 @@
         color="#FFFFFF"
         bg-color="#FA3B33"
         hover-bg-color="#fc0800"
-        box-shadow="0 0 25px rgba(219, 71, 60, 0.3)"
+        :box-shadow="
+          !isLoading ? '0 0 25px rgba(219, 71, 60, 0.3)' : ' 0 0 25px #c3ceeb'
+        "
         class="delete-address-modal__primary-button"
         data-qa="Yes"
         @click="$emit('confirm')"

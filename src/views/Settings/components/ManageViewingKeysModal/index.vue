@@ -73,9 +73,11 @@ export default {
     max-width: 770px;
     width: 100%;
     overflow: scroll;
-    max-height: 400px;
     display: flex;
     flex-direction: column;
+    min-height: 400px;
+    max-height: 625px;
+    padding-bottom: 32px;
   }
 }
 </style>

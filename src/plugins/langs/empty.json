@@ -1,0 +1,1416 @@
+{
+    "login": {
+        "continueEmail1": "",
+        "continueEmail2": "",
+        "continueEmail3": "",
+        "continueEmail4": "",
+        "continueEmail5": "",
+        "continueEmail6": "",
+        "continueEmail7": "",
+        "continueEmail8": "",
+        "continueEmail9": "",
+        "loginInWith": "",
+        "socialAccount": "",
+        "web3wallet": "",
+        "web3TitleMenu": "",
+        "web3DescriptionMenu": "",
+        "socialTitleMenu": "",
+        "socialDescriptionMenu": "",
+        "disclaimerMailTitle": "",
+        "disclaimerMailGuide": "",
+        "disclaimerMailGuide1": "",
+        "useEmailBtn": "",
+        "continueWithoutEmail": "",
+        "approveKeplrTitle": "",
+        "approveMetamaskTitle": "",
+        "approveDescription": "",
+        "confirmAddressTitleAnother": "",
+        "confirmAddressTitleMetamaskEth": "",
+        "confirmAddressTitleMetamaskBSC": "",
+        "confirmAddressTitleKeplr": "",
+        "changeLangTitle": "",
+        "changeLangDescription": "",
+        "KeplrNotFound": "",
+        "MetamaskNotFound": "",
+        "language": "",
+        "back": "",
+        "continue": "",
+        "with": "",
+        "login": "",
+        "signup": "",
+        "formInfo": "",
+        "withSocial": "",
+        "questionText1": "",
+        "questionText2": "",
+        "signIn": "",
+        "verification": "",
+        "verificationInfo": "",
+        "verificationNote": "",
+        "sendCode": "",
+        "resend": "",
+        "resendCode": "",
+        "inputPlaceholder": "",
+        "enterEmail": "",
+        "incorrectEmail": "",
+        "carousel": {
+            "stake": {
+                "title": "",
+                "text": ""
+            },
+            "xtc": {
+                "title": "",
+                "text": ""
+            },
+            "dao": {
+                "title": "",
+                "text": ""
+            },
+            "buy": {
+                "title": "",
+                "text": ""
+            },
+            "useCases": {
+                "title": "",
+                "text": ""
+            },
+            "keep": {
+                "title": "",
+                "text": ""
+            }
+        },
+        "whyEmailTitle": "",
+        "whyEmailDescription": "",
+        "whyEmailDescription1": "",
+        "whyEmailMarker1": "",
+        "whyEmailMarker2": "",
+        "whyEmailDescription3": "",
+        "guide": "",
+        "sync": {
+            "chooseValidator": {
+                "title": "",
+                "text": ""
+            },
+            "setAmount": {
+                "title": "",
+                "text": ""
+            },
+            "claimRewards": {
+                "title": "",
+                "text": ""
+            }
+        }
+    },
+    "logout": {
+        "modal": {
+            "title": "",
+            "eraseBtn": "",
+            "downloadBackup": ""
+        }
+    },
+    "messages": {
+        "incorrectAddress": "",
+        "incorrectNetwork": ""
+    },
+    "addToPublicKey": {
+        "title": "",
+        "info": ""
+    },
+    "addAddress": {
+        "addressLimits": "",
+        "cardTitle1": "",
+        "cardTitle2": "",
+        "cardDescP1": "",
+        "cardDescP2": "",
+        "cardNote": "",
+        "cardButton": "",
+        "card1Title": "",
+        "card1Note": "",
+        "card2Title": "",
+        "card2Desc": "",
+        "card2Note": "",
+        "card3Title": "",
+        "card3Desc": "",
+        "card3Important": "",
+        "card3Note": "",
+        "button": "",
+        "invalidDerivationPath": ""
+    },
+    "addToOneSeed": {
+        "rearrangeWords": "",
+        "exclamation": "",
+        "checkboxLabel": "",
+        "infoTitle": "",
+        "infoLine1": "",
+        "infoLine2": "",
+        "infoLine3": "",
+        "exclamationLearn": "",
+        "whySeedTitle": "",
+        "whySeedDescription": "",
+        "selectWord": "",
+        "getStartedBtn": "",
+        "moreNetworks": "",
+        "walletCreated": "",
+        "walletCreatedDescription": "",
+        "errorConfirmWords1": "",
+        "errorConfirmWords2": "",
+        "backUp":{
+            "h1":"",
+            "h2":"",
+            "h3":""
+        }
+    },
+    "importExistingAddress": {
+        "card1Title": "",
+        "card1Info": "",
+        "card2Title": "",
+        "card2Info": "",
+        "card3Info": "",
+        "card4Info": "",
+        "card4Title": "",
+        "card5Info": "",
+        "card5Title": ""
+    },
+    "importHardwareWallet": {
+        "note": "",
+        "card1Info": "",
+        "card2Info": ""
+    },
+    "importLedger": {
+        "title": "",
+        "title1": ""
+    },
+    "importTrezor": {
+        "title": "",
+        "title1": ""
+    },
+    "catPage": {
+        "congratulations": "",
+        "message": "",
+        "addedAddress": "",
+        "inputLabel": "",
+        "placeholderSeed": "",
+        "placeholderPrivate": "",
+        "placeholderPublic": "",
+        "placeholderHardware": ""
+    },
+    "importFile": {
+        "title": "",
+        "selectBackupFile": ""
+    },
+    "restoreOneSeed": {
+        "placeholder": "",
+        "counterMessage": ""
+    },
+    "metamaskKeplr": {
+        "card1Info": "",
+        "card2Info": "",
+        "modalCardMessage": "",
+        "modalCard1Info": "",
+        "modalCard2Info": ""
+    },
+    "qr": {
+        "modalErrorInfo": "",
+        "modalInfo": "",
+        "generateQR": ""
+    },
+    "qrInfo": {
+        "title": "",
+        "note": "",
+        "scanQrInfo": "",
+        "step1Info": "",
+        "step2Info": "",
+        "step3Info": ""
+    },
+    "wallet": {
+        "info": {
+            "title": "",
+            "note": "",
+            "block1Title": "",
+            "block1Info": "",
+            "block2Title": "",
+            "block2Info": "",
+            "availableAssets": "",
+            "totalAssets": ""
+        },
+        "stubs": {
+            "chain": "",
+            "description": "",
+            "subdescription": ""
+        }
+    },
+    "balanceTooltipInfo": {
+        "availableBalance": "",
+        "availableBalanceInfo": "",
+        "stakedBalance": "",
+        "stakedBalanceBalanceInfo": "",
+        "frozenBalance": "",
+        "frozenBalanceBalanceInfo1": "",
+        "frozenBalanceBalanceInfo2": "",
+        "withFromPeriod": "",
+        "to": "",
+        "iconPeriodLink": "",
+        "noPeriod": "",
+        "unstakingPeriod": "",
+        "is": "",
+        "frozenBalanceTooltipTitle": ""
+    },
+    "transactionsPage": {
+        "failed": "",
+        "modalSuccessHeader": "!",
+        "modalSuccessDescription": "",
+        "modalPendingHeader": "",
+        "modalPendingDescription": "",
+        "modalFailHeader": "",
+        "modalFailDescription": "",
+        "placeHolderInfo1": "",
+        "placeHolderInfo2P1": "",
+        "placeHolderInfo2P2": "",
+        "buyVia": "",
+        "placeHolderInfoTitle2": "",
+        "editCommentModalTitle": "",
+        "editCommentModalDesc": "",
+        "transactionInfoModalTitle": "",
+        "transactionInfoModalDesc": ""
+    },
+    "sendModal": {
+        "title1": "",
+        "desc1": "",
+        "changingModals": {
+            "error": "",
+            "title": "",
+            "decreaseDesc": "",
+            "increaseDesc": ""
+        },
+        "fee": {
+            "invalidAmount": ""
+        },
+        "desc2": ""
+    },
+    "yes": "",
+    "no": "",
+    "tryBtn": "",
+    "errorPage": {
+        "pageNotFound": "",
+        "toHomePage": ""
+    },
+    "lockBanner": {
+        "bannerInfo": "",
+        "thisLink": ""
+    },
+    "stakePlaceholder": {
+        "title": "",
+        "whatIs": "",
+        "card1Info": "",
+        "card2Info": "",
+        "card3Info": "",
+        "choseNodePlaceholderNote": ""
+    },
+    "staking": {
+        "chooseNodeForStaking": "",
+        "chooseNodeModalDesc": "",
+        "chooseNodeModalDesc1": "",
+        "chooseNodeModalDescWithFrom": "",
+        "Stake": "",
+        "staking": "",
+        "searchNode": "",
+        "searchInputPlaceholder": "",
+        "editNode": "",
+        "actionModalTitle": "",
+        "actionModalDesc": "",
+        "stakeFrom": "",
+        "stakeOn": "",
+        "amountToStake": "",
+        "inputNote": "",
+        "editModeDesc": "",
+        "editModeDescWithFrom": "",
+        "nodeIsNotActive": "",
+        "nodeIsJailed": ""
+    },
+    "unstaking": {
+        "unstake": "",
+        "defaultPrefix": "",
+        "customPrefix": "",
+        "chooseNodeForUnstaking": "",
+        "chooseNodeModalDesc": "",
+        "chooseNodeModalDescWithFrom": "",
+        "actionModalTitle": "",
+        "actionModalDesc": "",
+        "unstakeTo": "",
+        "unstakeFrom": "",
+        "amountToUnstake": "",
+        "unstakeNote": ""
+    },
+    "singleStake": {
+        "chooseNodeModalDesc": "",
+        "actionModalTitle": "",
+        "actionModalDesc": "",
+        "undelegateFrom": "",
+        "delegateTo": ""
+    },
+    "ledger": {
+        "connect": {
+            "title": "",
+            "desc": ""
+        },
+        "openApp": {
+            "title": "",
+            "desc": ""
+        },
+        "confirm": {
+            "title": "",
+            "desc": ""
+        },
+        "action": {
+            "title": "",
+            "desc": ""
+        },
+        "rejected": {
+            "title": "",
+            "desc": ""
+        },
+        "errors": {
+            "27404": ""
+        }
+    },
+    "rewardsPage": {
+        "rewardsDetails": "",
+        "periodRewards": "",
+        "rewardsPlaceholder": "",
+        "rigthSectionPlaceholder": "",
+        "rewardsReport": "",
+        "totalRewards": ""
+    },
+    "DAO": {
+        "placeholderTitle": "",
+        "placeholderInfo": ""
+    },
+    "claim": {
+        "claim": "",
+        "claimTo": "",
+        "amountToClaim": "",
+        "confirmModalTitle": "",
+        "confirmModalDesc": "",
+        "claimSuccessfuly": ""
+    },
+    "exportWallet": {
+        "card1Info": "",
+        "card2Info": "",
+        "chooseExportTypeModalTitle": "",
+        "chooseExportTypeModalDesc": "",
+        "approveExportModalTitle1": "",
+        "approveExportModalDesc1": "",
+        "approveExportModalTitle2": "",
+        "approveExportModalDesc2": "",
+        "exportModalTitle1": "",
+        "exportModalDesc": "",
+        "exportModalTitle2": ""
+    },
+    "customLists": {
+        "createListModalDesc": "",
+        "editList": "",
+        "editListModalDesc": "",
+        "deleteList": "",
+        "deleteListModalTitle": "",
+        "walletsCountTitle": "",
+        "eneterListName": "",
+        "warningModalDesc": "",
+        "infoBanner": " ",
+        "duplicateName": ""
+    },
+    "calculator": {
+        "title": "",
+        "subtitle": "",
+        "yearlyReturn": "",
+        "howManyYouHave": "",
+        "yearlyReward": "",
+        "expandTitle": "",
+        "expandSubtitle": ""
+    },
+    "xct": {
+        "publicKeyPlaceholderTitle": "",
+        "assignedAddresses": "",
+        "unAssignedAddresses": "",
+        "blocks": {
+            "title1": "",
+            "title2": "",
+            "title3": "",
+            "title4": "",
+            "title5": "",
+            "title6": "",
+            "desc1": "",
+            "desc2": "",
+            "desc3": "",
+            "desc4": "",
+            "desc5": ""
+        },
+        "assignedAddressesModalTitle": "",
+        "assignedAddressesModalDesc": "",
+        "addressAssigningInfoModalTitle": "",
+        "addressAssigningInfoModalDesc": "",
+        "addressAssigningInfoModalBlock1Info": "",
+        "addressAssigningInfoModalBlock2Info": "",
+        "addressAssigningInfoModalNote": "",
+        "assignAddressTooltipTitle": "",
+        "unassignedAddressesModalTitle": "",
+        "unassignedAddressesModalDesc": "",
+        "approveAssignWithPasswordModalDesc": "",
+        "newAssignedAddressesModalTitle": "",
+        "hardwareAddressesModalDesc": "",
+        "rewardsBlockTitle": "",
+        "rewardsBlockSubtitle": "",
+        "XCTStakingRewards": "",
+        "stakedOnCitadel": "",
+        "setStakingAmountModalDesc": "",
+        "setStakingAmountModalDesc1": "",
+        "stakingPlaceholderCard1Info": "",
+        "stakingPlaceholderCard3Info": "",
+        "claimRewardsCheckbox2Label": "",
+        "assignedAddressesBtn": "",
+        "unAssignedAddressesBtn": ""
+    },
+    "accounts": "",
+    "neededResources": "",
+    "restake": "",
+    "otherAssets": "",
+    "hardwareWallet": "",
+    "bscAddress": "",
+    "enterYourPassword": "",
+    "enterPaymentPassword": "",
+    "finish": "",
+    "assigned": "",
+    "note": "",
+    "manage": "",
+    "learnMore": "",
+    "Token": "",
+    "searchErrorText": "",
+    "searchToken": "",
+    "inputToken": "",
+    "commentPlaceholder": "",
+    "fail": "",
+    "date": "",
+    "inputName": "",
+    "listName": "",
+    "createList": "",
+    "cancel": "",
+    "enterYourCitadelPassword": "",
+    "show": "",
+    "yearAbbr": "",
+    "monthAbbr": "",
+    "custom": "",
+    "all": "",
+    "oneYear": "",
+    "month": "",
+    "notifications": "",
+    "swap": "",
+    "insufficientFunds": "",
+    "txWaitTitle": "",
+    "changeNode": "",
+    "startStaking": "",
+    "this": "",
+    "AddWallet": "",
+    "addWallet": "",
+    "download": "",
+    "enterTextComment": "",
+    "confirmed": "",
+    "min": "",
+    "pending": "",
+    "addedToMempool": "",
+    "warning": "",
+    "viewTranscasction": "",
+    "viewBalance": "",
+    "enterSendPassword": "",
+    "totalAmount": "",
+    "sendTo": "",
+    "sendFrom": "",
+    "app": "",
+    "unstake": "",
+    "Stake": "",
+    "receive": "",
+    "fee": "",
+    "addComment": "",
+    "editComment": "",
+    "comment": "",
+    "export": "",
+    "timeDate": "",
+    "type": "",
+    "status": "",
+    "viewOnly": "",
+    "error": "",
+    "success": "",
+    "info": "",
+    "buyNow": "",
+    "settingsTitle": "",
+    "overallTitle": "",
+    "days": "",
+    "copiedToClipboard": "",
+    "earn": "",
+    "seed": "",
+    "learnHow": "",
+    "importAddress": "",
+    "chooseAddresses": "",
+    "addressName": "",
+    "searchAddress": "",
+    "save": "",
+    "transactionFee": "",
+    "per": "",
+    "price": "",
+    "link": "",
+    "sendBannerInfo": "",
+    "selectAddress": "",
+    "advanced": "",
+    "max": "",
+    "inputMemo": "",
+    "memo": "",
+    "memoTooltip": "",
+    "includingFunds": "",
+    "includingFunds-xl": "",
+    "amount": "",
+    "to": "",
+    "sendAssetsToAnotherNetwork": "",
+    "rewards": "",
+    "stakingRatio": "",
+    "inflation": "",
+    "tokenPrice": "",
+    "lockedForiGasGeneration": "",
+    "unpledgedBalance": "",
+    "pledgedBalance": "",
+    "pledgeDescription": {
+        "part1": "",
+        "part2": "",
+        "part3": "",
+        "part4": "",
+        "part5": ""
+    },
+    "frozen": "",
+    "available": "",
+    "staked": "",
+    "balance": "",
+    "transactions": "",
+    "send": "",
+    "stake": "",
+    "youHave": "",
+    "claimRewards": "",
+    "oneSeed": "",
+    "publicKey": "",
+    "hardware": "",
+    "edit": "",
+    "Citadel.one": "",
+    "yourE-mail": "",
+    "loadingFile": "",
+    "incorrectFile": "",
+    "incorrectPassword": "",
+    "passwordsDontMatch": "",
+    "passwordTooShort": "",
+    "confirmPassword": "",
+    "createPassword": "",
+    "password": "",
+    "yourComputer": "",
+    "enterYourPrivateKey": "",
+    "privateKey": "",
+    "ok": "",
+    "select": "",
+    "retry": "",
+    "createPasswordNote": "",
+    "enterPasswordNote": "",
+    "understand": "",
+    "enterPassword": "",
+    "repeatYourPassword": "",
+    "network": "",
+    "Network": "",
+    "create": "",
+    "guide": "",
+    "searchNetworks": "",
+    "selectHardwareWallet": "",
+    "selectNetwork": "",
+    "addAddressExp": "",
+    "addAnAddress": "",
+    "chooseSuitableMethod": "",
+    "address": "",
+    "enterAddress": "",
+    "import": "",
+    "enterMnemonicPhrase": "",
+    "advancedSettings": "",
+    "mnemonicIncorrect": "",
+    "networkNameIncorrect": "",
+    "pleaseSelectNetwork": "",
+    "mnemonicPassphraseOptional": "",
+    "inputPassphrase": "",
+    "next": "",
+    "confirm": "",
+    "importExistingAddressExp": "",
+    "layouts": {
+        "addAddressLayout": {
+            "sidebarPlaceholder": "",
+            "favoritePlaceholder": "",
+            "overall": "",
+            "addresses": "",
+            "wallets": ""
+        }
+    },
+    "backBtn": "",
+    "steps": {
+        "step": "",
+        "selectNetworks": "",
+        "connectYourDevice": "",
+        "derivationPath": "",
+        "enterPassword": "",
+        "chooseDerivationPath": "",
+        "createPaymentPassword": "",
+        "addNewAddress": "",
+        "derivationPathInfo": "",
+        "setPasswordForAllIn": "",
+        "addAddressSpecifications": "",
+        "enterPaymentPassword": "",
+        "importFileExp": "",
+        "chooseImportOption": "",
+        "createPassword": "",
+        "addToOneSeed": {
+            "step1HeaderInfo1": "",
+            "createOneSeed": "",
+            "createOneSeedWallet": "",
+            "step2HeaderInfo": "",
+            "step3StepDesc": "",
+            "step4headerInfo": ""
+        },
+        "importLedger": {
+            "step2stepDesc": "",
+            "step2headerInfo": "",
+            "step3headerInfo": ""
+        },
+        "importTrezor": {
+            "step2stepDesc": "",
+            "step2headerInfo": "",
+            "step3headerInfo": ""
+        },
+        "importSeedPhrase": {
+            "step3HeaderInfo": ""
+        },
+        "importPrivateKey": {
+            "step3HeaderInfo": ""
+        },
+        "importFile": {
+            "step2HeaderInfo": "",
+            "step2StepDesc": "",
+            "step3HeaderTitle": "",
+            "step3HeaderInfo": "",
+            "step3StepDesc": ""
+        },
+        "restoreOneSeed": {
+            "step3HeaderTitle": "",
+            "step3HeaderInfo": "",
+            "step3StepDesc": "",
+            "step4HeaderInfo": ""
+        },
+        "enterPasswordForAllInSeed": "",
+        "enterPasswordForAllInPrivate": ""
+    },
+    "settings": {
+        "extensions": {
+            "title": "",
+            "description": "",
+            "appsTitle": "",
+            "searchLabel": "",
+            "searchPlaceholder": ""
+        },
+        "subscriptions": {
+            "title": "",
+            "description": "",
+            "rewardsDigest": "",
+            "addRewardsNotification": "",
+            "removeRewardsNotification": "",
+            "rewardsDigestTooltip": "",
+            "newsletter": "",
+            "newsletterTooltip": "",
+            "addNewsletterNotification": "",
+            "removeNewsletterNotification": ""
+        },
+        "transferData": {
+            "title": "",
+            "description": "",
+            "button": ""
+        },
+        "addresses": {
+            "title": "",
+            "description": "",
+            "deleteModalTitle": "",
+            "deleteModalSubtitle": "",
+            "deleteAddresses": "",
+            "deleteSeedTitle": "",
+            "deleteSeedDesc": "",
+            "deleteSeedInfo": "",
+            "modalTitle":"",
+            "modalSubtitle":"",
+            "bannerContent":"",
+            "selectAll":"",
+            "unselectAll":"",
+            "selectedWalletsLength":"",
+            "delete":""
+        },
+        "changeEmail": {
+            "title": "",
+            "description": "",
+            "inputLabel": "",
+            "inputPlaceHolder": "",
+            "button": "",
+            "comingSoon": "",
+            "changeModalTitle": "",
+            "changeModalDescription": "",
+            "oldEmail": "",
+            "newEmail": "",
+            "emailPlaceholder": "",
+            "validFormatError": "",
+            "lastStep": "",
+            "lastStepDescription":"",
+            "resend": ""
+        },
+        "language": {
+            "title": "",
+            "description": "",
+            "inputLabel": ""
+        },
+        "delete": {
+            "title": "",
+            "description": "",
+            "modalDescription": "",
+            "button": "",
+            "inputLabel": "",
+            "placeholder": ""
+        },
+        "changePassword": {
+            "btnTitle": "",
+            "btnUpdate": "",
+            "modalTitle": "",
+            "oldPassword": "",
+            "newPassword": "",
+            "modalDescription": "",
+            "incorrectOldPassword": "",
+            "minLen": "",
+            "successTitle": "",
+            "successDescription": "",
+            "title": "",
+            "description": "",
+            "button": "",
+            "comingSoon": "",
+            "tooltip": ""
+        },
+        "crossChain": {
+            "title": "",
+            "description": "",
+            "button": "",
+            "comingSoon": ""
+        },
+        "extensionSettings": {
+            "title": "",
+            "description": "",
+            "button": "",
+            "comingSoon": "",
+            "successDescription": ""
+        }
+    },
+    "overallPage": {
+        "noBalance": "",
+        "noRewards": "",
+        "balanceStructure": {
+            "title": ""
+        },
+        "balanceHistory": {
+            "title": ""
+        },
+        "rewardsChart": {
+            "title": ""
+        },
+        "favourites": {
+            "placeholder": {
+                "address": {
+                    "title": "",
+                    "text": ""
+                },
+                "portfolio": {
+                    "title": "",
+                    "text": ""
+                }
+            }
+        },
+        "problemBalance": "",
+        "maintance": ""
+    },
+    "addedModal": {
+        "title": "",
+        "desc": ""
+    },
+    "netInfoGeneral": {
+        "marketcap": "",
+        "marketcapTooltip": "",
+        "supply": "",
+        "supplyTooltip": "",
+        "staked": "",
+        "stakedTooltip": "",
+        "inflation": "",
+        "inflationTooltip": "",
+        "priceChart": "",
+        "apyTooltip": "",
+        "stakingRatioTooltip": "",
+        "dayTradingVol": "",
+        "dayTradingVolTooltip": "",
+        "placeholderTitle": "",
+        "placeholderDescription": ""
+    },
+    "viewingKey": {
+        "viewingKey": "",
+        "passwordText": "",
+        "confirmOperation": "",
+        "addVkFor": "",
+        "vkFor": "",
+        "importVk": "",
+        "enterYourVk": "",
+        "iHaveVk": "",
+        "viewingKeys": "",
+        "vkListedBelow": "",
+        "searchViewingKeys": "",
+        "tokenName": "",
+        "manageVks": "",
+        "vkDesc": "",
+        "deleteKey": "",
+        "createNew": "",
+        "incorrectKey": ""
+    },
+    "tokenSearchError": "",
+    "myTokens": "",
+    "allTokens": "",
+    "favourites": "",
+    "daoTitle": "",
+    "hours": "",
+    "minutes": "",
+    "migration": {
+        "cancel": "",
+        "logout": "",
+        "download": "",
+        "forgotPassword": "",
+        "forgotDescription": "",
+        "finishTitle": "",
+        "finishDescription": "",
+        "restore": "",
+        "skip": "",
+        "agree": "",
+        "welcomeTitle": "",
+        "welcomeDescription": "",
+        "backupPassword": "",
+        "title": "",
+        "description": ""
+    },
+    "multisigBalance": {
+        "title": "",
+        "labelAddress": "",
+        "labelPlaceholder": "",
+        "contractLabel": "",
+        "contractPlaceholder": "",
+        "claim": "",
+        "statsClaimed": "",
+        "statsClaimedDescription": "",
+        "statsUnlocked": "",
+        "statsUnlockedDescription": "",
+        "totalFrozen": "",
+        "statsFrozen": "",
+        "statsFrozenDescription": "",
+        "youHave": "",
+        "confirmModalTitle": "",
+        "confirmModalDescription": "",
+        "claimTo": "",
+        "amountToClaim": "",
+        "fee": "",
+        "totalAmount": ""
+    },
+    "mobileAppModal": {
+        "title": "",
+        "info": "",
+        "appStore": "",
+        "googlePlay": ""
+    },
+    "redelegation": {
+        "redelegationDesc": "",
+        "redelegate": "",
+        "chooseNodeTitle": "",
+        "choseNodePlaceholderNote": ""
+    },
+    "rewardDetails": {
+        "title": "",
+        "subtitle": "",
+        "totalStaked": "",
+        "stakedOnCitadel": ""
+    },
+    "copied": "",
+    "copy": "",
+    "week": "",
+    "multisigSend": {
+        "title": "",
+        "available": "",
+        "availableHint": "",
+        "spend": "",
+        "spendHint": "",
+        "total": "",
+        "totalHint": "",
+        "claimable": "",
+        "claimableHint": "",
+        "labelAddress": "",
+        "labelPlaceholder": "",
+        "selectFundPlaceholder": "",
+        "selectFundLabel": "",
+        "sendTo": "",
+        "amountToSend": "",
+        "fee": "",
+        "totalAmount": "",
+        "confirmModalTitle": "",
+        "selectedFund": ""
+    },
+    "importCustomPath": {
+        "labelSelect": ""
+    },
+    "ktAddresses": {
+        "modalTitle": "",
+        "modalDesc": ""
+    },
+    "withoutDelegation": "",
+    "pledge": {
+        "chooseModeModalTitle1": "",
+        "chooseModeModalSubtitle": "",
+        "chooseModeModalTitle2": "",
+        "pledge": "",
+        "unpledge": "",
+        "confirmModalTitle1": "",
+        "confirmModalDesc1": "",
+        "confirmModalTitle2": "",
+        "confirmModalDesc2": ""
+    },
+    "minAmmount": "",
+    "maxFloatDigits": "",
+    "emptyPassword": "",
+    "accruedDaily": "",
+    "extensions": {
+        "emptyList": "",
+        "showMore": "",
+        "showLabel": "",
+        "headerTitle": "",
+        "headerDescription": "",
+        "readMore": "",
+        "networks": "",
+        "guide": "",
+        "description": "",
+        "youCan": "",
+        "launch": "",
+        "dontShow": "",
+        "appTooltip": "",
+        "transactionData": "",
+        "transactionFee": "",
+        "signMessage": "",
+        "searchPlaceholder": "",
+        "typeOperation": "",
+        "execute": ""
+    },
+    "tokenDescriptionComdex": "",
+    "tokenDescriptionJuno": "",
+    "tokenDescriptionOsmosis": "",
+    "metamask": {
+        "notFound": "",
+        "changeNetwork": "",
+        "cancel": "",
+        "importWallet": "",
+        "allreadyAdded": "",
+        "titleModal": "",
+        "descModal": "",
+        "confirm": ""
+    },
+    "netInfo": {
+        "akash": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "band": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "bsc": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "btc": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "cosmos": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "eth": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "icon": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "iost": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "kava": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "secret": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "tez": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "sentinel": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "persistence": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "chihuahua": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "umee": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "stargaze": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "rizon": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "comdex": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "juno": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "osmosis": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "sifchain": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "lum": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "cheqd": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "fetch": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "injective": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "bitsong": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "kichain": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "regen": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "starname": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "emoney": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "iris": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "cerberus": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "mantle": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "gbridge": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "konstellation": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "evmos": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "axelar": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "crescent": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "polkadot": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "orai": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "tron": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "optimism": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "arbitrum": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "polygon": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "oasis": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "stafi": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "stride": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "jackal": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        }
+    },
+    "uptime": "",
+    "active": "",
+    "noactive": "",
+    "jailed": "",
+    "sendAssetsDestination": "",
+    "keplr": {
+        "notFound": "",
+        "cancel": "",
+        "importWallet": "",
+        "allreadyAdded": "",
+        "titleModal": "",
+        "descModal": "",
+        "selectChainId": "",
+        "errorSignMismatch": "",
+        "allExist": "",
+        "confirm": "",
+        "selectAll": "",
+        "unselectAll": "",
+        "addTitle": "",
+        "addInfo": ""
+    },
+    "faq": {
+        "privacyPolicy": "",
+        "termsOfService": "",
+        "guide": ""
+    },
+    "dontHaveEnoughFounds": "",
+    "transactionsSocket": {
+        "failed": "",
+        "completed": "",
+        "viewTitle": ""
+    },
+    "confirmModalTitle": "",
+    "confirmModalDesc": "",
+    "manageStaking": "",
+    "stakeShare": "",
+    "additionalFee": "",
+    "rewardDestination": "",
+    "unstakedBalance": "",
+    "claimUnstakedText": "",
+    "stakingAmount": "",
+    "polkadot": {
+        "chooseNodeModalDesc": "",
+        "nominatedNodesTitle": "",
+        "error": {
+            "chooseNotMoreThan16Nodes": ""
+        }
+    },
+    "minSendAmountError": "",
+    "changeValidators": "",
+    "redelegateNote": "",
+    "assets": "",
+    "menu": {
+        "settings": "",
+        "logOut": ""
+    },
+    "stakingNote": "",
+    "assetsModal": {
+        "title": "",
+        "description": "",
+        "searchLabel": "",
+        "searchPlaceholder": "",
+        "currentAsset": ""
+    },
+    "enterPasswordBackup": "",
+    "enterPasswordBackupLabel": "",
+    "walletsAdding": {
+        "mainMenuTitle": "",
+        "importMenuTitle": "",
+        "mainMenuDescription": "",
+        "menu": {
+            "create": "",
+            "createDescription": "",
+            "import": "",
+            "importDescription": "",
+            "addNetworks": "",
+            "addNetworksDescription": ""
+        },
+        "menuTypes": {
+            "restoreTitle": "",
+            "restoreDescription": "",
+            "importWallet": "",
+            "importDescription": "",
+            "externalWallet": "",
+            "externalDescription": "",
+            "restoreOneSeed": "",
+            "restoreOneSeedDescription": "",
+            "importFile": "",
+            "importFileDescription": "",
+            "seedPhrase": "",
+            "seedPhraseDescription": "",
+            "privateKey": "",
+            "privateKeyDescription": "",
+            "metamaskKeplr": "",
+            "metamaskKeplrDescription": "",
+            "hardware": "",
+            "hardwareDescription": "",
+            "sourceAddress": "",
+            "destinationAddress": ""
+        }
+    },
+    "tokenDescriptionPersistence": "",
+    "tokenDescriptionSENTINEL": "",
+    "tokenDescriptionChihuahua": "",
+    "tokenDescriptionUmee": "",
+    "tokenDescriptionStargaze": "",
+    "tokenDescriptionRizon": "",
+    "tokenDescriptionSifchain": "",
+    "tokenDescriptionLum": "",
+    "tokenDescriptionCheqd": "",
+    "tokenDescriptionInjective": "",
+    "syncExtensions": {
+        "modalMenuTitle": "",
+        "modalMenuDescription": "",
+        "syncTo": "",
+        "syncFrom": "",
+        "syncDescription": "",
+        "notFound": "",
+        "walletsNotFound": "",
+        "emptyWallets": "",
+        "extensionBlock": "",
+        "sync": "",
+        "syncWithExtension": "",
+        "syncingFromTitle": "",
+        "syncingFromDescription": "",
+        "incorrectPasswordExtension": "",
+        "enterPassword": "",
+        "syncMainTitle": "",
+        "syncMainDescription": "",
+        "syncMainSync": ""
+    },
+    "noApyNote": "",
+    "assetsStubs": {
+        "title": "",
+        "subtitle": "",
+        "card1": {
+            "title": "",
+            "action": " "
+        },
+        "card2": {
+            "title": "",
+            "action": ""
+        }
+    },
+    "dontHaveEnoughFoundsForFee": "",
+    "asset": "",
+    "noSelfSendError": "",
+    "minAmountError": "",
+    "errors": {
+        "notEnoughFounds": ""
+    }
+  }
+  

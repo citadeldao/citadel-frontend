@@ -450,7 +450,9 @@ export default {
     display: none;
     position: absolute;
     z-index: 1001;
-    width: 150px;
+    width: fit-content;
+    max-width: 150px;
+
     right: 0;
     top: 55px;
 

@@ -338,11 +338,19 @@ export default {
                 wallet.net,
                 wallet.privateKeyEncoded,
                 password.value
-              ).data;
+              );
+
+              if (privateKey.error) {
+                notify({
+                  type: 'warning',
+                  text: JSON.stringify(privateKey.error),
+                });
+                return;
+              }
 
               const res = await citadel.addWalletByPrivateKey({
                 net: wallet.net,
-                privateKey,
+                privateKey: privateKey.data,
               });
 
               if (res.data) {
