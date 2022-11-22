@@ -86,7 +86,7 @@ export default {
 
     const finalStep = async (checkedNets) => {
       store.commit('newWallets/setLoader', true);
-      isUserMnemonic.value && setMnemonic();
+      isUserMnemonic.value && (await setMnemonic());
       setNets(checkedNets);
       setType(WALLET_TYPES.ONE_SEED);
       createWallets(WALLET_TYPES.ONE_SEED).then(async (success) => {

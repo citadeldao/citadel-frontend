@@ -418,7 +418,7 @@ export default {
                 wallet.privateKeyEncoded,
                 migrationPassword.value
               );
-              privateKeyEncoded = await citadel.encodePrivateKeyByPassword(
+              privateKeyEncoded = citadel.encodePrivateKeyByPassword(
                 wallet.net,
                 privateKey.data,
                 password.value
@@ -429,11 +429,11 @@ export default {
               formatedWallet.mnemonicEncoded = privateKeyEncoded.data;
             }
             if (wallet.importedFromSeed) {
-              const mnemonic = await CryptoCoin.decodeMnemonic(
+              const mnemonic = CryptoCoin.decodeMnemonic(
                 wallet.importedFromSeed,
                 migrationPassword.value
               );
-              const encodeMnemonic = await CryptoCoin.encodeMnemonic(
+              const encodeMnemonic = CryptoCoin.encodeMnemonic(
                 mnemonic,
                 password.value
               );

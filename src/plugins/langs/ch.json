@@ -657,6 +657,13 @@
         "enterPasswordForAllInPrivate": "使用私钥添加网络"
     },
     "settings": {
+        "extensions": {
+            "title": "",
+            "description": "",
+            "appsTitle": "",
+            "searchLabel": "",
+            "searchPlaceholder": ""
+        },
         "subscriptions": {
             "title": "订阅",
             "description": "订阅相关消息",

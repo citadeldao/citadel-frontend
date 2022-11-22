@@ -69,5 +69,9 @@ export default {
     width: 100%;
     text-align: left;
   }
+
+  &__button {
+    margin-top: 10px !important;
+  }
 }
 </style>
