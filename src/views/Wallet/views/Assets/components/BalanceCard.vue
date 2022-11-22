@@ -72,7 +72,7 @@ export default {
   justify-content: center;
   align-items: flex-start;
 
-  @include md {
+  @include laptop-standard {
     height: 64px;
   }
 
@@ -112,7 +112,7 @@ export default {
       font-size: 13px;
     }
 
-    @include md {
+    @include laptop-standard {
       font-size: 12px;
     }
   }
@@ -126,7 +126,7 @@ export default {
       font-size: 18px;
     }
 
-    @include md {
+    @include laptop-standard {
       font-size: 14px;
     }
   }

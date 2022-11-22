@@ -155,7 +155,7 @@ export default {
   }
 
   &__value-icon {
-    @include md {
+    @include laptop-standard {
       width: 16px;
       height: 16px;
     }
@@ -187,7 +187,7 @@ export default {
         width: 60px;
       }
 
-      @include md {
+      @include laptop-standard {
         width: 56px;
       }
     }
@@ -226,7 +226,7 @@ export default {
     border: 1px solid $too-ligth-blue;
     border-radius: 8px;
 
-    @include md {
+    @include laptop-standard {
       height: 64px;
       width: 64px;
     }

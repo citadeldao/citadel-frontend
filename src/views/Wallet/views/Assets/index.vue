@@ -484,7 +484,7 @@ export default {
     height: 80px;
     margin-right: 8px;
 
-    @include md {
+    @include laptop-standard {
       height: 64px;
       width: 120px;
     }
@@ -591,7 +591,7 @@ export default {
   &__search {
     .input {
       & > input {
-        @include md {
+        @include laptop-standard {
           padding: 25px 25px 10px 36px;
         }
       }
@@ -603,7 +603,7 @@ export default {
           bottom: 24px;
         }
 
-        @include md {
+        @include laptop-standard {
           bottom: 15px;
         }
 
@@ -617,7 +617,7 @@ export default {
           font-size: 13px;
         }
 
-        @include md {
+        @include laptop-standard {
           font-size: 12px;
           top: 8px;
         }
@@ -662,7 +662,7 @@ export default {
   @include lg {
     font-size: 18px;
   }
-  @include md {
+  @include laptop-standard {
     font-size: 15px;
   }
 }
