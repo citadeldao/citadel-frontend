@@ -2,8 +2,7 @@
   <img v-if="isLoading" src="@/assets/gif/loader.gif" alt="" />
   <div v-else class="xct-calculator-expand">
     <div class="xct-calculator-expand__close-icon" @click="closeHandler">
-      <closeIcon />
-      <closeIconHover id="hover" />
+      <constrictIcon class="constrict__icon" />
     </div>
     <div class="xct-calculator-expand__header">
       <span class="xct-calculator-expand__header-title">
@@ -46,8 +45,7 @@
 
 <script>
 import CalculatorListItem from './components/CalculatorListItem.vue';
-import closeIcon from '@/assets/icons/network-info/constrict.svg';
-import closeIconHover from '@/assets/icons/network-info/constrict-hover.svg';
+import constrictIcon from '@/assets/icons/network-info/constrict.svg';
 import TabsGroup from '@/components/UI/TabsGroup';
 import { tabsListWithDays, tabsListWithDaysMd } from '@/static/dateTabs';
 import { computed, reactive, ref } from '@vue/reactivity';
@@ -59,7 +57,7 @@ import { onMounted } from '@vue/runtime-core';
 import { OUR_TOKEN } from '@/config/walletType';
 export default {
   name: 'XCTCalculatorExpand',
-  components: { closeIcon, closeIconHover, TabsGroup, CalculatorListItem },
+  components: { constrictIcon, TabsGroup, CalculatorListItem },
   props: {
     currentToken: {
       type: [Object, null],
@@ -164,20 +162,6 @@ export default {
     @include md {
       top: 20px;
       right: 24px;
-    }
-    svg {
-      display: block;
-    }
-    svg + #hover {
-      display: none;
-    }
-    &:hover {
-      svg:not(#hover) {
-        display: none;
-      }
-      svg + #hover {
-        display: block;
-      }
     }
   }
   &__header {

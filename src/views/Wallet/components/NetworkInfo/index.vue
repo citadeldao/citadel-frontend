@@ -65,8 +65,7 @@
           data-qa="wallet__network-info__expand-button"
           @click="showExpand"
         >
-          <expand />
-          <expandHover id="hover" />
+          <expand class="expand__icon" />
         </div>
       </div>
     </div>
@@ -249,7 +248,6 @@ import web from '@/assets/icons/web.svg';
 import twitter from '@/assets/icons/twitter.svg';
 import linkIcon from '@/assets/icons/link.svg';
 import expand from '@/assets/icons/network-info/expand.svg';
-import expandHover from '@/assets/icons/network-info/expand-hover.svg';
 import socialLinks from './socials';
 import NetworkInfoExpand from './components/NetworkInfoExpand';
 import Modal from '@/components/Modal';
@@ -265,7 +263,6 @@ export default {
   components: {
     Tooltip,
     expand,
-    expandHover,
     web,
     linkIcon,
     twitter,
@@ -511,24 +508,6 @@ export default {
 
   &__title-toggle-info {
     cursor: pointer;
-
-    svg {
-      display: block;
-    }
-
-    svg + #hover {
-      display: none;
-    }
-
-    &:hover {
-      svg:not(#hover) {
-        display: none;
-      }
-
-      svg + #hover {
-        display: block;
-      }
-    }
   }
 
   &__social {

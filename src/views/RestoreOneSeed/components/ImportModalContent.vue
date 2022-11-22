@@ -75,6 +75,8 @@ import Loading from '@/components/Loading';
 import download from '@/assets/icons/download.svg';
 import { ref, watch } from '@vue/runtime-core';
 import CryptoCoin from '@/models/CryptoCoin';
+import notify from '@/plugins/notify';
+
 export default {
   emits: ['passwordConfirmed'],
   name: 'ImportModalContent',
@@ -137,6 +139,14 @@ export default {
       reader.onload = (event) => {
         try {
           backup.value = JSON.parse(event.target.result);
+          if (!backup.value?.passwordHash) {
+            notify({
+              type: 'warning',
+              text: 'Backup password hash is null',
+            });
+            removeFile();
+            return;
+          }
 
           if (!(backup.value?.passwordHash && backup.value?.mnemonic)) {
             fileIncorrect.value = true;
@@ -150,18 +160,19 @@ export default {
       reader.readAsText(file);
     };
 
-    const submitHandler = () => {
+    const submitHandler = async () => {
       if (passwordError.value) {
         inputError.value = passwordError.value;
 
         return;
       }
+      const decodedMnemonic = await CryptoCoin.decodeMnemonic(
+        backup.value?.mnemonic,
+        password.value
+      );
       emit('passwordConfirmed', {
         password: password.value,
-        mnemonic: CryptoCoin.decodeMnemonic(
-          backup.value?.mnemonic,
-          password.value
-        ),
+        mnemonic: decodedMnemonic,
       });
     };
     const { password, passwordError, inputError, dynamicHash } =
