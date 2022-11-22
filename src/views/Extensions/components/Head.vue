@@ -68,7 +68,7 @@
         />
         <transition name="fade">
           <div
-            v-if="searchAppStr"
+            v-if="searchAppStr.length > 1"
             class="filter-input-icon"
             @click="clearInput"
           >

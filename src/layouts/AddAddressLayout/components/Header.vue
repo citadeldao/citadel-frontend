@@ -416,7 +416,7 @@ export default {
         flex-direction: column;
       }
 
-      & svg.faq {
+      svg {
         fill: $white;
       }
     }
