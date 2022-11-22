@@ -15,16 +15,30 @@
           clearable
         />
         <div class="controls__row">
-          <div class="select" @click="selectedCoins = [].concat(chains)">
+          <div
+            class="select"
+            :class="{ disabled: chainList.length === 0 }"
+            @click="
+              chainList.length !== 0
+                ? (selectedCoins = [].concat(chains))
+                : null
+            "
+          >
             {{ $t('keplr.selectAll') }}
           </div>
-          <div class="unselect" @click="selectedCoins = []">
+          <div
+            class="unselect"
+            :class="{ disabled: chainList.length === 0 }"
+            @click="chainList.length !== 0 ? (selectedCoins = []) : null"
+          >
             <p>{{ $t('keplr.unselectAll') }}</p>
             <closeIcon class="close-icon" />
           </div>
         </div>
       </div>
       <div class="chains__selector">
+        <NotFoundPlaceholder v-if="chainList.length === 0" />
+
         <NetworkCard
           v-for="chain in chainList"
           :key="chain.key"
@@ -36,6 +50,7 @@
         />
       </div>
       <PrimaryButton
+        v-if="chainList.length !== 0"
         :disabled="!selectedCoins.length"
         class="confirm"
         @click="importWallets"
@@ -51,6 +66,7 @@ import Modal from '@/components/Modal';
 import Loading from '@/components/Loading';
 import NetworkCard from '@/components/NetworkCard';
 import Input from '@/components/UI/Input';
+import NotFoundPlaceholder from '@/components/NotFoundPlaceholder';
 
 import { ref, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
@@ -78,6 +94,7 @@ export default {
     closeIcon,
     NetworkCard,
     Input,
+    NotFoundPlaceholder,
   },
   setup() {
     const router = useRouter();
@@ -229,16 +246,12 @@ export default {
         return chains.value;
       }
 
-      const filtered = chains.value.filter(
+      return chains.value.filter(
         (item) =>
           item.label.toLowerCase().includes(search.value.toLowerCase()) ||
           item.net.toLowerCase().includes(search.value.toLowerCase()) ||
           item.key.toLowerCase().includes(search.value.toLowerCase())
       );
-
-      if (filtered.length === 0) return chains.value;
-
-      return filtered;
     });
 
     const onChainsSearch = (value) => (search.value = value);
@@ -317,6 +330,14 @@ export default {
         border-bottom: 1px dotted #fa3b33;
       }
       cursor: pointer;
+    }
+    .select,
+    .unselect {
+      transition: 0.2s;
+      &.disabled {
+        opacity: 0;
+        cursor: initial;
+      }
     }
   }
 }

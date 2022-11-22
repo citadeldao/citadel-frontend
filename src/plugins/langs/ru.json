@@ -634,6 +634,7 @@
     "next": "Далее",
     "confirm": "Подтвердить",
     "importExistingAddressExp": "Импортировать существующий адрес",
+    "notFoundPlaceholderText": "",
     "layouts": {
         "addAddressLayout": {
             "sidebarPlaceholder": "Ваши адреса будут отображены здесь",

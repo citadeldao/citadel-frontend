@@ -638,6 +638,7 @@
     "next": "Next",
     "confirm": "Confirm",
     "importExistingAddressExp": "Import an existing address",
+    "notFoundPlaceholderText": "Nothing was found for your query",
     "layouts": {
         "addAddressLayout": {
             "sidebarPlaceholder": "Your addresses will be displayed here",
