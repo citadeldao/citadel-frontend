@@ -100,7 +100,7 @@ export default {
 
       store.commit('newWallets/setLoader', true);
       await setImportedFromSeed();
-      const { data, error } = await await citadel.addCreatedWallet({
+      const { data, error } = await citadel.addCreatedWallet({
         ...wallet,
         ...wallet.config,
         type:
