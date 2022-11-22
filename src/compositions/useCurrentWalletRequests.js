@@ -17,7 +17,7 @@ export default function useCurrentWalletRequests() {
   const isSendToAnotherNetwork = ref(false);
 
   const getFees = async (netTo) => {
-    if (wallet.value.hasPledged) {
+    if (wallet.value.hasResource) {
       const { resFee, maxAmount, error, resAdding } =
         await wallet.value.getDelegationFee({
           walletId: wallet.value.id,
@@ -79,7 +79,6 @@ export default function useCurrentWalletRequests() {
       });
       rawTx.value = data;
       rawTxError.value = error;
-      console.log(888, data, error);
     } else {
       const { data, error } = await wallet.value.prepareTransfer({
         walletId: wallet.value.id,
@@ -88,6 +87,10 @@ export default function useCurrentWalletRequests() {
       l1Fee.value = data.l1Fee || 0;
       rawTx.value = data;
       rawTxError.value = error;
+      if (data.resourcesForTx) {
+        iostFee.value = data.resourcesForTx.fee;
+        adding.value = data.resourcesForTx.adding;
+      }
     }
   };
 
