@@ -23,10 +23,10 @@
       <div class="dropdown-item__info">
         <span
           class="dropdown-item__title"
-          :style="{ maxWidth: `${maxWidth}px` }"
+          :style="{ maxWidth: `${maxNameWidth}px` }"
           @mouseenter="showAddressTooltip = true"
           @mouseleave="showAddressTooltip = false"
-          >{{ wallet.title || formattedAddress }}</span
+          >{{ wallet.title || wallet.address }}</span
         >
         <span
           class="dropdown-item__address"
@@ -261,6 +261,13 @@ export default {
         fontSizes.value.address
       )
     );
+    const maxNameWidth = computed(() =>
+      addressTextWidth(
+        props.wallet?.title || props.wallet?.address,
+        'Panton_Regular',
+        fontSizes.value.name
+      )
+    );
     const formattedAddress = computed(() => {
       if (props.isOpen)
         return formattedWalletAddress(
@@ -283,6 +290,7 @@ export default {
       addressRef,
       formattedAddress,
       maxWidth,
+      maxNameWidth,
       handleResize,
       currentIcon,
       notification,
