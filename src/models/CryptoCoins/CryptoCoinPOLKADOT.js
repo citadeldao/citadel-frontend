@@ -11,7 +11,6 @@ export default class CryptoCoinPOLKADOT extends CryptoCoin {
     //   ? await CryptoCoin.encodePrivateKeyByPassword(opts.net, opts.mnemonic, password)
     //   : null;
     this.publicKey = opts.publicKey || null;
-    this.hasFee = true;
     this.hasClaimUnstaked = true;
     this.maxNodes = 16;
     this.minSendAmount = 1;

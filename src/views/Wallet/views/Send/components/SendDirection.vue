@@ -27,7 +27,7 @@
     </div>
     <div v-if="fee" class="send-direction__line">
       <span class="send-direction__line-title"> {{ $t('fee') }}: </span>
-      <div v-if="wallet.hasResource">
+      <div v-if="currentWallet.hasResource">
         <template v-for="item in adding" :key="item.name">
           <span
             v-pretty-number="item.current || item.value"
@@ -80,11 +80,15 @@
     </div>
     <div v-if="iostFee" class="send-direction__needed-resources">
       <span
-        v-pretty-number="{ value: iostFee, currency: wallet?.code }"
+        v-pretty-number="{
+          value: iostFee,
+          currency: currentToken ? currentToken.parentCoin.code : wallet?.code,
+        }"
         class="send-direction__needed-resources-amount"
       />
       <span class="send-direction__needed-resources-currency">
-        {{ wallet?.code }} {{ $t('neededResources') }}
+        {{ currentToken ? currentToken.parentCoin.code : wallet?.code }}
+        {{ $t('neededResources') }}
       </span>
     </div>
 
@@ -158,6 +162,9 @@ export default {
     redelegationNodeAddress: {
       type: String,
       default: '',
+    },
+    currentWallet: {
+      type: Object,
     },
   },
 

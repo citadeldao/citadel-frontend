@@ -2,21 +2,22 @@
   <div class="action-modal-content">
     <div
       class="action-modal-content__send-direction"
-      :style="{ marginBottom: wallet.hasResource ? '20px' : '' }"
+      :style="{ marginBottom: currentWallet.hasResource ? '20px' : '' }"
     >
       <SendDirection
         :to="to"
         :amount="amount"
         :wallet="wallet"
         :current-token="currentToken"
-        :fee="wallet.hasResource"
+        :fee="currentWallet.hasResource"
         :adding="adding"
         :memo="memo"
         :iost-fee="iostFee"
+        :currentWallet="currentWallet"
       />
     </div>
 
-    <div v-if="wallet.hasFee" class="action-modal-content__fees">
+    <div v-if="currentWallet.hasFee" class="action-modal-content__fees">
       <Fees
         :hide-custom-fee="wallet.hideCustomFee"
         :current-token="currentToken"
@@ -33,7 +34,7 @@
         {{ $t('totalAmount') }}:
       </span>
       <div
-        v-if="wallet.hasResource || currentToken"
+        v-if="currentWallet.hasResource || currentToken"
         class="action-modal-content__total-wrapper"
       >
         <div class="action-modal-content__total-wrapper">
@@ -47,12 +48,14 @@
         </div>
         <!-- hide separator when fee receive 0 -->
         <span
-          v-if="wallet.hasResource || (!wallet.hasResource && fee.fee)"
+          v-if="
+            currentWallet.hasResource || (!currentWallet.hasResource && fee.fee)
+          "
           class="action-modal-content__total-amount-line"
           >/</span
         >
         <div
-          v-if="wallet.hasResource"
+          v-if="currentWallet.hasResource"
           class="action-modal-content__total-wrapper"
         >
           <template v-for="item in adding" :key="item.name">
@@ -68,7 +71,7 @@
         </div>
         <!-- hide when fee receive 0 -->
         <div
-          v-if="!wallet.hasResource && fee.fee"
+          v-if="!currentWallet.hasResource && fee.fee"
           class="action-modal-content__total-wrapper"
         >
           <span
@@ -116,7 +119,8 @@
 import SendDirection from './SendDirection.vue';
 import Fees from '@/components/Fees';
 import Input from '@/components/UI/Input';
-import { inject } from '@vue/runtime-core';
+import { computed, inject } from '@vue/runtime-core';
+import { useStore } from 'vuex';
 
 export default {
   name: 'ActionModalContent',
@@ -184,9 +188,13 @@ export default {
   },
   emits: ['update:password', 'submitSend', 'select-fee'],
   setup() {
+    const store = useStore();
     const inputError = inject('inputError');
+    const currentWallet = computed(
+      () => store.getters['wallets/currentWallet']
+    );
 
-    return { inputError };
+    return { inputError, currentWallet };
   },
 };
 </script>
