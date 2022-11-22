@@ -46,6 +46,7 @@ import CryptoCoinOASIS from './CryptoCoins/CryptoCoinOASIS';
 import CryptoCoinSTAFI from './CryptoCoins/CryptoCoinSTAFI';
 import CryptoCoinSTRIDE from './CryptoCoins/CryptoCoinSTRIDE';
 import CryptoCoinJACKAL from './CryptoCoins/CryptoCoinJACKAL';
+import CryptoCoinEVMOSETH from './CryptoCoins/CryptoCoinEVMOSETH';
 
 export default {
   // nets
@@ -97,4 +98,5 @@ export default {
   STAFI: CryptoCoinSTAFI,
   STRIDE: CryptoCoinSTRIDE,
   JACKAL: CryptoCoinJACKAL,
+  EVMOSETH: CryptoCoinEVMOSETH,
 };

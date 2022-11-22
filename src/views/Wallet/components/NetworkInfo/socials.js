@@ -551,6 +551,20 @@ export default {
       href: 'https://www.coingecko.com/en/coins/evmos',
     },
   },
+  evmoseth: {
+    web: {
+      title: 'evmos.org',
+      href: 'https://evmos.org/',
+    },
+    twitter: {
+      title: '@EvmosOrg',
+      href: 'EvmosOrg',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/evmos',
+    },
+  },
   tron: {
     web: {
       title: 'tron.network',

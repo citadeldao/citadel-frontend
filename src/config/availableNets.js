@@ -47,7 +47,14 @@ export const ledgerNets = [
   'jackal',
 ];
 
-export const metamaskNets = ['bsc', 'eth', 'polygon', 'optimism', 'arbitrum'];
+export const metamaskNets = [
+  'bsc',
+  'eth',
+  'polygon',
+  'optimism',
+  'arbitrum',
+  'evmoseth',
+];
 
 export const trezorNets = ['btc', 'eth', 'bsc', 'tez'];
 
