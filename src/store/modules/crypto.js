@@ -62,10 +62,10 @@ export default {
       }
       // export from settings when wallet import from seed
       if (customMnemonic) {
-        return CryptoCoin.decodeMnemonic(customMnemonic, password);
+        return await CryptoCoin.decodeMnemonic(customMnemonic, password);
       }
 
-      return CryptoCoin.decodeMnemonic(state.mnemonic, password);
+      return await CryptoCoin.decodeMnemonic(state.mnemonic, password);
     },
     async generateNewMnemonic({ commit }) {
       const { result, data } = await citadel.generateMnemonic();

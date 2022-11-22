@@ -307,6 +307,22 @@ export default class CryptoCoin {
     return { error, data };
   }
 
+  async getCrossNetFees(walletId, netTo) {
+    const { error, data } = await citadel.getCrossNetFees(walletId, { netTo });
+
+    if (!error) {
+      return { error, data };
+    }
+
+    notify({
+      type: 'warning',
+      text: error,
+    });
+    console.error(error);
+
+    return { error, data };
+  }
+
   async getDelegationFee({ walletId, ...options }) {
     const { data, error } = await citadel.getDelegationFee(walletId, options);
 
