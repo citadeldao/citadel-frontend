@@ -618,22 +618,22 @@ export default {
   &-note {
     overflow: hidden;
     text-overflow: ellipsis;
+    color: $mid-blue;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: -0.02em;
   }
   td {
     border-bottom-right-radius: 8px;
     border-bottom-left-radius: 8px;
     > div {
-      margin: 8px 24px 14px;
+      margin: -8px 24px 14px;
       width: 40vw;
       white-space: nowrap;
       height: 18px;
       overflow: hidden;
       text-overflow: ellipsis;
       display: flex;
-      //white-space: nowrap;
-      @include lg {
-      }
-      //max-width: 717px; // TODO max-width :style computed
     }
   }
 }
