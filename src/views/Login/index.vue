@@ -825,14 +825,6 @@ export default {
     justify-content: center;
   }
 
-  @include lg {
-    // padding: 50px;
-  }
-
-  @include md {
-    // padding: 40px;
-  }
-
   &::after {
     content: '';
     position: absolute;
@@ -858,7 +850,7 @@ export default {
       width: 500px;
     }
 
-    @include md {
+    @include laptop-standard {
       width: 400px;
     }
   }
@@ -883,7 +875,7 @@ export default {
     & svg {
       width: 259px;
       height: 36px;
-      @include md {
+      @include laptop-standard {
         width: 200px;
         height: 26px;
       }
