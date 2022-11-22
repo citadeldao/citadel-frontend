@@ -37,8 +37,11 @@
         </div>
       </div>
       <div class="chains__selector">
-        <NotFoundPlaceholder v-if="chainList.length === 0" />
-
+        <EmptyList
+          v-if="!chainList.length"
+          :title="$t('notFoundPlaceholderText')"
+          class="nodes-list__empty"
+        />
         <NetworkCard
           v-for="chain in chainList"
           :key="chain.key"
@@ -66,7 +69,7 @@ import Modal from '@/components/Modal';
 import Loading from '@/components/Loading';
 import NetworkCard from '@/components/NetworkCard';
 import Input from '@/components/UI/Input';
-import NotFoundPlaceholder from '@/components/NotFoundPlaceholder';
+import EmptyList from '@/components/EmptyList';
 
 import { ref, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
@@ -94,7 +97,7 @@ export default {
     closeIcon,
     NetworkCard,
     Input,
-    NotFoundPlaceholder,
+    EmptyList,
   },
   setup() {
     const router = useRouter();
