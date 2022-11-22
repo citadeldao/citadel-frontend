@@ -143,22 +143,24 @@ export default {
           await setCurrentToken(address, net, token);
 
           if (address && net) {
-            const hasTokenInWallet = store.getters[
-              'subtokens/formatedSubtokens'
-            ](false, store.getters['wallets/currentWallet']).some(
-              (t) => t.net === token
+            const currentWallet = store.getters['wallets/currentWallet'];
+            if (!currentWallet) return router.push({ name: 'AddAddress' });
+
+            const hasTokens = store.getters['subtokens/formatedSubtokens'](
+              false,
+              currentWallet?.some((t) => t.net === token)
             );
 
-            if (
-              !findAddressWithNet(wallets.value, { address, net }) ||
-              (token && !hasTokenInWallet)
-            ) {
-              router.push({ name: 'AddAddress' });
+            const checkAddress = !findAddressWithNet(wallets.value, {
+              address,
+              net,
+            });
 
-              return;
+            if (checkAddress || (token && !hasTokens)) {
+              return router.push({ name: 'AddAddress' });
             }
 
-            redirectToWallet({
+            return redirectToWallet({
               wallet: store.getters['wallets/currentWallet'],
               token: store.getters['subtokens/currentToken'],
             });
