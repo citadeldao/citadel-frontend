@@ -26,15 +26,14 @@
       </div>
       <div class="chains__selector">
         <NetworkCard
-          v-for="(chain, ndx) in chainList"
-          :key="ndx"
+          v-for="chain in chainList"
+          :key="chain.key"
           :network="chain"
           icon-path="networks"
           :checked="!!selectedCoins.find((coin) => coin.label === chain.label)"
           @check="onSelectCoin"
           @uncheck="onSelectCoin"
         />
-        <!-- </div> -->
       </div>
       <PrimaryButton
         :disabled="!selectedCoins.length"
@@ -236,6 +235,8 @@ export default {
           item.net.toLowerCase().includes(search.value.toLowerCase()) ||
           item.key.toLowerCase().includes(search.value.toLowerCase())
       );
+
+      if (filtered.length === 0) return chains.value;
 
       return filtered;
     });
