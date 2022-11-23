@@ -34,6 +34,11 @@
   }
 }
 
+@mixin laptop-standard {
+  @media (max-width: 1280px) {
+    @content;
+  }
+}
 
 
 @mixin md {
