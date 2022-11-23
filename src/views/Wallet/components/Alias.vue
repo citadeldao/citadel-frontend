@@ -323,6 +323,13 @@ export default {
     display: flex;
     flex-direction: column;
     width: 100%;
+    max-width: 490px;
+    @include laptop-l {
+      max-width: 400px;
+    }
+    @include laptop-standard {
+      max-width: 350px;
+    }
   }
   &__actions {
     height: 68px;
@@ -333,12 +340,8 @@ export default {
   }
   &__info {
     display: flex;
-    @include xl {
-      width: auto;
-    }
-    @media (max-width: 2336px) {
-      width: calc(100% - 160px);
-    }
+    max-width: 655px;
+    width: 100%;
   }
 
   &__edit {

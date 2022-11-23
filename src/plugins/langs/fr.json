@@ -530,6 +530,9 @@
     "overallTitle": "En général",
     "days": "jours",
     "copiedToClipboard": "Copié dans le presse-papiers",
+    "copyToClipboardTitle": "",
+    "showHideKeyTitle": "",
+    "changeKeyTitle": "",
     "earn": "Gagner",
     "seed": "Seed",
     "learnHow": "Apprenez comment",
@@ -692,6 +695,13 @@
         "enterPasswordForAllInPrivate": "Ajouter un réseau en utilisant votre clé privée"
     },
     "settings": {
+        "extensions": {
+            "title": "",
+            "description": "",
+            "appsTitle": "",
+            "searchLabel": "",
+            "searchPlaceholder": ""
+        },
         "subscriptions": {
             "title": "Abonnements",
             "description": "Abonnez-vous aux mises à jour pertinentes",
@@ -752,8 +762,8 @@
             "description": "Cette opération ne peut être annulée",
             "modalDescription": "Veuillez noter que cette action ne peut être annulée. Vos biens sont en sécurité - vous ne supprimez que le compte Citadel.one",
             "button": "Supprimer le compte",
-            "inputLabel": "Tapez \"Supprimer le compte\" pour confirmer",
-            "placeholder": "Tapez 'supprimer'"
+            "inputLabel": "Entrez \"delete\" pour confirmer",
+            "placeholder": "Entrez la confirmation"
         },
         "changePassword": {
             "btnTitle": "Modifier le mot de passe",
@@ -830,7 +840,9 @@
         "apyTooltip": "Le rendement annuel en pourcentage est compté dans l’Inflation du staking / staké",
         "stakingRatioTooltip": "Pourcentage de jetons éligibles qui sont stakés",
         "dayTradingVol": "Volume trading 24 heures",
-        "dayTradingVolTooltip": "Le volume de trading sur 24 heures est le nombre de pièces qui ont été échangées au cours des 24 dernières heures"
+        "dayTradingVolTooltip": "Le volume de trading sur 24 heures est le nombre de pièces qui ont été échangées au cours des 24 dernières heures",
+        "placeholderTitle": "Actuellement, les informations sur le jeton ne sont pas disponibles",
+        "placeholderDescription": "Des informations sur le jeton et le graphique de l'historique des prix seront bientôt disponibles"
     },
     "viewingKey": {
         "viewingKey": "Clé de visualisation",
@@ -963,6 +975,7 @@
     "emptyPassword": "Mot de passe vide",
     "accruedDaily": "Accumulé quotidiennement de 6 à 7 heures UTC",
     "extensions": {
+        "emptyList": "",
         "showLabel": "Afficher",
         "headerTitle": "Magasin d'extensions",
         "headerDescription": "Utilisez vos dApps, applications DeFi et extensions préférées en mode natif !",

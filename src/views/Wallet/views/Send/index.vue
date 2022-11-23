@@ -24,7 +24,7 @@
             v-model="isSendToAnotherNetwork"
             active-color="#6a4bff"
             inactive-color="#dfe9f5"
-            @input="toAddress = ''"
+            @input="switchChangeHandler"
           />
         </div>
         <div
@@ -109,7 +109,10 @@
           <span v-if="false" class="send__input-note-xl"
             >{{ $t('includingFunds-xl') }}
           </span>
-          <span class="send__input-note">
+          <span
+            class="send__input-note"
+            :class="{ 'send__input-note-laptop': insufficientFunds }"
+          >
             {{ $t('includingFunds') }}
           </span>
         </div>
@@ -471,7 +474,7 @@ export default {
     const loadingSign = ref(false);
     const showSuccessModal = ref(false);
     const { t } = useI18n();
-    const isSendToAnotherNetwork = ref(false);
+    // const isSendToAnotherNetwork = ref(false);
     const showAdvanced = ref(false);
     const showMemo = ref(false);
     const store = useStore();
@@ -484,7 +487,7 @@ export default {
     const showErrorText = computed(() =>
       width.value < screenWidths.xl ? false : true
     );
-    const prepareBuildTransaction = ref({});
+    // const prepareBuildTransaction = ref({});
 
     const {
       formatedFee: fees,
@@ -503,6 +506,7 @@ export default {
       iostFee,
       adding,
       resMaxAmount,
+      isSendToAnotherNetwork,
     } = useCurrentWalletRequests();
 
     const {
@@ -543,6 +547,12 @@ export default {
       return props.currentWallet.type;
     });
 
+    const switchChangeHandler = async (value) => {
+      if (value) {
+        await getFees(bridgeTargetNet.value);
+      }
+      toAddress.value = '';
+    };
     const { isHardwareWallet, wallets } = useWallets();
 
     const defaultFee = computed(() => fees.value?.medium);
@@ -696,11 +706,11 @@ export default {
       () => route.params,
       (newParams) => {
         if (newParams.net && newParams.address) {
+          isSendToAnotherNetwork.value = false;
           clearState();
           loadData();
           showNetworkTargetWallets.value = false;
           bridgeTargetNet.value = route.params.net;
-          isSendToAnotherNetwork.value = false;
           setCosmosNetworkBridgeToken();
         }
       },
@@ -935,12 +945,16 @@ export default {
       ...(props.currentWallet.fee_key && {
         [props.currentWallet.fee_key]: fee.value[props.currentWallet.fee_key],
       }),
+      //for crossnetwork transfer
+      token: props.currentWallet.net,
+      toNetwork: bridgeTargetNet.value,
     }));
 
     const showModal = ref(false);
     const showConfirmModal = ref(false);
 
-    const selectBridgeNetwork = (key) => {
+    const selectBridgeNetwork = async (key) => {
+      await getFees(key);
       bridgeTargetNet.value = key;
       toAddress.value = '';
     };
@@ -951,33 +965,33 @@ export default {
       }
 
       // bridge
-      if (isSendToAnotherNetwork.value) {
-        prepareLoading.value = true;
-        prepareBuildTransaction.value =
-          await props.currentWallet.getBuildBridgeTransaction({
-            walletId: props.currentWallet.id,
-            token: props.currentWallet.net,
-            toNetwork: bridgeTargetNet.value,
-            toAddress: toAddress.value,
-            amount: amount.value,
-          });
-        prepareLoading.value = false;
+      // if (isSendToAnotherNetwork.value) {
+      //   prepareLoading.value = true;
+      //   prepareBuildTransaction.value =
+      //     await props.currentWallet.getBuildBridgeTransaction({
+      //       walletId: props.currentWallet.id,
+      //       token: props.currentWallet.net,
+      //       toNetwork: bridgeTargetNet.value,
+      //       toAddress: toAddress.value,
+      //       amount: amount.value,
+      //     });
+      //   prepareLoading.value = false;
 
-        if (prepareBuildTransaction.value.ok) {
-          showConnectLedgerModal.value = false;
-          showAppLedgerModal.value = false;
-          showConfirmLedgerModal.value = false;
-          showRejectedLedgerModal.value = false;
-          showConfirmModal.value = true;
-          showModal.value = true;
-        } else {
-          showConfirmModal.value = false;
-          showModal.value = false;
-          clearTxData();
-        }
+      //   if (prepareBuildTransaction.value.ok) {
+      //     showConnectLedgerModal.value = false;
+      //     showAppLedgerModal.value = false;
+      //     showConfirmLedgerModal.value = false;
+      //     showRejectedLedgerModal.value = false;
+      //     showConfirmModal.value = true;
+      //     showModal.value = true;
+      //   } else {
+      //     showConfirmModal.value = false;
+      //     showModal.value = false;
+      //     clearTxData();
+      //   }
 
-        return;
-      }
+      //   return;
+      // }
 
       prepareLoading.value = true;
       try {
@@ -1044,16 +1058,16 @@ export default {
         props.currentWallet.type === WALLET_TYPES.KEPLR &&
         props.currentWallet?.config?.standard !== TOKEN_STANDARDS.SNIP_20
       ) {
-        const tx = isSendToAnotherNetwork.value
-          ? prepareBuildTransaction.value.data
-          : rawTx.value;
+        // const tx = isSendToAnotherNetwork.value
+        //   ? prepareBuildTransaction.value.data
+        //   : rawTx.value;
         let keplrResult;
 
         try {
           loadingSign.value = true;
           isLoading.value = true;
           keplrResult = await keplrConnector.value.sendKeplrTransaction(
-            tx,
+            rawTx.value,
             props.currentWallet.address,
             { preferNoSetFee: true }
           );
@@ -1085,11 +1099,11 @@ export default {
 
         const defaultTx = {
           ...keplrResult.signedTx,
-          publicKey: parentWallet.value.getPublicKeyDecoded(),
+          publicKey: await parentWallet.value.getPublicKeyDecoded(),
           signature: keplrResult.signature,
         };
 
-        const defaultSendTx = tx.transaction || tx;
+        const defaultSendTx = rawTx.value.transaction || rawTx.value;
         const protobufTx = {
           mode: 'sync',
           tx: {
@@ -1114,7 +1128,7 @@ export default {
           proxy: false,
           network: parentWallet.value.net,
           from: parentWallet.value.address,
-          mem_tx_id: tx.mem_tx_id,
+          mem_tx_id: rawTx.value.mem_tx_id,
         });
 
         if (data.ok) {
@@ -1167,10 +1181,10 @@ export default {
           showConfirmLedgerModal.value = true;
 
           try {
-            const tx = isSendToAnotherNetwork.value
-              ? prepareBuildTransaction.value.data
-              : rawTx.value;
-            await signAndSendTransfer(tx, null, {
+            // const tx = isSendToAnotherNetwork.value
+            //   ? prepareBuildTransaction.value.data
+            //   : rawTx.value;
+            await signAndSendTransfer(rawTx.value, null, {
               currentToken: props.currentToken,
             });
             showConfirmLedgerModal.value = false;
@@ -1189,10 +1203,10 @@ export default {
             }
           }
         } else {
-          const tx = isSendToAnotherNetwork.value
-            ? prepareBuildTransaction.value.data
-            : rawTx.value;
-          await signAndSendTransfer(tx, password.value, {
+          // const tx = isSendToAnotherNetwork.value
+          //   ? prepareBuildTransaction.value.data
+          //   : rawTx.value;
+          await signAndSendTransfer(rawTx.value, password.value, {
             currentToken: props.currentToken,
           });
           loadingSign.value = false;
@@ -1285,6 +1299,7 @@ export default {
     };
 
     return {
+      switchChangeHandler,
       WALLET_TYPES,
       isHardwareWallet,
       isSendToAnotherNetwork,
@@ -1528,6 +1543,12 @@ export default {
       font-size: 12px;
       line-height: 14px;
       bottom: -22px;
+    }
+    &-laptop {
+      @include laptop {
+        left: 25px;
+        bottom: -38px;
+      }
     }
   }
 

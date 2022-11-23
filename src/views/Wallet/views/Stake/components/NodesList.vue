@@ -11,7 +11,13 @@
         data-qa="staking__node-list__search-field"
       />
     </div>
+    <EmptyList
+      v-if="!displayData.length && keyword.length"
+      :title="$t('extensions.emptyList')"
+      class="nodes-list__empty"
+    />
     <div
+      v-if="displayData.length"
       ref="nodesListRef"
       class="nodes-list__nodes"
       :class="{ 'nodes-list__nodes--scrollbar': hasScrollbar }"
@@ -49,6 +55,7 @@ import Input from '@/components/UI/Input';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import { ref } from '@vue/reactivity';
 import { computed, inject } from '@vue/runtime-core';
+import EmptyList from '@/components/EmptyList';
 
 export default {
   name: 'NodesList',
@@ -57,6 +64,7 @@ export default {
     NodesListItem,
     PrimaryButton,
     error,
+    EmptyList,
   },
   props: {
     nodesList: {
@@ -204,6 +212,10 @@ export default {
 
   &__search-input {
     height: 68px;
+  }
+
+  &__empty {
+    margin-top: 20px;
   }
 
   &__nodes {

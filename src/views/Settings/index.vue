@@ -22,6 +22,7 @@
         <div class="column">
           <ChangeEmail />
           <ChangePassword />
+          <SyncExtension v-if="global.citadel && isPasswordHash" />
         </div>
 
         <ExtensionSettings :visibleClass="'comingSoon'" />
@@ -75,7 +76,8 @@
           <ExportModal
             :current-export-method="currentExportMethod"
             :private-key="decodedPrivateKey"
-            :mnemonic-phrase="decodedMnemonick"
+            :derivation-path="currentExportWallet.derivationPath"
+            :mnemonic-phrase="decodedMnemonic"
           />
         </ModalContent>
         <ModalContent
@@ -128,6 +130,7 @@ import TransferData from './components/TransferData';
 import ChangeEmail from './components/Account/Email';
 import ChangePassword from './components/Account/Password';
 import DeleteAccount from './components/Account/Delete';
+import SyncExtension from './components/SyncExtension';
 import Language from './components/Language';
 import CreateVkModal from '@/views/Wallet/components/CreateVkModal.vue';
 import ManageViewingKeysModal from './components/ManageViewingKeysModal';
@@ -161,6 +164,7 @@ export default {
     CrossChain,
     ChangePassword,
     ExtensionSettings,
+    SyncExtension,
   },
   setup() {
     const store = useStore();
@@ -205,6 +209,9 @@ export default {
       changeVk.value = null;
     };
 
+    const global = computed(() => window);
+    const isPasswordHash = computed(() => store.getters['crypto/passwordHash']);
+
     onMounted(() => {
       store.dispatch('wallets/initHiddenWallets');
     });
@@ -223,7 +230,7 @@ export default {
       currentExportMethod.value = null;
       currentExportWallet.value = null;
       showExportModal.value = false;
-      decodedMnemonick.value = '';
+      decodedMnemonic.value = '';
       inputError.value = false;
       manageVkWallets.value = null;
       changeVk.value = null;
@@ -277,9 +284,9 @@ export default {
 
       return {};
     });
-    const decodedMnemonick = ref('');
+    const decodedMnemonic = ref('');
     const decodedPrivateKey = ref('');
-    const approveExport = () => {
+    const approveExport = async () => {
       if (passwordError.value) {
         inputError.value = passwordError.value;
 
@@ -287,19 +294,23 @@ export default {
       } else if (currentExportMethod.value === WALLET_TYPES.ONE_SEED) {
         if (!currentExportWallet.value.importedFromSeed) {
           // export main account oneSeed
-          decodedMnemonick.value = store.getters['crypto/decodeUserMnemonic'](
-            password.value
+          decodedMnemonic.value = await store.dispatch(
+            'crypto/decodeUserMnemonic',
+            { password: password.value }
           );
         } else {
           // type wallet - private key (oneSeed), and export its oneSeed
-          decodedMnemonick.value = store.getters['crypto/decodeUserMnemonic'](
-            password.value,
-            currentExportWallet.value.importedFromSeed
+          decodedMnemonic.value = await store.dispatch(
+            'crypto/decodeUserMnemonic',
+            {
+              password: password.value,
+              customMnemonic: currentExportWallet.value.importedFromSeed,
+            }
           );
         }
       } else if (currentExportMethod.value === WALLET_TYPES.PRIVATE_KEY) {
         decodedPrivateKey.value =
-          currentExportWallet.value.getPrivateKeyDecoded(password.value);
+          await currentExportWallet.value.getPrivateKeyDecoded(password.value);
       }
 
       showApproveExportModal.value = false;
@@ -319,7 +330,7 @@ export default {
       approveExport,
       showExportModal,
       currentExportMethod,
-      decodedMnemonick,
+      decodedMnemonic,
       exportModalData,
       decodedPrivateKey,
       inputError,
@@ -332,6 +343,8 @@ export default {
       snip20TokenFee,
       closeCreateVkModal,
       VIEWING_KEY_TYPES,
+      isPasswordHash,
+      global,
     };
   },
 };

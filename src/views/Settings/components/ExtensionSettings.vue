@@ -1,5 +1,5 @@
 <template>
-  <div class="extension-settings-card" :class="visibleClass">
+  <div class="extension-settings-card">
     <h5 class="extension-settings-card__title">
       {{ $t('settings.extensionSettings.title') }}
     </h5>
@@ -8,7 +8,10 @@
         {{ $t(`settings.extensionSettings.${currentDescKey}`) }}
       </span>
 
-      <PrimaryButton :disabled="true" class="extension-settings-card__button">
+      <PrimaryButton
+        class="extension-settings-card__button"
+        @click="$router.push({ name: 'ExtensionsSettings' })"
+      >
         {{ $t('settings.extensionSettings.button') }}
       </PrimaryButton>
     </div>

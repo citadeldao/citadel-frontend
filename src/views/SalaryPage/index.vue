@@ -685,7 +685,7 @@ export default {
             rawTransaction: rawTx,
             privateKey:
               password.value &&
-              signerWallet.value.getPrivateKeyDecoded(password.value),
+              (await signerWallet.value.getPrivateKeyDecoded(password.value)),
             derivationPath: signerWallet.value.derivationPath,
           });
 
@@ -699,7 +699,7 @@ export default {
               rawTransaction: rawTx,
               privateKey:
                 password.value &&
-                signerWallet.value.getPrivateKeyDecoded(password.value),
+                (await signerWallet.value.getPrivateKeyDecoded(password.value)),
               derivationPath: signerWallet.value.derivationPath,
             });
 
