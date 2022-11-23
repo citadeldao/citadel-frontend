@@ -204,16 +204,19 @@ export default {
   emits: ['prepareClaim', 'prepareXctClaim'],
   setup(props) {
     const width = ref(null);
-    onMounted(() => {
+    const onResizeFn = () => {
       width.value = document.querySelector('.wallet__main').offsetWidth - 150;
+      if (window.innerWidth < 1920) {
+        width.value = document.querySelector('.wallet__main').offsetWidth - 116;
+      }
+      if (window.innerWidth <= 1280) {
+        width.value = document.querySelector('.wallet__main').offsetWidth - 100;
+      }
+    };
+    onMounted(() => {
+      onResizeFn();
     });
-    window.addEventListener(
-      'resize',
-      () => {
-        width.value = document.querySelector('.wallet__main').offsetWidth - 150;
-      },
-      true
-    );
+    window.addEventListener('resize', () => onResizeFn(), true);
 
     const currentKtAddress = inject('currentKtAddress');
     const currentAddress = computed(() =>
