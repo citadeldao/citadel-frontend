@@ -107,7 +107,7 @@
     @click="$emit('showTransactionInfo', currentTransaction)"
   >
     <td colspan="5">
-      <div>
+      <div :style="{ width: `${width}px` }">
         <div class="table-row__note-note">
           {{ transaction.note }}
         </div>
@@ -134,6 +134,10 @@ export default {
     linkIcon,
   },
   props: {
+    width: {
+      type: Number,
+      default: 0,
+    },
     transaction: {
       type: Object,
       default: () => ({}),
@@ -628,7 +632,6 @@ export default {
     border-bottom-left-radius: 8px;
     > div {
       margin: -8px 24px 14px;
-      width: 40vw;
       white-space: nowrap;
       height: 18px;
       overflow: hidden;

@@ -28,7 +28,7 @@
       <div v-if="!activateEdit" class="comment-value">{{ info.note }}</div>
       <textarea
         v-if="activateEdit"
-        v-model="customNote"
+        v-model.trim="customNote"
         id="editComment"
         rows="4"
         class="comment-field"
@@ -107,7 +107,7 @@ export default {
 
     const setComment = async () => {
       if (activateEdit.value) {
-        if (customNote.value !== props.info.note) {
+        if (customNote.value.length && customNote.value !== props.info.note) {
           await store.dispatch('transactions/postTransactionNote', {
             network: props.currentWallet.net,
             hash: props.info.hash,

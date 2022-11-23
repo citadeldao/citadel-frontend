@@ -29,6 +29,7 @@
         <template v-for="tx in txsFromMempool" :key="tx.hash">
           <div style="color: white; height: 0.5em"></div>
           <TableRow
+            :width="width"
             :transaction="tx"
             from-mempool
             :current-wallet="currentWallet"
@@ -42,6 +43,7 @@
       <template v-for="item in transactions" :key="item.hash">
         <div style="color: white; height: 0.5em"></div>
         <TableRow
+          :width="width"
           :transaction="item"
           :current-wallet="currentWallet"
           @showTransactionInfo="showTransactionInfo"
@@ -155,7 +157,7 @@
 </template>
 
 <script>
-import { ref, computed, inject, nextTick, watch } from 'vue';
+import { ref, computed, inject, nextTick, watch, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
 import TransactionInfoModalContent from './components/TransactionInfoModalContent.vue';
@@ -201,6 +203,18 @@ export default {
   },
   emits: ['prepareClaim', 'prepareXctClaim'],
   setup(props) {
+    const width = ref(null);
+    onMounted(() => {
+      width.value = document.querySelector('.wallet__main').offsetWidth - 150;
+    });
+    window.addEventListener(
+      'resize',
+      () => {
+        width.value = document.querySelector('.wallet__main').offsetWidth - 150;
+      },
+      true
+    );
+
     const currentKtAddress = inject('currentKtAddress');
     const currentAddress = computed(() =>
       currentKtAddress.value
@@ -334,6 +348,7 @@ export default {
     };
 
     return {
+      width,
       setCurrentPage,
       currentPage,
       options,
