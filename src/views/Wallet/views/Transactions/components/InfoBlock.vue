@@ -107,7 +107,10 @@ export default {
 
     const setComment = async () => {
       if (activateEdit.value) {
-        if (customNote.value.length && customNote.value !== props.info.note) {
+        if (
+          customNote.value.length ||
+          (props.info.note !== '' && customNote.value !== props.info.note)
+        ) {
           await store.dispatch('transactions/postTransactionNote', {
             network: props.currentWallet.net,
             hash: props.info.hash,
