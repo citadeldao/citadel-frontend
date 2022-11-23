@@ -474,6 +474,7 @@ export default {
   }
   &-loader {
     zoom: 50%;
+    align-self: center;
   }
   &__input {
     width: 100%;
