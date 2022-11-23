@@ -53,6 +53,7 @@ export default {
     padding-bottom: 13px;
     border-top: 1px solid $too-ligth-gray;
     cursor: pointer;
+    width: max-content;
 
     &:first-child {
       padding-top: 0px;

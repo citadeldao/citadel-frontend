@@ -7,7 +7,6 @@ export default class CryptoCoinSECRET extends CryptoCoin {
     this.publicKey = opts.publicKey || null;
     this.privateKeyHash = opts.privateKeyHash || null;
     this.savedViewingKeys = opts.savedViewingKeys || null;
-    this.hasFee = true;
     this.hasRedelegation = true;
   }
 
