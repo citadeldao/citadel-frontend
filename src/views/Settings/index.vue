@@ -22,7 +22,7 @@
         <div class="column">
           <ChangeEmail />
           <ChangePassword />
-          <SyncExtension v-if="global.citadel && isPasswordHash" />
+          <!-- <SyncExtension v-if="global.citadel && isPasswordHash" /> -->
         </div>
 
         <ExtensionSettings :visibleClass="'comingSoon'" />
@@ -130,7 +130,7 @@ import TransferData from './components/TransferData';
 import ChangeEmail from './components/Account/Email';
 import ChangePassword from './components/Account/Password';
 import DeleteAccount from './components/Account/Delete';
-import SyncExtension from './components/SyncExtension';
+// import SyncExtension from './components/SyncExtension';
 import Language from './components/Language';
 import CreateVkModal from '@/views/Wallet/components/CreateVkModal.vue';
 import ManageViewingKeysModal from './components/ManageViewingKeysModal';
@@ -164,7 +164,7 @@ export default {
     CrossChain,
     ChangePassword,
     ExtensionSettings,
-    SyncExtension,
+    // SyncExtension,
   },
   setup() {
     const store = useStore();

@@ -381,16 +381,19 @@ export default {
   },
   mounted() {
     if (window.innerWidth <= 1024) {
-      document
-        .querySelector('#main')
-        .addEventListener('click', this.onClickMain);
+      const main = document.querySelector('#main');
+      if (main) {
+        main.addEventListener('click', this.onClickMain);
+      }
     }
 
     this.setShadows();
-
-    document
-      .querySelector('.sidebar__addresses-addresses-full-list')
-      .addEventListener('scroll', this.onScrollFullList);
+    const fullList = document.querySelector(
+      '.sidebar__addresses-addresses-full-list'
+    );
+    if (fullList) {
+      fullList.addEventListener('scroll', this.onScrollFullList);
+    }
   },
   created() {
     window.addEventListener('resize', this.onResize);
