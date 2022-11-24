@@ -79,7 +79,7 @@
           active-class="header__menu-button--active"
           data-qa="header__rewards-button"
         >
-          <Badge :content="extensionsList?.length" background-color="#6A4BFF" />
+          <Badge :content="extensionsList?.length" background-color="#FF5722" />
           <app />
         </router-link>
 
@@ -441,7 +441,7 @@ export default {
         }
       }
 
-      & svg.faq {
+      svg {
         fill: $white;
       }
     }

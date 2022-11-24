@@ -739,7 +739,7 @@
         },
         "changeEmail": {
             "title": "Ваш e-mail",
-            "description": "E-mail вашего аккаунта",
+            "description": "",
             "inputLabel": "Ваш e-mail",
             "inputPlaceHolder": "e-mail",
             "button": "Изменить",

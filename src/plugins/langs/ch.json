@@ -739,7 +739,7 @@
         },
         "changeEmail": {
             "title": "您的邮箱",
-            "description": "您的账户邮箱",
+            "description": "",
             "inputLabel": "您的邮箱",
             "inputPlaceHolder": "邮箱",
             "button": "切换",
