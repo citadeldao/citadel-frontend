@@ -635,6 +635,7 @@
     "next": "下一步",
     "confirm": "确认",
     "importExistingAddressExp": "导入已有地址",
+    "notFoundPlaceholderText": "",
     "layouts": {
         "addAddressLayout": {
             "sidebarPlaceholder": "您的地址将展示在这里",

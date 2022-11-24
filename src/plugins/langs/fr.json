@@ -635,6 +635,7 @@
     "next": "Suivant",
     "confirm": "Confirmer",
     "importExistingAddressExp": "Importez une adresse existante",
+    "notFoundPlaceholderText": "",
     "layouts": {
         "addAddressLayout": {
             "sidebarPlaceholder": "Vos adresses seront affichées ici",
