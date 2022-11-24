@@ -94,14 +94,14 @@ export default {
       redirectToNewWallet,
     } = useCreateWallets();
     const store = useStore();
-    const finalStep = (nets) => {
+    const finalStep = async (nets) => {
       store.commit('newWallets/setLoader', true);
       setNets(nets);
       setType('oneSeed');
       const success = createWallets();
       success.then(async () => {
         !isPasswordHash.value && savePassword();
-        !isUserMnemonic.value && saveMnemonic();
+        !isUserMnemonic.value && (await saveMnemonic());
         await redirectToNewWallet();
         store.commit('newWallets/setNewWalletsList', newWallets.value);
         store.commit('newWallets/setLoader', false);
@@ -135,26 +135,17 @@ export default {
 </script>
 <style lang="scss" scoped>
 .restore-one-seed {
-  margin-bottom: 8px;
   display: flex;
   flex-direction: column;
   background: $white;
-  box-shadow: -10px 4px 27px rgba(0, 0, 0, 0.1);
+  box-shadow: -10px 4px 50px rgba(0, 0, 0, 0.1);
   border-radius: 25px;
-  padding: 0 44px;
+  padding: 0 40px 43px;
   flex-grow: 1;
   height: 100%;
-  @include lg {
-    padding: 0 40px;
-  }
-  @include md {
-    height: calc(100vh - 82px);
-    box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
-    padding: 0 31px;
-  }
+  margin-bottom: 40px;
 
   &__section {
-    overflow: hidden;
     display: flex;
     flex-grow: 1;
   }

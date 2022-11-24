@@ -49,7 +49,9 @@ export const filteredApps = (
   }
 
   if (!selectedTags.length) {
-    return baseList.filter((app) => app.name.toLowerCase().includes(searchStr));
+    return baseList.filter((app) =>
+      app.name.toLowerCase().includes(searchStr.toLowerCase())
+    );
   }
 
   return extensionsList
@@ -63,5 +65,5 @@ export const filteredApps = (
       return findTag;
     })
     .concat(baseList)
-    .filter((app) => app.name.toLowerCase().includes(searchStr));
+    .filter((app) => app.name.toLowerCase().includes(searchStr.toLowerCase()));
 };

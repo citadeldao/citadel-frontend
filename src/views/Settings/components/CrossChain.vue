@@ -7,13 +7,15 @@
       <h4 class="title">
         {{ $t('settings.crossChain.title') }}
       </h4>
-      <span class="description">
-        {{ $t(`settings.crossChain.${currentDescKey}`) }}
-      </span>
     </div>
-    <PrimaryButton class="cross-chain-card__button" :disabled="isDisabled">
+    <PrimaryButton
+      @click="openSync"
+      class="cross-chain-card__button"
+      :disabled="!global.citadel || !isPasswordHash"
+    >
       {{ $t('settings.crossChain.button') }}
     </PrimaryButton>
+    <SyncToFromExtension v-if="syncModal" @close="closeModal" />
   </div>
 </template>
 
@@ -21,6 +23,10 @@
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import CrossChainIcon from '@/assets/icons/settings/cross-chain.svg';
 import CrossChainDisabledIcon from '@/assets/icons/settings/cross-chain-disabled.svg';
+import { useRoute } from 'vue-router';
+import { ref, computed } from 'vue';
+import SyncToFromExtension from '@/views/SyncToFromExtension';
+import { useStore } from 'vuex';
 
 export default {
   name: 'CrossChain',
@@ -28,6 +34,7 @@ export default {
     PrimaryButton,
     CrossChainIcon,
     CrossChainDisabledIcon,
+    SyncToFromExtension,
   },
   props: {
     visibleClass: {
@@ -35,19 +42,46 @@ export default {
       default: '',
     },
   },
-  setup(props) {
+  setup() {
+    const store = useStore();
     let currentIcon = 'CrossChainIcon';
     let currentDescKey = 'description';
-    let isDisabled = false;
-    if (props.visibleClass == 'comingSoon') {
+
+    const global = computed(() => window);
+    const isPasswordHash = computed(() => store.getters['crypto/passwordHash']);
+
+    if (!window.citadel || !isPasswordHash.value) {
       currentIcon = 'CrossChainDisabledIcon';
       currentDescKey = 'comingSoon';
-      isDisabled = true;
     }
+
+    const route = useRoute();
+    const syncModal = ref(false);
+
+    const openSync = () => {
+      syncModal.value = true;
+    };
+
+    const closeModal = () => {
+      syncModal.value = false;
+      localStorage.removeItem('openSync');
+    };
+
+    if (route.hash === '#sync' || localStorage.getItem('openSync')) {
+      setTimeout(() => {
+        openSync();
+        localStorage.removeItem('openSync');
+      }, 1000);
+    }
+
     return {
+      openSync,
+      closeModal,
+      global,
+      isPasswordHash,
+      syncModal,
       currentIcon,
       currentDescKey,
-      isDisabled,
     };
   },
 };

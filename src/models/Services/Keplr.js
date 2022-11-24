@@ -9,7 +9,7 @@ export default class keplrConnector {
   }
 
   // eslint-disable-next-line consistent-return
-  async connect(network) {
+  async connect(network, stopNotify) {
     if (window.keplr) {
       if (network) {
         this.chainId = network;
@@ -21,10 +21,12 @@ export default class keplrConnector {
 
       return this.accounts;
     } else {
-      notify({
-        type: 'warning',
-        text: 'Keplr extension not found',
-      });
+      if (!stopNotify) {
+        notify({
+          type: 'warning',
+          text: 'Keplr extension not found',
+        });
+      }
     }
   }
 

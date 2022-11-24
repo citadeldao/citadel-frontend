@@ -4,7 +4,10 @@
     :style="{ borderBottom: transaction.note ? 'none' : `` }"
     @click="$emit('showTransactionInfo', currentTransaction)"
   >
-    <td class="table-row__type">
+    <td
+      class="table-row__type"
+      :class="{ 'table-row__type--no-border': transaction.note }"
+    >
       <div class="table-row__type-block">
         <img
           v-if="transaction?.view[0]?.icon"
@@ -98,6 +101,20 @@
       />
     </td>
   </tr>
+  <tr
+    class="table-row__note"
+    v-if="transaction.note"
+    @click="$emit('showTransactionInfo', currentTransaction)"
+  >
+    <td colspan="5">
+      <div :style="{ width: `${width}px` }">
+        <div class="table-row__note-note">
+          {{ transaction.note }}
+        </div>
+        <!-- <div v-if="showDots">...</div> -->
+      </div>
+    </td>
+  </tr>
 </template>
 
 <script>
@@ -117,6 +134,10 @@ export default {
     linkIcon,
   },
   props: {
+    width: {
+      type: Number,
+      default: 0,
+    },
     transaction: {
       type: Object,
       default: () => ({}),
@@ -136,7 +157,6 @@ export default {
     let type;
 
     const global = computed(() => window);
-
     if (props.transaction.type) {
       const data = useTransaction(props.transaction);
       type = data.type;
@@ -265,7 +285,6 @@ export default {
 
       return 'outcome';
     });
-
     return {
       txUrl,
       global,
@@ -292,6 +311,16 @@ export default {
   box-sizing: border-box;
   // border-bottom: 1px solid $too-ligth-blue;
 
+  &:has(.table-row__type--no-border) {
+    td {
+      &:last-child {
+        border-bottom-right-radius: 0px;
+      }
+      &:first-child {
+        border-bottom-left-radius: 0px;
+      }
+    }
+  }
   & td {
     background: rgba(239, 249, 254, 0.7);
     height: 64px;
@@ -302,7 +331,6 @@ export default {
     @include md {
       // padding: 16px 0 16px 0;
     }
-
     &:first-child {
       padding-left: 24px;
       border-top-left-radius: 8px;
@@ -336,7 +364,6 @@ export default {
       // padding-bottom: 36px !important;
     }
   }
-
   &__type-block {
     display: flex;
     align-items: center;
@@ -587,6 +614,31 @@ export default {
   &__amount-value-value {
     font-family: 'Panton_Bold' !important;
     margin-right: 3px;
+  }
+}
+.table-row__note {
+  cursor: pointer;
+  background: rgba(239, 249, 254, 0.7);
+  &-note {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: $mid-blue;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: -0.02em;
+    white-space: pre;
+  }
+  td {
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    > div {
+      margin: -8px 24px 14px;
+      white-space: nowrap;
+      height: 18px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: flex;
+    }
   }
 }
 </style>

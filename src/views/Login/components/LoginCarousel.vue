@@ -137,16 +137,13 @@ export default {
   width: 650px;
   display: flex;
   flex-direction: column;
-  margin-right: 190px;
 
   @include lg {
     width: 500px;
-    margin-right: 63px;
   }
 
-  @include md {
+  @include laptop-standard {
     width: 400px;
-    margin-right: 27px;
   }
 }
 </style>
@@ -242,8 +239,11 @@ export default {
 .el-carousel__container {
   min-height: 538px !important;
 
-  @include md {
+  @include laptop-standard {
     min-height: 450px !important;
+  }
+  @include laptop {
+    min-height: 350px !important;
   }
 }
 </style>
