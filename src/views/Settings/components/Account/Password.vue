@@ -295,6 +295,7 @@ export default {
 }
 
 .change-password-card {
+  height: 100%;
   @include settings-card-default;
   &__title {
     display: flex;
