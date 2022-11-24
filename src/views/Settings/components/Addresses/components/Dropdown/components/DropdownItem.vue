@@ -21,13 +21,17 @@
         <component :is="currentIcon" />
       </div>
       <div class="dropdown-item__info">
-        <span
-          class="dropdown-item__title"
-          :style="{ maxWidth: `${maxNameWidth}px` }"
-          @mouseenter="showAddressTooltip = true"
-          @mouseleave="showAddressTooltip = false"
-          >{{ wallet.title || wallet.address }}</span
-        >
+        <Tooltip :max-width="450">
+          <template #content>{{ wallet.title || wallet.address }} </template>
+          <template #default>
+            <span
+              class="dropdown-item__title"
+              @mouseenter="showAddressTooltip = true"
+              @mouseleave="showAddressTooltip = false"
+              >{{ wallet.title || wallet.address }}</span
+            >
+          </template>
+        </Tooltip>
         <span
           class="dropdown-item__address"
           :style="{ maxWidth: `${maxWidth}px` }"
@@ -87,14 +91,6 @@
         @close="closeDeleteModal"
       />
     </teleport>
-    <span
-      v-if="showAddressTooltip"
-      class="alias__address-tooltip"
-      @mouseenter="showAddressTooltip = true"
-      @mouseleave="showAddressTooltip = false"
-    >
-      {{ wallet.title || formattedAddress }}
-    </span>
   </div>
 </template>
 
@@ -103,7 +99,7 @@ import { ref, markRaw, computed, inject, watch, nextTick } from 'vue';
 import { useStore } from 'vuex';
 import useWallets from '@/compositions/useWallets';
 import { WALLET_TYPES, SNIP20_PARENT_NET } from '@/config/walletType';
-
+import Tooltip from '@/components/UI/Tooltip';
 import Checkbox from '@/components/UI/Checkbox';
 import DeleteAddressModal from './DeleteAddressModal.vue';
 import removeIcon from '@/assets/icons/settings/remove.svg';
@@ -117,6 +113,7 @@ import { screenWidths } from '@/config/sreenWidthThresholds';
 export default {
   name: 'DropdownItem',
   components: {
+    Tooltip,
     Checkbox,
     DeleteAddressModal,
     keyIcon,
@@ -372,7 +369,7 @@ export default {
   &__title {
     font-weight: 700;
     font-size: 14px;
-    width: 100%;
+    width: fit-content;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -481,7 +478,6 @@ export default {
   position: absolute;
   white-space: nowrap;
   z-index: 1;
-  top: 5%;
   left: 25%;
   margin-left: -60px;
   box-shadow: 0px 4px 25px rgba(63, 54, 137, 0.25);
@@ -490,7 +486,6 @@ export default {
   line-height: 16px;
   color: $too-dark-blue;
   max-width: 50% !important;
-  overflow: auto !important;
   &::-webkit-scrollbar {
     max-width: 368px !important;
     height: 4px; /* width of the entire scrollbar */

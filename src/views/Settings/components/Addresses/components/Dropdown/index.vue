@@ -106,7 +106,7 @@ export default {
 .dropdown {
   &__title {
     position: relative;
-    z-index: 1;
+    z-index: 0;
     cursor: pointer;
     display: flex;
     align-items: center;
