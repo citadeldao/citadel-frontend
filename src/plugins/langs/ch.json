@@ -62,7 +62,43 @@
                 "title": "3. 享受质押收益！",
                 "text": "只需简单点击几下鼠标，即可领取奖励"
             }
-        }
+        },
+        "loginInWith": "登录自",
+        "socialAccount": "社交账号",
+        "web3wallet": "Web3 钱包",
+        "web3TitleMenu": "通过 Web3 登录",
+        "web3DescriptionMenu": "连接您的 Web 3 钱包进入您的账户",
+        "socialTitleMenu": "使用社交账号登录",
+        "socialDescriptionMenu": "使用您的社交媒体账号登录账户",
+        "disclaimerMailTitle": "您确认不使用邮箱继续下一步吗？",
+        "disclaimerMailGuide": "如果您希望匿名注册，欢迎使用我们的",
+        "disclaimerMailGuide1": "教程",
+        "useEmailBtn": "使用邮箱",
+        "continueWithoutEmail": "不使用邮箱继续",
+        "approveKeplrTitle": "通过 Keplr 授权",
+        "approveMetamaskTitle": "通过 Metamask 授权",
+        "approveDescription": "浏览器扩展将弹出通知，提醒您批准钱包连接。",
+        "confirmAddressTitleAnother": "目前我们不支持您所选的网络，<br> 请在 Metamask 中选择以太坊或 BSC 网络",
+        "confirmAddressTitleMetamaskEth": "本次登录通过所选择的 Metamask 账户登录，未来登录时请确认使用该方式.<br> 您仅可以使用以太坊或 BSC 网络登录",
+        "confirmAddressTitleMetamaskBSC": "本次登录通过所选择的 Metamask 账户登录，未来登录时请确认使用该方式.<br> 您仅可以使用以太坊或 BSC 网络登录",
+        "confirmAddressTitleKeplr": "本次登录通过所选择的 Keplr 账户登录，未来登录时请确认使用该方式.<br> 您仅可以使用 Cosmos 网络登录",
+        "changeLangTitle": "选择语言",
+        "changeLangDescription": "选择最适用您的语言与 <span style='font-weight: bold; font-family: Panton_Bold;'>Citadel.one</span> 平台交互\n",
+        "KeplrNotFound": "未找到 Keplr 扩展程序",
+        "MetamaskNotFound": "未找到 Metamask 扩展程序",
+        "language": "语言",
+        "back": "返回",
+        "continue": "继续",
+        "with": "使用",
+        "continueEmail1": "邮箱能帮助您",
+        "continueEmail2": "轻松切换",
+        "continueEmail3": "在 Web 平台和移动应用中",
+        "continueEmail4": "通过邮箱我们可以更方便地联系您",
+        "continueEmail5": "当发生紧急情况",
+        "continueEmail6": "在很多情况下，我们需要快速向您传递信息：包括验证节点下线需转移您的代币；一笔贷款临近清算等。一旦C1 应用程序部分拥有了更多应用场景，联系到您本人将非常必要。",
+        "continueEmail7": "我们将会及时通知您，如果发生了",
+        "continueEmail8": "质押奖励丢失",
+        "continueEmail9": "因此您可以赚取更多，但这是您的选择"
     },
     "logout": {
         "modal": {
@@ -96,7 +132,8 @@
         "card3Important": "注意：您将无法使用此选项质押或发送您的资产。",
         "card3Note": "只读",
         "button": "添加地址",
-        "invalidDerivationPath": "无效的衍生路径"
+        "invalidDerivationPath": "无效的衍生路径",
+        "addressLimits": "超过网络限制的20个地址上限"
     },
     "addToOneSeed": {
         "rearrangeWords": "请按正确的顺序重新排列并确认你的助记词。",
@@ -117,9 +154,9 @@
         "errorConfirmWords1": "请检查输入的词语",
         "errorConfirmWords2": "如果您写下的助记词有误，请返回上一步检查，确保您的记录无误。",
         "backUp": {
-            "h1": "",
-            "h2": "",
-            "h3": ""
+            "h1": "您可以在电脑上储存助记词",
+            "h2": "在“下载文件”复选框打勾以获取助记词加密文件。您此后仅需导入此文件，无需手动输入助记词。",
+            "h3": "请注意！除非您在使用个人电脑，否则请勿使用该功能！"
         }
     },
     "importExistingAddress": {
@@ -226,7 +263,14 @@
         "editCommentModalTitle": "编辑评论",
         "editCommentModalDesc": "您可以在交易下方添加评论",
         "transactionInfoModalTitle": "交易信息",
-        "transactionInfoModalDesc": "在下方查看交易详情"
+        "transactionInfoModalDesc": "在下方查看交易详情",
+        "failed": "失败",
+        "modalSuccessHeader": "交易成功！",
+        "modalSuccessDescription": "您的交易已完成",
+        "modalPendingHeader": "等待交易",
+        "modalPendingDescription": "您的交易正在等待中",
+        "modalFailHeader": "交易失败！",
+        "modalFailDescription": "请等待片刻至交易完成"
     },
     "sendModal": {
         "title1": "确认转账代币",
@@ -346,7 +390,7 @@
         "amountToClaim": "可提取金额",
         "confirmModalTitle": "确认提取奖励",
         "confirmModalDesc": "您将在可用余额中查看应计奖励",
-        "claimSuccessfuly": ""
+        "claimSuccessfuly": "已成功提取"
     },
     "exportWallet": {
         "card1Info": "导出关联助记词",
@@ -495,9 +539,6 @@
     "overallTitle": "全部",
     "days": "日",
     "copiedToClipboard": "已复制至剪贴板",
-    "copyToClipboardTitle": "",
-    "showHideKeyTitle": "",
-    "changeKeyTitle": "",
     "earn": "赚取",
     "seed": "助记词",
     "learnHow": "学习如何使用",
@@ -660,13 +701,6 @@
         "enterPasswordForAllInPrivate": "使用私钥添加网络"
     },
     "settings": {
-        "extensions": {
-            "title": "",
-            "description": "",
-            "appsTitle": "",
-            "searchLabel": "",
-            "searchPlaceholder": ""
-        },
         "subscriptions": {
             "title": "订阅",
             "description": "订阅相关消息",
@@ -688,17 +722,18 @@
             "title": "地址",
             "description": "删除您的地址，或者导入助记词、私钥或查看密钥",
             "deleteModalTitle": "您确定删除该地址吗？",
-            "deleteModalSubtitle": "",
             "deleteSeedTitle": "您确定删除通用助记词信息吗？",
             "deleteSeedDesc": "您可以删除所有保存在本地的通用助记词",
             "deleteSeedInfo": "提示：当您确认此操作后，您通用助记词钱包的所有信息将被移除。",
-            "modalTitle":"",
-            "modalSubtitle":"",
-            "bannerContent":"",
-            "selectAll":"",
-            "unselectAll":"",
-            "selectedWalletsLength":"",
-            "delete":""
+            "deleteModalSubtitle": "<b style='color: red;'>请注意！</b> <span style='color: #6b93c0'>删除过程需要等待片刻</span>\n",
+            "deleteAddresses": "您确认删除所有地址？",
+            "modalTitle": "删除地址",
+            "modalSubtitle": "选择您想要删除的地址",
+            "bannerContent": "删除地址将无法找回助记词/私钥，请确认妥善保存。",
+            "selectAll": "全选",
+            "unselectAll": "取消全选",
+            "selectedWalletsLength": "您已选择 <b style='font-weight: 600;font-family: \"Panton_Bold\";'>{selectedWalletsLength}</b> 地址\n",
+            "delete": "删除"
         },
         "changeEmail": {
             "title": "您的邮箱",
@@ -706,7 +741,16 @@
             "inputLabel": "您的邮箱",
             "inputPlaceHolder": "邮箱",
             "button": "切换",
-            "comingSoon": "即将上线"
+            "comingSoon": "即将上线",
+            "changeModalTitle": "更换邮箱",
+            "changeModalDescription": "更换绑定账户邮箱",
+            "oldEmail": "旧邮箱",
+            "newEmail": "新邮箱",
+            "emailPlaceholder": "输入邮箱",
+            "validFormatError": "请输入正确格式的邮箱",
+            "lastStep": "最后一步！",
+            "lastStepDescription": "请检查 <span style='font-family: \"Panton_Bold\";'>  </span> 新旧邮箱地址以完成邮箱更新",
+            "resend": "重新发送"
         },
         "language": {
             "title": "语言",
@@ -718,8 +762,8 @@
             "description": "该操作不可逆",
             "modalDescription": "请注意，此操作不可逆。您的资产是安全的，这将只删除您的Citadel.one帐户",
             "button": "删除账户",
-            "inputLabel": "输入\"delete\"确认",
-            "placeholder": "输入确认"
+            "inputLabel": "输入“删除”进行确认",
+            "placeholder": "delete"
         },
         "changePassword": {
             "btnTitle": "更改密码",
@@ -750,6 +794,13 @@
             "button": "打开设置\n",
             "comingSoon": "即将上线",
             "successDescription": "使用您的密码确认交易"
+        },
+        "extensions": {
+            "title": "正在开发中的应用程序",
+            "description": "输入代码以进行应用程序测试，代码由开发中心提供。",
+            "appsTitle": "测试应用程序",
+            "searchLabel": "应用程序代码",
+            "searchPlaceholder": "输入代码"
         }
     },
     "overallPage": {
@@ -797,8 +848,8 @@
         "stakingRatioTooltip": "已质押的符合条件代币的百分比",
         "dayTradingVol": "24小时交易量",
         "dayTradingVolTooltip": "24小时交易量是指过去24小时内交易的代币数量",
-        "placeholderTitle": "目前，有关令牌的信息不可用",
-        "placeholderDescription": "有关代币和价格历史图表的信息将在不久的将来提供"
+        "placeholderTitle": "当前无该代币信息",
+        "placeholderDescription": "该代币信息及价格趋势表即将上线"
     },
     "viewingKey": {
         "viewingKey": "查看密钥",
@@ -927,11 +978,10 @@
         "confirmModalDesc2": "您的代币将被取消质押"
     },
     "minAmmount": "金额必须大于1",
-    "maxFloatDigits": "小数点后不超过两位数",
+    "maxFloatDigits": "小数点后不超过 {amount}  位",
     "emptyPassword": "密码为空",
     "accruedDaily": "每天下午 6 点至 7 点累积（UTC 时间）",
     "extensions": {
-        "emptyList": "",
         "showLabel": "展示",
         "headerTitle": "拓展程序商店",
         "headerDescription": "便捷使用您最喜欢的 dApp、DeFi app 和扩展程序！",
@@ -947,7 +997,10 @@
         "transactionFee": "交易手续费",
         "signMessage": "签名消息",
         "searchPlaceholder": "开始输入 APP 名称",
-        "typeOperation": "输入操作"
+        "typeOperation": "输入操作",
+        "showMore": "显示更多",
+        "execute": "执行",
+        "emptyList": "未根据您的指令找到相关结果"
     },
     "tokenDescriptionComdex": "Comdex 是搭建在 Cosmos 上的去中心化合成资产协议",
     "tokenDescriptionJuno": "Juno 是基于 Cosmos  搭建的区块链，为部署可交互操作的智能合约提供环境。",
@@ -960,7 +1013,7 @@
         "allreadyAdded": "地址已添加",
         "titleModal": "导入 Metamask 钱包",
         "descModal": "在 Metamask 中切换地址或网络",
-        "confirm": ""
+        "confirm": "确认"
     },
     "netInfo": {
         "akash": {
@@ -1035,7 +1088,7 @@
         },
         "umee": {
             "title": "Umee 网络",
-            "description": "Umee是一个去中心化的跨链交互基础设施",
+            "description": "Umee 是一个跨链 DeFi 枢纽，可以实现区块链之间互连交互。作为底层区块链，应用程序和货币乐高原语可以构建在 Umee 之上，以获取跨链杠杆和流动性。 Umee 区块链促进了 Cosmos 生态系统、以太坊网络、侧链架构、二层扩容解决方案和其他基础层协议之间的交互。",
             "shortDescription": "Umee 是一个去中心化的跨链交互基础设施。"
         },
         "stargaze": {
@@ -1163,45 +1216,45 @@
             "description": "作为全球首个人工智能驱动的区块链预言机和生态系统，Oraichain 现在转型为数据经济和预言机服务的高级 AI Layer 1，作为创建新一代智能合约和 Dapps 的基础层，并致力于创建一个完整的区块链人工智能生态系统。",
             "shortDescription": "Oraichain 是全球首个专注于 web3.0、规模化 dapp、去中心化 AI 的智能安全解决方案。"
         },
-        "tron": {
-            "title": "Tron 网络",
-            "description": "",
-            "shortDescription": ""
-        },
         "optimism": {
             "title": "Optimism",
-            "description": "",
-            "shortDescription": ""
+            "description": "Optimism 是以太坊的二层扩容解决方案，Optimism 使用名为 Optimism Rollups 的高级数据压缩技术来加速并降低以太坊的交易成本。",
+            "shortDescription": "Optimism 是针对以太坊的二层扩容解决方案，它使用先进的数据压缩技术来加速并降低以太坊交易成本。"
         },
         "arbitrum": {
-            "title": "Arbitrum",
-            "description": "",
-            "shortDescription": ""
+            "title": "Arbitrum\n",
+            "description": "Arbitrum 是以太坊的二层扩容解决方案，增强了以太坊智能合约功能。它旨在通过 Optimistic Rollup 技术加速以太坊区块链上的交易时间并降低费用。",
+            "shortDescription": "Arbitrum 是以太坊的二层扩容解决方案，增强了以太坊智能合约功能。"
         },
         "polygon": {
-            "title": "Polygon",
-            "description": "",
-            "shortDescription": ""
+            "title": "Polygon\n",
+            "description": "Polygon 是去中心化的二层扩展解决方案和多链以太坊生态系统，称为以太坊的区块链互联网。Polygon 旨在克服以太坊的局限性，使开发人员能够以更低的 gas \n 费和更快的交易速度构建可扩展、用户友好的DAPP",
+            "shortDescription": "Polygon 是去中心化的以太坊二层扩展解决方案，旨在使开发人员能够以更低的 gas 费和更快的交易速度构建可扩展、用户友好的DAPP"
         },
         "oasis": {
             "title": "Oasis 网络\n",
-            "description": "",
-            "shortDescription": ""
+            "description": "Oasis 网络是第一个支持隐私保护的区块链，用于开放金融和责任型数据经济。结合其高吞吐量和安全架构，Oasis 网络能够为私有、可扩展的 DeFi 赋能，彻底改变开放金融，并将其从交易用户和早期使用者扩展到大众市场。其独特的隐私功能不仅可以重新定义 DeFi，还可以创建一种名为代币化数据的新型数字资产，使用户可以控制他们生成的数据，并通过将其质押获得奖励 — 创造了有史以来第一个责任型数据经济。",
+            "shortDescription": "Oasis 网络是一个支持隐私保护的区块链平台，用于开放金融和责任型数据经济。"
+        },
+        "tron": {
+            "title": "Tron 网络",
+            "description": "TRON 是一个去中心化的区块链平台，可支持智能合约部署。TRON 的使命是通过区块链技术和去中心化应用程序（dApps）加速互联网的去中心化，并通过全球免费内容娱乐系统构建Web 4.0，使人们可以在没有第三方的参与情况下自由创建、拥有和共享内容。",
+            "shortDescription": "TRON 是一个去中心化的区块链平台，旨在通过区块链技术和去中心化应用程序（dApps）加速互联网的去中心化。该项目的主要任务是构建 Web 4.0 全球免费内容娱乐系统。"
         },
         "stafi": {
-            "title": "Stafihub",
-            "description": "",
-            "shortDescription": ""
+            "title": "Stafihub\n",
+            "description": "StaFiHub 是基于 Cosmos SDK 构建的 1 层链跨链质押衍生品平台，旨在通过 IBC 协议为资产提供流动性质押解决方案",
+            "shortDescription": "StaFiHub 是一个基于 Cosmos 的跨链质押衍生品平台，通过 IBC 提供流动性质押"
         },
         "stride": {
-            "title": "Stride",
-            "description": "",
-            "shortDescription": ""
+            "title": "Stride\n",
+            "description": "Stride是一个区块链（“区域”），允许任何与IBC兼容的代币进行流动性质押，并在 Cosmos 生态中获得质押和DeFi收益。",
+            "shortDescription": "Stride 是 Cosmos的一个流动性质押链，用户可以获得质押和 DeFi 收益"
         },
         "jackal": {
-            "title": "Jackaldao",
-            "description": "",
-            "shortDescription": ""
+            "title": "Jackaldao\n",
+            "description": " Jac kal协议是新一代数据存储网络和去中心化应用协议，旨在提高数据隐私和网络安全，且保证其易用性。该协议致力于打造世界级的应用程序，保护最重要的数据。",
+            "shortDescription": "Jackal 协议是新一代数据存储网络和去中心化的应用协议，旨在保证易用性的前提下，提高数据隐私和网络安全。"
         }
     },
     "uptime": "运行时间",
@@ -1228,7 +1281,7 @@
     "faq": {
         "privacyPolicy": "隐私条款",
         "termsOfService": "服务条款",
-        "guide": ""
+        "guide": "教程"
     },
     "dontHaveEnoughFounds": "您的余额不足，无法支付交易手续费",
     "transactionsSocket": {
@@ -1331,7 +1384,9 @@
         "enterPassword": "输入扩展程序密码",
         "syncMainTitle": "同步地址",
         "syncMainDescription": "即刻同步您的地址至 Citadel.one 浏览器扩展",
-        "syncMainSync": "同步"
+        "syncMainSync": "同步",
+        "extensionBlock": "Chrome 浏览器扩展程序",
+        "sync": "同步钱包"
     },
     "noApyNote": "通过质押加密资产获得被动收入！",
     "assetsStubs": {
@@ -1348,7 +1403,16 @@
     },
     "dontHaveEnoughFoundsForFee": "您的余额不足，无法支付交易手续费",
     "asset": "资产",
+    "minAmountError": "最小金额为 {minAmount} {code}",
+    "app": "App",
+    "noSelfSendError": "转账钱包不能和接收钱包相同",
+    "txWaitTitle": "请等待片刻至交易完成",
+    "addComment": "添加评论",
+    "editComment": "编辑评论",
     "errors": {
-        "notEnoughFounds": "没有足够的{code}来支付交易费用"
-    }
+        "notEnoughFounds": "{code} 不足，无法支付交易手续费"
+    },
+    "copyToClipboardTitle": "复制查看密钥",
+    "showHideKeyTitle": "展示/收起查看密钥",
+    "changeKeyTitle": "更改查看密钥"
 }
