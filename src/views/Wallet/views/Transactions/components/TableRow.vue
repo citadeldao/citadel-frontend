@@ -626,6 +626,7 @@ export default {
     font-size: 14px;
     line-height: 18px;
     letter-spacing: -0.02em;
+    white-space: break-spaces;
   }
   td {
     border-bottom-right-radius: 8px;
