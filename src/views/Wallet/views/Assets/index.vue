@@ -463,8 +463,7 @@ export default {
   flex-direction: column;
   border-radius: 16px;
   background: $white;
-  padding: 24px 0 11px 0;
-  min-height: 625px;
+  padding: 24px 0 28px 0;
   &-single__item {
     margin-bottom: 0;
   }
