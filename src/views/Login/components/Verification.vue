@@ -68,11 +68,15 @@ export default {
       type: String,
       default: '',
     },
+    codeFromEmail: {
+      type: String,
+      default: '',
+    },
   },
   emits: ['verification', 'sendVerificationCode', 'change'],
   setup(props, { emit }) {
     const previousStep = inject('previousStep');
-    const code = ref('');
+    const code = ref(props.codeFromEmail);
     const time = ref(60);
     const timerMode = ref(false);
     const showResendCode = ref(false);

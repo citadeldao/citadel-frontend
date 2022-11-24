@@ -14,16 +14,10 @@ export default function useCurrentWalletRequests() {
   const adding = ref();
   const resMaxAmount = ref();
   const l1Fee = ref(0);
+  const isSendToAnotherNetwork = ref(false);
 
-  const getFees = async () => {
-    if (wallet.value.hasFee) {
-      const { data, error } = await wallet.value.getFees(
-        wallet.value.id,
-        currentToken?.value?.net
-      );
-      fees.value = pickKeys(data, ['low', 'medium', 'high']);
-      feesError.value = error;
-    } else if (wallet.value.hasPledged) {
+  const getFees = async (netTo) => {
+    if (currentWallet.value.hasResource) {
       const { resFee, maxAmount, error, resAdding } =
         await wallet.value.getDelegationFee({
           walletId: wallet.value.id,
@@ -33,6 +27,22 @@ export default function useCurrentWalletRequests() {
       adding.value = resAdding;
       resMaxAmount.value = maxAmount;
       feesError.value = error;
+    } else if (wallet.value.hasFee) {
+      if (isSendToAnotherNetwork.value) {
+        const { data, error } = await wallet.value.getCrossNetFees(
+          wallet.value.id,
+          netTo
+        );
+        fees.value = pickKeys(data, ['low', 'medium', 'high']);
+        feesError.value = error;
+      } else {
+        const { data, error } = await wallet.value.getFees(
+          wallet.value.id,
+          currentToken?.value?.net
+        );
+        fees.value = pickKeys(data, ['low', 'medium', 'high']);
+        feesError.value = error;
+      }
     }
   };
 
@@ -62,13 +72,26 @@ export default function useCurrentWalletRequests() {
   const rawTx = ref(null);
   const rawTxError = ref(null);
   const prepareTransfer = async (options) => {
-    const { data, error } = await wallet.value.prepareTransfer({
-      walletId: wallet.value.id,
-      options,
-    });
-    l1Fee.value = data.l1Fee || 0;
-    rawTx.value = data;
-    rawTxError.value = error;
+    if (isSendToAnotherNetwork.value) {
+      const { data, error } = await wallet.value.getBuildBridgeTransaction({
+        walletId: wallet.value.id,
+        ...options,
+      });
+      rawTx.value = data;
+      rawTxError.value = error;
+    } else {
+      const { data, error } = await wallet.value.prepareTransfer({
+        walletId: wallet.value.id,
+        options,
+      });
+      l1Fee.value = data.l1Fee || 0;
+      rawTx.value = data;
+      rawTxError.value = error;
+      if (data.resourcesForTx) {
+        iostFee.value = data.resourcesForTx.fee;
+        adding.value = data.resourcesForTx.adding;
+      }
+    }
   };
 
   const txHash = ref(null);
@@ -78,7 +101,8 @@ export default function useCurrentWalletRequests() {
     const res = await wallet.value.signAndSendTransfer({
       walletId: wallet.value.id,
       rawTransaction: rawTx,
-      privateKey: password && wallet.value.getPrivateKeyDecoded(password),
+      privateKey:
+        password && (await wallet.value.getPrivateKeyDecoded(password)),
       derivationPath: wallet.value.derivationPath,
     });
     const { data } = res;
@@ -117,5 +141,6 @@ export default function useCurrentWalletRequests() {
     iostFee,
     adding,
     resMaxAmount,
+    isSendToAnotherNetwork,
   };
 }

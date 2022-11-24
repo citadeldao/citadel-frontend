@@ -1,9 +1,17 @@
 <template>
   <div class="sync-data">
+    <h5 class="sync-data__title">
+      {{ $t('syncExtensions.extensionBlock') }}
+    </h5>
     <SyncToFromExtension v-if="syncModal" @close="closeModal" />
-    <PrimaryButton class="sync-data__btn" @click="openSync">
-      {{ $t('syncExtensions.syncWithExtension') }}
-    </PrimaryButton>
+    <div class="settings-wrap">
+      <span class="sync-data__description">
+        {{ $t('syncExtensions.syncWithExtension') }}
+      </span>
+      <PrimaryButton class="sync-data__button" @click="openSync">
+        {{ $t('syncExtensions.sync') }}
+      </PrimaryButton>
+    </div>
   </div>
 </template>
 
@@ -50,13 +58,20 @@ export default {
 
 <style lang="scss" scoped>
 .sync-data {
+  @include settings-card-default;
+
+  margin-top: $card-margin;
   display: flex;
   align-items: center;
   justify-content: center;
 
-  &__btn {
-    width: 90%;
-    margin-top: 100px;
+  &__title {
+    width: 100%;
+    text-align: left;
+  }
+
+  &__button {
+    margin-top: 10px !important;
   }
 }
 </style>

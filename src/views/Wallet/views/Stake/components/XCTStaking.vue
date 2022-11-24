@@ -218,6 +218,8 @@ import { useStore } from 'vuex';
 import useLedger from '@/compositions/useLedger';
 import useTrezor from '@/compositions/useTrezor';
 import useWallets from '@/compositions/useWallets';
+import useCurrentWalletRequests from '@/compositions/useCurrentWalletRequests';
+
 import notify from '@/plugins/notify';
 import amountInputValidation from '@/helpers/amountInputValidation';
 
@@ -259,6 +261,9 @@ export default {
     useStaking();
 
     const { isHardwareWallet } = useWallets();
+
+    const { getDelegationBalance } = useCurrentWalletRequests();
+
     const disabledConfirm = computed(
       () => passwordIncorrect.value && !isHardwareWallet.value
     );
@@ -316,6 +321,7 @@ export default {
       txComment.value = '';
       amount.value = '';
       clearLedgerModals();
+      getDelegationBalance();
     };
 
     const toStake = () => {
@@ -562,7 +568,9 @@ export default {
         const res = await props.currentWallet.signAndSendMulti({
           walletId: props.currentWallet.id,
           rawTransactions: resRawTxs.value,
-          privateKey: props.currentWallet.getPrivateKeyDecoded(password.value),
+          privateKey: await props.currentWallet.getPrivateKeyDecoded(
+            password.value
+          ),
         });
 
         if (!res.error) {

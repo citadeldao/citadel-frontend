@@ -3,8 +3,11 @@
     <div class="enter-password__info-banner">
       <InfoBanner icon="protection" :content="$t('enterPasswordBackup')" />
     </div>
-    <form @submit.prevent="submitHandler">
-      <div class="enter-password__password-input">
+    <form
+      @submit.prevent="submitHandler"
+      :class="{ noPassword: !passwordHash }"
+    >
+      <div v-if="passwordHash" class="enter-password__password-input">
         <Input
           id="password"
           v-model="password"
@@ -43,7 +46,7 @@ export default {
   emits: ['passwordConfirmed'],
   setup(props, { emit }) {
     const submitHandler = () => {
-      if (passwordError.value) {
+      if (props.passwordHash && passwordError.value) {
         inputError.value = passwordError.value;
 
         return;
@@ -73,6 +76,11 @@ export default {
   align-items: center;
   padding-top: 80px;
   padding-left: 45px;
+
+  .noPassword {
+    margin-top: 25px;
+  }
+
   @include lg {
     padding-top: 32px;
   }

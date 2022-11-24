@@ -5,7 +5,9 @@
         <Autocomplete
           id="networks"
           v-model:value="search"
-          :items="networks"
+          :items="
+            networks.filter((c) => !netsWithoutPrivateKeys.includes(c.icon))
+          "
           :label="$t('network')"
           :placeholder="$t('selectNetwork')"
           initial-icon="citadel"
@@ -54,6 +56,7 @@ import useSelectNetwork from '@/compositions/useSelectNetwork';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import useIostProps from '@/compositions/useIostProps';
 import models from '@/models';
+import { netsWithoutPrivateKeys } from '@/config/netsWithoutPrivateKeys';
 
 export default {
   name: 'AddressSpecifications',
@@ -73,6 +76,7 @@ export default {
     const privateKey = ref('');
     const search = ref('');
     const { networks, netByTitle } = useSelectNetwork();
+
     const submitHandler = () => {
       if (!privateKey.value.trim()) {
         return;
@@ -117,6 +121,7 @@ export default {
       accounts,
       account,
       networkChangeHandler,
+      netsWithoutPrivateKeys,
     };
   },
 };

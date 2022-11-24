@@ -41,15 +41,7 @@
           :submit-button="false"
           @close="showAppInfoModal = false"
         >
-          <AppInfo
-            :app="selectedApp"
-            @launchApp="
-              router.push({
-                name: 'Extensions',
-                params: { name: selectedApp.name },
-              })
-            "
-          />
+          <AppInfo :app="selectedApp" @launchApp="onLaunchApp" />
         </ModalContent>
       </Modal>
     </teleport>
@@ -63,7 +55,15 @@
       @search="onSearchHandler"
       @selectTags="onSelectTags"
     />
-    <div v-if="!currentApp && !loading" class="extensions__apps">
+    <div
+      :class="{ empty: !appsFiltered.length && searchStr.length }"
+      v-if="!currentApp && !loading"
+      class="extensions__apps"
+    >
+      <EmptyList
+        v-if="!appsFiltered.length && searchStr.length"
+        :title="$t('extensions.emptyList')"
+      />
       <AppBlock
         v-for="(app, ndx) in appsFiltered"
         :key="ndx"
@@ -74,7 +74,7 @@
         :description="app.card_description"
         class="app"
         @openAppInfo="onOpenAppInfo(app.id)"
-        @openApp="onOpenApp(app.id)"
+        @openApp="onOpenApp(app)"
       />
     </div>
     <div v-if="loading" class="extensions__loading">
@@ -199,6 +199,7 @@ import TransactionInfo from './components/TransactionInfo';
 import MessageInfo from './components/MessageInfo';
 import FrameApp from './components/FrameApp.vue';
 import { parseTagsList, filteredApps } from './components/helpers';
+import EmptyList from '@/components/EmptyList';
 
 export default {
   name: 'Extensions',
@@ -215,6 +216,7 @@ export default {
     TransactionInfo,
     MessageInfo,
     FrameApp,
+    EmptyList,
   },
   setup() {
     const signLoading = ref(false);
@@ -244,12 +246,15 @@ export default {
     const showCreateVkModal = ref(false);
     const showConfirmModalLoading = ref(false);
     const selectedTags = ref([]);
+    const localAppMode = ref(false);
 
     let keplrTimer = null;
+    const firstAddressChecked = ref(false);
+
     const scrtAddress = ref('');
 
     onBeforeUnmount(() => {
-      clearTimeout(keplrTimer);
+      clearInterval(keplrTimer);
     });
 
     const { wallets: walletsList } = useWallets();
@@ -319,6 +324,11 @@ export default {
       currentApp.value = null;
       selectedApp.value = null;
 
+      const apps = store.getters['extensions/extensionsList'].filter(
+        (app) => !app.devCenterApp
+      );
+      store.commit('extensions/SET_EXTENSIONS_LIST', apps);
+
       if (!stopRedirect) {
         showFullScreen.value = false;
         showArtefactsForNormalScreen();
@@ -359,9 +369,11 @@ export default {
       showFullScreen.value = true;
       hideArtefactsForFullScreen();
 
-      await store.dispatch('extensions/fetchExtensionInfo', {
-        appId: selectedApp.value.id,
-      });
+      if (!selectedApp.value.citadelApp) {
+        await store.dispatch('extensions/fetchExtensionInfo', {
+          appId: selectedApp.value.id,
+        });
+      }
 
       const nets = selectedApp.value.networks.map((net) => {
         return net.toLowerCase();
@@ -383,24 +395,26 @@ export default {
         );
       }
 
-      if (currentAppInfo?.value?.token) {
+      if (currentAppInfo?.value?.token || selectedApp.value.citadelApp) {
         const nets = selectedApp.value.networks.map((net) => {
           return net.toLowerCase();
         });
-        const wallets = walletsList.value
-
-          .filter(
-            (w) =>
-              nets.includes(w.net.toLowerCase()) &&
-              w.type !== WALLET_TYPES.PUBLIC_KEY
-          )
-          .map((w) => ({
-            address: w.address,
-            net: w.net,
-            type: w.type,
-            publicKey:
-              (w.getPublicKeyDecoded && w.getPublicKeyDecoded()) || null,
-          }));
+        const wallets = await Promise.all(
+          walletsList.value
+            .filter(
+              (w) =>
+                nets.includes(w.net.toLowerCase()) &&
+                w.type !== WALLET_TYPES.PUBLIC_KEY
+            )
+            .map(async (w) => ({
+              address: w.address,
+              net: w.net,
+              type: w.type,
+              publicKey:
+                (w.getPublicKeyDecoded && (await w.getPublicKeyDecoded())) ||
+                null,
+            }))
+        );
 
         if (mergeWallet) {
           wallets.push({
@@ -411,7 +425,7 @@ export default {
         }
 
         selectedApp.value.url += `?token=${
-          currentAppInfo.value.token
+          currentAppInfo.value?.token
         }&wallets=${JSON.stringify(wallets)}`;
         currentApp.value = selectedApp.value;
       }
@@ -421,9 +435,14 @@ export default {
       // shade
       if ([17, 22, 26].includes(+selectedApp.value?.id)) {
         keplrTimer = setInterval(async () => {
-          await store.dispatch('keplr/connectToKeplr', 'secret-4');
+          if (firstAddressChecked.value && !scrtAddress.value) {
+            return;
+          }
+
+          await store.dispatch('keplr/connectToKeplr', { chainId: 'secret-4' });
           const secretAddress = keplrConnector.value.accounts[0];
           scrtAddress.value = secretAddress;
+          firstAddressChecked.value = true;
         }, 5000);
       }
     };
@@ -432,7 +451,7 @@ export default {
       selectedApp.value = Object.assign(
         {},
         extensionsList.value.find(
-          (a) => a.name.toLowerCase() === route.params.name.toLowerCase()
+          (a) => a.slug.toLowerCase() === route.params.name.toLowerCase()
         )
       );
       startKeplrSecretChecker();
@@ -447,13 +466,19 @@ export default {
     }
 
     const onOpenApp = (app) => {
+      if (app.citadelApp) {
+        router.push({ name: 'multisender' });
+        localAppMode.value = true;
+        return;
+      }
+      localAppMode.value = false;
       selectedApp.value = Object.assign(
         {},
-        extensionsList.value.find((a) => +a.id === +app)
+        extensionsList.value.find((a) => +a.id === +app.id)
       );
       router.push({
         name: 'Extensions',
-        params: { name: selectedApp.value.name },
+        params: { name: selectedApp.value.slug },
       });
     };
 
@@ -604,6 +629,10 @@ export default {
     });
 
     watch(route, (route) => {
+      if (localAppMode.value) {
+        router.push({ name: 'multisender' });
+        return;
+      }
       if (!route.params.name) {
         closeApp(true);
         showFullScreen.value = false;
@@ -611,7 +640,7 @@ export default {
       } else {
         selectedApp.value = Object.assign(
           {},
-          extensionsList.value.find((a) => a.name === route.params.name)
+          extensionsList.value.find((a) => a.slug === route.params.name)
         );
 
         if (selectedApp.value.id) {
@@ -686,6 +715,7 @@ export default {
           store.dispatch('extensions/sendCustomMsg', {
             token: currentAppInfo.value.token,
             message: {
+              address: signerWallet.value.address,
               balance: data.calculatedBalance,
               tokenContract: snip20Token.value.address,
             },
@@ -802,7 +832,7 @@ export default {
         const defaultTx = {
           ...keplrResult.signedTx,
           signType,
-          publicKey: signerWallet.value.getPublicKeyDecoded(),
+          publicKey: await signerWallet.value.getPublicKeyDecoded(),
           signature: keplrResult.signature,
         };
         const defaultSendTx = extensionTransactionForSign.value.transaction;
@@ -945,7 +975,9 @@ export default {
               {
                 privateKey:
                   password.value &&
-                  signerWallet.value.getPrivateKeyDecoded(password.value),
+                  (await signerWallet.value.getPrivateKeyDecoded(
+                    password.value
+                  )),
                 derivationPath: signerWallet.value.derivationPath,
               }
             );
@@ -956,7 +988,7 @@ export default {
             response = await citadel.executeContract(signerWallet.value.id, {
               privateKey:
                 password.value &&
-                signerWallet.value.getPrivateKeyDecoded(password.value),
+                (await signerWallet.value.getPrivateKeyDecoded(password.value)),
               proxy: false,
               derivationPath: signerWallet.value.derivationPath,
               ...extensionTransactionForSign.value.messageScrt,
@@ -1007,7 +1039,7 @@ export default {
           rawTransaction: extensionTransactionForSign.value,
           privateKey:
             password.value &&
-            signerWallet.value.getPrivateKeyDecoded(password.value),
+            (await signerWallet.value.getPrivateKeyDecoded(password.value)),
           derivationPath: signerWallet.value.derivationPath,
           proxy: false,
         });
@@ -1047,8 +1079,22 @@ export default {
       }
     };
 
+    const onLaunchApp = () => {
+      if (selectedApp.value.citadelApp) {
+        router.push({ name: 'multisender' });
+        localAppMode.value = true;
+        return;
+      }
+
+      router.push({
+        name: 'Extensions',
+        params: { name: selectedApp.value.name },
+      });
+    };
+
     /* eslint-disable */
     return {
+      onLaunchApp,
       showFullScreen,
       router,
       assetsDomain,
@@ -1084,6 +1130,7 @@ export default {
       confirmClickHandler,
       filterItems,
       signLoading,
+      searchStr,
 
       //ledgers
       showLedgerConnect,
@@ -1133,6 +1180,13 @@ export default {
     float: left;
     background: $white;
     border-radius: 0 0 16px 16px;
+
+    &.empty {
+      height: calc(100vh - 215px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 
   &__loading {

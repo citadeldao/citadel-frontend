@@ -5,22 +5,19 @@
       {{ $t('login.disclaimerMailTitle') }}
     </div>
     <div class="disclaimer-with-email__description">
-      <span>1.</span> Email will help you to
-      <span class="bold">easily switch</span> between web platform and mobile
-      application.
+      <span>1.</span> {{ $t('login.continueEmail1') }}
+      <span class="bold">{{ $t('login.continueEmail2') }}</span>
+      {{ $t('login.continueEmail3') }}
     </div>
     <div class="disclaimer-with-email__description">
-      <span>2.</span> With email we can stay in touch with you
-      <span class="bold">in case of emergency.</span> There are a lot of
-      situations when we need to deliver you information quickly: a validator
-      has gone offline and you need to transfer your coins; a loan liquidation
-      is approaching, etc. Once the C1 application section is full of various
-      use-cases, this kind of communication will be necessary.
+      <span>2.</span> {{ $t('login.continueEmail4') }}
+      <span class="bold">{{ $t('login.continueEmail5') }}</span>
+      {{ $t('login.continueEmail6') }}
     </div>
     <div class="disclaimer-with-email__description">
-      <span>3.</span> We might also let you know if you are
-      <span class="bold">missing your staking rewards,</span> so you earn more,
-      but it's optional.
+      <span>3.</span> {{ $t('login.continueEmail7') }}
+      <span class="bold">{{ $t('login.continueEmail8') }}</span>
+      {{ $t('login.continueEmail9') }}
     </div>
     <div class="disclaimer-with-email__guide">
       {{ $t('login.disclaimerMailGuide') }}
