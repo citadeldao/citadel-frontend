@@ -34,12 +34,17 @@
         @click="copyValue"
         :title="$t('copyToClipboardTitle')"
       >
-        <transition name="fade1">
-          <span v-if="isCopied" class="tooltip">
-            {{ $t('copiedToClipboard') }}
-          </span>
-        </transition>
-        <copyIcon />
+        <Tooltip left="-40px" width="100px">
+          <copyIcon />
+          <template #content>
+            <span v-if="!isCopied">
+              {{ $t('copyToClipboardTitle') }}
+            </span>
+            <span v-if="isCopied">
+              {{ $t('copiedToClipboard') }}
+            </span>
+          </template>
+        </Tooltip>
       </div>
       <div class="vk-item__btn" @click="change" :title="$t('changeKeyTitle')">
         <lockRefresh />
@@ -54,12 +59,15 @@ import vision from '@/assets/icons/input/vision.svg';
 import copyIcon from '@/assets/icons/copyIcon.svg';
 import lockRefresh from '@/assets/icons/lock-refresh.svg';
 import copyToClipboard from '@/helpers/copyToClipboard';
+import Tooltip from '@/components/Tooltip';
+
 export default {
   name: 'VkItem',
   components: {
     vision,
     copyIcon,
     lockRefresh,
+    Tooltip,
   },
   props: {
     vk: {
@@ -225,32 +233,16 @@ export default {
     fill: $royalblue1;
   }
 }
-.tooltip {
-  background-color: $too-ligth-gray;
-  text-align: center;
-  border-radius: 6px;
-  padding: 8px 9px;
-  position: absolute;
-  white-space: nowrap;
-  z-index: 1;
-  top: 110%;
-  left: 50%;
-  margin-left: -60px;
+.tooltip__content {
+  left: -38px;
   box-shadow: 0px 4px 10px rgba(63, 54, 137, 0.25);
   border-radius: 6px;
-  font-size: 12px;
-  line-height: 16px;
-  color: $too-dark-blue;
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 98%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-radius: 2px;
-    border-style: solid;
-    border-color: transparent transparent $too-ligth-gray transparent;
+  background: $too-ligth-gray !important;
+  span {
+    font-size: 12px;
+    line-height: 16px;
+    color: $too-dark-blue;
+    text-align: center;
   }
 }
 </style>
