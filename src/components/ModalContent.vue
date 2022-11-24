@@ -296,7 +296,7 @@ export default {
     }
   }
   &__block-header {
-    padding-bottom: 24px;
+    padding-bottom: 20px;
     display: flex;
     width: 100%;
     border-bottom: 1px dashed $lightsteelblue;
@@ -339,11 +339,13 @@ export default {
   &__block-header-title {
     text-align: left;
     font-size: 20px;
-    line-height: 24px;
+    line-height: 30px;
     margin: 0;
     font-family: 'Panton_Bold';
-    // width: 507px;
     margin-top: 5px;
+    @include laptop {
+      font-size: $h6-size;
+    }
   }
   &__block-header-desc {
     font-size: 14px;
@@ -355,6 +357,12 @@ export default {
   }
   & button {
     margin-top: 32px;
+    @include laptop-standard {
+      margin-top: 20px;
+    }
+    @include laptop {
+      margin-top: 10px;
+    }
   }
 }
 

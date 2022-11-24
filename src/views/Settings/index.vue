@@ -404,7 +404,7 @@ export default {
         filter: none;
       }
       & > div:not(:last-child) {
-        margin-bottom: 10px;
+        margin-bottom: 3px;
       }
     }
 

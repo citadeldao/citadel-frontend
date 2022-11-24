@@ -186,7 +186,7 @@ export default {
     align-content: center;
     box-sizing: border-box;
     padding: 36px 24px;
-    flex: 0 31.6%;
+    flex: 0 32%;
 
     .head {
       display: flex;
