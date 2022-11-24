@@ -296,7 +296,7 @@ export default {
     }
   }
   &__block-header {
-    padding-bottom: 24px;
+    padding-bottom: 20px;
     display: flex;
     width: 100%;
     border-bottom: 1px dashed $lightsteelblue;
@@ -339,7 +339,7 @@ export default {
   &__block-header-title {
     text-align: left;
     font-size: 20px;
-    line-height: 24px;
+    line-height: 30px;
     margin: 0;
     font-family: 'Panton_Bold';
     // width: 507px;

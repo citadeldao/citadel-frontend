@@ -5,7 +5,6 @@ export default class CryptoCoinPERSISTENCE extends CryptoCoin {
     this.privateKeyEncoded = opts.privateKeyEncoded || null;
     this.publicKey = opts.publicKey || null;
     this.privateKeyHash = opts.privateKeyHash || null;
-    this.hasFee = true;
     this.hasRedelegation = true;
   }
 

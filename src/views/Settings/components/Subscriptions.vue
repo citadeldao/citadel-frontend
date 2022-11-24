@@ -26,27 +26,22 @@
           @change="changeSubscriptionState('newsletter')"
         />
       </div>
-      <SyncExtension
-        v-if="global.citadel && isPasswordHash"
-        class="subscriptions__sync"
-      />
     </div>
   </div>
 </template>
 
 <script>
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 import Checkbox from '@/components/UI/Checkbox';
 import notify from '@/plugins/notify';
-import SyncExtension from './SyncExtension';
 
 const FREEZE_DURATION = 5000;
 
 export default {
   name: 'Subscriptions',
-  components: { Checkbox, SyncExtension },
+  components: { Checkbox },
   props: {},
   setup() {
     const store = useStore();
@@ -94,12 +89,7 @@ export default {
       });
     };
 
-    const global = computed(() => window);
-    const isPasswordHash = computed(() => store.getters['crypto/passwordHash']);
-
     return {
-      global,
-      isPasswordHash,
       subscriptions,
       isDisabled,
       changeSubscriptionState,

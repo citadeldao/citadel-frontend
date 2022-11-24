@@ -60,26 +60,28 @@ export default {
 <style lang="scss" scoped>
 .balance-card {
   position: relative;
-  height: 68px;
-  padding: 10px 20px;
-  border-radius: 16px;
-  margin-right: 8px;
+  min-height: 56px;
+  max-height: 80px;
+  height: 80px;
+  border-radius: 6px;
   overflow: hidden;
+  padding: 0 20px;
 
-  @include lg {
-    border-radius: 8px;
-    height: 60px;
-    padding: 13px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  @include laptop-standard {
+    height: 64px;
   }
 
-  @include md {
-    border-radius: 8px;
+  @include laptop {
     height: 56px;
-    padding: 10px 13px;
   }
 
-  &:last-child {
-    margin-right: 0;
+  &:not(:last-child) {
+    margin-right: 8px;
   }
 
   & > *:not(img) {
@@ -89,7 +91,7 @@ export default {
 
   &__wave {
     position: absolute;
-    object-fit: contain;
+    object-fit: cover;
     object-position: bottom;
     opacity: 0.2;
     bottom: 0;
@@ -124,7 +126,7 @@ export default {
       font-size: 18px;
     }
 
-    @include md {
+    @include laptop-standard {
       font-size: 14px;
     }
   }

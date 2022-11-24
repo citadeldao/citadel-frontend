@@ -62,31 +62,26 @@
         days.
       </span>
     </span>
-    <div v-if="currentWallet.hasPledged" class="balance-tooltip-info__balance">
+    <div v-if="currentWallet.hasResource" class="balance-tooltip-info__balance">
       <span class="balance-tooltip-info__balance-title"
         >{{ $t('balance') }}:</span
       >
-      <span class="balance-tooltip-info__balance-line"
-        >iGas -
+      <span
+        v-for="item in rsources"
+        :key="item.name"
+        class="balance-tooltip-info__balance-line"
+        >{{ item.nameForUser }} -
         <span
-          v-pretty-number="gas"
+          v-pretty-number="item.current"
           class="balance-tooltip-info__balance-amount"
         />
-        iGas
-      </span>
-      <span class="balance-tooltip-info__balance-line"
-        >iRam -
-        <span
-          v-pretty-number="ram"
-          class="balance-tooltip-info__balance-amount"
-        />
-        iRam
+        {{ item.nameForUser }}
       </span>
     </div>
   </div>
 </template>
 <script>
-import useIostProps from '@/compositions/useIostProps.js';
+import { computed } from '@vue/runtime-core';
 export default {
   name: 'BalanceTooltipInfo',
   props: {
@@ -95,10 +90,14 @@ export default {
       default: () => ({}),
     },
   },
-  setup() {
-    const { gas, ram } = useIostProps();
+  setup(props) {
+    const rsources = computed(() => {
+      return props.currentWallet.balance.adding.filter(
+        (item) => item.isResource
+      );
+    });
 
-    return { gas, ram };
+    return { rsources };
   },
 };
 </script>

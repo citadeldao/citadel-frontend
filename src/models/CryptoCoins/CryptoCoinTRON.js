@@ -5,6 +5,8 @@ export default class CryptoCoinTRON extends CryptoCoin {
     this.privateKeyEncoded = opts.privateKeyEncoded || null;
     this.publicKey = opts.publicKey || null;
     this.noSelfSend = true;
+    this.hasResource = true;
+    this.hasFee = false;
   }
 
   getPublicKeyDecoded() {

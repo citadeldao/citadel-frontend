@@ -14,7 +14,7 @@
       <div class="balance__title">
         <h4>{{ $t('balance') }}</h4>
         <BalanceTooltip
-          v-if="currentWallet?.hasStake"
+          v-if="currentWallet?.hasStake || currentWallet?.hasResource"
           left="-156px"
           width="326px"
         >
