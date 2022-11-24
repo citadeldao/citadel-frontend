@@ -95,7 +95,7 @@ export default {
       );
     },
     [types.UPDATE_TRANSACTION](state, obj) {
-      const index = state.transactions.findIndex((e) => e.note === obj.tx.note);
+      const index = state.transactions.findIndex((e) => e.hash === obj.tx.hash);
       state.transactions[index].note = obj.customNote;
     },
   },
