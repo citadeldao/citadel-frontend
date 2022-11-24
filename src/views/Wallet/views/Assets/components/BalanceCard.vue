@@ -110,8 +110,8 @@ export default {
       font-size: 13px;
     }
 
-    @include md {
-      font-size: 12px;
+    @include laptop-standard {
+      font-size: 14px;
     }
   }
 

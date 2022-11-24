@@ -1753,6 +1753,10 @@ export default {
 
   &__button {
     align-self: center;
+    button {
+      width: 200px;
+      height: 56px;
+    }
     @include md {
       display: none;
     }
