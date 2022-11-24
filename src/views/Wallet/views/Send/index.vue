@@ -1776,7 +1776,7 @@ export default {
     align-self: center;
     button {
       width: 200px;
-      height: 56px;
+      height: 60px;
     }
     @include md {
       display: none;
