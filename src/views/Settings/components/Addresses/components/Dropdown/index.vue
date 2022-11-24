@@ -137,7 +137,7 @@ export default {
         }
         &__text {
           background-color: $mid-blue;
-          color: $black;
+          color: $white;
         }
       }
     }

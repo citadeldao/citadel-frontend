@@ -356,6 +356,35 @@ export default {
     flex: 1;
     margin-right: 20px;
   }
+  @include laptop {
+    border-radius: 8px;
+    padding: 0 20px;
+  }
+
+  &__lines {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 490px;
+    @include laptop-l {
+      max-width: 400px;
+    }
+    @include laptop-standard {
+      max-width: 350px;
+    }
+  }
+  &__actions {
+    height: 68px;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    margin-left: 5px;
+  }
+  &__info {
+    display: flex;
+    max-width: 655px;
+    width: 100%;
+  }
 
   &__edit {
     display: flex;

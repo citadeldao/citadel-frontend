@@ -14,7 +14,9 @@
         color="#FFFFFF"
         bg-color="#FA3B33"
         hover-bg-color="#fc0800"
-        box-shadow="0 0 25px rgba(219, 71, 60, 0.3)"
+        :box-shadow="
+          !isLoading ? '0 0 25px rgba(219, 71, 60, 0.3)' : ' 0 0 25px #c3ceeb'
+        "
         class="delete-address-modal__primary-button"
         data-qa="Yes"
         @click="$emit('confirm')"
@@ -22,9 +24,9 @@
       >
         {{ $t('yes') }}
       </PrimaryButton>
-      <TextButton @click="$emit('close')">
+      <button class="text-button" @click.stop="close">
         {{ $t('no') }}
-      </TextButton>
+      </button>
     </ModalContent>
   </Modal>
 </template>
@@ -33,7 +35,6 @@
 import Modal from '@/components/Modal.vue';
 import ModalContent from '@/components/ModalContent.vue';
 import PrimaryButton from '@/components/UI/PrimaryButton.vue';
-import TextButton from '@/components/UI/TextButton.vue';
 
 export default {
   name: 'DeleteAddressModal',
@@ -41,7 +42,6 @@ export default {
     Modal,
     ModalContent,
     PrimaryButton,
-    TextButton,
   },
   props: {
     show: {
@@ -97,5 +97,25 @@ h3 {
   font-size: 16px;
   font-weight: 400;
   margin-top: 0;
+}
+.text-button {
+  font-size: 18px;
+  line-height: 19px;
+  padding: 0;
+  border-bottom: 2px solid $too-dark-blue;
+  color: $too-dark-blue;
+  font-family: 'Panton_Bold';
+  background: transparent;
+
+  &:hover {
+    color: $dark-blue;
+    border-color: $dark-blue;
+  }
+
+  &:disabled,
+  & [disabled] {
+    color: $mid-gray;
+    border-color: $mid-gray;
+  }
 }
 </style>

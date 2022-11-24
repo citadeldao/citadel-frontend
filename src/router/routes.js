@@ -10,6 +10,15 @@ export default [
     },
   },
   {
+    path: '/auth/verification/:code',
+    name: 'Login',
+    component: () => import(/* webpackChunkName: 'Login' */ '@/views/Login'),
+    meta: {
+      layout: 'DefaultLayout',
+      guard: 'guest',
+    },
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import(/* webpackChunkName: 'Login' */ '@/views/Login'),
@@ -259,6 +268,16 @@ export default [
     name: 'Extensions',
     component: () =>
       import(/* webpackChunkName: 'Extensions' */ '@/views/Extensions'),
+    meta: {
+      layout: 'AddAddressLayout',
+      guard: 'private',
+    },
+  },
+  {
+    path: '/extensions-settings',
+    name: 'ExtensionsSettings',
+    component: () =>
+      import(/* webpackChunkName: 'Extensions' */ '@/views/ExtensionsSettings'),
     meta: {
       layout: 'AddAddressLayout',
       guard: 'private',

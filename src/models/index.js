@@ -45,6 +45,7 @@ import CryptoCoinPOLYGON from './CryptoCoins/CryptoCoinPOLYGON';
 import CryptoCoinOASIS from './CryptoCoins/CryptoCoinOASIS';
 import CryptoCoinSTAFI from './CryptoCoins/CryptoCoinSTAFI';
 import CryptoCoinSTRIDE from './CryptoCoins/CryptoCoinSTRIDE';
+import CryptoCoinJACKAL from './CryptoCoins/CryptoCoinJACKAL';
 
 export default {
   // nets
@@ -95,4 +96,5 @@ export default {
   OASIS: CryptoCoinOASIS,
   STAFI: CryptoCoinSTAFI,
   STRIDE: CryptoCoinSTRIDE,
+  JACKAL: CryptoCoinJACKAL,
 };

@@ -25,10 +25,24 @@
             :key="n"
             class="inner-tx__view-item-component"
           >
-            <div v-if="component.type !== 'amount_collection'" class="title">
+            <div
+              v-if="
+                !['amount_collection', 'text_collection'].includes(
+                  component.type
+                )
+              "
+              class="title"
+            >
               {{ component.title }}
             </div>
-            <div v-if="component.type !== 'amount_collection'" class="line" />
+            <div
+              v-if="
+                !['amount_collection', 'text_collection'].includes(
+                  component.type
+                )
+              "
+              class="line"
+            />
             <div v-if="component.type === 'amount'" class="value">
               <div class="value-amount">{{ component.value.text }}</div>
               <div class="value-symbol">{{ component.value.symbol }}</div>
@@ -56,6 +70,21 @@
                     {{ componentInner.symbol }}
                   </div>
                   <div class="title">{{ componentInner.text }}</div>
+                </div>
+              </div>
+            </div>
+            <!-- text_collection -->
+            <div v-if="component.type === 'text_collection'" class="flex-value">
+              <div
+                v-for="(componentInner, key) in component.value"
+                :key="key"
+                class="inner-tx__view-item-component-flex"
+              >
+                <div class="value">
+                  <div class="value-symbol">
+                    {{ componentInner.text }}
+                  </div>
+                  <div class="title">{{ componentInner.weight }}</div>
                 </div>
               </div>
             </div>
@@ -214,7 +243,7 @@ $blue-dark: #262b61;
           font-family: 'Panton_Bold';
           word-break: break-all;
           text-align: right;
-          padding-left: 5px;
+          padding-left: 1px;
         }
 
         .value-symbol {
@@ -248,7 +277,7 @@ $blue-dark: #262b61;
 
       .line {
         flex-grow: 1;
-        border: 0.01rem dashed #a18eff;
+        border: 0.01rem dashed #c3ceeb;
         height: 1px;
       }
 

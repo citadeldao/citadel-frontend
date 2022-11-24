@@ -123,6 +123,7 @@
             <Verification
               v-if="currentStep === 2 && !showSyncBlock"
               :error="verificationError"
+              :code-from-email="codeFromEmail"
               @change="onChangeVerification"
               @verification="verification"
               @cancelVerification="
@@ -134,7 +135,7 @@
             />
           </template>
         </div>
-        <WhyCitadel v-if="showEmailModal" @close="showEmailModal = false" />
+        <WhyCitadel v-if="showEmailModal" @close="onCloseWhyEmail" />
       </main>
     </div>
     <InvisibleRecaptcha
@@ -237,6 +238,8 @@ export default {
     const newAddress = ref('');
     const newAddressNet = ref('');
     const captchaToken = ref('');
+
+    const codeFromEmail = ref('');
 
     const { setNets, setAddress, setPublicKey, createWallets } =
       useCreateWallets();
@@ -704,13 +707,35 @@ export default {
       metamaskConnector.value.disconnect();
       await store.dispatch('metamask/connectToMetamask');
     };
+
+    const redirectedFrom = router.currentRoute.value.redirectedFrom;
+
+    if (
+      redirectedFrom &&
+      redirectedFrom.path.startsWith('/auth/verification/')
+    ) {
+      const code = redirectedFrom.params.pathMatch.at(-1);
+
+      if (typeof code === 'string' && code.length === 6) {
+        userName.value = redirectedFrom.query.email.replace(' ', '+');
+        codeFromEmail.value = code;
+        setCurrentStep(2);
+      }
+    }
+
     const closePrivacy = () => {
       showPrivacy.value = false;
     };
     const closeTerms = () => {
       showTerms.value = false;
     };
+
+    const onCloseWhyEmail = () => {
+      showEmailModal.value = false;
+    };
+
     return {
+      onCloseWhyEmail,
       closePrivacy,
       closeTerms,
       showPrivacy,
@@ -751,6 +776,7 @@ export default {
       formDisabled,
       verificationError,
       showEmailModal,
+      codeFromEmail,
     };
   },
 };
@@ -771,13 +797,14 @@ export default {
   }
 
   .left {
+    position: relative;
     width: 100%;
     box-sizing: border-box;
     background-image: url('~@/assets/icons/login_bg.png');
     // background-color: #5030A0;
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: 50%;
+    background-position: 100%;
     height: 100vh;
     display: flex;
     align-items: center;
@@ -801,14 +828,6 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  @include lg {
-    // padding: 50px;
-  }
-
-  @include md {
-    // padding: 40px;
   }
 
   &::after {
@@ -836,7 +855,7 @@ export default {
       width: 500px;
     }
 
-    @include md {
+    @include laptop-standard {
       width: 400px;
     }
   }
@@ -844,14 +863,9 @@ export default {
   &__logo {
     display: flex;
     position: absolute;
-    top: 50px;
-    left: 50px;
+    top: 64px;
+    left: 64px;
     transform: scale(0.9);
-
-    @include lg {
-      top: 20px;
-      left: 20px;
-    }
 
     // & span {
     //   font-size: 45px;
@@ -866,7 +880,7 @@ export default {
     & svg {
       width: 259px;
       height: 36px;
-      @include md {
+      @include laptop-standard {
         width: 200px;
         height: 26px;
       }
@@ -901,8 +915,7 @@ export default {
   }
 
   &__question-info {
-    margin-top: 5px;
-    margin-bottom: 15px;
+    margin: 20px 0;
     cursor: pointer;
     display: inline-block;
     align-items: center;
@@ -919,17 +932,10 @@ export default {
     display: flex;
     justify-content: center;
     gap: 30px;
-    margin-right: 190px;
-
-    @include lg {
-      width: 500px;
-      margin-right: 63px;
-    }
-
-    @include md {
-      width: 400px;
-      margin-right: 27px;
-    }
+    position: absolute;
+    bottom: 42px;
+    left: 0;
+    right: 0;
   }
   &__link {
     font-weight: 700;

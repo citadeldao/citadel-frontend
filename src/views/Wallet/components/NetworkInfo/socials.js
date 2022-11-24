@@ -663,4 +663,18 @@ export default {
       href: 'https://www.coingecko.com/en/coins/crescent-network',
     },
   },
+  jackal: {
+    web: {
+      title: 'jackaldao',
+      href: 'https://jackaldao.com/',
+    },
+    twitter: {
+      title: '@Jackal_Protocol',
+      href: 'Jackal_Protocol',
+    },
+    // landing: {
+    //   title: 'Coingecko',
+    //   href: 'https://www.coingecko.com/en/coins/crescent-network',
+    // },
+  },
 };

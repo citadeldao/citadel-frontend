@@ -320,9 +320,7 @@ export default {
         try {
           await window.citadel.setUserId(userId.value);
 
-          const phForChrome = CryptoJS.SHA256(
-            CryptoJS.lib.WordArray.create(password.value)
-          ).toString();
+          const phForChrome = CryptoJS.SHA256(password.value).toString();
 
           syncResult = await window.citadel.syncFromExtension(
             networks,
@@ -336,15 +334,23 @@ export default {
           syncResult &&
           (await Promise.all(
             syncResult.map(async (wallet) => {
-              const privateKey = citadel.decodePrivateKeyByPassword(
+              const privateKey = await citadel.decodePrivateKeyByPassword(
                 wallet.net,
                 wallet.privateKeyEncoded,
                 password.value
-              ).data;
+              );
+
+              if (privateKey.error) {
+                notify({
+                  type: 'warning',
+                  text: JSON.stringify(privateKey.error),
+                });
+                return;
+              }
 
               const res = await citadel.addWalletByPrivateKey({
                 net: wallet.net,
-                privateKey,
+                privateKey: privateKey.data,
               });
 
               if (res.data) {
@@ -394,7 +400,7 @@ export default {
 
       if (window.citadel && !incorrectPassword.value) {
         const citadelPasswordHash = CryptoJS.SHA256(
-          CryptoJS.lib.WordArray.create(passwordExtension.value)
+          passwordExtension.value
         ).toString();
         if (citadelPasswordHash !== extensionPasswordHash) {
           incorrectPasswordExtension.value = true;
@@ -412,14 +418,24 @@ export default {
         let syncResult = null;
 
         try {
-          syncResult = await window.citadel.syncToExtension(
-            checkedItems.value.map((w) => {
+          const formattedWallets = await Promise.all(
+            checkedItems.value.map(async (w) => {
+              const decodedMnemonic = await store.dispatch(
+                'crypto/decodeUserMnemonic',
+                {
+                  password: password.value,
+                  customMnemonic: w.importedFromSeed || null,
+                }
+              );
+              const decodedPrivateKey =
+                await citadel.decodePrivateKeyByPassword(
+                  w.net,
+                  w.privateKeyEncoded,
+                  password.value
+                ).data;
               return {
                 mnemonic: CryptoJS.AES.encrypt(
-                  store.getters['crypto/decodeUserMnemonic'](
-                    password.value,
-                    w.importedFromSeed || null
-                  ),
+                  decodedMnemonic,
                   passwordExtension.value
                 ).toString(),
                 wallets: [
@@ -427,13 +443,9 @@ export default {
                     type: WALLET_TYPES.ONE_SEED,
                     net: w.net,
                     address: w.address,
-                    privateKeyEncoded: citadel.encodePrivateKeyByPassword(
+                    privateKeyEncoded: await citadel.encodePrivateKeyByPassword(
                       w.net,
-                      citadel.decodePrivateKeyByPassword(
-                        w.net,
-                        w.privateKeyEncoded,
-                        password.value
-                      ).data,
+                      decodedPrivateKey,
                       passwordExtension.value
                     ).data,
                   },
@@ -441,6 +453,7 @@ export default {
               };
             })
           );
+          syncResult = await window.citadel.syncToExtension(formattedWallets);
           syncLoading.value = false;
 
           if (syncResult === true) {
