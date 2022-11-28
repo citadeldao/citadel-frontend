@@ -307,11 +307,13 @@ export default {
     loadData(Date.now() - 86400000 * 31 * currentTab.value, Date.now());
 
     const description = computed(() => {
-      return te(`netInfo.${props.currentWallet.net}.description`)
+      const description = te(`netInfo.${props.currentWallet.net}.description`)
         ? t(`netInfo.${props.currentWallet.net}.description`)
         : props.isCurrentToken
         ? ''
         : t(`netInfo.${props.currentWallet.net}.shortDescription`);
+
+      return description.includes('netInfo') ? '' : description;
     });
 
     const isNotFound = computed(
