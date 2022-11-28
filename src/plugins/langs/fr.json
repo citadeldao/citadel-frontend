@@ -739,7 +739,7 @@
         },
         "changeEmail": {
             "title": "Votre email",
-            "description": "L'email de votre compte",
+            "description": "",
             "inputLabel": "Votre e-mail",
             "inputPlaceHolder": "e-mail",
             "button": "Changement",
