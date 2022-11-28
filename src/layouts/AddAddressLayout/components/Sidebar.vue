@@ -745,7 +745,7 @@ export default {
       flex-direction: column;
       overflow-y: overlay;
       overflow-x: hidden;
-      padding: 15px 0;
+      padding: 15px 0 0;
       border-radius: 8px;
       @include laptop {
         width: 90%;

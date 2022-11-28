@@ -238,16 +238,19 @@ export default {
 
   &__text {
     display: flex;
-    font-size: 20px;
+    font-size: $h5-size;
     line-height: 1.1;
     font-family: 'Panton_SemiBold';
+    width: max-content;
 
     @include lg {
-      font-size: 17px;
+      font-size: $default-size;
     }
 
-    @include md {
-      font-size: 14px;
+    @include laptop-standard {
+      font-size: $small-lg;
+      min-width: 115px;
+      max-width: 200px;
     }
   }
 }
