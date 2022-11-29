@@ -1410,7 +1410,7 @@
     "noSelfSendError": "",
     "minAmountError": "",
     "errors": {
-        "notEnoughFounds": ""
+        "notEnoughFounds": "",
+        "notAvailableToStake": ""
     }
-  }
-  
+}
