@@ -44,11 +44,29 @@
               class="line"
             />
             <div v-if="component.type === 'amount'" class="value">
-              <div class="value-amount">{{ component.value.text }}</div>
+              <div class="value-amount">
+                {{ component.value.text }}
+                <transition name="fade1">
+                  <span v-if="isCopied" class="input__tooltip">
+                    {{ $t('copiedToClipboard') }}
+                  </span>
+                </transition>
+              </div>
               <div class="value-symbol">{{ component.value.symbol }}</div>
             </div>
             <div v-if="component.type === 'text'" class="value">
-              <div class="value-amount">{{ component.value }}</div>
+              <div
+                class="value-amount"
+                :style="{
+                  cursor:
+                    component.value === info.view[0].components[0].value
+                      ? 'pointer'
+                      : 'initial',
+                }"
+                @click="copyValue(component.value)"
+              >
+                {{ component.value }}
+              </div>
             </div>
             <div v-if="component.type === 'textWithURL'" class="value">
               <a target="_blank" :href="component.value.url">{{
@@ -127,6 +145,7 @@
 
 <script>
 import { ref, onMounted } from 'vue';
+import copyToClipboard from '@/helpers/copyToClipboard';
 // import Textarea from '@/components/UI/Textarea';
 // import comment from '@/assets/icons/comment.svg';
 import InfoBlock from './InfoBlock.vue';
@@ -155,6 +174,7 @@ export default {
   },
   setup(props) {
     const showPlaceholder = ref(!props.info.note);
+    const isCopied = ref(false);
     const togleShowPlaceholder = () => {
       showPlaceholder.value = false;
       // nextTick(() => document.getElementById('comment').focus());
@@ -162,8 +182,17 @@ export default {
     onMounted(() => {
       togleShowPlaceholder();
     });
+    const copyValue = (e) => {
+      if (e === props.info.view[0].components[0].value) {
+        copyToClipboard(e);
+        isCopied.value = true;
 
-    return { showPlaceholder, togleShowPlaceholder };
+        setTimeout(() => {
+          isCopied.value = false;
+        }, 1500);
+      }
+    };
+    return { copyValue, isCopied, showPlaceholder, togleShowPlaceholder };
   },
 };
 </script>
@@ -269,7 +298,6 @@ $blue-dark: #262b61;
       justify-content: space-between;
       margin-top: 5px;
       align-items: center;
-
       .title {
         font-size: 14px;
         margin-bottom: 7px;
@@ -328,6 +356,37 @@ $blue-dark: #262b61;
   }
   &__textarea-textarea {
     height: 120px;
+  }
+}
+
+.input {
+  &__tooltip {
+    background-color: $too-ligth-gray;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 9px;
+    position: absolute;
+    white-space: nowrap;
+    z-index: 1;
+    top: 38px;
+    left: 50%;
+    transform: translate(-50%, 7px);
+    box-shadow: 0 4px 25px rgba(63, 54, 137, 0.25);
+    font-size: 12px;
+    line-height: 16px;
+    color: $too-dark-blue;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 98%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-radius: 2px;
+      border-style: solid;
+      border-color: transparent transparent $too-ligth-gray transparent;
+    }
   }
 }
 </style>
