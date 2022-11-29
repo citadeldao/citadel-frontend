@@ -69,46 +69,31 @@
             <DisclaimerApproveWeb3
               :is-metamask="loginWith === 'metamask'"
               @cancel="onApproveCancel"
-              v-if="
-                !keplrConnector?.accounts[0] &&
-                !metamaskConnector?.accounts[0] &&
-                connectedToWeb3 &&
-                ['metamask', 'keplr'].includes(loginWith)
-              "
+              v-show="showDisclaimerWeb3"
             />
 
             <ConfirmWeb3Address
-              v-if="
-                !confirmedAddress &&
-                loginWith === 'keplr' &&
-                connectedToWeb3 &&
-                keplrConnector?.accounts[0]
-              "
-              :is-keplr="!!keplrConnector.accounts[0].address"
-              :name="keplrNetworks[0].label"
-              :network="keplrNetworks[0].net"
+              v-show="showKepler"
+              :is-keplr="!!keplrConnector.accounts[0]?.address"
+              :name="keplrNetworks[0]?.label"
+              :network="keplrNetworks[0]?.net"
               :loading="addLoading"
-              :address="keplrConnector.accounts[0].address"
+              :address="keplrConnector.accounts[0]?.address"
               @cancel="onWeb3AddressCancel"
               @confirm="onWeb3AddressConfirm"
               @refreshKeplr="onRefreshWeb3Keplr"
             />
 
             <ConfirmWeb3Address
-              v-if="
-                !confirmedAddress &&
-                loginWith === 'metamask' &&
-                connectedToWeb3 &&
-                metamaskConnector?.accounts[0]
-              "
+              v-show="showMetamask"
               :name="
                 metamaskConnector.network === 'bsc'
                   ? 'Binance Smart Chain'
                   : 'Ethereum'
               "
-              :network="metamaskConnector.network"
+              :network="metamaskConnector?.network"
               :loading="addLoading"
-              :address="metamaskConnector.accounts[0]"
+              :address="metamaskConnector?.accounts[0]"
               @cancel="onWeb3AddressCancel"
               @confirm="onWeb3AddressConfirm"
               @refreshMetamask="onRefreshWeb3Metamask"
@@ -702,7 +687,7 @@ export default {
     const onRefreshWeb3Keplr = async () => {
       await store.dispatch('keplr/connectToKeplr', keplrNetworks[0].key);
     };
-
+    const whatEverShow = ref(true);
     const onRefreshWeb3Metamask = async () => {
       metamaskConnector.value.disconnect();
       await store.dispatch('metamask/connectToMetamask');
@@ -733,8 +718,33 @@ export default {
     const onCloseWhyEmail = () => {
       showEmailModal.value = false;
     };
-
+    const showMetamask = computed(
+      () =>
+        !confirmedAddress.value &&
+        loginWith.value === 'metamask' &&
+        connectedToWeb3.value &&
+        metamaskConnector.value?.accounts[0]
+    );
+    const showKepler = computed(
+      () =>
+        !confirmedAddress.value &&
+        loginWith.value === 'keplr' &&
+        connectedToWeb3.value &&
+        keplrConnector.value?.accounts[0]
+    );
+    const showDisclaimerWeb3 = computed(
+      () =>
+        !whatEverShow.value &&
+        !keplrConnector.value?.accounts[0] &&
+        !metamaskConnector.value?.accounts[0] &&
+        connectedToWeb3.value &&
+        ['metamask', 'keplr'].includes(loginWith.value)
+    );
     return {
+      showDisclaimerWeb3,
+      whatEverShow,
+      showKepler,
+      showMetamask,
       onCloseWhyEmail,
       closePrivacy,
       closeTerms,

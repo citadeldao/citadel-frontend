@@ -85,7 +85,7 @@ export default {
     const metamaskNetworks = ref(['eth', 'bsc']);
 
     const supportNetworks = computed(() => {
-      if (props.address.startsWith('0x') && props.address.length === 42) {
+      if (props?.address?.startsWith('0x') && props?.address?.length === 42) {
         return metamaskNetworks.value.includes(props.network);
       }
       return true;
