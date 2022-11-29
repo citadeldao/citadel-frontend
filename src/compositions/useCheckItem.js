@@ -11,7 +11,9 @@ export default function useCheckItem() {
   };
   const removeItem = (id, remove) => {
     if (remove) return;
-    checkedItems.value = checkedItems.value.filter((item) => item !== id);
+    checkedItems.value = checkedItems.value.filter(
+      (item) => item !== (typeof id === 'number' ? id : id.id)
+    );
   };
 
   const addSingleItem = (id) => {
