@@ -684,7 +684,7 @@ export default {
     const dataLoaded = ref(false);
     const loadData = async () => {
       dataLoaded.value = false;
-      await getFees();
+      await getFees(bridgeTargetNet.value);
       await getDelegationBalance();
       dataLoaded.value = true;
     };
@@ -1774,6 +1774,10 @@ export default {
 
   &__button {
     align-self: center;
+    button {
+      width: 200px;
+      height: 60px;
+    }
     @include md {
       display: none;
     }
