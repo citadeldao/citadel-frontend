@@ -684,7 +684,7 @@ export default {
     const dataLoaded = ref(false);
     const loadData = async () => {
       dataLoaded.value = false;
-      await getFees();
+      await getFees(bridgeTargetNet.value);
       await getDelegationBalance();
       dataLoaded.value = true;
     };
