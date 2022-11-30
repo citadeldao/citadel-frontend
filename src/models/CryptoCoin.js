@@ -5,6 +5,7 @@ import citadel from '@citadeldao/lib-citadel';
 import { i18n } from '@/plugins/i18n';
 import store from '@/store';
 import router from '@/router';
+import { getErrorText } from '@/config/errors';
 import BigNumber from 'bignumber.js';
 
 const { t } = i18n.global;
@@ -66,12 +67,12 @@ export default class CryptoCoin {
     return txLink;
   }
 
-  getPrivateKeyDecoded(password) {
-    const { error, data } = citadel.decodePrivateKeyByPassword(
+  async getPrivateKeyDecoded(password) {
+    const { error, data } = await citadel.decodePrivateKeyByPassword(
       this.net,
       this.mnemonicEncoded ||
         this.privateKeyEncoded ||
-        store.getters['crypto/encodeUserMnemonic'],
+        (await store.dispatch('crypto/encodeUserMnemonic')),
       password
     );
 
@@ -127,9 +128,11 @@ export default class CryptoCoin {
       return res;
     }
 
+    const errorText = getErrorText(res.error?.message?.toLowerCase());
+
     notify({
       type: 'warning',
-      text: res.error,
+      text: errorText || res.error,
     });
     console.error(res.error);
 
@@ -304,8 +307,27 @@ export default class CryptoCoin {
     return { error, data };
   }
 
+  async getCrossNetFees(walletId, netTo) {
+    const { error, data } = await citadel.getCrossNetFees(walletId, { netTo });
+
+    if (!error) {
+      return { error, data };
+    }
+
+    notify({
+      type: 'warning',
+      text: error,
+    });
+    console.error(error);
+
+    return { error, data };
+  }
+
   async getDelegationFee({ walletId, ...options }) {
-    const { data, error } = await citadel.getDelegationFee(walletId, options);
+    const { data, error } = await citadel.getDelegationFee(walletId, {
+      ...options,
+      newAddingFormat: true,
+    });
 
     if (!error) {
       if (!data.enough && options.transactionType !== 'transfer') {
@@ -456,13 +478,16 @@ export default class CryptoCoin {
     return { ok: false };
   }
 
-  static encodeMnemonic(mnemonic, password) {
-    const { data } = citadel.encodeMnemonicByPassword(mnemonic, password);
+  static async encodeMnemonic(mnemonic, password) {
+    const { data } = await citadel.encodeMnemonicByPassword(mnemonic, password);
     return data;
   }
 
-  static decodeMnemonic(encodeMnemonic, password) {
-    const { data } = citadel.decodeMnemonicByPassword(encodeMnemonic, password);
+  static async decodeMnemonic(encodeMnemonic, password) {
+    const { data } = await citadel.decodeMnemonicByPassword(
+      encodeMnemonic,
+      password
+    );
     return data;
   }
 
@@ -470,8 +495,8 @@ export default class CryptoCoin {
     return bip39.validateMnemonic(mnemonic);
   }
 
-  static encodePrivateKeyByPassword(net, privateKey, password) {
-    const { data, error } = citadel.encodePrivateKeyByPassword(
+  static async encodePrivateKeyByPassword(net, privateKey, password) {
+    const { data, error } = await citadel.encodePrivateKeyByPassword(
       net,
       privateKey,
       password

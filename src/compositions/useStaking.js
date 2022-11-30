@@ -3,6 +3,7 @@ import { computed, provide, ref } from 'vue';
 import useCheckPassword from '@/compositions/useCheckPassword';
 import { useI18n } from 'vue-i18n';
 import useWallets from '@/compositions/useWallets';
+import useCurrentWalletRequests from '@/compositions/useCurrentWalletRequests';
 import { OUR_NODE } from '@/config/walletType';
 import BigNumber from 'bignumber.js';
 import { useStore } from 'vuex';
@@ -11,8 +12,12 @@ import amountInputValidation from '@/helpers/amountInputValidation';
 export default function useStaking(stakeNodes, list) {
   const { t } = useI18n();
   const { currentWallet } = useWallets();
+  const { getDelegationBalance } = useCurrentWalletRequests();
   const currentToken = computed(() => store.getters['subtokens/currentToken']);
+
   const isMultiple = computed(() => currentWallet.value.net === 'polkadot');
+  const isSifchain = computed(() => currentWallet.value.net === 'sifchain');
+
   provide('isMultiple', isMultiple)
   const isLoading = ref(false);
   const showModal = ref(false);
@@ -38,6 +43,16 @@ export default function useStaking(stakeNodes, list) {
   provide('showModal', showModal);
   provide('updateShowModal', updateShowModal);
 
+  const updateNodeList = () => {
+    const { address, net } = currentWallet.value;
+    store.dispatch(
+      'staking/updateStakeList',
+      { address, net },
+      { root: true }
+    );
+    getDelegationBalance();
+  };
+
   const modalCloseHandler = () => {
     updateShowModal(false);
     updateSelectedNode('');
@@ -58,6 +73,7 @@ export default function useStaking(stakeNodes, list) {
     inputError.value = false;
     updateEditMode(false);
     resMaxAmount.value = '';
+    updateNodeList();
   };
   const nodesListModalCloseHandler = () => {
     if (activeTab.value === 'redelegate' || mode.value === 'redelegate') {
@@ -194,7 +210,7 @@ export default function useStaking(stakeNodes, list) {
     if (isMultiple.value && list.length) {
       await getDelegationFee('stake', list);
     }
-    if (initialStakingNode) {
+    if (initialStakingNode && !isSifchain.value) {
       await updateSelectedNode(initialStakingNode.value);
     }
     updateShowModal(true);
@@ -328,6 +344,7 @@ export default function useStaking(stakeNodes, list) {
   });
   const showWarningModal = ref(false);
   const finalClose = () => {
+    console.log('FinalClose');
     updateShowModal(false);
     updateSelectedNode('');
     updateSelectedNodeForRedelegation('');
@@ -346,6 +363,7 @@ export default function useStaking(stakeNodes, list) {
     inputError.value = false;
     updateEditMode(false);
     resMaxAmount.value = '';
+    updateNodeList();
   };
 
   const nodesListModalData = computed(() => {

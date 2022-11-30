@@ -28,7 +28,7 @@
       <div v-if="!activateEdit" class="comment-value">{{ info.note }}</div>
       <textarea
         v-if="activateEdit"
-        v-model="customNote"
+        v-model.trim="customNote"
         id="editComment"
         rows="4"
         class="comment-field"
@@ -48,7 +48,7 @@
     </div>
     <div v-if="info.value" class="info-block__line">
       <span class="info-block__line-title"> {{ $t('amount') }}: </span>
-      <div>
+      <div class="amount">
         <span
           v-pretty-number="{
             value: info.value,
@@ -107,19 +107,22 @@ export default {
 
     const setComment = async () => {
       if (activateEdit.value) {
-        if (customNote.value !== props.info.note) {
+        if (
+          customNote.value.length ||
+          (props.info.note !== '' && customNote.value !== props.info.note)
+        ) {
           await store.dispatch('transactions/postTransactionNote', {
             network: props.currentWallet.net,
             hash: props.info.hash,
             text: customNote.value,
           });
           /* eslint-disable */
+          store.commit('transactions/UPDATE_TRANSACTION', {tx: JSON.parse(JSON.stringify(props.info)), customNote: customNote.value});
           props.info.note = customNote.value;
           activateEdit.value = false;
         }
         return;
       }
-
       // activate input
       activateEdit.value = true;
       nextTick(() => document.getElementById('editComment').focus());
@@ -146,6 +149,10 @@ export default {
     }
     &:first-child {
       margin-top: 0;
+    }
+
+    .amount {
+      text-align: right;
     }
 
     .value {
@@ -180,6 +187,10 @@ export default {
     font-size: 14px;
     color: #54478f;
     margin-top: 5px;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: break-spaces;
   }
 
   &__line-title {
@@ -195,7 +206,8 @@ export default {
       justify-content: space-between;
 
       .comment-btn {
-        width: 100px;
+        padding: 0 10px;
+        max-width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;

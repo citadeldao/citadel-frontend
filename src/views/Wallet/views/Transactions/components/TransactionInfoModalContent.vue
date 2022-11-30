@@ -45,7 +45,9 @@
             />
             <div v-if="component.type === 'amount'" class="value">
               <div class="value-amount">{{ component.value.text }}</div>
-              <div class="value-symbol">{{ component.value.symbol }}</div>
+              <div class="value-symbol">
+                {{ component.value.symbol.slice(0, 5) }}
+              </div>
             </div>
             <div v-if="component.type === 'text'" class="value">
               <div class="value-amount">{{ component.value }}</div>
@@ -243,7 +245,7 @@ $blue-dark: #262b61;
           font-family: 'Panton_Bold';
           word-break: break-all;
           text-align: right;
-          padding-left: 5px;
+          padding-left: 1px;
         }
 
         .value-symbol {
@@ -277,7 +279,7 @@ $blue-dark: #262b61;
 
       .line {
         flex-grow: 1;
-        border: 0.01rem dashed #a18eff;
+        border: 0.01rem dashed #c3ceeb;
         height: 1px;
       }
 

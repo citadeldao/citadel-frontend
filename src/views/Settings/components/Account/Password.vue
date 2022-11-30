@@ -160,7 +160,7 @@ export default {
       return sha3_256(oldPassword.value) !== oldPasswordHash.value;
     });
 
-    const updatePassword = () => {
+    const updatePassword = async () => {
       const walletsToUpdate = [];
 
       startUpdate.value = true;
@@ -169,12 +169,12 @@ export default {
         return;
       }
 
-      wallets.value.forEach((w) => {
+      wallets.value.forEach(async (w) => {
         if (
           [WALLET_TYPES.PRIVATE_KEY, WALLET_TYPES.ONE_SEED].includes(w.type)
         ) {
-          const privateKey = w.getPrivateKeyDecoded(oldPassword.value);
-          const privateKeyEncoded = citadel.encodePrivateKeyByPassword(
+          const privateKey = await w.getPrivateKeyDecoded(oldPassword.value);
+          const privateKeyEncoded = await citadel.encodePrivateKeyByPassword(
             w.net,
             privateKey,
             newPassword.value
@@ -188,11 +188,11 @@ export default {
           }
 
           if (w.importedFromSeed) {
-            const mnemonic = store.getters['crypto/decodeUserMnemonic'](
-              oldPassword.value,
-              w.importedFromSeed
-            );
-            const encodeMnemonic = CryptoCoin.encodeMnemonic(
+            const mnemonic = await store.dispatch('crypto/decodeUserMnemonic', {
+              password: oldPassword.value,
+              customMnemonic: w.importedFromSeed,
+            });
+            const encodeMnemonic = await CryptoCoin.encodeMnemonic(
               mnemonic,
               newPassword.value
             );
@@ -207,19 +207,19 @@ export default {
         root: true,
       });
 
-      const mnemonic = store.getters['crypto/decodeUserMnemonic'](
-        oldPassword.value
-      );
+      const mnemonic = await store.dispatch('crypto/decodeUserMnemonic', {
+        password: oldPassword.value,
+      });
 
       if (mnemonic) {
         // rewrite encode mnemonic/passwordHash
-        store.dispatch('crypto/setAndEncodeUserMnemonic', {
+        await store.dispatch('crypto/setAndEncodeUserMnemonic', {
           mnemonic,
           password: newPassword.value,
         });
       }
       // rewrite encode mnemonic/passwordHash
-      store.dispatch('crypto/setAndEncodeUserMnemonic', {
+      await store.dispatch('crypto/setAndEncodeUserMnemonic', {
         mnemonic,
         password: newPassword.value,
       });
@@ -262,7 +262,7 @@ export default {
   height: 70px;
 
   &.m-20 {
-    margin: 55px 0 20px 0;
+    margin: 45px 0 25px 0;
 
     &.hasError {
       margin: 75px 0 20px 0;
@@ -295,6 +295,7 @@ export default {
 }
 
 .change-password-card {
+  height: 100%;
   @include settings-card-default;
   &__title {
     display: flex;

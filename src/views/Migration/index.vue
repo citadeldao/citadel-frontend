@@ -331,7 +331,7 @@ export default {
     provide('updatePassword', updatePassword);
     provide('inputError', inputErrorExport);
 
-    const approveExport = () => {
+    const approveExport = async () => {
       if (sha3_256(password.value) !== oldPasswordHash.value) {
         inputErrorExport.value = passwordError.value;
 
@@ -340,9 +340,8 @@ export default {
 
       showApproveModal.value = false;
       showExportModal.value = true;
-      decodedPrivateKey.value = currentExportWallet.value.getPrivateKeyDecoded(
-        password.value
-      );
+      decodedPrivateKey.value =
+        await currentExportWallet.value.getPrivateKeyDecoded(password.value);
     };
 
     const {
@@ -414,7 +413,7 @@ export default {
           if (props.privateWalletsMode) {
             let privateKeyEncoded;
             if (wallet.privateKeyEncoded) {
-              const privateKey = citadel.decodePrivateKeyByPassword(
+              const privateKey = await citadel.decodePrivateKeyByPassword(
                 wallet.net,
                 wallet.privateKeyEncoded,
                 migrationPassword.value

@@ -124,16 +124,13 @@ export default {
   width: 650px;
   display: flex;
   flex-direction: column;
-  margin-right: 190px;
 
   @include lg {
     width: 500px;
-    margin-right: 63px;
   }
 
   @include md {
     width: 400px;
-    margin-right: 27px;
   }
 }
 </style>

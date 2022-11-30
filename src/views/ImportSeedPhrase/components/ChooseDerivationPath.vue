@@ -22,6 +22,15 @@
         :checked="checked(wallet.walletInstance)"
         @check="addSingleItem"
       />
+      <div
+        class="add-derivation__card"
+        @click="generateNewPath"
+        v-if="limitOfCards < maxPaths"
+      >
+        <seedPhraseIcon class="initial-icon" />
+
+        {{ $t('anotherAddress') }}
+      </div>
     </div>
     <div class="choose-derivation-path__custom">
       <span>Custom</span>
@@ -42,12 +51,13 @@
 </template>
 
 <script>
+import seedPhraseIcon from '@/assets/icons/addAddressV2/seedphrase-type.svg';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import Select from '@/components/UI/Select';
 import DerivationPathCard from '@/components/DerivationPathCard';
 import useCheckItem from '@/compositions/useCheckItem';
 import { useStore } from 'vuex';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { WALLET_TYPES } from '@/config/walletType';
 import CryptoCoin from '@/models/CryptoCoin';
 
@@ -57,6 +67,7 @@ export default {
     PrimaryButton,
     DerivationPathCard,
     Select,
+    seedPhraseIcon,
   },
   props: {
     walletOpts: {
@@ -74,15 +85,16 @@ export default {
       CryptoCoin.getDerivationPathTemplates(props.walletOpts.nets[0], 'seed')
     );
     const hasPathOptions = computed(() => pathOptions.value.length > 1);
-    const numberOfPaths = 5;
+    const numberOfPaths = ref(5);
     const wallets = ref([]);
+    const walletsFromStore = computed(() => store.getters['wallets/wallets']);
     const isInvalid = ref(false);
-
+    const maxPaths = ref(20);
     currentPath.value = pathOptions.value[0].key;
 
     const selectCustomPathFormat = (pathFormat) => {
       Promise.all(
-        [...Array(numberOfPaths)].map((_, pathIndex) => {
+        [...Array(numberOfPaths.value)].map((_, pathIndex) => {
           return store.dispatch('crypto/createWalletByMnemonic', {
             walletOpts: {
               //for polkadot
@@ -129,7 +141,6 @@ export default {
           setCustomWallet();
         });
     };
-    setCustomWallet();
 
     const clickHandler = () => {
       emit('selectWallet', checkedItems.value[0]);
@@ -145,8 +156,29 @@ export default {
 
       return !isChecked || isExist || isInvalid.value;
     });
-
+    const filteredWalletsByCurNetLength = computed(() => {
+      return walletsFromStore.value.filter(
+        (e) => e.name === customWallet.value.walletInstance?.name
+      ).length;
+    });
+    const limitOfCards = computed(
+      () =>
+        numberOfPaths.value +
+        filteredWalletsByCurNetLength.value -
+        wallets.value.filter((e) => e.alreadyExist).length
+    );
+    const generateNewPath = () => {
+      if (limitOfCards.value <= maxPaths.value) {
+        numberOfPaths.value++;
+        selectCustomPathFormat(currentPath.value);
+      }
+    };
+    onMounted(async () => {
+      await setCustomWallet();
+    });
     return {
+      maxPaths,
+      generateNewPath,
       clickHandler,
       addSingleItem,
       removeItem,
@@ -156,10 +188,11 @@ export default {
       customWallet,
       checkedItems,
       disabled,
-
+      numberOfPaths,
       currentPath,
       pathOptions,
       selectCustomPathFormat,
+      limitOfCards,
     };
   },
 };
@@ -232,6 +265,41 @@ export default {
       @include md {
         margin-bottom: 11px;
       }
+    }
+  }
+}
+.add-derivation__card {
+  width: 288px;
+  height: 150px;
+  border: 1px solid #c3ceeb;
+  border-radius: 8px;
+  padding: 24px 24px 21px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  color: #6b93c0;
+  @include lg {
+    width: 277px;
+    padding: 16px 16px 13px 16px;
+  }
+  @include md {
+    width: 100%;
+    padding: 16px;
+    height: 64px;
+    flex-direction: row;
+  }
+  svg {
+    width: 40px;
+    fill: $too-ligth-blue;
+    &:hover {
+      fill: $dark-blue;
     }
   }
 }

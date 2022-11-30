@@ -39,6 +39,7 @@
                 <a
                   style="text-decoration: none; color: inherit"
                   href="https://www.notion.so/600cfeaeb06a4d78b9578f3c19117246"
+                  target="_blank"
                   >{{ $t('faq.guide') }}
                 </a>
               </div>
@@ -78,7 +79,7 @@
           active-class="header__menu-button--active"
           data-qa="header__rewards-button"
         >
-          <Badge :content="extensionsList?.length" background-color="#6A4BFF" />
+          <Badge :content="extensionsList?.length" background-color="#FF5722" />
           <app />
         </router-link>
 
@@ -348,7 +349,11 @@ export default {
         border-radius: 8px;
         position: absolute;
         z-index: 10;
-        top: 45px;
+        top: 55px;
+
+        @include md {
+          top: 45px;
+        }
 
         .faq-item {
           padding: 16px 0;
@@ -414,9 +419,29 @@ export default {
       .faq-items {
         display: flex;
         flex-direction: column;
+
+        &::after {
+          content: '';
+          position: absolute;
+          top: -20px;
+          right: 0;
+          left: 0;
+          height: 25px;
+        }
       }
 
-      & svg.faq {
+      .header__user-tooltip {
+        &::after {
+          content: '';
+          position: absolute;
+          top: -20px;
+          right: 0;
+          left: 0;
+          height: 25px;
+        }
+      }
+
+      svg {
         fill: $white;
       }
     }
@@ -426,10 +451,14 @@ export default {
     display: none;
     position: absolute;
     z-index: 1001;
+    width: fit-content;
+    max-width: 150px;
+
     right: 0;
-    top: 45px;
+    top: 55px;
+
     @include md {
-      top: 32px;
+      top: 45px;
     }
   }
 }

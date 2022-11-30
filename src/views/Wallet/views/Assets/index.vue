@@ -432,7 +432,7 @@ export default {
       bottom: 0;
       border-radius: 16px;
     }
-    @media (max-width: 1400px) {
+    @media (min-width: 1280px) and (max-width: 1400px) {
       max-width: 260px;
       width: 100%;
       height: 220px;
@@ -449,8 +449,9 @@ export default {
         top: -16px;
       }
     }
-    @media (max-width: 1280px) {
+    @media (max-width: 1279px) {
       & .round-arrow-button {
+        top: 56px !important;
         right: 35px !important;
       }
     }
@@ -462,14 +463,14 @@ export default {
   flex-direction: column;
   border-radius: 16px;
   background: $white;
-  padding: 24px 0 11px 0;
+  padding: 24px 0 28px 0;
   &-single__item {
     margin-bottom: 0;
   }
   &__header {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     text-transform: capitalize;
 
     & > * {
@@ -478,17 +479,18 @@ export default {
   }
 
   &__search {
-    height: 68px;
+    min-height: 56px;
+    max-height: 80px;
+    height: 80px;
     margin-right: 8px;
 
-    @include lg {
-      width: 135px;
-      height: 60px;
+    @include laptop-standard {
+      height: 64px;
+      width: 120px;
     }
 
-    @include md {
+    @include laptop {
       height: 56px;
-      width: 120px;
     }
   }
 
@@ -533,7 +535,7 @@ export default {
     display: flex;
 
     div {
-      padding: 12px 0;
+      padding: 10px 0;
       font-family: 'Panton_Bold';
       font-size: 18px;
       text-align: left;
@@ -544,8 +546,8 @@ export default {
         font-size: $wallet-assets-heading-font-size;
       }
 
-      @include md {
-        font-size: $wallet-assets-heading-font-size-md;
+      @include laptop-standard {
+        font-size: $h6-size;
       }
 
       &:nth-child(1) {
@@ -589,17 +591,23 @@ export default {
   &__search {
     .input {
       & > input {
-        @include md {
+        @include laptop-standard {
           padding: 25px 25px 10px 36px;
         }
       }
 
       svg {
+        bottom: 24px;
+
         @include lg {
-          bottom: 14px;
+          bottom: 24px;
         }
 
-        @include md {
+        @include laptop-standard {
+          bottom: 15px;
+        }
+
+        @include laptop {
           bottom: 13px;
         }
       }
@@ -609,7 +617,7 @@ export default {
           font-size: 13px;
         }
 
-        @include md {
+        @include laptop-standard {
           font-size: 12px;
           top: 8px;
         }
@@ -619,15 +627,6 @@ export default {
 
   &__sort {
     .wallet-filter-dropdown {
-      @include lg {
-        width: 60px;
-        height: 60px;
-      }
-
-      @include md {
-        width: 56px;
-        height: 56px;
-      }
       @include laptop {
         & svg {
           width: 22px;
@@ -663,7 +662,7 @@ export default {
   @include lg {
     font-size: 18px;
   }
-  @include md {
+  @include laptop-standard {
     font-size: 15px;
   }
 }
@@ -675,6 +674,9 @@ export default {
   button {
     top: 64px;
     right: 75px;
+    @media (min-width: 1280px) and (max-width: 1475px) {
+      right: 55px;
+    }
   }
 }
 </style>

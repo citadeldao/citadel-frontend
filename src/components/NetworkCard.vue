@@ -12,14 +12,14 @@
       </div>
       <div class="network-card__content">
         <span class="network-card__title">
-          {{ network.title }}
+          {{ network?.title || network?.label }}
         </span>
         <div class="network-card__info">
-          <span v-if="network.percent" class="network-card__percent">
-            {{ network.percent }}%
+          <span v-if="network?.percent" class="network-card__percent">
+            {{ network?.percent }}%
           </span>
           <div class="network-card__abbr">
-            {{ network.abbr }}
+            {{ network?.abbr || network?.key }}
           </div>
         </div>
       </div>
@@ -55,17 +55,27 @@ export default {
   emits: ['uncheck', 'check'],
   setup(props, { emit }) {
     const icon = ref();
-    import(`@/assets/icons/${props.iconPath}/${props.network.icon}.svg`).then(
-      (val) => {
-        icon.value = markRaw(val.default);
-      }
-    );
+    const iconName = props.network?.icon || props.network?.net;
+
+    import(`@/assets/icons/${props.iconPath}/${iconName}.svg`).then((val) => {
+      icon.value = markRaw(val.default);
+    });
 
     const toggleChecked = () => {
       if (props.checked) {
-        emit('uncheck', props.network.id);
+        emit(
+          'uncheck',
+          typeof props.network?.id === 'number'
+            ? props.network.id
+            : props.network
+        );
       } else {
-        emit('check', props.network.id);
+        emit(
+          'check',
+          typeof props.network?.id === 'number'
+            ? props.network.id
+            : props.network
+        );
       }
     };
 
@@ -90,17 +100,20 @@ export default {
 }
 
 .network-card {
-  margin: 5px;
   display: flex;
   justify-content: space-between;
-  height: 94px;
-  padding: 24px 24px 0 24px;
-  // margin-right: 10px;
+  align-items: center;
+  padding: 0 24px;
+
   border-radius: 8px;
   background-color: $ghostwhite;
   cursor: pointer;
-  width: 290px;
-  // @include getWidth(4, 10px);
+  max-width: 290px;
+  width: 100%;
+  height: 94px;
+  max-height: 94px;
+
+  margin: 8px 0;
 
   &:hover {
     background: $white;
@@ -120,16 +133,9 @@ export default {
     }
   }
 
-  @include lg {
-    width: 277px;
-    // @include getWidth(2, 10px);
-  }
-
   @include md {
-    height: 78px;
-    padding: 10px 10px 0 10px;
-    width: 225px;
-    // @include getWidth(2, 10px);
+    height: 75px;
+    width: 285px;
   }
 
   &--checked,
@@ -244,6 +250,7 @@ export default {
   &__select {
     width: 28px;
     height: 28px;
+    margin-bottom: 19px;
     min-width: 28px;
     display: flex;
     justify-content: center;
