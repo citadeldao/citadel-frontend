@@ -8,6 +8,7 @@
         type="text"
         icon="loop"
         :placeholder="$t('staking.searchInputPlaceholder')"
+        clearable
         data-qa="staking__node-list__search-field"
       />
     </div>
