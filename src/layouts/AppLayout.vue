@@ -35,6 +35,10 @@ export default {
     );
     const { walletByAddress, wallets } = useWallets();
 
+    if (process.env.VUE_APP_OFF) {
+      router.push({ name: 'AppOff' });
+    }
+
     const hashInfo = ref('');
     const startTimeout = ref(false);
 
