@@ -1412,7 +1412,8 @@
     "addComment": "",
     "editComment": "",
     "errors": {
-        "notEnoughFounds": ""
+        "notEnoughFounds": "",
+        "notAvailableToStake": ""
     },
     "copyToClipboardTitle": "",
     "showHideKeyTitle": "",

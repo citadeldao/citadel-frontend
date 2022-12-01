@@ -175,7 +175,7 @@ export default {
       );
     };
     const onCheck = (e) => {
-      addItem(typeof e === 'number' ? e : e.id);
+      addItem(e);
       checkedBtnStatus();
     };
     const prepareSelectedItems = () => {

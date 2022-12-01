@@ -75,7 +75,7 @@ export default [
       },
       {
         name: 'WalletTransactionsOld',
-        path: 'transactions',
+        path: 'transactions_old',
         component: () =>
           import(
             /* webpackChunkName: 'Transactions' */ '@/views/Wallet/views/TransactionsOld'
