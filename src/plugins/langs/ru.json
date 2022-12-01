@@ -1412,7 +1412,8 @@
     "addComment": "Добавить комментарий",
     "editComment": "Изменить комментарий",
     "errors": {
-        "notEnoughFounds": "Недостаточно {code} для оплаты комиссии за транзакцию"
+        "notEnoughFounds": "Недостаточно {code} для оплаты комиссии за транзакцию",
+        "notAvailableToStake": ""
     },
     "copyToClipboardTitle": "Копировать ключ просмотра",
     "showHideKeyTitle": "Показать / скрыть кнопку просмотра",
