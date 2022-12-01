@@ -64,9 +64,11 @@
       </div>
       <div
         v-if="
-          [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(
-            wallet.type
-          )
+          [
+            WALLET_TYPES.ONE_SEED,
+            WALLET_TYPES.PRIVATE_KEY,
+            WALLET_TYPES.SEED_PHRASE,
+          ].includes(wallet.type)
         "
         class="dropdown-item__btn dropdown-item__btn--export"
         data-qa="settings__address__export-button"

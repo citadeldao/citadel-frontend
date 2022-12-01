@@ -76,9 +76,11 @@ export default {
                 type: 1,
                 coins: list
                   .filter((w) =>
-                    [WALLET_TYPES.PRIVATE_KEY, WALLET_TYPES.ONE_SEED].includes(
-                      w.type
-                    )
+                    [
+                      WALLET_TYPES.PRIVATE_KEY,
+                      WALLET_TYPES.ONE_SEED,
+                      WALLET_TYPES.SEED_PHRASE,
+                    ].includes(w.type)
                   )
                   .map((w) => ({
                     ...w,

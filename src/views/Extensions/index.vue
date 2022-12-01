@@ -741,9 +741,11 @@ export default {
       confirmPassword.value = true;
 
       if (
-        [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(
-          signerWallet.value.type
-        ) &&
+        [
+          WALLET_TYPES.ONE_SEED,
+          WALLET_TYPES.PRIVATE_KEY,
+          WALLET_TYPES.SEED_PHRASE,
+        ].includes(signerWallet.value.type) &&
         incorrectPassword.value
       ) {
         return;
@@ -928,9 +930,11 @@ export default {
       confirmPassword.value = true;
 
       if (
-        [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(
-          signerWallet.value.type
-        ) &&
+        [
+          WALLET_TYPES.ONE_SEED,
+          WALLET_TYPES.PRIVATE_KEY,
+          WALLET_TYPES.SEED_PHRASE,
+        ].includes(signerWallet.value.type) &&
         incorrectPassword.value
       ) {
         signLoading.value = false;

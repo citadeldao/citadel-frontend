@@ -47,8 +47,11 @@
       </div>
       <div
         v-if="
-          currentWallet.type === WALLET_TYPES.PRIVATE_KEY ||
-          currentWallet.type === WALLET_TYPES.ONE_SEED
+          [
+            WALLET_TYPES.PRIVATE_KEY,
+            WALLET_TYPES.ONE_SEED,
+            WALLET_TYPES.SEED_PHRASE,
+          ].includes(currentWallet.type)
         "
         class="createVkPassword"
       >

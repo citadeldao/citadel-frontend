@@ -100,7 +100,11 @@
             v-if="showPasswordForAssign"
             :has-seeds="
               seedAddresses.some(({ type }) =>
-                [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(type)
+                [
+                  WALLET_TYPES.ONE_SEED,
+                  WALLET_TYPES.PRIVATE_KEY,
+                  WALLET_TYPES.SEED_PHRASE,
+                ].includes(type)
               )
             "
             @approveAssign="approveAssign"
@@ -279,7 +283,11 @@ export default {
     const showPasswordForAssign = computed(
       () =>
         !!unassignedAddresses.value.find((w) =>
-          [WALLET_TYPES.PRIVATE_KEY, WALLET_TYPES.ONE_SEED].includes(w.type)
+          [
+            WALLET_TYPES.PRIVATE_KEY,
+            WALLET_TYPES.ONE_SEED,
+            WALLET_TYPES.SEED_PHRASE,
+          ].includes(w.type)
         )
     );
 
@@ -394,7 +402,11 @@ export default {
     const newAssignedAddresses = ref([]);
     const approveAssign = async () => {
       const hasSeeds = seedAddresses.value.some(({ type }) =>
-        [WALLET_TYPES.PRIVATE_KEY, WALLET_TYPES.ONE_SEED].includes(type)
+        [
+          WALLET_TYPES.PRIVATE_KEY,
+          WALLET_TYPES.ONE_SEED,
+          WALLET_TYPES.SEED_PHRASE,
+        ].includes(type)
       );
 
       if (hasSeeds && passwordError.value && showPasswordForAssign.value) {

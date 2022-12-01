@@ -171,7 +171,11 @@ export default {
 
       wallets.value.forEach(async (w) => {
         if (
-          [WALLET_TYPES.PRIVATE_KEY, WALLET_TYPES.ONE_SEED].includes(w.type)
+          [
+            WALLET_TYPES.PRIVATE_KEY,
+            WALLET_TYPES.ONE_SEED,
+            WALLET_TYPES.SEED_PHRASE,
+          ].includes(w.type)
         ) {
           const privateKey = await w.getPrivateKeyDecoded(oldPassword.value);
           const privateKeyEncoded = await citadel.encodePrivateKeyByPassword(

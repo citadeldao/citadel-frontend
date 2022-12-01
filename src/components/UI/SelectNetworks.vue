@@ -184,6 +184,7 @@ export default {
         const displayItem = displayData.value[key];
 
         if (displayItem.net === 'polkadot') {
+          // TO DO NEW TYPE ?
           const foundItemOneSeed = wallets.value.find(
             (e) =>
               e.net === displayItem.net &&

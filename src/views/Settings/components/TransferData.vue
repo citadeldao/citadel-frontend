@@ -70,7 +70,8 @@ export default {
       return wallets.value.filter(
         (wallet) =>
           wallet.type === WALLET_TYPES.ONE_SEED ||
-          wallet.type === WALLET_TYPES.PRIVATE_KEY
+          wallet.type === WALLET_TYPES.PRIVATE_KEY ||
+          wallet.type === WALLET_TYPES.SEED_PHRASE
       ).length;
     });
 

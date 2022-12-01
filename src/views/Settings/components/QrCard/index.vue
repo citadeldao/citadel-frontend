@@ -90,8 +90,11 @@ export default {
             data.address
               ?.toLowerCase()
               .includes(keyword.value.toLowerCase())) &&
-          (data.type === WALLET_TYPES.ONE_SEED ||
-            data.type === WALLET_TYPES.PRIVATE_KEY)
+          [
+            WALLET_TYPES.ONE_SEED,
+            WALLET_TYPES.PRIVATE_KEY,
+            WALLET_TYPES.SEED_PHRASE,
+          ].includes(data.type)
       );
     });
     const modalDesc = computed(() =>

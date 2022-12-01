@@ -17,9 +17,11 @@
       v-if="
         !msgSuccessSignature &&
         signerWallet &&
-        [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(
-          signerWallet.type
-        )
+        [
+          WALLET_TYPES.ONE_SEED,
+          WALLET_TYPES.PRIVATE_KEY,
+          WALLET_TYPES.SEED_PHRASE,
+        ].includes(signerWallet.type)
       "
       class="password-wrap"
     >

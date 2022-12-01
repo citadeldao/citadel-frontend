@@ -110,7 +110,11 @@ export default {
 
     const removeSeed = () => {
       const hasPrivateWallets = wallets.value.filter((w) =>
-        [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(w.type)
+        [
+          WALLET_TYPES.ONE_SEED,
+          WALLET_TYPES.PRIVATE_KEY,
+          WALLET_TYPES.SEED_PHRASE,
+        ].includes(w.type)
       );
 
       store.commit('crypto/setUserMnemonic', null);

@@ -227,9 +227,11 @@
           v-if="
             !Object.keys(successTxs).length &&
             signerWallet &&
-            [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(
-              signerWallet.type
-            )
+            [
+              WALLET_TYPES.ONE_SEED,
+              WALLET_TYPES.PRIVATE_KEY,
+              WALLET_TYPES.SEED_PHRASE,
+            ].includes(signerWallet.type)
           "
         >
           <div class="line" />
@@ -395,6 +397,7 @@ export default {
             w?.net === 'bsc' &&
             [
               WALLET_TYPES.ONE_SEED,
+              WALLET_TYPES.SEED_PHRASE,
               WALLET_TYPES.PRIVATE_KEY,
               WALLET_TYPES.LEDGER,
             ].includes(w?.type)
@@ -670,9 +673,11 @@ export default {
       confirmPassword.value = true;
       if (
         incorrectPassword.value &&
-        [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(
-          signerWallet.value.type
-        )
+        [
+          WALLET_TYPES.ONE_SEED,
+          WALLET_TYPES.PRIVATE_KEY,
+          WALLET_TYPES.SEED_PHRASE,
+        ].includes(signerWallet.value.type)
       )
         return;
 

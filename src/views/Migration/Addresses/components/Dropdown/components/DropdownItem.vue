@@ -12,9 +12,11 @@
     </div>
     <div
       v-if="
-        [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(
-          wallet.type
-        ) && true
+        [
+          WALLET_TYPES.ONE_SEED,
+          WALLET_TYPES.PRIVATE_KEY,
+          WALLET_TYPES.SEED_PHRASE,
+        ].includes(wallet.type) && true
       "
       class="dropdown-item__btn dropdown-item__btn--export"
       @click="exportWallet"

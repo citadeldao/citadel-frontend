@@ -4,6 +4,7 @@ export const WALLET_TYPES = {
   TREZOR: 'trezor',
   LEDGER: 'ledger',
   ONE_SEED: 'oneSeed',
+  SEED_PHRASE: 'seedPhrase',
   PRIVATE_KEY: 'privateKey',
   PUBLIC_KEY: 'publicKey',
   METAMASK: 'metamask',
@@ -16,6 +17,10 @@ export const isHardwareWallet = (type) =>
 export const types = {
   oneSeed: {
     color: '#6A4BFF',
+    text: t('oneSeed'),
+  },
+  seedPhrase: {
+    color: '#F4BD13',
     text: t('oneSeed'),
   },
   privateKey: {
