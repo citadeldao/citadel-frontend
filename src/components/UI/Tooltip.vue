@@ -4,7 +4,11 @@
       v-if="showTooltip"
       id="tooltip"
       class="tooltip"
-      :style="{ top: `${tooltipY}px`, left: `${tooltipX}px` }"
+      :style="{
+        top: `${tooltipY}px`,
+        left: `${tooltipX}px`,
+        maxWidth: `${maxWidth}px`,
+      }"
       @mouseover="tooltipSelfOn"
       @mouseout="tooltipOff"
       @click.stop
@@ -31,6 +35,9 @@ export default {
     text: {
       type: String,
       default: '',
+    },
+    maxWidth: {
+      type: Number,
     },
   },
   setup() {
@@ -84,7 +91,7 @@ export default {
   transition: 0s;
   color: $mid-blue;
   max-width: 350px;
-
+  word-wrap: break-word;
   &::after {
     content: '';
     position: absolute;
@@ -101,7 +108,7 @@ export default {
   &__target {
     display: inline-flex;
     align-items: center;
-    margin-left: 5px;
+    //margin-left: 5px;
     cursor: pointer;
 
     & svg {

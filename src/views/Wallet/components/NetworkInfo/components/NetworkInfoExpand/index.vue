@@ -307,11 +307,13 @@ export default {
     loadData(Date.now() - 86400000 * 31 * currentTab.value, Date.now());
 
     const description = computed(() => {
-      return te(`netInfo.${props.currentWallet.net}.description`)
+      const description = te(`netInfo.${props.currentWallet.net}.description`)
         ? t(`netInfo.${props.currentWallet.net}.description`)
         : props.isCurrentToken
         ? ''
         : t(`netInfo.${props.currentWallet.net}.shortDescription`);
+
+      return description.includes('netInfo') ? '' : description;
     });
 
     const isNotFound = computed(
@@ -360,9 +362,13 @@ export default {
   &__title {
     margin-right: 15px;
     font-weight: 700;
-    font-size: 30px;
+    font-size: $h2-size;
     line-height: 30px;
     flex: 1 1 auto;
+
+    @include laptop-standard {
+      font-size: $h4-size;
+    }
   }
 
   &__icon {

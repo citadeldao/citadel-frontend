@@ -26,25 +26,30 @@
       </tr>
 
       <template v-if="currentPage === 1">
+        <template v-for="tx in txsFromMempool" :key="tx.hash">
+          <div style="color: white; height: 0.5em"></div>
+          <TableRow
+            :width="width"
+            :transaction="tx"
+            from-mempool
+            :current-wallet="currentWallet"
+            @showTransactionInfo="showTransactionInfo"
+            @editComment="editComment"
+          />
+          <div class="table-row__note">{{ tx.note }}</div>
+        </template>
+      </template>
+
+      <template v-for="item in transactions" :key="item.hash">
+        <div style="color: white; height: 0.5em"></div>
         <TableRow
-          v-for="tx in txsFromMempool"
-          :key="tx.hash"
-          :transaction="tx"
-          from-mempool
+          :width="width"
+          :transaction="item"
           :current-wallet="currentWallet"
           @showTransactionInfo="showTransactionInfo"
           @editComment="editComment"
         />
       </template>
-
-      <TableRow
-        v-for="item in transactions"
-        :key="item.hash"
-        :transaction="item"
-        :current-wallet="currentWallet"
-        @showTransactionInfo="showTransactionInfo"
-        @editComment="editComment"
-      />
     </table>
 
     <div class="transactions__section">
@@ -152,7 +157,7 @@
 </template>
 
 <script>
-import { ref, computed, inject, nextTick, watch } from 'vue';
+import { ref, computed, inject, nextTick, watch, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
 import TransactionInfoModalContent from './components/TransactionInfoModalContent.vue';
@@ -198,6 +203,21 @@ export default {
   },
   emits: ['prepareClaim', 'prepareXctClaim'],
   setup(props) {
+    const width = ref(null);
+    const onResizeFn = () => {
+      width.value = document.querySelector('.wallet__main').offsetWidth - 150;
+      if (window.innerWidth < 1920) {
+        width.value = document.querySelector('.wallet__main').offsetWidth - 116;
+      }
+      if (window.innerWidth <= 1280) {
+        width.value = document.querySelector('.wallet__main').offsetWidth - 100;
+      }
+    };
+    onMounted(() => {
+      onResizeFn();
+    });
+    window.addEventListener('resize', () => onResizeFn(), true);
+
     const currentKtAddress = inject('currentKtAddress');
     const currentAddress = computed(() =>
       currentKtAddress.value
@@ -331,6 +351,7 @@ export default {
     };
 
     return {
+      width,
       setCurrentPage,
       currentPage,
       options,
@@ -382,7 +403,12 @@ export default {
   }
   &__table {
     border-collapse: separate;
-    border-spacing: 0 0.5em;
+    &:not(td) {
+      border-spacing: 0 0.5em;
+    }
+    &:has(td) {
+      border-spacing: 0;
+    }
     // border-collapse: collapse;
     // margin-bottom: 30px;
     @include lg {
@@ -531,6 +557,29 @@ export default {
   }
   &__edit-comment-modal-content-textarea {
     height: 120px;
+  }
+}
+.transaction {
+  &__note {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: -0.02em;
+    color: #6b93c0;
+    background: rgba(239, 249, 254, 0.7);
+    td {
+      height: 18px;
+      position: relative;
+    }
+    div {
+      position: absolute;
+      height: 18px;
+      overflow: hidden;
+      top: 0px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100%;
+    }
   }
 }
 </style>

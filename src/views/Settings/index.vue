@@ -14,20 +14,22 @@
       </div>
 
       <div class="settings__right-wrap">
-        <div class="two_in_one">
-          <Language />
-          <Subscriptions />
+        <div class="container">
+          <div class="two_in_one">
+            <Language />
+            <Subscriptions />
+          </div>
+
+          <div class="column">
+            <ChangeEmail />
+            <ChangePassword />
+          </div>
         </div>
+        <div class="container">
+          <ExtensionSettings :visibleClass="'comingSoon'" />
 
-        <div class="column">
-          <ChangeEmail />
-          <ChangePassword />
-          <!-- <SyncExtension v-if="global.citadel && isPasswordHash" /> -->
+          <DeleteAccount />
         </div>
-
-        <ExtensionSettings :visibleClass="'comingSoon'" />
-
-        <DeleteAccount />
       </div>
     </div>
 
@@ -356,23 +358,10 @@ export default {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  gap: 30px;
 
-  & > div {
-    &:first-child {
-      flex: 0 0 63%;
-    }
-    &:nth-child(2) {
-      flex: 0 0 35%;
-    }
-
-    @include laptop-xl {
-      &:first-child,
-      &:nth-child(2) {
-        flex: 0 0 49%;
-      }
-    }
-  }
   &__left-side {
+    width: 50%;
     & .cross-chain-card {
       display: none;
     }
@@ -391,6 +380,9 @@ export default {
   }
 
   &__right-side {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
     & > div {
       margin-bottom: $card-margin;
     }
@@ -408,6 +400,7 @@ export default {
     }
 
     .two_in_one {
+      width: 50%;
       @include card-default;
 
       & > div {
@@ -424,6 +417,7 @@ export default {
     .column {
       display: flex;
       flex-direction: column;
+      width: 50%;
     }
     @include laptop-l {
       & .cross-chain-card {
@@ -439,19 +433,35 @@ export default {
     align-items: stretch;
 
     & > div {
-      flex: 0 0 49%;
       margin-bottom: $card-margin;
-      @include laptop-l {
-        flex: 0 0 100%;
-      }
-      @include laptop {
-        flex: 0 0 100%;
-      }
     }
   }
 }
 .manage-vk-modal {
   max-width: 850px;
   width: 100% !important;
+}
+.container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  gap: 25px;
+  & div {
+    width: 100%;
+  }
+}
+@media (max-width: 1370px) {
+  .settings__right-side:deep {
+    & .container {
+      flex-direction: column;
+    }
+    & .two_in_one,
+    & .column {
+      width: 100%;
+    }
+  }
+  .settings__left-side {
+    width: 63%;
+  }
 }
 </style>

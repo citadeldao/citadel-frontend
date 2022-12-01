@@ -539,9 +539,6 @@
     "overallTitle": "Обзор",
     "days": "дни",
     "copiedToClipboard": "Скопировано в буфер обмена",
-    "copyToClipboardTitle": "",
-    "showHideKeyTitle": "",
-    "changeKeyTitle": "",
     "earn": "Получить",
     "seed": "Сид",
     "learnHow": "Узнать как",
@@ -625,6 +622,7 @@
     "addAnAddress": "Добавить адрес",
     "chooseSuitableMethod": "Выбрать подходящий метод для импорта существующего адреса",
     "address": "Адрес",
+    "anotherAddress": "",
     "enterAddress": "Введите адрес",
     "import": "Импорт",
     "enterMnemonicPhrase": "Введите мнемоническую фразу",
@@ -637,6 +635,7 @@
     "next": "Далее",
     "confirm": "Подтвердить",
     "importExistingAddressExp": "Импортировать существующий адрес",
+    "notFoundPlaceholderText": "",
     "layouts": {
         "addAddressLayout": {
             "sidebarPlaceholder": "Ваши адреса будут отображены здесь",
@@ -704,13 +703,6 @@
         "enterPasswordForAllInPrivate": "Добавьте сеть, используя ваш приватный ключ"
     },
     "settings": {
-        "extensions": {
-            "title": "",
-            "description": "",
-            "appsTitle": "",
-            "searchLabel": "",
-            "searchPlaceholder": ""
-        },
         "subscriptions": {
             "title": "Подписки",
             "description": "Подпишитесь на важные обновления",
@@ -747,7 +739,7 @@
         },
         "changeEmail": {
             "title": "Ваш e-mail",
-            "description": "E-mail вашего аккаунта",
+            "description": "",
             "inputLabel": "Ваш e-mail",
             "inputPlaceHolder": "e-mail",
             "button": "Изменить",
@@ -772,8 +764,8 @@
             "description": "Эта операция не может быть отменена",
             "modalDescription": "Обратите внимание, что это действие нельзя отменить. Ваши активы в безопасности - вы удаляете только аккаунт Citadel.one",
             "button": "Удалить аккаунт",
-            "inputLabel": "Введите \"delete\" для подтвердления",
-            "placeholder": "Введите подтверждение"
+            "inputLabel": "Нажмите «Удалить аккаунт» чтобы подтвердить действие",
+            "placeholder": "Введите 'delete'"
         },
         "changePassword": {
             "btnTitle": "Изменить пароль",
@@ -804,6 +796,13 @@
             "button": "Открыть настройки",
             "comingSoon": "Скоро",
             "successDescription": "Используйте свой новый пароль для подтверждения транзакций"
+        },
+        "extensions": {
+            "title": "Приложения в разработке",
+            "description": "Введите код для тестирования приложения. Код предоставляет центр разработки.",
+            "appsTitle": "Ваши приложения для тестирования",
+            "searchLabel": "Код приложения",
+            "searchPlaceholder": "Введите код"
         }
     },
     "overallPage": {
@@ -843,7 +842,7 @@
         "supply": "Активы в обороте",
         "supplyTooltip": "Активы в обороте - это общее количество монет, которые доступны для торговли и обращаются на рынке.",
         "staked": "Застейканные активы",
-        "stakedTooltip": "Застейканные активы",
+        "stakedTooltip": "Процент доступных токенов для стейкинга",
         "inflation": "Инфляция",
         "inflationTooltip": "Для инфляции (Инфляция Сети), мы учитываем все новые токены и все резервные активы, которые распределяются в качестве вознаграждения.",
         "priceChart": "график цены",
@@ -852,7 +851,7 @@
         "dayTradingVol": "Объем торгов за 24 часа",
         "dayTradingVolTooltip": "Объем торговли за 24 часа - это количество монет, которые были в обмене за последние 24 часа.",
         "placeholderTitle": "В настоящее время информация о токене недоступна",
-        "placeholderDescription": "Информация о токене и график истории цен будут доступны в ближайшее время"
+        "placeholderDescription": "Информация о токене и график динамики цен будут доступны в ближайшее время"
     },
     "viewingKey": {
         "viewingKey": "Ключ просмотра",
@@ -985,7 +984,6 @@
     "emptyPassword": "Поле пароля пусто",
     "accruedDaily": "Начисляется ежедневно с 18:00 до 19:00 UTC",
     "extensions": {
-        "emptyList": "",
         "showLabel": "Показать",
         "headerTitle": "Приложения",
         "headerDescription": "Используйте ваши любимые приложения DeFi и другие приложения не покидая Citadel.one!",
@@ -1003,7 +1001,8 @@
         "searchPlaceholder": "Введите название приложения",
         "typeOperation": "Тип операции",
         "showMore": "Показать больше",
-        "execute": "выполнить"
+        "execute": "выполнить",
+        "emptyList": "По вашему запросу ничего не найдено"
     },
     "tokenDescriptionComdex": "Comdex — это децентрализованный протокол синтетических активов, являющийся частью экосистемы Cosmos.",
     "tokenDescriptionJuno": "Juno — проект из Cosmos-экосистемы, который обеспечивает среду для создания интероперабельных смарт-контрактов.",
@@ -1387,7 +1386,9 @@
         "enterPassword": "Введите пароль для расширения",
         "syncMainTitle": "Синхронизация адресов",
         "syncMainDescription": "Синхронизируйте свои адреса с помощью Citadel.one Browser Extension за считанные секунды",
-        "syncMainSync": "Синхронизация"
+        "syncMainSync": "Синхронизация",
+        "extensionBlock": "Расширение для Chrome",
+        "sync": "Синхронизировать кошельки"
     },
     "noApyNote": "Получайте пассивный доход, стейкая ваши криптоактивы!",
     "assetsStubs": {
@@ -1411,6 +1412,10 @@
     "addComment": "Добавить комментарий",
     "editComment": "Изменить комментарий",
     "errors": {
-        "notEnoughFounds": "Недостаточно {code} для оплаты комиссии за транзакцию"
-    }
+        "notEnoughFounds": "Недостаточно {code} для оплаты комиссии за транзакцию",
+        "notAvailableToStake": ""
+    },
+    "copyToClipboardTitle": "Копировать ключ просмотра",
+    "showHideKeyTitle": "Показать / скрыть кнопку просмотра",
+    "changeKeyTitle": "Изменить ключ просмотра"
 }

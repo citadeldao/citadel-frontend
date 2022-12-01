@@ -56,7 +56,7 @@ module.exports = {
     },
   },
   devServer: {
-    https: true,
+    https: process.env.NODE_ENV === 'production',
   },
   productionSourceMap: process.env.NODE_ENV !== 'production',
   css: {

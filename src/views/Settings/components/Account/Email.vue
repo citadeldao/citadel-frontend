@@ -9,6 +9,7 @@
       </span>
 
       <PrimaryButton
+        width="120px"
         class="change-email__button"
         data-qa="settings__email-button"
         @click="toggleModal(currentStage, true)"
@@ -239,6 +240,7 @@ export default {
 
 <style lang="scss" scoped>
 .change-email {
+  height: 100%;
   @include settings-card-default;
   margin-bottom: $card-margin;
 

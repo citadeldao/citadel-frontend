@@ -563,11 +563,9 @@ export default {
       return props.currentWallet.type;
     });
 
-    const switchChangeHandler = async (value) => {
-      if (value) {
-        await getFees(bridgeTargetNet.value);
-      }
+    const switchChangeHandler = async () => {
       toAddress.value = '';
+      await getFees(bridgeTargetNet.value);
     };
     const { isHardwareWallet, wallets } = useWallets();
 
@@ -699,8 +697,8 @@ export default {
     };
     const dataLoaded = ref(false);
     const loadData = async () => {
-      dataLoaded.value = true;
-      await getFees();
+      dataLoaded.value = false;
+      await getFees(bridgeTargetNet.value);
       await getDelegationBalance();
       dataLoaded.value = false;
     };
@@ -1822,6 +1820,10 @@ export default {
 
   &__button {
     align-self: center;
+    button {
+      width: 200px;
+      height: 60px;
+    }
     @include md {
       display: none;
     }
