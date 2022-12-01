@@ -48,7 +48,7 @@
     </div>
     <div v-if="info.value" class="info-block__line">
       <span class="info-block__line-title"> {{ $t('amount') }}: </span>
-      <div>
+      <div class="amount">
         <span
           v-pretty-number="{
             value: info.value,
@@ -149,6 +149,10 @@ export default {
     }
     &:first-child {
       margin-top: 0;
+    }
+
+    .amount {
+      text-align: right;
     }
 
     .value {

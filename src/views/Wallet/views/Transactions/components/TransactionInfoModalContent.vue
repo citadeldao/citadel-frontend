@@ -52,7 +52,9 @@
                   </span>
                 </transition>
               </div>
-              <div class="value-symbol">{{ component.value.symbol }}</div>
+              <div class="value-symbol">
+                {{ component.value.symbol.slice(0, 5) }}
+              </div>
             </div>
             <div v-if="component.type === 'text'" class="value">
               <div

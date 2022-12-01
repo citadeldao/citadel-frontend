@@ -63,9 +63,19 @@ export default {
 
     const toggleChecked = () => {
       if (props.checked) {
-        emit('uncheck', props.network.id || props.network);
+        emit(
+          'uncheck',
+          typeof props.network?.id === 'number'
+            ? props.network.id
+            : props.network
+        );
       } else {
-        emit('check', props.network.id || props.network);
+        emit(
+          'check',
+          typeof props.network?.id === 'number'
+            ? props.network.id
+            : props.network
+        );
       }
     };
 

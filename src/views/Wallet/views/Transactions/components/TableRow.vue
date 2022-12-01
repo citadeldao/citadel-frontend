@@ -54,7 +54,7 @@
             :style="{ color: valueColor }"
           />
           <span class="table-row__amount-value-currency">
-            {{ formatedValueSymbol || currentWallet.code }}
+            {{ (formatedValueSymbol || currentWallet.code).slice(0, 5) }}
           </span>
         </div>
       </div>
