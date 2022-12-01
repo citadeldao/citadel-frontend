@@ -74,18 +74,20 @@ export default {
   }
 
   &__item {
-    width: 350px;
+    min-width: 200px;
+    width: 100%;
+    max-width: 350px;
     height: 48px;
     border-radius: 8px;
     display: flex;
     align-items: center;
+    justify-content: center;
+
     padding: 0 15px;
     box-sizing: border-box;
     cursor: pointer;
     margin-bottom: 12px;
     border: 1px solid #c3ceeb;
-    display: flex;
-    justify-content: center;
 
     svg {
       fill: #1a53f0;
@@ -111,6 +113,9 @@ export default {
     }
 
     .info {
+      min-width: 80px;
+      width: 100px;
+      max-width: 120px;
       .description {
         color: #1a53f0;
         font-weight: 600;

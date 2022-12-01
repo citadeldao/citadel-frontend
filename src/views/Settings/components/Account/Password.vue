@@ -262,7 +262,7 @@ export default {
   height: 70px;
 
   &.m-20 {
-    margin: 55px 0 20px 0;
+    margin: 45px 0 25px 0;
 
     &.hasError {
       margin: 75px 0 20px 0;
@@ -295,6 +295,7 @@ export default {
 }
 
 .change-password-card {
+  height: 100%;
   @include settings-card-default;
   &__title {
     display: flex;

@@ -75,7 +75,7 @@ export default [
       },
       {
         name: 'WalletTransactionsOld',
-        path: 'transactions',
+        path: 'transactions_old',
         component: () =>
           import(
             /* webpackChunkName: 'Transactions' */ '@/views/Wallet/views/TransactionsOld'
@@ -319,6 +319,15 @@ export default [
     name: 'ErrorPage',
     component: () =>
       import(/* webpackChunkName: 'ErrorPage' */ '@/views/ErrorPage'),
+    meta: {
+      layout: 'DefaultLayout',
+      guard: 'private',
+    },
+  },
+  {
+    path: '/service-is-unavailable',
+    name: 'AppOff',
+    component: () => import(/* webpackChunkName: 'AppOff' */ '@/views/AppOff'),
     meta: {
       layout: 'DefaultLayout',
       guard: 'private',

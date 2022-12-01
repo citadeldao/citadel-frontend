@@ -5,12 +5,8 @@
     @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"
   >
-    <div class="sidebar__logo">
-      <div
-        data-qa="main-logo"
-        class="sidebar__logo-inner-wrapper"
-        @click="setActiveTab('all')"
-      >
+    <div data-qa="main-logo" class="sidebar__logo" @click="setActiveTab('all')">
+      <div class="sidebar__logo-inner-wrapper">
         <citadelLogo class="sidebar__logo-citadel" />
         <onlyLogo class="sidebar__compact-logo-citadel" />
       </div>
@@ -82,9 +78,6 @@
         :class="scrollClass"
         @change="isOverflown($event)"
       >
-        <h4 class="sidebar__addresses-header-title">
-          {{ $t('layouts.addAddressLayout.addresses') }}
-        </h4>
         <SearchPlaceholder />
       </div>
       <div
@@ -385,16 +378,19 @@ export default {
   },
   mounted() {
     if (window.innerWidth <= 1024) {
-      document
-        .querySelector('#main')
-        .addEventListener('click', this.onClickMain);
+      const main = document.querySelector('#main');
+      if (main) {
+        main.addEventListener('click', this.onClickMain);
+      }
     }
 
     this.setShadows();
-
-    document
-      .querySelector('.sidebar__addresses-addresses-full-list')
-      .addEventListener('scroll', this.onScrollFullList);
+    const fullList = document.querySelector(
+      '.sidebar__addresses-addresses-full-list'
+    );
+    if (fullList) {
+      fullList.addEventListener('scroll', this.onScrollFullList);
+    }
   },
   created() {
     window.addEventListener('resize', this.onResize);
@@ -585,10 +581,11 @@ export default {
   }
 
   &__logo {
-    margin: 0 auto 40px;
+    margin: 0 auto 45px;
     max-width: calc(#{$sidebar-max-width} - 50px);
     width: 100%;
     text-align: left;
+    cursor: pointer;
     @include md {
       max-width: calc(#{$sidebar-max-width-md} - 50px);
       margin: 0 auto 20px;
@@ -690,7 +687,7 @@ export default {
     & svg {
       width: 20px;
       height: 20px;
-      fill: $mid-blue;
+      fill: $blue-hyacinth;
       margin-right: 19px;
       cursor: pointer;
 
@@ -748,7 +745,7 @@ export default {
       flex-direction: column;
       overflow-y: overlay;
       overflow-x: hidden;
-      padding: 15px 0;
+      padding: 15px 0 0;
       border-radius: 8px;
       @include laptop {
         width: 90%;

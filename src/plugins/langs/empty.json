@@ -291,7 +291,9 @@
     "tryBtn": "",
     "errorPage": {
         "pageNotFound": "",
-        "toHomePage": ""
+        "toHomePage": "",
+        "serviceOff": "",
+        "serviceOffDescription": ""
     },
     "lockBanner": {
         "bannerInfo": "",
@@ -1410,7 +1412,7 @@
     "noSelfSendError": "",
     "minAmountError": "",
     "errors": {
-        "notEnoughFounds": ""
+        "notEnoughFounds": "",
+        "notAvailableToStake": ""
     }
-  }
-  
+}

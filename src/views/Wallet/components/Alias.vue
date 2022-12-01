@@ -1,55 +1,51 @@
 <template>
   <div class="alias">
     <div class="alias__info">
-      <div class="alias__lines">
-        <div class="alias__first-line">
-          <FavoriteButton
-            :value="isFavorite"
-            data-qa="wallet__favourite"
-            @change="toggleFavorite"
+      <div class="alias__first-line">
+        <FavoriteButton
+          :value="isFavorite"
+          data-qa="wallet__favourite"
+          @change="toggleFavorite"
+        />
+        <div v-click-away="onClickAway" class="alias__edit">
+          <input
+            v-if="editMode"
+            ref="titleInput"
+            v-model="alias"
+            type="text"
+            class="alias__input"
+            spellcheck="false"
+            @focus="focus = true"
+            @blur="focus = false"
+            @keyup.enter="setAlias()"
           />
-          <div v-click-away="onClickAway" class="alias__edit">
-            <input
-              v-if="editMode"
-              ref="titleInput"
-              v-model="alias"
-              type="text"
-              class="alias__input"
-              spellcheck="false"
-              @focus="focus = true"
-              @blur="focus = false"
-              @keyup.enter="setAlias()"
-            />
-            <p v-else ref="nameRef" class="alias__wallet-name">
-              {{ currentWallet.title || currentWallet.address }}
-            </p>
-          </div>
-        </div>
-        <div class="alias__second-line">
-          <div class="alias__wallet-type">
-            <WalletTypeCard
-              :type="currentWalletType"
-              data-qa="wallet__adding-type"
-            />
-          </div>
-          <div class="alias__address-wrapper">
-            <span
-              id="address"
-              ref="addressRef"
-              class="alias__address"
-              @mouseenter="showAddressTooltip = true"
-              @mouseleave="showAddressTooltip = false"
-            >
-              {{ currentWallet.address }}
-            </span>
-          </div>
+          <h4 v-else ref="nameRef" class="alias__wallet-name">
+            {{ currentWallet.title || currentWallet.address }}
+          </h4>
+          <EditButton @click="clickHandler">
+            {{ editMode ? $t('save') : $t('edit') }}
+          </EditButton>
         </div>
       </div>
-      <div class="alias__actions">
-        <EditButton @click="clickHandler">
-          {{ editMode ? $t('save') : $t('edit') }}
-        </EditButton>
-        <div style="display: flex">
+      <div class="alias__second-line">
+        <div class="alias__wallet-type">
+          <WalletTypeCard
+            :type="currentWalletType"
+            data-qa="wallet__adding-type"
+          />
+        </div>
+        <div class="alias__address-wrapper">
+          <span
+            id="address"
+            ref="addressRef"
+            class="alias__address"
+            :style="{ maxWidth: `${maxWidth}px` }"
+            @mouseenter="showAddressTooltip = true"
+            @mouseleave="showAddressTooltip = false"
+          >
+            <resize-observer :show-trigger="true" @notify="handleResize" />
+            {{ formattedAddress }}
+          </span>
           <div
             class="alias__copy-icon"
             data-qa="wallet__copy-address-button"
@@ -96,12 +92,14 @@ import WalletTypeCard from '@/components/WalletTypeCard';
 import EditButton from '@/components/UI/EditButton';
 import FavoriteButton from '@/components/FavoriteButton';
 import copyToClipboard from '@/helpers/copyToClipboard';
-import { computed, nextTick, ref } from 'vue';
+import { computed, nextTick, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
-import { addressTextWidth } from '@/helpers';
+import { addressTextWidth, formattedWalletAddress } from '@/helpers';
 import { findAddressWithNet } from '@/helpers';
+import { useWindowSize } from 'vue-window-size';
+import { screenWidths } from '@/config/sreenWidthThresholds';
 import { WALLET_TYPES } from '@/config/walletType';
-import { useRouter } from 'vue-router';
+
 export default {
   name: 'Alias',
   components: {
@@ -120,9 +118,32 @@ export default {
   },
   emits: ['qrClick'],
   setup(props) {
-    const router = useRouter();
+    const { width } = useWindowSize();
+    const addressRef = ref(null);
+    const nameRef = ref(null);
+    const wrapperWidth = ref();
+    const wrapperNameWidth = ref();
 
     const scannerLink = computed(() => props.currentWallet.getScannerLink());
+
+    const handleResize = ({ width }) => {
+      wrapperWidth.value = width;
+    };
+
+    const fontSizes = computed(() => {
+      return width.value < screenWidths.lg
+        ? { name: 16, address: 14 }
+        : { name: 20, address: 16 };
+    });
+
+    const maxWidth = computed(() =>
+      addressTextWidth(
+        props.currentWallet?.address,
+        'Panton_Regular',
+        fontSizes.value.address
+      )
+    );
+
     const metamaskConnector = computed(
       () => store.getters['metamask/metamaskConnector']
     );
@@ -144,6 +165,17 @@ export default {
 
       return props.currentWallet.type;
     });
+
+    const formattedAddress = computed(() => {
+      return formattedWalletAddress(
+        props.currentWallet?.address,
+        +wrapperWidth.value,
+        'Panton_Regular',
+        fontSizes.value.address,
+        0
+      );
+    });
+
     const editMode = ref(false);
     const titleInput = ref(null);
     const alias = ref('');
@@ -156,12 +188,11 @@ export default {
 
         return;
       }
-
       await store.dispatch('wallets/renameWalletTitle', {
         walletId: props.currentWallet.id,
-        title: alias.value.trim(),
+        title: alias.value,
       });
-      // store.dispatch('wallets/getNewWallets','lazy');
+      store.dispatch('wallets/getNewWallets', 'lazy');
       editMode.value = false;
       alias.value = '';
     };
@@ -211,7 +242,6 @@ export default {
       } else {
         await addToFavorite();
       }
-
       await store.dispatch('wallets/getCustomWalletsList');
     };
     const removeFromFavorite = async () => {
@@ -228,13 +258,6 @@ export default {
         ),
         needSetActiveList: false,
       });
-
-      if (
-        !favouritesList.value.wallets?.length &&
-        store.getters['wallets/activeList'] === 'Favourites'
-      ) {
-        router.push({ name: 'Overall' });
-      }
     };
     const addToFavorite = async () => {
       if (!favouritesList.value) {
@@ -251,7 +274,6 @@ export default {
 
         return;
       }
-
       await store.dispatch('wallets/editCustomWalletsList', {
         listId: favouritesList.value.id,
         name: 'Favourites',
@@ -268,8 +290,13 @@ export default {
 
     const showAddressTooltip = ref(false);
 
+    // set wrapper width default
+    onMounted(() => {
+      wrapperWidth.value = addressRef.value.offsetWidth;
+      wrapperNameWidth.value = nameRef.value.offsetWidth;
+    });
+
     return {
-      addressTextWidth,
       copyToClipboard,
       editMode,
       clickHandler,
@@ -282,8 +309,15 @@ export default {
       focus,
       isFavorite,
       toggleFavorite,
+      formattedAddress,
+      wrapperWidth,
+      wrapperNameWidth,
+      handleResize,
+      maxWidth,
       showAddressTooltip,
       currentWalletType,
+      addressRef,
+      nameRef,
       scannerLink,
     };
   },
@@ -292,28 +326,36 @@ export default {
 
 <style lang="scss" scoped>
 .alias {
+  flex: 1;
   height: 150px;
   padding: 0 45px;
   align-items: center;
   justify-content: space-between;
   display: flex;
   background: $white;
-  box-shadow: $card-shadow;
+  box-shadow: -10px 4px 27px rgba(0, 0, 0, 0.1);
   border-radius: 25px;
   position: relative;
-  width: 100%;
-  &-xl {
-    @include xl {
-      width: calc(100% - 360px);
-    }
+  @include lg {
+    width: 100%;
+    height: 126px;
+    padding: 0 24px 0 29px;
   }
-
   @include md {
+    width: 100%;
     height: 98px;
     padding: 0 24px;
     border-radius: 16px;
+    box-shadow: -10px 4px 27px rgba(0, 0, 0, 0.1);
   }
 
+  &__info {
+    display: flex;
+    flex-direction: column;
+    max-width: 86%;
+    flex: 1;
+    margin-right: 20px;
+  }
   @include laptop {
     border-radius: 8px;
     padding: 0 20px;
@@ -323,6 +365,13 @@ export default {
     display: flex;
     flex-direction: column;
     width: 100%;
+    max-width: 490px;
+    @include laptop-l {
+      max-width: 400px;
+    }
+    @include laptop-standard {
+      max-width: 350px;
+    }
   }
   &__actions {
     height: 68px;
@@ -333,41 +382,42 @@ export default {
   }
   &__info {
     display: flex;
-    @include xl {
-      width: auto;
-    }
-    @media (max-width: 2336px) {
-      width: calc(100% - 160px);
-    }
+    max-width: 655px;
+    width: 100%;
   }
 
   &__edit {
+    display: flex;
     align-items: center;
-    width: calc(100% - 46px);
   }
 
   &__first-line {
     display: flex;
     align-items: center;
     margin-bottom: 8px;
-    height: 30px;
   }
 
   &__wallet-name {
     position: relative;
+    flex: 1;
     margin: 0;
     font-family: 'Panton_Bold';
+    margin-right: 16px;
     font-size: 20px;
     line-height: 30px;
+    white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    max-width: 525px;
+
+    @include lg {
+      max-width: 396px;
+    }
+
     @include md {
-      max-width: 390px;
+      max-width: 318px;
       font-size: 16px;
       line-height: 19px;
-    }
-    @include laptop {
-      max-width: 280px !important;
     }
   }
 
@@ -398,22 +448,30 @@ export default {
 
   &__address-wrapper {
     display: flex;
+    flex: 1;
     align-items: center;
-    width: calc(100% - 113px);
   }
 
   &__address {
+    flex: 1;
     position: relative;
     font-size: 16px;
     line-height: 27px;
     color: $mid-blue;
+    margin-right: 15px;
+    // overflow: hidden;
+    // white-space: nowrap;
+    // text-overflow: ellipsis;
     cursor: pointer;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    // max-width: 495px;
+    @include lg {
+      // max-width: 335px;
+    }
     @include md {
       font-size: 14px;
       line-height: 27px;
+      margin-right: 10px;
+      // max-width: 260px;
     }
   }
 
@@ -427,7 +485,7 @@ export default {
     justify-content: center;
     cursor: pointer;
     flex-shrink: 0;
-    margin-left: 20px;
+
     & svg {
       width: 43px;
       height: 43px;

@@ -7,24 +7,44 @@
       'dropdown-item--checked': isItemChecked,
     }"
   >
-    <Checkbox
-      v-if="selectable"
-      :id="wallet.id"
-      :value="isItemChecked"
-      @change="change"
-    />
-    <div
-      class="dropdown-item__icon"
-      :class="{ 'dropdown-item__icon--selectable': selectable }"
-    >
-      <component :is="currentIcon" />
-    </div>
-    <div class="dropdown-item__address">
-      {{
-        hidden
-          ? Array(wallet.address.length).fill('*').join('')
-          : currentAddress
-      }}
+    <div class="dropdown-item__info_wrapper">
+      <Checkbox
+        v-if="selectable"
+        :id="wallet.id"
+        :value="isItemChecked"
+        @change="change"
+      />
+      <div
+        class="dropdown-item__icon"
+        :class="{ 'dropdown-item__icon--selectable': selectable }"
+      >
+        <component :is="currentIcon" />
+      </div>
+      <div class="dropdown-item__info">
+        <Tooltip :max-width="450">
+          <template #content>{{ wallet.title || wallet.address }} </template>
+          <template #default>
+            <span
+              class="dropdown-item__title"
+              @mouseenter="showAddressTooltip = true"
+              @mouseleave="showAddressTooltip = false"
+              >{{ wallet.title || wallet.address }}</span
+            >
+          </template>
+        </Tooltip>
+        <span
+          class="dropdown-item__address"
+          :style="{ maxWidth: `${maxWidth}px` }"
+          id="address"
+          ref="addressRef"
+        >
+          {{
+            hidden
+              ? Array(wallet.address.length).fill('*').join('')
+              : formattedAddress
+          }}
+        </span>
+      </div>
     </div>
     <div class="dropdown-item__btn_group" v-if="!selectable">
       <div
@@ -75,11 +95,11 @@
 </template>
 
 <script>
-import { ref, markRaw, computed, inject, watchEffect } from 'vue';
+import { ref, markRaw, computed, inject, watch, nextTick } from 'vue';
 import { useStore } from 'vuex';
 import useWallets from '@/compositions/useWallets';
 import { WALLET_TYPES, SNIP20_PARENT_NET } from '@/config/walletType';
-
+import Tooltip from '@/components/UI/Tooltip';
 import Checkbox from '@/components/UI/Checkbox';
 import DeleteAddressModal from './DeleteAddressModal.vue';
 import removeIcon from '@/assets/icons/settings/remove.svg';
@@ -87,10 +107,13 @@ import keyIcon from '@/assets/icons/settings/key.svg';
 import notificationIcon from '@/assets/icons/settings/notification.svg';
 import exportIcon from '@/assets/icons/settings/export.svg';
 import visionIcon from '@/assets/icons/input/vision.svg';
-
+import { addressTextWidth, formattedWalletAddress } from '@/helpers';
+import { useWindowSize } from 'vue-window-size';
+import { screenWidths } from '@/config/sreenWidthThresholds';
 export default {
   name: 'DropdownItem',
   components: {
+    Tooltip,
     Checkbox,
     DeleteAddressModal,
     keyIcon,
@@ -100,6 +123,10 @@ export default {
     visionIcon,
   },
   props: {
+    isOpen: {
+      type: Boolean,
+      required: false,
+    },
     wallet: {
       type: Object,
       required: true,
@@ -117,12 +144,14 @@ export default {
   setup(props, { emit }) {
     const store = useStore();
     const { wallets } = useWallets();
+    const { width } = useWindowSize();
     const manageVkWallets = inject('manageVkWallets');
     const currentIcon = ref();
     const notification = ref(false);
     const isShowDeleteModal = ref(false);
     const isLoading = ref(false);
     const isItemChecked = ref(false);
+    const showAddressTooltip = ref(false);
     // const isLastWallet = computed(() => store.getters['wallets/wallets'].length === 0);
     const isSnip20 = computed(
       () =>
@@ -132,11 +161,13 @@ export default {
     );
     const updateSelectedWallets = inject('updateSelectedWallets');
     const change = (e) => {
-      isItemChecked.value = e;
-      updateSelectedWallets({
-        wallet: props.wallet,
-        isCheck: isItemChecked.value ? true : false,
-      });
+      if (props.selectable) {
+        isItemChecked.value = e;
+        updateSelectedWallets({
+          wallet: props.wallet,
+          isCheck: isItemChecked.value ? true : false,
+        });
+      }
     };
     import(`@/assets/icons/types/${props.wallet.type}.svg`).then((val) => {
       currentIcon.value = markRaw(val.default);
@@ -209,18 +240,55 @@ export default {
       windowSize.value = window.innerWidth;
     });
 
-    watchEffect(() => {
-      if (windowSize.value <= 1666) {
-        currentAddress.value = `${currentAddress.value.slice(
-          0,
-          6
-        )}***${currentAddress.value.slice(
-          currentAddress.value.length - 6,
-          currentAddress.value.length
-        )}`;
-      }
+    const addressRef = ref(null);
+    const wrapperWidth = ref();
+    const handleResize = ({ width }) => {
+      wrapperWidth.value = width;
+    };
+    const fontSizes = computed(() => {
+      return width.value < screenWidths.lg
+        ? { name: 14, address: 12 }
+        : { name: 14, address: 12 };
     });
+
+    const maxWidth = computed(() =>
+      addressTextWidth(
+        props.wallet?.address,
+        'Panton_Regular',
+        fontSizes.value.address
+      )
+    );
+    const maxNameWidth = computed(() =>
+      addressTextWidth(
+        props.wallet?.title || props.wallet?.address,
+        'Panton_Regular',
+        fontSizes.value.name
+      )
+    );
+    const formattedAddress = computed(() => {
+      if (props.isOpen)
+        return formattedWalletAddress(
+          props.wallet?.address,
+          +wrapperWidth.value,
+          'Panton_Regular',
+          fontSizes.value.address
+        );
+      return props.wallet?.address;
+    });
+    watch(
+      () => props.isOpen,
+      (value) => {
+        nextTick(() => {
+          if (value) wrapperWidth.value = addressRef.value.offsetWidth;
+        });
+      }
+    );
     return {
+      addressRef,
+      formattedAddress,
+      maxWidth,
+      maxNameWidth,
+      handleResize,
       currentIcon,
       notification,
       isSnip20,
@@ -236,6 +304,7 @@ export default {
       currentAddress,
       isItemChecked,
       change,
+      showAddressTooltip,
     };
   },
 };
@@ -254,6 +323,9 @@ export default {
   padding: 0 10px;
   &--selectable:not(&--checked) {
     cursor: pointer;
+    & svg {
+      height: 18px;
+    }
     .dropdown-item__address {
       color: #756aa8;
     }
@@ -263,6 +335,7 @@ export default {
     color: #000000;
   }
   &__icon {
+    min-width: 36px;
     width: 36px;
     height: 36px;
     border-radius: 4px;
@@ -280,15 +353,38 @@ export default {
     }
   }
 
-  &__address {
-    font-size: 14px;
-    text-align: left;
-    width: 60%;
-    margin-left: 15px;
-    margin-right: auto;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  &__info {
+    max-width: 65%;
+    color: #4b4c63;
+    display: flex;
+    flex-direction: column;
+    &_wrapper {
+      display: flex;
+      gap: 7px;
+      align-items: center;
+      width: 65%;
+      flex: 1;
+    }
   }
+  &__title {
+    font-weight: 700;
+    font-size: 14px;
+    width: fit-content;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  &__address {
+    flex: 1;
+    position: relative;
+    width: 100%;
+    text-align: left;
+    margin-right: auto;
+    color: $fieldName;
+    font-size: 12px;
+  }
+
   &__btn_group {
     max-width: 35%;
     width: fit-content;
@@ -309,7 +405,7 @@ export default {
     cursor: pointer;
 
     &:not(:first-child) {
-      margin-left: 3px;
+      margin-left: 8px;
     }
     &:hover {
       background: $too-dark-blue;
@@ -372,6 +468,43 @@ export default {
         height: 16px;
       }
     }
+  }
+}
+.alias__address-tooltip {
+  background-color: $too-ligth-gray;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 9px;
+  position: absolute;
+  white-space: nowrap;
+  z-index: 1;
+  left: 25%;
+  margin-left: -60px;
+  box-shadow: 0px 4px 25px rgba(63, 54, 137, 0.25);
+  border-radius: 6px;
+  font-size: 12px;
+  line-height: 16px;
+  color: $too-dark-blue;
+  max-width: 50% !important;
+  &::-webkit-scrollbar {
+    max-width: 368px !important;
+    height: 4px; /* width of the entire scrollbar */
+    border-radius: 20px;
+    scrollbar-width: thin;
+  }
+  &::-webkit-scrollbar-track {
+    margin: 4px;
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 98%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-radius: 2px;
+    border-style: solid;
+    border-color: transparent transparent $too-ligth-gray transparent;
   }
 }
 </style>

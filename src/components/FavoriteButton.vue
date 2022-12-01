@@ -55,8 +55,8 @@ export default {
 
 <style lang="scss" scoped>
 .favorite-button {
-  width: 23px;
-  height: 22px;
+  min-width: 23px;
+  min-height: 22px;
   margin-right: 16px;
   cursor: pointer;
   transition: all 0.2s;

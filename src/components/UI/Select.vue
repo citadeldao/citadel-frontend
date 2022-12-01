@@ -7,7 +7,7 @@
     @blur="closeOptions"
   >
     <div class="select__body">
-      <div class="select__label">
+      <div v-if="label" class="select__label">
         {{ label }}
       </div>
       <div class="select__value">
