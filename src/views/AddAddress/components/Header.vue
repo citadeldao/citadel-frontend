@@ -84,7 +84,7 @@ export default {
   &__section {
     display: flex;
     flex-direction: column;
-    margin-left: 25px;
+    margin-left: 50px;
   }
 
   &__title {
@@ -102,6 +102,7 @@ export default {
     line-height: 27px;
     color: $mid-blue;
     margin: 0;
+    font-weight: 400;
 
     @include md {
       font-size: 14px;

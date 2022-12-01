@@ -1,0 +1,1419 @@
+{
+    "login": {
+        "login": "ログインする",
+        "signup": "サインアップ",
+        "formInfo": "メールアドレスを入力して確認コードを受け取ります",
+        "withSocial": "またはでログイン",
+        "questionText1": "どうして",
+        "questionText2": "私のメールアドレスが必要ですか?",
+        "signIn": "ログイン",
+        "verification": "検証",
+        "verificationInfo": "確認コードが記載されたメールが届きます。 ここに入力してアクションを確認します",
+        "verificationNote": "注: 確認メッセージが届かない場合は、スパム ボックスを確認してください。",
+        "sendCode": "コードを送信",
+        "resend": "再送",
+        "resendCode": "コードを再送する",
+        "inputPlaceholder": "メールを入力",
+        "enterEmail": "メールアドレスを入力して",
+        "incorrectEmail": "誤ったメール",
+        "carousel": {
+            "stake": {
+                "title": "ステークして報酬を最大化",
+                "text": "次世代の資産管理のためのDAOベースのプラットフォームで暗号の世界に参加しましょう"
+            },
+            "xtc": {
+                "title": "ステーキング用のXCTを受け取る",
+                "text": "次世代の資産管理のためのDAOベースのプラットフォームで暗号の世界に参加しましょう"
+            },
+            "dao": {
+                "title": "DAOに参加する",
+                "text": "次世代の資産管理のためのDAOベースのプラットフォームで暗号の世界に参加しましょう"
+            },
+            "buy": {
+                "title": "仮想通貨の購入と交換",
+                "text": "次世代の資産管理のためのDAOベースのプラットフォームで暗号の世界に参加しましょう"
+            },
+            "useCases": {
+                "title": "暗号のユースケースを試す",
+                "text": "次世代の資産管理のためのDAOベースのプラットフォームで暗号の世界に参加しましょう"
+            },
+            "keep": {
+                "title": "ポートフォリオを追跡する",
+                "text": "次世代の資産管理のためのDAOベースのプラットフォームで暗号の世界に参加しましょう"
+            }
+        },
+        "whyEmailTitle": "Citadel.one がメールアドレスを必要とするのはなぜですか?",
+        "whyEmailDescription": "Citadel.one は非保管型のウォレットであるため、メールアドレスからアドレスにアクセスすることはできません。",
+        "whyEmailDescription1": "メールアドレスをお尋ねする理由は 2 つあります。",
+        "whyEmailMarker1": "Web プラットフォームとモバイル アプリケーションを簡単に切り替えることができます。",
+        "whyEmailMarker2": "必要に応じて、いつでも連絡を取り合うことができます。 暗号化アプリケーションでは通信が不足しているため、ステーク解除後のロックアップ期間の終了、バリデーターのシャットダウン、またはローンの清算が近づいているときに、人々は情報を得ることができません。 また、蓄積した報酬をステークする時期が来たら通知して、より多くの報酬を獲得できるようにします。",
+        "whyEmailDescription3": "匿名で登録したい場合は、",
+        "guide": "ガイド",
+        "sync": {
+            "chooseValidator": {
+                "title": "バリデーターの選択",
+                "text": "利用可能なノードの完全なリストから任意のバリデータを選択できます"
+            },
+            "setAmount": {
+                "title": "賭ける金額を設定する",
+                "text": "アセットは選択したバリデーターに委任されます"
+            },
+            "claimRewards": {
+                "title": "ステーキング報酬をお楽しみください！",
+                "text": "数回クリックするだけで報酬を受け取ることができます"
+            }
+        },
+        "loginInWith": "でログイン",
+        "socialAccount": "ソーシャルアカウント",
+        "web3wallet": "Web3 ウォレット",
+        "web3TitleMenu": "Web3でログイン",
+        "web3DescriptionMenu": "Web3ウォレットを接続してアカウントに入ります",
+        "socialTitleMenu": "ソーシャルでログイン",
+        "socialDescriptionMenu": "ソーシャル ネットワークを使用してアカウントを入力します",
+        "disclaimerMailTitle": "メールなしで続行してもよろしいですか？",
+        "disclaimerMailGuide": "匿名で登録したい場合は、",
+        "disclaimerMailGuide1": "ガイド",
+        "useEmailBtn": "メールを使う",
+        "continueWithoutEmail": "メールなしで続行",
+        "approveKeplrTitle": "Keplr 経由で承認する",
+        "approveMetamaskTitle": "メタマスク経由で承認",
+        "approveDescription": "ウォレット接続を承認するポップアップブラウザ拡張機能が表示されます。",
+        "confirmAddressTitleAnother": "現時点では、選択したネットワークはサポートされていません。<br>メタマスクでイーサリアムまたは BSC ネットワークを変更してください",
+        "confirmAddressTitleMetamaskEth": "ログインは、選択した Metamask アカウントを介して行われます。 今後のログインには必ず使用してください。<br>ログインには Ethereum または BSC ネットワークのみを使用できます。",
+        "confirmAddressTitleMetamaskBSC": "ログインは、選択した Metamask アカウントを介して行われます。 今後のログインには必ず使用してください。<br>ログインには Ethereum または BSC ネットワークのみを使用できます。",
+        "confirmAddressTitleKeplr": "ログインは、選択した Keplr アカウントを介して行われます。 今後のログインには必ず使用してください。<br>ログインには Cosmos ネットワークのみを使用できます。",
+        "changeLangTitle": "言語選択",
+        "changeLangDescription": "<span style='font-weight: bold; の操作に最も便利な言語を選択してください。  font-family: Panton_Bold;'>Citadel.one</span> プラットフォーム",
+        "KeplrNotFound": "Keplr 拡張機能が見つかりません",
+        "MetamaskNotFound": "メタマスク拡張子が見つかりません",
+        "language": "言語",
+        "back": "戻る",
+        "continue": "継続する",
+        "with": "と",
+        "continueEmail1": "メールがお手伝いします",
+        "continueEmail2": "簡単に切り替える",
+        "continueEmail3": "Web プラットフォームとモバイル アプリケーションの間。",
+        "continueEmail4": "メールで連絡を取り合うことができます",
+        "continueEmail5": "緊急の場合は。",
+        "continueEmail6": "情報を迅速に提供する必要がある状況は数多くあります。バリデーターがオフラインになり、コインを転送する必要がある場合。 ローンの清算が近づいているなど。 C1 アプリケーション セクションがさまざまなユースケースでいっぱいになると、この種のコミュニケーションが必要になります。",
+        "continueEmail7": "また、あなたが",
+        "continueEmail8": "ステーキング報酬を逃し、",
+        "continueEmail9": "より多くの収益を得ることができますが、オプションです。"
+    },
+    "logout": {
+        "modal": {
+            "title": "本当にやめる気？",
+            "eraseBtn": "秘密鍵を含むローカルに保存されたユーザー データを消去する",
+            "downloadBackup": "バックアップファイルをダウンロード"
+        }
+    },
+    "messages": {
+        "incorrectAddress": "間違った住所",
+        "incorrectNetwork": "不適切なネットワーク"
+    },
+    "addToPublicKey": {
+        "title": "公開アドレスを追加する",
+        "info": "Citadel.one の分析機能を探索するには、住所を追加してください"
+    },
+    "addAddress": {
+        "cardTitle1": "One-seed にネットワークを追加する",
+        "cardTitle2": "シードを 1 つ作成する",
+        "cardDescP1": "シタデル ワンシード ウォレットにより、ユーザーはプラットフォームに統合されたすべてのネットワークのアドレスを 1 つのみで作成できます。",
+        "cardDescP2": "記憶語句。 したがって、さまざまなウォレット用に複数のシードを保存および記憶する必要はありません。",
+        "cardNote": "おすすめされた",
+        "cardButton": "ネットワークを追加",
+        "card1Title": "既存の住所をインポート",
+        "card1Note": "速い",
+        "card2Title": "ハードウェアウォレットのインポート",
+        "card2Desc": "高度な使用のために Ledger または Trezor デバイスから住所をインポートする",
+        "card2Note": "高度",
+        "card3Title": "公開アドレスを追加",
+        "card3Desc": "住所を追加して、Citadel の分析機能を探索してください",
+        "card3Important": "注: このオプションでは、資産をステークまたは譲渡することはできません",
+        "card3Note": "ウォッチオンリー",
+        "button": "住所を追加",
+        "invalidDerivationPath": "派生パスが無効です",
+        "addressLimits": "ネットワーク内の 20 個のアドレスの制限を超えました"
+    },
+    "addToOneSeed": {
+        "rearrangeWords": "単語を正しい順序に並べ替えて、覚えやすいフレーズを確認してください。",
+        "exclamation": "シードフレーズを保存することを忘れないでください。 アカウントの回復に必要になります。 シードフレーズを失うと、資産を失います。",
+        "checkboxLabel": "シードフレーズを書き留めた",
+        "infoTitle": "シードフレーズが重要な理由",
+        "infoLine1": "ワンシードは、すべての Citadel.one ネイティブ アドレスを生成するために使用されます。",
+        "infoLine2": "写真やスクリーンショットを撮るのではなく、紙に書き留めることを強くお勧めします。",
+        "infoLine3": "この情報を失うと、誰もそれを回復することはできません。 安全保持。",
+        "exclamationLearn": "シード フレーズの詳細",
+        "whySeedTitle": "なぜシードフレーズが必要なのですか?",
+        "whySeedDescription": "シード フレーズを使用すると、ウォレットとウォレット内のすべての秘密鍵にアクセスできます。 クリプト ウォレットはクリプトのパスワード マネージャーと考えることができます。マスター パスワード (シード フレーズ) を持っている限り、関連するすべてのクリプトにアクセスできます。",
+        "selectWord": "単語を選択",
+        "getStartedBtn": "始めましょう",
+        "moreNetworks": "その他のネットワーク",
+        "walletCreated": "ウォレットが作成されました。",
+        "walletCreatedDescription": "利用可能なネットワークのリストに移動したい場合は、チェックボックスにチェックを入れます",
+        "errorConfirmWords1": "入力した単語を確認してください。",
+        "errorConfirmWords2": "シードフレーズを間違って書き留めた場合は、前のステップに戻って、記録が正しいことを確認してください。",
+        "backUp": {
+            "h1": "シードフレーズをコンピューターに保存できます",
+            "h2": "[ファイルのダウンロード] フィールドの近くにチェックマークを設定して、シード フレーズで暗号化されたファイルを取得します。 その後、シード フレーズを手動で入力する必要なく、このファイルをインポートできるようになります。",
+            "h3": "注意！ パソコンを使用していない場合は、この機能を使用しないでください。"
+        }
+    },
+    "importExistingAddress": {
+        "card1Title": "シード - フレーズ",
+        "card1Info": "シードフレーズをインポートしてアドレスを追加する",
+        "card2Title": "秘密鍵",
+        "card2Info": "秘密鍵をインポートしてアドレスを追加する",
+        "card3Info": "Web3 ウォレットを接続してアドレスを追加してください",
+        "card4Info": "Citadel バックアップ ファイルをインポートしてウォレットを復元する",
+        "card4Title": "インポートファイル",
+        "card5Info": "シタデル シードフレーズを入力して、ワンシード ウォレットを復元します",
+        "card5Title": "ワンシードを復元"
+    },
+    "importHardwareWallet": {
+        "note": "Chrome for Windows を使用している場合、場合によっては Ledger デバイスを接続するために、ブラウザーの設定を変更する必要があります。",
+        "card1Info": "元帳デバイスを接続する",
+        "card2Info": "Trezor デバイスを接続する"
+    },
+    "importLedger": {
+        "title": "元帳を使用しているコンピューターに接続します",
+        "title1": "元帳で開いたアプリを選択してください"
+    },
+    "importTrezor": {
+        "title": "Trezor を使用しているコンピューターに接続します。",
+        "title1": "Trezor で開いたアプリを選択してください"
+    },
+    "catPage": {
+        "congratulations": "おめでとうございます",
+        "message": "アドレスが正常に追加されました。 下の特別なフィールドで名前を設定できるようになりました。",
+        "addedAddress": "追加された住所",
+        "inputLabel": "エイリアスアドレスを入力してください",
+        "placeholderSeed": "シタデル・ワンシード",
+        "placeholderPrivate": "シタデルの秘密鍵",
+        "placeholderPublic": "シタデルの公開鍵",
+        "placeholderHardware": "シタデル ハードウェア"
+    },
+    "importFile": {
+        "title": "バックアップ ファイルをインポートまたはドラッグ アンド ドロップして、ウォレットを復元します",
+        "selectBackupFile": "バックアップファイルを選択"
+    },
+    "restoreOneSeed": {
+        "placeholder": "以前に Citadel.one で作成したシード フレーズを入力して、One-seed ウォレットにアクセスします",
+        "counterMessage": "スペースに単語を入力する"
+    },
+    "metamaskKeplr": {
+        "card1Info": "Metamask デバイスを接続する",
+        "card2Info": "Keplr デバイスを接続する",
+        "modalCardMessage": "要確認",
+        "modalCard1Info": "ブラウザの Metamask 拡張ポップアップでトランザクションを確認してください。",
+        "modalCard2Info": "ブラウザの Keplr 拡張ポップアップでトランザクションを確認してください。"
+    },
+    "qr": {
+        "modalErrorInfo": "QR コードでモバイル アプリに転送するアドレスを選択します。 一度に転送できるアドレスは 3 つまでです。",
+        "modalInfo": "␣モバイルアプリに転送したいアドレスをQRコードで選択",
+        "generateQR": "QR を生成する"
+    },
+    "qrInfo": {
+        "title": "Citadel.one モバイル アプリを Web プラットフォームに接続する",
+        "note": "上記の QR コードをスキャンして、アカウント データを Citadel.one モバイル アプリに転送します。  [次へ] をクリックして、次の QR コードにアクセスします。",
+        "scanQrInfo": "上記の QR コードをスキャンして、アカウント データを Citadel.one モバイル アプリに転送します。",
+        "step1Info": "Citadel.one アプリを開く",
+        "step2Info": "[アドレスを追加] に移動し、[QR で接続] を選択します",
+        "step3Info": "QRコードをスキャン"
+    },
+    "wallet": {
+        "info": {
+            "title": "ウォレットをインポートして資産の管理を開始",
+            "note": "トークンを送信、ステーク、または交換するには、シード フレーズまたは秘密鍵を使用してアドレスをインポートする必要があります。",
+            "block1Title": "なぜ住所をインポートする必要があるのですか?",
+            "block1Info": "公開鍵を使用して追加したか、ログアウトしたため、これは表示専用のアドレスです。",
+            "block2Title": "住所のインポートに関するガイダンスが必要ですか?",
+            "block2Info": "秘密鍵またはシード フレーズを使用してアドレスをインポートする方法については、ステップバイステップ ガイドを確認してください。",
+            "availableAssets": "利用可能なアセット",
+            "totalAssets": "総資産"
+        },
+        "stubs": {
+            "chain": "Ki-chain は一時的に利用できません",
+            "description": "Ki-chain は一時的に利用できません",
+            "subdescription": "注: アドレスを割り当てた場合でも、XCT 報酬を受け取ることができます。"
+        }
+    },
+    "balanceTooltipInfo": {
+        "availableBalance": "利用可能残高",
+        "availableBalanceInfo": "送信、ステーク、交換可能なトークン",
+        "stakedBalance": "ステーク残高",
+        "stakedBalanceBalanceInfo": "報酬が発生する累積ステーク残高",
+        "frozenBalance": "冷凍残高",
+        "frozenBalanceBalanceInfo1": "一時的に出金や交換ができないが、ステークはできるトークン",
+        "frozenBalanceBalanceInfo2": "ステーク解除トランザクション後にロックされるトークン",
+        "withFromPeriod": "{code} のステーキング解除期間は、",
+        "to": "に",
+        "iconPeriodLink": "を介して現在のステーキング解除期間を確認してください",
+        "noPeriod": "ステーキング解除期間はありません",
+        "unstakingPeriod": "ステーキング解除期間",
+        "is": "は",
+        "frozenBalanceTooltipTitle": "あなたのトークンはで利用可能になります"
+    },
+    "transactionsPage": {
+        "placeHolderInfo1": "取引履歴は空です。",
+        "placeHolderInfo2P1": "いくらか入金する",
+        "placeHolderInfo2P2": "報酬を送信、賭け、獲得する。",
+        "buyVia": "経由で購入",
+        "placeHolderInfoTitle2": "取引所からの入金",
+        "editCommentModalTitle": "コメントを編集",
+        "editCommentModalDesc": "以下のトランザクションにコメントを追加できます",
+        "transactionInfoModalTitle": "取引情報",
+        "transactionInfoModalDesc": "取引詳細は下記をご覧ください",
+        "failed": "失敗した",
+        "modalSuccessHeader": "取引成功！",
+        "modalSuccessDescription": "あなたの取引は完了しました。",
+        "modalPendingHeader": "取引保留中！",
+        "modalPendingDescription": "あなたの取引は保留中です。",
+        "modalFailHeader": "処理に失敗しました！",
+        "modalFailDescription": "取引が完了するまでに時間がかかる場合があります。"
+    },
+    "sendModal": {
+        "title1": "トークン送信の確認",
+        "desc1": "詳細は下記をご確認ください",
+        "changingModals": {
+            "error": "手数料が残高を超えています",
+            "title": "続行するには金額の変更を検討してください",
+            "decreaseDesc": "取引手数料をカバーするために、送金金額をわずかに減らすことをお勧めします。 以前の金額で続行する場合は、&#34No&#34 をクリックします。",
+            "increaseDesc": "取引手数料が安くなるので、送金金額を増やすことをお勧めします。 以前の金額で続行する場合は、&#34No&#34 をクリックします。"
+        },
+        "fee": {
+            "invalidAmount": "手数料の金額が無効です"
+        },
+        "desc2": "取引は進行中です"
+    },
+    "yes": "はい",
+    "no": "いいえ",
+    "tryBtn": "再試行",
+    "errorPage": {
+        "pageNotFound": "ページが見つかりません",
+        "toHomePage": "ホームページへ"
+    },
+    "lockBanner": {
+        "bannerInfo": "アドレスをインポートしてステーキングを開始します。 ガイドが必要ですか？ 小切手",
+        "thisLink": "このリンク"
+    },
+    "stakePlaceholder": {
+        "title": "数回クリックするだけでステーキングを開始できます!",
+        "whatIs": "とは",
+        "card1Info": "リストからノードを選択",
+        "card2Info": "ステークする金額を設定して確認する",
+        "card3Info": "暗号受動収入をお楽しみください",
+        "choseNodePlaceholderNote": "ステーキングするノードをクリックして選択します"
+    },
+    "staking": {
+        "chooseNodeForStaking": "ステーキングするノードを選択",
+        "chooseNodeModalDesc": "リストのノードをクリックして、ステークするノードを選択します。",
+        "chooseNodeModalDesc1": "資産をステークするには、ノードを選択し、委任の金額を設定します。  {net} のステーク解除期間が <span style='color: #0A2778; であることを考慮してください。  font-weight: bold;'>{perioud} 日</span>。",
+        "chooseNodeModalDescWithFrom": "資産をステークするには、ノードを選択し、委任の金額を設定します。  {net} のステーキング解除期間は変動することを考慮に入れてください <span style='color: #0A2778;  font-weight: bold;'>{perioudFrom} から {perioudTo} 日まで</span>。  <a href='{link}' style='color: #0A2778; で現在のステーク解除期間を確認してください。  font-weight: bold;text-decoration:none'>link</a>.",
+        "Stake": "ステーク",
+        "staking": "ステーキング",
+        "searchNode": "検索ノード",
+        "searchInputPlaceholder": "ノード名の入力を開始します",
+        "editNode": "ノードを編集",
+        "actionModalTitle": "ステーキング取引を確認する",
+        "actionModalDesc": "あなたのトークンが賭けられます",
+        "stakeFrom": "からの出資",
+        "stakeOn": "賭ける",
+        "amountToStake": "賭ける金額",
+        "inputNote": "手数料トークンの購入のために予約された資金を含む",
+        "editModeDesc": "資産をステークまたはアンステークするには、下のフィールドで委任の金額を設定します。  {net} のステーク解除期間が <span style='color: #0A2778; であることを考慮してください。  font-weight: bold;'>{perioud} 日</span>",
+        "editModeDescWithFrom": "資産をステークまたはアンステークするには、下のフィールドで委任の金額を設定します。  {net} のステーキング解除期間は変動することを考慮に入れてください <span style='color: #0A2778;  font-weight: bold;'>{perioudFrom} から {perioudTo} 日まで</span>。  <a href='{link}' style='color: #0A2778; で現在のステーク解除期間を確認してください。  font-weight: bold;text-decoration:none'>link</a>.",
+        "nodeIsNotActive": "ノードは非アクティブで、報酬は発行されていません",
+        "nodeIsJailed": "このノードは現在非アクティブです。ステーキングしても報酬は得られません。 アセットを別のノードに委任する"
+    },
+    "unstaking": {
+        "unstake": "アンステーク",
+        "defaultPrefix": "ノードを選択し、アンステークする金額を設定します。",
+        "customPrefix": "アンステークする金額を設定します。",
+        "chooseNodeForUnstaking": "ステーキングを解除するノードを選択",
+        "chooseNodeModalDesc": "{net} のステーク解除期間が <span style='color: #0A2778; であることを考慮してください。  font-weight: bold;'>{perioud} 日</span>。",
+        "chooseNodeModalDescWithFrom": "{net} のステーキング解除期間は変動することを考慮に入れてください <span style='color: #0A2778;  font-weight: bold;'>{perioudFrom} から {perioudTo} 日まで</span>。  <a href='{link}' style='color: #0A2778; で現在のステーク解除期間を確認してください。  font-weight: bold;text-decoration:none'>link</a>.\n\n chooseNodeModalDescWithFrom",
+        "actionModalTitle": "アンステーキング取引を確認する",
+        "actionModalDesc": "トークンはステーク解除され、しばらくの間凍結されます",
+        "unstakeTo": "ステーク解除",
+        "unstakeFrom": "ステーク解除",
+        "amountToUnstake": "アンステークする金額",
+        "unstakeNote": "ステーキング解除トランザクションの確認後、資産は {unstakeingPerioud} 日間ロックされます。ステーキングされていない資産は凍結残高セクションに表示されます。"
+    },
+    "singleStake": {
+        "chooseNodeModalDesc": "資産を賭けるには、ノードを選択し、委任の金額を設定します。  <strong style='color:#0a2778;'>ステーク解除期間がない</strong>ことに注意してください。",
+        "actionModalTitle": "再委任の確認",
+        "actionModalDesc": "あなたの資産は現在のバリデーターからステーク解除され、新しく選択されたバリデーターに一度ステークされます",
+        "undelegateFrom": "委任を取り消す",
+        "delegateTo": "に委任する"
+    },
+    "ledger": {
+        "connect": {
+            "title": "元帳を接続する",
+            "desc": "ハードウェアウォレットをコンピュータに接続してください"
+        },
+        "openApp": {
+            "title": "Ledger アプリを開く (再度開く)",
+            "desc": "Ledger デバイスで関連するネットワーク アプリを開きます"
+        },
+        "confirm": {
+            "title": "動作確認",
+            "desc": "Ledgerデバイスでの動作確認"
+        },
+        "action": {
+            "title": "必要なアクション",
+            "desc": "おっと..アクションは確認されませんでした。  <br/>Ledger デバイスのボタンをタップして続行してください。"
+        },
+        "rejected": {
+            "title": "取引拒否",
+            "desc": "台帳デバイスによってトランザクションが拒否されました"
+        },
+        "errors": {
+            "27404": "ハードウェア ウォレットのパスワードを入力して、操作を再試行してください"
+        }
+    },
+    "rewardsPage": {
+        "rewardsDetails": "特典の詳細",
+        "periodRewards": "期間報酬",
+        "rewardsPlaceholder": "報酬はありません",
+        "rigthSectionPlaceholder": "リワードの通知はありません",
+        "rewardsReport": "報酬レポート",
+        "totalRewards": "総報酬"
+    },
+    "DAO": {
+        "placeholderTitle": "Citadel.one DAO が登場",
+        "placeholderInfo": "すぐに、統合する機能とネットワーク、実装する財務およびガバナンス設定に関する決定に参加できるようになります。"
+    },
+    "claim": {
+        "claim": "請求",
+        "claimTo": "主張する",
+        "amountToClaim": "請求する金額",
+        "confirmModalTitle": "報酬の請求を確認する",
+        "confirmModalDesc": "利用可能な残高に発生した報酬が表示されます",
+        "claimSuccessfuly": "正常に請求されました"
+    },
+    "exportWallet": {
+        "card1Info": "関連するニーモニック フレーズをエクスポートする",
+        "card2Info": "関連する秘密鍵をエクスポートする",
+        "chooseExportTypeModalTitle": "エクスポート オプションを選択",
+        "chooseExportTypeModalDesc": "この住所のエクスポート方法を選択してください",
+        "approveExportModalTitle1": "秘密鍵をエクスポートする",
+        "approveExportModalDesc1": "パスワードを入力して、このアドレスの秘密鍵を表示します",
+        "approveExportModalTitle2": "ニーモニック フレーズのエクスポート",
+        "approveExportModalDesc2": "このアドレスのニーモニック フレーズを表示するには、パスワードを入力してください",
+        "exportModalTitle1": "秘密鍵が下に表示されます",
+        "exportModalDesc": "確実に保管してください。",
+        "exportModalTitle2": "あなたのニーモニックフレーズが下に表示されます"
+    },
+    "customLists": {
+        "createListModalDesc": "リストに追加するアドレスを選択します",
+        "editList": "リストを編集",
+        "editListModalDesc": "リスト内のアドレスを管理する",
+        "deleteList": "リストを削除",
+        "deleteListModalTitle": "リストを削除しますか?",
+        "walletsCountTitle": "リスト内のアドレス",
+        "eneterListName": "リスト名を入力してください。",
+        "warningModalDesc": "このリスト名は既に存在します。別の名前を試してください",
+        "infoBanner": "このリストにアドレスを追加していません。 リストを作成するには、アドレスを少なくとも 1 つ選択してください。",
+        "duplicateName": "この名前のリストは既に存在します。 別の名前を選択してください"
+    },
+    "calculator": {
+        "title": "{coin}ステーキング電卓",
+        "subtitle": "報酬を計算する",
+        "yearlyReturn": "年次リターン",
+        "howManyYouHave": "いくつ持っていますか？",
+        "yearlyReward": "年間報酬",
+        "expandTitle": "より多くの報酬を得る",
+        "expandSubtitle": "Citadel.one ノードでステークすればするほど、より多くの XCT 報酬を獲得できます"
+    },
+    "xct": {
+        "publicKeyPlaceholderTitle": "ウォレットをインポートして XCT の獲得を開始する",
+        "assignedAddresses": "割り当てられたアドレス",
+        "unAssignedAddresses": "割り当てられていないアドレス",
+        "blocks": {
+            "title1": "アドレスがありません",
+            "title2": "XCTを獲得しましょう！",
+            "title3": "もっと稼げます！",
+            "title4": "XCTのステーキングを始めましょう！",
+            "title5": "よくやった！",
+            "title6": "XCTステーキングでもっと稼ごう！",
+            "desc1": "この Citadel.one アカウントにステーキング アドレスが追加されていません。 今すぐインポートして、仮想通貨でもっと稼ぎましょう!",
+            "desc2": "XCT を受信するためのアドレスが割り当てられていません。 今すぐ割り当てて、ネットワーク報酬に加えて、Citadel.one ノードでのステーキングで XCT を獲得してください!",
+            "desc3": "すべてのアドレスが割り当てられているわけではありません。つまり、一部の XCT 報酬が不足しています。 今すぐ割り当てて、ステーキングでさらに獲得しましょう!",
+            "desc4": "蓄積された XCT 報酬をステーキングして、さらに多くを受け取りましょう!",
+            "desc5": "XCT トークンを受け取るためにすべてのアドレスを割り当てました。これは、Citadel.one でステーキング報酬を最大化することに成功したことを意味します!"
+        },
+        "assignedAddressesModalTitle": "割り当てられたアドレス",
+        "assignedAddressesModalDesc": "以下は、すでに割り当てられており、XCT 報酬を受け取る資格のあるアドレスのリストです。",
+        "addressAssigningInfoModalTitle": "XCT の BSC アドレス",
+        "addressAssigningInfoModalDesc": "指示に従ってアドレスを割り当て、XCT 報酬を受け取ります。",
+        "addressAssigningInfoModalBlock1Info": "この BSC アドレスに割り当てたい Citadel.one ウォレットからアドレスを選択します",
+        "addressAssigningInfoModalBlock2Info": "支払いパスワードを入力して、アドレスの割り当てを確認します",
+        "addressAssigningInfoModalNote": "元帳アドレスを割り当てたい場合は、割り当ての確認のためにハードウェア デバイスを接続する必要があります。",
+        "assignAddressTooltipTitle": "BSCアドレスに割り当て",
+        "unassignedAddressesModalTitle": "割り当てるアドレスを選択",
+        "unassignedAddressesModalDesc": "アドレスを選択して、前のステップで選択した Binance Smart Chain アドレスに割り当てます。",
+        "approveAssignWithPasswordModalDesc": "パスワードを入力して、前のステップで選択した BSC アドレスへのアドレスの割り当てを確認します。",
+        "newAssignedAddressesModalTitle": "XCT 報酬に正常に追加されました",
+        "hardwareAddressesModalDesc": "アドレスを正常に割り当てるために、ハードウェア ウォレットを接続してアドレスを確認します。",
+        "rewardsBlockTitle": "XCT報酬",
+        "rewardsBlockSubtitle": "Citadel.one で得られる追加の報酬",
+        "XCTStakingRewards": "XCTステーキング報酬",
+        "stakedOnCitadel": "Citadel.one に賭ける",
+        "setStakingAmountModalDesc": "賭けるXCTの量を設定する",
+        "setStakingAmountModalDesc1": "アンステークする XCT の量を設定する",
+        "stakingPlaceholderCard1Info": "ボタンをクリックしてXCTのステーキングを開始",
+        "stakingPlaceholderCard3Info": "追加の XCT リワードをお楽しみください",
+        "claimRewardsCheckbox2Label": "割り当てられたステーキング報酬",
+        "assignedAddressesBtn": "割り当てられたアドレス",
+        "unAssignedAddressesBtn": "割り当てられていないアドレス"
+    },
+    "accounts": "アカウント",
+    "neededResources": "ネットワーク リソース用",
+    "restake": "再受験",
+    "otherAssets": "その他の資産",
+    "hardwareWallet": "ハードウェアウォレット",
+    "bscAddress": "BSC アドレス",
+    "enterYourPassword": "パスワードを入力してください",
+    "enterPaymentPassword": "お支払いパスワードを入力してください",
+    "finish": "終了",
+    "assigned": "割り当て済み",
+    "note": "ノート",
+    "manage": "管理",
+    "learnMore": "もっと詳しく知る",
+    "Token": "トークン",
+    "searchErrorText": "このリクエストのアドレスが見つかりません",
+    "searchToken": "検索トークン",
+    "inputToken": "入力トークン",
+    "commentPlaceholder": "取引を特定するためにいくつかの単語を追加してください",
+    "fail": "不合格",
+    "date": "日にち",
+    "inputName": "入力名",
+    "listName": "リスト名",
+    "createList": "リストを作成",
+    "cancel": "キャンセル",
+    "enterYourCitadelPassword": "シタデルのパスワードを入力してください",
+    "show": "見せる",
+    "yearAbbr": "y",
+    "monthAbbr": "メートル",
+    "custom": "カスタム",
+    "all": "全て",
+    "oneYear": "1年",
+    "month": "月",
+    "notifications": "通知",
+    "swap": "スワップ",
+    "insufficientFunds": "残高不足",
+    "changeNode": "ノードを変更",
+    "startStaking": "ステーキングを開始",
+    "this": "これ",
+    "AddWallet": "ウォレットを追加",
+    "addWallet": "ウォレットを追加",
+    "download": "ダウンロード",
+    "enterTextComment": "テキストコメントを入力",
+    "confirmed": "確認済み",
+    "min": "分",
+    "pending": "保留中",
+    "addedToMempool": "mempool に追加",
+    "warning": "警告",
+    "viewTranscasction": "取引を見る",
+    "viewBalance": "残高を見る",
+    "enterSendPassword": "検証を送信するためのパスワードを入力してください",
+    "totalAmount": "合計金額",
+    "sendTo": "に送る",
+    "sendFrom": "送信元",
+    "unstake": "アンステーク",
+    "Stake": "ステーク",
+    "receive": "受け取る",
+    "fee": "費用",
+    "comment": "コメント",
+    "export": "書き出す",
+    "timeDate": "時間とデータ",
+    "type": "タイプ",
+    "status": "状態",
+    "viewOnly": "表示のみ",
+    "error": "エラー",
+    "success": "成功",
+    "info": "情報",
+    "buyNow": "今買う",
+    "settingsTitle": "設定",
+    "overallTitle": "全体",
+    "days": "日々",
+    "copiedToClipboard": "クリップボードにコピーしました",
+    "earn": "得る",
+    "seed": "シード",
+    "learnHow": "方法を学ぶ",
+    "importAddress": "住所のインポート",
+    "chooseAddresses": "住所を選択",
+    "addressName": "住所名",
+    "searchAddress": "住所検索",
+    "save": "保存",
+    "transactionFee": "取引手数料",
+    "per": "あたり",
+    "price": "価格",
+    "link": "リンク",
+    "sendBannerInfo": "このブリッジにより、ユーザーは Ethereum のスマート コントラクトで ETH をロックし、secretETH を作成できます。 以下で、secretETH をアンラップして、ETH トークンを受け取ることができます",
+    "selectAddress": "住所を選択",
+    "advanced": "高度",
+    "max": "最大",
+    "inputMemo": "入力メモ",
+    "memo": "メモ",
+    "memoTooltip": "メモは、トランザクションの受信者を指定するために使用される宛先タグです。",
+    "includingFunds": "デフォルトのネットワーク料金を含む",
+    "includingFunds-xl": "手数料トークンの購入のために予約された資金を含む",
+    "amount": "額",
+    "to": "に",
+    "sendAssetsToAnotherNetwork": "アセットを別のネットワークに送信する",
+    "rewards": "報酬",
+    "stakingRatio": "ステーキング率",
+    "inflation": "インフレーション",
+    "tokenPrice": "トークン価格",
+    "lockedForiGasGeneration": "iGas生成用にロック",
+    "unpledgedBalance": "未定残高",
+    "pledgedBalance": "担保残高",
+    "pledgeDescription": {
+        "part1": "システムは、iGas を取得するために IOST トークンを誓約する必要があります。  1 プレッジされた IOST が生成する",
+        "part2": "100,000 ガス",
+        "part3": "あたり",
+        "part4": "日",
+        "part5": "、それもロックされており、取引できません。 トークンを取り消すと IOST のロックが解除されますが、ガスの生成は停止します。"
+    },
+    "frozen": "凍った",
+    "available": "利用可能",
+    "staked": "杭打ち",
+    "balance": "残高",
+    "transactions": "取引",
+    "send": "送信",
+    "stake": "ステーク",
+    "youHave": "あなたが持っている",
+    "claimRewards": "報酬を請求する",
+    "oneSeed": "ワンシード",
+    "publicKey": "公開鍵",
+    "hardware": "ハードウェア",
+    "edit": "編集",
+    "Citadel.one": "シタデルワン",
+    "yourE-mail": "あなたの電子メール",
+    "loadingFile": "ファイルを読み込んでいます",
+    "incorrectFile": "ファイルが正しくありません。 ここをタップして、別のバックアップ ファイルをアップロードします。",
+    "incorrectPassword": "パスワードが正しくありません",
+    "passwordsDontMatch": "パスワードが一致しません",
+    "passwordTooShort": "パスワードが短すぎます (8 文字以上である必要があります)",
+    "confirmPassword": "あなたのパスワードを確認",
+    "createPassword": "支払いパスワードを作成してください",
+    "password": "パスワード",
+    "yourComputer": "あなたのコンピュータ",
+    "enterYourPrivateKey": "秘密鍵を入力してください",
+    "privateKey": "秘密鍵",
+    "ok": "Ok",
+    "select": "選択する",
+    "retry": "リトライ",
+    "createPasswordNote": "支払いパスワードを作成してください。  Citadel.one プラットフォームを介して行われたすべての取引の確認に必要となります。 パスワードを紛失した場合、パスワードを回復または変更することはできません。",
+    "enterPasswordNote": "シタデル ワンシードに新しいアドレスを追加するには、支払いパスワードを入力してください",
+    "understand": "理解します io",
+    "enterPassword": "パスワードを入力します",
+    "repeatYourPassword": "パスワードを繰り返します",
+    "network": "通信網",
+    "Network": "通信網",
+    "create": "作成",
+    "guide": "ガイド",
+    "searchNetworks": "ネットワークを検索します",
+    "selectHardwareWallet": "ハードウェアウォレットを選択",
+    "selectNetwork": "ネットワークを選択",
+    "addAddressExp": "住所を追加",
+    "addAnAddress": "アドレスを追加",
+    "chooseSuitableMethod": "既存のアドレスをインポートする適切な方法を選択してください",
+    "address": "住所",
+    "enterAddress": "住所を入力",
+    "import": "輸入",
+    "enterMnemonicPhrase": "ニーモニックフレーズを入力してください",
+    "advancedSettings": "高度な設定",
+    "mnemonicIncorrect": "ニーモニック句が無効です",
+    "networkNameIncorrect": "ネットワークが正しくありません",
+    "pleaseSelectNetwork": "ネットワークを選択してください",
+    "mnemonicPassphraseOptional": "ニーモニック パスフレーズ (オプション)",
+    "inputPassphrase": "入力パスフレーズ",
+    "next": "次",
+    "confirm": "確認",
+    "importExistingAddressExp": "既存の住所をインポートする",
+    "layouts": {
+        "addAddressLayout": {
+            "sidebarPlaceholder": "あなたのアドレスがここに表示されます",
+            "favoritePlaceholder": "お気に入りのウォレットがここに表示されます。 お気に入りに追加するには、公開鍵の近くにあるスター ボタンを押します",
+            "overall": "全体",
+            "addresses": "住所",
+            "wallets": "財布"
+        }
+    },
+    "backBtn": "戻る",
+    "steps": {
+        "step": "ステップ",
+        "selectNetworks": "ネットワークを選択",
+        "connectYourDevice": "デバイスを接続する",
+        "derivationPath": "派生経路",
+        "enterPassword": "パスワードを入力する",
+        "chooseDerivationPath": "派生パスを選択",
+        "createPaymentPassword": "支払いパスワードを作成する",
+        "addNewAddress": "新しいアドレスを追加します",
+        "derivationPathInfo": "派生パスは、使用される秘密鍵 (したがって、どのアドレス) を指定します。",
+        "setPasswordForAllIn": "すべてのプラットフォーム内操作のパスワードを設定します",
+        "addAddressSpecifications": "アドレス指定を追加",
+        "enterPaymentPassword": "支払いパスワードを入力してください",
+        "importFileExp": "インポートファイル",
+        "chooseImportOption": "インポート オプションを選択",
+        "createPassword": "パスワードの作成",
+        "addToOneSeed": {
+            "step1HeaderInfo1": "既存の One-seed ウォレットに新しいネットワークを追加",
+            "createOneSeed": "ワンシード作成",
+            "createOneSeedWallet": "ワンシードウォレットを作成する",
+            "step2HeaderInfo": "1 つのウォレットを使用して、プラットフォームに統合されたすべての資産を管理します",
+            "step3StepDesc": "シードフレーズを確認する",
+            "step4headerInfo": "ウォレットに追加するネットワークを選択"
+        },
+        "importLedger": {
+            "step2stepDesc": "台帳アプリを選択",
+            "step2headerInfo": "Ledger デバイスでネットワーク アプリを選択します",
+            "step3headerInfo": "台帳デバイスをコンピュータに接続して確認します"
+        },
+        "importTrezor": {
+            "step2stepDesc": "Trezor アプリを選択",
+            "step2headerInfo": "Trezor デバイスでネットワーク アプリを選択する",
+            "step3headerInfo": "Trezor デバイスをコンピュータに接続して確認する"
+        },
+        "importSeedPhrase": {
+            "step3HeaderInfo": "ネットワークを選択して呼び名を入力"
+        },
+        "importPrivateKey": {
+            "step3HeaderInfo": "ネットワークを選択し、対応する秘密鍵を入力してください"
+        },
+        "importFile": {
+            "step2HeaderInfo": "Citadel.one バックアップ ファイルを選択してアップロードします",
+            "step2StepDesc": "バックアップ ファイルをインポートする",
+            "step3HeaderTitle": "バックアップパスワードを入力してください",
+            "step3HeaderInfo": "バックアップ ファイルのパスワードを入力して、Citadel One-seed ウォレットを復元します",
+            "step3StepDesc": "バックアップファイルのパスワードを入力してください"
+        },
+        "restoreOneSeed": {
+            "step3HeaderTitle": "シタデル ワンシード フレーズを入力してください",
+            "step3HeaderInfo": "Citadel.one 内で作成されたニーモニック フレーズを入力します",
+            "step3StepDesc": "シード フレーズを入力してください",
+            "step4HeaderInfo": "このネットワークのアドレスは、One-seed で復元されます"
+        },
+        "enterPasswordForAllInSeed": "既存のシード フレーズに新しいネットワークを追加する",
+        "enterPasswordForAllInPrivate": "秘密鍵を使用してネットワークを追加する"
+    },
+    "settings": {
+        "subscriptions": {
+            "title": "サブスクリプション",
+            "description": "関連するアップデートを購読する",
+            "rewardsDigest": "アカウント報酬ダイジェスト",
+            "addRewardsNotification": "報酬通知メールを購読しました",
+            "removeRewardsNotification": "報酬通知メールの登録を解除しました",
+            "rewardsDigestTooltip": "獲得した報酬、請求可能なトークン、ステークする資産に関する隔週の更新",
+            "newsletter": "ニュースレター",
+            "newsletterTooltip": "重要な Citadel.one イベントとアップデートを毎月受け取る",
+            "addNewsletterNotification": "メールニュースレターの通知を購読しました",
+            "removeNewsletterNotification": "メールマガジン通知の登録を解除しました"
+        },
+        "transferData": {
+            "title": "ウェブからモバイルへ数秒でデータを転送",
+            "description": "お客様の便宜のために、数回クリックするだけで Citadel.one Web プラットフォームからモバイル アプリにデータを簡単に転送できる QR コードを追加しました。",
+            "button": "QRコードを開く"
+        },
+        "addresses": {
+            "title": "住所",
+            "description": "アドレスを削除するか、シードフレーズ、秘密鍵、または表示鍵をインポートします",
+            "deleteModalTitle": "アドレスを削除しますか？",
+            "deleteSeedTitle": "ワンシード情報を削除しますか?",
+            "deleteSeedDesc": "One-Seed のローカルに保存されたすべてのデータを削除できます",
+            "deleteSeedInfo": "注: このアクションの確認後、One-Seed ウォレットに関連付けられたすべてのデータが削除されます。",
+            "deleteModalSubtitle": "<b style='color: red;'>注意!</b> <span style='color: #6b93c0'>削除プロセスには時間がかかります。</span>",
+            "deleteAddresses": "すべてのアドレスを削除しますか?",
+            "modalTitle": "アドレスを削除する",
+            "modalSubtitle": "削除するアドレスを選択してください",
+            "bannerContent": "アドレスを削除すると、シード フレーズ/秘密鍵が失われます。 必ず保存してください。",
+            "selectAll": "すべて選択",
+            "unselectAll": "すべて選択解除",
+            "selectedWalletsLength": "<b style='font-weight: 600;font-family: \"Panton_Bold\";'>{selectedWalletsLength}</b> アドレスを選択します",
+            "delete": "消去"
+        },
+        "changeEmail": {
+            "title": "あなたの電子メール",
+            "description": "アカウントのメール",
+            "inputLabel": "あなたの電子メール",
+            "inputPlaceHolder": "Eメール",
+            "button": "変化する",
+            "comingSoon": "近日公開",
+            "changeModalTitle": "メールの変更",
+            "changeModalDescription": "アカウントに関連付けられている電子メールを変更する",
+            "oldEmail": "古いメール",
+            "newEmail": "新しいメール",
+            "emailPlaceholder": "メールアドレスを入力",
+            "validFormatError": "メールアドレスを有効な形式で入力してください",
+            "lastStep": "最後の一歩！",
+            "lastStepDescription": "<span style='font-family: \"Panton_Bold\";'> 古いメール アドレスと新しいメール アドレスの両方 </span> を確認して、メールの更新を完了してください。",
+            "resend": "再送"
+        },
+        "language": {
+            "title": "言語",
+            "description": "選択したプラットフォーム言語",
+            "inputLabel": "言語"
+        },
+        "delete": {
+            "title": "アカウントを削除する",
+            "description": "この操作は元に戻せません",
+            "modalDescription": "このアクションは元に戻すことができないことに注意してください。 あなたの資産は安全です - Citadel.one アカウントを削除するだけです",
+            "button": "アカウントを削除する",
+            "inputLabel": "「アカウントの削除」と入力して確認します",
+            "placeholder": "「削除」と入力します"
+        },
+        "changePassword": {
+            "btnTitle": "パスワードを変更する",
+            "btnUpdate": "アップデート",
+            "modalTitle": "パスワードの変更",
+            "oldPassword": "以前のパスワード",
+            "newPassword": "新しいパスワード",
+            "modalDescription": "これは、トランザクションの署名を確認するために使用するパスワードです",
+            "incorrectOldPassword": "古いパスワードが正しくありません",
+            "minLen": "最小長 8 文字",
+            "successTitle": "パスワードが正常に変更されました",
+            "successDescription": "新しいパスワードを使用して取引を確認します",
+            "title": "あなたのパスワード",
+            "description": "ここでパスワードを変更できます",
+            "button": "変化する",
+            "comingSoon": "近日公開",
+            "tooltip": "Citadel.one は非管理プラットフォームであるため、パスワードは保存されません。パスワードはブラウザのローカル ストレージに保存されます。  Cookie をクリアすると、パスワードが削除されます。新しいパスワードを作成する必要があります。"
+        },
+        "crossChain": {
+            "title": "Citadel.one クロスチェーン Web3",
+            "description": "最新の Citadel.one ブラウザー拡張機能を使用して、お気に入りのアプリケーションにアクセスしてください。",
+            "button": "始めましょう",
+            "comingSoon": "近日公開"
+        },
+        "extensionSettings": {
+            "title": "拡張機能の設定",
+            "description": "Citadel.one ミニアプリケーションの設定をオールインワンで管理します。",
+            "button": "設定を開く",
+            "comingSoon": "近日公開",
+            "successDescription": "新しいパスワードを使用して取引を確認します"
+        },
+        "extensions": {
+            "title": "開発中のアプリ",
+            "description": "コードを入力して、優先アプリケーションをテストします。 コードは開発センターから提供されます。",
+            "appsTitle": "テスト用のアプリ",
+            "searchLabel": "アプリケーションコード",
+            "searchPlaceholder": "コードを入力する"
+        }
+    },
+    "overallPage": {
+        "noBalance": "あなたにはバランスがありません",
+        "noRewards": "報酬はありません",
+        "balanceStructure": {
+            "title": "バランス構造"
+        },
+        "balanceHistory": {
+            "title": "残高履歴"
+        },
+        "rewardsChart": {
+            "title": "報酬表"
+        },
+        "favourites": {
+            "placeholder": {
+                "address": {
+                    "title": "お気に入りの住所を追跡する",
+                    "text": "優先順位に基づいてアドレス リストを作成し、アドレス エイリアスを設定して、お気に入りのアドレスをすべて 1 か所で追跡します。"
+                },
+                "portfolio": {
+                    "title": "サブポートフォリオを作成する",
+                    "text": "ニーズと要件に応じてアドレスをリストに追加し、サブポートフォリオのパフォーマンスを常に把握してください。"
+                }
+            }
+        },
+        "problemBalance": "このセクションにいくつかのマイナーな修正を提供しています。",
+        "maintance": "メンテナンス中"
+    },
+    "addedModal": {
+        "title": "ウォレットはすでに追加されています",
+        "desc": "このアドレスは既にアカウントに追加されています。"
+    },
+    "netInfoGeneral": {
+        "marketcap": "時価総額",
+        "marketcapTooltip": "時価総額は、仮想通貨の価値の合計です。 流通しているコインの総数に暗号通貨の現在の価格を掛けて計算されます",
+        "supply": "循環供給",
+        "supplyTooltip": "循環供給量とは、活発に取引され、市場で流通しているコインの総数です。",
+        "staked": "ステーキング率",
+        "stakedTooltip": "ステークされている適格なトークンの割合",
+        "inflation": "インフレーション",
+        "inflationTooltip": "インフレーション (ネットワーク インフレーション) については、新しく作成されたすべてのトークンと、報酬として配布されているすべての準備金を考慮に入れます。",
+        "priceChart": "価格表",
+        "apyTooltip": "年間利回りはステーキング インフレーション / ステーキングとしてカウントされます",
+        "stakingRatioTooltip": "ステークされている適格なトークンの割合",
+        "dayTradingVol": "24時間取引量",
+        "dayTradingVolTooltip": "24 時間取引量は、過去 24 時間に取引されたコインの数です。",
+        "placeholderTitle": "現在、トークンに関する情報は利用できません",
+        "placeholderDescription": "トークンと価格履歴チャートに関する情報はすぐに利用可能になります"
+    },
+    "viewingKey": {
+        "viewingKey": "閲覧キー",
+        "passwordText": "確認のためにパスワードを入力してください",
+        "confirmOperation": "動作確認",
+        "addVkFor": "の閲覧キーを追加",
+        "vkFor": "の表示キー",
+        "importVk": "の閲覧キーをインポート",
+        "enterYourVk": "検証のために表示キーを入力してください",
+        "iHaveVk": "閲覧キーを持っています。",
+        "viewingKeys": "キーの表示",
+        "vkListedBelow": "SNIP-20 トークンの表示キーを以下に示します。",
+        "searchViewingKeys": "検索表示キー",
+        "tokenName": "トークン名",
+        "manageVks": "閲覧キーの管理",
+        "vkDesc": "SNIP-20 トークンの表示キーを以下に示します。 ここで新しい表示キーを削除または作成できます。",
+        "deleteKey": "キーを削除",
+        "createNew": "新しく作る",
+        "incorrectKey": "不正なキー"
+    },
+    "tokenSearchError": "トークンはありません",
+    "myTokens": "私のトークン",
+    "allTokens": "すべてのトークン",
+    "favourites": "お気に入り",
+    "daoTitle": "ダオ",
+    "hours": "時間",
+    "minutes": "分",
+    "migration": {
+        "cancel": "キャンセル",
+        "logout": "ログアウト",
+        "download": "バックアップファイルをダウンロード",
+        "forgotPassword": "パスワードをお忘れですか？",
+        "forgotDescription": "パスワードを忘れた場合は、ログアウトして新しいパスワードを設定し、自分でシード フレーズ/ウォレットを復元できます。",
+        "finishTitle": "ワンシードを復元",
+        "finishDescription": "プラットフォームをより便利に操作するために、シード フレーズをすぐに復元できます。",
+        "restore": "戻す",
+        "skip": "スキップ",
+        "agree": "同意",
+        "welcomeTitle": "Citadel の新しいバージョン 2.0 へようこそ!",
+        "welcomeDescription": "古いバージョンの Citadel.one アプリケーションから新しいバージョンに、迅速かつ簡単にすべての住所を移行できます。",
+        "backupPassword": "バックアップパスワードを入力してください",
+        "title": "移行に対応",
+        "description": "Citadel.one への最後のログインからデバイスに保存されている、アカウントに関連付けられたいくつかの秘密鍵を認識しました。"
+    },
+    "multisigBalance": {
+        "title": "ロック解除済み xct",
+        "labelAddress": "Bsc アドレス",
+        "labelPlaceholder": "住所を選択",
+        "contractLabel": "契約を選択",
+        "contractPlaceholder": "契約名",
+        "claim": "請求",
+        "statsClaimed": "XCTが請求されました",
+        "statsClaimedDescription": "要求されたトークンの累計",
+        "statsUnlocked": "ロックされていない残高",
+        "statsUnlockedDescription": "ロック解除されたトークンは、要求されたトークンと要求可能なトークンの合計です",
+        "totalFrozen": "合計凍結残高",
+        "statsFrozen": "冷凍残高",
+        "statsFrozenDescription": "権利が確定したトークン",
+        "youHave": "請求可能な XCT",
+        "confirmModalTitle": "報酬の請求を確認する",
+        "confirmModalDescription": "利用可能な残高に発生した報酬が表示されます",
+        "claimTo": "主張する",
+        "amountToClaim": "請求する金額",
+        "fee": "費用",
+        "totalAmount": "合計金額"
+    },
+    "mobileAppModal": {
+        "title": "Citadel.one アプリをダウンロードしてください!",
+        "info": "オールインワンのモバイル アプリケーションでシームレスな仮想通貨体験をお楽しみください。",
+        "appStore": "アプリストア",
+        "googlePlay": "グーグルプレイ"
+    },
+    "redelegation": {
+        "redelegationDesc": "ノードを選択し、再委任する量を設定します。 同じウォレットアドレスでは、アセットを再委任できるのは <span style='color: #0A2778; までです。  font-weight: bold;'>7 回</span> <span style='color: #0A2778;  font-weight: bold;'>21 日間</span>。 ステーキング解除期間は適用されません。",
+        "redelegate": "再委任",
+        "chooseNodeTitle": "再委任するノードを選択",
+        "choseNodePlaceholderNote": "クリックして再委任するノードを選択"
+    },
+    "rewardDetails": {
+        "title": "報酬の詳細",
+        "subtitle": "Citadel.one ノードでステークすればするほど、より多くの XCT 報酬を獲得できます",
+        "totalStaked": "合計賭け金",
+        "stakedOnCitadel": "<b>Citadel.one</b> に賭ける"
+    },
+    "copied": "コピーしました",
+    "copy": "コピー",
+    "week": "週",
+    "multisigSend": {
+        "title": "マルチシグ送信",
+        "available": "利用可能",
+        "availableHint": "合計で請求するために残っているトークン",
+        "spend": "消耗",
+        "spendHint": "合計で消費されたトークン",
+        "total": "合計",
+        "totalHint": "THE中に見つけるために配布されたトークンの総数",
+        "claimable": "請求可能",
+        "claimableHint": "請求可能なトークン",
+        "labelAddress": "Bsc アドレス",
+        "labelPlaceholder": "住所を選択",
+        "selectFundPlaceholder": "生態系基金",
+        "selectFundLabel": "ファンドを選択",
+        "sendTo": "に送る",
+        "amountToSend": "送金額",
+        "fee": "費用",
+        "totalAmount": "合計金額",
+        "confirmModalTitle": "送金額の確認",
+        "selectedFund": "選定ファンド"
+    },
+    "importCustomPath": {
+        "labelSelect": "HD 派生パスを選択"
+    },
+    "ktAddresses": {
+        "modalTitle": "すべてのアドレス",
+        "modalDesc": "Tezos には、2 種類のアドレスがあります。TZ プレフィックスが付いた暗黙的またはマネージャー アドレスと、KT プレフィックスが付いた元のアドレスです。 以下に、メインの TZ アドレスに関連付けられている KT アドレスを示します。"
+    },
+    "withoutDelegation": "委任なしのステーク",
+    "pledge": {
+        "chooseModeModalTitle1": "iGas生成のためにIOSTをロックする",
+        "chooseModeModalSubtitle": "<span style='color: #0A2778;  font-weight: bold;'>1</span> 誓約した IOST は <span style='color: #0A2778; を生成します。  font-weight: bold;'>100 000</span> iGas/日",
+        "chooseModeModalTitle2": "iGas生成に使用されるIOSTのロックを解除",
+        "pledge": "誓約",
+        "unpledge": "解約する",
+        "confirmModalTitle1": "担保取引の確認",
+        "confirmModalDesc1": "あなたのトークンはプレッジされます",
+        "confirmModalTitle2": "取消取引を確認する",
+        "confirmModalDesc2": "あなたのトークンは取り消されます"
+    },
+    "minAmmount": "金額は 1 より大きい必要があります",
+    "maxFloatDigits": "小数点以下 {amount} 桁以内",
+    "emptyPassword": "空のパスワード",
+    "accruedDaily": "UTC 午後 6 時から午後 7 時まで毎日発生",
+    "extensions": {
+        "showLabel": "見せる",
+        "headerTitle": "拡張機能ストア",
+        "headerDescription": "お気に入りの dApps、DeFi アプリケーション、および拡張機能をネイティブで使用してください!",
+        "readMore": "続きを読む",
+        "networks": "ネットワーク",
+        "guide": "ガイド",
+        "description": "説明",
+        "youCan": "このアプリでできること",
+        "launch": "発売",
+        "dontShow": "今後表示しない",
+        "appTooltip": "このアプリケーションは、Citadel.one チームによって統合されています。",
+        "transactionData": "取引データ",
+        "transactionFee": "取引手数料",
+        "signMessage": "メッセージに署名する",
+        "searchPlaceholder": "アプリ名の入力を開始します",
+        "typeOperation": "型操作",
+        "showMore": "もっと見せる",
+        "execute": "実行する",
+        "emptyList": "クエリに一致するものが見つかりませんでした"
+    },
+    "tokenDescriptionComdex": "Comdex は、コスモス上に構築された分散型合成資産プロトコルです。",
+    "tokenDescriptionJuno": "Juno は、相互運用可能なスマート コントラクトを展開するための環境を提供する Cosmos ベースのチェーンです。",
+    "tokenDescriptionOsmosis": "Osmosis は分散型のピアツーピア ブロックチェーンであり、人々は流動性を作成し、IBC 対応トークンを取引するために使用できます。",
+    "metamask": {
+        "notFound": "お使いのブラウザでメタマスクが見つかりません",
+        "changeNetwork": "メタマスクのネットワークを変更",
+        "cancel": "キャンセル",
+        "importWallet": "ウォレットのインポート",
+        "allreadyAdded": "アドレスは既に追加されています",
+        "titleModal": "メタマスク ウォレットのインポート",
+        "descModal": "メタマスクでアドレスまたはネットワークを変更する",
+        "confirm": "確認"
+    },
+    "netInfo": {
+        "akash": {
+            "title": "アカッシュネットワーク",
+            "description": "Akash は、コンピューティング リソースを必要とする人々と、コンピューティング能力をリースできる人々をつなぐ、安全で透明性のある分散型のクラウド コンピューティング マーケットプレイスです。  Akash DeCloud とも呼ばれ、ネットワークとプラットフォームの 2 つの主要コンポーネントで構成されています。  Akash Network は、コンピューティング リソースをリースするためのオンチェーンの分散型マーケットプレイスです。 一方、Akash プラットフォームは、ワークロードのホスティングと管理に使用されるオフチェーン デプロイ プラットフォームです。",
+            "shortDescription": "Akash は、コンピューティング リソースを必要とする人々と、コンピューティング能力をリースできる人々をつなぐ、安全で透明性のある分散型のクラウド コンピューティング マーケットプレイスです。"
+        },
+        "band": {
+            "title": "バンドネットワーク",
+            "description": "Band Protocol は、ブロックチェーン上で実行されている分散型アプリケーション (dapps) に実世界のデータを提供するように、ユーザーのネットワークにインセンティブを与えるように設計されたソフトウェアです。 たとえば、dapp 開発者が、ユーザーが金の将来の価格に賭けることができるようにしたい場合、希望する後日にその価格を決定できる必要があります。",
+            "shortDescription": "Band Protocol は、ブロックチェーン上で実行されている分散型アプリケーション (dapps) に実世界のデータを提供するように、ユーザーのネットワークにインセンティブを与えるように設計されたソフトウェアです。"
+        },
+        "bsc": {
+            "title": "バイナンス スマート チェーン ネットワーク",
+            "description": "BNB チェーンは、イーサリアムやその他の主要な DeFi プラットフォームに代わるものです。  BNB チェーンは、イーサリアムが手数料を支払う余裕のない人々に実行可能であることが証明されなかったため、人気を博しました。BNB チェーンは委任されたプルーフ オブ ステークを使用して、1 秒あたりにより多くのトランザクションを低コストで処理できるようにします。 このプラットフォームの目的は、開発者が分散型アプリケーションを構築できるようにし、ユーザーがデジタル資産のクロスチェーンを低レイテンシと大容量で管理できるようにすることです。",
+            "shortDescription": "BNB チェーンは、イーサリアムやその他の主要な DeFi プラットフォームに代わるものです。 高速で分散型の取引を促進することに重点を置いています"
+        },
+        "btc": {
+            "title": "ビットコイン ネットワーク",
+            "description": "ビットコインは、2009 年 1 月に作成された分散型デジタル通貨です。それは、神秘的で仮名のサトシ・ナカモトによるホワイト ペーパーに示されたアイデアに従っています。技術を作成した人物の身元はまだ謎です。 ビットコインは、従来のオンライン決済メカニズムよりも低い取引手数料が約束されており、政府発行の通貨とは異なり、分散型の機関によって運営されています。",
+            "shortDescription": "ビットコインは、2008 年に作成されたデジタル通貨または仮想通貨であり、ピアツーピア技術を使用して即時支払いを容易にします。"
+        },
+        "cosmos": {
+            "title": "コスモスネットワーク",
+            "description": "Cosmos ネットワークは、ゾーンと呼ばれる多くの独立した並列ブロックチェーンで構成され、それぞれが Tendermint のような古典的なビザンチン フォールト トレラント (BFT) コンセンサス プロトコルを利用しています (ErisDB のようなプラットフォームで既に使用されています)。 一部のゾーンは他のゾーンに対してハブとして機能し、多くのゾーンが共有ハブを介して相互運用できるようにします。 このアーキテクチャは、従来の BFT とプルーフ オブ ステーク アルゴリズムを使用した、ビットコイン サイドチェーンの概念のより一般的なアプリケーションです。  Cosmos は、他の複数のアプリケーションや暗号通貨と相互運用できますが、これは他のブロックチェーンではうまく機能しません。 新しいゾーンを作成することで、任意のブロックチェーン システムを Cosmos ハブに接続し、仲介者を必要とせずに、それらのゾーン間でトークンをやり取りできます。",
+            "shortDescription": "Cosmos ネットワークは、ゾーンと呼ばれる多くの独立した並列ブロックチェーンで構成されており、それぞれが Tendermint のようなコンセンサス プロトコルによって強化されています。 一部のゾーンは他のゾーンに対してハブとして機能し、多くのゾーンが共有ハブを介して相互運用できるようにします。"
+        },
+        "eth": {
+            "title": "イーサリアム ネットワーク",
+            "description": "イーサリアムは、イーサ トークンによって強化されたコミュニティ主導の分散型ブロックチェーン ネットワークであり、ユーザーは取引を行い、ステーキングを通じて保有する利子を獲得し、NFT を使用および保存し、仮想通貨を取引し、ゲームをプレイし、ソーシャル メディアを使用することができます。 この「次世代ウェブ」は、たとえば、分散型アプリケーション (DApps)、分散型金融 (DeFi)、分散型取引所 (DEX) をサポートしています。",
+            "shortDescription": "イーサリアムは、スマート コントラクト機能を備えた分散型のオープンソース ブロックチェーンです。"
+        },
+        "icon": {
+            "title": "アイコンネットワーク",
+            "description": "ICON ネットワークは、スマート コントラクトを実行し、BFT-DPoS (Delegated Proof-of-Stake) コンセンサス プロトコルを採用し、DPoC (Delegated Proof-of) と呼ばれる経済ガバナンス プロトコルを使用できる、ネイティブの暗号通貨 ICX に基づく汎用ブロックチェーン プロトコルです。  -貢献）。  ICON ネットワークは、「ループチェーン」と呼ばれる独自のブロックチェーン エンジンを搭載しており、毎秒数百のトランザクションを処理する能力を備えています。  ICON プロジェクトは、機関や企業間で共有されるデータの整合性と透明性を確保し、中央集権的な組織なしで異種ブロックチェーン上で相互の資産を移動するために開始されました。",
+            "shortDescription": "ICON Network は、スマート コントラクトを実行し、BFT-DPoS コンセンサス プロトコルを採用し、DPoC (Delegated Proof-of-Contribution) と呼ばれる経済ガバナンス プロトコルを使用できる、ネイティブ暗号通貨 ICX に基づく汎用ブロックチェーン プロトコルです。"
+        },
+        "iost": {
+            "title": "IOST ネットワーク",
+            "description": "IOST は、次世代コンセンサス アルゴリズム「Proof of Believability」（PoB）に基づく超高速の分散型ブロックチェーン ネットワークです。 実績のある創設者のチームが主導し、世界クラスの投資家に支えられている私たちの使命は、分散型経済のセキュリティとスケーラビリティのニーズを満たすオンライン サービスの基盤となるアーキテクチャになることです。",
+            "shortDescription": "IOST は、次世代コンセンサス アルゴリズム「Proof of Believability」（PoB）に基づく超高速の分散型ブロックチェーン ネットワークです。"
+        },
+        "kava": {
+            "title": "カバネットワーク",
+            "description": "Kava は、分散型金融サービスおよびアプリケーション向けのクロスチェーン DeFi ハブです。 ユーザーをステーブルコイン、ローン、利付口座などの製品に接続するデジタル資産の分散型銀行のように機能し、デジタル資産でより多くのことを行い、より多くの収入を得られるようにします。",
+            "shortDescription": "Kava は、分散型金融サービスおよびアプリケーション向けのクロスチェーン DeFi ハブです。"
+        },
+        "secret": {
+            "title": "秘密のネットワーク",
+            "description": "Secret Network は、プライバシーを保護するスマート コントラクトを備えた最初のブロックチェーンです。 つまり、Secret に基づいて構築されたアプリケーションは、ネットワーク内のノードであっても、暗号化されたデータを誰にも公開せずに利用できます。  Secret Network により、開発者は初めて、強力で無許可のプライバシー保護アプリケーションである Secret Apps を構築できます。",
+            "shortDescription": "Secret Network は、プライバシーを保護するスマート コントラクトを備えた最初のブロックチェーンです。 つまり、Secret に基づいて構築されたアプリケーションは、ネットワーク内のノードであっても、暗号化されたデータを誰にも公開せずに利用できます。"
+        },
+        "tez": {
+            "title": "テゾスネットワーク",
+            "description": "Tezos は、バリデーター、研究者、ビルダーのグローバル コミュニティに支えられたアセットとアプリケーションのブロックチェーン採用が直面している主要な障壁に対処するオープンソース プラットフォームです。 設計上、Tezos は長期的なアップグレード可能性、オープンな参加、コラボレーション、スマート コントラクトの安全性を取り入れています。",
+            "shortDescription": "Tezos は、バリデーター、研究者、ビルダーのグローバル コミュニティに支えられたアセットとアプリケーションのブロックチェーン採用が直面している主要な障壁に対処するオープンソース プラットフォームです。"
+        },
+        "sentinel": {
+            "title": "センチネルネットワーク",
+            "description": "Sentinel は、帯域幅を共有するノードのネットワークであり、分散型 VPN やその他のサービスが構築されています。  Sentinel エコシステムの目的は、信頼できる証明可能な方法でインターネットへのユニバーサル アクセスを強化することです。 これは、世界中の組織や個人が、Sentinel の Cosmos ベースのブロックチェーン上で費用対効果が高く、スケーラブルで、分散型および分散型のネットワーク ソリューションを構築できるようにすることによって実現されます。",
+            "shortDescription": "Sentinel エコシステムは、自律型 dVPN アプリケーションのグローバル ネットワークであり、プライベートで検閲に強いインターネット アクセスを可能にします"
+        },
+        "persistence": {
+            "title": "持続性ネットワーク",
+            "description": "Persistence は、グローバルな流動性を刺激し、シームレスな価値交換を可能にするように設計されたマルチチェーン DeFi 製品のエコシステムです。  Persistence は、Proof-of-Stake 資産 (pSTAKE)、Agri Commodity 資産 (Comdex)、Trade Finance Debt 資産 (ShipFi) などの製品を通じて、さまざまな資産クラスを DeFi に導入しています。",
+            "shortDescription": "持続性は、請求書などの現実世界の資産を担保として使用して暗号資産 (ステーブルコイン) の借入を促進することにより、機関のオープン ファイナンスを強化するプロトコルです。"
+        },
+        "chihuahua": {
+            "title": "チワワネットワーク",
+            "description": "チワワはミーム コインであり、チワワ チェーンに組み込まれているガバナンスを介して提案および投票されたチェーン上のプロジェクトに資金を提供するために使用できる 100 億 HUAHUA のコミュニティ プールを備えたコミュニティ主導のプロジェクトを目指しています。 このプロジェクトは、Cosmos SDK と Tendermint コンセンサスを使用して構築されています。",
+            "shortDescription": "チワワは Cosmos meme コインであり、HUAHUA はチワワ チェーンのネイティブ ステーキングおよびガバナンス資産です。"
+        },
+        "umee": {
+            "title": "うめえネットワーク",
+            "description": "Umee は、ブロックチェーン間を相互接続するクロスチェーン DeFi ハブです。 ベースレイヤーブロックチェーンとして、アプリケーションとマネーレゴプリミティブをUmeeの上に構築して、クロスチェーンのレバレッジと流動性にアクセスできます。  Umee ブロックチェーンは、Cosmos エコシステム、イーサリアム ネットワーク、サイド チェーン アーキテクチャ、レイヤー 2 スケーリング ソリューション、代替ベース レイヤー プロトコル間の相互運用性を促進します。",
+            "shortDescription": "Umee は、ネットワーク間のクロスチェーン相互作用のための分散型インフラストラクチャです。"
+        },
+        "stargaze": {
+            "title": "スターゲイズ ネットワーク",
+            "description": "Stargaze は、Cosmos エコシステム内の完全に分散化された NFT マーケットプレイスです。 これは、高レベルのセキュリティ、分散化、透明性、および柔軟性を実証する Cosmos エコシステム内のゾーンです。  Stargaze により、コンテンツ キュレーターは、コンテンツを見つけて評価することで報酬を得ることができます。 そのネイティブ STARS は、ステーキング、ガバナンスへの参加、プラットフォーム上でのやり取り、および NFT の発行に使用できます。",
+            "shortDescription": "Stargaze は、Cosmos エコシステム内のコミュニティ所有の Interchain NFT マーケットプレイスです。"
+        },
+        "rizon": {
+            "title": "リゾンネットワーク",
+            "description": "RIZON Blockchain は、世界中の法定通貨を安全に発行し、ビジネスの相互運用を可能にするプラットフォームを提供するデジタル通貨およびアセット ハブです。  Rizon Blockchain は、ソブリン ブロックチェーン ネットワーク間の相互運用性を可能にし、これらのネットワークが流動性の膨大なプールを利用できる環境を可能にし、個々のプロジェクトのビジネス ニーズに応えます。  RIZON Blockchain は強力なネットワーク バックグラウンドを持ち、エコシステム参加者の流入とビジネスの多様化を促進することができます。",
+            "shortDescription": "RIZON Blockchain の使命は、世界中の法定通貨を安全に発行できるプラットフォームを提供し、Cosmos IBC を通じて企業が相互運用できるようにすることです。"
+        },
+        "comdex": {
+            "title": "コムデックス ネットワーク",
+            "description": "Comdex は、細分化された商品取引業界に、効率的、迅速、透明な方法で革命を起こすことを目的としたプラットフォームです。  Comdex のビジョンは、世界の商品取引の基本的なプロセスに革命をもたらし、決済時間を最小限に抑え、取引発見と取引金融における透明性、効率性、および不変性を電光石火の速さで最大化することです。",
+            "shortDescription": "Comdex は、Cosmos 上に構築された分散型合成資産プロトコルです。 その使命は、DeFi と CeFi の間のギャップを埋め、それによって金融を民主化する相互運用可能なソリューションのエコシステムを作成することです。"
+        },
+        "juno": {
+            "title": "ジュノ ネットワーク",
+            "description": "レイヤー 1 スマート コントラクト ネットワークとしての Juno は、第 1 世代のスマート コントラクトのボトルネックであるスケーラビリティの制限、展開と実行の高コストを解決し、世界中の開発者がスケーラブルで安全な分散型アプリケーションを効率的に展開するための簡単な環境を提供します。",
+            "shortDescription": "Juno は、CosmWasm の相互運用可能なスマート コントラクトと InterWasm DAO のパーミッションレス ニュートラル ホームです。 エコシステムは、CosmWasm の開発と採用の先駆者です。"
+        },
+        "osmosis": {
+            "title": "浸透ネットワーク",
+            "description": "Osmosis は分散型のピアツーピア ブロックチェーンであり、人々は流動性を作成し、IBC 対応トークンを取引するために使用できます。  Osmosis ブロックチェーンは、無料で公開されているオープンソースのソフトウェアで構成されています。  Osmosis は、他の Tendermint ベースのブロックチェーンに接続する自動化されたマーケット メーカー (AMM) として機能し、異種の相互運用可能なクロスチェーン取引体験をユーザーに提供します。",
+            "shortDescription": "Osmosis は、開発者が独自のカスタマイズされた AMM を設計、構築、展開できるようにする Cosmos SDK を使用して構築されたクロスチェーンの自動化されたマーケット メーカー (AMM) プロトコルです。"
+        },
+        "sifchain": {
+            "title": "Sifchain ネットワーク",
+            "description": "Sifchain は、DEX のオムニチェーン ソリューションです。 取引とセキュリティのためのより高性能で堅牢な暗号経済学、より柔軟な取引機能、拡張可能なオムニチェーン ロードマップ、そして最終的な真の DAO ガバナンス。  Sifchain は、地球、農業、豊饒、家族、結婚の北欧の女神である Sif の発案によるものです。  Sif は、ブロックチェーン業界の協調的な性質と、他の複数のチェーン間のつながりを育むことで見られる豊かな報酬を表しています。",
+            "shortDescription": "Sifchain は分散型取引所であり、最適な注文執行のために流動性プールとオーダーブックの最良の要素を組み合わせています。"
+        },
+        "lum": {
+            "title": "ラムネットワーク",
+            "description": "Lum Network は、最も高度で安全な Delegated Proof-Of-Stake アルゴリズムである Tendermint & Cosmos SDK に基づくオープン ソース ブロックチェーン プロトコル (レイヤー 1) です。 ネイティブの暗号資産である LUM を利用しています。",
+            "shortDescription": "Lum ネットワークは、高速で安全かつ持続可能なオープンソース ブロックチェーン プロトコルを導入し、企業と顧客の間の信頼を育み、それらに報酬を与えるための新しい基準を設定します"
+        },
+        "cheqd": {
+            "title": "確認済みネットワーク",
+            "description": "Cheqd チームは、個人や組織が個人データを完全に管理できる安全なネットワークを構築しています。  cheqd は、企業が新しい革新的なビジネス モデルを作成するのを支援し、セルフ ソブリン アイデンティティが実行可能で、顧客に提供する価値のあるサービスであることを保証します。",
+            "shortDescription": "Cheqd ソリューションは、検証可能な資格情報が信頼できる、再利用可能な、より安全で安価な方法で交換される新しいビジネス モデルを可能にします。"
+        },
+        "fetch": {
+            "title": "Fetch.ai ネットワーク",
+            "description": "Fetch.ai はケンブリッジを拠点とする人工知能研究所で、スマート インフラストラクチャ向けのオープンアクセス分散型機械学習ネットワークを構築しています。  Fetch.ai ブロックチェーンは、Cosmos-SDK に基づくインターチェーン プロトコルであり、高性能の WASM ベースのスマート コントラクト言語 (Cosmwasm) を使用して、高度な暗号化と機械学習ロジックをオンチェーンに実装できるようにします。 これにより、Fetch.ai ネットワークは、レガシー ブロックチェーン ネットワークのレイヤー 2 ネットワークとして、また外部世界へのインターチェーン ブリッジとしても機能することができます。",
+            "shortDescription": "Fetch.ai は、分散型デジタル経済を中心に構築されたスマート インフラストラクチャを可能にする、オープン アクセスのトークン化された機械学習ネットワークを構築する AI ラボです。"
+        },
+        "injective": {
+            "title": "単射ネットワーク",
+            "description": "Injective は、強力な取引所、DeFi、デリバティブ、および Web3 アプリケーションを構築するための相互運用可能なカスタム レイヤー 1 プロトコルです。  Injective は Cosmos SDK を使用して作成され、超高速を維持しながら即時のトランザクション ファイナリティを達成できます。  INJ は、インジェクティブ プロトコルとその急速に成長するエコシステムを強化するネイティブのデフレ希少資産です。  Injective は Binance によって培養され、Pantera Capital によって支援されています。",
+            "shortDescription": "Injective は、クロスチェーン Web3 DeFi アプリを構築するために最適化された相互運用可能なレイヤー 1 プロトコルです。"
+        },
+        "bitsong": {
+            "title": "ビットソング ネットワーク",
+            "description": "BitSong は、2017 年 12 月に着想され、ブロックチェーン技術を使用して構築された、分散型のオープンソースで無許可の音楽エコシステムです。 目的は、音楽業界のさまざまな市場関係者を有利に相互接続する、分散型でトラストレスなハブを作成することです。",
+            "shortDescription": "BitSong は、音楽アーティストとそのファンをブロックチェーン ベースのシステムに戦略的に結び付け、収益源を制御し、Web3 成長ツールにアクセスし、相互に有益な収益モデル内で機会を享受します。"
+        },
+        "kichain": {
+            "title": "Kiチェーンネットワーク",
+            "description": "Ki Chain は Cosmos Ecosystem に基づくブロックチェーン プラットフォームであり、従来の投資家と仮想通貨の投資家に便利な投資および取引プラットフォームを提供することを目的としています。これにより、機会が大幅に拡大され、従来の投資家が仮想通貨業界と簡単にやり取りできるようになります。",
+            "shortDescription": "Ki Chain ブロックチェーン プラットフォームは、CeFi および DeFi 市場全体で暗号資産と便利にやり取りするためのインフラストラクチャを暗号投資家に提供するように設計された Cosmos ベースのネットワークです。"
+        },
+        "regen": {
+            "title": "再生ネットワーク",
+            "description": "Regen Ledger は、Cosmos SDK 上に構築されたパブリック プルーフ オブ ステーク ブロックチェーンです。 その主な目標は 2 つあります。つまり、生態系の健全性に関する主張と主張をインデックス化することと、生態系の健全性の測定可能な変化に結び付けられた、生態系サービス クレジットと呼ばれる新しいクラスの金融資産を安全に追跡することです。",
+            "shortDescription": "Regen は、地球温暖化を逆転させるために再生農業の経済学を変える生態学的知識のブロックチェーン ネットワークです。"
+        },
+        "starname": {
+            "title": "スターネームネットワーク",
+            "description": "*starname は、ブロックチェーン上で選択したパーソナライズされた ID を提供します。 支払いを直接送受信したり、資産を所有および保管したり、暗号化ユニバース全体で取引したり、参加したりできます。これらはすべて同じ *starname で実行できます。",
+            "shortDescription": "*starname は、デジタル所有権の Web3 コア哲学に沿った真の分散型ネーム サービスです。"
+        },
+        "emoney": {
+            "title": "電子マネーネットワーク",
+            "description": "2016 年にデンマークのフィンテック企業によって設立された e-Money は、単一の効率的なブロックチェーン レイヤーで従来の銀行システムを橋渡しすることを目的とした、ブロックチェーン ベースの支払いプラットフォームです。  Cosmos テクノロジーに基づいて構築された e-Money プロトコルは、さまざまな金利付きの通貨に裏打ちされたステーブルコインを発行するために構築されています。",
+            "shortDescription": "e-Money は Cosmos 上に構築されたブロックチェーン ベースの支払いプラットフォームであり、金融​​包摂を実現し、世界中の人々が暗号通貨に簡単にアクセスできるようにすることに取り組んでいます。"
+        },
+        "iris": {
+            "title": "アイリスネットワーク",
+            "description": "IRISnet (別名 IRIS Hub) は、次世代の分散アプリケーションの基盤となるように設計されています。  Cosmos-SDK で構築された IRIS Hub は、DeFi アプリケーションをサポートするさまざまなモジュールを提供しながら、統一されたサービス モデルを通じてクロスチェーンの相互運用性を実現します。",
+            "shortDescription": "IRIS ネットワークは、分散型ビジネス アプリケーションの構築を容易にする技術基盤を提供することを目的としたブロックチェーンのインターネットです。"
+        },
+        "cerberus": {
+            "title": "ケルベロスネットワーク",
+            "description": "Cerberus ブロックチェーンは、誰でもネットワークに参加してバリデーターを実行できる、完全に許可のないブロックチェーンです。 コミュニティは、バリデーターと流動性プールを使用して Cerberus ($CRBRUS) をステーキングすることで、コインから価値を得ることができます。  2022 年後半、Cerberus チームは NFT プロジェクトの立ち上げに注力する予定です。",
+            "shortDescription": "Cerberus は、Cosmos で最初の 3 つの頭を持つミームコインおよび NFT プロジェクトです。"
+        },
+        "mantle": {
+            "title": "AssetMantle ネットワーク",
+            "description": "AssetMantle を使用すると、特定の販売者または販売者グループの幅広い製品専用のマーケットプレイスを簡単に作成できます。 クリエイターやアーティストが「NFT 向け Amazon」（OpenSea など）に商品を掲載する代わりに、特定の NFT 向けに独自の Shopify スタイルのストアを作成できる、NFT 向け Shopify と考えてください。",
+            "shortDescription": "AssetMantle は、NFT の商取引を容易にする独自のプラットフォームです。"
+        },
+        "gbridge": {
+            "title": "重力橋ネットワーク",
+            "description": "Cosmos Gravity Bridge は、Ethereum と Cosmos のエコシステム間で資産を橋渡しする、専用の完全分散型トラストレス ブロックチェーンです。  Ethereum と EVM 互換のトークンは、Gravity Bridge を介して Cosmos ウォレットに転送してから、他の Cosmos ウォレットまたは DEX に転送できます。  Cosmos SDK ベースのブロックチェーンは、同様に Gravity Bridge を介して Ethereum エコシステムにトークンを送信し、Uniswap やその他の ETH DEX での転送や取引に利用できるようにすることができます。",
+            "shortDescription": "Gravity Bridge は分散型の Cosmos ブロックチェーンであり、その主な目的はブロックチェーン間のブリッジの運用を保護することです。"
+        },
+        "konstellation": {
+            "title": "コンステレーション ネットワーク",
+            "description": "Konstellation は、Cosmos 上に構築されたレイヤー 3 ブロックチェーン プロトコルであり、現在、Solana および Binance スマート チェーンに接続されています。  IBC リレイヤーのおかげで、Konstellation は、すべてのブロックチェーンでアクセス可能なさまざまなドメイン (DeFi、CeFi、NFT、DAO) でさまざまな Dapps を開発することを目指しています。  Konstellation の相互運用性により、投資家はクロスチェーンのデジタル資産に投資し、さまざまな法定通貨にペッグされたステーブルコインを鋳造し、NFT の機会を探り、プレイして稼ぐゲームや DAO に参加することができます。 このネットワークは、トランザクションに必要な DARC トークン、Konstellation Dapps のユーティリティ、および Konstellation ネットワークのガバナンスによって強化されています。",
+            "shortDescription": "Konstellation Network は、Cosmos SDK に基づいて構築されたブロックチェーン プロトコルであり、分散型資本市場の未来のためのグローバル インフラストラクチャを作成します。"
+        },
+        "evmos": {
+            "title": "Evmos ネットワーク",
+            "description": "Evmos は、Ethereum メインネット、EVM 互換環境、および IBC を介したその他の BFT チェーンと相互運用可能な、アプリケーションに依存しないチェーンであり、ユーザーと開発者がチェーン間でシームレスに対話することを容易にします。  Evmos は Cosmos の EVM ハブになることを目指しており、Cosmos エコシステム内でのスマート コントラクトの展開と通信を容易にします。",
+            "shortDescription": "Evmos は Cosmos Network 上の EVM ハブです。 これは、相互運用性と斬新な経済性を優先する Ethermint ライブラリの主力実装です。"
+        },
+        "axelar": {
+            "title": "アクセルネットワーク",
+            "description": "Axelar ネットワークは、スケーラブルなクロスチェーン通信プラットフォームです。 ブロックチェーン プラットフォーム ビルダーは、これを使用して、ブロックチェーンを他のすべてのブロックチェーン エコシステムにシームレスにプラグインできます。 アプリケーション開発者は、アプリケーションをホストするのに最適なブロックチェーンを選択し、Axelar のクロスチェーン通信プロトコルを使用して資産をロック、ロック解除、転送し、他のチェーン上のアプリケーションと通信することができます。  dapps を複数のブロックチェーン エコシステムに接続することで、Axelar プラットフォームは、ユーザーがウォレットから直接エコシステム全体のすべてのアプリケーションとやり取りできるようにします。",
+            "shortDescription": "Axelar ネットワークは、クロスチェーン リクエストを容易にする分散型ステート マシンです。 ネットワークは、Cross-Chain Gateway Protocol (CGP) などのいくつかの主要なプロトコルをサポートしています。"
+        },
+        "crescent": {
+            "title": "クレセントネットワーク",
+            "description": "Crescent は、Cosmos エコシステムでは見られない方法でさまざまなブロックチェーンを統合することにより、デジタル資産の無限の可能性を探求する旅にユーザーを招待する DeFi ハブです。",
+            "shortDescription": "Crescent は、資本効率を高め、リスクを効果的に管理するために、Cosmos Ecosystem に接続された DeFi 機能を提供します。"
+        },
+        "polkadot": {
+            "title": "ポルカドットネットワーク",
+            "description": "Polkadot は、トークンだけでなく、任意のデータをブロックチェーン間で転送できるようにするネットワーク プロトコルです。これは、Polkadot がクロスチェーン レジストリやクロスチェーン計算などのことが可能な真のマルチチェーン アプリケーション環境であることを意味します。Polkadot はこれを転送できます。 パブリックでオープンなパーミッションレスのブロックチェーンと、プライベートで許可されたブロックチェーン全体のデータ。",
+            "shortDescription": "Polkadot は、トークンだけでなく任意のデータをブロックチェーン間で転送できるようにするネットワーク プロトコルです。 これは、Polkadot が、クロスチェーン レジストリやクロスチェーン計算が可能な真のマルチチェーン アプリケーション環境であることを意味します。"
+        },
+        "orai": {
+            "title": "オライチェーン",
+            "description": "ブロックチェーン向けの世界初の AI 駆動のオラクルおよびエコシステムとして、Oraichain は現在、データ エコノミーおよびオラクル サービス向けの高度な AI レイヤー 1 に変身し、新世代のスマート コントラクトおよび Dapps を作成するための基盤レイヤーとして機能します。 ブロックチェーン上の完全な AI エコシステム。",
+            "shortDescription": "Oraichain は、新しい Web3、スケーラブルな Dapps、および分散型 AI 向けの世界初のインテリジェントで安全なソリューションです。"
+        },
+        "optimism": {
+            "title": "楽観",
+            "description": "Optimism は、イーサリアムのレイヤー 2 スケーリング ソリューションです。 オプティミズムは、オプティミスティック ロールアップと呼ばれる高度なデータ圧縮技術を使用して、イーサリアム トランザクションのコストを高速化し、削減します。",
+            "shortDescription": "Optimism は、高度なデータ圧縮技術を使用して Ethereum トランザクションのコストを高速化し、削減する Ethereum のレイヤー 2 スケーリング ソリューションです。"
+        },
+        "arbitrum": {
+            "title": "アービトラム",
+            "description": "Arbitrum は、イーサリアムのスマート コントラクトの機能を強化する、イーサリアムのレイヤー 2 スケーリング ソリューションです。 オプティミスティック ロールアップ テクノロジーにより、イーサリアム ブロックチェーンのトランザクション時間を短縮し、手数料を削減することを目的としています。",
+            "shortDescription": "Arbitrum は、イーサリアムのスマート コントラクトの機能を強化する、イーサリアムのレイヤー 2 スケーリング ソリューションです。"
+        },
+        "polygon": {
+            "title": "ポリゴン",
+            "description": "Polygon は、分散型のレイヤー 2 スケーリング ソリューションであり、Ethereum の Internet of Blockchains と呼ばれるマルチチェーン Ethereum エコシステムです。  Polygon は、イーサリアムの制限を克服し、開発者がより低いガス料金とより高速なトランザクションでスケーラブルでユーザーフレンドリーな dApps を構築できるようにすることを目指しています",
+            "shortDescription": "Polygon は分散型 Ethereum レイヤー 2 スケーリング ソリューションであり、開発者がスケーラブルでユーザーフレンドリーな dApps をより低いガス料金とより高速なトランザクションで構築できるようにすることを目的としています。"
+        },
+        "oasis": {
+            "title": "オアシスネットワーク",
+            "description": "Oasis Network は、オープン ファイナンスと責任あるデータ エコノミーのための初のプライバシー対応ブロックチェーン プラットフォームです。  Oasis Network は、その高いスループットと安全なアーキテクチャと組み合わせることで、プライベートでスケーラブルな DeFi を強化し、オープン ファイナンスに革命をもたらし、それをトレーダーやアーリー アダプターを超えて大衆市場に拡大することができます。 その独自のプライバシー機能は、DeFi を再定義するだけでなく、トークン化されたデータと呼ばれる新しいタイプのデジタル資産を作成することもできます。これにより、ユーザーは自分が生成したデータを制御し、アプリケーションでそれをステーキングすることで報酬を得ることができます。史上初の責任あるデータ エコノミーを作成します。  .",
+            "shortDescription": "Oasis Network は、オープン ファイナンスと責任あるデータ経済のためのプライバシー対応ブロックチェーン プラットフォームです。"
+        },
+        "tron": {
+            "title": "トロンネットワーク",
+            "description": "TRON は、スマート コントラクトをサポートするための分散型ブロックチェーン プラットフォームです。 トロンの使命は、ブロックチェーン技術と分散型アプリケーション (dApps) を介してインターネットの分散化を加速し、人々が第三者なしでコンテンツを作成、所有、共有できるグローバルな無料コンテンツ エンターテイメント システムで Web 4.0 を構築することです。",
+            "shortDescription": "TRON は、ブロックチェーン技術と分散型アプリケーション (dApps) を介してインターネットの分散化を加速することを目的とした分散型ブロックチェーン プラットフォームです。 このプロジェクトの主な使命は、グローバルな無料コンテンツ エンターテイメント システムで Web 4.0 を構築することです。"
+        },
+        "stafi": {
+            "title": "スタフィハブ",
+            "description": "StaFiHub は Cosmos SDK に基づいて構築されたレイヤー 1 チェーンであり、クロスチェーン ステーキング デリバティブ プラットフォームは、IBC プロトコルを通じて資産のリキッド ステーキング ソリューションを提供することを目的としています。",
+            "shortDescription": "StaFiHub は、Cosmos 上に構築されたクロスチェーン ステーキング デリバティブ プラットフォームであり、IBC を通じてリキッド ステーキングを提供します。"
+        },
+        "stride": {
+            "title": "ストライド",
+            "description": "Stride はブロックチェーン (「ゾーン」) であり、IBC 互換のトークンを流動的にステーキングし、Cosmos エコシステム全体でステーキングと DeFi 利回りの両方を獲得できます。",
+            "shortDescription": "Stride は Cosmos のリキッド ステーキング ゾーンであり、ユーザーはステーキングと DeFi 利回りの両方を獲得できます"
+        },
+        "jackal": {
+            "title": "ジャッカルダオ",
+            "description": "ジャッカル プロトコルは、次世代のデータ ストレージ ネットワークであり、分散型アプリケーション プロトコルは、使いやすさを犠牲にすることなく、データのプライバシーとサイバーセキュリティ体制を強化することを目的としています。 このプロトコルは、最も重要なデータを保護する世界クラスのアプリケーションを提供することを目指しています。",
+            "shortDescription": "ジャッカル プロトコルは、次世代のデータ ストレージ ネットワークであり、分散型アプリケーション プロトコルは、使いやすさを犠牲にすることなく、データのプライバシーとサイバーセキュリティ体制を強化することを目的としています。"
+        }
+    },
+    "uptime": "アップタイム",
+    "active": "アクティブ",
+    "noactive": "非活性",
+    "jailed": "投獄された",
+    "sendAssetsDestination": "宛先ネットワーク",
+    "keplr": {
+        "notFound": "ブラウザに Keplr が見つかりません",
+        "cancel": "キャンセル",
+        "importWallet": "ウォレットのインポート",
+        "allreadyAdded": "アドレスは既に追加されています",
+        "titleModal": "Keplr ウォレットのインポート",
+        "descModal": "Keplr を接続するチェーンを選択",
+        "selectChainId": "チェーン ID を選択",
+        "errorSignMismatch": "Keplr でアカウントを変更してトランザクションに署名してください",
+        "allExist": "操作がキャンセルされたか、すべてのアドレスが既に存在します",
+        "confirm": "確認",
+        "selectAll": "すべて選択",
+        "unselectAll": "すべて選択解除",
+        "addTitle": "Keplr からネットワークを追加する",
+        "addInfo": "Keplr ウォレットからインポートするネットワークを選択してください"
+    },
+    "faq": {
+        "privacyPolicy": "プライバシーポリシー",
+        "termsOfService": "利用規約",
+        "guide": "ガイド"
+    },
+    "dontHaveEnoughFounds": "取引手数料を支払うのに十分な資金がありません。",
+    "transactionsSocket": {
+        "failed": "処理に失敗しました",
+        "completed": "取引完了",
+        "viewTitle": "エクスプローラーで見る"
+    },
+    "confirmModalTitle": "報酬の請求を確認する",
+    "confirmModalDesc": "利用可能な残高に発生した報酬が表示されます",
+    "manageStaking": "ステーキングを管理する",
+    "stakeShare": "出資比率",
+    "additionalFee": "追加料金",
+    "rewardDestination": "特典先",
+    "unstakedBalance": "ステークされていない残高",
+    "claimUnstakedText": "あなたの資産は賭けられていません。 トランザクションを確認して、今すぐ請求してください。",
+    "stakingAmount": "ステーキング量",
+    "polkadot": {
+        "chooseNodeModalDesc": "賭けたいトークンの量を設定します。 次に、委任するノードを選択します。 あなたの資金は <span style='color: #0A2778; に分配できます。  font-weight: 700;'>{maxNodes} ノード以下</span>。 また、${net} のステーク解除期間が <span style='color: #0A2778' font-weight: 700;>{perioud} 日</span>であることも考慮してください。 この間、ステーキングされていないトークンは凍結されます。  <span style='color: #FF5722;  font-weight: 700;'>最小ステーキング残高: {minStakingAmount} {code}</span>",
+        "nominatedNodesTitle": "指名されたノード:",
+        "error": {
+            "chooseNotMoreThan16Nodes": "16 個以下のノードを選択してください"
+        }
+    },
+    "minSendAmountError": "最小取引額は {minAmount} {code} です。",
+    "changeValidators": "バリデーターの変更",
+    "redelegateNote": "再委任する別のバリ​​データーを選択する必要があります",
+    "assets": "資産",
+    "menu": {
+        "settings": "設定",
+        "logOut": "ログアウト"
+    },
+    "stakingNote": "バリデータを変更したくない場合は、新しい金額を設定できます",
+    "assetsModal": {
+        "title": "トークンを選択",
+        "description": "トークンを選択したら、送信、ステーク、請求、および管理できます",
+        "searchLabel": "検索トークン",
+        "searchPlaceholder": "トークン名の入力を開始します",
+        "currentAsset": "流動資産"
+    },
+    "enterPasswordBackup": "シードフレーズを間違って書き留めた場合は、前のステップに戻って、記録が正しいことを確認してください。",
+    "enterPasswordBackupLabel": "バックアップファイルのパスワードを入力してくださいa,₹,,,",
+    "walletsAdding": {
+        "mainMenuTitle": "アドレスを追加",
+        "importMenuTitle": "輸入",
+        "mainMenuDescription": "Citadel.one 以外で作成された住所をインポートする",
+        "menu": {
+            "create": "作成",
+            "createDescription": "シタデル ワンシード ウォレットにより、ユーザーはプラットフォームに統合されたすべてのネットワークのアドレスを作成できます。",
+            "import": "輸入",
+            "importDescription": "住所をインポートして、資産の管理を開始します。",
+            "addNetworks": "ネットワークを追加",
+            "addNetworksDescription": "シタデル ワンシード ウォレットにより、ユーザーは 1 つのニーモニック フレーズのみを使用して、プラットフォームに統合されたすべてのネットワークのアドレスを作成できます。 したがって、さまざまなウォレットの複数のシードを保存して記憶する必要はありません。"
+        },
+        "menuTypes": {
+            "restoreTitle": "戻す",
+            "restoreDescription": "既存の Citadel.one ユーザーの場合",
+            "importWallet": "ウォレットのインポート",
+            "importDescription": "外部ウォレットユーザー向け",
+            "externalWallet": "外部ウォレット",
+            "externalDescription": "上級者向け",
+            "restoreOneSeed": "ワンシードを復元",
+            "restoreOneSeedDescription": "既存のアドレスをインポートする適切な方法を選択してください",
+            "importFile": "インポートファイル",
+            "importFileDescription": "既存のアドレスをインポートする適切な方法を選択してください",
+            "seedPhrase": "シードフレーズ",
+            "seedPhraseDescription": "シードフレーズをインポートしてアドレスを追加する",
+            "privateKey": "秘密鍵",
+            "privateKeyDescription": "秘密鍵をインポートしてアドレスを追加する",
+            "metamaskKeplr": "メタマスク、ケプラー",
+            "metamaskKeplrDescription": "Web3 ウォレットを接続してアドレスを追加してください",
+            "hardware": "Web3 ウォレットを接続してアドレスを追加してください",
+            "hardwareDescription": "高度な使用のために Ledger または Trezor デバイスから住所をインポートする",
+            "sourceAddress": "ソースアドレス",
+            "destinationAddress": "宛先アドレス"
+        }
+    },
+    "tokenDescriptionPersistence": "Persistence は、グローバルな流動性を刺激し、シームレスな価値交換を可能にするように設計されたマルチチェーン DeFi 製品のエコシステムです。  Persistence は、Proof-of-Stake 資産 (pSTAKE)、Agri Commodity 資産 (Comdex)、Trade Finance Debt 資産 (ShipFi) などの製品を通じて、さまざまな資産クラスを DeFi に導入しています。",
+    "tokenDescriptionSENTINEL": "Sentinel は、帯域幅を共有するノードのネットワークであり、分散型 VPN やその他のサービスが構築されています。  Sentinel エコシステムの目的は、信頼できる証明可能な方法でインターネットへのユニバーサル アクセスを強化することです。 これは、世界中の組織や個人が、Sentinel の Cosmos ベースのブロックチェーン上で、費用対効果が高く、スケーラブルで、分散型および分散型のネットワーク ソリューションを構築できるようにすることによって実現されます。",
+    "tokenDescriptionChihuahua": "チワワはミーム コインであり、チワワ チェーンに組み込まれているガバナンスを介して提案および投票されたチェーン上のプロジェクトに資金を提供するために使用できる 100 億 HUAHUA のコミュニティ プールを備えたコミュニティ主導のプロジェクトを目指しています。 このプロジェクトは、Cosmos SDK と Tendermint コンセンサスを使用して構築されています",
+    "tokenDescriptionUmee": "Umee は、ブロックチェーン間を相互接続するクロスチェーン DeFi ハブです。 ベースレイヤーブロックチェーンとして、アプリケーションとマネーレゴプリミティブをUmeeの上に構築して、クロスチェーンのレバレッジと流動性にアクセスできます。  Umee ブロックチェーンは、Cosmos エコシステム、イーサリアム ネットワーク、サイド チェーン アーキテクチャ、レイヤー 2 スケーリング ソリューション、代替ベース レイヤー プロトコル間の相互運用性を促進します。",
+    "tokenDescriptionStargaze": "Stargaze は、Cosmos エコシステム内のコミュニティ所有の Interchain NFT マーケットプレイスです。",
+    "tokenDescriptionRizon": "RIZON Blockchain の使命は、世界中の法定通貨を安全に発行できるプラットフォームを提供し、Cosmos IBC を通じて企業が相互運用できるようにすることです。",
+    "tokenDescriptionSifchain": "Sifchain は、DEX のオムニチェーン ソリューションです。 取引とセキュリティのためのより高性能で堅牢な暗号経済学、より柔軟な取引機能、拡張可能なオムニチェーン ロードマップ、そして最終的な真の DAO ガバナンス。  Sifchain は、地球、農業、豊饒、家族、結婚の北欧の女神である Sif の発案によるものです。  Sif は、ブロックチェーン業界の協調的な性質と、他の複数のチェーン間のつながりを育むことで見られる豊かな報酬を表しています。",
+    "tokenDescriptionLum": "Lum Network は、最も高度で安全な Delegated Proof-Of-Stake アルゴリズムである Tendermint & Cosmos SDK に基づくオープン ソース ブロックチェーン プロトコル (レイヤー 1) です。 ネイティブの暗号資産である LUM を利用しています。",
+    "tokenDescriptionCheqd": "Cheqd チームは、個人や組織が個人データを完全に管理できる安全なネットワークを構築しています。  cheqd は、企業が新しい革新的なビジネス モデルを作成するのを支援し、セルフ ソブリン アイデンティティが実行可能で、顧客に提供する価値のあるサービスであることを保証します。",
+    "tokenDescriptionInjective": "Injective は、クロスチェーン Web3 DeFi アプリを構築するために最適化された相互運用可能なレイヤー 1 プロトコルです。",
+    "syncExtensions": {
+        "modalMenuTitle": "アドレスを選択",
+        "modalMenuDescription": "拡張機能と同期するアドレスを選択",
+        "syncTo": "アドレスのエクスポート",
+        "syncFrom": "住所のインポート",
+        "syncDescription": "Citadel.one ブラウザ拡張機能に追加するアドレスを選択してください",
+        "notFound": "Citadel ブラウザ拡張機能が見つかりません",
+        "walletsNotFound": "ブラウザ拡張機能と同期するウォレットが見つかりません",
+        "emptyWallets": "同期する前にブラウザ拡張機能をセットアップする必要があります",
+        "syncWithExtension": "ブラウザ拡張機能へのアドレスのエクスポート",
+        "syncingFromTitle": "ブラウザ拡張機能からのアドレスのインポート",
+        "syncingFromDescription": "この操作をパスワードで確認する",
+        "incorrectPasswordExtension": "拡張パスワードが正しくありません",
+        "enterPassword": "拡張パスワードを入力してください",
+        "syncMainTitle": "アドレスを同期する",
+        "syncMainDescription": "アドレスを Citadel.one ブラウザー拡張機能と数秒で同期します",
+        "syncMainSync": "同期",
+        "extensionBlock": "Chrome 拡張機能",
+        "sync": "ウォレットを同期する"
+    },
+    "noApyNote": "暗号資産をステーキングして受動的収入を獲得しましょう!",
+    "assetsStubs": {
+        "title": "まだアセットがありません",
+        "subtitle": "Citadel.one 経由で直接交換するか、外部取引所から入金することができます",
+        "card1": {
+            "title": "Citadel.one 経由でスワップ",
+            "action": "拡張子"
+        },
+        "card2": {
+            "title": "からの入金",
+            "action": "交換"
+        }
+    },
+    "dontHaveEnoughFoundsForFee": "取引手数料を支払うのに十分な資金がありません。",
+    "asset": "資産",
+    "minAmountError": "最低額は {minAmount} {code} です",
+    "app": "アプリ",
+    "noSelfSendError": "転送ウォレットは、受信ウォレットと同じにすることはできません。",
+    "txWaitTitle": "取引が完了するまでに時間がかかる場合があります",
+    "addComment": "コメントを追加する",
+    "editComment": "コメントを編集",
+    "errors": {
+        "notEnoughFounds": "取引手数料を支払うのに十分な {code} がありません",
+        "notAvailableToStake": ""
+    },
+    "copyToClipboardTitle": "閲覧キーをコピー",
+    "showHideKeyTitle": "表示キーの表示/非表示",
+    "changeKeyTitle": "閲覧キーの変更"
+}

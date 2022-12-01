@@ -58,7 +58,7 @@ export default {
       height: 350px;
     }
 
-    @include md {
+    @include laptop-standard {
       height: 300px;
     }
   }
@@ -81,7 +81,7 @@ export default {
       font-size: 28px;
     }
 
-    @include md {
+    @include laptop-standard {
       font-size: 24px;
       margin: 15px 0 10px;
     }
@@ -100,7 +100,7 @@ export default {
       font-size: 18px;
     }
 
-    @include md {
+    @include laptop-standard {
       font-size: 16px;
     }
   }

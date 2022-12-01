@@ -9,8 +9,7 @@
       class="rewards-block-expand__close-icon"
       @click="$emit('close', $event)"
     >
-      <closeIcon />
-      <closeIconHover id="hover" />
+      <constrictIcon class="constrict__icon" />
     </div>
     <div class="rewards-block-expand__header">
       <span class="rewards-block-expand__header-title">
@@ -170,8 +169,7 @@
 import Modal from '@/components/Modal';
 import Loading from '@/components/Loading';
 import Dropdown from '@/views/Rewards/components/Dropdown.vue';
-import closeIcon from '@/assets/icons/network-info/constrict.svg';
-import closeIconHover from '@/assets/icons/network-info/constrict-hover.svg';
+import constrictIcon from '@/assets/icons/network-info/constrict.svg';
 import DatePicker from '@/components/UI/DatePicker.vue';
 import TabsGroup from '@/components/UI/TabsGroup';
 import { tabsList, tabsListmd } from '@/static/dateTabs';
@@ -184,8 +182,7 @@ import { useStore } from 'vuex';
 export default {
   name: 'RewardsBlockExpand',
   components: {
-    closeIcon,
-    closeIconHover,
+    constrictIcon,
     DatePicker,
     TabsGroup,
     Dropdown,
@@ -322,20 +319,6 @@ export default {
     @include md {
       top: 20px;
       right: 24px;
-    }
-    svg {
-      display: block;
-    }
-    svg + #hover {
-      display: none;
-    }
-    &:hover {
-      svg:not(#hover) {
-        display: none;
-      }
-      svg + #hover {
-        display: block;
-      }
     }
   }
   &__header {

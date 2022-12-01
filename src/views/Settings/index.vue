@@ -14,19 +14,22 @@
       </div>
 
       <div class="settings__right-wrap">
-        <div class="two_in_one">
-          <Language />
-          <Subscriptions />
+        <div class="container">
+          <div class="two_in_one">
+            <Language />
+            <Subscriptions />
+          </div>
+
+          <div class="column">
+            <ChangeEmail />
+            <ChangePassword />
+          </div>
         </div>
+        <div class="container">
+          <ExtensionSettings :visibleClass="'comingSoon'" />
 
-        <div class="column">
-          <ChangeEmail />
-          <ChangePassword />
+          <DeleteAccount />
         </div>
-
-        <ExtensionSettings :visibleClass="'comingSoon'" />
-
-        <DeleteAccount />
       </div>
     </div>
 
@@ -75,7 +78,8 @@
           <ExportModal
             :current-export-method="currentExportMethod"
             :private-key="decodedPrivateKey"
-            :mnemonic-phrase="decodedMnemonick"
+            :derivation-path="currentExportWallet.derivationPath"
+            :mnemonic-phrase="decodedMnemonic"
           />
         </ModalContent>
         <ModalContent
@@ -128,6 +132,7 @@ import TransferData from './components/TransferData';
 import ChangeEmail from './components/Account/Email';
 import ChangePassword from './components/Account/Password';
 import DeleteAccount from './components/Account/Delete';
+// import SyncExtension from './components/SyncExtension';
 import Language from './components/Language';
 import CreateVkModal from '@/views/Wallet/components/CreateVkModal.vue';
 import ManageViewingKeysModal from './components/ManageViewingKeysModal';
@@ -161,6 +166,7 @@ export default {
     CrossChain,
     ChangePassword,
     ExtensionSettings,
+    // SyncExtension,
   },
   setup() {
     const store = useStore();
@@ -205,6 +211,9 @@ export default {
       changeVk.value = null;
     };
 
+    const global = computed(() => window);
+    const isPasswordHash = computed(() => store.getters['crypto/passwordHash']);
+
     onMounted(() => {
       store.dispatch('wallets/initHiddenWallets');
     });
@@ -223,7 +232,7 @@ export default {
       currentExportMethod.value = null;
       currentExportWallet.value = null;
       showExportModal.value = false;
-      decodedMnemonick.value = '';
+      decodedMnemonic.value = '';
       inputError.value = false;
       manageVkWallets.value = null;
       changeVk.value = null;
@@ -277,9 +286,9 @@ export default {
 
       return {};
     });
-    const decodedMnemonick = ref('');
+    const decodedMnemonic = ref('');
     const decodedPrivateKey = ref('');
-    const approveExport = () => {
+    const approveExport = async () => {
       if (passwordError.value) {
         inputError.value = passwordError.value;
 
@@ -287,19 +296,23 @@ export default {
       } else if (currentExportMethod.value === WALLET_TYPES.ONE_SEED) {
         if (!currentExportWallet.value.importedFromSeed) {
           // export main account oneSeed
-          decodedMnemonick.value = store.getters['crypto/decodeUserMnemonic'](
-            password.value
+          decodedMnemonic.value = await store.dispatch(
+            'crypto/decodeUserMnemonic',
+            { password: password.value }
           );
         } else {
           // type wallet - private key (oneSeed), and export its oneSeed
-          decodedMnemonick.value = store.getters['crypto/decodeUserMnemonic'](
-            password.value,
-            currentExportWallet.value.importedFromSeed
+          decodedMnemonic.value = await store.dispatch(
+            'crypto/decodeUserMnemonic',
+            {
+              password: password.value,
+              customMnemonic: currentExportWallet.value.importedFromSeed,
+            }
           );
         }
       } else if (currentExportMethod.value === WALLET_TYPES.PRIVATE_KEY) {
         decodedPrivateKey.value =
-          currentExportWallet.value.getPrivateKeyDecoded(password.value);
+          await currentExportWallet.value.getPrivateKeyDecoded(password.value);
       }
 
       showApproveExportModal.value = false;
@@ -319,7 +332,7 @@ export default {
       approveExport,
       showExportModal,
       currentExportMethod,
-      decodedMnemonick,
+      decodedMnemonic,
       exportModalData,
       decodedPrivateKey,
       inputError,
@@ -332,6 +345,8 @@ export default {
       snip20TokenFee,
       closeCreateVkModal,
       VIEWING_KEY_TYPES,
+      isPasswordHash,
+      global,
     };
   },
 };
@@ -343,23 +358,10 @@ export default {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  gap: 30px;
 
-  & > div {
-    &:first-child {
-      flex: 0 0 63%;
-    }
-    &:nth-child(2) {
-      flex: 0 0 35%;
-    }
-
-    @include laptop-xl {
-      &:first-child,
-      &:nth-child(2) {
-        flex: 0 0 49%;
-      }
-    }
-  }
   &__left-side {
+    width: 50%;
     & .cross-chain-card {
       display: none;
     }
@@ -378,6 +380,9 @@ export default {
   }
 
   &__right-side {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
     & > div {
       margin-bottom: $card-margin;
     }
@@ -395,6 +400,7 @@ export default {
     }
 
     .two_in_one {
+      width: 50%;
       @include card-default;
 
       & > div {
@@ -411,6 +417,7 @@ export default {
     .column {
       display: flex;
       flex-direction: column;
+      width: 50%;
     }
     @include laptop-l {
       & .cross-chain-card {
@@ -426,19 +433,35 @@ export default {
     align-items: stretch;
 
     & > div {
-      flex: 0 0 49%;
       margin-bottom: $card-margin;
-      @include laptop-l {
-        flex: 0 0 100%;
-      }
-      @include laptop {
-        flex: 0 0 100%;
-      }
     }
   }
 }
 .manage-vk-modal {
   max-width: 850px;
   width: 100% !important;
+}
+.container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  gap: 25px;
+  & div {
+    width: 100%;
+  }
+}
+@media (max-width: 1370px) {
+  .settings__right-side:deep {
+    & .container {
+      flex-direction: column;
+    }
+    & .two_in_one,
+    & .column {
+      width: 100%;
+    }
+  }
+  .settings__left-side {
+    width: 63%;
+  }
 }
 </style>

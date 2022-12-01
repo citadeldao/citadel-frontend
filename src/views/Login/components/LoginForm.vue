@@ -120,27 +120,26 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 55px 60px 10px 60px;
+  padding: 55px 60px 24px 60px;
   border-radius: 25px;
-  margin-bottom: 15px;
-  @include lg {
-    margin-bottom: 15px;
-  }
+
   @include md {
-    padding: 36px 36px 42px 36px;
-    margin-bottom: 15px;
+    padding: 26px 26px 24px 26px;
+  }
+
+  @include laptop {
+    padding: 26px 26px 24px 26px;
   }
 
   &__title {
     font-family: 'Panton_Bold';
     font-size: 35px;
     line-height: 42px;
-    margin-bottom: 16px;
+    margin-bottom: 5px;
     text-align: center;
     @include md {
       font-size: 25px;
       line-height: 30px;
-      margin-bottom: 5px;
     }
   }
 
@@ -148,21 +147,20 @@ export default {
     font-size: 16px;
     line-height: 27px;
     color: $mid-blue;
-    margin-bottom: 26px;
-    @include md {
-      margin-bottom: 18px;
-    }
+    margin-bottom: 20px;
   }
 
   &__input {
+    min-width: 250px;
     width: 100%;
+    max-width: 350px;
     height: 68px;
-    margin-bottom: 24px;
+    margin-bottom: 10px;
   }
 
   &-social {
     width: 100%;
-
+    max-width: 350px;
     &__description {
       position: relative;
       display: flex;

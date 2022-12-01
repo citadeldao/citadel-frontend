@@ -1,7 +1,11 @@
 <template>
   <teleport to="body">
     <Modal>
-      <ModalContent :submit-button="false" @close="$emit('close')">
+      <ModalContent
+        v-click-away="onClose"
+        :submit-button="false"
+        @close="onClose"
+      >
         <div class="container">
           <div class="container__title">
             {{ $t('login.whyEmailTitle') }}
@@ -38,6 +42,16 @@ import ModalContent from '@/components/ModalContent';
 export default {
   name: 'WhyCitadel',
   components: { Modal, ModalContent },
+  emits: ['close'],
+  setup(_, { emit }) {
+    const onClose = () => {
+      emit('close');
+    };
+
+    return {
+      onClose,
+    };
+  },
 };
 </script>
 

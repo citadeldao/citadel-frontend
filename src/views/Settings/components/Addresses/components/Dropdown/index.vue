@@ -23,6 +23,7 @@
         class="dropdown__item"
       >
         <DropdownItem
+          :is-open="isOpen"
           ref="dropdownItem"
           :selectable="selectable"
           :wallet="wallet"
@@ -105,7 +106,7 @@ export default {
 .dropdown {
   &__title {
     position: relative;
-    z-index: 1;
+    z-index: 0;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -136,7 +137,7 @@ export default {
         }
         &__text {
           background-color: $mid-blue;
-          color: $black;
+          color: $white;
         }
       }
     }
@@ -178,7 +179,7 @@ export default {
       background: $mid-blue;
       & svg {
         fill: white;
-        height: 16px;
+        height: 24px;
         margin: auto;
       }
 

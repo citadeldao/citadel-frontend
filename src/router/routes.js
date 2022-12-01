@@ -75,7 +75,7 @@ export default [
       },
       {
         name: 'WalletTransactionsOld',
-        path: 'transactions',
+        path: 'transactions_old',
         component: () =>
           import(
             /* webpackChunkName: 'Transactions' */ '@/views/Wallet/views/TransactionsOld'
@@ -268,6 +268,16 @@ export default [
     name: 'Extensions',
     component: () =>
       import(/* webpackChunkName: 'Extensions' */ '@/views/Extensions'),
+    meta: {
+      layout: 'AddAddressLayout',
+      guard: 'private',
+    },
+  },
+  {
+    path: '/extensions-settings',
+    name: 'ExtensionsSettings',
+    component: () =>
+      import(/* webpackChunkName: 'Extensions' */ '@/views/ExtensionsSettings'),
     meta: {
       layout: 'AddAddressLayout',
       guard: 'private',

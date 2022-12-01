@@ -237,6 +237,11 @@ export default {
   .dropdown__item {
     height: 48px;
   }
+  &:deep {
+    .title__text {
+      color: $black !important;
+    }
+  }
 }
 .modal_content {
   &:deep &__content {
