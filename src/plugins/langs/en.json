@@ -291,7 +291,9 @@
     "tryBtn": "Try again",
     "errorPage": {
         "pageNotFound": "Page not found",
-        "toHomePage": "To the homepage"
+        "toHomePage": "To the homepage",
+        "serviceOff": "We'll be back soon!",
+        "serviceOffDescription": "Sorry for the inconvenience but we're performing some maintenance at the moment. We'll be back online shortly! Please feel free to contact us with any questions @citadeldao"
     },
     "lockBanner": {
         "bannerInfo": "Import your address to start staking. Need a guide? Check ",

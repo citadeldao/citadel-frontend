@@ -291,7 +291,9 @@
     "tryBtn": "",
     "errorPage": {
         "pageNotFound": "",
-        "toHomePage": ""
+        "toHomePage": "",
+        "serviceOff": "",
+        "serviceOffDescription": ""
     },
     "lockBanner": {
         "bannerInfo": "",
