@@ -93,7 +93,9 @@
             :label="$t('amount')"
             :max="maxAmount"
             :disabled="
-              (isSendToAnotherNetwork && !bridgeTargetNet) || maxAmount === 0
+              (isSendToAnotherNetwork && !bridgeTargetNet) ||
+              maxAmount === 0 ||
+              maxAmountParent === 0
             "
             placeholder="0.0"
             icon="coins"
@@ -106,7 +108,9 @@
             <div
               v-if="insufficientFunds"
               class="send__section-error"
-              :class="{ doNotHaveEnoughFunds: maxAmount === 0 }"
+              :class="{
+                doNotHaveEnoughFunds: maxAmountParent === 0 || maxAmount === 0,
+              }"
             >
               <error class="send__section-error-icon" />
               <span class="send__section-error-text">
@@ -119,10 +123,10 @@
             >{{ $t('includingFunds-xl') }}
           </span>
           <transition name="fade">
-            <span 
-              v-if="!insufficientFunds" 
+            <span
+              v-if="!insufficientFunds"
               class="send__input-note"
-              :class="{ 'send__input-note-laptop': insufficientFunds }" 
+              :class="{ 'send__input-note-laptop': insufficientFunds }"
             >
               {{ $t('includingFunds') }}
             </span>
@@ -730,6 +734,20 @@ export default {
     );
 
     // Calc Max Amount
+    const maxAmountParent = computed(() => {
+      if (balance.value?.adding && balance.value?.adding.length > 0) {
+        return balance.value?.adding[0].current > fee.value.fee
+          ? BigNumber(balance.value?.adding[0].current)
+              .minus(fee.value.fee)
+              .toNumber()
+          : 0;
+      }
+
+      return balance.value?.mainBalance > fee.value.fee
+        ? BigNumber(balance.value?.mainBalance).minus(fee.value.fee).toNumber()
+        : 0;
+    });
+
     const maxAmount = computed(() => {
       if (props.currentToken) {
         return balance.value?.mainBalance;
@@ -741,6 +759,7 @@ export default {
         ? BigNumber(balance.value?.mainBalance).minus(fee.value.fee).toNumber()
         : 0;
     });
+
     const isMaxSelected = computed(() => amount.value === maxAmount.value);
 
     // Select Fee
@@ -853,6 +872,7 @@ export default {
         wallet: props.currentWallet,
         maxAmount: +maxAmount.value,
         type: 'send',
+        maxAmountParent: +maxAmountParent.value,
       })
     );
 
@@ -1319,6 +1339,7 @@ export default {
       toAddress,
       amount,
       maxAmount,
+      maxAmountParent,
       showAdvanced,
       memo,
       submitHandler,
