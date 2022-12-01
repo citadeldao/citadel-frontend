@@ -325,6 +325,15 @@ export default [
     },
   },
   {
+    path: '/service-is-unavailable',
+    name: 'AppOff',
+    component: () => import(/* webpackChunkName: 'AppOff' */ '@/views/AppOff'),
+    meta: {
+      layout: 'DefaultLayout',
+      guard: 'private',
+    },
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'not-found',
     redirect: { name: 'ErrorPage' },
