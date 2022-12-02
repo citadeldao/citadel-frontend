@@ -630,6 +630,7 @@
     "addAnAddress": "Add an address",
     "chooseSuitableMethod": "Choose a suitable method to import an existing address",
     "address": "Address",
+    "anotherAddress": "Another Address",
     "enterAddress": "Enter address",
     "import": "Import",
     "enterMnemonicPhrase": "Enter a mnemonic phrase",
@@ -642,6 +643,7 @@
     "next": "Next",
     "confirm": "Confirm",
     "importExistingAddressExp": "Import an existing address",
+    "notFoundPlaceholderText": "Nothing was found for your query",
     "layouts": {
         "addAddressLayout": {
             "sidebarPlaceholder": "Your addresses will be displayed here",
@@ -752,7 +754,7 @@
         },
         "changeEmail": {
             "title": "Your email",
-            "description": "Your account email",
+            "description": "You can change your account email here",
             "inputLabel": "Your e-mail",
             "inputPlaceHolder": "e-mail",
             "button": "Change",
@@ -1261,8 +1263,8 @@
         },
         "jackal": {
             "title": "Jackaldao",
-            "description": "-",
-            "shortDescription": "-"
+            "description": "The Jackal Protocol is a next generation data storage network and decentralized application protocol aims to increase data privacy and cybersecurity posture without sacrificing ease of use. The protocol strives to offer world-class applications to protect the most important data.",
+            "shortDescription": "The Jackal Protocol is a a next generation data storage network and decentralized application protocol aims to increase data privacy and cybersecurity posture without sacrificing ease of use."
         }
     },
     "uptime": "Uptime",
@@ -1414,6 +1416,7 @@
     "noSelfSendError": "Transfer wallet cannot be the same as receiving wallet.",
     "minAmountError": "Minimum amount is {minAmount} {code}",
     "errors": {
-        "notEnoughFounds": "Not enough {code} to pay the transaction fee"
+        "notEnoughFounds": "Not enough {code} to pay the transaction fee",
+        "notAvailableToStake": "Validator is unavailable for stake"
     }
 }

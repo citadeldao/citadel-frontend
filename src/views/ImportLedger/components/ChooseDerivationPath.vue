@@ -55,7 +55,7 @@ import PrimaryButton from '@/components/UI/PrimaryButton';
 import DerivationPathCard from '@/components/DerivationPathCard';
 import useCheckItem from '@/compositions/useCheckItem';
 import { useStore } from 'vuex';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import Modal from '@/components/Modal';
 import { WALLET_TYPES } from '@/config/walletType';
 import Select from '@/components/UI/Select';
@@ -84,6 +84,8 @@ export default {
 
     const numberOfPaths = 5;
     const wallets = ref([]);
+    const walletsFromStore = computed(() => store.getters['wallets/wallets']);
+    const maxPaths = ref(20);
     const pathOptions = ref(
       props.net === 'evmos'
         ? [
@@ -192,7 +194,26 @@ export default {
 
       return !isChecked || isExist;
     });
-
+    const filteredWalletsByCurNetLength = computed(() => {
+      return walletsFromStore.value.filter(
+        (e) => e.name === customWallet.value.walletInstance?.name
+      ).length;
+    });
+    const limitOfCards = computed(
+      () =>
+        numberOfPaths.value +
+        filteredWalletsByCurNetLength.value -
+        wallets.value.filter((e) => e.alreadyExist).length
+    );
+    const generateNewPath = () => {
+      if (limitOfCards.value <= maxPaths.value) {
+        numberOfPaths.value++;
+        createWalletsWithTemplatePath(currentPathDerivation.value);
+      }
+    };
+    onMounted(async () => {
+      await setCustomWallet();
+    });
     return {
       clickHandler,
       addSingleItem,
@@ -209,6 +230,7 @@ export default {
       pathOptions,
       currentPathDerivation,
       createWalletsWithTemplatePath,
+      generateNewPath,
     };
   },
 };

@@ -78,9 +78,6 @@
         :class="scrollClass"
         @change="isOverflown($event)"
       >
-        <h4 class="sidebar__addresses-header-title">
-          {{ $t('layouts.addAddressLayout.addresses') }}
-        </h4>
         <SearchPlaceholder />
       </div>
       <div
@@ -748,7 +745,7 @@ export default {
       flex-direction: column;
       overflow-y: overlay;
       overflow-x: hidden;
-      padding: 15px 0;
+      padding: 15px 0 0;
       border-radius: 8px;
       @include laptop {
         width: 90%;

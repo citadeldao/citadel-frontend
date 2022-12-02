@@ -463,15 +463,14 @@ export default {
   flex-direction: column;
   border-radius: 16px;
   background: $white;
-  padding: 24px 0 11px 0;
-  min-height: 625px;
+  padding: 24px 0 28px 0;
   &-single__item {
     margin-bottom: 0;
   }
   &__header {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     text-transform: capitalize;
 
     & > * {
@@ -536,7 +535,7 @@ export default {
     display: flex;
 
     div {
-      padding: 12px 0;
+      padding: 10px 0;
       font-family: 'Panton_Bold';
       font-size: 18px;
       text-align: left;
@@ -547,8 +546,8 @@ export default {
         font-size: $wallet-assets-heading-font-size;
       }
 
-      @include md {
-        font-size: $wallet-assets-heading-font-size-md;
+      @include laptop-standard {
+        font-size: $h6-size;
       }
 
       &:nth-child(1) {

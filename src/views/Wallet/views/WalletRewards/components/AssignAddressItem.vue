@@ -175,6 +175,7 @@ export default {
   &__info-line {
     display: flex;
     justify-content: space-between;
+    max-width: 462px;
   }
   &__title {
     font-size: 16px;

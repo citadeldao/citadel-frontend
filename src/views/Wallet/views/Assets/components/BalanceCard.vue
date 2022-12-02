@@ -113,7 +113,7 @@ export default {
     }
 
     @include laptop-standard {
-      font-size: 12px;
+      font-size: 14px;
     }
   }
 
