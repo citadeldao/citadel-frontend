@@ -102,7 +102,7 @@
             :show-error-text="showErrorText"
             :error="insufficientFunds"
             data-qa="send__amount-field"
-            :show-set-max="maxAmount !== 0"
+            :show-set-max="maxAmountParent !== 0"
           />
           <transition name="fade">
             <div
@@ -119,6 +119,23 @@
             </div>
           </transition>
 
+          <transition name="fade">
+            <div class="send__section-muted" v-if="!insufficientFunds">
+              <span class="send__section-muted-text">
+                {{ $t('transactionFee') }}:
+                <span
+                  class="send__section-muted-amount"
+                  v-pretty-number="{
+                    title: $t('transactionFeeSimulate'),
+                    value: fee.fee || 0,
+                    currency: currentWallet.code,
+                  }"
+                ></span>
+                {{ currentWallet.code }}
+              </span>
+            </div>
+          </transition>
+
           <span v-if="false" class="send__input-note-xl"
             >{{ $t('includingFunds-xl') }}
           </span>
@@ -131,6 +148,9 @@
               {{ $t('includingFunds') }}
             </span>
           </transition>
+          <span class="send__input-note" v-if="!insufficientFunds">
+            {{ $t('includingFunds') }}
+          </span>
         </div>
       </div>
       <div
@@ -733,7 +753,7 @@ export default {
       { deep: true }
     );
 
-    // Calc Max Amount
+    // Calc Max Amount Parent
     const maxAmountParent = computed(() => {
       if (balance.value?.adding && balance.value?.adding.length > 0) {
         return balance.value?.adding[0].current > fee.value.fee
@@ -748,6 +768,7 @@ export default {
         : 0;
     });
 
+    // Calc Max Amount
     const maxAmount = computed(() => {
       if (props.currentToken) {
         return balance.value?.mainBalance;
@@ -1496,9 +1517,6 @@ export default {
       flex-direction: column;
       margin-bottom: 0;
     }
-    @include laptop {
-      flex-direction: row;
-    }
   }
 
   &__autocomplete {
@@ -1521,12 +1539,10 @@ export default {
       width: 100%;
       margin-bottom: 23px;
     }
-    @include laptop {
-      width: 48%;
-    }
   }
 
-  &__section-error {
+  &__section-error,
+  &__section-muted {
     display: flex;
     position: absolute;
     align-items: center;
@@ -1550,16 +1566,22 @@ export default {
     width: 19px;
   }
 
+  &__section-muted-text,
   &__section-error-text {
     font-size: 14px;
     color: $red;
     font-family: 'Panton_Regular';
-    width: fit-content;
-    word-break: break-word;
-
+    @include lg {
+      display: initial;
+    }
     @include md {
       font-size: 12px;
+      line-height: 14px;
     }
+  }
+
+  &__section-muted-text {
+    color: $mid-gray;
   }
 
   &__input-note-xl {
@@ -1822,6 +1844,7 @@ export default {
 
   &__button {
     align-self: center;
+    margin-top: 20px;
     @include md {
       display: none;
     }
