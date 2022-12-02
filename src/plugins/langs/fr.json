@@ -291,7 +291,9 @@
     "tryBtn": "Essayez à nouveau",
     "errorPage": {
         "pageNotFound": "Page non trouvée",
-        "toHomePage": "Vers la page d'accueil"
+        "toHomePage": "Vers la page d'accueil",
+        "serviceOff": "",
+        "serviceOffDescription": ""
     },
     "lockBanner": {
         "bannerInfo": "Importez votre adresse pour commencer à staker. Besoin d'un guide ? Consultez ",
