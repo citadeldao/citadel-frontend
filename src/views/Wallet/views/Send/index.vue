@@ -128,10 +128,13 @@
                   v-pretty-number="{
                     title: $t('transactionFeeSimulate'),
                     value: fee.fee || 0,
-                    currency: currentWallet.code,
+                    currency:
+                      currentWallet?.parentCoin?.code || currentWallet.code,
                   }"
                 ></span>
-                {{ currentWallet.code }}
+                <span class="send__section-muted-currency">
+                  {{ currentWallet?.parentCoin?.code || currentWallet.code }}
+                </span>
               </span>
             </div>
           </transition>
@@ -1579,7 +1582,14 @@ export default {
   }
 
   &__section-muted-text {
-    color: $mid-gray;
+    color: $gray;
+    span.send__section-muted-currency {
+      color: $mid-gray;
+    }
+    & > span {
+      color: $ligth-blue;
+      font-weight: 700;
+    }
   }
 
   &__input-note-xl {
