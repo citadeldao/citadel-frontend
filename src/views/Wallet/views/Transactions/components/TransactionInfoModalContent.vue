@@ -44,7 +44,12 @@
               class="line"
             />
             <div v-if="component.type === 'amount'" class="value">
-              <div class="value-amount">
+              <div
+                class="value-amount"
+                :style="{
+                  color: component?.value?.symbol ? '#6A4BFF' : '#262b61',
+                }"
+              >
                 {{ component.value.text }}
                 <transition name="fade1">
                   <span v-if="isCopied" class="input__tooltip">
@@ -66,7 +71,7 @@
                 class="value-amount"
                 :style="{
                   cursor:
-                    component.value === info.view[0].components[0].value
+                    component.value === info.view[0].components[0]?.value
                       ? 'pointer'
                       : 'initial',
                 }"
@@ -270,7 +275,7 @@ $blue-dark: #262b61;
         .value-amount {
           font-size: 13px;
           margin-right: 5px;
-          color: $dark-blue;
+          color: $blue-dark;
           font-family: 'Panton_Bold';
           word-break: break-all;
           text-align: right;
