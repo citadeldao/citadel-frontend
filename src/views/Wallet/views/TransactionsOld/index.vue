@@ -329,6 +329,10 @@ export default {
       modalCloseHandler();
     };
     const showTransactionInfo = async (transaction) => {
+      const index = transactions.value.findIndex(
+        (e) => e.id === transaction.id
+      );
+      transaction.date = transactions.value[index].date;
       currentTransaction.value = transaction;
       txComment.value = transaction.note;
       showModal.value = true;

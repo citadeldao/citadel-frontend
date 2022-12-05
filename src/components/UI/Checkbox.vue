@@ -134,7 +134,6 @@ input[type='checkbox'] {
 
 .checkbox {
   display: inline-flex;
-  justify-content: space-between;
   align-items: center;
   cursor: pointer;
 
@@ -160,6 +159,7 @@ input[type='checkbox'] {
     display: flex;
     font-size: 1rem !important;
     width: fit-content;
+    margin-right: 5px;
     @include laptop {
       font-size: 0.875rem !important;
     }
