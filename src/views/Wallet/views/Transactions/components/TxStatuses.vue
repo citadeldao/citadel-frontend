@@ -37,17 +37,10 @@
         <calendar />
       </div>
       <div class="status">
-        <div class="label">{{ $t('date') }}</div>
-        <Tooltip>
-          <template #content>
-            <span> {{ defaultDate(info.date) }} </span>
-          </template>
-          <template #default>
-            <div class="value time">
-              {{ info.date ? moment(info.date).fromNow() : '' }}
-            </div>
-          </template>
-        </Tooltip>
+        <div class="value time">
+          <span>{{ formatedDate.first }}</span>
+          <span>{{ formatedDate.second }}</span>
+        </div>
       </div>
     </div>
     <div v-if="info.fee" class="tx-statuses__item">
@@ -70,9 +63,9 @@ import fee from '@/assets/icons/transaction-status/fee.svg';
 import pending from '@/assets/icons/transaction-status/pending.svg';
 import error from '@/assets/icons/transaction-status/error.svg';
 import Tooltip from '@/components/UI/Tooltip';
-import moment from 'moment';
 import defaultDate from '@/helpers/date.js';
-
+import { computed } from 'vue';
+import { format } from 'date-fns';
 export default {
   components: { success, pending, error, calendar, fee, Tooltip },
   props: {
@@ -83,10 +76,16 @@ export default {
       required: true,
     },
   },
-  setup() {
+  setup(props) {
+    const formatedDate = computed(() => {
+      return {
+        first: format(new Date(props.info.date), 'yyyy/MM/dd'),
+        second: format(new Date(props.info.date), 'hh:mm:ss'),
+      };
+    });
     return {
+      formatedDate,
       defaultDate,
-      moment,
     };
   },
 };
@@ -120,6 +119,11 @@ export default {
 
         &.time {
           margin-left: -5px;
+          display: flex;
+          flex-direction: column;
+          & span:first-child {
+            color: $fieldName;
+          }
         }
       }
 

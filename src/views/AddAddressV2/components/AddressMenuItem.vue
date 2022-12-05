@@ -65,19 +65,26 @@ export default {
     font-weight: 700;
     font-size: 28px;
     color: $black;
+    @include laptop {
+      font-size: $h4-size;
+    }
   }
 
   .description {
     margin-top: 15px;
     font-family: 'Panton_Regular';
     font-weight: 400;
-    font-size: 16px;
+    font-size: $default-size;
     line-height: 27px;
     color: $mid-blue;
     width: 47%;
 
     @include md {
       width: 45%;
+    }
+
+    @include laptop {
+      font-size: $small-lg;
     }
   }
 }

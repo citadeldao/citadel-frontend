@@ -472,7 +472,9 @@ export default {
     align-items: center;
     margin-bottom: 5px;
     text-transform: capitalize;
-
+    &:deep .input__clear-icon {
+      top: calc(100% - 60px);
+    }
     & > * {
       flex-grow: 1;
     }

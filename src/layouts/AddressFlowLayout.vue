@@ -57,9 +57,9 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-start;
   position: relative;
-  padding: 50px 0 0;
+  padding: 38px 0 0;
   box-sizing: border-box;
   min-height: 100vh;
   //height: 100vh;
