@@ -1,5 +1,5 @@
 <template>
-  <div class="tooltip">
+  <div class="tooltip" style="direction: ltr">
     <slot />
     <div class="tooltip__content" :style="{ width, left }">
       <slot name="content" />
