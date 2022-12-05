@@ -21,7 +21,7 @@ export const types = {
   },
   seedPhrase: {
     color: '#F4BD13',
-    text: t('oneSeed'),
+    text: t('seedPhrase'),
   },
   privateKey: {
     color: '#00A3FF',

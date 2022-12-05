@@ -118,6 +118,10 @@ export default {
               'crypto/createNewWalletInstance',
               { walletOpts: wallet }
             );
+            // new type override
+            if (newInstance.importedFromSeed) {
+              newInstance.type = WALLET_TYPES.SEED_PHRASE;
+            }
             await store.dispatch('wallets/pushWallets', {
               wallets: [newInstance],
             });

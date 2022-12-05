@@ -86,6 +86,12 @@ export default {
     }
   }
 
+  &__seedPhrase {
+    &::after {
+      background: #f4bd13;
+    }
+  }
+
   &__privateKey {
     &::after {
       background: $ligth-blue;
