@@ -119,7 +119,7 @@
             </div>
           </transition>
 
-          <transition name="fade">
+          <!-- <transition name="fade">
             <div class="send__section-muted" v-if="!insufficientFunds">
               <span class="send__section-muted-text">
                 {{ $t('transactionFee') }}:
@@ -137,7 +137,7 @@
                 </span>
               </span>
             </div>
-          </transition>
+          </transition> -->
 
           <span v-if="false" class="send__input-note-xl"
             >{{ $t('includingFunds-xl') }}
