@@ -75,7 +75,7 @@ export default {
   &__choose-method {
     display: flex;
     width: 100%;
-    padding-top: 82px;
+    padding-top: 48px;
     justify-content: center;
     @include lg {
       padding-top: 31px 40px;

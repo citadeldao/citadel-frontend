@@ -220,7 +220,7 @@ export default {
     background: transparent;
     display: flex;
     align-items: center;
-    margin-bottom: 31px;
+    margin-bottom: 21px;
     cursor: pointer;
     @include lg {
       margin-bottom: 20px;
