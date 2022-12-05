@@ -547,11 +547,9 @@ export default {
       return props.currentWallet.type;
     });
 
-    const switchChangeHandler = async (value) => {
-      if (value) {
-        await getFees(bridgeTargetNet.value);
-      }
+    const switchChangeHandler = async () => {
       toAddress.value = '';
+      await getFees(bridgeTargetNet.value);
     };
     const { isHardwareWallet, wallets } = useWallets();
 

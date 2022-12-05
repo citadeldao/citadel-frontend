@@ -342,8 +342,10 @@ export default {
     line-height: 30px;
     margin: 0;
     font-family: 'Panton_Bold';
-    // width: 507px;
     margin-top: 5px;
+    @include laptop {
+      font-size: $h6-size;
+    }
   }
   &__block-header-desc {
     font-size: 14px;
@@ -355,6 +357,12 @@ export default {
   }
   & button {
     margin-top: 32px;
+    @include laptop-standard {
+      margin-top: 20px;
+    }
+    @include laptop {
+      margin-top: 10px;
+    }
   }
 }
 

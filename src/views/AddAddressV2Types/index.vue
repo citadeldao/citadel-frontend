@@ -177,7 +177,6 @@ export default {
   }
 
   &__card-type {
-    width: 30%;
     height: 511px;
     box-shadow: -10px 4px 50px rgba(0, 0, 0, 0.1);
     border-radius: 25px;
@@ -187,6 +186,7 @@ export default {
     align-content: center;
     box-sizing: border-box;
     padding: 36px 24px;
+    flex: 0 32%;
 
     .head {
       display: flex;

@@ -1418,6 +1418,7 @@
     "noSelfSendError": "Transfer wallet cannot be the same as receiving wallet.",
     "minAmountError": "Minimum amount is {minAmount} {code}",
     "errors": {
-        "notEnoughFounds": "Not enough {code} to pay the transaction fee"
+        "notEnoughFounds": "Not enough {code} to pay the transaction fee",
+        "notAvailableToStake": "Validator is unavailable for stake"
     }
 }

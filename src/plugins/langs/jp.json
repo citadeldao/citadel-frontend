@@ -1411,7 +1411,8 @@
     "addComment": "コメントを追加する",
     "editComment": "コメントを編集",
     "errors": {
-        "notEnoughFounds": "取引手数料を支払うのに十分な {code} がありません"
+        "notEnoughFounds": "取引手数料を支払うのに十分な {code} がありません",
+        "notAvailableToStake": ""
     },
     "copyToClipboardTitle": "閲覧キーをコピー",
     "showHideKeyTitle": "表示キーの表示/非表示",
