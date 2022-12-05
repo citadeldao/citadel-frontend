@@ -56,7 +56,12 @@
                 {{ component.value.symbol.slice(0, 5) }}
               </div>
             </div>
-            <div v-if="component.type === 'text'" class="value">
+            <div
+              v-if="
+                component.type === 'text' || component.type === 'textWithURL'
+              "
+              class="value"
+            >
               <div
                 class="value-amount"
                 :style="{
@@ -67,13 +72,8 @@
                 }"
                 @click="copyValue(component.value)"
               >
-                {{ component.value }}
+                {{ component.value.text || component.value }}
               </div>
-            </div>
-            <div v-if="component.type === 'textWithURL'" class="value">
-              <a target="_blank" :href="component.value.url">{{
-                component.value.text
-              }}</a>
             </div>
             <!-- structure in type -->
             <div
@@ -280,17 +280,6 @@ $blue-dark: #262b61;
         .value-symbol {
           font-size: 13px;
           color: $blue-dark;
-        }
-
-        a {
-          color: $blue-dark;
-          text-decoration: none;
-          font-size: 13px;
-
-          &:hover {
-            color: $blue-dark;
-            cursor: pointer;
-          }
         }
       }
     }
