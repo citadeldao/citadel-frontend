@@ -1259,6 +1259,16 @@
             "title": "Jackaldao\n",
             "description": " Jac kal协议是新一代数据存储网络和去中心化应用协议，旨在提高数据隐私和网络安全，且保证其易用性。该协议致力于打造世界级的应用程序，保护最重要的数据。",
             "shortDescription": "Jackal 协议是新一代数据存储网络和去中心化的应用协议，旨在保证易用性的前提下，提高数据隐私和网络安全。"
+        },
+        "omniflix": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "teritori": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "运行时间",
