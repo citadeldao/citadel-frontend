@@ -136,8 +136,6 @@ export class SocketManager {
           tx
         );
 
-        console.log('WWWWWWW', wallet, tx);
-
         if (!res.error) {
           store.commit('transactions/REMOVE_FROM_MEMPOOL', tx);
           // store.dispatch('wallets/getNewWallets','lazy');
