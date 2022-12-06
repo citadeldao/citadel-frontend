@@ -1,5 +1,5 @@
 <template>
-  <div class="tooltip" style="direction: ltr">
+  <div class="tooltip">
     <slot />
     <div class="tooltip__content" :style="{ width, left }">
       <slot name="content" />
@@ -24,6 +24,7 @@ export default {
 
 <style lang="scss" scoped>
 .tooltip {
+  direction: ltr;
   position: relative;
   cursor: pointer;
   &:hover {

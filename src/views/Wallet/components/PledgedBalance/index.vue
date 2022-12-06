@@ -180,7 +180,6 @@ export default {
     const password = inject('password');
     const actionModalData = inject('actionModalData');
     const width = computed(() => {
-      console.log(window.innerWidth, 'width');
       if (window.innerWidth <= 1286 && window.innerWidth >= 1280) {
         return '310px';
       } else if (window.innerWidth <= 1024) {
