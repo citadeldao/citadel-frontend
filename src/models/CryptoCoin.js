@@ -63,7 +63,11 @@ export default class CryptoCoin {
     };
 
     for (const key in customErrors) {
-      if (customErrors[key].find((check) => error.includes(check) || error?.message.includes(check))) {
+      if (
+        customErrors[key].find(
+          (check) => error.includes(check) || error?.message.includes(check)
+        )
+      ) {
         const code = this.code;
         message.text = t(key, { code });
         return message;
@@ -146,7 +150,7 @@ export default class CryptoCoin {
     if (!res.error) {
       return res;
     }
-  
+
     const errorText = getErrorText(res.error?.message?.toLowerCase());
     const message = this.getCustomErrorMessage(res.error || errorText);
 

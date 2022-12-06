@@ -44,7 +44,7 @@ export const types = {
   },
 };
 
-export const XCT_GOVERNANCE_APP = 'XCT governance';
+export const XCT_GOVERNANCE_APP = 'xct-governance';
 export const OUR_TOKEN = 'bsc_xct';
 export const OUR_NODE = 'Citadel.one';
 export const SNIP20_PARENT_NET = 'secret';

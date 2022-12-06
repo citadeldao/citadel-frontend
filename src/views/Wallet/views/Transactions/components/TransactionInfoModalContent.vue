@@ -4,7 +4,7 @@
     <InfoBlock :current-wallet="currentWallet" :info="info" />
     <div v-if="info.view" class="inner-tx">
       <div
-        v-for="(item, ndx) in info.view"
+        v-for="(item, ndx) in info.view.filter(filterTypeMethod)"
         :key="ndx"
         :class="{ empty: !item.components?.length }"
         class="inner-tx__view-item"
@@ -199,7 +199,17 @@ export default {
         }, 1500);
       }
     };
-    return { copyValue, isCopied, showPlaceholder, togleShowPlaceholder };
+
+    const filterTypeMethod = (view) =>
+      !view?.type.toLowerCase().includes('acknowledgement');
+
+    return {
+      copyValue,
+      isCopied,
+      showPlaceholder,
+      filterTypeMethod,
+      togleShowPlaceholder,
+    };
   },
 };
 </script>
@@ -214,7 +224,7 @@ $blue-dark: #262b61;
   flex-direction: column;
 
   .inner-tx {
-    margin-top: 20px;
+    margin-top: 25px;
 
     &__view {
       margin-top: 10px;
@@ -234,7 +244,7 @@ $blue-dark: #262b61;
         align-items: center;
         position: absolute;
         left: 0;
-        top: -40px;
+        top: -44px;
 
         &.empty {
           &.last {
