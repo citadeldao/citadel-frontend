@@ -291,7 +291,9 @@
     "tryBtn": "Try again",
     "errorPage": {
         "pageNotFound": "Page not found",
-        "toHomePage": "To the homepage"
+        "toHomePage": "To the homepage",
+        "serviceOff": "We'll be back soon!",
+        "serviceOffDescription": "Sorry for the inconvenience but we're performing some maintenance at the moment. We'll be back online shortly! Please feel free to contact us with any questions @citadeldao"
     },
     "lockBanner": {
         "bannerInfo": "Import your address to start staking. Need a guide? Check ",
@@ -629,6 +631,7 @@
     "addAnAddress": "Add an address",
     "chooseSuitableMethod": "Choose a suitable method to import an existing address",
     "address": "Address",
+    "anotherAddress": "Another Address",
     "enterAddress": "Enter address",
     "import": "Import",
     "enterMnemonicPhrase": "Enter a mnemonic phrase",
@@ -641,6 +644,7 @@
     "next": "Next",
     "confirm": "Confirm",
     "importExistingAddressExp": "Import an existing address",
+    "notFoundPlaceholderText": "Nothing was found for your query",
     "layouts": {
         "addAddressLayout": {
             "sidebarPlaceholder": "Your addresses will be displayed here",
@@ -751,7 +755,7 @@
         },
         "changeEmail": {
             "title": "Your email",
-            "description": "Your account email",
+            "description": "You can change your account email here",
             "inputLabel": "Your e-mail",
             "inputPlaceHolder": "e-mail",
             "button": "Change",
@@ -1265,8 +1269,18 @@
         },
         "jackal": {
             "title": "Jackaldao",
-            "description": "",
-            "shortDescription": ""
+            "description": "The Jackal Protocol is a next generation data storage network and decentralized application protocol aims to increase data privacy and cybersecurity posture without sacrificing ease of use. The protocol strives to offer world-class applications to protect the most important data.",
+            "shortDescription": "The Jackal Protocol is a a next generation data storage network and decentralized application protocol aims to increase data privacy and cybersecurity posture without sacrificing ease of use."
+        },
+        "omniflix": {
+            "title": "Omniflix network",
+            "description": "OmniFlix is a p2p network for creators and sovereign communities to achieve efficiency in Web2 & Web3 media management, distribution and monetization while also helping community members engage in meaningful ways via on-chain data.",
+            "shortDescription": "OmniFlix is a p2p network for creators and communities to achieve efficiency in Web2 & Web3 media management, distribution and monetization."
+        },
+        "teritori": {
+            "title": "Teritori",
+            "description": "Teritori is a multi-chain hub and the open ecosystem built on the Cosmos SDK and aims to enhance Web3 individuals, communities & builders experience through an all-in-one hub of dApps.",
+            "shortDescription": "Teritori is a multi-chain hub aims to enhance Web3 individuals, communities & builders experience through an all-in-one hub of dApps."
         }
     },
     "uptime": "Uptime",
@@ -1418,6 +1432,7 @@
     "noSelfSendError": "Transfer wallet cannot be the same as receiving wallet.",
     "minAmountError": "Minimum amount is {minAmount} {code}",
     "errors": {
-        "notEnoughFounds": "Not enough {code} to pay the transaction fee"
+        "notEnoughFounds": "Not enough {code} to pay the transaction fee",
+        "notAvailableToStake": "Validator is unavailable for stake"
     }
 }

@@ -66,6 +66,15 @@
           class="filter-input"
           @input="$emit('search', searchAppStr)"
         />
+        <transition name="fade">
+          <div
+            v-if="searchAppStr.length > 1"
+            class="filter-input-icon"
+            @click="clearInput"
+          >
+            <closeIcon />
+          </div>
+        </transition>
       </div>
       <div
         v-if="!showMobileSearch"
@@ -164,6 +173,11 @@ export default {
       searchIcon.value = markRaw(val.default);
     });
 
+    const clearInput = () => {
+      searchAppStr.value = '';
+      emit('search', searchAppStr);
+    };
+
     return {
       searchAppStr,
       searchIcon,
@@ -175,6 +189,7 @@ export default {
       openFilter,
       resetFilter,
       onSelectTag,
+      clearInput,
     };
   },
 };
@@ -350,6 +365,14 @@ export default {
     box-sizing: border-box;
     border-radius: 8px;
     outline: none;
+
+    &-icon {
+      cursor: pointer;
+      position: absolute;
+      top: 15px;
+      right: 25px;
+      transform: scale(0.7);
+    }
   }
 
   ::-webkit-input-placeholder {

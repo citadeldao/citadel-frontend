@@ -6,30 +6,54 @@
     </Modal>
     <div class="keplr__section">
       <div class="controls">
-        <div class="select" @click="selectedCoins = [].concat(chains)">
-          {{ $t('keplr.selectAll') }}
-        </div>
-        <div class="unselect" @click="selectedCoins = []">
-          <p>{{ $t('keplr.unselectAll') }}</p>
-          <closeIcon class="close-icon" />
+        <Input
+          id="chainsSearch"
+          :label="$t('searchNetworks')"
+          @input="onChainsSearch"
+          type="text"
+          icon="loop"
+          clearable
+        />
+        <div class="controls__row">
+          <div
+            class="select"
+            :class="{ disabled: chainList.length === 0 }"
+            @click="
+              chainList.length !== 0
+                ? (selectedCoins = [].concat(chains))
+                : null
+            "
+          >
+            {{ $t('keplr.selectAll') }}
+          </div>
+          <div
+            class="unselect"
+            :class="{ disabled: chainList.length === 0 }"
+            @click="chainList.length !== 0 ? (selectedCoins = []) : null"
+          >
+            <p>{{ $t('keplr.unselectAll') }}</p>
+            <closeIcon class="close-icon" />
+          </div>
         </div>
       </div>
       <div class="chains__selector">
-        <div
-          v-for="(chain, ndx) in chains"
-          :key="ndx"
-          class="chains__selector-row"
-        >
-          <CoinItem
-            :chain="chain"
-            :is-active="
-              !!selectedCoins.find((coin) => coin.label === chain.label)
-            "
-            @select="onSelectCoin"
-          />
-        </div>
+        <EmptyList
+          v-if="!chainList.length"
+          :title="$t('notFoundPlaceholderText')"
+          class="nodes-list__empty"
+        />
+        <NetworkCard
+          v-for="chain in chainList"
+          :key="chain.key"
+          :network="chain"
+          icon-path="networks"
+          :checked="!!selectedCoins.find((coin) => coin.label === chain.label)"
+          @check="onSelectCoin"
+          @uncheck="onSelectCoin"
+        />
       </div>
       <PrimaryButton
+        v-if="chainList.length !== 0"
         :disabled="!selectedCoins.length"
         class="confirm"
         @click="importWallets"
@@ -43,6 +67,9 @@
 <script>
 import Modal from '@/components/Modal';
 import Loading from '@/components/Loading';
+import NetworkCard from '@/components/NetworkCard';
+import Input from '@/components/UI/Input';
+import EmptyList from '@/components/EmptyList';
 
 import { ref, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
@@ -52,7 +79,6 @@ import useCreateWallets from '@/compositions/useCreateWallets';
 import { WALLET_TYPES } from '@/config/walletType';
 import { i18n } from '@/plugins/i18n';
 import { keplrNetworks } from '@/config/availableNets';
-import CoinItem from './CoinItem.vue';
 import Header from '../AddAddress/components/Header';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import KeplrConnector from '@/models/Services/Keplr';
@@ -65,11 +91,13 @@ export default {
   name: 'Metamask',
   components: {
     PrimaryButton,
-    CoinItem,
     Modal,
     Header,
     Loading,
     closeIcon,
+    NetworkCard,
+    Input,
+    EmptyList,
   },
   setup() {
     const router = useRouter();
@@ -214,6 +242,23 @@ export default {
       }
     });
 
+    const search = ref('');
+
+    const chainList = computed(() => {
+      if (!search.value) {
+        return chains.value;
+      }
+
+      return chains.value.filter(
+        (item) =>
+          item.label.toLowerCase().includes(search.value.toLowerCase()) ||
+          item.net.toLowerCase().includes(search.value.toLowerCase()) ||
+          item.key.toLowerCase().includes(search.value.toLowerCase())
+      );
+    });
+
+    const onChainsSearch = (value) => (search.value = value);
+
     return {
       showSuccess,
       chains,
@@ -225,6 +270,8 @@ export default {
       loadingImport,
       importedAddresses,
       privateWallets,
+      chainList,
+      onChainsSearch,
     };
   },
 };
@@ -235,18 +282,11 @@ export default {
   display: flex;
   flex-direction: column;
   background: $white;
-  box-shadow: -10px 4px 27px rgba(0, 0, 0, 0.1);
+  box-shadow: -10px 4px 50px rgba(0, 0, 0, 0.1);
   border-radius: 25px;
-  padding: 0 44px 40px;
+  padding: 0 40px 43px;
+  margin-bottom: 40px;
   flex-grow: 1;
-
-  @include lg {
-    padding: 0 40px;
-  }
-  @include md {
-    box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
-    padding: 0 31px;
-  }
 
   .confirm {
     width: 200px;
@@ -256,17 +296,28 @@ export default {
   &__section {
     display: flex;
     flex-direction: column;
-    padding-bottom: 40px;
   }
 
   .controls {
-    width: 300px;
-    margin: 40px auto 23px auto;
+    width: 100%;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 600;
-    font-size: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: column;
+    margin: 50px auto 0;
+    max-width: 891px;
+
+    .input {
+      height: 68px;
+    }
+
+    &__row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin: 15px 0 25px;
+    }
     .select {
       color: #00a3ff;
       border-bottom: 1px dotted #00a3ff;
@@ -282,6 +333,14 @@ export default {
         border-bottom: 1px dotted #fa3b33;
       }
       cursor: pointer;
+    }
+    .select,
+    .unselect {
+      transition: 0.2s;
+      &.disabled {
+        opacity: 0;
+        cursor: initial;
+      }
     }
   }
 }
@@ -326,14 +385,14 @@ export default {
 }
 
 .chains__selector {
+  width: 100%;
+  margin: auto;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 310px;
-  margin: 0 auto 30px;
-  height: 300px;
-  box-sizing: border-box;
-  overflow-y: auto;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 10px;
+  margin-bottom: 30px;
+  max-width: 891px;
 }
 .close-icon {
   svg {

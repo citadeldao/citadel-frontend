@@ -41,16 +41,16 @@ export default {
   &__item {
     border: 1px solid transparent;
     width: 350px;
-    height: 80px;
     border-radius: 8px;
     display: flex;
     align-items: center;
     padding: 0 15px;
     box-sizing: border-box;
     cursor: pointer;
+    border: 1px solid transparent;
 
     &:hover {
-      border: 1px solid #1a53f0;
+      border-color: $blue;
       box-shadow: 0px 15px 50px rgba(80, 100, 124, 0.1),
         0px 10px 15px rgba(80, 100, 124, 0.16);
     }
@@ -58,37 +58,55 @@ export default {
     .info {
       .label {
         font-size: 14px;
+        line-height: 16px;
         color: $slategray1;
       }
 
       .description {
-        color: #0a2778;
+        color: $too-dark-blue;
+        line-height: 21px;
 
         &.large {
           font-size: 24px;
+          line-height: 28px;
         }
       }
     }
 
     &.socials {
-      margin-bottom: 12px;
-      border: 1px solid #1a53f0;
+      margin-bottom: 24px;
       display: flex;
-
+      height: 80px;
+      border-color: $too-ligth-blue;
+      &:hover {
+        border-color: $blue;
+      }
       .icon {
         width: 39px;
         height: 36px;
         margin-right: 12px;
       }
+
+      @include laptop {
+        height: 56px;
+      }
     }
 
     &.web3 {
+      height: 100px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       background-image: url('~@/assets/icons/newLogin/web3block.png');
       background-size: cover;
       background-position: 50%;
+
+      @include laptop {
+        height: 68px;
+        svg {
+          transform: scale(0.775);
+        }
+      }
     }
   }
 }

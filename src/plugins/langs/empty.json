@@ -291,7 +291,9 @@
     "tryBtn": "",
     "errorPage": {
         "pageNotFound": "",
-        "toHomePage": ""
+        "toHomePage": "",
+        "serviceOff": "",
+        "serviceOffDescription": ""
     },
     "lockBanner": {
         "bannerInfo": "",
@@ -1259,6 +1261,16 @@
             "title": "",
             "description": "",
             "shortDescription": ""
+        },
+        "omniflix": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "teritori": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "",
@@ -1410,7 +1422,7 @@
     "noSelfSendError": "",
     "minAmountError": "",
     "errors": {
-        "notEnoughFounds": ""
+        "notEnoughFounds": "",
+        "notAvailableToStake": ""
     }
-  }
-  
+}

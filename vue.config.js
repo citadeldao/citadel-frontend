@@ -14,7 +14,7 @@ module.exports = {
   parallel: false,
   lintOnSave: process.env.NODE_ENV !== 'production',
   runtimeCompiler: true,
-  transpileDependencies: ['@citadeldao/lib-citadel'],
+  transpileDependencies: ['@citadeldao/lib-citadel', '@polkadot'],
   chainWebpack: (config) => {
     const svgRule = config.module.rule('svg');
 
@@ -56,7 +56,7 @@ module.exports = {
     },
   },
   devServer: {
-    https: true,
+    https: process.env.NODE_ENV === 'production',
   },
   productionSourceMap: process.env.NODE_ENV !== 'production',
   css: {
