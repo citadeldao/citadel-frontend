@@ -291,9 +291,7 @@
     "tryBtn": "Попробовать снова",
     "errorPage": {
         "pageNotFound": "Страница не найдена",
-        "toHomePage": "На домашнюю страницу",
-        "serviceOff": "",
-        "serviceOffDescription": ""
+        "toHomePage": "На домашнюю страницу"
     },
     "lockBanner": {
         "bannerInfo": "Импортируйте ваш адрес для стейкинга. Нужна помощь? Прочтите ",
@@ -313,7 +311,7 @@
         "chooseNodeModalDesc1": "Чтобы застейкать свои активы, выберите ноды и укажите нужную сумму делегации. Обратите внимание, что период анстейкинга {net} составляет <span style='color: #0A2778; font-weight: bold;'>{perioud} days</span>.",
         "chooseNodeModalDescWithFrom": "Чтобы застейкать свои активы, выберите ноды и укажите нужную сумму делегации. Обратите внимание, что период анстейкинга {net} длится от <span style='color: #0A2778; font-weight: bold;'>from {perioudFrom} до {perioudTo} дней</span>. Чтобы проверить длительность анстейкинга на текущий момент, перейдите по ссылке:  <a href='{link}' style='color: #0A2778; font-weight: bold;text-decoration:none'>link</a>.",
         "Stake": "Стейкать",
-        "staking": "Стейкать\n",
+        "staking": "Стейкинг\n",
         "searchNode": "Поиск ноды",
         "searchInputPlaceholder": "Начните печатать название ноды",
         "editNode": "Изменить выбор",
@@ -550,7 +548,6 @@
     "searchAddress": "Поиск адреса",
     "save": "Сохранить",
     "transactionFee": "Комиссия за транзакцию",
-    "transactionFeeSimulate": "",
     "per": "за",
     "price": "Цена",
     "link": "Ссылка",
@@ -625,7 +622,6 @@
     "addAnAddress": "Добавить адрес",
     "chooseSuitableMethod": "Выбрать подходящий метод для импорта существующего адреса",
     "address": "Адрес",
-    "anotherAddress": "",
     "enterAddress": "Введите адрес",
     "import": "Импорт",
     "enterMnemonicPhrase": "Введите мнемоническую фразу",
@@ -638,7 +634,6 @@
     "next": "Далее",
     "confirm": "Подтвердить",
     "importExistingAddressExp": "Импортировать существующий адрес",
-    "notFoundPlaceholderText": "",
     "layouts": {
         "addAddressLayout": {
             "sidebarPlaceholder": "Ваши адреса будут отображены здесь",
@@ -742,7 +737,7 @@
         },
         "changeEmail": {
             "title": "Ваш e-mail",
-            "description": "",
+            "description": "E-mail вашего аккаунта",
             "inputLabel": "Ваш e-mail",
             "inputPlaceHolder": "e-mail",
             "button": "Изменить",
@@ -1415,10 +1410,11 @@
     "addComment": "Добавить комментарий",
     "editComment": "Изменить комментарий",
     "errors": {
-        "notEnoughFounds": "Недостаточно {code} для оплаты комиссии за транзакцию",
-        "notAvailableToStake": ""
+        "notEnoughFounds": "Недостаточно {code} для оплаты комиссии за транзакцию"
     },
     "copyToClipboardTitle": "Копировать ключ просмотра",
     "showHideKeyTitle": "Показать / скрыть кнопку просмотра",
-    "changeKeyTitle": "Изменить ключ просмотра"
+    "changeKeyTitle": "Изменить ключ просмотра",
+    "anotherAddress": "Другой адрес",
+    "notFoundPlaceholderText": "По вашему запросу ничего не найдено"
 }
