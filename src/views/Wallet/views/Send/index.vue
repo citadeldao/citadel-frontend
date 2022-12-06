@@ -16,7 +16,10 @@
     "
     class="send"
   >
-    <form @submit.prevent="submitHandler">
+    <div v-if="dataLoaded" class="send__loader">
+      <Loading />
+    </div>
+    <form v-if="!dataLoaded" @submit.prevent="submitHandler">
       <div v-if="itemsNetworks.length && bridgeTargetNet" class="send__section">
         <div class="send__switch">
           <span>{{ $t('sendAssetsToAnotherNetwork') }}</span>
@@ -89,16 +92,26 @@
             :currency="currentWallet.code"
             :label="$t('amount')"
             :max="maxAmount"
-            :disabled="isSendToAnotherNetwork && !bridgeTargetNet"
+            :disabled="
+              (isSendToAnotherNetwork && !bridgeTargetNet) ||
+              maxAmount === 0 ||
+              maxAmountParent === 0
+            "
             placeholder="0.0"
             icon="coins"
             :show-error-text="showErrorText"
             :error="insufficientFunds"
             data-qa="send__amount-field"
-            show-set-max
+            :show-set-max="maxAmountParent !== 0"
           />
           <transition name="fade">
-            <div v-if="insufficientFunds" class="send__section-error">
+            <div
+              v-if="insufficientFunds"
+              class="send__section-error"
+              :class="{
+                doNotHaveEnoughFunds: maxAmountParent === 0 || maxAmount === 0,
+              }"
+            >
               <error class="send__section-error-icon" />
               <span class="send__section-error-text">
                 {{ insufficientFunds }}
@@ -106,13 +119,39 @@
             </div>
           </transition>
 
+          <!-- <transition name="fade">
+            <div class="send__section-muted" v-if="!insufficientFunds">
+              <span class="send__section-muted-text">
+                {{ $t('transactionFee') }}:
+                <span
+                  class="send__section-muted-amount"
+                  v-pretty-number="{
+                    title: $t('transactionFeeSimulate'),
+                    value: fee.fee || 0,
+                    currency:
+                      currentWallet?.parentCoin?.code || currentWallet.code,
+                  }"
+                ></span>
+                <span class="send__section-muted-currency">
+                  {{ currentWallet?.parentCoin?.code || currentWallet.code }}
+                </span>
+              </span>
+            </div>
+          </transition> -->
+
           <span v-if="false" class="send__input-note-xl"
             >{{ $t('includingFunds-xl') }}
           </span>
-          <span
-            class="send__input-note"
-            :class="{ 'send__input-note-laptop': insufficientFunds }"
-          >
+          <transition name="fade">
+            <span
+              v-if="!insufficientFunds"
+              class="send__input-note"
+              :class="{ 'send__input-note-laptop': insufficientFunds }"
+            >
+              {{ $t('includingFunds') }}
+            </span>
+          </transition>
+          <span class="send__input-note" v-if="!insufficientFunds">
             {{ $t('includingFunds') }}
           </span>
         </div>
@@ -681,10 +720,10 @@ export default {
     };
     const dataLoaded = ref(false);
     const loadData = async () => {
-      dataLoaded.value = false;
+      dataLoaded.value = true;
       await getFees(bridgeTargetNet.value);
       await getDelegationBalance();
-      dataLoaded.value = true;
+      dataLoaded.value = false;
     };
     loadData();
 
@@ -715,6 +754,21 @@ export default {
       { deep: true }
     );
 
+    // Calc Max Amount Parent
+    const maxAmountParent = computed(() => {
+      if (balance.value?.adding && balance.value?.adding.length > 0) {
+        return balance.value?.adding[0].current > fee.value.fee
+          ? BigNumber(balance.value?.adding[0].current)
+              .minus(fee.value.fee)
+              .toNumber()
+          : 0;
+      }
+
+      return balance.value?.mainBalance > fee.value.fee
+        ? BigNumber(balance.value?.mainBalance).minus(fee.value.fee).toNumber()
+        : 0;
+    });
+
     // Calc Max Amount
     const maxAmount = computed(() => {
       if (props.currentToken) {
@@ -727,6 +781,7 @@ export default {
         ? BigNumber(balance.value?.mainBalance).minus(fee.value.fee).toNumber()
         : 0;
     });
+
     const isMaxSelected = computed(() => amount.value === maxAmount.value);
 
     // Select Fee
@@ -839,6 +894,7 @@ export default {
         wallet: props.currentWallet,
         maxAmount: +maxAmount.value,
         type: 'send',
+        maxAmountParent: +maxAmountParent.value,
       })
     );
 
@@ -1305,6 +1361,7 @@ export default {
       toAddress,
       amount,
       maxAmount,
+      maxAmountParent,
       showAdvanced,
       memo,
       submitHandler,
@@ -1337,6 +1394,7 @@ export default {
       showFeeSelectModal,
       openFeeSelectModal,
       closeFeeSelectModal,
+      dataLoaded,
       /* onCustomFocus,*/
       feeType,
       showChangingAmountModal,
@@ -1460,9 +1518,6 @@ export default {
       flex-direction: column;
       margin-bottom: 0;
     }
-    @include laptop {
-      flex-direction: row;
-    }
   }
 
   &__autocomplete {
@@ -1485,31 +1540,56 @@ export default {
       width: 100%;
       margin-bottom: 23px;
     }
-    @include laptop {
-      width: 48%;
-    }
   }
 
-  &__section-error {
+  &__section-error,
+  &__section-muted {
     display: flex;
     position: absolute;
     align-items: center;
-    bottom: -20px;
+    bottom: -25px;
 
     @include xl {
       display: none;
+    }
+
+    @include md {
+      &.doNotHaveEnoughFunds {
+        bottom: -30px;
+      }
+
+      bottom: -22px;
     }
   }
 
   &__section-error-icon {
     margin-right: 8px;
+    width: 19px;
   }
 
+  &__section-muted-text,
   &__section-error-text {
     font-size: 14px;
-    line-height: 17px;
     color: $red;
-    font-family: 'Panton_Bold';
+    font-family: 'Panton_Regular';
+    @include lg {
+      display: initial;
+    }
+    @include md {
+      font-size: 12px;
+      line-height: 14px;
+    }
+  }
+
+  &__section-muted-text {
+    color: $gray;
+    span.send__section-muted-currency {
+      color: $mid-gray;
+    }
+    & > span {
+      color: $ligth-blue;
+      font-weight: 700;
+    }
   }
 
   &__input-note-xl {
@@ -1772,6 +1852,7 @@ export default {
 
   &__button {
     align-self: center;
+    margin-top: 20px;
     button {
       width: 200px;
       height: 60px;
@@ -1779,6 +1860,13 @@ export default {
     @include md {
       display: none;
     }
+  }
+
+  &__loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
   }
 }
 

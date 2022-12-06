@@ -550,6 +550,7 @@
     "searchAddress": "搜索地址",
     "save": "保存",
     "transactionFee": "交易手续费",
+    "transactionFeeSimulate": "",
     "per": "每",
     "price": "价格",
     "link": "链接",
