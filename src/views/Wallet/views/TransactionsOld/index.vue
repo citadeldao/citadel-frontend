@@ -212,9 +212,9 @@ export default {
       return mempool.value
         .filter((tx) => {
           const hasFrom =
-            tx.from.toLowerCase() === currentAddress.value?.toLowerCase();
+            tx?.from?.toLowerCase() === currentAddress?.value?.toLowerCase();
           const hasTo =
-            tx.to.toLowerCase() === currentAddress.value?.toLowerCase();
+            tx?.to?.toLowerCase() === currentAddress?.value?.toLowerCase();
           const txBelongToWallet =
             (hasFrom || hasTo) && tx.net === props.currentWallet.net;
 
