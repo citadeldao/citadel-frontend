@@ -62,9 +62,7 @@
               </div>
             </div>
             <div
-              v-if="
-                component.type === 'text' || component.type === 'textWithURL'
-              "
+              v-if="['text', 'textWithURL'].includes(component.type)"
               class="value"
             >
               <div
