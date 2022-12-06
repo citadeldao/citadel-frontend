@@ -24,6 +24,7 @@ export default {
 
 <style lang="scss" scoped>
 .tooltip {
+  direction: ltr;
   position: relative;
   cursor: pointer;
   &:hover {
