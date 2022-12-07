@@ -291,7 +291,9 @@
     "tryBtn": "Essayez à nouveau",
     "errorPage": {
         "pageNotFound": "Page non trouvée",
-        "toHomePage": "Vers la page d'accueil"
+        "toHomePage": "Vers la page d'accueil",
+        "serviceOff": "",
+        "serviceOffDescription": ""
     },
     "lockBanner": {
         "bannerInfo": "Importez votre adresse pour commencer à staker. Besoin d'un guide ? Consultez ",
@@ -1197,6 +1199,11 @@
             "description": "Evmos est une chaîne agnostique en termes d'applications qui sera interopérable avec le réseau principal Ethereum, les environnements compatibles EVM et d'autres chaînes BFT via IBC, ce qui permettra aux utilisateurs et aux développeurs d'interagir de manière transparente entre les chaînes. Evmos a pour objectif d'être le Hub EVM de Cosmos, facilitant le déploiement et la communication des smart contracts au sein de l'écosystème Cosmos.",
             "shortDescription": "Evmos est la plateforme EVM du réseau Cosmos. Il s'agit de l'implémentation phare de la bibliothèque Ethermint qui donne la priorité à l'interopérabilité et à une économie nouvelle."
         },
+        "evmoseth": {
+            "title": "Evmos network",
+            "description": "Evmos est une chaîne agnostique en termes d'applications qui sera interopérable avec le réseau principal Ethereum, les environnements compatibles EVM et d'autres chaînes BFT via IBC, ce qui permettra aux utilisateurs et aux développeurs d'interagir de manière transparente entre les chaînes. Evmos a pour objectif d'être le Hub EVM de Cosmos, facilitant le déploiement et la communication des smart contracts au sein de l'écosystème Cosmos.",
+            "shortDescription": "Evmos est la plateforme EVM du réseau Cosmos. Il s'agit de l'implémentation phare de la bibliothèque Ethermint qui donne la priorité à l'interopérabilité et à une économie nouvelle."
+        },
         "axelar": {
             "title": "Axelar network",
             "description": "Le réseau Axelar est une plateforme de communication inter-chaînes évolutive. Les créateurs de plateformes blockchain peuvent l'utiliser pour brancher de manière transparente leurs blockchains à tous les autres écosystèmes blockchain. Les développeurs d'applications peuvent choisir la meilleure blockchain pour héberger leurs applications et utiliser les protocoles de communication inter-chaînes d'Axelar pour verrouiller, déverrouiller et transférer des actifs, ainsi que pour communiquer avec des applications sur n'importe quelle autre chaîne. En connectant les dapps à plusieurs écosystèmes blockchain, la plateforme Axelar permet aux utilisateurs d'interagir avec toutes les applications de l'écosystème directement à partir de leurs portefeuilles.",
@@ -1256,6 +1263,16 @@
             "title": "Jackaldao",
             "description": "-",
             "shortDescription": "-"
+        },
+        "omniflix": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "teritori": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "Disponibilité",
