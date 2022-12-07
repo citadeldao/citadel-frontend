@@ -1196,6 +1196,11 @@
             "description": "Evmos 是一个应用程序兼容的区块链，可通过 IBC 与以太坊、EVM兼容环境和其他 BFT 链进行交互，从而方便用户和开发人员实现跨链无缝交互。Evmos 的目标是成为 Cosmos 的 EVM 中心，使智能合约能够在 Cosmos 生态系统内轻松部署和交互。",
             "shortDescription": "Evmos 是 Cosmos 网络的 EVM 中心。它是 Ethermint 库的标杆应用，着重交互性和新经济性。"
         },
+        "evmoseth": {
+            "title": "Evmos 网络",
+            "description": "Evmos 是一个应用程序兼容的区块链，可通过 IBC 与以太坊、EVM兼容环境和其他 BFT 链进行交互，从而方便用户和开发人员实现跨链无缝交互。Evmos 的目标是成为 Cosmos 的 EVM 中心，使智能合约能够在 Cosmos 生态系统内轻松部署和交互。",
+            "shortDescription": "Evmos 是 Cosmos 网络的 EVM 中心。它是 Ethermint 库的标杆应用，着重交互性和新经济性。"
+        },
         "axelar": {
             "title": "Axelar 网络",
             "description": "Axelar 网络是一个可扩展的跨链通信平台。区块链平台开发者可以通过它将无缝接入其他所有区块链生态系统。应用程序开发人员可以选择最好的区块链来支持其应用程序，并使用 Axelar 的跨链通信协议锁定、解锁和传输资产，并与其他链上的应用程序通信。Axelar 将 DAPP 与多个区块链生态系统连接起来，允许用户直接从其钱包与生态系统中的所有应用程序进行交互。",

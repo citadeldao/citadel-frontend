@@ -45,11 +45,19 @@ export const ledgerNets = [
   'stride',
   'tron',
   'jackal',
+  'evmoseth',
   'omniflix',
   'teritori',
 ];
 
-export const metamaskNets = ['bsc', 'eth', 'polygon', 'optimism', 'arbitrum'];
+export const metamaskNets = [
+  'bsc',
+  'eth',
+  'polygon',
+  'optimism',
+  'arbitrum',
+  'evmoseth',
+];
 
 export const trezorNets = ['btc', 'eth', 'bsc', 'tez'];
 
