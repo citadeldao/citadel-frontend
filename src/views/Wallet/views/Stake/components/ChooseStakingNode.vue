@@ -287,6 +287,13 @@ export default {
     border-bottom: 2px solid $too-ligth-gray;
     position: relative;
     margin-bottom: 24px;
+
+    @include md {
+      height: 52px;
+    }
+    @include laptop {
+      height: 48px;
+    }
   }
   &__tabs {
     display: flex;
@@ -295,7 +302,7 @@ export default {
   }
   &__tabs-item {
     cursor: pointer;
-    font-size: 20px;
+    font-size: $h5-size;
     line-height: 30px;
     text-transform: uppercase;
     color: $mid-gray;
@@ -305,6 +312,16 @@ export default {
     font-family: 'Panton_Bold';
     &:last-child {
       margin-right: 0;
+    }
+
+    @include md {
+      font-size: $default-size;
+      padding-bottom: 10px;
+    }
+
+    @include laptop {
+      font-size: $small-lg;
+      padding-bottom: 5px;
     }
   }
   &__active-tab {

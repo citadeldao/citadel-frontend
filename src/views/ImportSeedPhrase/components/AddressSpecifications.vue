@@ -170,7 +170,7 @@ export default {
   flex-grow: 1;
   flex-direction: column;
   align-items: center;
-  padding-top: 80px;
+  padding-top: 48px;
   padding-left: 45px;
   @include lg {
     padding-top: 32px;
@@ -220,7 +220,7 @@ export default {
     background: transparent;
     display: flex;
     align-items: center;
-    margin-bottom: 31px;
+    margin-bottom: 21px;
     cursor: pointer;
     @include lg {
       margin-bottom: 20px;

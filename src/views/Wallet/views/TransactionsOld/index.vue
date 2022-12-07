@@ -212,9 +212,9 @@ export default {
       return mempool.value
         .filter((tx) => {
           const hasFrom =
-            tx.from.toLowerCase() === currentAddress.value?.toLowerCase();
+            tx?.from?.toLowerCase() === currentAddress?.value?.toLowerCase();
           const hasTo =
-            tx.to.toLowerCase() === currentAddress.value?.toLowerCase();
+            tx?.to?.toLowerCase() === currentAddress?.value?.toLowerCase();
           const txBelongToWallet =
             (hasFrom || hasTo) && tx.net === props.currentWallet.net;
 
@@ -329,6 +329,10 @@ export default {
       modalCloseHandler();
     };
     const showTransactionInfo = async (transaction) => {
+      const index = transactions.value.findIndex(
+        (e) => e.id === transaction.id
+      );
+      transaction.date = transactions.value[index].date;
       currentTransaction.value = transaction;
       txComment.value = transaction.note;
       showModal.value = true;

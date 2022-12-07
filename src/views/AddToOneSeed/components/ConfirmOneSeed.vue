@@ -129,18 +129,17 @@ export default {
 
 <style lang="scss" scoped>
 .confirm-one-seed {
-  margin: 30px auto;
+  margin: 48px auto 30px auto;
   display: flex;
   flex-grow: 1;
   flex-direction: column;
   align-items: center;
-  padding-top: 80px;
 
   @include lg {
-    padding-top: 32px;
+    margin-top: 32px;
   }
   @include md {
-    padding-top: 24px;
+    margin-top: 24px;
   }
 
   &__confirms {
