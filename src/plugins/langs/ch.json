@@ -291,7 +291,9 @@
     "tryBtn": "重试一次",
     "errorPage": {
         "pageNotFound": "无法找到网页",
-        "toHomePage": "返回首页"
+        "toHomePage": "返回首页",
+        "serviceOff": "",
+        "serviceOffDescription": ""
     },
     "lockBanner": {
         "bannerInfo": "导入您的地址开启质押。需要教程？点击查看",

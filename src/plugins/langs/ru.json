@@ -291,7 +291,9 @@
     "tryBtn": "Попробовать снова",
     "errorPage": {
         "pageNotFound": "Страница не найдена",
-        "toHomePage": "На домашнюю страницу"
+        "toHomePage": "На домашнюю страницу",
+        "serviceOff": "",
+        "serviceOffDescription": ""
     },
     "lockBanner": {
         "bannerInfo": "Импортируйте ваш адрес для стейкинга. Нужна помощь? Прочтите ",
