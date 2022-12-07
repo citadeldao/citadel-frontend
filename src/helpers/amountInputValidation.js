@@ -2,7 +2,7 @@ import { i18n } from '@/plugins/i18n';
 // import { getDecimalCount } from '@/helpers';
 const { t } = i18n.global;
 
-export default ({ amount, wallet, maxAmount, type }) => {
+export default ({ amount, wallet, maxAmount, type, maxAmountParent = -1 }) => {
   if (+amount) {
     if (
       (type === 'send' &&
@@ -34,6 +34,10 @@ export default ({ amount, wallet, maxAmount, type }) => {
     if (+amount > +maxAmount) {
       return t('insufficientFunds');
     }
+  }
+
+  if (+maxAmount === 0 || +maxAmountParent === 0) {
+    return t('dontHaveEnoughFounds');
   }
 
   return false;

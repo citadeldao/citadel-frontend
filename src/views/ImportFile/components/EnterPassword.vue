@@ -74,7 +74,7 @@ export default {
   flex-grow: 1;
   flex-direction: column;
   align-items: center;
-  padding-top: 80px;
+  padding-top: 48px;
   padding-left: 45px;
 
   .noPassword {

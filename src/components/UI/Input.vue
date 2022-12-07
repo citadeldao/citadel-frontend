@@ -502,20 +502,14 @@ export default {
 
   &__clear-icon {
     position: absolute;
-    bottom: 17px;
+    //top: 0;
+    bottom: 0;
+    margin: auto 0;
+    top: calc(100% - 54px);
     right: 17px;
     display: flex;
     justify-content: center;
     align-items: center;
-    @include lg {
-      bottom: 14px;
-    }
-    @include xs-lg {
-      bottom: 13px;
-    }
-    @include md {
-      bottom: 13px;
-    }
 
     & svg {
       cursor: pointer;

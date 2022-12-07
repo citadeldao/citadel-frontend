@@ -74,7 +74,7 @@ export default {
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding-top: 82px;
+  padding-top: 48px;
   align-items: center;
   @include lg {
     padding-top: 31px;

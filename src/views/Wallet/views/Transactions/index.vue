@@ -337,6 +337,10 @@ export default {
       nextTick(() => document.getElementById('prevComment').focus());
     };
     const showTransactionInfo = async (transaction) => {
+      const index = transactions.value.findIndex(
+        (e) => e.hash === transaction.hash
+      );
+      transaction.date = transactions.value[index].date;
       currentTransaction.value = transaction;
       txComment.value = transaction.note;
       showModal.value = true;
