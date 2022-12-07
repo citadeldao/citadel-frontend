@@ -716,6 +716,7 @@
         "extensions": {
             "title": "Apps in development",
             "description": "Enter the code to test preferred application. The code is provided from a dev center.",
+            "accsTitle": "Your developer account",
             "appsTitle": "Your apps for testing",
             "searchLabel": "Application code",
             "searchPlaceholder": "Enter code"

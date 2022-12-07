@@ -799,6 +799,7 @@
             "title": "Applications en cours de développement",
             "description": "Entrez le code pour tester votre application préférée. Le code est fourni par un centre de développement.",
             "appsTitle": "Vos applications à tester",
+            "accsTitle": "",
             "searchLabel": "Code d'application",
             "searchPlaceholder": "Entrez le code"
         }

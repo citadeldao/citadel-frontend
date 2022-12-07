@@ -799,6 +799,7 @@
             "title": "開発中のアプリ",
             "description": "コードを入力して、優先アプリケーションをテストします。 コードは開発センターから提供されます。",
             "appsTitle": "テスト用のアプリ",
+            "accsTitle": "",
             "searchLabel": "アプリケーションコード",
             "searchPlaceholder": "コードを入力する"
         }

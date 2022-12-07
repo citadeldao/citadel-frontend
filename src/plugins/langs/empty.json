@@ -710,6 +710,7 @@
         "extensions": {
             "title": "",
             "description": "",
+            "accsTitle": "",
             "appsTitle": "",
             "searchLabel": "",
             "searchPlaceholder": ""

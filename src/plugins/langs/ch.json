@@ -798,6 +798,7 @@
         "extensions": {
             "title": "正在开发中的应用程序",
             "description": "输入代码以进行应用程序测试，代码由开发中心提供。",
+            "accsTitle": "",
             "appsTitle": "测试应用程序",
             "searchLabel": "应用程序代码",
             "searchPlaceholder": "输入代码"
