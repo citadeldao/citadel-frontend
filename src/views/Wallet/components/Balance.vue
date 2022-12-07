@@ -15,8 +15,8 @@
         <h4>{{ $t('balance') }}</h4>
         <BalanceTooltip
           v-if="currentWallet?.hasStake || currentWallet?.hasResource"
-          left="-156px"
-          width="326px"
+          :left="leftBalanceTooltip"
+          :width="widthBalanceTooltip"
         >
           <info />
           <template #content>
@@ -157,7 +157,7 @@
         <span class="balance__pledged-balance-title-title">
           {{ $t('pledgedBalance') }}
         </span>
-        <BalanceTooltip width="240px" left="-113px">
+        <BalanceTooltip :width="width" :left="left">
           <info />
           <template #content>
             <span class="balance__pledged-balance-tooltip-info">
@@ -356,8 +356,30 @@ export default {
       dropdownClass.value = '';
       isOpened.value = false;
     };
-
+    const width = computed(() => {
+      if (window.innerWidth <= 1024) {
+        return '192px';
+      }
+      return '240px';
+    });
+    const left = computed(() => {
+      if (window.innerWidth <= 1286 && window.innerWidth >= 1280) {
+        return '-180px';
+      }
+      return '-113px';
+    });
+    const widthBalanceTooltip = computed(() => {
+      if (window.innerWidth <= 1024) {
+        return '238px';
+      }
+      return '326px';
+    });
+    const leftBalanceTooltip = computed(() => '-113px');
     return {
+      leftBalanceTooltip,
+      widthBalanceTooltip,
+      width,
+      left,
       currentTab,
       balance,
       mainBalance,

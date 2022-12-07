@@ -294,9 +294,9 @@
           @update:password="onChangePassword"
         />
         <!-- Changing Amount Modals -->
-        <Modal v-if="showChangingAmountModal">
-          <!-- Decrease Amount modal -->
-          <ModalContent
+        <!-- <Modal v-if="showChangingAmountModal"> -->
+        <!-- Decrease Amount modal -->
+        <!-- <ModalContent
             v-if="showDecreaseAmountModal"
             v-click-away="cancelDecreaseAmount"
             :title="$t('sendModal.changingModals.title')"
@@ -317,9 +317,9 @@
               :fee-prev="lastCorrectFee.fee"
               :fee="fee.fee"
             />
-          </ModalContent>
-          <!-- Increase Amount modal -->
-          <ModalContent
+          </ModalContent> -->
+        <!-- Increase Amount modal -->
+        <!-- <ModalContent
             v-else-if="showIncreaseAmountModal"
             v-click-away="cancelIncreaseAmount"
             :title="$t('sendModal.changingModals.title')"
@@ -340,8 +340,8 @@
               :fee-prev="lastCorrectFee.fee"
               :fee="fee.fee"
             />
-          </ModalContent>
-        </Modal>
+          </ModalContent> -->
+        <!-- </Modal> -->
       </ModalContent>
 
       <transition name="fade">
@@ -429,7 +429,7 @@ import error from '@/assets/icons/input/error.svg';
 import { useWindowSize } from 'vue-window-size';
 import ActionModalContent from './components/ActionModalContent.vue';
 import SuccessModalContent from './components/SuccessModalContent.vue';
-import ChangingModalContent from '@/views/Wallet/views/Send/components/ChangingModalContent.vue';
+// import ChangingModalContent from '@/views/Wallet/views/Send/components/ChangingModalContent.vue';
 import SelectFeeModal from '@/views/Wallet/views/Send/components/SelectFeeModal';
 import Modal from '@/components/Modal';
 import ModalContent from '@/components/ModalContent';
@@ -482,7 +482,7 @@ export default {
     SuccessModalContent,
     Loading,
     error,
-    ChangingModalContent,
+    // ChangingModalContent,
     WalletButtonsPanel,
     ConfirmLedgerModal,
     ConnectLedgerModal,
