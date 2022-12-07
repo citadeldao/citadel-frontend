@@ -330,7 +330,7 @@ export default {
     };
     const showTransactionInfo = async (transaction) => {
       const index = transactions.value.findIndex(
-        (e) => e.id === transaction.id
+        (e) => e.hash === transaction.hash
       );
       transaction.date = transactions.value[index].date;
       currentTransaction.value = transaction;
