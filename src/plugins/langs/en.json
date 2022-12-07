@@ -1208,6 +1208,11 @@
             "description": "Evmos is an application-agnostic chain that will be interoperable with the Ethereum mainnet, EVM-compatible environments, and other BFT chains via IBC, making it easy for users and developers to interact seamlessly between chains. Evmos aims to be the EVM Hub of Cosmos, making it easy for smart contracts to deploy and communicate within the Cosmos ecosystem.",
             "shortDescription": "Evmos is the EVM Hub on the Cosmos Network. It is the flagship implementation of the Ethermint library that prioritizes interoperability and novel economics."
         },
+        "evmoseth": {
+            "title": "Evmos network",
+            "description": "Evmos is an application-agnostic chain that will be interoperable with the Ethereum mainnet, EVM-compatible environments, and other BFT chains via IBC, making it easy for users and developers to interact seamlessly between chains. Evmos aims to be the EVM Hub of Cosmos, making it easy for smart contracts to deploy and communicate within the Cosmos ecosystem.",
+            "shortDescription": "Evmos is the EVM Hub on the Cosmos Network. It is the flagship implementation of the Ethermint library that prioritizes interoperability and novel economics."
+        },
         "axelar": {
             "title": "Axelar network",
             "description": "Axelar network is a scalable cross-chain communication platform. Blockchain platform builders can use it to seamlessly plug-in their blockchains to all other blockchain ecosystems. Application developers can choose the best blockchain to host their applications and use Axelar’s cross-chain communication protocols to lock, unlock, and transfer assets, as well as communicate with applications on any other chain. By connecting dapps with multiple blockchain ecosystems, the Axelar platform empowers users to interact with all applications across the ecosystem directly from their wallets.",
@@ -1267,6 +1272,16 @@
             "title": "Jackaldao",
             "description": "The Jackal Protocol is a next generation data storage network and decentralized application protocol aims to increase data privacy and cybersecurity posture without sacrificing ease of use. The protocol strives to offer world-class applications to protect the most important data.",
             "shortDescription": "The Jackal Protocol is a a next generation data storage network and decentralized application protocol aims to increase data privacy and cybersecurity posture without sacrificing ease of use."
+        },
+        "omniflix": {
+            "title": "Omniflix network",
+            "description": "OmniFlix is a p2p network for creators and sovereign communities to achieve efficiency in Web2 & Web3 media management, distribution and monetization while also helping community members engage in meaningful ways via on-chain data.",
+            "shortDescription": "OmniFlix is a p2p network for creators and communities to achieve efficiency in Web2 & Web3 media management, distribution and monetization."
+        },
+        "teritori": {
+            "title": "Teritori",
+            "description": "Teritori is a multi-chain hub and the open ecosystem built on the Cosmos SDK and aims to enhance Web3 individuals, communities & builders experience through an all-in-one hub of dApps.",
+            "shortDescription": "Teritori is a multi-chain hub aims to enhance Web3 individuals, communities & builders experience through an all-in-one hub of dApps."
         }
     },
     "uptime": "Uptime",
