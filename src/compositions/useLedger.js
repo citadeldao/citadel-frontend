@@ -2,6 +2,7 @@ import { ref, computed } from 'vue';
 import store from '@/store';
 import { i18n } from '@/plugins/i18n';
 import { WALLET_TYPES } from '@/config/walletType';
+import customErrors from '@/helpers/customErrors';
 
 const { t } = i18n.global;
 
@@ -23,6 +24,20 @@ export default function useLedger() {
     showAppLedgerModal.value = false;
     showConfirmLedgerModal.value = false;
     showRejectedLedgerModal.value = false;
+  };
+
+  const getCustomErrorMessage = (error) => {
+    let message = error;
+
+    for (const key in customErrors) {
+      if (customErrors[key].find((check) => error.message.includes(check))) {
+        const code = currentWallet.value.code;
+        message = t(key, { code });
+        return message;
+      }
+    }
+
+    return message;
   };
 
   const ledgerErrorHandler = (error) => {
@@ -55,7 +70,9 @@ export default function useLedger() {
       showAppLedgerModal.value = false;
     }
 
-    ledgerError.value = errorMessage || error.message || error;
+    ledgerError.value = getCustomErrorMessage(
+      errorMessage || error.message || error
+    );
   };
 
   return {

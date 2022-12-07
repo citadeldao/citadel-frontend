@@ -1255,6 +1255,16 @@
             "title": "ジャッカルダオ",
             "description": "ジャッカル プロトコルは、次世代のデータ ストレージ ネットワークであり、分散型アプリケーション プロトコルは、使いやすさを犠牲にすることなく、データのプライバシーとサイバーセキュリティ体制を強化することを目的としています。 このプロトコルは、最も重要なデータを保護する世界クラスのアプリケーションを提供することを目指しています。",
             "shortDescription": "ジャッカル プロトコルは、次世代のデータ ストレージ ネットワークであり、分散型アプリケーション プロトコルは、使いやすさを犠牲にすることなく、データのプライバシーとサイバーセキュリティ体制を強化することを目的としています。"
+        },
+        "omniflix": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "teritori": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "アップタイム",
@@ -1410,10 +1420,11 @@
     "addComment": "コメントを追加する",
     "editComment": "コメントを編集",
     "errors": {
-        "notEnoughFounds": "取引手数料を支払うのに十分な {code} がありません",
-        "notAvailableToStake": ""
+        "notEnoughFounds": "取引手数料を支払うのに十分な {code} がありません"
     },
     "copyToClipboardTitle": "閲覧キーをコピー",
     "showHideKeyTitle": "表示キーの表示/非表示",
-    "changeKeyTitle": "閲覧キーの変更"
+    "changeKeyTitle": "閲覧キーの変更",
+    "anotherAddress": "別のアドレス",
+    "notFoundPlaceholderText": "クエリに一致するものが見つかりませんでした"
 }
