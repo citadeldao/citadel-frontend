@@ -68,14 +68,20 @@
               <div
                 class="value-amount"
                 :style="{
-                  cursor:
-                    component.value === info.view[0].components[0]?.value
-                      ? 'pointer'
-                      : 'initial',
+                  cursor: foundedComponent(
+                    component.value.text || component.value
+                  )
+                    ? 'pointer'
+                    : 'initial',
                 }"
-                @click="copyValue(component.value)"
+                @click="copyValue(component.value.text || component.value)"
               >
                 {{ component.value.text || component.value }}
+                <transition name="fade1">
+                  <span v-if="isCopied" class="input__tooltip">
+                    {{ $t('copiedToClipboard') }}
+                  </span>
+                </transition>
               </div>
             </div>
             <!-- structure in type -->
@@ -187,8 +193,19 @@ export default {
     onMounted(() => {
       togleShowPlaceholder();
     });
+    const foundedComponent = (desiredValue) => {
+      const infoPropView = props.info.view;
+
+      const findFirstAddress = infoPropView.map((e) =>
+        e.components.map((e1) => e1.value)
+      )[0][0].text;
+      return findFirstAddress === desiredValue;
+      // props.info.view[0].components[0]?.value?.text ||
+      //   props.info.view[0].components[0]?.value;
+    };
     const copyValue = (e) => {
-      if (e === props.info.view[0].components[0].value) {
+      console.log(e);
+      if (foundedComponent(e)) {
         copyToClipboard(e);
         isCopied.value = true;
 
@@ -197,7 +214,13 @@ export default {
         }, 1500);
       }
     };
-    return { copyValue, isCopied, showPlaceholder, togleShowPlaceholder };
+    return {
+      copyValue,
+      foundedComponent,
+      isCopied,
+      showPlaceholder,
+      togleShowPlaceholder,
+    };
   },
 };
 </script>
