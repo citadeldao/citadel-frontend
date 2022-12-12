@@ -55,7 +55,11 @@
             @keypress="onKeyPressInput"
           />
         </div>
-        <PrimaryButton :loading="loading" :disabled="loading" type="submit">
+        <PrimaryButton
+          :loading="loading"
+          :disabled="loading || newEmail.length === 0"
+          type="submit"
+        >
           {{ $t('settings.changeEmail.button') }}
         </PrimaryButton>
       </form>
@@ -198,8 +202,9 @@ export default {
       let duration = moment.duration(time, 'minutes');
 
       const countDownStart = setInterval(() => {
-        if (duration.asSeconds() === 0) {
-          resendActive.value = attempts > 0;
+        if (duration.asSeconds() <= 1) {
+          resendActive.value = attempts > 0 ?? true;
+          return;
         }
 
         duration = moment.duration(
