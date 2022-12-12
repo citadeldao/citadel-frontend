@@ -61,8 +61,12 @@ export default {
     };
     const checkAll = () => {
       let list = props.list;
-      if (checkedAddresses.value.length === list.length) return;
-      for (const key in list) {
+      for (const key in list.filter(
+        (listItem) =>
+          checkedAddresses.value.findIndex(
+            (chkdAdrs) => chkdAdrs.id === listItem.id
+          ) === -1
+      )) {
         if (Object.hasOwnProperty.call(list, key)) {
           addItem(list[key]);
         }
