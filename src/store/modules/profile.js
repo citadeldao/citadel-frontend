@@ -13,7 +13,9 @@ const types = {
   SET_RATES: 'SET_RATES',
   SET_CURRENT_WALLET_MARKETCAP: 'SET_CURRENT_WALLET_MARKETCAP',
   SET_CHANGE_EMAIL_STAGE: 'SET_CHANGE_EMAIL_STAGE',
+  SET_CHANGE_EMAIL_TIMER: 'SET_CHANGE_EMAIL_TIMER',
 };
+
 export default {
   namespaced: true,
   state: {
@@ -23,7 +25,8 @@ export default {
       rates: {},
       currentWalletMarketcap: {},
     },
-    changeEmailStage: null,
+    changeEmailStage: 'change',
+    changeEmailTimer: null,
   },
   getters: {
     info: (state) => state.info,
@@ -33,6 +36,7 @@ export default {
     rates: (state) => state.rates,
     currentWalletMarketcap: (state) => state.currentWalletMarketcap,
     changeEmailStage: (state) => state.changeEmailStage,
+    changeEmailTimer: (state) => state.changeEmailTimer,
   },
   mutations: {
     [types.SET_INFO](state, info) {
@@ -52,6 +56,9 @@ export default {
     },
     [types.SET_CHANGE_EMAIL_STAGE](state, value) {
       state.changeEmailStage = value;
+    },
+    [types.SET_CHANGE_EMAIL_TIMER](state, value) {
+      state.changeEmailTimer = value;
     },
   },
   actions: {
@@ -165,6 +172,21 @@ export default {
         });
 
         return { ok: false };
+      } catch (error) {
+        return { ok: false, error };
+      }
+    },
+
+    async changeEmailInfo({ commit }) {
+      try {
+        const { ok, data } = await api.getChangeEmailInfo();
+
+        if (ok) {
+          commit(types.SET_CHANGE_EMAIL_STAGE, 'timer');
+          return { ok, data };
+        }
+
+        return { ok: false, data: {} };
       } catch (error) {
         return { ok: false, error };
       }

@@ -84,18 +84,17 @@
           {{ $t('settings.changeEmail.resend') }}
         </PrimaryButton>
 
-        <p v-if="countDown > 0" class="count-down">
-          <span>00</span>
-          <span>{{ countDown }}</span>
-        </p>
+        <p class="count-down">{{ counter }}</p>
       </div>
     </ModalContent>
   </Modal>
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
+
+import moment from 'moment';
 
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import Modal from '@/components/Modal';
@@ -108,13 +107,26 @@ export default {
   name: 'ChangeEmail',
   components: { PrimaryButton, Modal, ModalContent, Input, Letter },
   setup() {
-    const MINUTE = 60;
-
     const store = useStore();
-    const currentEmail = computed(() => store.getters['profile/info'].login);
-    const newEmail = ref('');
 
-    const countDown = ref(MINUTE);
+    const checkTimer = async () => {
+      const { ok, data } = await store.dispatch('profile/changeEmailInfo');
+      if (ok) {
+        timerState(data.confirmTime, data.attemptsLeft);
+      }
+    };
+
+    onMounted(async () => await checkTimer());
+
+    const currentEmail = computed(() => store.getters['profile/info'].login);
+    const timer = computed(() => store.getters['profile/changeEmailTimer']);
+    const currentStage = computed(
+      () => store.getters['profile/changeEmailStage']
+    );
+
+    const newEmail = ref('');
+    const counter = ref('00:00');
+
     const resendActive = ref(false);
 
     const loading = ref(false);
@@ -123,26 +135,19 @@ export default {
     const showChange = ref(false);
     const showTimer = ref(false);
 
-    const currentStage = computed(
-      () => store.getters['profile/changeEmailStage']
-    );
-
     if (!currentStage.value) {
       store.commit('profile/SET_CHANGE_EMAIL_STAGE', 'change');
     }
 
-    const toggleModal = (target, state = false) => {
+    const toggleModal = async (target, state = false) => {
+      if (state) await checkTimer();
+
       switch (target) {
         case 'change':
           showChange.value = state;
           break;
         case 'timer':
           showTimer.value = state;
-
-          if (state && countDown.value === MINUTE) {
-            countDownTimer();
-          }
-
           break;
         default:
           break;
@@ -163,6 +168,7 @@ export default {
       return await store.dispatch('profile/changeEmail', newEmail.value);
     };
 
+    // *** CHANGE EMAIL REQUEST
     const changeEmail = async () => {
       loading.value = true;
       showError.value = false;
@@ -175,6 +181,7 @@ export default {
         return toggleModal('change', false);
       }
 
+      localStorage.setItem('new-email', newEmail.value);
       loading.value = false;
 
       toggleModal('change', false);
@@ -183,21 +190,35 @@ export default {
       store.commit('profile/SET_CHANGE_EMAIL_STAGE', 'timer');
     };
 
-    const countDownTimer = () => {
-      if (countDown.value < 10) countDown.value = `0${countDown.value}`;
+    // *** TIMER
+    const timerState = (time = 1, attempts) => {
+      clearInterval(timer.value);
+      const ONE_SEC = 1000;
 
-      if (countDown.value > 0) {
-        return setTimeout(() => {
-          countDown.value -= 1;
-          countDownTimer();
-        }, 1000);
-      }
+      let duration = moment.duration(time, 'minutes');
 
-      resendActive.value = true;
+      const countDownStart = setInterval(() => {
+        if (duration.asSeconds() === 0) {
+          resendActive.value = attempts > 0;
+        }
+
+        duration = moment.duration(
+          duration.asMilliseconds() - ONE_SEC,
+          'milliseconds'
+        );
+
+        counter.value = moment(duration.asMilliseconds()).format('mm:ss');
+      }, ONE_SEC);
+
+      store.commit('profile/SET_CHANGE_EMAIL_TIMER', countDownStart);
+      store.commit('profile/SET_CHANGE_EMAIL_STAGE', 'timer');
     };
 
+    // *** RESEND
     const resend = async () => {
       loading.value = true;
+
+      newEmail.value = localStorage.getItem('new-email');
 
       const { ok } = await changeEmailRequest();
 
@@ -208,12 +229,10 @@ export default {
         return toggleModal('timer', false);
       }
 
-      countDown.value = MINUTE;
-
       resendActive.value = false;
       loading.value = false;
 
-      countDownTimer();
+      timerState();
     };
 
     return {
@@ -221,18 +240,17 @@ export default {
       showChange,
       showTimer,
       loading,
-      countDown,
       resendActive,
 
       toggleModal,
       changeEmail,
       onKeyPressInput,
-      countDownTimer,
       resend,
 
       currentEmail,
       newEmail,
       currentStage,
+      counter,
     };
   },
 };
@@ -309,15 +327,6 @@ export default {
     span {
       display: inline-block;
       width: 32px;
-    }
-    &::after {
-      content: ':';
-      position: absolute;
-      left: 0;
-      right: 0;
-      margin: auto;
-      width: fit-content;
-      height: 40px;
     }
   }
   .primary-button {

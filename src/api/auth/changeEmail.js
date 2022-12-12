@@ -5,3 +5,8 @@ export const changeEmail = ({ newEmail }) => ({
     newEmail,
   },
 });
+
+export const getChangeEmailInfo = () => ({
+  url: `/profile/change-email/getInfo`,
+  method: 'get',
+});
