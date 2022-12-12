@@ -22,6 +22,15 @@
         :checked="checked(wallet.walletInstance)"
         @check="addSingleItem"
       />
+      <div
+        class="add-derivation__card"
+        @click="generateNewPath"
+        v-if="limitOfCards < maxPaths"
+      >
+        <seedPhraseIcon class="initial-icon" />
+
+        {{ $t('anotherAddress') }}
+      </div>
     </div>
     <div v-if="customWallet" class="choose-derivation-path__custom">
       <span>Custom</span>
@@ -61,6 +70,7 @@ import { WALLET_TYPES } from '@/config/walletType';
 import Select from '@/components/UI/Select';
 import CryptoCoin from '@/models/CryptoCoin';
 import notify from '@/plugins/notify';
+import seedPhraseIcon from '@/assets/icons/addAddressV2/seedphrase-type.svg';
 
 export default {
   name: 'ChooseDerivationPath',
@@ -69,6 +79,7 @@ export default {
     DerivationPathCard,
     Modal,
     Select,
+    seedPhraseIcon,
   },
   props: {
     net: {
@@ -82,7 +93,7 @@ export default {
     const { checked, addSingleItem, checkedItems } = useCheckItem();
     const store = useStore();
 
-    const numberOfPaths = 5;
+    const numberOfPaths = ref(5);
     const wallets = ref([]);
     const walletsFromStore = computed(() => store.getters['wallets/wallets']);
     const maxPaths = ref(20);
@@ -108,13 +119,13 @@ export default {
 
       let currentPath = 0;
 
-      while (currentPath < numberOfPaths) {
+      while (currentPath < numberOfPaths.value) {
         const wallet = await store.dispatch('crypto/createLedgerWallet', {
           derivationPath: templatePath.replace('N', currentPath),
           net: props.net,
         });
         wallets.value.push(wallet);
-        const isLastIteration = currentPath === numberOfPaths - 1;
+        const isLastIteration = currentPath === numberOfPaths.value - 1;
 
         if (isLastIteration) {
           await setCustomWallet();
@@ -129,13 +140,13 @@ export default {
     const createWallets = async () => {
       let currentPath = 0;
 
-      while (currentPath < numberOfPaths) {
+      while (currentPath < numberOfPaths.value) {
         const wallet = await store.dispatch('crypto/createLedgerWallet', {
           pathIndex: currentPath,
           net: props.net,
         });
         wallets.value.push(wallet);
-        const isLastIteration = currentPath === numberOfPaths - 1;
+        const isLastIteration = currentPath === numberOfPaths.value - 1;
 
         if (isLastIteration) {
           await setCustomWallet();
@@ -205,10 +216,26 @@ export default {
         filteredWalletsByCurNetLength.value -
         wallets.value.filter((e) => e.alreadyExist).length
     );
-    const generateNewPath = () => {
+
+    const generateNewWalletLoader = ref(false);
+
+    const generateNewPath = async () => {
+      if (generateNewWalletLoader.value) return;
+
       if (limitOfCards.value <= maxPaths.value) {
         numberOfPaths.value++;
-        createWalletsWithTemplatePath(currentPathDerivation.value);
+
+        // createWalletsWithTemplatePath(currentPathDerivation.value);
+        generateNewWalletLoader.value = true;
+        const wallet = await store.dispatch('crypto/createLedgerWallet', {
+          derivationPath: currentPathDerivation.value.replace(
+            'N',
+            numberOfPaths.value - 1
+          ),
+          net: props.net,
+        });
+        wallets.value.push(wallet);
+        generateNewWalletLoader.value = false;
       }
     };
 
@@ -229,6 +256,8 @@ export default {
       currentPathDerivation,
       createWalletsWithTemplatePath,
       generateNewPath,
+      limitOfCards,
+      maxPaths,
     };
   },
 };
@@ -303,6 +332,42 @@ export default {
       }
       @include md {
         margin-bottom: 11px;
+      }
+    }
+  }
+
+  .add-derivation__card {
+    width: 288px;
+    height: 150px;
+    border: 1px solid #c3ceeb;
+    border-radius: 8px;
+    padding: 24px 24px 21px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: #6b93c0;
+    @include lg {
+      width: 277px;
+      padding: 16px 16px 13px 16px;
+    }
+    @include md {
+      width: 100%;
+      padding: 16px;
+      height: 64px;
+      flex-direction: row;
+    }
+    svg {
+      width: 40px;
+      fill: $too-ligth-blue;
+      &:hover {
+        fill: $dark-blue;
       }
     }
   }
