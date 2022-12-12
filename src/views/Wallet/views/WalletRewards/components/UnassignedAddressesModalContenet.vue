@@ -61,14 +61,15 @@ export default {
     };
     const checkAll = () => {
       const list = props.list;
-      for (const key in list.filter(
+      const filteredListByExist = list.filter(
         (listItem) =>
           checkedAddresses.value.findIndex(
             (chkdAdrs) => chkdAdrs.id === listItem.id
           ) === -1
-      )) {
-        if (Object.hasOwnProperty.call(list, key)) {
-          addItem(list[key]);
+      );
+      for (const key in filteredListByExist) {
+        if (Object.hasOwnProperty.call(filteredListByExist, key)) {
+          addItem(filteredListByExist[key]);
         }
       }
     };
