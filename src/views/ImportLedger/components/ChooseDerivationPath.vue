@@ -55,7 +55,7 @@ import PrimaryButton from '@/components/UI/PrimaryButton';
 import DerivationPathCard from '@/components/DerivationPathCard';
 import useCheckItem from '@/compositions/useCheckItem';
 import { useStore } from 'vuex';
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed } from 'vue';
 import Modal from '@/components/Modal';
 import { WALLET_TYPES } from '@/config/walletType';
 import Select from '@/components/UI/Select';
@@ -211,9 +211,7 @@ export default {
         createWalletsWithTemplatePath(currentPathDerivation.value);
       }
     };
-    onMounted(async () => {
-      await setCustomWallet();
-    });
+
     return {
       clickHandler,
       addSingleItem,
