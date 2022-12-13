@@ -1273,6 +1273,11 @@
             "title": "",
             "description": "",
             "shortDescription": ""
+        },
+        "kujira":{
+            "title": "Kujira",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "运行时间",

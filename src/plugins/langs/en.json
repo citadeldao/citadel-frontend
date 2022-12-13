@@ -1283,6 +1283,11 @@
             "title": "Teritori",
             "description": "Teritori is a multi-chain hub and the open ecosystem built on the Cosmos SDK and aims to enhance Web3 individuals, communities & builders experience through an all-in-one hub of dApps.",
             "shortDescription": "Teritori is a multi-chain hub aims to enhance Web3 individuals, communities & builders experience through an all-in-one hub of dApps."
+        },
+        "kujira":{
+            "title": "Kujira",
+            "description": "Kujira is a semi-permissioned sovereign Cosmos L1 platform bringing user-friendly DeFi tools for trading, liquidating, and minting, and targeting everyone, from the novice crypto enthusiasts to the experienced investors.",
+            "shortDescription": "Kujira is a decentralized Cosmos L1 platform bringing user-friendly DeFi tools for trading, liquidating, and minting."
         }
     },
     "uptime": "Uptime",
