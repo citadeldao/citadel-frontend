@@ -841,20 +841,25 @@ export default {
   left: 0;
   z-index: 100;
   width: 100%;
-  height: 15px;
+  height: 59px;
   transition: 0.2s ease-in-out;
   opacity: 0;
   box-shadow: none;
-
   &--top {
     top: 0;
+    border-radius: 8px 8px 0 0;
     background: -webkit-linear-gradient(
       270deg,
-      rgba(0, 0, 0, 0.2),
-      transparent
+      #edf2fc 0%,
+      rgba(233, 238, 247, 0.75) 44.79%,
+      rgba(228, 232, 241, 0) 100%
     );
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.2), transparent);
-    border-radius: 8px 8px 0 0;
+    background: linear-gradient(
+      180deg,
+      #edf2fc 0%,
+      rgba(233, 238, 247, 0.75) 44.79%,
+      rgba(228, 232, 241, 0) 100%
+    );
     &.active {
       opacity: 1;
     }
@@ -862,9 +867,20 @@ export default {
 
   &--bottom {
     bottom: 0;
-    background: -webkit-linear-gradient(90deg, rgba(0, 0, 0, 0.2), transparent);
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), transparent);
     border-radius: 0 0 8px 8px;
+    background: -webkit-linear-gradient(
+      90deg,
+      #edf2fc 0%,
+      rgba(233, 238, 247, 0.75) 44.79%,
+      rgba(228, 232, 241, 0) 100%
+    );
+    background: linear-gradient(
+      180deg,
+      #edf2fc 0%,
+      rgba(233, 238, 247, 0.75) 44.79%,
+      rgba(228, 232, 241, 0) 100%
+    );
+    transform: matrix(1, 0, 0, -1, 0, 0);
     &.active {
       opacity: 1;
     }
