@@ -351,7 +351,10 @@ export default {
     );
 
     const showModal = ref(false);
-    const modalCloseHandler = () => (showModal.value = false);
+    const modalCloseHandler = (e) => {
+      if (e.target.className !== 'tabs-group__item-label')
+        return (showModal.value = false);
+    };
     const showExpand = () => (showModal.value = true);
 
     return {
