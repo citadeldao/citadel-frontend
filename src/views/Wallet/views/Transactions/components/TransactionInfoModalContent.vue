@@ -45,9 +45,7 @@
             />
             <div v-if="component.type === 'amount'" class="value">
               <div class="value-amount">{{ component.value.text }}</div>
-              <div class="value-symbol">
-                {{ component.value.symbol.slice(0, 5) }}
-              </div>
+              <div class="value-symbol">{{ component.value.symbol }}</div>
             </div>
             <div v-if="component.type === 'text'" class="value">
               <div class="value-amount">{{ component.value }}</div>
@@ -164,11 +162,13 @@ export default {
     onMounted(() => {
       togleShowPlaceholder();
     });
-
     const filterTypeMethod = (view) =>
       !view?.type.toLowerCase().includes('acknowledgement');
-
-    return { showPlaceholder, filterTypeMethod, togleShowPlaceholder };
+    return {
+      filterTypeMethod,
+      showPlaceholder,
+      togleShowPlaceholder,
+    };
   },
 };
 </script>

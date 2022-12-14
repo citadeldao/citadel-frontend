@@ -16,7 +16,7 @@
       <span class="pledged-balance__title-title">
         {{ $t('pledgedBalance') }}
       </span>
-      <Tooltip width="326px" left="-156px">
+      <Tooltip :width="width" left="-156px">
         <info />
         <template #content>
           <span class="pledged-balance__tooltip-info">
@@ -125,6 +125,7 @@
 </template>
 
 <script>
+import { computed } from 'vue';
 import claimBlockLock from '@/assets/icons/claim-block-lock.svg';
 import { WALLET_TYPES } from '@/config/walletType';
 import ActionModalContent from './../../views/Stake/components/ActionModalContent.vue';
@@ -178,8 +179,16 @@ export default {
     const txComment = inject('txComment');
     const password = inject('password');
     const actionModalData = inject('actionModalData');
-
+    const width = computed(() => {
+      if (window.innerWidth <= 1286 && window.innerWidth >= 1280) {
+        return '310px';
+      } else if (window.innerWidth <= 1024) {
+        return '280px';
+      }
+      return '326px';
+    });
     return {
+      width,
       showModal,
       isLoading,
       modalCloseHandler,

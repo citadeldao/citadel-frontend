@@ -711,6 +711,7 @@
         "extensions": {
             "title": "",
             "description": "",
+            "accsTitle": "",
             "appsTitle": "",
             "searchLabel": "",
             "searchPlaceholder": ""
@@ -1259,6 +1260,16 @@
             "shortDescription": ""
         },
         "jackal": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "omniflix": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "teritori": {
             "title": "",
             "description": "",
             "shortDescription": ""
