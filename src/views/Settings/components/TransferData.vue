@@ -49,7 +49,7 @@ import QrInfo from './QrInfo';
 import QrCard from './QrCard';
 import TransferIcon from '@/assets/icons/qr-scan.svg';
 import useCurrentStep from '@/compositions/useCurrentStep';
-import { WALLET_TYPES } from '@/config/walletType';
+import { PRIVATE_PASSWORD_TYPES } from '@/config/walletType';
 import useWallets from '@/compositions/useWallets';
 
 export default {
@@ -67,11 +67,8 @@ export default {
     const addresses = ref([]);
     const { wallets } = useWallets();
     const hasWallets = computed(() => {
-      return wallets.value.filter(
-        (wallet) =>
-          wallet.type === WALLET_TYPES.ONE_SEED ||
-          wallet.type === WALLET_TYPES.PRIVATE_KEY ||
-          wallet.type === WALLET_TYPES.SEED_PHRASE
+      return wallets.value.filter((wallet) =>
+        PRIVATE_PASSWORD_TYPES.includes(wallet.type)
       ).length;
     });
 

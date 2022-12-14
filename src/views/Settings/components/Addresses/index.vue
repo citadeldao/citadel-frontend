@@ -53,7 +53,7 @@ import Dropdown from './components/Dropdown';
 import useWallets from '@/compositions/useWallets';
 import DeleteSeedModal from './components/Dropdown/components/DeleteSeedModal';
 import DeleteAddressesModal from './components/Dropdown/components/DeleteAddressesModal.vue';
-import { WALLET_TYPES } from '@/config/walletType';
+import { PRIVATE_PASSWORD_TYPES } from '@/config/walletType';
 import { sortByAlphabet } from '@/helpers';
 import DeleteAddressModal from './components/Dropdown/components/DeleteAddressModal.vue';
 import { useI18n } from 'vue-i18n';
@@ -110,11 +110,7 @@ export default {
 
     const removeSeed = () => {
       const hasPrivateWallets = wallets.value.filter((w) =>
-        [
-          WALLET_TYPES.ONE_SEED,
-          WALLET_TYPES.PRIVATE_KEY,
-          WALLET_TYPES.SEED_PHRASE,
-        ].includes(w.type)
+        PRIVATE_PASSWORD_TYPES.includes(w.type)
       );
 
       store.commit('crypto/setUserMnemonic', null);

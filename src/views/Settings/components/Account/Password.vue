@@ -118,7 +118,7 @@ import { useStore } from 'vuex';
 import useWallets from '@/compositions/useWallets';
 import { sha3_256 } from 'js-sha3';
 import successIcon from '@/assets/icons/success.svg';
-import { WALLET_TYPES } from '../../../../config/walletType';
+import { PRIVATE_PASSWORD_TYPES } from '@/config/walletType';
 import CryptoCoin from '@/models/CryptoCoin';
 import Modal from '@/components/Modal';
 import ModalContent from '@/components/ModalContent';
@@ -170,13 +170,7 @@ export default {
       }
 
       wallets.value.forEach(async (w) => {
-        if (
-          [
-            WALLET_TYPES.PRIVATE_KEY,
-            WALLET_TYPES.ONE_SEED,
-            WALLET_TYPES.SEED_PHRASE,
-          ].includes(w.type)
-        ) {
+        if (PRIVATE_PASSWORD_TYPES.includes(w.type)) {
           const privateKey = await w.getPrivateKeyDecoded(oldPassword.value);
           const privateKeyEncoded = await citadel.encodePrivateKeyByPassword(
             w.net,
@@ -245,7 +239,6 @@ export default {
       changePassword,
       showChangePasswordModal,
       oldPasswordHash,
-
       oldPassword,
       newPassword,
       onChangeNewPassword,

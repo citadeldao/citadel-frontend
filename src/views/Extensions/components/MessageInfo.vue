@@ -17,11 +17,7 @@
       v-if="
         !msgSuccessSignature &&
         signerWallet &&
-        [
-          WALLET_TYPES.ONE_SEED,
-          WALLET_TYPES.PRIVATE_KEY,
-          WALLET_TYPES.SEED_PHRASE,
-        ].includes(signerWallet.type)
+        PRIVATE_PASSWORD_TYPES.includes(signerWallet.type)
       "
       class="password-wrap"
     >
@@ -42,9 +38,9 @@
   </div>
 </template>
 <script>
-import { WALLET_TYPES } from '@/config/walletType';
 import { ref } from 'vue';
 import Input from '@/components/UI/Input';
+import { PRIVATE_PASSWORD_TYPES } from '@/config/walletType';
 
 export default {
   name: 'MessageInfo',
@@ -78,7 +74,7 @@ export default {
 
     return {
       password,
-      WALLET_TYPES,
+      PRIVATE_PASSWORD_TYPES,
       onChange,
     };
   },

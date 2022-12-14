@@ -63,13 +63,7 @@
         <notificationIcon />
       </div>
       <div
-        v-if="
-          [
-            WALLET_TYPES.ONE_SEED,
-            WALLET_TYPES.PRIVATE_KEY,
-            WALLET_TYPES.SEED_PHRASE,
-          ].includes(wallet.type)
-        "
+        v-if="PRIVATE_PASSWORD_TYPES.includes(wallet.type)"
         class="dropdown-item__btn dropdown-item__btn--export"
         data-qa="settings__address__export-button"
         @click="exportWallet"
@@ -100,7 +94,11 @@
 import { ref, markRaw, computed, inject, watch, nextTick } from 'vue';
 import { useStore } from 'vuex';
 import useWallets from '@/compositions/useWallets';
-import { WALLET_TYPES, SNIP20_PARENT_NET } from '@/config/walletType';
+import {
+  WALLET_TYPES,
+  PRIVATE_PASSWORD_TYPES,
+  SNIP20_PARENT_NET,
+} from '@/config/walletType';
 import Tooltip from '@/components/UI/Tooltip';
 import Checkbox from '@/components/UI/Checkbox';
 import DeleteAddressModal from './DeleteAddressModal.vue';
@@ -294,7 +292,7 @@ export default {
       currentIcon,
       notification,
       isSnip20,
-      WALLET_TYPES,
+      PRIVATE_PASSWORD_TYPES,
       isShowDeleteModal,
       isLoading,
       showDeleteModal,

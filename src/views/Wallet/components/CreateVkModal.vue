@@ -46,13 +46,7 @@
         </div>
       </div>
       <div
-        v-if="
-          [
-            WALLET_TYPES.PRIVATE_KEY,
-            WALLET_TYPES.ONE_SEED,
-            WALLET_TYPES.SEED_PHRASE,
-          ].includes(currentWallet.type)
-        "
+        v-if="PRIVATE_PASSWORD_TYPES.includes(currentWallet.type)"
         class="createVkPassword"
       >
         <Input
@@ -206,7 +200,7 @@ import Loading from '@/components/Loading';
 import useCheckPassword from '@/compositions/useCheckPassword';
 import useLedger from '@/compositions/useLedger';
 import redirectToWallet from '@/router/helpers/redirectToWallet';
-import { WALLET_TYPES } from '@/config/walletType';
+import { WALLET_TYPES, PRIVATE_PASSWORD_TYPES } from '@/config/walletType';
 
 export default {
   name: 'CreateVkModal',
@@ -514,7 +508,7 @@ export default {
       confirmLedgerCloseHandler,
       appLedgerCloseHandler,
       rejectedLedgerCloseHandler,
-      WALLET_TYPES,
+      PRIVATE_PASSWORD_TYPES,
     };
   },
 };

@@ -11,13 +11,7 @@
       }}
     </div>
     <div
-      v-if="
-        [
-          WALLET_TYPES.ONE_SEED,
-          WALLET_TYPES.PRIVATE_KEY,
-          WALLET_TYPES.SEED_PHRASE,
-        ].includes(wallet.type) && true
-      "
+      v-if="PRIVATE_PASSWORD_TYPES.includes(wallet.type) && true"
       class="dropdown-item__btn dropdown-item__btn--export"
       @click="exportWallet"
     >
@@ -29,7 +23,7 @@
 <script>
 import { ref, markRaw } from 'vue';
 import removeIcon from '@/assets/icons/settings/remove.svg';
-import { WALLET_TYPES } from '@/config/walletType';
+import { PRIVATE_PASSWORD_TYPES } from '@/config/walletType';
 import keyIcon from '@/assets/icons/settings/key.svg';
 import notificationIcon from '@/assets/icons/settings/notification.svg';
 
@@ -70,7 +64,7 @@ export default {
       currentIcon,
       notification,
       toggleNotification,
-      WALLET_TYPES,
+      PRIVATE_PASSWORD_TYPES,
       exportWallet,
     };
   },

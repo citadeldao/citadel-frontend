@@ -100,11 +100,7 @@
             v-if="showPasswordForAssign"
             :has-seeds="
               seedAddresses.some(({ type }) =>
-                [
-                  WALLET_TYPES.ONE_SEED,
-                  WALLET_TYPES.PRIVATE_KEY,
-                  WALLET_TYPES.SEED_PHRASE,
-                ].includes(type)
+                PRIVATE_PASSWORD_TYPES.includes(type)
               )
             "
             @approveAssign="approveAssign"
@@ -164,7 +160,7 @@ import AssignedAddressesModalContent from './components/AssignedAddressesModalCo
 import ModalContent from '@/components/ModalContent';
 import Modal from '@/components/Modal';
 import InfoBlocks from './components/InfoBlocks.vue';
-import { WALLET_TYPES } from '@/config/walletType';
+import { WALLET_TYPES, PRIVATE_PASSWORD_TYPES } from '@/config/walletType';
 import sadMad from '@/assets/icons/sad-man.svg';
 import Loading from '@/components/Loading';
 import WalletButtonsPanel from '@/components/WalletButtonsPanel';
@@ -283,11 +279,7 @@ export default {
     const showPasswordForAssign = computed(
       () =>
         !!unassignedAddresses.value.find((w) =>
-          [
-            WALLET_TYPES.PRIVATE_KEY,
-            WALLET_TYPES.ONE_SEED,
-            WALLET_TYPES.SEED_PHRASE,
-          ].includes(w.type)
+          PRIVATE_PASSWORD_TYPES.includes(w.type)
         )
     );
 
@@ -402,11 +394,7 @@ export default {
     const newAssignedAddresses = ref([]);
     const approveAssign = async () => {
       const hasSeeds = seedAddresses.value.some(({ type }) =>
-        [
-          WALLET_TYPES.PRIVATE_KEY,
-          WALLET_TYPES.ONE_SEED,
-          WALLET_TYPES.SEED_PHRASE,
-        ].includes(type)
+        PRIVATE_PASSWORD_TYPES.includes(type)
       );
 
       if (hasSeeds && passwordError.value && showPasswordForAssign.value) {
@@ -546,6 +534,7 @@ export default {
       isDataLoading,
       unassignedAddresses,
       WALLET_TYPES,
+      PRIVATE_PASSWORD_TYPES,
       assignedAddresses,
       showModal,
       showAssignedAddressesModal,

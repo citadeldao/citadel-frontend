@@ -32,7 +32,7 @@ import useCreateWallets from '@/compositions/useCreateWallets';
 import { ref, computed, onMounted } from 'vue';
 import { steps as fileSteps } from '@/static/importFile';
 import { useStore } from 'vuex';
-import { WALLET_TYPES } from '@/config/walletType';
+import { WALLET_TYPES, PRIVATE_PASSWORD_TYPES } from '@/config/walletType';
 import redirectToWallet from '@/router/helpers/redirectToWallet';
 export default {
   name: 'ImportFile',
@@ -75,13 +75,7 @@ export default {
               {
                 type: 1,
                 coins: list
-                  .filter((w) =>
-                    [
-                      WALLET_TYPES.PRIVATE_KEY,
-                      WALLET_TYPES.ONE_SEED,
-                      WALLET_TYPES.SEED_PHRASE,
-                    ].includes(w.type)
-                  )
+                  .filter((w) => PRIVATE_PASSWORD_TYPES.includes(w.type))
                   .map((w) => ({
                     ...w,
                     coin: w.net,

@@ -11,6 +11,12 @@ export const WALLET_TYPES = {
   KEPLR: 'keplr',
 };
 
+export const PRIVATE_PASSWORD_TYPES = [
+  WALLET_TYPES.ONE_SEED,
+  WALLET_TYPES.PRIVATE_KEY,
+  WALLET_TYPES.SEED_PHRASE,
+];
+
 export const isHardwareWallet = (type) =>
   [WALLET_TYPES.LEDGER, WALLET_TYPES.TREZOR].includes(type);
 
