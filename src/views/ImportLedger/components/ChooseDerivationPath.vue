@@ -25,7 +25,7 @@
       <div
         class="add-derivation__card"
         @click="generateNewPath"
-        v-if="limitOfCards < maxPaths"
+        v-if="numberOfPaths < maxPaths"
       >
         <seedPhraseIcon class="initial-icon" />
 
@@ -95,7 +95,6 @@ export default {
 
     const numberOfPaths = ref(5);
     const wallets = ref([]);
-    const walletsFromStore = computed(() => store.getters['wallets/wallets']);
     const maxPaths = ref(20);
     const pathOptions = ref(
       props.net === 'evmos'
@@ -205,28 +204,17 @@ export default {
 
       return !isChecked || isExist;
     });
-    const filteredWalletsByCurNetLength = computed(() => {
-      return walletsFromStore.value.filter(
-        (e) => e.name === customWallet.value.walletInstance?.name
-      ).length;
-    });
-    const limitOfCards = computed(
-      () =>
-        numberOfPaths.value +
-        filteredWalletsByCurNetLength.value -
-        wallets.value.filter((e) => e.alreadyExist).length
-    );
 
     const generateNewWalletLoader = ref(false);
 
     const generateNewPath = async () => {
       if (generateNewWalletLoader.value) return;
 
-      if (limitOfCards.value <= maxPaths.value) {
+      if (numberOfPaths.value < maxPaths.value) {
+        generateNewWalletLoader.value = true;
         numberOfPaths.value++;
 
-        // createWalletsWithTemplatePath(currentPathDerivation.value);
-        generateNewWalletLoader.value = true;
+        // createWalletsWithTemplatePath(currentPathDerivation.value); // default
         const wallet = await store.dispatch('crypto/createLedgerWallet', {
           derivationPath: currentPathDerivation.value.replace(
             'N',
@@ -256,8 +244,8 @@ export default {
       currentPathDerivation,
       createWalletsWithTemplatePath,
       generateNewPath,
-      limitOfCards,
       maxPaths,
+      numberOfPaths,
     };
   },
 };
