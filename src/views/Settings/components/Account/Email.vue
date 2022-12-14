@@ -57,7 +57,7 @@
         </div>
         <PrimaryButton
           :loading="loading"
-          :disabled="loading || newEmail.length === 0"
+          :disabled="loading || !newEmail.length"
           type="submit"
         >
           {{ $t('settings.changeEmail.button') }}
