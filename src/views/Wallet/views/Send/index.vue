@@ -1073,7 +1073,11 @@ export default {
     const isLoading = ref(false);
     const confirmClickHandler = async () => {
       // prepare new tx if fee was changed
-      if (fee.value && fee.value !== defaultFee.value) {
+      if (
+        fee.value &&
+        fee.value !== defaultFee.value &&
+        !props.currentWallet.hasResource
+      ) {
         await prepareTransfer(transferParams.value);
 
         if (rawTxError.value) {
