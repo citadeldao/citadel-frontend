@@ -47,7 +47,10 @@
         </div>
       </div>
       <div class="send__section">
-        <div class="send__section-input">
+        <div
+          class="send__section-input"
+          v-click-away="() => (showNetworkTargetWallets = false)"
+        >
           <Input
             id="to"
             v-model="toAddress"
