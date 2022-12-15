@@ -719,4 +719,18 @@ export default {
       href: 'https://www.coingecko.com/en/coins/teritori',
     },
   },
+  avalanche: {
+    web: {
+      title: 'avax.network',
+      href: 'https://www.avax.network/',
+    },
+    twitter: {
+      title: '@avalancheavax',
+      href: 'avalancheavax',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/categories/avalanche-ecosystemi',
+    },
+  },
 };

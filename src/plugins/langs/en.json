@@ -1283,6 +1283,11 @@
             "title": "Teritori",
             "description": "Teritori is a multi-chain hub and the open ecosystem built on the Cosmos SDK and aims to enhance Web3 individuals, communities & builders experience through an all-in-one hub of dApps.",
             "shortDescription": "Teritori is a multi-chain hub aims to enhance Web3 individuals, communities & builders experience through an all-in-one hub of dApps."
+        },
+        "avalanche": {
+            "title": "Avalanche network",
+            "description":"Avalanche is a smart contract capable blockchain platform, aims to deliver scalable blockchain solution with low costs and fast transaction speed, and possibility to easily build dApps.",
+            "shortDescription": "Avalanche is a smart contract capable blockchain platform, delivering a scalable blockchain solution and possibility to easily build dApps."
         }
     },
     "uptime": "Uptime",

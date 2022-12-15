@@ -1273,6 +1273,11 @@
             "title": "",
             "description": "",
             "shortDescription": ""
+        },
+        "avalanche": {
+            "title": "Avalanche",
+            "description":"",
+            "shortDescription": ""
         }
     },
     "uptime": "运行时间",
