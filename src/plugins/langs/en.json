@@ -719,7 +719,15 @@
             "accsTitle": "Your developer account",
             "appsTitle": "Your apps for testing",
             "searchLabel": "Application code",
-            "searchPlaceholder": "Enter code"
+            "searchPlaceholder": "Enter code",
+            "guideTitle": "Guides & Questions",
+            "guideTitleDescription": "Learn more on setting your developer center experience",
+            "guides": {
+                "question1Title": "How to connect your developer account?",
+                "question1Description": "To link a developer account, click the Get Dev code button and copy it so you can subsequently add it in your Citadel.one user account",
+                "question2Title": "How to get code to test an application?",
+                "question2Description": "For testers to access the dev version of an application, developer should copy the Testing code from the Dev Center on the project layout."
+            }
         },
         "subscriptions": {
             "title": "Subscriptions",

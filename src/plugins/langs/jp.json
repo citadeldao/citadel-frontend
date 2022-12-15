@@ -801,7 +801,15 @@
             "appsTitle": "テスト用のアプリ",
             "accsTitle": "",
             "searchLabel": "アプリケーションコード",
-            "searchPlaceholder": "コードを入力する"
+            "searchPlaceholder": "コードを入力する",
+            "guideTitle": "",
+            "guideTitleDescription": "",
+            "guides": {
+                "question1Title": "",
+                "question1Description": "",
+                "question2Title": "",
+                "question2Description": ""
+            }
         }
     },
     "overallPage": {

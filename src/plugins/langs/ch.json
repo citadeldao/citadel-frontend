@@ -803,7 +803,15 @@
             "accsTitle": "",
             "appsTitle": "测试应用程序",
             "searchLabel": "应用程序代码",
-            "searchPlaceholder": "输入代码"
+            "searchPlaceholder": "输入代码",
+            "guideTitle": "",
+            "guideTitleDescription": "",
+            "guides": {
+                "question1Title": "",
+                "question1Description": "",
+                "question2Title": "",
+                "question2Description": ""
+            }
         }
     },
     "overallPage": {

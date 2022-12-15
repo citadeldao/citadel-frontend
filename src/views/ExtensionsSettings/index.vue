@@ -84,23 +84,61 @@
       </div>
     </div>
     <div class="block right">
-      <appsettings />
+      <div class="head">
+        <div class="head__title">
+          {{ $t('settings.extensions.guideTitle') }}
+        </div>
+        <div class="head__description">
+          {{ $t('settings.extensions.guideTitleDescription') }}
+        </div>
+      </div>
+      <div class="guides">
+        <ToggleItem
+          :item="{
+            title: $t('settings.extensions.guides.question1Title'),
+            description: $t('settings.extensions.guides.question1Description'),
+          }"
+          class="guides-item"
+        >
+          <answer1 />
+        </ToggleItem>
+        <ToggleItem
+          :item="{
+            title: $t('settings.extensions.guides.question2Title'),
+            description: $t('settings.extensions.guides.question2Description'),
+          }"
+          class="guides-item"
+        >
+          <answer2 />
+        </ToggleItem>
+      </div>
     </div>
   </div>
 </template>
 <script>
-import appsettings from '@/assets/icons/appsettings.svg';
+// import appsettings from '@/assets/icons/appsettings.svg';
 import removeIcon from '@/assets/icons/settings/remove.svg';
 import Textarea from '@/components/UI/Textarea';
 import Loading from '@/components/Loading';
+import ToggleItem from '@/components/ToggleItem';
 import { ref, computed, markRaw, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import anonymusSvg from '@/assets/icons/anonymus.svg';
+import answer1 from '@/assets/icons/settings/answer1.svg';
+import answer2 from '@/assets/icons/settings/answer2.svg';
 
 export default {
   name: 'ExtensionsSettings',
-  components: { Textarea, Loading, appsettings, removeIcon, anonymusSvg },
+  components: {
+    Textarea,
+    Loading,
+    ToggleItem,
+    removeIcon,
+    anonymusSvg,
+    answer1,
+    answer2,
+  },
   setup() {
     const router = useRouter();
     const store = useStore();
@@ -241,6 +279,8 @@ export default {
   }
 
   .head {
+    width: 100%;
+
     &__title {
       font-size: 20px;
       font-weight: 700;
@@ -367,8 +407,20 @@ export default {
 
     &.right {
       display: flex;
-      justify-content: center;
-      align-items: center;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+
+      .guides {
+        width: 100%;
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .guides-item {
+        margin-bottom: 20px;
+      }
     }
   }
 }
