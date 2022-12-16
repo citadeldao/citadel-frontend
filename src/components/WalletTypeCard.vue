@@ -88,7 +88,7 @@ export default {
 
   &__seedPhrase {
     &::after {
-      background: #f4bd13;
+      background: #0f95b2;
     }
   }
 
