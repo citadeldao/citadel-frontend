@@ -86,8 +86,11 @@
         @scroll="onScrollContent"
       >
         <div class="sidebar__addresses-addresses-full-list">
-          <div class="scroll-shadow scroll-shadow--top"></div>
-          <div class="scroll-shadow scroll-shadow--bottom"></div>
+          <div class="scroll-shadow scroll-shadow--top" v-show="showTop"></div>
+          <div
+            class="scroll-shadow scroll-shadow--bottom"
+            v-show="showBottom"
+          ></div>
           <transition-group name="drop">
             <AddressItem
               v-for="wallet in displayData"
@@ -368,6 +371,11 @@ export default {
   },
   data() {
     return {
+      hasScroll: undefined,
+      showBottom: true,
+      showTop: true,
+      checkOnTop: true,
+      checkOnBottom: true,
       windowWidth: window.innerWidth,
       sidebarClass: '',
       timer: null,
@@ -450,17 +458,19 @@ export default {
 
       if (!fullList) return;
 
-      const hasScroll = fullList.scrollHeight > fullList.clientHeight;
+      this.hasScroll = fullList.scrollHeight > fullList.clientHeight;
 
-      const checkOnBottom =
+      this.checkOnBottom =
         fullList.scrollHeight - fullList.scrollTop === fullList.clientHeight;
 
-      const checkOnTop = fullList.scrollTop === 0;
+      this.checkOnTop = fullList.scrollTop === 0;
 
-      if (!hasScroll) {
+      if (!this.hasScroll) {
         shadowTop.classList.remove('active');
         shadowBottom.classList.remove('active');
 
+        this.showTop = false;
+        this.showBottom = false;
         return;
       }
 
@@ -468,16 +478,20 @@ export default {
 
       if (fullList.scrollTop > 0) {
         shadowTop.classList.add('active');
-      } else if (checkOnTop) {
+        this.showTop = true;
+      } else if (this.checkOnTop) {
         shadowTop.classList.remove('active');
+        this.showTop = false;
       }
 
-      if (hasScroll) {
+      if (this.hasScroll) {
         shadowBottom.classList.add('active');
+        this.showBottom = true;
       }
 
-      if (checkOnBottom) {
+      if (this.checkOnBottom) {
         shadowBottom.classList.remove('active');
+        this.showBottom = false;
       }
     },
   },
@@ -837,6 +851,7 @@ export default {
 }
 
 .scroll-shadow {
+  pointer-events: none;
   position: absolute;
   left: 0;
   z-index: 100;
