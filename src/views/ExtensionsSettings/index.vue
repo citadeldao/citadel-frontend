@@ -1,5 +1,19 @@
 <template>
   <div class="extensions-settings">
+    <DeleteModal
+      :show="showDeleteUser"
+      :text="'Confirm delete user'"
+      :description="'User will be deleted'"
+      @confirm="confirmDeleteAccount"
+      @close="showDeleteUser = false"
+    />
+    <DeleteModal
+      :show="showDeleteApp"
+      :text="'Confirm delete app'"
+      :description="'App will be deleted'"
+      @confirm="confirmDeleteApp"
+      @close="showDeleteApp = false"
+    />
     <div class="block left">
       <div class="head">
         <div class="head__title">{{ $t('settings.extensions.title') }}</div>
@@ -121,6 +135,7 @@ import removeIcon from '@/assets/icons/settings/remove.svg';
 import Textarea from '@/components/UI/Textarea';
 import Loading from '@/components/Loading';
 import ToggleItem from '@/components/ToggleItem';
+import DeleteModal from '@/views/Settings/components/Addresses/components/Dropdown/components/DeleteAddressModal';
 import { ref, computed, markRaw, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
@@ -138,6 +153,7 @@ export default {
     anonymusSvg,
     answer1,
     answer2,
+    DeleteModal,
   },
   setup() {
     const router = useRouter();
@@ -146,6 +162,10 @@ export default {
     const isLoading = ref(false);
     const messageError = ref('');
     const ignoreApps = ref([]);
+    const showDeleteUser = ref(false);
+    const showDeleteApp = ref(false);
+    const developer_id = ref('');
+    const project_id = ref('');
 
     import(`@/assets/icons/extensions/app.svg`).then((val) => {
       window.defaultIcon = markRaw(val.default);
@@ -234,13 +254,27 @@ export default {
       router.push({ name: 'Extensions', params: { name: app.slug } });
     };
 
-    const disconnectAccount = async (developer_id) => {
-      await store.dispatch('extensions/disconnectAccount', { developer_id });
+    const disconnectAccount = (id) => {
+      showDeleteUser.value = true;
+      developer_id.value = id;
+    };
+
+    const confirmDeleteAccount = async () => {
+      await store.dispatch('extensions/disconnectAccount', {
+        developer_id: developer_id.value,
+      });
       await store.dispatch('extensions/fetchDevAccount');
     };
 
-    const disconnectApp = async (project_id) => {
-      await store.dispatch('extensions/disconnectApp', { project_id });
+    const disconnectApp = (id) => {
+      showDeleteApp.value = true;
+      project_id.value = id;
+    };
+
+    const confirmDeleteApp = async () => {
+      await store.dispatch('extensions/disconnectApp', {
+        project_id: project_id.value,
+      });
       await store.dispatch('extensions/fetchDevAppsList');
     };
 
@@ -250,12 +284,16 @@ export default {
       appCode,
       isLoading,
       messageError,
+      showDeleteUser,
+      showDeleteApp,
       goToApp,
       onSetCode,
       connectToDevCenter,
       setIgnoreApps,
       disconnectAccount,
       disconnectApp,
+      confirmDeleteAccount,
+      confirmDeleteApp,
     };
   },
 };
