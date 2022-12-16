@@ -1331,7 +1331,9 @@
         "nominatedNodesTitle": "Nominated nodes:",
         "error": {
             "chooseNotMoreThan16Nodes": "Choose not more than 16 nodes"
-        }
+        },
+        "claimTooltip": "Earning rewards is automatic. Rewards are claimed automatically when validator or a nominator with the same validator claims rewards",
+        "chooseNodeModalDesc1": "To stake your assets, choose nodes and set the amount for delegation.Not all nodes have a particular name. A node mainly shares the same name as a validator address.Take into account that unstaking period for {net} is <span style='color: #0A2778; font-weight: bold;'>{perioud} days</span>."
     },
     "minSendAmountError": "The minimum transaction amount is {minAmount} {code}.",
     "changeValidators": "Change validators",

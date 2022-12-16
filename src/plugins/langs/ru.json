@@ -1321,7 +1321,8 @@
         "nominatedNodesTitle": "Назначенные ноды",
         "error": {
             "chooseNotMoreThan16Nodes": "Выберите не более 16 нод"
-        }
+        },
+        "claimTooltip": ""
     },
     "minSendAmountError": "Минимальный размер транзакции составляет {minAmount} {code}",
     "changeValidators": "Изменить валидатора",

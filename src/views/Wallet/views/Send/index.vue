@@ -277,7 +277,7 @@
           :total-amount="totalAmount"
           :fees="fees"
           :memo="memo"
-          :fee-type="feeType"
+          :fee-type="!currentWallet.hasFee ? '' : feeType"
           :hide-password="
             isHardwareWallet ||
             [WALLET_TYPES.METAMASK, WALLET_TYPES.KEPLR].includes(
@@ -287,7 +287,7 @@
           :custom-fee="customFee"
           :current-token="currentToken"
           :fee="fee"
-          :iost-fee="iostFee"
+          :fee-info="feeInfo"
           :adding="adding"
           @select-fee="openFeeSelectModal"
           @submitSend="confirmClickHandler"
@@ -542,7 +542,7 @@ export default {
       txHash,
       txError,
       clearTxData,
-      iostFee,
+      feeInfo,
       adding,
       resMaxAmount,
       isSendToAnotherNetwork,
@@ -775,7 +775,7 @@ export default {
         return balance.value?.mainBalance;
       }
 
-      return props.currentWallet.hasPledged
+      return !props.currentWallet.hasFee
         ? resMaxAmount.value
         : balance.value?.mainBalance > fee.value.fee
         ? BigNumber(balance.value?.mainBalance).minus(fee.value.fee).toNumber()
@@ -789,7 +789,9 @@ export default {
     const feeType = ref('medium');
     const fee = computed(() =>
       // fee is object to keep fee-appropriate key (eg gasPrice)
-      feeType.value === 'custom'
+      !props.currentWallet.hasFee
+        ? { fee: feeInfo.value }
+        : feeType.value === 'custom'
         ? { fee: customFee.value }
         : fees.value?.[feeType.value] || { fee: 0 }
     );
@@ -1423,7 +1425,7 @@ export default {
       showRejectedLedgerModal,
       rejectedLedgerCloseHandler,
       rejectedLedgerClickHandler,
-      iostFee,
+      feeInfo,
       adding,
       currentWalletType,
       prepareLoading,

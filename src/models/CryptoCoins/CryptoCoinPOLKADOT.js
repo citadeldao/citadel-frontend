@@ -10,12 +10,15 @@ export default class CryptoCoinPOLKADOT extends CryptoCoin {
     //   : opts.mnemonic
     //   ? await CryptoCoin.encodePrivateKeyByPassword(opts.net, opts.mnemonic, password)
     //   : null;
+    this.hasFee = false;
+    this.hideCustomFee = true;
     this.publicKey = opts.publicKey || null;
     this.hasClaimUnstaked = true;
     this.maxNodes = 16;
     this.minSendAmount = 1;
     this.minStakingAmount = 10;
     this.hasRedelegation = true;
+    this.claimRewardsMessage = 'polkadot.claimTooltip';
   }
   static hasNoAdvancedSettings = true;
 }

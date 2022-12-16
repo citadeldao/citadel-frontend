@@ -1314,7 +1314,8 @@
         "nominatedNodesTitle": "指名されたノード:",
         "error": {
             "chooseNotMoreThan16Nodes": "16 個以下のノードを選択してください"
-        }
+        },
+        "claimTooltip": ""
     },
     "minSendAmountError": "最小取引額は {minAmount} {code} です。",
     "changeValidators": "バリデーターの変更",

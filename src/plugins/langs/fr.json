@@ -1321,7 +1321,8 @@
         "nominatedNodesTitle": "Nœuds nominés :",
         "error": {
             "chooseNotMoreThan16Nodes": "Ne choisissez pas plus de 16 nœuds"
-        }
+        },
+        "claimTooltip": ""
     },
     "minSendAmountError": "Le montant minimum de la transaction est {minAmount} {code}.",
     "changeValidators": "Modifier les validateurs",

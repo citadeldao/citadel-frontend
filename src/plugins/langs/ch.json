@@ -1321,7 +1321,8 @@
         "nominatedNodesTitle": "指定节点：",
         "error": {
             "chooseNotMoreThan16Nodes": "选择最多16个节点"
-        }
+        },
+        "claimTooltip": ""
     },
     "minSendAmountError": "最低交易金额为 {minAmount} {code}",
     "changeValidators": "切换节点",
