@@ -160,7 +160,7 @@ export default {
       }
 
       &__abbr {
-        color: $too-ligth-blue;
+        color: $darkgray;
       }
 
       &__select {
@@ -244,7 +244,7 @@ export default {
   &__abbr {
     font-size: 14px;
     line-height: 17px;
-    color: $too-ligth-blue;
+    color: $darkgray;
   }
 
   &__select {
