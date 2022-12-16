@@ -352,7 +352,14 @@ export default {
 
     const showModal = ref(false);
     const modalCloseHandler = (e) => {
-      if (e.target.className !== 'tabs-group__item-label')
+      console.log(e.target.className, 'e');
+      if (
+        [
+          'tabs-group__item-label',
+          'tabs-group__item',
+          'tabs-group__item active',
+        ].indexOf(e.target.className) === -1
+      )
         return (showModal.value = false);
     };
     const showExpand = () => (showModal.value = true);
