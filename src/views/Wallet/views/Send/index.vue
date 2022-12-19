@@ -19,7 +19,18 @@
     <div v-if="dataLoaded" class="send__loader">
       <Loading />
     </div>
+
     <form v-if="!dataLoaded" @submit.prevent="submitHandler">
+      <MinBalanceWarning
+        v-if="currentWallet.minBalance && currentWallet.balance.stake"
+        class="send__min-balance-note"
+        icon="exclamation"
+        :content="
+          $t('minBalanceNote', {
+            amount: `<span style='font-weight: 800;font-family: Panton_ExtraBold;'>${currentWallet.minBalance} ${currentWallet.code}</span>`,
+          })
+        "
+      />
       <div v-if="itemsNetworks.length && bridgeTargetNet" class="send__section">
         <div class="send__switch">
           <span>{{ $t('sendAssetsToAnotherNetwork') }}</span>
@@ -280,7 +291,7 @@
           :total-amount="totalAmount"
           :fees="fees"
           :memo="memo"
-          :fee-type="feeType"
+          :fee-type="!currentWallet.hasFee ? '' : feeType"
           :hide-password="
             isHardwareWallet ||
             [WALLET_TYPES.METAMASK, WALLET_TYPES.KEPLR].includes(
@@ -290,7 +301,7 @@
           :custom-fee="customFee"
           :current-token="currentToken"
           :fee="fee"
-          :iost-fee="iostFee"
+          :fee-info="feeInfo"
           :adding="adding"
           @select-fee="openFeeSelectModal"
           @submitSend="confirmClickHandler"
@@ -467,6 +478,7 @@ import AddressItem from '@/layouts/AddAddressLayout/components/CutomLists/compon
 import { keplrNetworksProtobufFormat } from '@/config/availableNets';
 import { getDecorateLabel } from '@/config/decorators';
 import amountInputValidation from '@/helpers/amountInputValidation';
+import MinBalanceWarning from '@/views/Wallet/views/Stake/components/MinBalanceWarning';
 
 export default {
   name: 'Send',
@@ -492,6 +504,7 @@ export default {
     OpenAppLedgerModal,
     RejectLedgerModal,
     AddressItem,
+    MinBalanceWarning,
   },
   props: {
     currentWallet: {
@@ -545,7 +558,7 @@ export default {
       txHash,
       txError,
       clearTxData,
-      iostFee,
+      feeInfo,
       adding,
       resMaxAmount,
       isSendToAnotherNetwork,
@@ -778,7 +791,7 @@ export default {
         return balance.value?.mainBalance;
       }
 
-      return props.currentWallet.hasPledged
+      return !props.currentWallet.hasFee
         ? resMaxAmount.value
         : balance.value?.mainBalance > fee.value.fee
         ? BigNumber(balance.value?.mainBalance).minus(fee.value.fee).toNumber()
@@ -792,7 +805,9 @@ export default {
     const feeType = ref('medium');
     const fee = computed(() =>
       // fee is object to keep fee-appropriate key (eg gasPrice)
-      feeType.value === 'custom'
+      !props.currentWallet.hasFee
+        ? { fee: feeInfo.value }
+        : feeType.value === 'custom'
         ? { fee: customFee.value }
         : fees.value?.[feeType.value] || { fee: 0 }
     );
@@ -1076,7 +1091,11 @@ export default {
     const isLoading = ref(false);
     const confirmClickHandler = async () => {
       // prepare new tx if fee was changed
-      if (fee.value && fee.value !== defaultFee.value) {
+      if (
+        fee.value &&
+        fee.value !== defaultFee.value &&
+        !props.currentWallet.hasResource
+      ) {
         await prepareTransfer(transferParams.value);
 
         if (rawTxError.value) {
@@ -1422,7 +1441,7 @@ export default {
       showRejectedLedgerModal,
       rejectedLedgerCloseHandler,
       rejectedLedgerClickHandler,
-      iostFee,
+      feeInfo,
       adding,
       currentWalletType,
       prepareLoading,
@@ -1456,6 +1475,10 @@ export default {
   width: 100%;
   flex-grow: 1;
   padding: 34px 0 120px 0;
+
+  &__min-balance-note {
+    margin-bottom: 25px;
+  }
 
   & form {
     display: flex;

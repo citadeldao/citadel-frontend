@@ -1322,7 +1322,8 @@
         "nominatedNodesTitle": "Nœuds nominés :",
         "error": {
             "chooseNotMoreThan16Nodes": "Ne choisissez pas plus de 16 nœuds"
-        }
+        },
+        "claimTooltip": ""
     },
     "minSendAmountError": "Le montant minimum de la transaction est {minAmount} {code}.",
     "changeValidators": "Modifier les validateurs",
@@ -1435,5 +1436,6 @@
     "showHideKeyTitle": "Afficher / Masquer la clé de visualisation",
     "changeKeyTitle": "Modifier la clé de visualisation",
     "anotherAddress": "Autre adresse",
-    "notFoundPlaceholderText": "Rien n'a été trouvé pour votre requête"
+    "notFoundPlaceholderText": "Rien n'a été trouvé pour votre requête",
+    "minBalanceNote": ""
 }

@@ -1330,7 +1330,8 @@
         "nominatedNodesTitle": "指定节点：",
         "error": {
             "chooseNotMoreThan16Nodes": "选择最多16个节点"
-        }
+        },
+        "claimTooltip": ""
     },
     "minSendAmountError": "最低交易金额为 {minAmount} {code}",
     "changeValidators": "切换节点",
@@ -1443,5 +1444,6 @@
     "showHideKeyTitle": "展示/收起查看密钥",
     "changeKeyTitle": "更改查看密钥",
     "anotherAddress": "其它地址",
-    "notFoundPlaceholderText": "您的请求未找到结果"
+    "notFoundPlaceholderText": "您的请求未找到结果",
+    "minBalanceNote": ""
 }

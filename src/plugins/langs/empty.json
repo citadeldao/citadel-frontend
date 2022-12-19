@@ -1329,7 +1329,8 @@
         "nominatedNodesTitle": "",
         "error": {
             "chooseNotMoreThan16Nodes": ""
-        }
+        },
+        "claimTooltip": ""
     },
     "minSendAmountError": "",
     "changeValidators": "",
@@ -1434,5 +1435,6 @@
     "errors": {
         "notEnoughFounds": "",
         "notAvailableToStake": ""
-    }
+    },
+    "minBalanceNote": ""
 }
