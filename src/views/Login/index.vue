@@ -83,9 +83,10 @@
               @confirm="onWeb3AddressConfirm"
               @refreshKeplr="onRefreshWeb3Keplr"
             />
-
             <ConfirmWeb3Address
-              v-show="showMetamask"
+              v-show="
+                (loginWith.value === 'metamask' && !isShow) || showMetamask
+              "
               :name="
                 metamaskConnector.network === 'bsc'
                   ? 'Binance Smart Chain'
@@ -721,9 +722,8 @@ export default {
     const showMetamask = computed(
       () =>
         !confirmedAddress.value &&
-        loginWith.value === 'metamask' &&
         connectedToWeb3.value &&
-        metamaskConnector.value?.accounts[0]
+        loginWith.value === 'metamask'
     );
     const showKepler = computed(
       () =>
@@ -740,7 +740,9 @@ export default {
         connectedToWeb3.value &&
         ['metamask', 'keplr'].includes(loginWith.value)
     );
+    const isShow = store.getters['metamask/isShow'];
     return {
+      isShow,
       showDisclaimerWeb3,
       whatEverShow,
       showKepler,
