@@ -5,4 +5,5 @@ export const INPUT_TYPE_ICON = {
   KEPLR: 'keplr-dot',
   METAMASK: 'metamask-dot',
   SEED: 'oneseed-dot',
+  SEED_PHRASE: 'seedphrase-dot',
 };

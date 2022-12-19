@@ -11,6 +11,16 @@
       >
         <LockBanner @showPlaceholder="$emit('showPlaceholder')" />
       </div>
+      <MinBalanceWarning
+        v-if="currentWallet.minBalance"
+        class="multi__min-balance-note"
+        icon="exclamation"
+        :content="
+          $t('minBalanceNote', {
+            amount: `<span style='font-weight: 800;font-family: Panton_ExtraBold;'>${currentWallet.minBalance} ${currentWallet.code}</span>`,
+          })
+        "
+      />
       <div v-if="list.length > 0" class="multi__stake-chart">
         <StakeChart :chart-data="chartData" />
       </div>
@@ -832,7 +842,9 @@ export default {
   @include md {
     padding: 28px 0 16px 0;
   }
-
+  &__min-balance-note {
+    margin-bottom: 25px;
+  }
   &__lock-banner {
     margin-bottom: 32px;
     @include lg {

@@ -12,12 +12,12 @@
         :fee="currentWallet.hasResource"
         :adding="adding"
         :memo="memo"
-        :iost-fee="iostFee"
+        :fee-info="feeInfo"
         :currentWallet="currentWallet"
       />
     </div>
 
-    <div v-if="currentWallet.hasFee" class="action-modal-content__fees">
+    <div v-if="!currentWallet.hasResource" class="action-modal-content__fees">
       <Fees
         :hide-custom-fee="wallet.hideCustomFee"
         :current-token="currentToken"
@@ -25,6 +25,7 @@
         :wallet="wallet"
         :fee-type="feeType"
         :custom-fee="customFee"
+        :fee="fee"
         @select-fee="$emit('select-fee')"
       />
     </div>
@@ -173,7 +174,7 @@ export default {
       type: Object,
       default: () => ({}),
     },
-    iostFee: {
+    feeInfo: {
       type: Number,
       default: 0,
     },

@@ -589,6 +589,7 @@
     "youHave": "您拥有",
     "claimRewards": "提取奖励",
     "oneSeed": "助记词",
+    "seedPhrase": "",
     "publicKey": "公钥",
     "hardware": "硬件",
     "edit": "编辑",
@@ -805,7 +806,22 @@
             "accsTitle": "",
             "appsTitle": "测试应用程序",
             "searchLabel": "应用程序代码",
-            "searchPlaceholder": "输入代码"
+            "searchPlaceholder": "输入代码",
+            "guideTitle": "",
+            "guideTitleDescription": "",
+            "guides": {
+                "question1Title": "",
+                "question1Description": "",
+                "question2Title": "",
+                "question2Description": ""
+            },
+            "deleteAccTitle": "",
+            "deleteAccDescription": "",
+            "deleteAppTitle": "",
+            "deleteAppDescription": "",
+            "emptyApps": "",
+            "tabApps": "",
+            "tabGuide": ""
         }
     },
     "overallPage": {
@@ -1323,7 +1339,8 @@
         "nominatedNodesTitle": "指定节点：",
         "error": {
             "chooseNotMoreThan16Nodes": "选择最多16个节点"
-        }
+        },
+        "claimTooltip": ""
     },
     "minSendAmountError": "最低交易金额为 {minAmount} {code}",
     "changeValidators": "切换节点",
@@ -1436,5 +1453,6 @@
     "showHideKeyTitle": "展示/收起查看密钥",
     "changeKeyTitle": "更改查看密钥",
     "anotherAddress": "其它地址",
-    "notFoundPlaceholderText": "您的请求未找到结果"
+    "notFoundPlaceholderText": "您的请求未找到结果",
+    "minBalanceNote": ""
 }

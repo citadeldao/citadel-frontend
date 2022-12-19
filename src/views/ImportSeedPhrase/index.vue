@@ -36,6 +36,8 @@ import citadel from '@citadeldao/lib-citadel';
 import { onMounted } from 'vue';
 import notify from '@/plugins/notify';
 import { useI18n } from 'vue-i18n';
+import { WALLET_TYPES } from '@/config/walletType';
+import { INPUT_TYPE_ICON } from '@/config/newWallets';
 
 export default {
   name: 'ImportSeedPhrase',
@@ -83,6 +85,8 @@ export default {
     onMounted(() => {
       store.commit('newWallets/setCatPageProps', {
         dataQa: 'add-address__existing__seed-phrase',
+        inputTypeIcon: INPUT_TYPE_ICON.SEED,
+        walletTypePlaceholder: 'Citadel One-Seed',
       });
     });
     const finalStep = async (wallet) => {
@@ -100,14 +104,29 @@ export default {
 
       store.commit('newWallets/setLoader', true);
       await setImportedFromSeed();
+
+      const oneSeed =
+        walletOpts.mnemonic === (await userMnemonic(walletOpts.password)) ||
+        !isUserMnemonic.value;
+
+      store.commit('newWallets/setCatPageProps', {
+        dataQa: 'add-address__existing__seed-phrase',
+        inputTypeIcon: oneSeed
+          ? INPUT_TYPE_ICON.SEED
+          : INPUT_TYPE_ICON.SEED_PHRASE,
+        walletTypePlaceholder: oneSeed
+          ? 'Citadel One-Seed'
+          : 'Citadel Seed phrase',
+      });
+
       const { data, error } = await citadel.addCreatedWallet({
         ...wallet,
         ...wallet.config,
         type:
           walletOpts.mnemonic === (await userMnemonic(walletOpts.password)) ||
           !isUserMnemonic.value
-            ? 'oneSeed'
-            : 'privateKey',
+            ? WALLET_TYPES.ONE_SEED
+            : WALLET_TYPES.SEED_PHRASE,
         networkName: wallet.config.name,
       });
 

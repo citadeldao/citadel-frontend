@@ -589,6 +589,7 @@
     "youHave": "Vous avez",
     "claimRewards": "Claim des récompenses",
     "oneSeed": "One Seed",
+    "seedPhrase": "",
     "publicKey": "Clé publique",
     "hardware": "Matériel",
     "edit": "Modifier",
@@ -805,7 +806,22 @@
             "appsTitle": "Vos applications à tester",
             "accsTitle": "",
             "searchLabel": "Code d'application",
-            "searchPlaceholder": "Entrez le code"
+            "searchPlaceholder": "Entrez le code",
+            "guideTitle": "",
+            "guideTitleDescription": "",
+            "guides": {
+                "question1Title": "",
+                "question1Description": "",
+                "question2Title": "",
+                "question2Description": ""
+            },
+            "deleteAccTitle": "",
+            "deleteAccDescription": "",
+            "deleteAppTitle": "",
+            "deleteAppDescription": "",
+            "emptyApps": "",
+            "tabApps": "",
+            "tabGuide": ""
         }
     },
     "overallPage": {
@@ -1323,7 +1339,8 @@
         "nominatedNodesTitle": "Nœuds nominés :",
         "error": {
             "chooseNotMoreThan16Nodes": "Ne choisissez pas plus de 16 nœuds"
-        }
+        },
+        "claimTooltip": ""
     },
     "minSendAmountError": "Le montant minimum de la transaction est {minAmount} {code}.",
     "changeValidators": "Modifier les validateurs",
@@ -1436,5 +1453,6 @@
     "showHideKeyTitle": "Afficher / Masquer la clé de visualisation",
     "changeKeyTitle": "Modifier la clé de visualisation",
     "anotherAddress": "Autre adresse",
-    "notFoundPlaceholderText": "Rien n'a été trouvé pour votre requête"
+    "notFoundPlaceholderText": "Rien n'a été trouvé pour votre requête",
+    "minBalanceNote": ""
 }

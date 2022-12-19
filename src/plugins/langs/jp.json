@@ -587,6 +587,7 @@
     "youHave": "あなたが持っている",
     "claimRewards": "報酬を請求する",
     "oneSeed": "ワンシード",
+    "seedPhrase": "",
     "publicKey": "公開鍵",
     "hardware": "ハードウェア",
     "edit": "編集",
@@ -803,7 +804,22 @@
             "appsTitle": "テスト用のアプリ",
             "accsTitle": "",
             "searchLabel": "アプリケーションコード",
-            "searchPlaceholder": "コードを入力する"
+            "searchPlaceholder": "コードを入力する",
+            "guideTitle": "",
+            "guideTitleDescription": "",
+            "guides": {
+                "question1Title": "",
+                "question1Description": "",
+                "question2Title": "",
+                "question2Description": ""
+            },
+            "deleteAccTitle": "",
+            "deleteAccDescription": "",
+            "deleteAppTitle": "",
+            "deleteAppDescription": "",
+            "emptyApps": "",
+            "tabApps": "",
+            "tabGuide": ""
         }
     },
     "overallPage": {
@@ -1316,7 +1332,8 @@
         "nominatedNodesTitle": "指名されたノード:",
         "error": {
             "chooseNotMoreThan16Nodes": "16 個以下のノードを選択してください"
-        }
+        },
+        "claimTooltip": ""
     },
     "minSendAmountError": "最小取引額は {minAmount} {code} です。",
     "changeValidators": "バリデーターの変更",
@@ -1429,5 +1446,6 @@
     "showHideKeyTitle": "表示キーの表示/非表示",
     "changeKeyTitle": "閲覧キーの変更",
     "anotherAddress": "別のアドレス",
-    "notFoundPlaceholderText": "クエリに一致するものが見つかりませんでした"
+    "notFoundPlaceholderText": "クエリに一致するものが見つかりませんでした",
+    "minBalanceNote": ""
 }
