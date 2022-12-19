@@ -2,18 +2,165 @@
   <div class="extensions-settings">
     <DeleteModal
       :show="showDeleteUser"
-      :text="'Confirm delete user'"
-      :description="'User will be deleted'"
+      :text="$t('settings.extensions.deleteAccTitle')"
+      :description="$t('settings.extensions.deleteAccDescription')"
       @confirm="confirmDeleteAccount"
       @close="showDeleteUser = false"
     />
     <DeleteModal
       :show="showDeleteApp"
-      :text="'Confirm delete app'"
-      :description="'App will be deleted'"
+      :text="$t('settings.extensions.deleteAppTitle')"
+      :description="$t('settings.extensions.deleteAppDescription')"
       @confirm="confirmDeleteApp"
       @close="showDeleteApp = false"
     />
+    <!-- 1024 -->
+    <div class="block max">
+      <Tabs
+        :items="[
+          $t('settings.extensions.tabApps'),
+          $t('settings.extensions.tabGuide'),
+        ]"
+        :active-index="tabActiveIndex"
+        @select="onSelectTab"
+      />
+      <template v-if="tabActiveIndex === 0">
+        <div class="head mt">
+          <div class="head__title">{{ $t('settings.extensions.title') }}</div>
+          <div class="head__description">
+            {{ $t('settings.extensions.description') }}
+          </div>
+          <div class="head__search">
+            <Textarea
+              id="app-search"
+              icon="text"
+              :value="appCode"
+              :label="$t('settings.extensions.searchLabel')"
+              :placeholder="$t('settings.extensions.searchPlaceholder')"
+              @update:value="onSetCode"
+            />
+            <div @click="connectToDevCenter(appCode)" class="head__enter">
+              ENTER
+            </div>
+          </div>
+          <div v-if="messageError" class="message">{{ messageError }}</div>
+        </div>
+        <div v-if="isLoading" class="loading">
+          <Loading />
+        </div>
+        <div
+          v-if="!isLoading && !devAccounts.length && !appsListFiltered.length"
+          class="empty-list loading"
+        >
+          <emptyAppsSvg />
+          <div class="text-empty">
+            {{ $t('settings.extensions.emptyApps') }}
+          </div>
+        </div>
+        <!-- ACCS -->
+        <div
+          v-if="!isLoading && devAccounts.length"
+          class="extensions-settings__apps"
+        >
+          <div class="title">{{ $t('settings.extensions.accsTitle') }}</div>
+          <div class="apps-list">
+            <div
+              v-for="(user, ndx) in devAccounts"
+              :key="ndx"
+              class="apps-list__item acc"
+            >
+              <div class="info">
+                <div class="logo">
+                  <anonymusSvg />
+                </div>
+                <div class="name">{{ user.full_name }}</div>
+              </div>
+              <removeIcon
+                width="19"
+                height="24"
+                fill="#FA3B33"
+                class="remove"
+                @click.stop="disconnectAccount(user.id)"
+              />
+            </div>
+          </div>
+        </div>
+        <!-- APPS -->
+        <div
+          v-if="!isLoading && appsListFiltered.length"
+          class="extensions-settings__apps"
+        >
+          <div class="title">{{ $t('settings.extensions.appsTitle') }}</div>
+          <div class="apps-list">
+            <div
+              v-for="(app, ndx) in appsListFiltered"
+              :key="ndx"
+              class="apps-list__item"
+              @click="goToApp(app)"
+            >
+              <div class="info">
+                <div class="logo">
+                  <img
+                    v-if="!app.is_single_connected"
+                    :src="app.logo"
+                    width="32"
+                    height="32"
+                    onerror="this.src = window.defaultIcon"
+                  />
+                </div>
+                <div class="name">{{ app.name }}</div>
+              </div>
+              <removeIcon
+                v-if="app.is_single_connected"
+                width="19"
+                height="24"
+                fill="#FA3B33"
+                class="remove"
+                @click.stop="disconnectApp(app.project_id)"
+              />
+            </div>
+          </div>
+        </div>
+      </template>
+      <!-- GUIDE -->
+      <template v-if="tabActiveIndex === 1">
+        <div class="head mt">
+          <div class="head__title">
+            {{ $t('settings.extensions.guideTitle') }}
+          </div>
+          <div class="head__description">
+            {{ $t('settings.extensions.guideTitleDescription') }}
+          </div>
+        </div>
+        <div class="guides">
+          <ToggleItem
+            :item="{
+              title: $t('settings.extensions.guides.question1Title'),
+              description: $t(
+                'settings.extensions.guides.question1Description'
+              ),
+            }"
+            class="guides-item"
+          >
+            <answer1 />
+          </ToggleItem>
+          <ToggleItem
+            :item="{
+              title: $t('settings.extensions.guides.question2Title'),
+              description: $t(
+                'settings.extensions.guides.question2Description'
+              ),
+            }"
+            class="guides-item"
+          >
+            <answer2 />
+          </ToggleItem>
+        </div>
+      </template>
+    </div>
+
+    <!-------------------->
+    <!-- LEFT > 1024+ -->
     <div class="block left">
       <div class="head">
         <div class="head__title">{{ $t('settings.extensions.title') }}</div>
@@ -38,8 +185,18 @@
       <div v-if="isLoading" class="loading">
         <Loading />
       </div>
+      <div
+        v-if="!isLoading && !devAccounts.length && !appsListFiltered.length"
+        class="empty-list loading"
+      >
+        <emptyAppsSvg />
+        <div class="text-empty">{{ $t('settings.extensions.emptyApps') }}</div>
+      </div>
       <!-- ACCS -->
-      <div v-if="!isLoading" class="extensions-settings__apps">
+      <div
+        v-if="!isLoading && devAccounts.length"
+        class="extensions-settings__apps"
+      >
         <div class="title">{{ $t('settings.extensions.accsTitle') }}</div>
         <div class="apps-list">
           <div
@@ -64,7 +221,10 @@
         </div>
       </div>
       <!-- APPS -->
-      <div v-if="!isLoading" class="extensions-settings__apps">
+      <div
+        v-if="!isLoading && appsListFiltered.length"
+        class="extensions-settings__apps"
+      >
         <div class="title">{{ $t('settings.extensions.appsTitle') }}</div>
         <div class="apps-list">
           <div
@@ -133,6 +293,7 @@
 // import appsettings from '@/assets/icons/appsettings.svg';
 import removeIcon from '@/assets/icons/settings/remove.svg';
 import Textarea from '@/components/UI/Textarea';
+import Tabs from '@/components/UI/Tabs';
 import Loading from '@/components/Loading';
 import ToggleItem from '@/components/ToggleItem';
 import DeleteModal from '@/views/Settings/components/Addresses/components/Dropdown/components/DeleteAddressModal';
@@ -140,17 +301,20 @@ import { ref, computed, markRaw, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import anonymusSvg from '@/assets/icons/anonymus.svg';
+import emptyAppsSvg from '@/assets/icons/settings/empty_apps.svg';
 import answer1 from '@/assets/icons/settings/answer1.svg';
 import answer2 from '@/assets/icons/settings/answer2.svg';
 
 export default {
   name: 'ExtensionsSettings',
   components: {
+    Tabs,
     Textarea,
     Loading,
     ToggleItem,
     removeIcon,
     anonymusSvg,
+    emptyAppsSvg,
     answer1,
     answer2,
     DeleteModal,
@@ -166,6 +330,11 @@ export default {
     const showDeleteApp = ref(false);
     const developer_id = ref('');
     const project_id = ref('');
+    const tabActiveIndex = ref(0);
+
+    const onSelectTab = (ndx) => {
+      tabActiveIndex.value = ndx;
+    };
 
     import(`@/assets/icons/extensions/app.svg`).then((val) => {
       window.defaultIcon = markRaw(val.default);
@@ -286,6 +455,7 @@ export default {
       messageError,
       showDeleteUser,
       showDeleteApp,
+      tabActiveIndex,
       goToApp,
       onSetCode,
       connectToDevCenter,
@@ -294,6 +464,7 @@ export default {
       disconnectApp,
       confirmDeleteAccount,
       confirmDeleteApp,
+      onSelectTab,
     };
   },
 };
@@ -318,6 +489,10 @@ export default {
 
   .head {
     width: 100%;
+
+    &.mt {
+      margin-top: 20px;
+    }
 
     &__title {
       font-size: 20px;
@@ -443,22 +618,69 @@ export default {
     box-sizing: border-box;
     width: 49%;
 
+    @include md {
+      width: 74%;
+    }
+
+    @include laptop {
+      display: none;
+    }
+
+    &.max {
+      width: 100%;
+      display: none;
+
+      @include laptop {
+        display: block;
+      }
+    }
+
     &.right {
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       align-items: flex-start;
 
+      @include laptop {
+        display: none;
+      }
+
+      @include md {
+        max-width: 35%;
+        margin-left: 12px;
+      }
+
       .guides {
         width: 100%;
         margin-top: 20px;
         display: flex;
         flex-direction: column;
+
+        svg {
+          border-radius: 8px;
+        }
       }
 
       .guides-item {
-        margin-bottom: 20px;
+        margin-bottom: 10px;
       }
+    }
+  }
+
+  .empty-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .text-empty {
+      color: #59779a;
+      font-family: 'Panton_SemiBold';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 18px;
+      margin-top: 20px;
     }
   }
 }

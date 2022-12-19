@@ -2,10 +2,10 @@
   <div class="toggle-item">
     <div class="toggle-item__head" @click="opened = !opened">
       <div class="titles">
-        <questionIcon />
+        <questionIcon class="icon" />
         <div class="toggle-item__title">{{ item.title }}</div>
       </div>
-      <arrowIcon :class="{ opened }" class="arrow" />
+      <arrowIcon :class="{ opened }" class="icon arrow" />
     </div>
     <div v-if="!opened" class="toggle-item__body">
       <div class="toggle-item__description">{{ item.description }}</div>
@@ -46,18 +46,35 @@ export default {
   flex-direction: column;
   width: 100%;
 
+  .icon {
+    min-width: 16px;
+  }
+
   .slot {
-    padding: 30px 0 0 30px;
+    padding: 30px 0 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @include md {
+      max-width: 100%;
+      overflow: hidden;
+    }
   }
 
   &__head {
     width: 100%;
     display: flex;
     align-items: center;
+    min-height: 35px;
     padding-bottom: 8px;
     justify-content: space-between;
     border-bottom: 1px dashed #c3d6ec;
     cursor: pointer;
+
+    @include laptop {
+      margin-top: 10px;
+    }
 
     .titles {
       display: flex;

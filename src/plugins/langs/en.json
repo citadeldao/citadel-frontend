@@ -727,7 +727,14 @@
                 "question1Description": "To link a developer account, click the Get Dev code button and copy it so you can subsequently add it in your Citadel.one user account",
                 "question2Title": "How to get code to test an application?",
                 "question2Description": "For testers to access the dev version of an application, developer should copy the Testing code from the Dev Center on the project layout."
-            }
+            },
+            "deleteAccTitle": "Are you sure you want to delete the account?",
+            "deleteAccDescription": "<span style='color: #6b93c0;'>This will erase your developer account from the list</span>",
+            "deleteAppTitle": "Are you sure you want to delete the app?",
+            "deleteAppDescription": "<span style='color: #6b93c0;'>The app will be deleted immediately. You cannot undo this action.</span>",
+            "emptyApps": "You do not have applications to test",
+            "tabApps": "Apps in development",
+            "tabGuide": "Guides & Questions"
         },
         "subscriptions": {
             "title": "Subscriptions",
