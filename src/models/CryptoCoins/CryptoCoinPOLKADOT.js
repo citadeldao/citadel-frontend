@@ -16,9 +16,10 @@ export default class CryptoCoinPOLKADOT extends CryptoCoin {
     this.hasClaimUnstaked = true;
     this.maxNodes = 16;
     this.minSendAmount = 1;
-    this.minStakingAmount = 10;
+    this.minStakingAmount = 100;
     this.hasRedelegation = true;
     this.claimRewardsMessage = 'polkadot.claimTooltip';
+    this.minBalance = 1.1;
   }
   static hasNoAdvancedSettings = true;
 }

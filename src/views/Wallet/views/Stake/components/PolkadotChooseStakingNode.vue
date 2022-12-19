@@ -1,5 +1,14 @@
 <template>
   <div class="choose-staking-node">
+    <MinBalanceWarning
+      class="choose-staking-node__min-balance-note"
+      icon="exclamation"
+      :content="
+        $t('minBalanceNote', {
+          amount: `<span style='font-weight: 800;font-family: Panton_ExtraBold;'>${currentWallet.minBalance} ${currentWallet.code}</span>`,
+        })
+      "
+    />
     <div
       v-if="!selectedNode && mode === 'stake' && list.length < 16"
       class="choose-staking-node__placeholder"
@@ -38,7 +47,7 @@
           {{ $t('staking.Stake') }}
         </div>
         <div
-          v-if="currentWallet.balance.stake"
+          v-if="list.length"
           class="choose-staking-node__tabs-item"
           :class="{ 'choose-staking-node__active-tab': mode === 'unstake' }"
           @click="changeMode('unstake')"
@@ -46,7 +55,7 @@
           {{ $t('unstaking.unstake') }}
         </div>
         <span
-          v-if="currentWallet.hasRedelegation && currentWallet.balance.stake"
+          v-if="currentWallet.hasRedelegation && list.length"
           :class="{
             'choose-staking-node__active-tab': mode === 'redelegate',
           }"
@@ -163,6 +172,7 @@ import pointer from '@/assets/icons/pointer.svg';
 import Select from '@/components/UI/Select';
 import { polkadotRewardDestinationOptions } from './config';
 import PolkadotUnstakeListItems from './PolkadotUnstakeListItems.vue';
+import MinBalanceWarning from '@/views/Wallet/views/Stake/components/MinBalanceWarning';
 export default {
   name: 'PolkadotChooseStakingNode',
   components: {
@@ -171,6 +181,7 @@ export default {
     Input,
     PolkadotStakeListItems,
     PolkadotUnstakeListItems,
+    MinBalanceWarning,
   },
   props: {
     amount: {
@@ -311,6 +322,9 @@ export default {
   width: 100%;
   flex-direction: column;
   // margin-bottom: 19px;
+  &__min-balance-note {
+    margin-bottom: 25px;
+  }
   &__placeholder {
     height: 150px;
     border: 1px dashed $lightsteelblue;

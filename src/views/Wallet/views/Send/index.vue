@@ -19,7 +19,18 @@
     <div v-if="dataLoaded" class="send__loader">
       <Loading />
     </div>
+
     <form v-if="!dataLoaded" @submit.prevent="submitHandler">
+      <MinBalanceWarning
+        v-if="currentWallet.minBalance && currentWallet.balance.stake"
+        class="send__min-balance-note"
+        icon="exclamation"
+        :content="
+          $t('minBalanceNote', {
+            amount: `<span style='font-weight: 800;font-family: Panton_ExtraBold;'>${currentWallet.minBalance} ${currentWallet.code}</span>`,
+          })
+        "
+      />
       <div v-if="itemsNetworks.length && bridgeTargetNet" class="send__section">
         <div class="send__switch">
           <span>{{ $t('sendAssetsToAnotherNetwork') }}</span>
@@ -464,6 +475,7 @@ import AddressItem from '@/layouts/AddAddressLayout/components/CutomLists/compon
 import { keplrNetworksProtobufFormat } from '@/config/availableNets';
 import { getDecorateLabel } from '@/config/decorators';
 import amountInputValidation from '@/helpers/amountInputValidation';
+import MinBalanceWarning from '@/views/Wallet/views/Stake/components/MinBalanceWarning';
 
 export default {
   name: 'Send',
@@ -489,6 +501,7 @@ export default {
     OpenAppLedgerModal,
     RejectLedgerModal,
     AddressItem,
+    MinBalanceWarning,
   },
   props: {
     currentWallet: {
@@ -1459,6 +1472,10 @@ export default {
   width: 100%;
   flex-grow: 1;
   padding: 34px 0 120px 0;
+
+  &__min-balance-note {
+    margin-bottom: 25px;
+  }
 
   & form {
     display: flex;

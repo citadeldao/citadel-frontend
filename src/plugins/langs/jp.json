@@ -1428,5 +1428,6 @@
     "showHideKeyTitle": "表示キーの表示/非表示",
     "changeKeyTitle": "閲覧キーの変更",
     "anotherAddress": "別のアドレス",
-    "notFoundPlaceholderText": "クエリに一致するものが見つかりませんでした"
+    "notFoundPlaceholderText": "クエリに一致するものが見つかりませんでした",
+    "minBalanceNote": ""
 }

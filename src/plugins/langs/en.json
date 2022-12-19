@@ -1438,5 +1438,6 @@
     "errors": {
         "notEnoughFounds": "Not enough {code} to pay the transaction fee",
         "notAvailableToStake": "Validator is unavailable for stake"
-    }
+    },
+    "minBalanceNote": "At least {amount} should be remained on your balance to keep receiving your staking rewards. Otherwise rewards will be burnt."
 }

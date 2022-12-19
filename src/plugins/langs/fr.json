@@ -1435,5 +1435,6 @@
     "showHideKeyTitle": "Afficher / Masquer la clé de visualisation",
     "changeKeyTitle": "Modifier la clé de visualisation",
     "anotherAddress": "Autre adresse",
-    "notFoundPlaceholderText": "Rien n'a été trouvé pour votre requête"
+    "notFoundPlaceholderText": "Rien n'a été trouvé pour votre requête",
+    "minBalanceNote": ""
 }
