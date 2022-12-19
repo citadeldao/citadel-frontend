@@ -1,5 +1,10 @@
 <template>
-  <div class="stake" :class="{ 'stake-view-only': isViewOnly }">
+  <div
+    class="stake"
+    :class="{
+      'stake-view-only': isViewOnly && currentToken.config.net !== 'bsc_xct',
+    }"
+  >
     <div v-if="isLoading" class="stake__loader">
       <Loading />
     </div>
@@ -189,9 +194,9 @@ export default {
       { deep: true }
     );
 
-    const isViewOnly = computed(
-      () => props.currentWallet.type === WALLET_TYPES.PUBLIC_KEY
-    );
+    const isViewOnly = computed(() => {
+      return props.currentWallet.type === WALLET_TYPES.PUBLIC_KEY;
+    });
 
     return {
       isLoading,
