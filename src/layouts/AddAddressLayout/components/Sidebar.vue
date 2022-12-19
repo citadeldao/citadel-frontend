@@ -371,11 +371,8 @@ export default {
   },
   data() {
     return {
-      hasScroll: undefined,
-      showBottom: true,
-      showTop: true,
-      checkOnTop: true,
-      checkOnBottom: true,
+      showBottom: false,
+      showTop: false,
       windowWidth: window.innerWidth,
       sidebarClass: '',
       timer: null,
@@ -430,6 +427,7 @@ export default {
       }
     },
     onMouseEnter() {
+      console.log('mouseEnter');
       if (window.innerWidth <= 1024) {
         this.timer = setTimeout(() => {
           this.sidebarClass = '';
@@ -447,7 +445,7 @@ export default {
     setShadows(parent) {
       const shadowTop = document.querySelector('.scroll-shadow--top');
       const shadowBottom = document.querySelector('.scroll-shadow--bottom');
-
+      console.log(0);
       let fullList = parent;
 
       if (parent === undefined) {
@@ -458,14 +456,15 @@ export default {
 
       if (!fullList) return;
 
-      this.hasScroll = fullList.scrollHeight > fullList.clientHeight;
+      const hasScroll = fullList.scrollHeight > fullList.clientHeight;
 
-      this.checkOnBottom =
+      const checkOnBottom =
         fullList.scrollHeight - fullList.scrollTop === fullList.clientHeight;
 
-      this.checkOnTop = fullList.scrollTop === 0;
+      const checkOnTop = fullList.scrollTop === 0;
 
-      if (!this.hasScroll) {
+      if (!hasScroll) {
+        console.log(1);
         shadowTop.classList.remove('active');
         shadowBottom.classList.remove('active');
 
@@ -479,17 +478,19 @@ export default {
       if (fullList.scrollTop > 0) {
         shadowTop.classList.add('active');
         this.showTop = true;
-      } else if (this.checkOnTop) {
+      } else if (checkOnTop) {
         shadowTop.classList.remove('active');
         this.showTop = false;
       }
 
-      if (this.hasScroll) {
+      if (hasScroll) {
+        console.log('123');
         shadowBottom.classList.add('active');
         this.showBottom = true;
       }
 
-      if (this.checkOnBottom) {
+      if (checkOnBottom) {
+        console.log('1234');
         shadowBottom.classList.remove('active');
         this.showBottom = false;
       }
