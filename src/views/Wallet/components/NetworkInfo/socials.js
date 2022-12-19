@@ -551,6 +551,20 @@ export default {
       href: 'https://www.coingecko.com/en/coins/evmos',
     },
   },
+  evmoseth: {
+    web: {
+      title: 'evmos.org',
+      href: 'https://evmos.org/',
+    },
+    twitter: {
+      title: '@EvmosOrg',
+      href: 'EvmosOrg',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/evmos',
+    },
+  },
   tron: {
     web: {
       title: 'tron.network',
@@ -672,9 +686,37 @@ export default {
       title: '@Jackal_Protocol',
       href: 'Jackal_Protocol',
     },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/jackal-protocol',
+    },
+  },
+  omniflix: {
+    web: {
+      title: 'omniflix.network',
+      href: 'https://omniflix.network/',
+    },
+    twitter: {
+      title: '@OmniFlixNetwork',
+      href: 'OmniFlixNetwork',
+    },
     // landing: {
     //   title: 'Coingecko',
     //   href: 'https://www.coingecko.com/en/coins/crescent-network',
     // },
+  },
+  teritori: {
+    web: {
+      title: 'teritori',
+      href: 'https://teritori.com/',
+    },
+    twitter: {
+      title: '@TeritoriNetwork',
+      href: 'TeritoriNetwork',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/teritori',
+    },
   },
 };

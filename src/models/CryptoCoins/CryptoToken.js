@@ -26,7 +26,7 @@ export default class CryptoToken extends CryptoCoin {
     };
   }
 
-  getCustomMessage(error) {
+  getCustomErrorMessage(error) {
     const message = {
       type: 'warning',
       text: error,
@@ -39,6 +39,7 @@ export default class CryptoToken extends CryptoCoin {
         return message;
       }
     }
+
     return message;
   }
 
@@ -54,7 +55,7 @@ export default class CryptoToken extends CryptoCoin {
       return { data: data, error };
     }
 
-    const message = this.getCustomMessage(error);
+    const message = this.getCustomErrorMessage(error);
 
     notify(message);
 
@@ -78,7 +79,7 @@ export default class CryptoToken extends CryptoCoin {
       return res;
     }
 
-    const message = this.getCustomMessage(res.error);
+    const message = this.getCustomErrorMessage(res.error);
 
     notify(message);
 
@@ -94,10 +95,11 @@ export default class CryptoToken extends CryptoCoin {
 
     if (!res.error) {
       if (parentWalletBalance < res.data.fee) {
-        notify({
-          type: 'warning',
-          text: t('insufficientFunds'),
+        const message = this.getCustomErrorMessage({
+          message: 'Insufficient funds',
         });
+
+        notify(message);
 
         return { ok: false };
       }
@@ -105,7 +107,7 @@ export default class CryptoToken extends CryptoCoin {
       return { ok: true, rawTxs: res.data, resFee: res.data.fee };
     }
 
-    const message = this.getCustomMessage(res.error);
+    const message = this.getCustomErrorMessage(res.error);
 
     notify(message);
 

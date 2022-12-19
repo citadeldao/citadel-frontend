@@ -946,6 +946,9 @@ export default {
     bottom: 42px;
     left: 0;
     right: 0;
+    @media (min-width: 1024px) and (min-height: 600px) and (max-height: 768px) {
+      bottom: 10px;
+    }
   }
   &__link {
     font-weight: 700;

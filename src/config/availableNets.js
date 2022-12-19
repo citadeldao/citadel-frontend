@@ -45,13 +45,23 @@ export const ledgerNets = [
   'stride',
   'tron',
   'jackal',
+  'evmoseth',
+  'omniflix',
+  'teritori',
 ];
 
-export const metamaskNets = ['bsc', 'eth', 'polygon', 'optimism', 'arbitrum'];
+export const metamaskNets = [
+  'bsc',
+  'eth',
+  'polygon',
+  'optimism',
+  'arbitrum',
+  'evmoseth',
+];
 
 export const trezorNets = ['btc', 'eth', 'bsc', 'tez'];
 
-export const keplrNetworksProtobufFormat = ['starname', 'emoney'];
+export const keplrNetworksProtobufFormat = ['emoney'];
 export const keplrNetworks = [
   { label: 'Cosmos Hub', key: 'cosmoshub-4', net: 'cosmos' },
   { label: 'Akash', key: 'akashnet-2', net: 'akash' },
@@ -100,6 +110,8 @@ export const keplrNetworks = [
   { label: 'Stride', key: 'stride-1', net: 'stride' },
   { label: 'Stafi', key: 'stafihub-1', net: 'stafi' },
   { label: 'Jackal', key: 'jackal-1', net: 'jackal' },
+  { label: 'Omniflix', key: 'omniflixhub-1', net: 'omniflix' },
+  { label: 'Teritori', key: 'teritori-1', net: 'teritori' },
 ];
 
 export const showAssetsExep = ['secret', 'bsc'];

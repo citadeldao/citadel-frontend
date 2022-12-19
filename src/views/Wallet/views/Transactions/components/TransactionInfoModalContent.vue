@@ -4,7 +4,7 @@
     <InfoBlock :current-wallet="currentWallet" :info="info" />
     <div v-if="info.view" class="inner-tx">
       <div
-        v-for="(item, ndx) in info.view"
+        v-for="(item, ndx) in info.view.filter(filterTypeMethod)"
         :key="ndx"
         :class="{ empty: !item.components?.length }"
         class="inner-tx__view-item"
@@ -45,9 +45,7 @@
             />
             <div v-if="component.type === 'amount'" class="value">
               <div class="value-amount">{{ component.value.text }}</div>
-              <div class="value-symbol">
-                {{ component.value.symbol.slice(0, 5) }}
-              </div>
+              <div class="value-symbol">{{ component.value.symbol }}</div>
             </div>
             <div v-if="component.type === 'text'" class="value">
               <div class="value-amount">{{ component.value }}</div>
@@ -164,8 +162,13 @@ export default {
     onMounted(() => {
       togleShowPlaceholder();
     });
-
-    return { showPlaceholder, togleShowPlaceholder };
+    const filterTypeMethod = (view) =>
+      !view?.type.toLowerCase().includes('acknowledgement');
+    return {
+      filterTypeMethod,
+      showPlaceholder,
+      togleShowPlaceholder,
+    };
   },
 };
 </script>
@@ -180,7 +183,7 @@ $blue-dark: #262b61;
   flex-direction: column;
 
   .inner-tx {
-    margin-top: 20px;
+    margin-top: 25px;
 
     &__view {
       margin-top: 10px;
@@ -200,7 +203,7 @@ $blue-dark: #262b61;
         align-items: center;
         position: absolute;
         left: 0;
-        top: -40px;
+        top: -44px;
 
         &.empty {
           &.last {

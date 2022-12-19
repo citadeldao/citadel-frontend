@@ -12,7 +12,7 @@
     <div v-if="info.date" class="info-block__line">
       <span class="info-block__line-title"> {{ $t('date') }}: </span>
       <span class="info-block__date">
-        {{ info.date }}
+        {{ formatedDate }}
       </span>
     </div>
     <div v-if="type !== 'redelegation'" class="info-block__line">
@@ -66,6 +66,7 @@
 
 <script>
 import linkIcon from '@/assets/icons/link.svg';
+import { format } from 'date-fns';
 import { computed } from 'vue';
 
 export default {
@@ -83,11 +84,14 @@ export default {
   },
 
   setup(props) {
+    const formatedDate = computed(() =>
+      format(new Date(props.info.date), 'yyyy/MM/dd hh:mm:ss')
+    );
     const txUrl = computed(() =>
       props.currentWallet?.getTxUrl(props.currentWallet.id, props.info.hash)
     );
 
-    return { txUrl };
+    return { formatedDate, txUrl };
   },
 };
 </script>

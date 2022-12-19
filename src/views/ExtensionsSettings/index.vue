@@ -24,7 +24,33 @@
       <div v-if="isLoading" class="loading">
         <Loading />
       </div>
-      <div v-else class="extensions-settings__apps">
+      <!-- ACCS -->
+      <div v-if="!isLoading" class="extensions-settings__apps">
+        <div class="title">{{ $t('settings.extensions.accsTitle') }}</div>
+        <div class="apps-list">
+          <div
+            v-for="(user, ndx) in devAccounts"
+            :key="ndx"
+            class="apps-list__item acc"
+          >
+            <div class="info">
+              <div class="logo">
+                <anonymusSvg />
+              </div>
+              <div class="name">{{ user.full_name }}</div>
+            </div>
+            <removeIcon
+              width="19"
+              height="24"
+              fill="#FA3B33"
+              class="remove"
+              @click.stop="disconnectAccount(user.id)"
+            />
+          </div>
+        </div>
+      </div>
+      <!-- APPS -->
+      <div v-if="!isLoading" class="extensions-settings__apps">
         <div class="title">{{ $t('settings.extensions.appsTitle') }}</div>
         <div class="apps-list">
           <div
@@ -36,6 +62,7 @@
             <div class="info">
               <div class="logo">
                 <img
+                  v-if="!app.is_single_connected"
                   :src="app.logo"
                   width="32"
                   height="32"
@@ -45,33 +72,73 @@
               <div class="name">{{ app.name }}</div>
             </div>
             <removeIcon
+              v-if="app.is_single_connected"
               width="19"
               height="24"
               fill="#FA3B33"
               class="remove"
-              @click.stop="setIgnoreApps(app.name)"
+              @click.stop="disconnectApp(app.project_id)"
             />
           </div>
         </div>
       </div>
     </div>
     <div class="block right">
-      <appsettings />
+      <div class="head">
+        <div class="head__title">
+          {{ $t('settings.extensions.guideTitle') }}
+        </div>
+        <div class="head__description">
+          {{ $t('settings.extensions.guideTitleDescription') }}
+        </div>
+      </div>
+      <div class="guides">
+        <ToggleItem
+          :item="{
+            title: $t('settings.extensions.guides.question1Title'),
+            description: $t('settings.extensions.guides.question1Description'),
+          }"
+          class="guides-item"
+        >
+          <answer1 />
+        </ToggleItem>
+        <ToggleItem
+          :item="{
+            title: $t('settings.extensions.guides.question2Title'),
+            description: $t('settings.extensions.guides.question2Description'),
+          }"
+          class="guides-item"
+        >
+          <answer2 />
+        </ToggleItem>
+      </div>
     </div>
   </div>
 </template>
 <script>
-import appsettings from '@/assets/icons/appsettings.svg';
+// import appsettings from '@/assets/icons/appsettings.svg';
 import removeIcon from '@/assets/icons/settings/remove.svg';
 import Textarea from '@/components/UI/Textarea';
 import Loading from '@/components/Loading';
+import ToggleItem from '@/components/ToggleItem';
 import { ref, computed, markRaw, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
+import anonymusSvg from '@/assets/icons/anonymus.svg';
+import answer1 from '@/assets/icons/settings/answer1.svg';
+import answer2 from '@/assets/icons/settings/answer2.svg';
 
 export default {
   name: 'ExtensionsSettings',
-  components: { Textarea, Loading, appsettings, removeIcon },
+  components: {
+    Textarea,
+    Loading,
+    ToggleItem,
+    removeIcon,
+    anonymusSvg,
+    answer1,
+    answer2,
+  },
   setup() {
     const router = useRouter();
     const store = useStore();
@@ -97,6 +164,7 @@ export default {
 
       try {
         await store.dispatch('extensions/fetchDevAppsList');
+        await store.dispatch('extensions/fetchDevAccount');
         isLoading.value = false;
       } catch (err) {
         isLoading.value = false;
@@ -109,6 +177,8 @@ export default {
       })
     );
 
+    const devAccounts = computed(() => store.getters['extensions/devAccount']);
+
     const connectToDevCenter = async (token) => {
       messageError.value = '';
       ignoreApps.value = [];
@@ -118,6 +188,14 @@ export default {
       }
 
       isLoading.value = true;
+
+      if (token.startsWith('app')) {
+        await store.dispatch('extensions/connectDevApp', { token });
+        await store.dispatch('extensions/fetchDevAppsList');
+        isLoading.value = false;
+        return;
+      }
+
       try {
         const res = await store.dispatch('extensions/connectToDevCenter', {
           token,
@@ -125,7 +203,9 @@ export default {
         if (!res.ok) {
           messageError.value = res.error;
           await store.dispatch('extensions/fetchDevAppsList');
+          await store.dispatch('extensions/fetchDevAccount');
           isLoading.value = false;
+
           setTimeout(() => {
             messageError.value = '';
           }, 1500);
@@ -133,6 +213,8 @@ export default {
         }
         localStorage.setItem('userAppSettingsToken', token);
         await store.dispatch('extensions/fetchDevAppsList');
+        await store.dispatch('extensions/fetchDevAccount');
+
         isLoading.value = false;
       } catch (err) {
         console.log('err', err);
@@ -152,8 +234,19 @@ export default {
       router.push({ name: 'Extensions', params: { name: app.slug } });
     };
 
+    const disconnectAccount = async (developer_id) => {
+      await store.dispatch('extensions/disconnectAccount', { developer_id });
+      await store.dispatch('extensions/fetchDevAccount');
+    };
+
+    const disconnectApp = async (project_id) => {
+      await store.dispatch('extensions/disconnectApp', { project_id });
+      await store.dispatch('extensions/fetchDevAppsList');
+    };
+
     return {
       appsListFiltered,
+      devAccounts,
       appCode,
       isLoading,
       messageError,
@@ -161,6 +254,8 @@ export default {
       onSetCode,
       connectToDevCenter,
       setIgnoreApps,
+      disconnectAccount,
+      disconnectApp,
     };
   },
 };
@@ -184,6 +279,8 @@ export default {
   }
 
   .head {
+    width: 100%;
+
     &__title {
       font-size: 20px;
       font-weight: 700;
@@ -226,6 +323,10 @@ export default {
   }
 
   &__apps {
+    &:last-child {
+      margin-top: 10px;
+    }
+
     .title {
       color: #59779a;
       font-weight: 700;
@@ -249,6 +350,15 @@ export default {
         border-radius: 8px;
         padding: 0 12px;
         cursor: pointer;
+
+        &.acc {
+          background: linear-gradient(
+            90deg,
+            #fad0c4 0%,
+            #fad0c4 1%,
+            #ffd1ff 100%
+          );
+        }
 
         .info {
           display: flex;
@@ -297,8 +407,20 @@ export default {
 
     &.right {
       display: flex;
-      justify-content: center;
-      align-items: center;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+
+      .guides {
+        width: 100%;
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .guides-item {
+        margin-bottom: 20px;
+      }
     }
   }
 }

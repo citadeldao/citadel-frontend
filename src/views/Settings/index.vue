@@ -26,7 +26,7 @@
           </div>
         </div>
         <div class="container">
-          <ExtensionSettings :visibleClass="'comingSoon'" />
+          <!-- <ExtensionSettings :visibleClass="'comingSoon'" /> -->
 
           <DeleteAccount />
         </div>
@@ -139,7 +139,7 @@ import ManageViewingKeysModal from './components/ManageViewingKeysModal';
 import ChangeVkModal from './components/ChangeVkModal.vue';
 import Modal from '@/components/Modal';
 import CrossChain from './components/CrossChain';
-import ExtensionSettings from './components/ExtensionSettings';
+// import ExtensionSettings from './components/ExtensionSettings';
 import { computed, provide, ref, onMounted, watch } from 'vue';
 import { WALLET_TYPES, VIEWING_KEY_TYPES } from '@/config/walletType';
 import { i18n } from '@/plugins/i18n';
@@ -165,7 +165,7 @@ export default {
     CreateVkModal,
     CrossChain,
     ChangePassword,
-    ExtensionSettings,
+    // ExtensionSettings,
     // SyncExtension,
   },
   setup() {
@@ -410,7 +410,7 @@ export default {
         filter: none;
       }
       & > div:not(:last-child) {
-        margin-bottom: $card-margin;
+        margin-bottom: 3px;
       }
     }
 
