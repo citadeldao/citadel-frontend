@@ -221,9 +221,7 @@
             <div
               v-if="
                 signerWallet &&
-                [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(
-                  signerWallet.type
-                )
+                PRIVATE_PASSWORD_TYPES.includes(signerWallet.type)
               "
               class="password-wrap"
             >
@@ -287,7 +285,7 @@ import info from '@/assets/icons/info.svg';
 import Modal from '@/components/Modal';
 import ModalContent from '@/components/ModalContent';
 import { default as BalanceTooltip } from '@/components/Tooltip';
-import { WALLET_TYPES } from '@/config/walletType';
+import { WALLET_TYPES, PRIVATE_PASSWORD_TYPES } from '@/config/walletType';
 import Loading from '@/components/Loading';
 import Input from '@/components/UI/Input';
 import { sha3_256 } from 'js-sha3';
@@ -475,9 +473,7 @@ export default {
       confirmPassword.value = true;
 
       if (
-        [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(
-          signerWallet.value.type
-        ) &&
+        PRIVATE_PASSWORD_TYPES.includes(signerWallet.value.type) &&
         incorrectPassword.value
       ) {
         return;
@@ -571,6 +567,7 @@ export default {
       selectAddress,
       selectContract,
       metamaskConnector,
+      PRIVATE_PASSWORD_TYPES,
     };
   },
 };

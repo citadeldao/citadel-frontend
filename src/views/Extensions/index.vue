@@ -184,7 +184,7 @@ import Head from './components/Head';
 import AppBlock from './components/AppBlock';
 import AppInfo from './components/AppInfo';
 import SuccessModalContent from '@/views/Wallet/views/Send/components/SuccessModalContent.vue';
-import { WALLET_TYPES } from '../../config/walletType';
+import { WALLET_TYPES, PRIVATE_PASSWORD_TYPES } from '@/config/walletType';
 import { sha3_256 } from 'js-sha3';
 import { useRouter, useRoute } from 'vue-router';
 import ConfirmLedgerModal from '@/components/Modals/Ledger/ConfirmLedgerModal';
@@ -743,9 +743,7 @@ export default {
       confirmPassword.value = true;
 
       if (
-        [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(
-          signerWallet.value.type
-        ) &&
+        PRIVATE_PASSWORD_TYPES.includes(signerWallet.value.type) &&
         incorrectPassword.value
       ) {
         return;
@@ -935,9 +933,7 @@ export default {
       confirmPassword.value = true;
 
       if (
-        [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(
-          signerWallet.value.type
-        ) &&
+        PRIVATE_PASSWORD_TYPES.includes(signerWallet.value.type) &&
         incorrectPassword.value
       ) {
         signLoading.value = false;
