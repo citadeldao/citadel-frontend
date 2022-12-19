@@ -722,7 +722,14 @@
                 "question1Description": "",
                 "question2Title": "",
                 "question2Description": ""
-            }
+            },
+            "deleteAccTitle": "",
+            "deleteAccDescription": "",
+            "deleteAppTitle": "",
+            "deleteAppDescription": "",
+            "emptyApps": "",
+            "tabApps": "",
+            "tabGuide": ""
         },
         "subscriptions": {
             "title": "",

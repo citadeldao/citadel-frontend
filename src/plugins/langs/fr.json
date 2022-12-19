@@ -804,7 +804,22 @@
             "appsTitle": "Vos applications à tester",
             "accsTitle": "",
             "searchLabel": "Code d'application",
-            "searchPlaceholder": "Entrez le code"
+            "searchPlaceholder": "Entrez le code",
+            "guideTitle": "",
+            "guideTitleDescription": "",
+            "guides": {
+                "question1Title": "",
+                "question1Description": "",
+                "question2Title": "",
+                "question2Description": ""
+            },
+            "deleteAccTitle": "",
+            "deleteAccDescription": "",
+            "deleteAppTitle": "",
+            "deleteAppDescription": "",
+            "emptyApps": "",
+            "tabApps": "",
+            "tabGuide": ""
         }
     },
     "overallPage": {
