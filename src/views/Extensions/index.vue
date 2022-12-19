@@ -660,6 +660,8 @@ export default {
 
     const confirmModalCloseHandlerWithRequest = () => {
       password.value = '';
+      signLoading.value = false;
+      confirmPassword.value = false;
       store.commit('extensions/SET_TRANSACTION_FOR_SIGN', null, { root: true });
 
       store.dispatch('extensions/sendCustomMsg', {
@@ -816,6 +818,8 @@ export default {
             type: 'warning',
             text: JSON.stringify(err),
           });
+          confirmPassword.value = false;
+          password.value = '';
           signLoading.value = false;
           return;
         }
@@ -877,6 +881,9 @@ export default {
           signLoading.value = false;
           sendSuccessMSG();
         } else {
+          signLoading.value = false;
+          confirmPassword.value = false;
+          password.value = '';
           signLoading.value = false;
           notify({
             type: 'warning',
@@ -1025,6 +1032,9 @@ export default {
             showLedgerConnect.value = false;
             confirmModalDisabled.value = false;
             showConfirmModalLoading.value = false;
+            signLoading.value = false;
+            password.value = '';
+            confirmPassword.value = false;
             confirmModalCloseHandler();
             notify({
               type: 'warning',
