@@ -55,7 +55,11 @@
             @keypress="onKeyPressInput"
           />
         </div>
-        <PrimaryButton :loading="loading" :disabled="loading" type="submit">
+        <PrimaryButton
+          :loading="loading"
+          :disabled="loading || !newEmail.length"
+          type="submit"
+        >
           {{ $t('settings.changeEmail.button') }}
         </PrimaryButton>
       </form>
@@ -70,11 +74,16 @@
     >
       <div class="change-email-modal">
         <Letter />
+
         <div class="change-email-modal__info timer">
-          <p>{{ $t('settings.changeEmail.lastStep') }}</p>
-          <span v-html="$t('settings.changeEmail.lastStepDescription')"></span>
+          <p>{{ $t(`settings.changeEmail.${stepKey}`) }}</p>
+          <span
+            v-html="$t(`settings.changeEmail.${stepKey}Description`)"
+          ></span>
         </div>
+
         <PrimaryButton
+          v-if="!alreadyChanged"
           :loading="loading"
           :disabled="!resendActive || loading"
           class="change-email__button"
@@ -84,18 +93,17 @@
           {{ $t('settings.changeEmail.resend') }}
         </PrimaryButton>
 
-        <p v-if="countDown > 0" class="count-down">
-          <span>00</span>
-          <span>{{ countDown }}</span>
-        </p>
+        <p class="count-down">{{ counter }}</p>
       </div>
     </ModalContent>
   </Modal>
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
+
+import moment from 'moment';
 
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import Modal from '@/components/Modal';
@@ -108,13 +116,18 @@ export default {
   name: 'ChangeEmail',
   components: { PrimaryButton, Modal, ModalContent, Input, Letter },
   setup() {
-    const MINUTE = 60;
+    const TIMER_STAGE = 'timer';
+    const CHANGE_STAGE = 'change';
+
+    const currentStage = ref(CHANGE_STAGE);
 
     const store = useStore();
-    const currentEmail = computed(() => store.getters['profile/info'].login);
-    const newEmail = ref('');
 
-    const countDown = ref(MINUTE);
+    const alreadyChanged = ref(false);
+
+    const newEmail = ref('');
+    const counter = ref('60:00');
+
     const resendActive = ref(false);
 
     const loading = ref(false);
@@ -123,27 +136,49 @@ export default {
     const showChange = ref(false);
     const showTimer = ref(false);
 
-    const currentStage = computed(
-      () => store.getters['profile/changeEmailStage']
-    );
+    // Translation key for showing information about timer
+    const stepKey = ref('lastStep');
 
-    if (!currentStage.value) {
-      store.commit('profile/SET_CHANGE_EMAIL_STAGE', 'change');
-    }
+    // Checking the timer status to display the "timer" or "change" modal window
+    const checkTimer = async () => {
+      const {
+        attemptsLeft,
+        timer,
+        wasChanged = false,
+      } = await store.dispatch('profile/changeEmailInfo');
 
-    const toggleModal = (target, state = false) => {
+      if (timer) {
+        currentStage.value = TIMER_STAGE;
+
+        stepKey.value = wasChanged ? 'tryAgainLater' : 'lastStep';
+
+        alreadyChanged.value = wasChanged;
+
+        timerState(timer, attemptsLeft);
+        return;
+      }
+
+      currentStage.value = CHANGE_STAGE;
+    };
+
+    onMounted(async () => await checkTimer());
+
+    const timer = computed(() => store.getters['profile/changeEmailTimer']);
+
+    const currentEmail = computed(() => store.getters['profile/info'].login);
+
+    const toggleModal = async (target, state = false) => {
+      if (state) await checkTimer();
+
       switch (target) {
-        case 'change':
+        case CHANGE_STAGE:
           showChange.value = state;
           break;
-        case 'timer':
+
+        case TIMER_STAGE:
           showTimer.value = state;
-
-          if (state && countDown.value === MINUTE) {
-            countDownTimer();
-          }
-
           break;
+
         default:
           break;
       }
@@ -163,6 +198,7 @@ export default {
       return await store.dispatch('profile/changeEmail', newEmail.value);
     };
 
+    // *** CHANGE EMAIL REQUEST
     const changeEmail = async () => {
       loading.value = true;
       showError.value = false;
@@ -172,32 +208,60 @@ export default {
       if (!ok) {
         loading.value = false;
         newEmail.value = '';
-        return toggleModal('change', false);
+        toggleModal(CHANGE_STAGE, false);
+        return;
       }
 
+      localStorage.setItem('new-email', newEmail.value);
       loading.value = false;
 
-      toggleModal('change', false);
-      toggleModal('timer', true);
+      currentStage.value = TIMER_STAGE;
 
-      store.commit('profile/SET_CHANGE_EMAIL_STAGE', 'timer');
+      toggleModal(CHANGE_STAGE, false);
+      toggleModal(TIMER_STAGE, true);
+      timerState();
     };
 
-    const countDownTimer = () => {
-      if (countDown.value < 10) countDown.value = `0${countDown.value}`;
+    // *** TIMER
+    const timerState = (time = 60, attempts) => {
+      clearInterval(timer.value);
+      const ONE_SEC = 1000;
 
-      if (countDown.value > 0) {
-        return setTimeout(() => {
-          countDown.value -= 1;
-          countDownTimer();
-        }, 1000);
-      }
+      let duration = moment.duration(time, 'minutes');
 
-      resendActive.value = true;
+      const countDownStart = setInterval(() => {
+        if (duration.asSeconds() <= 1) {
+          resendActive.value = attempts > 0 ?? true;
+          return;
+        }
+
+        duration = moment.duration(
+          duration.asMilliseconds() - ONE_SEC,
+          'milliseconds'
+        );
+
+        counter.value = moment(duration.asMilliseconds()).format('mm:ss');
+      }, ONE_SEC);
+
+      store.commit('profile/SET_CHANGE_EMAIL_TIMER', countDownStart);
     };
 
+    // *** RESEND
     const resend = async () => {
       loading.value = true;
+
+      const cachedValue = localStorage.getItem('new-email');
+
+      if (!cachedValue) {
+        resendActive.value = false;
+        loading.value = false;
+
+        toggleModal(TIMER_STAGE, false);
+        toggleModal(CHANGE_STAGE, true);
+        return;
+      }
+
+      newEmail.value = cachedValue;
 
       const { ok } = await changeEmailRequest();
 
@@ -205,15 +269,14 @@ export default {
         resendActive.value = false;
         loading.value = false;
         newEmail.value = '';
-        return toggleModal('timer', false);
-      }
 
-      countDown.value = MINUTE;
+        return toggleModal(TIMER_STAGE, false);
+      }
 
       resendActive.value = false;
       loading.value = false;
 
-      countDownTimer();
+      return await checkTimer();
     };
 
     return {
@@ -221,18 +284,19 @@ export default {
       showChange,
       showTimer,
       loading,
-      countDown,
       resendActive,
 
       toggleModal,
       changeEmail,
       onKeyPressInput,
-      countDownTimer,
       resend,
 
       currentEmail,
       newEmail,
       currentStage,
+      counter,
+      alreadyChanged,
+      stepKey,
     };
   },
 };
@@ -309,15 +373,6 @@ export default {
     span {
       display: inline-block;
       width: 32px;
-    }
-    &::after {
-      content: ':';
-      position: absolute;
-      left: 0;
-      right: 0;
-      margin: auto;
-      width: fit-content;
-      height: 40px;
     }
   }
   .primary-button {

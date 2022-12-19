@@ -753,7 +753,9 @@
             "validFormatError": "Veuillez saisir votre e-mail dans un format valide",
             "lastStep": "Une dernière étape !",
             "lastStepDescription": "S'il vous plaît, vérifiez <span style='font-family: \"Panton_Bold\";'> LES DEUX </span>anciennes et nouvelles adresses e-mail pour finaliser la mise à jour de l'e-mail.",
-            "resend": "Renvoyer"
+            "resend": "Renvoyer",
+            "tryAgainLater": "",
+            "tryAgainLaterDescription": ""
         },
         "language": {
             "title": "Langue",

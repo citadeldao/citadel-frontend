@@ -753,7 +753,9 @@
             "validFormatError": "请输入正确格式的邮箱",
             "lastStep": "最后一步！",
             "lastStepDescription": "请检查 <span style='font-family: \"Panton_Bold\";'>  </span> 新旧邮箱地址以完成邮箱更新",
-            "resend": "重新发送"
+            "resend": "重新发送",
+            "tryAgainLater": "",
+            "tryAgainLaterDescription": ""
         },
         "language": {
             "title": "语言",

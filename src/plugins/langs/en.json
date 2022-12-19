@@ -786,6 +786,8 @@
             "validFormatError": "Please type your email in valid format",
             "lastStep": "One last step!",
             "lastStepDescription":"Please, check <span style='font-family: \"Panton_Bold\";'> BOTH </span> old and new email addresses to finalize the email update.",
+            "tryAgainLater": "Already Changed",
+            "tryAgainLaterDescription": "You have already changed your email address, please try again later",
             "resend": "Resend"
         },
         "language": {
