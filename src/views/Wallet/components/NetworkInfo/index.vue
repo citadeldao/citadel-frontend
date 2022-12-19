@@ -352,7 +352,6 @@ export default {
 
     const showModal = ref(false);
     const modalCloseHandler = (e) => {
-      console.log(e.target.className, 'e');
       if (
         [
           'tabs-group__item-label',
