@@ -155,7 +155,10 @@ export default {
         alreadyChanged.value = wasChanged;
 
         timerState(timer, attemptsLeft);
+        return;
       }
+
+      currentStage.value = CHANGE_STAGE;
     };
 
     onMounted(async () => await checkTimer());
@@ -164,7 +167,9 @@ export default {
 
     const currentEmail = computed(() => store.getters['profile/info'].login);
 
-    const toggleModal = (target, state = false) => {
+    const toggleModal = async (target, state = false) => {
+      if (state) await checkTimer();
+
       switch (target) {
         case CHANGE_STAGE:
           showChange.value = state;
@@ -209,6 +214,8 @@ export default {
 
       localStorage.setItem('new-email', newEmail.value);
       loading.value = false;
+
+      currentStage.value = TIMER_STAGE;
 
       toggleModal(CHANGE_STAGE, false);
       toggleModal(TIMER_STAGE, true);
