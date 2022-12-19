@@ -86,11 +86,8 @@
         @scroll="onScrollContent"
       >
         <div class="sidebar__addresses-addresses-full-list">
-          <div class="scroll-shadow scroll-shadow--top" v-show="showTop"></div>
-          <div
-            class="scroll-shadow scroll-shadow--bottom"
-            v-show="showBottom"
-          ></div>
+          <div class="scroll-shadow scroll-shadow--top"></div>
+          <div class="scroll-shadow scroll-shadow--bottom"></div>
           <transition-group name="drop">
             <AddressItem
               v-for="wallet in displayData"
@@ -445,7 +442,7 @@ export default {
     setShadows(parent) {
       const shadowTop = document.querySelector('.scroll-shadow--top');
       const shadowBottom = document.querySelector('.scroll-shadow--bottom');
-      console.log(0);
+
       let fullList = parent;
 
       if (parent === undefined) {
@@ -464,12 +461,9 @@ export default {
       const checkOnTop = fullList.scrollTop === 0;
 
       if (!hasScroll) {
-        console.log(1);
         shadowTop.classList.remove('active');
         shadowBottom.classList.remove('active');
 
-        this.showTop = false;
-        this.showBottom = false;
         return;
       }
 
@@ -477,22 +471,16 @@ export default {
 
       if (fullList.scrollTop > 0) {
         shadowTop.classList.add('active');
-        this.showTop = true;
       } else if (checkOnTop) {
         shadowTop.classList.remove('active');
-        this.showTop = false;
       }
 
       if (hasScroll) {
-        console.log('123');
         shadowBottom.classList.add('active');
-        this.showBottom = true;
       }
 
       if (checkOnBottom) {
-        console.log('1234');
         shadowBottom.classList.remove('active');
-        this.showBottom = false;
       }
     },
   },
