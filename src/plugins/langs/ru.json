@@ -1321,7 +1321,8 @@
         "nominatedNodesTitle": "Назначенные ноды",
         "error": {
             "chooseNotMoreThan16Nodes": "Выберите не более 16 нод"
-        }
+        },
+        "claimTooltip": ""
     },
     "minSendAmountError": "Минимальный размер транзакции составляет {minAmount} {code}",
     "changeValidators": "Изменить валидатора",
@@ -1434,5 +1435,6 @@
     "showHideKeyTitle": "Показать / скрыть кнопку просмотра",
     "changeKeyTitle": "Изменить ключ просмотра",
     "anotherAddress": "Другой адрес",
-    "notFoundPlaceholderText": "По вашему запросу ничего не найдено"
+    "notFoundPlaceholderText": "По вашему запросу ничего не найдено",
+    "minBalanceNote": ""
 }
