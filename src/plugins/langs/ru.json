@@ -752,7 +752,9 @@
             "validFormatError": "Пожалуйста, укажите e-mail в правильном формате",
             "lastStep": "Последний шаг!",
             "lastStepDescription": "Пожалуйста, проверьте <span style='font-family: \"Panton_Bold\";'> ОБА \n</span> старый и новый адреса электронной почты, чтобы завершить процесс обновления.",
-            "resend": "Отправить"
+            "resend": "Отправить",
+            "tryAgainLater": "",
+            "tryAgainLaterDescription": ""
         },
         "language": {
             "title": "Язык",

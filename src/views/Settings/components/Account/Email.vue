@@ -74,11 +74,16 @@
     >
       <div class="change-email-modal">
         <Letter />
+
         <div class="change-email-modal__info timer">
-          <p>{{ $t('settings.changeEmail.lastStep') }}</p>
-          <span v-html="$t('settings.changeEmail.lastStepDescription')"></span>
+          <p>{{ $t(`settings.changeEmail.${stepKey}`) }}</p>
+          <span
+            v-html="$t(`settings.changeEmail.${stepKey}Description`)"
+          ></span>
         </div>
+
         <PrimaryButton
+          v-if="!alreadyChanged"
           :loading="loading"
           :disabled="!resendActive || loading"
           class="change-email__button"
@@ -111,25 +116,17 @@ export default {
   name: 'ChangeEmail',
   components: { PrimaryButton, Modal, ModalContent, Input, Letter },
   setup() {
+    const TIMER_STAGE = 'timer';
+    const CHANGE_STAGE = 'change';
+
+    const currentStage = ref(CHANGE_STAGE);
+
     const store = useStore();
 
-    const checkTimer = async () => {
-      const { ok, data } = await store.dispatch('profile/changeEmailInfo');
-      if (ok) {
-        timerState(data.confirmTime, data.attemptsLeft);
-      }
-    };
-
-    onMounted(async () => await checkTimer());
-
-    const currentEmail = computed(() => store.getters['profile/info'].login);
-    const timer = computed(() => store.getters['profile/changeEmailTimer']);
-    const currentStage = computed(
-      () => store.getters['profile/changeEmailStage']
-    );
+    const alreadyChanged = ref(false);
 
     const newEmail = ref('');
-    const counter = ref('00:00');
+    const counter = ref('60:00');
 
     const resendActive = ref(false);
 
@@ -139,20 +136,44 @@ export default {
     const showChange = ref(false);
     const showTimer = ref(false);
 
-    if (!currentStage.value) {
-      store.commit('profile/SET_CHANGE_EMAIL_STAGE', 'change');
-    }
+    // Translation key for showing information about timer
+    const stepKey = ref('lastStep');
 
-    const toggleModal = async (target, state = false) => {
-      if (state) await checkTimer();
+    // Checking the timer status to display the "timer" or "change" modal window
+    const checkTimer = async () => {
+      const {
+        attemptsLeft,
+        timer,
+        wasChanged = false,
+      } = await store.dispatch('profile/changeEmailInfo');
 
+      if (timer) {
+        currentStage.value = TIMER_STAGE;
+
+        stepKey.value = wasChanged ? 'tryAgainLater' : 'lastStep';
+
+        alreadyChanged.value = wasChanged;
+
+        timerState(timer, attemptsLeft);
+      }
+    };
+
+    onMounted(async () => await checkTimer());
+
+    const timer = computed(() => store.getters['profile/changeEmailTimer']);
+
+    const currentEmail = computed(() => store.getters['profile/info'].login);
+
+    const toggleModal = (target, state = false) => {
       switch (target) {
-        case 'change':
+        case CHANGE_STAGE:
           showChange.value = state;
           break;
-        case 'timer':
+
+        case TIMER_STAGE:
           showTimer.value = state;
           break;
+
         default:
           break;
       }
@@ -182,20 +203,20 @@ export default {
       if (!ok) {
         loading.value = false;
         newEmail.value = '';
-        return toggleModal('change', false);
+        toggleModal(CHANGE_STAGE, false);
+        return;
       }
 
       localStorage.setItem('new-email', newEmail.value);
       loading.value = false;
 
-      toggleModal('change', false);
-      toggleModal('timer', true);
-
-      store.commit('profile/SET_CHANGE_EMAIL_STAGE', 'timer');
+      toggleModal(CHANGE_STAGE, false);
+      toggleModal(TIMER_STAGE, true);
+      timerState();
     };
 
     // *** TIMER
-    const timerState = (time = 1, attempts) => {
+    const timerState = (time = 60, attempts) => {
       clearInterval(timer.value);
       const ONE_SEC = 1000;
 
@@ -216,14 +237,24 @@ export default {
       }, ONE_SEC);
 
       store.commit('profile/SET_CHANGE_EMAIL_TIMER', countDownStart);
-      store.commit('profile/SET_CHANGE_EMAIL_STAGE', 'timer');
     };
 
     // *** RESEND
     const resend = async () => {
       loading.value = true;
 
-      newEmail.value = localStorage.getItem('new-email');
+      const cachedValue = localStorage.getItem('new-email');
+
+      if (!cachedValue) {
+        resendActive.value = false;
+        loading.value = false;
+
+        toggleModal(TIMER_STAGE, false);
+        toggleModal(CHANGE_STAGE, true);
+        return;
+      }
+
+      newEmail.value = cachedValue;
 
       const { ok } = await changeEmailRequest();
 
@@ -231,13 +262,14 @@ export default {
         resendActive.value = false;
         loading.value = false;
         newEmail.value = '';
-        return toggleModal('timer', false);
+
+        return toggleModal(TIMER_STAGE, false);
       }
 
       resendActive.value = false;
       loading.value = false;
 
-      timerState();
+      return await checkTimer();
     };
 
     return {
@@ -256,6 +288,8 @@ export default {
       newEmail,
       currentStage,
       counter,
+      alreadyChanged,
+      stepKey,
     };
   },
 };

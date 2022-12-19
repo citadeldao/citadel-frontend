@@ -764,7 +764,9 @@
             "validFormatError": "",
             "lastStep": "",
             "lastStepDescription":"",
-            "resend": ""
+            "resend": "",
+            "tryAgainLater": "",
+            "tryAgainLaterDescription": ""
         },
         "language": {
             "title": "",

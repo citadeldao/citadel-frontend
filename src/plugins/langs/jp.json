@@ -750,7 +750,9 @@
             "validFormatError": "メールアドレスを有効な形式で入力してください",
             "lastStep": "最後の一歩！",
             "lastStepDescription": "<span style='font-family: \"Panton_Bold\";'> 古いメール アドレスと新しいメール アドレスの両方 </span> を確認して、メールの更新を完了してください。",
-            "resend": "再送"
+            "resend": "再送",
+            "tryAgainLater": "",
+            "tryAgainLaterDescription": ""
         },
         "language": {
             "title": "言語",
