@@ -10,20 +10,20 @@ export default function useCurrentWalletRequests() {
   const wallet = computed(() => currentToken.value || currentWallet.value);
   const fees = ref(null);
   const feesError = ref(null);
-  const iostFee = ref();
+  const feeInfo = ref();
   const adding = ref();
   const resMaxAmount = ref();
   const l1Fee = ref(0);
   const isSendToAnotherNetwork = ref(false);
 
   const getFees = async (netTo) => {
-    if (currentWallet.value.hasResource) {
+    if (!currentWallet.value.hasFee) {
       const { resFee, maxAmount, error, resAdding } =
         await wallet.value.getDelegationFee({
           walletId: wallet.value.id,
           transactionType: 'transfer',
         });
-      iostFee.value = resFee;
+      feeInfo.value = resFee;
       adding.value = resAdding;
       resMaxAmount.value = maxAmount;
       feesError.value = error;
@@ -88,7 +88,7 @@ export default function useCurrentWalletRequests() {
       rawTx.value = data;
       rawTxError.value = error;
       if (data.resourcesForTx) {
-        iostFee.value = data.resourcesForTx.fee;
+        feeInfo.value = data.resourcesForTx.fee;
         adding.value = data.resourcesForTx.adding;
       }
     }
@@ -138,7 +138,7 @@ export default function useCurrentWalletRequests() {
     txHash,
     txError,
     clearTxData,
-    iostFee,
+    feeInfo,
     adding,
     resMaxAmount,
     isSendToAnotherNetwork,

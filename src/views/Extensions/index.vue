@@ -184,7 +184,7 @@ import Head from './components/Head';
 import AppBlock from './components/AppBlock';
 import AppInfo from './components/AppInfo';
 import SuccessModalContent from '@/views/Wallet/views/Send/components/SuccessModalContent.vue';
-import { WALLET_TYPES } from '../../config/walletType';
+import { WALLET_TYPES, PRIVATE_PASSWORD_TYPES } from '@/config/walletType';
 import { sha3_256 } from 'js-sha3';
 import { useRouter, useRoute } from 'vue-router';
 import ConfirmLedgerModal from '@/components/Modals/Ledger/ConfirmLedgerModal';
@@ -660,6 +660,8 @@ export default {
 
     const confirmModalCloseHandlerWithRequest = () => {
       password.value = '';
+      signLoading.value = false;
+      confirmPassword.value = false;
       store.commit('extensions/SET_TRANSACTION_FOR_SIGN', null, { root: true });
 
       store.dispatch('extensions/sendCustomMsg', {
@@ -741,9 +743,7 @@ export default {
       confirmPassword.value = true;
 
       if (
-        [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(
-          signerWallet.value.type
-        ) &&
+        PRIVATE_PASSWORD_TYPES.includes(signerWallet.value.type) &&
         incorrectPassword.value
       ) {
         return;
@@ -816,6 +816,8 @@ export default {
             type: 'warning',
             text: JSON.stringify(err),
           });
+          confirmPassword.value = false;
+          password.value = '';
           signLoading.value = false;
           return;
         }
@@ -878,6 +880,9 @@ export default {
           sendSuccessMSG();
         } else {
           signLoading.value = false;
+          confirmPassword.value = false;
+          password.value = '';
+          signLoading.value = false;
           notify({
             type: 'warning',
             text: data.error,
@@ -928,9 +933,7 @@ export default {
       confirmPassword.value = true;
 
       if (
-        [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(
-          signerWallet.value.type
-        ) &&
+        PRIVATE_PASSWORD_TYPES.includes(signerWallet.value.type) &&
         incorrectPassword.value
       ) {
         signLoading.value = false;
@@ -1025,6 +1028,9 @@ export default {
             showLedgerConnect.value = false;
             confirmModalDisabled.value = false;
             showConfirmModalLoading.value = false;
+            signLoading.value = false;
+            password.value = '';
+            confirmPassword.value = false;
             confirmModalCloseHandler();
             notify({
               type: 'warning',

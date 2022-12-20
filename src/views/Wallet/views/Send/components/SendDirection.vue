@@ -78,10 +78,13 @@
         </div>
       </div>
     </div>
-    <div v-if="iostFee" class="send-direction__needed-resources">
+    <div
+      v-if="feeInfo && currentWallet.hasResource"
+      class="send-direction__needed-resources"
+    >
       <span
         v-pretty-number="{
-          value: iostFee,
+          value: feeInfo,
           currency: currentToken ? currentToken.parentCoin.code : wallet?.code,
         }"
         class="send-direction__needed-resources-amount"
@@ -147,7 +150,7 @@ export default {
       type: Object,
       default: () => ({}),
     },
-    iostFee: {
+    feeInfo: {
       type: Number,
       default: 0,
     },

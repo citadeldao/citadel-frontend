@@ -589,6 +589,7 @@
     "youHave": "您拥有",
     "claimRewards": "提取奖励",
     "oneSeed": "助记词",
+    "seedPhrase": "",
     "publicKey": "公钥",
     "hardware": "硬件",
     "edit": "编辑",
@@ -752,7 +753,9 @@
             "validFormatError": "请输入正确格式的邮箱",
             "lastStep": "最后一步！",
             "lastStepDescription": "请检查 <span style='font-family: \"Panton_Bold\";'>  </span> 新旧邮箱地址以完成邮箱更新",
-            "resend": "重新发送"
+            "resend": "重新发送",
+            "tryAgainLater": "",
+            "tryAgainLaterDescription": ""
         },
         "language": {
             "title": "语言",
@@ -800,9 +803,25 @@
         "extensions": {
             "title": "正在开发中的应用程序",
             "description": "输入代码以进行应用程序测试，代码由开发中心提供。",
+            "accsTitle": "",
             "appsTitle": "测试应用程序",
             "searchLabel": "应用程序代码",
-            "searchPlaceholder": "输入代码"
+            "searchPlaceholder": "输入代码",
+            "guideTitle": "",
+            "guideTitleDescription": "",
+            "guides": {
+                "question1Title": "",
+                "question1Description": "",
+                "question2Title": "",
+                "question2Description": ""
+            },
+            "deleteAccTitle": "",
+            "deleteAccDescription": "",
+            "deleteAppTitle": "",
+            "deleteAppDescription": "",
+            "emptyApps": "",
+            "tabApps": "",
+            "tabGuide": ""
         }
     },
     "overallPage": {
@@ -1320,7 +1339,8 @@
         "nominatedNodesTitle": "指定节点：",
         "error": {
             "chooseNotMoreThan16Nodes": "选择最多16个节点"
-        }
+        },
+        "claimTooltip": ""
     },
     "minSendAmountError": "最低交易金额为 {minAmount} {code}",
     "changeValidators": "切换节点",
@@ -1433,5 +1453,6 @@
     "showHideKeyTitle": "展示/收起查看密钥",
     "changeKeyTitle": "更改查看密钥",
     "anotherAddress": "其它地址",
-    "notFoundPlaceholderText": "您的请求未找到结果"
+    "notFoundPlaceholderText": "您的请求未找到结果",
+    "minBalanceNote": ""
 }

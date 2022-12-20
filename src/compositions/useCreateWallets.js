@@ -112,6 +112,7 @@ export default function useCreateWallets() {
         };
       });
 
+      // TO DO NEW TYPE ?
       if (newWalletType === WALLET_TYPES.ONE_SEED) {
         const { data, error } = await citadel.addWalletCollectionByMnemonic(
           newWalletsOptsList

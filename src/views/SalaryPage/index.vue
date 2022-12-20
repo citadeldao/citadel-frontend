@@ -227,9 +227,7 @@
           v-if="
             !Object.keys(successTxs).length &&
             signerWallet &&
-            [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(
-              signerWallet.type
-            )
+            PRIVATE_PASSWORD_TYPES.includes(signerWallet.type)
           "
         >
           <div class="line" />
@@ -256,7 +254,7 @@
 import useWallets from '@/compositions/useWallets';
 import { computed, ref, watch, onMounted } from 'vue';
 import { useStore } from 'vuex';
-import { WALLET_TYPES } from '@/config/walletType';
+import { WALLET_TYPES, PRIVATE_PASSWORD_TYPES } from '@/config/walletType';
 import citadel from '@citadeldao/lib-citadel';
 import Autocomplete from '@/components/UI/Autocomplete';
 import PrimaryButton from '@/components/UI/PrimaryButton';
@@ -393,11 +391,7 @@ export default {
         .filter(
           (w) =>
             w?.net === 'bsc' &&
-            [
-              WALLET_TYPES.ONE_SEED,
-              WALLET_TYPES.PRIVATE_KEY,
-              WALLET_TYPES.LEDGER,
-            ].includes(w?.type)
+            PRIVATE_PASSWORD_TYPES.concat(WALLET_TYPES.LEDGER).includes(w?.type)
         )
         .map((w) => ({
           id: w.address,
@@ -670,9 +664,7 @@ export default {
       confirmPassword.value = true;
       if (
         incorrectPassword.value &&
-        [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(
-          signerWallet.value.type
-        )
+        PRIVATE_PASSWORD_TYPES.includes(signerWallet.value.type)
       )
         return;
 
@@ -774,6 +766,7 @@ export default {
       successTxs,
 
       WALLET_TYPES,
+      PRIVATE_PASSWORD_TYPES,
       signerWallet,
 
       activeTabControlsIndex,

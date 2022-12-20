@@ -3,10 +3,12 @@
     <span class="fees__title"> {{ $t('transactionFee') }} </span>
 
     <div class="fees__value">
-      {{ customFee ? 'custom' : feeType }}: &nbsp;&nbsp;
+      <span v-if="!hideCustomFee">
+        {{ customFee ? 'custom' : feeType }}: &nbsp;&nbsp;
+      </span>
       <span
         v-pretty-number="{
-          value: customFee || fee,
+          value: customFee || computedFee,
           currency: currentToken ? currentToken.parentCoin.code : wallet?.code,
         }"
         class="fees__amount"
@@ -47,7 +49,7 @@ export default {
     },
     feeType: {
       type: String,
-      default: 'medium',
+      default: '',
     },
     customFee: {
       type: Number,
@@ -57,15 +59,23 @@ export default {
       type: [Object, null],
       default: null,
     },
+    fee: {
+      type: Object,
+      default: () => ({}),
+    },
   },
   emits: ['select-fee'],
   setup(props) {
-    const fee = computed(() =>
-      props.customFee > 0 ? 'custom' : props.fees[props.feeType].fee
+    const computedFee = computed(() =>
+      props.customFee > 0
+        ? 'custom'
+        : props.feeType
+        ? props.fees[props.feeType]?.fee
+        : props.fee.fee
     );
 
     return {
-      fee,
+      computedFee,
     };
   },
 };

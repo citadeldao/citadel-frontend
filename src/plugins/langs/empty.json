@@ -593,6 +593,7 @@
     "youHave": "",
     "claimRewards": "",
     "oneSeed": "",
+    "seedPhrase": "",
     "publicKey": "",
     "hardware": "",
     "edit": "",
@@ -710,9 +711,25 @@
         "extensions": {
             "title": "",
             "description": "",
+            "accsTitle": "",
             "appsTitle": "",
             "searchLabel": "",
-            "searchPlaceholder": ""
+            "searchPlaceholder": "",
+            "guideTitle": "",
+            "guideTitleDescription": "",
+            "guides": {
+                "question1Title": "",
+                "question1Description": "",
+                "question2Title": "",
+                "question2Description": ""
+            },
+            "deleteAccTitle": "",
+            "deleteAccDescription": "",
+            "deleteAppTitle": "",
+            "deleteAppDescription": "",
+            "emptyApps": "",
+            "tabApps": "",
+            "tabGuide": ""
         },
         "subscriptions": {
             "title": "",
@@ -763,7 +780,9 @@
             "validFormatError": "",
             "lastStep": "",
             "lastStepDescription":"",
-            "resend": ""
+            "resend": "",
+            "tryAgainLater": "",
+            "tryAgainLaterDescription": ""
         },
         "language": {
             "title": "",
@@ -1319,7 +1338,8 @@
         "nominatedNodesTitle": "",
         "error": {
             "chooseNotMoreThan16Nodes": ""
-        }
+        },
+        "claimTooltip": ""
     },
     "minSendAmountError": "",
     "changeValidators": "",
@@ -1424,5 +1444,6 @@
     "errors": {
         "notEnoughFounds": "",
         "notAvailableToStake": ""
-    }
+    },
+    "minBalanceNote": ""
 }

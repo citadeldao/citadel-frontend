@@ -589,6 +589,7 @@
     "youHave": "Vous avez",
     "claimRewards": "Claim des récompenses",
     "oneSeed": "One Seed",
+    "seedPhrase": "",
     "publicKey": "Clé publique",
     "hardware": "Matériel",
     "edit": "Modifier",
@@ -752,7 +753,9 @@
             "validFormatError": "Veuillez saisir votre e-mail dans un format valide",
             "lastStep": "Une dernière étape !",
             "lastStepDescription": "S'il vous plaît, vérifiez <span style='font-family: \"Panton_Bold\";'> LES DEUX </span>anciennes et nouvelles adresses e-mail pour finaliser la mise à jour de l'e-mail.",
-            "resend": "Renvoyer"
+            "resend": "Renvoyer",
+            "tryAgainLater": "",
+            "tryAgainLaterDescription": ""
         },
         "language": {
             "title": "Langue",
@@ -801,8 +804,24 @@
             "title": "Applications en cours de développement",
             "description": "Entrez le code pour tester votre application préférée. Le code est fourni par un centre de développement.",
             "appsTitle": "Vos applications à tester",
+            "accsTitle": "",
             "searchLabel": "Code d'application",
-            "searchPlaceholder": "Entrez le code"
+            "searchPlaceholder": "Entrez le code",
+            "guideTitle": "",
+            "guideTitleDescription": "",
+            "guides": {
+                "question1Title": "",
+                "question1Description": "",
+                "question2Title": "",
+                "question2Description": ""
+            },
+            "deleteAccTitle": "",
+            "deleteAccDescription": "",
+            "deleteAppTitle": "",
+            "deleteAppDescription": "",
+            "emptyApps": "",
+            "tabApps": "",
+            "tabGuide": ""
         }
     },
     "overallPage": {
@@ -1320,7 +1339,8 @@
         "nominatedNodesTitle": "Nœuds nominés :",
         "error": {
             "chooseNotMoreThan16Nodes": "Ne choisissez pas plus de 16 nœuds"
-        }
+        },
+        "claimTooltip": ""
     },
     "minSendAmountError": "Le montant minimum de la transaction est {minAmount} {code}.",
     "changeValidators": "Modifier les validateurs",
@@ -1433,5 +1453,6 @@
     "showHideKeyTitle": "Afficher / Masquer la clé de visualisation",
     "changeKeyTitle": "Modifier la clé de visualisation",
     "anotherAddress": "Autre adresse",
-    "notFoundPlaceholderText": "Rien n'a été trouvé pour votre requête"
+    "notFoundPlaceholderText": "Rien n'a été trouvé pour votre requête",
+    "minBalanceNote": ""
 }
