@@ -740,7 +740,7 @@ export default {
         connectedToWeb3.value &&
         ['metamask', 'keplr'].includes(loginWith.value)
     );
-    const isShow = store.getters['metamask/isShow'];
+    const isShow = computed(() => store.getters['metamask/isShow']);
     return {
       isShow,
       showDisclaimerWeb3,

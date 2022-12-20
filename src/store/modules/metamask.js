@@ -20,7 +20,6 @@ export default {
       try {
         await state.metamaskConnector.connect();
         if (!metamaskNets.includes(state.metamaskConnector.network)) {
-          console.log(1);
           await state.metamaskConnector.changeNetwork();
         }
         state.isShow = false;

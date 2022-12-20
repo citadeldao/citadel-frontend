@@ -74,6 +74,7 @@ export default {
     },
     address: {
       type: String,
+      default: () => '0x1',
     },
     network: {
       type: String,
