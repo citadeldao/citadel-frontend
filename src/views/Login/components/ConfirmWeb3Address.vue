@@ -31,10 +31,20 @@
         </div>
         <div class="address">{{ address }}</div>
       </div>
-      <div v-if="isKeplr" class="refresh" @click="$emit('refreshKeplr')">
+      <div
+        v-if="isKeplr"
+        class="refresh"
+        :class="{ 'refresh-animation': refresh }"
+        @click="$emit('refreshKeplr')"
+      >
         <refreshSvg />
       </div>
-      <div v-if="!isKeplr" class="refresh" @click="$emit('refreshMetamask')">
+      <div
+        v-if="!isKeplr"
+        class="refresh"
+        :class="{ 'refresh-animation': refresh }"
+        @click="$emit('refreshMetamask')"
+      >
         <refreshSvg />
       </div>
     </div>
@@ -78,6 +88,10 @@ export default {
     },
     network: {
       type: String,
+    },
+    refresh: {
+      type: Boolean,
+      default: false,
     },
   },
   setup(props) {
@@ -168,7 +182,6 @@ export default {
       position: absolute;
       cursor: pointer;
       right: 20px;
-
       &:hover {
         opacity: 0.6;
       }
@@ -214,6 +227,17 @@ export default {
     color: #0a2778;
     font-weight: 700;
     font-size: 18px;
+  }
+}
+.refresh-animation svg {
+  animation: circle 2s linear infinite;
+}
+@keyframes circle {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 </style>

@@ -94,9 +94,10 @@
               "
               :network="metamaskConnector?.network"
               :loading="addLoading"
-              :address="metamaskConnector?.accounts[0]"
+              :address="metamaskAddress"
               @cancel="onWeb3AddressCancel"
               @confirm="onWeb3AddressConfirm"
+              :refresh="mmRefresh"
               @refreshMetamask="onRefreshWeb3Metamask"
             />
 
@@ -224,7 +225,8 @@ export default {
     const newAddress = ref('');
     const newAddressNet = ref('');
     const captchaToken = ref('');
-
+    const mmRefresh = ref(false);
+    const kplrRefresh = ref(false);
     const codeFromEmail = ref('');
 
     const { setNets, setAddress, setPublicKey, createWallets } =
@@ -686,12 +688,16 @@ export default {
     };
 
     const onRefreshWeb3Keplr = async () => {
+      kplrRefresh.value = true;
       await store.dispatch('keplr/connectToKeplr', keplrNetworks[0].key);
+      kplrRefresh.value = false;
     };
     const whatEverShow = ref(true);
     const onRefreshWeb3Metamask = async () => {
+      mmRefresh.value = true;
       metamaskConnector.value.disconnect();
       await store.dispatch('metamask/connectToMetamask');
+      mmRefresh.value = false;
     };
 
     const redirectedFrom = router.currentRoute.value.redirectedFrom;
@@ -741,7 +747,13 @@ export default {
         ['metamask', 'keplr'].includes(loginWith.value)
     );
     const isShow = computed(() => store.getters['metamask/isShow']);
+    const metamaskAddress = computed(
+      () => store.getters['metamask/metamaskAddress']
+    );
     return {
+      metamaskAddress,
+      mmRefresh,
+      kplrRefresh,
       isShow,
       showDisclaimerWeb3,
       whatEverShow,
