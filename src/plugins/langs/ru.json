@@ -589,6 +589,7 @@
     "youHave": "У вас",
     "claimRewards": "Получить вознаграждения",
     "oneSeed": "One Seed",
+    "seedPhrase": "",
     "publicKey": "Публичный ключ",
     "hardware": "Аппаратный",
     "edit": "Изменить",
@@ -752,7 +753,9 @@
             "validFormatError": "Пожалуйста, укажите e-mail в правильном формате",
             "lastStep": "Последний шаг!",
             "lastStepDescription": "Пожалуйста, проверьте <span style='font-family: \"Panton_Bold\";'> ОБА \n</span> старый и новый адреса электронной почты, чтобы завершить процесс обновления.",
-            "resend": "Отправить"
+            "resend": "Отправить",
+            "tryAgainLater": "",
+            "tryAgainLaterDescription": ""
         },
         "language": {
             "title": "Язык",
@@ -811,7 +814,14 @@
                 "question1Description": "",
                 "question2Title": "",
                 "question2Description": ""
-            }
+            },
+            "deleteAccTitle": "",
+            "deleteAccDescription": "",
+            "deleteAppTitle": "",
+            "deleteAppDescription": "",
+            "emptyApps": "",
+            "tabApps": "",
+            "tabGuide": ""
         }
     },
     "overallPage": {
@@ -1329,7 +1339,8 @@
         "nominatedNodesTitle": "Назначенные ноды",
         "error": {
             "chooseNotMoreThan16Nodes": "Выберите не более 16 нод"
-        }
+        },
+        "claimTooltip": ""
     },
     "minSendAmountError": "Минимальный размер транзакции составляет {minAmount} {code}",
     "changeValidators": "Изменить валидатора",
@@ -1442,5 +1453,6 @@
     "showHideKeyTitle": "Показать / скрыть кнопку просмотра",
     "changeKeyTitle": "Изменить ключ просмотра",
     "anotherAddress": "Другой адрес",
-    "notFoundPlaceholderText": "По вашему запросу ничего не найдено"
+    "notFoundPlaceholderText": "По вашему запросу ничего не найдено",
+    "minBalanceNote": ""
 }

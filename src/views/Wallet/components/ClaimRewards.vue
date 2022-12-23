@@ -13,9 +13,24 @@
     @click="handleBlockClick"
   >
     <div class="claim-rewards__section">
-      <span class="claim-rewards__title">{{
-        $t(currentWalletInfo?.claimableRewards ? 'claimRewards' : 'rewards')
-      }}</span>
+      <div>
+        <span class="claim-rewards__title"
+          >{{
+            $t(currentWalletInfo?.claimableRewards ? 'claimRewards' : 'rewards')
+          }}
+        </span>
+        <div class="claim-rewards__tooltip">
+          <Tooltip v-if="currentWallet.claimRewardsMessage">
+            <info />
+            <template #content>
+              <span class="claim-rewards__tooltip-info">
+                {{ $t(currentWallet.claimRewardsMessage) }}
+              </span>
+            </template>
+          </Tooltip>
+        </div>
+      </div>
+
       <span class="claim-rewards__note"
         >{{
           !apy
@@ -76,6 +91,7 @@
 </template>
 
 <script>
+import info from '@/assets/icons/info.svg';
 import hotSale from '@/assets/icons/hot-sale.svg';
 import claimBlockLock from '@/assets/icons/claim-block-lock.svg';
 import RoundArrowButton from '@/components/UI/RoundArrowButton';
@@ -85,10 +101,19 @@ import { WALLET_TYPES, OUR_TOKEN } from '@/config/walletType';
 import { ref, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useStore } from 'vuex';
+import Tooltip from '@/components/UI/Tooltip';
 
 export default {
   name: 'ClaimRewards',
-  components: { hotSale, RoundArrowButton, claimBlockLock, Modal, InfoModal },
+  components: {
+    hotSale,
+    RoundArrowButton,
+    claimBlockLock,
+    Modal,
+    InfoModal,
+    Tooltip,
+    info,
+  },
   props: {
     disabled: {
       type: Boolean,
@@ -105,6 +130,14 @@ export default {
   emits: ['prepareClaim', 'prepareXctClaim'],
   setup(props, { emit }) {
     const store = useStore();
+    const width = computed(() => {
+      if (window.innerWidth <= 1286 && window.innerWidth >= 1280) {
+        return '310px';
+      } else if (window.innerWidth <= 1024) {
+        return '280px';
+      }
+      return '326px';
+    });
     const currentWalletInfo = computed(() =>
       props.isCurrentToken
         ? props.currentWallet.tokenBalance
@@ -170,6 +203,7 @@ export default {
     };
 
     return {
+      width,
       reward,
       currency,
       infoModal,
@@ -217,6 +251,10 @@ export default {
       font-size: 18px;
       line-height: 22px;
     }
+  }
+  &__tooltip {
+    display: inline-block;
+    margin-left: 5px;
   }
 
   &__note {

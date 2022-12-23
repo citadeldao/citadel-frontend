@@ -88,6 +88,7 @@ export default {
       store.commit('newWallets/setLoader', true);
       isUserMnemonic.value && (await setMnemonic());
       setNets(checkedNets);
+      // TO DO NEW TYPE ?
       setType(WALLET_TYPES.ONE_SEED);
       createWallets(WALLET_TYPES.ONE_SEED).then(async (success) => {
         if (success) {

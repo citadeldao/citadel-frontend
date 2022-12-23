@@ -368,6 +368,8 @@ export default {
   },
   data() {
     return {
+      showBottom: false,
+      showTop: false,
       windowWidth: window.innerWidth,
       sidebarClass: '',
       timer: null,
@@ -745,11 +747,17 @@ export default {
       flex-direction: column;
       overflow-y: overlay;
       overflow-x: hidden;
-      padding: 15px 0 0;
+      padding: 15px 0 15px;
       border-radius: 8px;
       @include laptop {
         width: 90%;
         margin: 0 auto;
+      }
+      & > .address-item {
+        margin-bottom: 0;
+        &:not(:last-child) {
+          margin-bottom: 15px;
+        }
       }
     }
   }
@@ -837,24 +845,33 @@ export default {
 }
 
 .scroll-shadow {
+  pointer-events: none;
   position: absolute;
   left: 0;
   z-index: 100;
   width: 100%;
-  height: 15px;
+  height: 40px;
   transition: 0.2s ease-in-out;
   opacity: 0;
   box-shadow: none;
 
+  &--top,
+  &--bottom {
+    border-radius: 8px 8px 0 0;
+    background: linear-gradient(
+      180deg,
+      #edf2fc 0%,
+      rgba(233, 238, 247, 0.75) 44.79%,
+      rgba(228, 232, 241, 0) 100%
+    );
+
+    @include laptop {
+      border-radius: 16px 16px 0 0;
+    }
+  }
+
   &--top {
     top: 0;
-    background: -webkit-linear-gradient(
-      270deg,
-      rgba(0, 0, 0, 0.2),
-      transparent
-    );
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.2), transparent);
-    border-radius: 8px 8px 0 0;
     &.active {
       opacity: 1;
     }
@@ -862,9 +879,7 @@ export default {
 
   &--bottom {
     bottom: 0;
-    background: -webkit-linear-gradient(90deg, rgba(0, 0, 0, 0.2), transparent);
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), transparent);
-    border-radius: 0 0 8px 8px;
+    transform: matrix(1, 0, 0, -1, 0, 0);
     &.active {
       opacity: 1;
     }

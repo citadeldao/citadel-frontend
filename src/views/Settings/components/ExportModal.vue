@@ -69,6 +69,7 @@ export default {
     const isCopied = ref(false);
     const copyAddress = () => {
       isCopied.value = true;
+      // TO DO NEW TYPE ?
       copyToClipboard(
         props.currentExportMethod === WALLET_TYPES.ONE_SEED
           ? props.mnemonicPhrase

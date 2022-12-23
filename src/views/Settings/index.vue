@@ -262,7 +262,11 @@ export default {
           title: t('exportWallet.approveExportModalTitle1'),
           desc: t('exportWallet.approveExportModalDesc1'),
         };
-      } else if (currentExportMethod.value === WALLET_TYPES.ONE_SEED) {
+      } else if (
+        [WALLET_TYPES.ONE_SEED, WALLET_TYPES.SEED_PHRASE].includes(
+          currentExportMethod.value
+        )
+      ) {
         return {
           title: t('exportWallet.approveExportModalTitle2'),
           desc: t('exportWallet.approveExportModalDesc2'),
@@ -277,7 +281,11 @@ export default {
           title: t('exportWallet.exportModalTitle1'),
           desc: t('exportWallet.exportModalDesc'),
         };
-      } else if (currentExportMethod.value === WALLET_TYPES.ONE_SEED) {
+      } else if (
+        [WALLET_TYPES.ONE_SEED, WALLET_TYPES.SEED_PHRASE].includes(
+          currentExportMethod.value
+        )
+      ) {
         return {
           title: t('exportWallet.exportModalTitle2'),
           desc: t('exportWallet.exportModalDesc'),
@@ -293,7 +301,11 @@ export default {
         inputError.value = passwordError.value;
 
         return;
-      } else if (currentExportMethod.value === WALLET_TYPES.ONE_SEED) {
+      } else if (
+        [WALLET_TYPES.ONE_SEED, WALLET_TYPES.SEED_PHRASE].includes(
+          currentExportMethod.value
+        )
+      ) {
         if (!currentExportWallet.value.importedFromSeed) {
           // export main account oneSeed
           decodedMnemonic.value = await store.dispatch(

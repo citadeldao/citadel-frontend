@@ -597,6 +597,7 @@
     "youHave": "You have",
     "claimRewards": "Claim rewards",
     "oneSeed": "One Seed",
+    "seedPhrase": "Seed phrase",
     "publicKey": "Public key",
     "hardware": "Hardware",
     "edit": "Edit",
@@ -727,7 +728,14 @@
                 "question1Description": "To link a developer account, click the Get Dev code button and copy it so you can subsequently add it in your Citadel.one user account",
                 "question2Title": "How to get code to test an application?",
                 "question2Description": "For testers to access the dev version of an application, developer should copy the Testing code from the Dev Center on the project layout."
-            }
+            },
+            "deleteAccTitle": "Are you sure you want to delete the account?",
+            "deleteAccDescription": "<span style='color: #6b93c0;'>This will erase your developer account from the list</span>",
+            "deleteAppTitle": "Are you sure you want to delete the app?",
+            "deleteAppDescription": "<span style='color: #6b93c0;'>The app will be deleted immediately. You cannot undo this action.</span>",
+            "emptyApps": "You do not have applications to test",
+            "tabApps": "Apps in development",
+            "tabGuide": "Guides & Questions"
         },
         "subscriptions": {
             "title": "Subscriptions",
@@ -778,6 +786,8 @@
             "validFormatError": "Please type your email in valid format",
             "lastStep": "One last step!",
             "lastStepDescription":"Please, check <span style='font-family: \"Panton_Bold\";'> BOTH </span> old and new email addresses to finalize the email update.",
+            "tryAgainLater": "Already Changed",
+            "tryAgainLaterDescription": "You have already changed your email address, please try again later",
             "resend": "Resend"
         },
         "language": {
@@ -1339,7 +1349,9 @@
         "nominatedNodesTitle": "Nominated nodes:",
         "error": {
             "chooseNotMoreThan16Nodes": "Choose not more than 16 nodes"
-        }
+        },
+        "claimTooltip": "Earning rewards is automatic. Rewards are claimed automatically when validator or a nominator with the same validator claims rewards",
+        "chooseNodeModalDesc1": "To stake your assets, choose nodes and set the amount for delegation.Not all nodes have a particular name. A node mainly shares the same name as a validator address.Take into account that unstaking period for {net} is <span style='color: #0A2778; font-weight: bold;'>{perioud} days</span>."
     },
     "minSendAmountError": "The minimum transaction amount is {minAmount} {code}.",
     "changeValidators": "Change validators",
@@ -1444,5 +1456,6 @@
     "errors": {
         "notEnoughFounds": "Not enough {code} to pay the transaction fee",
         "notAvailableToStake": "Validator is unavailable for stake"
-    }
+    },
+    "minBalanceNote": "At least {amount} should be remained on your balance to keep receiving your staking rewards. Otherwise rewards will be burnt."
 }
