@@ -387,7 +387,15 @@ export default {
       await loadKtAddresses(currentWallet?.value?.id);
       await loadXCTInfo();
       await checkKeplrAddress();
+      await getWalletRewards();
     });
+
+    const getWalletRewards = async () => {
+      if (currentWallet?.value.hasMultiCoinRewards) {
+        const deta = await currentWallet?.value.getRewardsById();
+        console.log(888, deta);
+      }
+    };
 
     watch(
       () => route.params,
