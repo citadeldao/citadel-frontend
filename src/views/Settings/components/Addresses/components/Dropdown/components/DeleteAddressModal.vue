@@ -9,7 +9,9 @@
       <h4 class="delete-address-modal__title">
         {{ text || $t('settings.addresses.deleteModalTitle') }}
       </h4>
-      <h3 v-html="$t('settings.addresses.deleteModalSubtitle')" />
+      <h3
+        v-html="description || $t('settings.addresses.deleteModalSubtitle')"
+      />
       <PrimaryButton
         color="#FFFFFF"
         bg-color="#FA3B33"
@@ -51,6 +53,10 @@ export default {
     isLoading: {
       type: Boolean,
       default: false,
+    },
+    description: {
+      type: String,
+      default: '',
     },
     text: {
       type: String,

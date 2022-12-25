@@ -149,6 +149,7 @@ export async function socketEventHandler({ eventName, data }) {
 
     case 'change-email-client':
       if (data.msg.new === true && data.msg.old === true) {
+        localStorage.removeItem('new-email');
         await store.dispatch('auth/logout');
         window.location.reload();
       }

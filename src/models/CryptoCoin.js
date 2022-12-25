@@ -541,4 +541,16 @@ export default class CryptoCoin {
   static async createWalletByKeplr(addOpts) {
     return new this(addOpts);
   }
+
+  async getRewardsById() {
+    const { error, data } = await citadel.getRewardsById(this.id);
+    if (!error) {
+      return data;
+    }
+    notify({
+      type: 'warning',
+      text: error,
+    });
+    return { total: [], list: [] };
+  }
 }

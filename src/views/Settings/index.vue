@@ -26,7 +26,7 @@
           </div>
         </div>
         <div class="container">
-          <!-- <ExtensionSettings :visibleClass="'comingSoon'" /> -->
+          <ExtensionSettings />
 
           <DeleteAccount />
         </div>
@@ -139,7 +139,7 @@ import ManageViewingKeysModal from './components/ManageViewingKeysModal';
 import ChangeVkModal from './components/ChangeVkModal.vue';
 import Modal from '@/components/Modal';
 import CrossChain from './components/CrossChain';
-// import ExtensionSettings from './components/ExtensionSettings';
+import ExtensionSettings from './components/ExtensionSettings';
 import { computed, provide, ref, onMounted, watch } from 'vue';
 import { WALLET_TYPES, VIEWING_KEY_TYPES } from '@/config/walletType';
 import { i18n } from '@/plugins/i18n';
@@ -165,7 +165,7 @@ export default {
     CreateVkModal,
     CrossChain,
     ChangePassword,
-    // ExtensionSettings,
+    ExtensionSettings,
     // SyncExtension,
   },
   setup() {
@@ -262,7 +262,11 @@ export default {
           title: t('exportWallet.approveExportModalTitle1'),
           desc: t('exportWallet.approveExportModalDesc1'),
         };
-      } else if (currentExportMethod.value === WALLET_TYPES.ONE_SEED) {
+      } else if (
+        [WALLET_TYPES.ONE_SEED, WALLET_TYPES.SEED_PHRASE].includes(
+          currentExportMethod.value
+        )
+      ) {
         return {
           title: t('exportWallet.approveExportModalTitle2'),
           desc: t('exportWallet.approveExportModalDesc2'),
@@ -277,7 +281,11 @@ export default {
           title: t('exportWallet.exportModalTitle1'),
           desc: t('exportWallet.exportModalDesc'),
         };
-      } else if (currentExportMethod.value === WALLET_TYPES.ONE_SEED) {
+      } else if (
+        [WALLET_TYPES.ONE_SEED, WALLET_TYPES.SEED_PHRASE].includes(
+          currentExportMethod.value
+        )
+      ) {
         return {
           title: t('exportWallet.exportModalTitle2'),
           desc: t('exportWallet.exportModalDesc'),
@@ -293,7 +301,11 @@ export default {
         inputError.value = passwordError.value;
 
         return;
-      } else if (currentExportMethod.value === WALLET_TYPES.ONE_SEED) {
+      } else if (
+        [WALLET_TYPES.ONE_SEED, WALLET_TYPES.SEED_PHRASE].includes(
+          currentExportMethod.value
+        )
+      ) {
         if (!currentExportWallet.value.importedFromSeed) {
           // export main account oneSeed
           decodedMnemonic.value = await store.dispatch(

@@ -6,6 +6,7 @@ export default class CryptoCoinKUJIRA extends CryptoCoin {
     this.privateKeyEncoded = opts.privateKeyEncoded || null;
     this.publicKey = opts.publicKey || null;
     this.hasRedelegation = true;
+    this.hasMultiCoinRewards = true;
   }
 
   getPublicKeyDecoded() {

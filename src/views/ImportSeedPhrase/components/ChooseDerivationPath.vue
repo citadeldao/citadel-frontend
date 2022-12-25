@@ -25,7 +25,7 @@
       <div
         class="add-derivation__card"
         @click="generateNewPath"
-        v-if="limitOfCards < maxPaths"
+        v-if="numberOfPaths < maxPaths"
       >
         <seedPhraseIcon class="initial-icon" />
 
@@ -87,7 +87,6 @@ export default {
     const hasPathOptions = computed(() => pathOptions.value.length > 1);
     const numberOfPaths = ref(5);
     const wallets = ref([]);
-    const walletsFromStore = computed(() => store.getters['wallets/wallets']);
     const isInvalid = ref(false);
     const maxPaths = ref(20);
     currentPath.value = pathOptions.value[0].key;
@@ -156,19 +155,9 @@ export default {
 
       return !isChecked || isExist || isInvalid.value;
     });
-    const filteredWalletsByCurNetLength = computed(() => {
-      return walletsFromStore.value.filter(
-        (e) => e.name === customWallet.value.walletInstance?.name
-      ).length;
-    });
-    const limitOfCards = computed(
-      () =>
-        numberOfPaths.value +
-        filteredWalletsByCurNetLength.value -
-        wallets.value.filter((e) => e.alreadyExist).length
-    );
+
     const generateNewPath = () => {
-      if (limitOfCards.value <= maxPaths.value) {
+      if (numberOfPaths.value < maxPaths.value) {
         numberOfPaths.value++;
         selectCustomPathFormat(currentPath.value);
       }
@@ -192,7 +181,6 @@ export default {
       currentPath,
       pathOptions,
       selectCustomPathFormat,
-      limitOfCards,
     };
   },
 };

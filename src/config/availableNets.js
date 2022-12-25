@@ -62,7 +62,7 @@ export const metamaskNets = [
 
 export const trezorNets = ['btc', 'eth', 'bsc', 'tez'];
 
-export const keplrNetworksProtobufFormat = ['starname', 'emoney'];
+export const keplrNetworksProtobufFormat = ['emoney'];
 export const keplrNetworks = [
   { label: 'Cosmos Hub', key: 'cosmoshub-4', net: 'cosmos' },
   { label: 'Akash', key: 'akashnet-2', net: 'akash' },

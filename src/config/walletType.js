@@ -4,11 +4,18 @@ export const WALLET_TYPES = {
   TREZOR: 'trezor',
   LEDGER: 'ledger',
   ONE_SEED: 'oneSeed',
+  SEED_PHRASE: 'seedPhrase',
   PRIVATE_KEY: 'privateKey',
   PUBLIC_KEY: 'publicKey',
   METAMASK: 'metamask',
   KEPLR: 'keplr',
 };
+
+export const PRIVATE_PASSWORD_TYPES = [
+  WALLET_TYPES.ONE_SEED,
+  WALLET_TYPES.PRIVATE_KEY,
+  WALLET_TYPES.SEED_PHRASE,
+];
 
 export const isHardwareWallet = (type) =>
   [WALLET_TYPES.LEDGER, WALLET_TYPES.TREZOR].includes(type);
@@ -17,6 +24,10 @@ export const types = {
   oneSeed: {
     color: '#6A4BFF',
     text: t('oneSeed'),
+  },
+  seedPhrase: {
+    color: '#0F95B2',
+    text: t('seedPhrase'),
   },
   privateKey: {
     color: '#00A3FF',

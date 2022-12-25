@@ -67,12 +67,7 @@
       }}</pre
     >
     <div
-      v-if="
-        signerWallet &&
-        [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(
-          signerWallet.type
-        )
-      "
+      v-if="signerWallet && PRIVATE_PASSWORD_TYPES.includes(signerWallet.type)"
       class="password-wrap"
     >
       <Input
@@ -98,7 +93,7 @@ import Input from '@/components/UI/Input';
 import linkIcon from '@/assets/icons/link.svg';
 import linkIconHovered from '@/assets/icons/link_hovered.svg';
 
-import { WALLET_TYPES } from '@/config/walletType';
+import { PRIVATE_PASSWORD_TYPES } from '@/config/walletType';
 
 import { ref, markRaw } from 'vue';
 
@@ -139,7 +134,13 @@ export default {
       arrowDownIcon.value = markRaw(val.default);
     });
 
-    return { showTx, WALLET_TYPES, arrowDownIcon, password, onChange };
+    return {
+      showTx,
+      PRIVATE_PASSWORD_TYPES,
+      arrowDownIcon,
+      password,
+      onChange,
+    };
   },
 };
 </script>

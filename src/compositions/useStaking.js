@@ -382,7 +382,12 @@ export default function useStaking(stakeNodes, list) {
     } else if (mode.value === 'stake') {
       return {
         title: t('staking.chooseNodeForStaking'),
-        desc: currentWallet.value.unstakePerioudFrom ?
+        desc: currentWallet.value.net === 'polkadot' ?
+        `${t('polkadot.chooseNodeModalDesc1', {
+          net: currentWallet.value.name,
+          perioud: currentWallet.value.unstakeingPerioud,
+        })}`:
+         currentWallet.value.unstakePerioudFrom ?
           `${t('staking.chooseNodeModalDescWithFrom', {
             net: currentWallet.value.name,
             perioudFrom: currentWallet.value.unstakePerioudFrom,

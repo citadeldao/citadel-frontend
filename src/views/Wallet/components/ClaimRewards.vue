@@ -13,9 +13,24 @@
     @click="handleBlockClick"
   >
     <div class="claim-rewards__section">
-      <span class="claim-rewards__title">{{
-        $t(currentWalletInfo?.claimableRewards ? 'claimRewards' : 'rewards')
-      }}</span>
+      <div>
+        <span class="claim-rewards__title"
+          >{{
+            $t(currentWalletInfo?.claimableRewards ? 'claimRewards' : 'rewards')
+          }}
+        </span>
+        <div class="claim-rewards__tooltip">
+          <Tooltip v-if="currentWallet.claimRewardsMessage">
+            <info />
+            <template #content>
+              <span class="claim-rewards__tooltip-info">
+                {{ $t(currentWallet.claimRewardsMessage) }}
+              </span>
+            </template>
+          </Tooltip>
+        </div>
+      </div>
+
       <span class="claim-rewards__note"
         >{{
           !apy
@@ -40,6 +55,41 @@
           class="claim-rewards__apy"
           >APY</span
         >
+        <div class="claim-rewards__rewards-list-tooltip">
+          <el-tooltip
+            v-if="currentWallet.hasMultiCoinRewards"
+            placement="bottom"
+            effect="rewards-list-tooltip"
+            :disabled="!rewardsList.length"
+          >
+            <info
+              class="claim-rewards__rewards-list-tooltip-icon"
+              @click="visible = !visible"
+            />
+            <template #content>
+              <div class="claim-rewards__rewards-list-tooltip-content">
+                <div
+                  class="claim-rewards__rewrd-item"
+                  v-for="item in rewardsList"
+                  :key="item.code"
+                >
+                  <span
+                    class="claim-rewards__rewrd-item_value"
+                    v-pretty-number="{
+                      value: item.amount,
+                      currency: item.code,
+                    }"
+                  >
+                    {{ item.amount }}
+                  </span>
+                  <span class="claim-rewards__rewrd-item_currency">
+                    {{ item.code }}
+                  </span>
+                </div>
+              </div>
+            </template>
+          </el-tooltip>
+        </div>
       </span>
     </div>
     <div
@@ -76,19 +126,29 @@
 </template>
 
 <script>
+import info from '@/assets/icons/info.svg';
 import hotSale from '@/assets/icons/hot-sale.svg';
 import claimBlockLock from '@/assets/icons/claim-block-lock.svg';
 import RoundArrowButton from '@/components/UI/RoundArrowButton';
 import Modal from '@/components/Modal';
 import InfoModal from './InfoModal';
 import { WALLET_TYPES, OUR_TOKEN } from '@/config/walletType';
-import { ref, computed } from 'vue';
+import { ref, computed, inject } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useStore } from 'vuex';
+import Tooltip from '@/components/UI/Tooltip';
 
 export default {
   name: 'ClaimRewards',
-  components: { hotSale, RoundArrowButton, claimBlockLock, Modal, InfoModal },
+  components: {
+    hotSale,
+    RoundArrowButton,
+    claimBlockLock,
+    Modal,
+    InfoModal,
+    Tooltip,
+    info,
+  },
   props: {
     disabled: {
       type: Boolean,
@@ -105,6 +165,15 @@ export default {
   emits: ['prepareClaim', 'prepareXctClaim'],
   setup(props, { emit }) {
     const store = useStore();
+    const rewardsList = inject('rewardsList');
+    const width = computed(() => {
+      if (window.innerWidth <= 1286 && window.innerWidth >= 1280) {
+        return '310px';
+      } else if (window.innerWidth <= 1024) {
+        return '280px';
+      }
+      return '326px';
+    });
     const currentWalletInfo = computed(() =>
       props.isCurrentToken
         ? props.currentWallet.tokenBalance
@@ -170,6 +239,8 @@ export default {
     };
 
     return {
+      rewardsList,
+      width,
       reward,
       currency,
       infoModal,
@@ -201,6 +272,9 @@ export default {
     padding: 16px 20px 15px 24px;
     height: 126px;
   }
+  &__rewards-list-tooltip {
+    display: inline-block;
+  }
 
   &__section {
     margin-left: 0;
@@ -217,6 +291,10 @@ export default {
       font-size: 18px;
       line-height: 22px;
     }
+  }
+  &__tooltip {
+    display: inline-block;
+    margin-left: 5px;
   }
 
   &__note {
@@ -271,8 +349,29 @@ export default {
     width: 79px;
     height: 99px;
   }
+  &__rewards-list-tooltip-icon {
+    margin-bottom: 2px;
+    margin-left: 4px;
+    &:hover {
+      fill: $too-dark-blue;
+    }
+  }
+  &__rewards-list-tooltip-content {
+    padding: 10px 0 8px 11px;
+    width: 130px;
+    max-height: 230px;
+    overflow: auto;
+  }
+  &__rewrd-item {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    &_value {
+      color: $blue;
+      margin-right: 3px;
+    }
+  }
 }
-
 .noStaked {
   background: $blue-gradient;
 

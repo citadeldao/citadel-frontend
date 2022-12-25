@@ -2,7 +2,7 @@
   <div
     v-if="
       (type === STAKE || button2 !== SWAP || currentWallet.hasClaim) &&
-      !isViewOnly &&
+      (!isViewOnly || currentToken.config.net === 'bsc_xct') &&
       type !== TRANSACTIONS
     "
     class="wallet-buttons-panel"

@@ -325,6 +325,8 @@ export default {
     const { t } = useI18n();
     const store = useStore();
     const route = useRoute();
+    const rewardsList = ref([]);
+    provide('rewardsList', rewardsList);
     const { currency, currentWallet, isHardwareWallet, currentToken } =
       useWallets();
     const subtokensIsLoading = ref(false);
@@ -387,7 +389,15 @@ export default {
       await loadKtAddresses(currentWallet?.value?.id);
       await loadXCTInfo();
       await checkKeplrAddress();
+      await getWalletRewards();
     });
+
+    const getWalletRewards = async () => {
+      if (currentWallet?.value.hasMultiCoinRewards) {
+        const data = await currentWallet?.value.getRewardsById();
+        rewardsList.value = data.total.filter((item) => item.code);
+      }
+    };
 
     watch(
       () => route.params,
@@ -402,6 +412,7 @@ export default {
             await loadKtAddresses(currentWallet?.value?.id);
             await loadXCTInfo();
             await checkKeplrAddress();
+            await getWalletRewards();
           }
         }
       },
@@ -1157,6 +1168,7 @@ export default {
     );
 
     return {
+      rewardsList,
       WALLET_TYPES,
       currentWalletType,
       currentWallet,
