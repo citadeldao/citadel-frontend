@@ -543,6 +543,7 @@ export default {
     };
 
     const claim = async () => {
+      showConfirmClaim.value = false;
       // KEPLR
       if (currentWallet.value.type === WALLET_TYPES.KEPLR) {
         isLoading.value = true;
@@ -609,7 +610,6 @@ export default {
 
         if (data.ok) {
           txHash.value = [data.data.txhash];
-          showConfirmClaim.value = false;
           showConfirmUnstakedClaim.value = false;
           showClaimSuccessModal.value = true;
           isLoading.value = false;

@@ -165,7 +165,10 @@
         <img src="@/assets/gif/loader.gif" alt="" />
       </Modal>
     </teleport>
-    <teleport v-if="showModal || showLedgerModalContent" to="body">
+    <teleport
+      v-if="(showModal || showLedgerModalContent) && !isLoading"
+      to="body"
+    >
       <Modal>
         <!-- if POLKADOT -->
         <ModalContent
