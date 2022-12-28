@@ -193,7 +193,7 @@ import useWallets from '@/compositions/useWallets';
 import extensionsSocketTypes from '@/config/extensionsSocketTypes';
 
 import useApi from '@/api/useApi';
-import { keplrNetworksProtobufFormat } from '@/config/availableNets';
+// import { keplrNetworksProtobufFormat } from '@/config/availableNets';
 import citadel from '@citadeldao/lib-citadel';
 import TransactionInfo from './components/TransactionInfo';
 import MessageInfo from './components/MessageInfo';
@@ -796,13 +796,10 @@ export default {
         !extensionTransactionForSign.value.messageScrt
       ) {
         let keplrResult;
-        const signType =
-          extensionTransactionForSign.value.transaction.direct &&
-          extensionTransactionForSign.value.transaction.json.memo
-            .toLowerCase()
-            .includes('permission')
-            ? 'direct'
-            : 'json';
+
+        // const signType = keplrConnector.value.getSignType(
+        //   extensionTransactionForSign.value
+        // );
 
         try {
           keplrResult = await keplrConnector.value.sendKeplrTransaction(
@@ -831,37 +828,14 @@ export default {
           return;
         }
 
-        const defaultTx = {
-          ...keplrResult.signedTx,
-          signType,
-          publicKey: await signerWallet.value.getPublicKeyDecoded(),
-          signature: keplrResult.signature,
-        };
-        const defaultSendTx = extensionTransactionForSign.value.transaction;
-        const protobufTx = {
-          signType,
-          mode: 'sync',
-          tx: {
-            memo: defaultSendTx.json.memo || '',
-            fee: keplrResult.signedTx.fee,
-            msg: defaultSendTx.json.msgs,
-            signatures: [
-              {
-                account_number: keplrResult.fullResponse.signed.account_number,
-                pub_key: keplrResult.fullResponse.signature.pub_key,
-                sequence: keplrResult.fullResponse.signed.sequence,
-                signature: keplrResult.fullResponse.signature.signature,
-              },
-            ],
-          },
-        };
-
-        // https://core-fix-cosmos-grant.3ahtim54r.ru/api
+        const hash = await keplrConnector.value.getOutputHash(
+          signerWallet.value,
+          extensionTransactionForSign.value,
+          keplrResult
+        );
 
         const data = await useApi('wallet').sendSignedTransaction({
-          hash: keplrNetworksProtobufFormat.includes(signerWallet.value.net)
-            ? protobufTx
-            : defaultTx,
+          hash,
           deviceType: WALLET_TYPES.KEPLR,
           proxy: false,
           network: signerWallet.value.net,
