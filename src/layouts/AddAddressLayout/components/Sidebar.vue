@@ -595,6 +595,12 @@ export default {
     @include laptop {
       max-width: calc(#{$sidebar-max-width-laptop} - 50px);
     }
+    &-citadel {
+      @media (max-width: 1279.96px) and (min-width: 1025px) {
+        margin-top: -19px;
+        margin-left: -19px;
+      }
+    }
   }
   &__overall {
     max-width: calc(#{$sidebar-max-width} - 50px);
