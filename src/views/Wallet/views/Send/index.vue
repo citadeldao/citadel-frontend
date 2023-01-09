@@ -477,7 +477,6 @@ import notify from '@/plugins/notify';
 
 import { useI18n } from 'vue-i18n';
 import AddressItem from '@/layouts/AddAddressLayout/components/CutomLists/components/AddressItem';
-import { keplrNetworksProtobufFormat } from '@/config/availableNets';
 import { getDecorateLabel } from '@/config/decorators';
 import amountInputValidation from '@/helpers/amountInputValidation';
 import MinBalanceWarning from '@/views/Wallet/views/Stake/components/MinBalanceWarning';
@@ -1175,33 +1174,14 @@ export default {
 
         const { currentWallet: parentWallet } = useWallets();
 
-        const defaultTx = {
-          ...keplrResult.signedTx,
-          publicKey: await parentWallet.value.getPublicKeyDecoded(),
-          signature: keplrResult.signature,
-        };
+        const hash = await keplrConnector.value.getOutputHash(
+          parentWallet.value,
+          rawTx.value,
+          keplrResult
+        );
 
-        const defaultSendTx = rawTx.value.transaction || rawTx.value;
-        const protobufTx = {
-          mode: 'sync',
-          tx: {
-            memo: defaultSendTx.json.memo || '',
-            fee: keplrResult.signedTx.fee,
-            msg: defaultSendTx.json.msgs,
-            signatures: [
-              {
-                account_number: keplrResult.fullResponse.signed.account_number,
-                pub_key: keplrResult.fullResponse.signature.pub_key,
-                sequence: keplrResult.fullResponse.signed.sequence,
-                signature: keplrResult.fullResponse.signature.signature,
-              },
-            ],
-          },
-        };
         const data = await useApi('wallet').sendSignedTransaction({
-          hash: keplrNetworksProtobufFormat.includes(parentWallet.value.net)
-            ? protobufTx
-            : defaultTx,
+          hash,
           deviceType: WALLET_TYPES.KEPLR,
           proxy: false,
           network: parentWallet.value.net,
