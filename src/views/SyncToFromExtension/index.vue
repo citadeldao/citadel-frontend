@@ -432,7 +432,14 @@ export default {
                   w.net,
                   w.privateKeyEncoded,
                   password.value
-                ).data;
+                );
+
+              const encodedKey = await citadel.encodePrivateKeyByPassword(
+                w.net,
+                decodedPrivateKey.data,
+                passwordExtension.value
+              );
+
               return {
                 mnemonic: CryptoJS.AES.encrypt(
                   decodedMnemonic,
@@ -443,11 +450,7 @@ export default {
                     type: WALLET_TYPES.ONE_SEED,
                     net: w.net,
                     address: w.address,
-                    privateKeyEncoded: await citadel.encodePrivateKeyByPassword(
-                      w.net,
-                      decodedPrivateKey,
-                      passwordExtension.value
-                    ).data,
+                    privateKeyEncoded: encodedKey.data,
                   },
                 ],
               };
