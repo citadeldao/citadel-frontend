@@ -30,7 +30,9 @@ export default function useLedger() {
     let message = error;
 
     for (const key in customErrors) {
-      if (customErrors[key].find((check) => error.message.includes(check))) {
+      if (
+        customErrors[key].find((check) => message && message.includes(check))
+      ) {
         const code = currentWallet.value.code;
         message = t(key, { code });
         return message;
