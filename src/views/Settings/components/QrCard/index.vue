@@ -40,7 +40,7 @@ import Input from '@/components/UI/Input';
 import ModalContent from '@/components/ModalContent';
 import QrAddressItem from './components/QrAddressItem';
 import useCheckItem from '@/compositions/useCheckItem';
-import { WALLET_TYPES } from '@/config/walletType';
+import { PRIVATE_PASSWORD_TYPES } from '@/config/walletType';
 import useWallets from '@/compositions/useWallets';
 
 export default {
@@ -65,11 +65,7 @@ export default {
     };
     const wallets = computed(() => {
       return walletsList.value
-        .filter(
-          (wallet) =>
-            wallet.type === WALLET_TYPES.ONE_SEED ||
-            wallet.type === WALLET_TYPES.PRIVATE_KEY
-        )
+        .filter((wallet) => PRIVATE_PASSWORD_TYPES.includes(wallet.type))
         .filter(
           (v, i, a) =>
             a.findIndex(
@@ -90,8 +86,7 @@ export default {
             data.address
               ?.toLowerCase()
               .includes(keyword.value.toLowerCase())) &&
-          (data.type === WALLET_TYPES.ONE_SEED ||
-            data.type === WALLET_TYPES.PRIVATE_KEY)
+          PRIVATE_PASSWORD_TYPES.includes(data.type)
       );
     });
     const modalDesc = computed(() =>

@@ -19,7 +19,18 @@
     <div v-if="dataLoaded" class="send__loader">
       <Loading />
     </div>
+
     <form v-if="!dataLoaded" @submit.prevent="submitHandler">
+      <MinBalanceWarning
+        v-if="currentWallet.minBalance && currentWallet.balance.stake"
+        class="send__min-balance-note"
+        icon="exclamation"
+        :content="
+          $t('minBalanceNote', {
+            amount: `<span style='font-weight: 800;font-family: Panton_ExtraBold;'>${currentWallet.minBalance} ${currentWallet.code}</span>`,
+          })
+        "
+      />
       <div v-if="itemsNetworks.length && bridgeTargetNet" class="send__section">
         <div class="send__switch">
           <span>{{ $t('sendAssetsToAnotherNetwork') }}</span>
@@ -47,7 +58,10 @@
         </div>
       </div>
       <div class="send__section">
-        <div class="send__section-input">
+        <div
+          class="send__section-input"
+          v-click-away="() => (showNetworkTargetWallets = false)"
+        >
           <Input
             id="to"
             v-model="toAddress"
@@ -250,53 +264,54 @@
   </div>
   <teleport v-if="showModal" to="body">
     <Modal>
-      <!--Confirm Modal -->
-      <ModalContent
-        v-if="showConfirmModal"
-        v-click-away="confirmModalCloseHandler"
-        :title="$t('sendModal.title1')"
-        :desc="$t('sendModal.desc1')"
-        button-text="confirm"
-        type="action"
-        :disabled="confirmModalDisabled"
-        @close="confirmModalCloseHandler"
-        @buttonClick="confirmClickHandler"
-      >
-        <div v-if="isLoading" class="loader">
-          <Loading />
-        </div>
-        <ActionModalContent
-          v-model:password="password"
-          :hide-fee="!!isSendToAnotherNetwork"
-          :password-error="passwordError"
-          :to="toAddress"
-          :wallet="currentWallet"
-          :amount="amount"
-          :confirm-clicked="confirmClicked"
-          :max-amount="maxAmount"
-          :total-amount="totalAmount"
-          :fees="fees"
-          :memo="memo"
-          :fee-type="feeType"
-          :hide-password="
-            isHardwareWallet ||
-            [WALLET_TYPES.METAMASK, WALLET_TYPES.KEPLR].includes(
-              currentWalletType
-            )
-          "
-          :custom-fee="customFee"
-          :current-token="currentToken"
-          :fee="fee"
-          :iost-fee="iostFee"
-          :adding="adding"
-          @select-fee="openFeeSelectModal"
-          @submitSend="confirmClickHandler"
-          @update:password="onChangePassword"
-        />
-        <!-- Changing Amount Modals -->
-        <!-- <Modal v-if="showChangingAmountModal"> -->
-        <!-- Decrease Amount modal -->
-        <!-- <ModalContent
+      <div v-if="isLoading" class="loader">
+        <Loading />
+      </div>
+      <template v-else>
+        <!--Confirm Modal -->
+        <ModalContent
+          v-if="showConfirmModal"
+          v-click-away="confirmModalCloseHandler"
+          :title="$t('sendModal.title1')"
+          :desc="$t('sendModal.desc1')"
+          button-text="confirm"
+          type="action"
+          :disabled="confirmModalDisabled"
+          @close="confirmModalCloseHandler"
+          @buttonClick="confirmClickHandler"
+        >
+          <ActionModalContent
+            v-model:password="password"
+            :hide-fee="!!isSendToAnotherNetwork"
+            :password-error="passwordError"
+            :to="toAddress"
+            :wallet="currentWallet"
+            :amount="amount"
+            :confirm-clicked="confirmClicked"
+            :max-amount="maxAmount"
+            :total-amount="totalAmount"
+            :fees="fees"
+            :memo="memo"
+            :fee-type="feeType"
+            :hide-password="
+              isHardwareWallet ||
+              [WALLET_TYPES.METAMASK, WALLET_TYPES.KEPLR].includes(
+                currentWalletType
+              )
+            "
+            :custom-fee="customFee"
+            :current-token="currentToken"
+            :fee="fee"
+            :iost-fee="iostFee"
+            :adding="adding"
+            @select-fee="openFeeSelectModal"
+            @submitSend="confirmClickHandler"
+            @update:password="onChangePassword"
+          />
+          <!-- Changing Amount Modals -->
+          <!-- <Modal v-if="showChangingAmountModal"> -->
+          <!-- Decrease Amount modal -->
+          <!-- <ModalContent
             v-if="showDecreaseAmountModal"
             v-click-away="cancelDecreaseAmount"
             :title="$t('sendModal.changingModals.title')"
@@ -318,8 +333,8 @@
               :fee="fee.fee"
             />
           </ModalContent> -->
-        <!-- Increase Amount modal -->
-        <!-- <ModalContent
+          <!-- Increase Amount modal -->
+          <!-- <ModalContent
             v-else-if="showIncreaseAmountModal"
             v-click-away="cancelIncreaseAmount"
             :title="$t('sendModal.changingModals.title')"
@@ -341,85 +356,86 @@
               :fee="fee.fee"
             />
           </ModalContent> -->
-        <!-- </Modal> -->
-      </ModalContent>
+          <!-- </Modal> -->
+        </ModalContent>
 
-      <transition name="fade">
-        <Modal v-if="showFeeSelectModal">
-          <SelectFeeModal
-            v-click-away="closeFeeSelectModal"
-            :fees="fees"
-            :fee-type="feeType"
-            :custom-fee="customFee"
-            :currency="
-              currentToken ? currentToken.parentCoin.code : currentWallet.code
-            "
-            :balance="balance"
-            @close="closeFeeSelectModal"
-            @confirm="updateFee"
-          />
-        </Modal>
-      </transition>
+        <transition name="fade">
+          <Modal v-if="showFeeSelectModal">
+            <SelectFeeModal
+              v-click-away="closeFeeSelectModal"
+              :fees="fees"
+              :fee-type="feeType"
+              :custom-fee="customFee"
+              :currency="
+                currentToken ? currentToken.parentCoin.code : currentWallet.code
+              "
+              :balance="balance"
+              @close="closeFeeSelectModal"
+              @confirm="updateFee"
+            />
+          </Modal>
+        </transition>
 
-      <!--Confirm Ledger Modals-->
-      <ConnectLedgerModal
-        v-if="showConnectLedgerModal"
-        v-click-away="connectLedgerCloseHandler"
-        :error="ledgerError"
-        @close="connectLedgerCloseHandler"
-        @buttonClick="connectLedgerClickHandler"
-      />
-      <OpenAppLedgerModal
-        v-if="showAppLedgerModal"
-        v-click-away="appLedgerCloseHandler"
-        @close="appLedgerCloseHandler"
-        @buttonClick="appLedgerClickHandler"
-      />
-      <ConfirmLedgerModal
-        v-if="showConfirmLedgerModal"
-        @close="confirmLedgerCloseHandler"
-      />
-      <RejectLedgerModal
-        v-if="showRejectedLedgerModal"
-        v-click-away="rejectedLedgerCloseHandler"
-        @close="rejectedLedgerCloseHandler"
-        @buttonClick="rejectedLedgerClickHandler"
-      />
-
-      <!--Error Modal -->
-      <ModalContent
-        v-if="txError"
-        v-click-away="errorCloseHandler"
-        title="Warning"
-        icon="warningIcon"
-        :desc="txError"
-        button-text="ok"
-        type="warning"
-        @close="errorCloseHandler"
-        @buttonClick="errorClickHandler"
-      />
-      <!--Success Modal -->
-      <ModalContent
-        v-if="showSuccessModal && !txError"
-        v-click-away="successCloseHandler"
-        title="Success"
-        desc="The transaction is in progress"
-        button-text="ok"
-        type="success"
-        icon="success"
-        @close="successCloseHandler"
-        @buttonClick="successClickHandler"
-      >
-        <SuccessModalContent
-          v-model:txComment="txComment"
-          :to="toAddress"
-          :wallet="currentWallet"
-          :amount="amount"
-          :fee="fee.fee"
-          type="transfer"
-          :tx-hash="txHash"
+        <!--Confirm Ledger Modals-->
+        <ConnectLedgerModal
+          v-if="showConnectLedgerModal"
+          v-click-away="connectLedgerCloseHandler"
+          :error="ledgerError"
+          @close="connectLedgerCloseHandler"
+          @buttonClick="connectLedgerClickHandler"
         />
-      </ModalContent>
+        <OpenAppLedgerModal
+          v-if="showAppLedgerModal"
+          v-click-away="appLedgerCloseHandler"
+          @close="appLedgerCloseHandler"
+          @buttonClick="appLedgerClickHandler"
+        />
+        <ConfirmLedgerModal
+          v-if="showConfirmLedgerModal"
+          @close="confirmLedgerCloseHandler"
+        />
+        <RejectLedgerModal
+          v-if="showRejectedLedgerModal"
+          v-click-away="rejectedLedgerCloseHandler"
+          @close="rejectedLedgerCloseHandler"
+          @buttonClick="rejectedLedgerClickHandler"
+        />
+
+        <!--Error Modal -->
+        <ModalContent
+          v-if="txError"
+          v-click-away="errorCloseHandler"
+          title="Warning"
+          icon="warningIcon"
+          :desc="txError"
+          button-text="ok"
+          type="warning"
+          @close="errorCloseHandler"
+          @buttonClick="errorClickHandler"
+        />
+        <!--Success Modal -->
+        <ModalContent
+          v-if="showSuccessModal && !txError"
+          v-click-away="successCloseHandler"
+          title="Success"
+          desc="The transaction is in progress"
+          button-text="ok"
+          type="success"
+          icon="success"
+          @close="successCloseHandler"
+          @buttonClick="successClickHandler"
+        >
+          <SuccessModalContent
+            v-model:txComment="txComment"
+            :to="toAddress"
+            :wallet="currentWallet"
+            :amount="amount"
+            :fee="fee.fee"
+            type="transfer"
+            :tx-hash="txHash"
+          />
+        </ModalContent>
+      </template>
     </Modal>
   </teleport>
 </template>
@@ -464,6 +480,7 @@ import AddressItem from '@/layouts/AddAddressLayout/components/CutomLists/compon
 import { keplrNetworksProtobufFormat } from '@/config/availableNets';
 import { getDecorateLabel } from '@/config/decorators';
 import amountInputValidation from '@/helpers/amountInputValidation';
+import MinBalanceWarning from '@/views/Wallet/views/Stake/components/MinBalanceWarning';
 
 export default {
   name: 'Send',
@@ -489,6 +506,7 @@ export default {
     OpenAppLedgerModal,
     RejectLedgerModal,
     AddressItem,
+    MinBalanceWarning,
   },
   props: {
     currentWallet: {
@@ -542,7 +560,7 @@ export default {
       txHash,
       txError,
       clearTxData,
-      iostFee,
+      feeInfo,
       adding,
       resMaxAmount,
       isSendToAnotherNetwork,
@@ -775,7 +793,7 @@ export default {
         return balance.value?.mainBalance;
       }
 
-      return props.currentWallet.hasPledged
+      return !props.currentWallet.hasFee
         ? resMaxAmount.value
         : balance.value?.mainBalance > fee.value.fee
         ? BigNumber(balance.value?.mainBalance).minus(fee.value.fee).toNumber()
@@ -789,7 +807,9 @@ export default {
     const feeType = ref('medium');
     const fee = computed(() =>
       // fee is object to keep fee-appropriate key (eg gasPrice)
-      feeType.value === 'custom'
+      !props.currentWallet.hasFee
+        ? { fee: feeInfo.value }
+        : feeType.value === 'custom'
         ? { fee: customFee.value }
         : fees.value?.[feeType.value] || { fee: 0 }
     );
@@ -1423,7 +1443,7 @@ export default {
       showRejectedLedgerModal,
       rejectedLedgerCloseHandler,
       rejectedLedgerClickHandler,
-      iostFee,
+      feeInfo,
       adding,
       currentWalletType,
       prepareLoading,
@@ -1444,19 +1464,25 @@ export default {
 <style lang="scss" scoped>
 .loader {
   position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
   display: flex;
-  align-items: center;
   justify-content: center;
-  height: 100%;
-  width: 100%;
-  background: white;
-  z-index: 10;
+  align-items: center;
+  background-color: rgba($black, 0.2);
 }
 
 .send {
   width: 100%;
   flex-grow: 1;
   padding: 34px 0 120px 0;
+
+  &__min-balance-note {
+    margin-bottom: 25px;
+  }
 
   & form {
     display: flex;

@@ -3,7 +3,7 @@ import { confirmCode } from './confirmCode';
 import { logout } from './logout';
 import { deleteAccount } from './deleteAccount';
 import { getSocketToken } from './getSocketToken';
-import { changeEmail } from './changeEmail';
+import { changeEmail, getChangeEmailInfo } from './changeEmail';
 import { authWeb3 } from './authWeb3';
 import { confirmWeb3 } from './confirmWeb3';
 
@@ -14,6 +14,7 @@ export const auth = {
   getSocketToken,
   deleteAccount,
   changeEmail,
+  getChangeEmailInfo,
   authWeb3,
   confirmWeb3,
 };

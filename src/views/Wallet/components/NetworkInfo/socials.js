@@ -733,4 +733,18 @@ export default {
       href: 'https://www.coingecko.com/en/categories/avalanche-ecosystemi',
     },
   },
+  kujira: {
+    web: {
+      title: 'kujira.app',
+      href: 'https://kujira.app/',
+    },
+    twitter: {
+      title: '@TeamKujira',
+      href: 'TeamKujira',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/kujira',
+    },
+  },
 };

@@ -60,11 +60,16 @@ export default {
         updateCheckedAddresses(checkedAddresses.value);
     };
     const checkAll = () => {
-      let list = props.list;
-      if (checkedAddresses.value.length === list.length) return;
-      for (const key in list) {
-        if (Object.hasOwnProperty.call(list, key)) {
-          addItem(list[key]);
+      const list = props.list;
+      const filteredListByExist = list.filter(
+        (listItem) =>
+          checkedAddresses.value.findIndex(
+            (chkdAdrs) => chkdAdrs.id === listItem.id
+          ) === -1
+      );
+      for (const key in filteredListByExist) {
+        if (Object.hasOwnProperty.call(filteredListByExist, key)) {
+          addItem(filteredListByExist[key]);
         }
       }
     };

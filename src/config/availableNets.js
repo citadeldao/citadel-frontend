@@ -49,6 +49,7 @@ export const ledgerNets = [
   'omniflix',
   'teritori',
   'avalanche',
+  'kujira',
 ];
 
 export const metamaskNets = [
@@ -63,7 +64,7 @@ export const metamaskNets = [
 
 export const trezorNets = ['btc', 'eth', 'bsc', 'tez'];
 
-export const keplrNetworksProtobufFormat = ['starname', 'emoney'];
+export const keplrNetworksProtobufFormat = ['emoney'];
 export const keplrNetworks = [
   { label: 'Cosmos Hub', key: 'cosmoshub-4', net: 'cosmos' },
   { label: 'Akash', key: 'akashnet-2', net: 'akash' },
@@ -114,6 +115,7 @@ export const keplrNetworks = [
   { label: 'Jackal', key: 'jackal-1', net: 'jackal' },
   { label: 'Omniflix', key: 'omniflixhub-1', net: 'omniflix' },
   { label: 'Teritori', key: 'teritori-1', net: 'teritori' },
+  { label: 'Kujira', key: 'kaiyo-1', net: 'kujira' },
 ];
 
 export const showAssetsExep = ['secret', 'bsc'];

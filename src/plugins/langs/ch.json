@@ -496,6 +496,7 @@
     "cancel": "频道",
     "enterYourCitadelPassword": "输入您的Citadel密码",
     "show": "显示",
+    "hide": "",
     "yearAbbr": "年",
     "monthAbbr": "月",
     "custom": "自定义",
@@ -589,6 +590,7 @@
     "youHave": "您拥有",
     "claimRewards": "提取奖励",
     "oneSeed": "助记词",
+    "seedPhrase": "",
     "publicKey": "公钥",
     "hardware": "硬件",
     "edit": "编辑",
@@ -752,7 +754,9 @@
             "validFormatError": "请输入正确格式的邮箱",
             "lastStep": "最后一步！",
             "lastStepDescription": "请检查 <span style='font-family: \"Panton_Bold\";'>  </span> 新旧邮箱地址以完成邮箱更新",
-            "resend": "重新发送"
+            "resend": "重新发送",
+            "tryAgainLater": "",
+            "tryAgainLaterDescription": ""
         },
         "language": {
             "title": "语言",
@@ -803,7 +807,22 @@
             "accsTitle": "",
             "appsTitle": "测试应用程序",
             "searchLabel": "应用程序代码",
-            "searchPlaceholder": "输入代码"
+            "searchPlaceholder": "输入代码",
+            "guideTitle": "",
+            "guideTitleDescription": "",
+            "guides": {
+                "question1Title": "",
+                "question1Description": "",
+                "question2Title": "",
+                "question2Description": ""
+            },
+            "deleteAccTitle": "",
+            "deleteAccDescription": "",
+            "deleteAppTitle": "",
+            "deleteAppDescription": "",
+            "emptyApps": "",
+            "tabApps": "",
+            "tabGuide": ""
         }
     },
     "overallPage": {
@@ -1278,6 +1297,11 @@
             "title": "Avalanche",
             "description":"",
             "shortDescription": ""
+        },
+        "kujira":{
+            "title": "Kujira",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "运行时间",
@@ -1326,7 +1350,8 @@
         "nominatedNodesTitle": "指定节点：",
         "error": {
             "chooseNotMoreThan16Nodes": "选择最多16个节点"
-        }
+        },
+        "claimTooltip": ""
     },
     "minSendAmountError": "最低交易金额为 {minAmount} {code}",
     "changeValidators": "切换节点",
@@ -1439,5 +1464,10 @@
     "showHideKeyTitle": "展示/收起查看密钥",
     "changeKeyTitle": "更改查看密钥",
     "anotherAddress": "其它地址",
+<<<<<<< HEAD
     "notFoundPlaceholderText": "您的请求未找到结果"
+=======
+    "notFoundPlaceholderText": "您的请求未找到结果",
+    "minBalanceNote": ""
+>>>>>>> blockchain-integration
 }

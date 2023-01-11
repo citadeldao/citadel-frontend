@@ -51,7 +51,7 @@ export default class CryptoCoin {
       frozenBalance: 'balanceTooltipInfo.frozenBalanceBalanceInfo2',
     };
     this.isCosmosNetwork = cosmosNetworks.includes(this.net);
-    opts.config.nativeTokenName
+    opts.config?.nativeTokenName
       ? (this.nativeTokenName = opts.config.nativeTokenName)
       : '';
   }
@@ -540,5 +540,17 @@ export default class CryptoCoin {
   // Keplr wallet factory
   static async createWalletByKeplr(addOpts) {
     return new this(addOpts);
+  }
+
+  async getRewardsById() {
+    const { error, data } = await citadel.getRewardsById(this.id);
+    if (!error) {
+      return data;
+    }
+    notify({
+      type: 'warning',
+      text: error,
+    });
+    return { total: [], list: [] };
   }
 }

@@ -69,48 +69,35 @@
             <DisclaimerApproveWeb3
               :is-metamask="loginWith === 'metamask'"
               @cancel="onApproveCancel"
-              v-if="
-                !keplrConnector?.accounts[0] &&
-                !metamaskConnector?.accounts[0] &&
-                connectedToWeb3 &&
-                ['metamask', 'keplr'].includes(loginWith)
-              "
+              v-show="showDisclaimerWeb3"
             />
 
             <ConfirmWeb3Address
-              v-if="
-                !confirmedAddress &&
-                loginWith === 'keplr' &&
-                connectedToWeb3 &&
-                keplrConnector?.accounts[0]
-              "
-              :is-keplr="!!keplrConnector.accounts[0].address"
-              :name="keplrNetworks[0].label"
-              :network="keplrNetworks[0].net"
+              v-show="showKepler"
+              :is-keplr="!!keplrConnector.accounts[0]?.address"
+              :name="keplrNetworks[0]?.label"
+              :network="keplrNetworks[0]?.net"
               :loading="addLoading"
-              :address="keplrConnector.accounts[0].address"
+              :address="keplrConnector.accounts[0]?.address"
               @cancel="onWeb3AddressCancel"
               @confirm="onWeb3AddressConfirm"
               @refreshKeplr="onRefreshWeb3Keplr"
             />
-
             <ConfirmWeb3Address
-              v-if="
-                !confirmedAddress &&
-                loginWith === 'metamask' &&
-                connectedToWeb3 &&
-                metamaskConnector?.accounts[0]
+              v-show="
+                (loginWith.value === 'metamask' && !isShow) || showMetamask
               "
               :name="
                 metamaskConnector.network === 'bsc'
                   ? 'Binance Smart Chain'
                   : 'Ethereum'
               "
-              :network="metamaskConnector.network"
+              :network="metamaskConnector?.network"
               :loading="addLoading"
-              :address="metamaskConnector.accounts[0]"
+              :address="metamaskAddress"
               @cancel="onWeb3AddressCancel"
               @confirm="onWeb3AddressConfirm"
+              :refresh="mmRefresh"
               @refreshMetamask="onRefreshWeb3Metamask"
             />
 
@@ -238,7 +225,8 @@ export default {
     const newAddress = ref('');
     const newAddressNet = ref('');
     const captchaToken = ref('');
-
+    const mmRefresh = ref(false);
+    const kplrRefresh = ref(false);
     const codeFromEmail = ref('');
 
     const { setNets, setAddress, setPublicKey, createWallets } =
@@ -700,12 +688,16 @@ export default {
     };
 
     const onRefreshWeb3Keplr = async () => {
+      kplrRefresh.value = true;
       await store.dispatch('keplr/connectToKeplr', keplrNetworks[0].key);
+      kplrRefresh.value = false;
     };
-
+    const whatEverShow = ref(true);
     const onRefreshWeb3Metamask = async () => {
+      mmRefresh.value = true;
       metamaskConnector.value.disconnect();
       await store.dispatch('metamask/connectToMetamask');
+      mmRefresh.value = false;
     };
 
     const redirectedFrom = router.currentRoute.value.redirectedFrom;
@@ -733,8 +725,40 @@ export default {
     const onCloseWhyEmail = () => {
       showEmailModal.value = false;
     };
-
+    const showMetamask = computed(
+      () =>
+        !confirmedAddress.value &&
+        connectedToWeb3.value &&
+        loginWith.value === 'metamask'
+    );
+    const showKepler = computed(
+      () =>
+        !confirmedAddress.value &&
+        loginWith.value === 'keplr' &&
+        connectedToWeb3.value &&
+        keplrConnector.value?.accounts[0]
+    );
+    const showDisclaimerWeb3 = computed(
+      () =>
+        !whatEverShow.value &&
+        !keplrConnector.value?.accounts[0] &&
+        !metamaskConnector.value?.accounts[0] &&
+        connectedToWeb3.value &&
+        ['metamask', 'keplr'].includes(loginWith.value)
+    );
+    const isShow = computed(() => store.getters['metamask/isShow']);
+    const metamaskAddress = computed(
+      () => store.getters['metamask/metamaskAddress']
+    );
     return {
+      metamaskAddress,
+      mmRefresh,
+      kplrRefresh,
+      isShow,
+      showDisclaimerWeb3,
+      whatEverShow,
+      showKepler,
+      showMetamask,
       onCloseWhyEmail,
       closePrivacy,
       closeTerms,
@@ -936,6 +960,9 @@ export default {
     bottom: 42px;
     left: 0;
     right: 0;
+    @media (min-width: 1024px) and (min-height: 600px) and (max-height: 768px) {
+      bottom: 10px;
+    }
   }
   &__link {
     font-weight: 700;
