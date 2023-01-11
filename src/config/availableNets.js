@@ -48,6 +48,7 @@ export const ledgerNets = [
   'evmoseth',
   'omniflix',
   'teritori',
+  'avalanche',
   'kujira',
 ];
 
@@ -58,6 +59,7 @@ export const metamaskNets = [
   'optimism',
   'arbitrum',
   'evmoseth',
+  'avalanche',
 ];
 
 export const trezorNets = ['btc', 'eth', 'bsc', 'tez'];

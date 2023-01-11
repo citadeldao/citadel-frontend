@@ -1293,6 +1293,11 @@
             "description": "",
             "shortDescription": ""
         },
+        "avalanche": {
+            "title": "",
+            "description":"",
+            "shortDescription": ""
+        },
         "kujira":{
             "title": "Kujira",
             "description": "",
