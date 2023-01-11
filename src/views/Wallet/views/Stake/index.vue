@@ -2,7 +2,7 @@
   <div
     class="stake"
     :class="{
-      'stake-view-only': isViewOnly && currentToken.config.net !== 'bsc_xct',
+      'stake-view-only': isViewOnly && currentToken?.config?.net !== 'bsc_xct',
     }"
   >
     <div v-if="isLoading" class="stake__loader">

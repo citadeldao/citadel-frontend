@@ -1301,6 +1301,11 @@
             "title": "Teritori",
             "description": "Teritori is a multi-chain hub and the open ecosystem built on the Cosmos SDK and aims to enhance Web3 individuals, communities & builders experience through an all-in-one hub of dApps.",
             "shortDescription": "Teritori is a multi-chain hub aims to enhance Web3 individuals, communities & builders experience through an all-in-one hub of dApps."
+        },
+        "quicksilver": {
+            "title": "",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "Uptime",
