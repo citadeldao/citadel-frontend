@@ -496,6 +496,7 @@
     "cancel": "频道",
     "enterYourCitadelPassword": "输入您的Citadel密码",
     "show": "显示",
+    "hide": "",
     "yearAbbr": "年",
     "monthAbbr": "月",
     "custom": "自定义",
@@ -1294,6 +1295,16 @@
         },
         "quicksilver": {
             "title": "",
+            "description":"",
+            "shortDescription": ""
+        },
+        "avalanche": {
+            "title": "Avalanche",
+            "description":"",
+            "shortDescription": ""
+        },
+        "kujira":{
+            "title": "Kujira",
             "description": "",
             "shortDescription": ""
         }

@@ -496,6 +496,7 @@
     "cancel": "Отменить",
     "enterYourCitadelPassword": "Введите ваш пароль Citadel.one",
     "show": "Показать",
+    "hide": "",
     "yearAbbr": "г",
     "monthAbbr": "м",
     "custom": "Другое",
@@ -1294,6 +1295,16 @@
         },
         "quicksilver": {
             "title": "",
+            "description":"",
+            "shortDescription": ""
+        },
+        "avalanche": {
+            "title": "",
+            "description":"",
+            "shortDescription": ""
+        },
+        "kujira":{
+            "title": "Kujira",
             "description": "",
             "shortDescription": ""
         }

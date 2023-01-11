@@ -496,6 +496,7 @@
     "cancel": "Cancel",
     "enterYourCitadelPassword": "Enter your Citadel password",
     "show": "Show",
+    "hide": "hide",
     "yearAbbr": "y",
     "monthAbbr": "m",
     "custom": "Custom",
@@ -1306,6 +1307,16 @@
             "title": "",
             "description": "",
             "shortDescription": ""
+        },
+        "avalanche": {
+            "title": "Avalanche network",
+            "description":"Avalanche is a smart contract capable blockchain platform, aims to deliver scalable blockchain solution with low costs and fast transaction speed, and possibility to easily build dApps.",
+            "shortDescription": "Avalanche is a smart contract capable blockchain platform, delivering a scalable blockchain solution and possibility to easily build dApps."
+        },
+        "kujira":{
+            "title": "Kujira",
+            "description": "Kujira is a semi-permissioned sovereign Cosmos L1 platform bringing user-friendly DeFi tools for trading, liquidating, and minting, and targeting everyone, from the novice crypto enthusiasts to the experienced investors.",
+            "shortDescription": "Kujira is a decentralized Cosmos L1 platform bringing user-friendly DeFi tools for trading, liquidating, and minting."
         }
     },
     "uptime": "Uptime",
