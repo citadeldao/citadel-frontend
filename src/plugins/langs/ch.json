@@ -496,6 +496,7 @@
     "cancel": "频道",
     "enterYourCitadelPassword": "输入您的Citadel密码",
     "show": "显示",
+    "hide": "",
     "yearAbbr": "年",
     "monthAbbr": "月",
     "custom": "自定义",
@@ -1289,6 +1290,11 @@
         },
         "teritori": {
             "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "kujira":{
+            "title": "Kujira",
             "description": "",
             "shortDescription": ""
         }

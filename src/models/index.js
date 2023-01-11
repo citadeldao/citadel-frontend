@@ -49,6 +49,7 @@ import CryptoCoinJACKAL from './CryptoCoins/CryptoCoinJACKAL';
 import CryptoCoinEVMOSETH from './CryptoCoins/CryptoCoinEVMOSETH';
 import CryptoCoinOMNIFLIX from './CryptoCoins/CryptoCoinOMNIFLIX';
 import CryptoCoinTERITORI from './CryptoCoins/CryptoCoinTERITORI';
+import CryptoCoinKUJIRA from './CryptoCoins/CryptoCoinKUJIRA';
 
 export default {
   // nets
@@ -103,4 +104,5 @@ export default {
   EVMOSETH: CryptoCoinEVMOSETH,
   OMNIFLIX: CryptoCoinOMNIFLIX,
   TERITORI: CryptoCoinTERITORI,
+  KUJIRA: CryptoCoinKUJIRA,
 };

@@ -496,6 +496,7 @@
     "cancel": "Отменить",
     "enterYourCitadelPassword": "Введите ваш пароль Citadel.one",
     "show": "Показать",
+    "hide": "",
     "yearAbbr": "г",
     "monthAbbr": "м",
     "custom": "Другое",
@@ -1289,6 +1290,11 @@
         },
         "teritori": {
             "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "kujira":{
+            "title": "Kujira",
             "description": "",
             "shortDescription": ""
         }
