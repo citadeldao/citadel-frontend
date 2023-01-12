@@ -53,7 +53,7 @@
     </table>
 
     <div class="transactions__section">
-      <div style="opacity: 0" class="transactions__export-csv">
+      <div class="transactions__export-csv">
         <fileExport />
         <span>CSV {{ $t('export') }}</span>
       </div>
@@ -490,10 +490,11 @@ export default {
   }
   &__section {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
   }
   &__export-csv {
     display: flex;
+    display: none;
     align-items: center;
     &:hover {
       cursor: pointer;

@@ -122,18 +122,16 @@ export async function socketEventHandler({ eventName, data }) {
         store.commit('transactions/REMOVE_FROM_MEMPOOL', data);
         // store.dispatch('wallets/getNewWallets','lazy');
         if (data.updateStakeListRequired) {
-          await store.dispatch(
-            'staking/updateStakeList',
-            { address: data.from, net: data.net },
-            { root: true }
-          );
-          if (data.from.toLowerCase() !== data.to.toLowerCase()) {
-            await store.dispatch(
-              'staking/updateStakeList',
-              { address: data.to, net: data.net },
-              { root: true }
-            );
-          }
+          await store.dispatch('staking/updateStakeList', wallet, {
+            root: true,
+          });
+          // if (data.from.toLowerCase() !== data.to.toLowerCase()) {
+          //   await store.dispatch(
+          //     'staking/updateStakeList',
+          //     { address: data.to, net: data.net },
+          //     { root: true }
+          //   );
+          // }
           // }
         }
       }
