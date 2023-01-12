@@ -1111,7 +1111,10 @@ export default {
       if (currentWalletType.value === WALLET_TYPES.METAMASK) {
         isLoading.value = true;
         const metamaskResult =
-          await metamaskConnector.value.sendMetamaskTransaction(rawTx.value);
+          await metamaskConnector.value.sendMetamaskTransaction(
+            rawTx.value,
+            rawTx.value.mem_tx_id
+          );
 
         if (metamaskResult.error) {
           loadingSign.value = false;

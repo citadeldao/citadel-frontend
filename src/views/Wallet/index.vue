@@ -894,7 +894,8 @@ export default {
 
         const metamaskResult =
           await metamaskConnector.value.sendMetamaskTransaction(
-            restakeAllTxs.value
+            restakeAllTxs.value,
+            restakeAllTxs.value.mem_tx_id
           );
 
         if (metamaskResult.error) {
@@ -1013,7 +1014,8 @@ export default {
 
         const metamaskResult =
           await metamaskConnector.value.sendMetamaskTransaction(
-            claimAllTxs.value
+            claimAllTxs.value,
+            claimAllTxs.value.mem_tx_id
           );
 
         if (metamaskResult.error) {

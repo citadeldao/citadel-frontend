@@ -872,7 +872,8 @@ export default {
       if (metamaskSigner.value) {
         const metamaskResult =
           await metamaskConnector.value.sendMetamaskTransaction(
-            extensionTransactionForSign.value.transaction
+            extensionTransactionForSign.value.transaction,
+            extensionTransactionForSign.value.mem_tx_id
           );
 
         if (metamaskResult.error) {
@@ -891,10 +892,10 @@ export default {
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;
           successTx.value = [metamaskResult.txHash];
-          store.dispatch('extensions/putMempoolChangeStatus', {
-            hash: metamaskResult.txHash,
-            mempool_id: extensionTransactionForSign.value.mem_tx_id,
-          });
+          // store.dispatch('extensions/putMempoolChangeStatus', {
+          //   hash: metamaskResult.txHash,
+          //   mempool_id: extensionTransactionForSign.value.mem_tx_id,
+          // });
           confirmModalDisabled.value = false;
           confirmModalCloseHandler();
           showSuccessModal.value = true;

@@ -1,5 +1,6 @@
 const Web3 = require('web3');
 import notify from '@/plugins/notify';
+import store from '@/store';
 
 export default class MetamaskConnector {
   constructor() {
@@ -73,7 +74,7 @@ export default class MetamaskConnector {
     });
   }
 
-  async sendMetamaskTransaction(rawTx) {
+  async sendMetamaskTransaction(rawTx, memTxId) {
     const transaction = rawTx.transaction || rawTx;
 
     if (Array.isArray(transaction)) {
@@ -130,6 +131,13 @@ export default class MetamaskConnector {
         method: 'eth_sendTransaction',
         params: [tx],
       });
+
+      if (memTxId) {
+        store.dispatch('extensions/putMempoolChangeStatus', {
+          hash: txHash,
+          mempool_id: memTxId,
+        });
+      }
 
       return { txHash };
     } catch (err) {
