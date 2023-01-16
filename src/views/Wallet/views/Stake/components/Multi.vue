@@ -382,7 +382,6 @@ import useStaking from '@/compositions/useStaking';
 import useApi from '@/api/useApi';
 import notify from '@/plugins/notify';
 import { keplrNetworksProtobufFormat } from '@/config/availableNets';
-import MinBalanceWarning from '@/views/Wallet/views/Stake/components/MinBalanceWarning';
 
 export default {
   name: 'Multi',
