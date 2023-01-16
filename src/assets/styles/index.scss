@@ -38,7 +38,8 @@ textarea {
 body {
     margin: 0px;
     position: relative;
-    overflow: overlay;
+    overflow-y: overlay;
+    overflow-x: hidden;
 }
 button {
    border: none;
@@ -329,4 +330,15 @@ background-color: #F0F3FD;
       fill: $white;
     }
   }
+}
+
+.el-popper.is-rewards-list-tooltip {
+  background: $white;
+  box-shadow: 0px 4px 25px rgba(63, 54, 137, 0.25);
+  border-radius: 6px;
+  color: $black;
+}
+
+.el-popper.is-rewards-list-tooltip .el-popper__arrow::before {
+  background: $white;
 }

@@ -350,6 +350,7 @@
 </template>
 
 <script>
+import MinBalanceWarning from '@/views/Wallet/views/Stake/components/MinBalanceWarning';
 import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import BigNumber from 'bignumber.js';

@@ -496,6 +496,7 @@
     "cancel": "Annuler",
     "enterYourCitadelPassword": "Entrez votre mot de passe Citadel",
     "show": "Afficher",
+    "hide": "",
     "yearAbbr": "y",
     "monthAbbr": "m",
     "custom": "Personnalisé",
@@ -1289,6 +1290,16 @@
         },
         "teritori": {
             "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "avalanche": {
+            "title": "",
+            "description":"",
+            "shortDescription": ""
+        },
+        "kujira":{
+            "title": "Kujira",
             "description": "",
             "shortDescription": ""
         }
