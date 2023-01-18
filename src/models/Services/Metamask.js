@@ -10,7 +10,7 @@ export default class MetamaskConnector {
       10: 'optimism',
       42161: 'arbitrum',
       9001: 'evmoseth',
-      43114: 'valanche',
+      43114: 'avalanche',
     };
     this.accounts = [];
     this.web3 = new Web3(Web3.givenProvider);
