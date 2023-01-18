@@ -744,7 +744,7 @@ export default {
     },
     landing: {
       title: 'Coingecko',
-      href: 'https://www.coingecko.com/en/categories/avalanche-ecosystemi',
+      href: 'https://www.coingecko.com/en/coins/avalanche',
     },
   },
   kujira: {
