@@ -86,8 +86,41 @@
           class="send-direction__line-amount"
         />
         <span class="send-direction__line-currency"> {{ wallet?.code }} </span>
+        <div
+          v-if="wallet.hasMultiCoinRewards"
+          class="send-direction__line-show-rewards-list"
+          :class="{ active: isShowRewardsList }"
+          @click="isShowRewardsList = !isShowRewardsList"
+        >
+          <span>
+            {{ isShowRewardsList ? $t('hide') : $t('show') }}
+            <arrowDown />
+          </span>
+        </div>
       </div>
     </div>
+    <transition name="fade">
+      <div v-if="isShowRewardsList" class="send-direction__rewards-list">
+        <div
+          v-for="item in rewardsList"
+          :key="item.code"
+          class="send-direction__rewards-list_item"
+        >
+          <span
+            class="send-direction__rewards-list_item-value"
+            v-pretty-number="{
+              value: item.amount,
+              currency: item.code,
+            }"
+          >
+          </span>
+          <span class="send-direction__rewards-list_item-currency">
+            {{ item.code }}
+          </span>
+        </div>
+      </div>
+    </transition>
+
     <div class="send-direction__line">
       <span class="send-direction__line-title"> {{ $t('fee') }}: </span>
       <div v-if="wallet.hasResource">
@@ -125,11 +158,12 @@
 
 <script>
 import linkIcon from '@/assets/icons/link.svg';
-import { computed, inject } from 'vue';
+import arrowDown from '@/assets/icons/arrow-down.svg';
+import { computed, inject, ref } from 'vue';
 
 export default {
   name: 'SendDirection',
-  components: { linkIcon },
+  components: { linkIcon, arrowDown },
   props: {
     to: {
       type: String,
@@ -164,6 +198,8 @@ export default {
   },
 
   setup(props) {
+    const rewardsList = inject('rewardsList');
+    const isShowRewardsList = ref(false);
     const txUrl = computed(() => {
       const data = [];
 
@@ -216,7 +252,7 @@ export default {
       };
     });
 
-    return { txUrl, titles, activeTab, mode };
+    return { txUrl, titles, activeTab, mode, isShowRewardsList, rewardsList };
   },
 };
 </script>
@@ -272,6 +308,58 @@ export default {
     font-size: 14px;
     line-height: 17px;
     color: $mid-gray;
+  }
+  &__line-show-rewards-list {
+    display: inline-block;
+    text-transform: lowercase;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -0.02em;
+    color: $mid-blue;
+    border-bottom: 1px dashed $mid-blue;
+    margin-left: 10px;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.6;
+    }
+    & svg {
+      width: 10px;
+      height: 6px;
+      fill: $mid-blue;
+      margin-left: 8px;
+    }
+    &.active {
+      color: #54478f;
+      border-color: #54478f;
+      & svg {
+        fill: #54478f;
+        transform: rotate(-180deg);
+      }
+    }
+  }
+  &__rewards-list {
+    max-height: 168px;
+    background: $too-ligth-gray;
+    border-radius: 8px;
+    overflow: auto;
+    padding: 13px 16px 15px 16px;
+    margin-top: 5px;
+    &_item {
+    }
+    &_item-value {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 20px;
+      color: $blue;
+      margin-right: 4px;
+    }
+    &_item-currency {
+      color: $fieldName;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 20px;
+    }
   }
   &__line-to,
   &__line-undelegate-from,
