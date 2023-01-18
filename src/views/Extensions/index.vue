@@ -282,6 +282,13 @@ export default {
       return sha3_256(password.value) !== store.getters['crypto/passwordHash'];
     });
 
+    const clearStates = () => {
+      confirmPassword.value = false;
+      showSuccessModal.value = false;
+      successTx.value = '';
+      password.value = '';
+    };
+
     const successClickHandler = async () => {
       txComment.value &&
         (await store.dispatch('transactions/postTransactionNote', {
@@ -291,23 +298,27 @@ export default {
         }));
       txComment.value = '';
 
-      confirmPassword.value = false;
-      showSuccessModal.value = false;
-      successTx.value = '';
-      password.value = '';
+      clearStates();
+    };
+
+    const currentAppInfo = computed(
+      () => store.getters['extensions/currentAppInfo']
+    );
+
+    const sendMSG = (message, type) => {
+      store.dispatch('extensions/sendCustomMsg', {
+        token: currentAppInfo.value.token,
+        message,
+        type,
+      });
     };
 
     const closeSuccessModal = () => {
-      showSuccessModal.value = false;
-      confirmPassword.value = false;
-      successTx.value = '';
-      password.value = '';
-
-      store.dispatch('extensions/sendCustomMsg', {
-        token: currentAppInfo.value.token,
-        message: extensionsSocketTypes.messages.success,
-        type: extensionsSocketTypes.types.transaction,
-      });
+      clearStates();
+      sendMSG(
+        extensionsSocketTypes.messages.success,
+        extensionsSocketTypes.types.transaction
+      );
     };
 
     const onSearchHandler = (str) => {
@@ -335,10 +346,6 @@ export default {
         router.push({ name: 'Extensions' });
       }
     };
-
-    const currentAppInfo = computed(
-      () => store.getters['extensions/currentAppInfo']
-    );
 
     const messageForSign = ref(''); // computed(() => store.getters['extensions/extensionMessageForSign']);
 
@@ -650,25 +657,16 @@ export default {
       }
     });
 
-    const sendSuccessMSG = () => {
-      store.dispatch('extensions/sendCustomMsg', {
-        token: currentAppInfo.value.token,
-        message: extensionsSocketTypes.messages.success,
-        type: extensionsSocketTypes.types.transaction,
-      });
-    };
-
     const confirmModalCloseHandlerWithRequest = () => {
       password.value = '';
       signLoading.value = false;
       confirmPassword.value = false;
       store.commit('extensions/SET_TRANSACTION_FOR_SIGN', null, { root: true });
 
-      store.dispatch('extensions/sendCustomMsg', {
-        token: currentAppInfo.value.token,
-        message: extensionsSocketTypes.messages.canceled,
-        type: extensionsSocketTypes.types.transaction,
-      });
+      sendMSG(
+        extensionsSocketTypes.messages.canceled,
+        extensionsSocketTypes.types.transaction
+      );
     };
 
     const closeSignMessageModal = () => {
@@ -676,11 +674,10 @@ export default {
       confirmPassword.value = false;
 
       if (!msgSuccessSignature.value) {
-        store.dispatch('extensions/sendCustomMsg', {
-          token: currentAppInfo.value.token,
-          message: extensionsSocketTypes.messages.canceled,
-          type: extensionsSocketTypes.types.message,
-        });
+        sendMSG(
+          extensionsSocketTypes.messages.canceled,
+          extensionsSocketTypes.types.message
+        );
       }
 
       msgSuccessSignature.value = '';
@@ -699,13 +696,12 @@ export default {
         // set default values
 
         // send success or cancel message
-        store.dispatch('extensions/sendCustomMsg', {
-          token: currentAppInfo.value.token,
-          message: success
+        sendMSG(
+          success
             ? extensionsSocketTypes.messages.success
             : extensionsSocketTypes.messages.canceled,
-          type: extensionsSocketTypes.types.message,
-        });
+          extensionsSocketTypes.types.message
+        );
 
         // if success, send new balance (move to app)
         const { data } = await citadel.getBalanceById(
@@ -727,11 +723,10 @@ export default {
         snip20TokenFee.value = null;
         snip20Token.value = null;
       } catch (error) {
-        store.dispatch('extensions/sendCustomMsg', {
-          token: currentAppInfo.value.token,
-          message: extensionsSocketTypes.messages.failed,
-          type: extensionsSocketTypes.types.transaction,
-        });
+        sendMSG(
+          extensionsSocketTypes.messages.failed,
+          extensionsSocketTypes.types.transaction
+        );
       } finally {
         store.commit('extensions/SET_TRANSACTION_FOR_SIGN', null, {
           root: true,
@@ -763,22 +758,17 @@ export default {
         showLedgerConnect.value = false;
         msgSuccessSignature.value = signResult;
 
-        store.dispatch('extensions/sendCustomMsg', {
-          token: currentAppInfo.value.token,
-          message: msgSuccessSignature.value,
-          type: extensionsSocketTypes.types.message,
-        });
+        sendMSG(msgSuccessSignature.value, extensionsSocketTypes.types.message);
       } catch (err) {
         showLedgerConnect.value = false;
         notify({
           type: 'warning',
           text: JSON.stringify(err),
         });
-        store.dispatch('extensions/sendCustomMsg', {
-          token: currentAppInfo.value.token,
-          message: extensionsSocketTypes.messages.failed,
-          type: extensionsSocketTypes.types.message,
-        });
+        sendMSG(
+          extensionsSocketTypes.messages.failed,
+          extensionsSocketTypes.types.message
+        );
       }
     };
 
@@ -851,7 +841,7 @@ export default {
           confirmModalCloseHandler();
           showSuccessModal.value = true;
           signLoading.value = false;
-          sendSuccessMSG();
+          sendMSG();
         } else {
           signLoading.value = false;
           confirmPassword.value = false;
@@ -881,25 +871,21 @@ export default {
             type: 'warning',
             text: metamaskResult.error,
           });
-          store.dispatch('extensions/sendCustomMsg', {
-            token: currentAppInfo.value.token,
-            message: extensionsSocketTypes.messages.failed,
-            type: extensionsSocketTypes.types.transaction,
-          });
+          sendMSG(
+            extensionsSocketTypes.messages.failed,
+            extensionsSocketTypes.types.transaction
+          );
           signLoading.value = false;
         } else {
           signLoading.value = false;
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;
           successTx.value = [metamaskResult.txHash];
-          // store.dispatch('extensions/putMempoolChangeStatus', {
-          //   hash: metamaskResult.txHash,
-          //   mempool_id: extensionTransactionForSign.value.mem_tx_id,
-          // });
+
           confirmModalDisabled.value = false;
           confirmModalCloseHandler();
           showSuccessModal.value = true;
-          sendSuccessMSG();
+          sendMSG();
         }
 
         return;
@@ -980,26 +966,21 @@ export default {
           // send success message to app
           if (response?.data) {
             signLoading.value = false;
-            confirmModalDisabled.value = false;
             showLedgerConnect.value = false;
             successTx.value = response.data;
             confirmModalDisabled.value = false;
             confirmModalCloseHandler();
             showConfirmModalLoading.value = false;
             showSuccessModal.value = true;
-            store.dispatch('extensions/sendCustomMsg', {
-              token: currentAppInfo.value.token,
-              message: extensionsSocketTypes.messages.success,
-              type: extensionsSocketTypes.types.execute,
-            });
+            sendMSG(
+              extensionsSocketTypes.messages.success,
+              extensionsSocketTypes.types.execute
+            );
           } else {
-            // send failed message to app
-            store.dispatch('extensions/sendCustomMsg', {
-              token: currentAppInfo.value.token,
-              message: extensionsSocketTypes.messages.failed,
-              type: extensionsSocketTypes.types.execute,
-            });
-            confirmModalDisabled.value = false;
+            sendMSG(
+              extensionsSocketTypes.messages.failed,
+              extensionsSocketTypes.types.execute
+            );
             showLedgerConnect.value = false;
             confirmModalDisabled.value = false;
             showConfirmModalLoading.value = false;
@@ -1033,15 +1014,13 @@ export default {
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;
           successTx.value = result.data;
-          confirmModalDisabled.value = false;
           confirmModalCloseHandler();
           showSuccessModal.value = true;
-          sendSuccessMSG();
+          sendMSG();
         } else {
           signLoading.value = false;
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;
-          confirmModalDisabled.value = false;
           confirmModalCloseHandler();
           notify({
             type: 'warning',
@@ -1050,11 +1029,10 @@ export default {
         }
       } catch (e) {
         signLoading.value = false;
-        store.dispatch('extensions/sendCustomMsg', {
-          token: currentAppInfo.value.token,
-          message: extensionsSocketTypes.messages.failed,
-          type: extensionsSocketTypes.types.transaction,
-        });
+        sendMSG(
+          extensionsSocketTypes.messages.failed,
+          extensionsSocketTypes.types.transaction
+        );
         ledgerError.value = e;
         showLedgerConnect.value = false;
       }
