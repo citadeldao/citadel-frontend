@@ -1304,9 +1304,9 @@
             "shortDescription": "Teritori is a multi-chain hub aims to enhance Web3 individuals, communities & builders experience through an all-in-one hub of dApps."
         },
         "quicksilver": {
-            "title": "",
-            "description": "",
-            "shortDescription": ""
+            "title": "Quicksilver",
+            "description": "Quicksilver Protocol is a sovereign Cosmos-SDK zone providing liquid staking for the Cosmos Interchain ecosystem",
+            "shortDescription": "Quicksilver is a liquid staking zone for the Interchain"
         },
         "avalanche": {
             "title": "Avalanche network",
