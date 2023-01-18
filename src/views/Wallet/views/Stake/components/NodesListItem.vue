@@ -54,14 +54,13 @@
             effect="rewards-list-tooltip"
             placement="top"
           >
-            <a
-              target="_blank"
-              :href="item?.providerWebsite"
+            <span
               class="nodes-list-item__info-verified"
+              @click.stop="toValidatorPage(item?.providerWebsite)"
             >
               <srIsVerified v-if="item?.isVerified" />
               <srIsNotVerified v-else />
-            </a>
+            </span>
             <template #content>
               <div
                 class="rewards-list-tooltip__content"
@@ -169,6 +168,10 @@ export default {
       currentIcon.value = markRaw(val.default);
     });
 
+    const toValidatorPage = (url) => {
+      window.open(url, '_blank');
+    };
+
     const onLoadLogo = () => {
       hasLogo.value = true;
     };
@@ -181,6 +184,7 @@ export default {
       hasLogo,
       fee,
       onLoadLogo,
+      toValidatorPage,
     };
   },
 };
@@ -257,6 +261,7 @@ export default {
   }
   &__info-verified {
     margin-left: 8px;
+    cursor: pointer;
   }
 
   &__info-section {
