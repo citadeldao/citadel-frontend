@@ -57,12 +57,13 @@ export default {
 
   actions: {
     async decodeUserMnemonic({ state }, { password, customMnemonic }) {
-      if (!state.mnemonic) {
-        return null;
-      }
       // export from settings when wallet import from seed
       if (customMnemonic) {
         return await CryptoCoin.decodeMnemonic(customMnemonic, password);
+      }
+
+      if (!state.mnemonic) {
+        return null;
       }
 
       return await CryptoCoin.decodeMnemonic(state.mnemonic, password);
