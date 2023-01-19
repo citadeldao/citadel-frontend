@@ -885,7 +885,10 @@ export default {
           confirmModalDisabled.value = false;
           confirmModalCloseHandler();
           showSuccessModal.value = true;
-          sendMSG();
+          sendMSG(
+            extensionsSocketTypes.messages.success,
+            extensionsSocketTypes.types.transaction
+          );
         }
 
         return;
