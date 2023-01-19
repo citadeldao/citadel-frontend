@@ -50,6 +50,11 @@
             <div v-if="component.type === 'text'" class="value">
               <div class="value-amount">{{ component.value }}</div>
             </div>
+            <div v-if="component.type === 'dateTime'" class="value">
+              <div class="value-amount">
+                {{ format(new Date(component.value), 'yyyy/MM/dd hh:mm:ss') }}
+              </div>
+            </div>
             <div v-if="component.type === 'textWithURL'" class="value">
               <a target="_blank" :href="component.value.url">{{
                 component.value.text
@@ -131,6 +136,7 @@ import { ref, onMounted } from 'vue';
 // import comment from '@/assets/icons/comment.svg';
 import InfoBlock from './InfoBlock.vue';
 import TxStatuses from './TxStatuses';
+import { format } from 'date-fns';
 
 export default {
   namae: 'TransactionInfoModalContent',
@@ -168,6 +174,7 @@ export default {
       filterTypeMethod,
       showPlaceholder,
       togleShowPlaceholder,
+      format,
     };
   },
 };
