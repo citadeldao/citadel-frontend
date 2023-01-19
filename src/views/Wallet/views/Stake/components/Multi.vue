@@ -381,7 +381,6 @@ import LargeStakeListItem from './LargeStakeListItem.vue';
 import useStaking from '@/compositions/useStaking';
 import useApi from '@/api/useApi';
 import notify from '@/plugins/notify';
-import { keplrNetworksProtobufFormat } from '@/config/availableNets';
 
 export default {
   name: 'Multi',
@@ -645,34 +644,14 @@ export default {
           return;
         }
 
-        const defaultTx = {
-          ...keplrResult.signedTx,
-          publicKey: await props.currentWallet.getPublicKeyDecoded(),
-          signature: keplrResult.signature,
-        };
-
-        const defaultSendTx = resRawTxs.value?.transaction || resRawTxs.value;
-        const protobufTx = {
-          mode: 'sync',
-          tx: {
-            memo: defaultSendTx.json.memo || '',
-            fee: keplrResult.signedTx.fee,
-            msg: defaultSendTx.json.msgs,
-            signatures: [
-              {
-                account_number: keplrResult.fullResponse.signed.account_number,
-                pub_key: keplrResult.fullResponse.signature.pub_key,
-                sequence: keplrResult.fullResponse.signed.sequence,
-                signature: keplrResult.fullResponse.signature.signature,
-              },
-            ],
-          },
-        };
+        const hash = await keplrConnector.value.getOutputHash(
+          props.currentWallet,
+          resRawTxs.value,
+          keplrResult
+        );
 
         const data = await useApi('wallet').sendSignedTransaction({
-          hash: keplrNetworksProtobufFormat.includes(props.currentWallet.net)
-            ? protobufTx
-            : defaultTx,
+          hash,
           deviceType: WALLET_TYPES.KEPLR,
           proxy: false,
           network: props.currentWallet.net,
