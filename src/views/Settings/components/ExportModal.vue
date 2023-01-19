@@ -65,7 +65,7 @@ export default {
     },
   },
   setup(props) {
-    const phrase = computed(() => props.mnemonicPhrase.split(' '));
+    const phrase = computed(() => props.mnemonicPhrase?.split(' '));
     const isCopied = ref(false);
     const copyAddress = () => {
       isCopied.value = true;

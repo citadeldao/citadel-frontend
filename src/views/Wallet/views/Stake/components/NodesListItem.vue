@@ -16,38 +16,66 @@
         </keep-alive>
       </div>
       <div class="nodes-list-item__info">
-        <Tooltip>
-          <template #content>
-            <div
-              class="nodes-list-item-tooltip"
-              :class="{
-                'nodes-list-item-tooltip--status--active': item.isActive,
-              }"
+        <div class="nodes-list-item__info-section">
+          <Tooltip>
+            <template #content>
+              <div
+                class="nodes-list-item-tooltip"
+                :class="{
+                  'nodes-list-item-tooltip--status--active': item.isActive,
+                }"
+              >
+                <div class="nodes-list-item-tooltip__status">
+                  {{ $t('status') }}:
+                  <span>{{
+                    $t(`${item.isActive ? 'active' : 'noactive'}`)
+                  }}</span>
+                </div>
+                <div
+                  v-if="!item.isActive"
+                  class="nodes-list-item-tooltip__status-hint"
+                >
+                  {{ $t('staking.nodeIsNotActive') }}
+                </div>
+                <div
+                  v-if="item.description"
+                  class="nodes-list-item-tooltip__description"
+                >
+                  {{ item.description }}
+                </div>
+              </div>
+            </template>
+            <template #default>
+              <span class="nodes-list-item__info-title">{{ item.name }}</span>
+            </template>
+          </Tooltip>
+          <el-tooltip
+            v-if="item?.providerWebsite"
+            effect="rewards-list-tooltip"
+            placement="top"
+          >
+            <span
+              class="nodes-list-item__info-verified"
+              @click.stop="toValidatorPage(item?.providerWebsite)"
             >
-              <div class="nodes-list-item-tooltip__status">
-                {{ $t('status') }}:
-                <span>{{
-                  $t(`${item.isActive ? 'active' : 'noactive'}`)
-                }}</span>
-              </div>
+              <srIsVerified v-if="item?.isVerified" />
+              <srIsNotVerified v-else />
+            </span>
+            <template #content>
               <div
-                v-if="!item.isActive"
-                class="nodes-list-item-tooltip__status-hint"
+                class="rewards-list-tooltip__content"
+                v-if="item?.isVerified"
               >
-                {{ $t('staking.nodeIsNotActive') }}
+                <span> Staking Rewards </span>
+                <span> Verified Provider </span>
               </div>
-              <div
-                v-if="item.description"
-                class="nodes-list-item-tooltip__description"
-              >
-                {{ item.description }}
+              <div class="rewards-list-tooltip__content" v-else>
+                <span> Staking Rewards </span>
+                <span> Provider </span>
               </div>
-            </div>
-          </template>
-          <template #default>
-            <span class="nodes-list-item__info-title">{{ item.name }}</span>
-          </template>
-        </Tooltip>
+            </template>
+          </el-tooltip>
+        </div>
 
         <div class="nodes-list-item__info-section">
           <span class="nodes-list-item__info-fee">
@@ -94,6 +122,8 @@
 </template>
 
 <script>
+import srIsNotVerified from '@/assets/icons/sr-isNotVerified.svg';
+import srIsVerified from '@/assets/icons/sr-isVerified.svg';
 import Tooltip from '@/components/UI/Tooltip.vue';
 import Label from '@/components/UI/Label.vue';
 import { ref, computed, markRaw } from 'vue';
@@ -105,6 +135,8 @@ export default {
     Tooltip,
     Label,
     tick,
+    srIsNotVerified,
+    srIsVerified,
   },
   props: {
     item: {
@@ -136,6 +168,10 @@ export default {
       currentIcon.value = markRaw(val.default);
     });
 
+    const toValidatorPage = (url) => {
+      window.open(url, '_blank');
+    };
+
     const onLoadLogo = () => {
       hasLogo.value = true;
     };
@@ -148,6 +184,7 @@ export default {
       hasLogo,
       fee,
       onLoadLogo,
+      toValidatorPage,
     };
   },
 };
@@ -222,9 +259,14 @@ export default {
     text-overflow: ellipsis;
     max-width: 290px;
   }
+  &__info-verified {
+    margin-left: 8px;
+    cursor: pointer;
+  }
 
   &__info-section {
     display: flex;
+    align-items: center;
   }
 
   &__info-fee,
@@ -326,5 +368,13 @@ export default {
       }
     }
   }
+}
+.rewards-list-tooltip__content {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
 }
 </style>

@@ -48,6 +48,9 @@ export const ledgerNets = [
   'evmoseth',
   'omniflix',
   'teritori',
+  'quicksilver',
+  'avalanche',
+  'kujira',
 ];
 
 export const metamaskNets = [
@@ -57,6 +60,7 @@ export const metamaskNets = [
   'optimism',
   'arbitrum',
   'evmoseth',
+  'avalanche',
 ];
 
 export const trezorNets = ['btc', 'eth', 'bsc', 'tez'];
@@ -112,6 +116,8 @@ export const keplrNetworks = [
   { label: 'Jackal', key: 'jackal-1', net: 'jackal' },
   { label: 'Omniflix', key: 'omniflixhub-1', net: 'omniflix' },
   { label: 'Teritori', key: 'teritori-1', net: 'teritori' },
+  { label: 'Quicksilver', key: 'quicksilver-2', net: 'quicksilver' },
+  { label: 'Kujira', key: 'kaiyo-1', net: 'kujira' },
 ];
 
 export const showAssetsExep = ['secret', 'bsc'];

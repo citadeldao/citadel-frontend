@@ -350,6 +350,7 @@
 </template>
 
 <script>
+import MinBalanceWarning from '@/views/Wallet/views/Stake/components/MinBalanceWarning';
 import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import BigNumber from 'bignumber.js';
@@ -380,8 +381,6 @@ import LargeStakeListItem from './LargeStakeListItem.vue';
 import useStaking from '@/compositions/useStaking';
 import useApi from '@/api/useApi';
 import notify from '@/plugins/notify';
-
-import MinBalanceWarning from '@/views/Wallet/views/Stake/components/MinBalanceWarning';
 
 export default {
   name: 'Multi',
