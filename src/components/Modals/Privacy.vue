@@ -47,8 +47,8 @@
               <p>
                 <span class="bold">Company</span> (referred to as either "the
                 Company", "We", "Us" or "Our" in this Agreement) refers to
-                Citadel.One Pte. Ltd., 160 ROBINSON ROAD #24-09 SINGAPORE
-                (068914).
+                Citadel.One Pte. Ltd., Intershore Chambers, P.O. Box 4342, Road
+                Town, Tortola, British Virgin Islands.
               </p>
             </li>
             <li>
@@ -75,7 +75,10 @@
               <p><span class="bold">Service</span> refers to the Website.</p>
             </li>
             <li>
-              <p><span class="bold">Country</span> refers to: Singapore</p>
+              <p>
+                <span class="bold">Country</span> refers to: British Virgin
+                Islands
+              </p>
             </li>
             <li>
               <p>
