@@ -122,7 +122,7 @@ export default {
     watch(
       () => props.show,
       (nV) => {
-        if (nV) needSaveBackup.value = hasWallets.value;
+        if (nV) needSaveBackup.value = !!hasWallets.value;
       }
     );
     return {
