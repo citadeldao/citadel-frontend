@@ -1,85 +1,64 @@
 <template>
-  <div class="delete">
-    <h5 class="delete__title">
-      {{ $t('settings.delete.title') }}
-    </h5>
-    <div class="settings-wrap">
-      <span class="delete__description">
-        {{ $t('settings.delete.description') }}
-      </span>
-      <PrimaryButton
-        bg-color="#FA3B33"
-        hover-bg-color="#fc0800"
-        box-shadow="0 0 25px 0 rgba(219, 71, 60, 0.3)"
-        class="delete__button"
-        data-qa="Delete-account"
-        @click="openDeleteAccountModal"
-      >
-        {{ $t('settings.delete.button') }}
-      </PrimaryButton>
-    </div>
+  <Modal v-if="show">
+    <ModalContent
+      v-click-away="closeDeleteAccountModal"
+      :title="$t('settings.delete.title')"
+      icon="warningIcon"
+      :desc="$t('settings.delete.modalDescription')"
+      type="warning"
+      @close="closeDeleteAccountModal"
+      @buttonClick="closeDeleteAccountModal"
+    >
+      <template #default>
+        <div class="delete-modal__password">
+          <Input
+            id="phrase"
+            v-model="phrase"
+            :label="$t('settings.delete.inputLabel')"
+            :placeholder="$t('settings.delete.placeholder')"
+            type="text"
+            icon="lock"
+            data-qa="settings__delete-account__codeword-field"
+          />
+        </div>
 
-    <Modal v-if="isDeleteAccountModalOpened">
-      <ModalContent
-        v-click-away="closeDeleteAccountModal"
-        :title="$t('settings.delete.title')"
-        icon="warningIcon"
-        :desc="$t('settings.delete.modalDescription')"
-        type="warning"
-        @close="closeDeleteAccountModal"
-        @buttonClick="closeDeleteAccountModal"
-      >
-        <template #default>
-          <div class="delete-modal__password">
-            <Input
-              id="phrase"
-              v-model="phrase"
-              :label="$t('settings.delete.inputLabel')"
-              :placeholder="$t('settings.delete.placeholder')"
-              type="text"
-              icon="lock"
-              data-qa="settings__delete-account__codeword-field"
-            />
-          </div>
+        <div v-if="hasWallets" class="delete-modal__checkbox">
+          <Checkbox
+            id="backup"
+            v-model:value="needSaveBackup"
+            :label="$t('logout.modal.downloadBackup')"
+            data-qa="settings__delete-account__backup-checkbox"
+          />
+        </div>
+      </template>
 
-          <div v-if="hasWallets" class="delete-modal__checkbox">
-            <Checkbox
-              id="backup"
-              v-model:value="needSaveBackup"
-              :label="$t('logout.modal.downloadBackup')"
-              data-qa="settings__delete-account__backup-checkbox"
-            />
-          </div>
-        </template>
+      <template #footer>
+        <div class="delete-modal__buttons">
+          <PrimaryButton
+            :disabled="isButtonDisabled"
+            bg-color="#FA3B33"
+            hover-bg-color="#fc0800"
+            class="delete-modal__button"
+            data-qa="Delete-account_modal"
+            @click="deleteAccount"
+          >
+            {{ $t('settings.delete.button') }}
+          </PrimaryButton>
 
-        <template #footer>
-          <div class="delete-modal__buttons">
-            <PrimaryButton
-              :disabled="isButtonDisabled"
-              bg-color="#FA3B33"
-              hover-bg-color="#fc0800"
-              class="delete-modal__button"
-              data-qa="Delete-account_modal"
-              @click="deleteAccount"
-            >
-              {{ $t('settings.delete.button') }}
-            </PrimaryButton>
-
-            <TextButton
-              data-qa="settings__delete-account__cancel-button"
-              @click="closeDeleteAccountModal"
-            >
-              {{ $t('cancel') }}
-            </TextButton>
-          </div>
-        </template>
-      </ModalContent>
-    </Modal>
-  </div>
+          <TextButton
+            data-qa="settings__delete-account__cancel-button"
+            @click="closeDeleteAccountModal"
+          >
+            {{ $t('cancel') }}
+          </TextButton>
+        </div>
+      </template>
+    </ModalContent>
+  </Modal>
 </template>
 
 <script>
-import { computed, ref, inject } from 'vue';
+import { computed, ref, inject, watch } from 'vue';
 import { useStore } from 'vuex';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import TextButton from '@/components/UI/TextButton';
@@ -102,10 +81,15 @@ export default {
     Modal,
     ModalContent,
   },
-  props: {},
-  setup() {
+  props: {
+    show: {
+      type: Boolean,
+      default: false,
+      required: true,
+    },
+  },
+  setup(props, { emit }) {
     const store = useStore();
-    const isDeleteAccountModalOpened = ref(false);
     const phrase = ref('');
     const needSaveBackup = ref(true);
     const { wallets } = useWallets();
@@ -118,13 +102,8 @@ export default {
     const keyStorage = computed(() => `user_${userId.value}`);
     const citadel = inject('citadel');
 
-    const openDeleteAccountModal = () => {
-      isDeleteAccountModalOpened.value = true;
-      needSaveBackup.value = hasWallets.value;
-    };
-
     const closeDeleteAccountModal = () => {
-      isDeleteAccountModalOpened.value = false;
+      emit('setModalFlag');
       phrase.value = '';
     };
 
@@ -140,16 +119,19 @@ export default {
       removeStorage(keyStorage.value);
       window.location.reload(true);
     };
-
+    watch(
+      () => props.show,
+      (nV) => {
+        if (nV) needSaveBackup.value = hasWallets.value;
+      }
+    );
     return {
       phrase,
-      isDeleteAccountModalOpened,
       needSaveBackup,
       isButtonDisabled,
       hasWallets,
       deleteAccount,
       closeDeleteAccountModal,
-      openDeleteAccountModal,
     };
   },
 };
