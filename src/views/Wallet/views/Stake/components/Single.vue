@@ -56,7 +56,7 @@
       <img src="@/assets/gif/loader.gif" alt="" />
     </Modal>
   </teleport>
-  <teleport v-if="showModal" to="body">
+  <teleport v-if="showModal && !isLoading" to="body">
     <Modal>
       <ModalContent
         v-if="showChooseNode"

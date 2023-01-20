@@ -264,53 +264,54 @@
   </div>
   <teleport v-if="showModal" to="body">
     <Modal>
-      <!--Confirm Modal -->
-      <ModalContent
-        v-if="showConfirmModal"
-        v-click-away="confirmModalCloseHandler"
-        :title="$t('sendModal.title1')"
-        :desc="$t('sendModal.desc1')"
-        button-text="confirm"
-        type="action"
-        :disabled="confirmModalDisabled"
-        @close="confirmModalCloseHandler"
-        @buttonClick="confirmClickHandler"
-      >
-        <div v-if="isLoading" class="loader">
-          <Loading />
-        </div>
-        <ActionModalContent
-          v-model:password="password"
-          :hide-fee="!!isSendToAnotherNetwork"
-          :password-error="passwordError"
-          :to="toAddress"
-          :wallet="currentWallet"
-          :amount="amount"
-          :confirm-clicked="confirmClicked"
-          :max-amount="maxAmount"
-          :total-amount="totalAmount"
-          :fees="fees"
-          :memo="memo"
-          :fee-type="!currentWallet.hasFee ? '' : feeType"
-          :hide-password="
-            isHardwareWallet ||
-            [WALLET_TYPES.METAMASK, WALLET_TYPES.KEPLR].includes(
-              currentWalletType
-            )
-          "
-          :custom-fee="customFee"
-          :current-token="currentToken"
-          :fee="fee"
-          :fee-info="feeInfo"
-          :adding="adding"
-          @select-fee="openFeeSelectModal"
-          @submitSend="confirmClickHandler"
-          @update:password="onChangePassword"
-        />
-        <!-- Changing Amount Modals -->
-        <!-- <Modal v-if="showChangingAmountModal"> -->
-        <!-- Decrease Amount modal -->
-        <!-- <ModalContent
+      <div v-if="isLoading" class="loader">
+        <Loading />
+      </div>
+      <template v-else>
+        <!--Confirm Modal -->
+        <ModalContent
+          v-if="showConfirmModal"
+          v-click-away="confirmModalCloseHandler"
+          :title="$t('sendModal.title1')"
+          :desc="$t('sendModal.desc1')"
+          button-text="confirm"
+          type="action"
+          :disabled="confirmModalDisabled"
+          @close="confirmModalCloseHandler"
+          @buttonClick="confirmClickHandler"
+        >
+          <ActionModalContent
+            v-model:password="password"
+            :hide-fee="!!isSendToAnotherNetwork"
+            :password-error="passwordError"
+            :to="toAddress"
+            :wallet="currentWallet"
+            :amount="amount"
+            :confirm-clicked="confirmClicked"
+            :max-amount="maxAmount"
+            :total-amount="totalAmount"
+            :fees="fees"
+            :memo="memo"
+            :fee-type="feeType"
+            :hide-password="
+              isHardwareWallet ||
+              [WALLET_TYPES.METAMASK, WALLET_TYPES.KEPLR].includes(
+                currentWalletType
+              )
+            "
+            :custom-fee="customFee"
+            :current-token="currentToken"
+            :fee="fee"
+            :iost-fee="iostFee"
+            :adding="adding"
+            @select-fee="openFeeSelectModal"
+            @submitSend="confirmClickHandler"
+            @update:password="onChangePassword"
+          />
+          <!-- Changing Amount Modals -->
+          <!-- <Modal v-if="showChangingAmountModal"> -->
+          <!-- Decrease Amount modal -->
+          <!-- <ModalContent
             v-if="showDecreaseAmountModal"
             v-click-away="cancelDecreaseAmount"
             :title="$t('sendModal.changingModals.title')"
@@ -332,8 +333,8 @@
               :fee="fee.fee"
             />
           </ModalContent> -->
-        <!-- Increase Amount modal -->
-        <!-- <ModalContent
+          <!-- Increase Amount modal -->
+          <!-- <ModalContent
             v-else-if="showIncreaseAmountModal"
             v-click-away="cancelIncreaseAmount"
             :title="$t('sendModal.changingModals.title')"
@@ -355,85 +356,86 @@
               :fee="fee.fee"
             />
           </ModalContent> -->
-        <!-- </Modal> -->
-      </ModalContent>
+          <!-- </Modal> -->
+        </ModalContent>
 
-      <transition name="fade">
-        <Modal v-if="showFeeSelectModal">
-          <SelectFeeModal
-            v-click-away="closeFeeSelectModal"
-            :fees="fees"
-            :fee-type="feeType"
-            :custom-fee="customFee"
-            :currency="
-              currentToken ? currentToken.parentCoin.code : currentWallet.code
-            "
-            :balance="balance"
-            @close="closeFeeSelectModal"
-            @confirm="updateFee"
-          />
-        </Modal>
-      </transition>
+        <transition name="fade">
+          <Modal v-if="showFeeSelectModal">
+            <SelectFeeModal
+              v-click-away="closeFeeSelectModal"
+              :fees="fees"
+              :fee-type="feeType"
+              :custom-fee="customFee"
+              :currency="
+                currentToken ? currentToken.parentCoin.code : currentWallet.code
+              "
+              :balance="balance"
+              @close="closeFeeSelectModal"
+              @confirm="updateFee"
+            />
+          </Modal>
+        </transition>
 
-      <!--Confirm Ledger Modals-->
-      <ConnectLedgerModal
-        v-if="showConnectLedgerModal"
-        v-click-away="connectLedgerCloseHandler"
-        :error="ledgerError"
-        @close="connectLedgerCloseHandler"
-        @buttonClick="connectLedgerClickHandler"
-      />
-      <OpenAppLedgerModal
-        v-if="showAppLedgerModal"
-        v-click-away="appLedgerCloseHandler"
-        @close="appLedgerCloseHandler"
-        @buttonClick="appLedgerClickHandler"
-      />
-      <ConfirmLedgerModal
-        v-if="showConfirmLedgerModal"
-        @close="confirmLedgerCloseHandler"
-      />
-      <RejectLedgerModal
-        v-if="showRejectedLedgerModal"
-        v-click-away="rejectedLedgerCloseHandler"
-        @close="rejectedLedgerCloseHandler"
-        @buttonClick="rejectedLedgerClickHandler"
-      />
-
-      <!--Error Modal -->
-      <ModalContent
-        v-if="txError"
-        v-click-away="errorCloseHandler"
-        title="Warning"
-        icon="warningIcon"
-        :desc="txError"
-        button-text="ok"
-        type="warning"
-        @close="errorCloseHandler"
-        @buttonClick="errorClickHandler"
-      />
-      <!--Success Modal -->
-      <ModalContent
-        v-if="showSuccessModal && !txError"
-        v-click-away="successCloseHandler"
-        title="Success"
-        desc="The transaction is in progress"
-        button-text="ok"
-        type="success"
-        icon="success"
-        @close="successCloseHandler"
-        @buttonClick="successClickHandler"
-      >
-        <SuccessModalContent
-          v-model:txComment="txComment"
-          :to="toAddress"
-          :wallet="currentWallet"
-          :amount="amount"
-          :fee="fee.fee"
-          type="transfer"
-          :tx-hash="txHash"
+        <!--Confirm Ledger Modals-->
+        <ConnectLedgerModal
+          v-if="showConnectLedgerModal"
+          v-click-away="connectLedgerCloseHandler"
+          :error="ledgerError"
+          @close="connectLedgerCloseHandler"
+          @buttonClick="connectLedgerClickHandler"
         />
-      </ModalContent>
+        <OpenAppLedgerModal
+          v-if="showAppLedgerModal"
+          v-click-away="appLedgerCloseHandler"
+          @close="appLedgerCloseHandler"
+          @buttonClick="appLedgerClickHandler"
+        />
+        <ConfirmLedgerModal
+          v-if="showConfirmLedgerModal"
+          @close="confirmLedgerCloseHandler"
+        />
+        <RejectLedgerModal
+          v-if="showRejectedLedgerModal"
+          v-click-away="rejectedLedgerCloseHandler"
+          @close="rejectedLedgerCloseHandler"
+          @buttonClick="rejectedLedgerClickHandler"
+        />
+
+        <!--Error Modal -->
+        <ModalContent
+          v-if="txError"
+          v-click-away="errorCloseHandler"
+          title="Warning"
+          icon="warningIcon"
+          :desc="txError"
+          button-text="ok"
+          type="warning"
+          @close="errorCloseHandler"
+          @buttonClick="errorClickHandler"
+        />
+        <!--Success Modal -->
+        <ModalContent
+          v-if="showSuccessModal && !txError"
+          v-click-away="successCloseHandler"
+          title="Success"
+          desc="The transaction is in progress"
+          button-text="ok"
+          type="success"
+          icon="success"
+          @close="successCloseHandler"
+          @buttonClick="successClickHandler"
+        >
+          <SuccessModalContent
+            v-model:txComment="txComment"
+            :to="toAddress"
+            :wallet="currentWallet"
+            :amount="amount"
+            :fee="fee.fee"
+            type="transfer"
+            :tx-hash="txHash"
+          />
+        </ModalContent>
+      </template>
     </Modal>
   </teleport>
 </template>
@@ -475,7 +477,6 @@ import notify from '@/plugins/notify';
 
 import { useI18n } from 'vue-i18n';
 import AddressItem from '@/layouts/AddAddressLayout/components/CutomLists/components/AddressItem';
-import { keplrNetworksProtobufFormat } from '@/config/availableNets';
 import { getDecorateLabel } from '@/config/decorators';
 import amountInputValidation from '@/helpers/amountInputValidation';
 import MinBalanceWarning from '@/views/Wallet/views/Stake/components/MinBalanceWarning';
@@ -1110,7 +1111,10 @@ export default {
       if (currentWalletType.value === WALLET_TYPES.METAMASK) {
         isLoading.value = true;
         const metamaskResult =
-          await metamaskConnector.value.sendMetamaskTransaction(rawTx.value);
+          await metamaskConnector.value.sendMetamaskTransaction(
+            rawTx.value,
+            rawTx.value.mem_tx_id
+          );
 
         if (metamaskResult.error) {
           loadingSign.value = false;
@@ -1173,33 +1177,14 @@ export default {
 
         const { currentWallet: parentWallet } = useWallets();
 
-        const defaultTx = {
-          ...keplrResult.signedTx,
-          publicKey: await parentWallet.value.getPublicKeyDecoded(),
-          signature: keplrResult.signature,
-        };
+        const hash = await keplrConnector.value.getOutputHash(
+          parentWallet.value,
+          rawTx.value,
+          keplrResult
+        );
 
-        const defaultSendTx = rawTx.value.transaction || rawTx.value;
-        const protobufTx = {
-          mode: 'sync',
-          tx: {
-            memo: defaultSendTx.json.memo || '',
-            fee: keplrResult.signedTx.fee,
-            msg: defaultSendTx.json.msgs,
-            signatures: [
-              {
-                account_number: keplrResult.fullResponse.signed.account_number,
-                pub_key: keplrResult.fullResponse.signature.pub_key,
-                sequence: keplrResult.fullResponse.signed.sequence,
-                signature: keplrResult.fullResponse.signature.signature,
-              },
-            ],
-          },
-        };
         const data = await useApi('wallet').sendSignedTransaction({
-          hash: keplrNetworksProtobufFormat.includes(parentWallet.value.net)
-            ? protobufTx
-            : defaultTx,
+          hash,
           deviceType: WALLET_TYPES.KEPLR,
           proxy: false,
           network: parentWallet.value.net,
@@ -1462,13 +1447,15 @@ export default {
 <style lang="scss" scoped>
 .loader {
   position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
   display: flex;
-  align-items: center;
   justify-content: center;
-  height: 100%;
-  width: 100%;
-  background: white;
-  z-index: 10;
+  align-items: center;
+  background-color: rgba($black, 0.2);
 }
 
 .send {

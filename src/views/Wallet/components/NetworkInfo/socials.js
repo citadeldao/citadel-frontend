@@ -719,4 +719,46 @@ export default {
       href: 'https://www.coingecko.com/en/coins/teritori',
     },
   },
+  quicksilver: {
+    web: {
+      title: 'quicksilver.zone',
+      href: 'https://quicksilver.zone/',
+    },
+    twitter: {
+      title: '@quicksilverzone',
+      href: 'quicksilverzone',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/quicksilver',
+    },
+  },
+  avalanche: {
+    web: {
+      title: 'avax.network',
+      href: 'https://www.avax.network/',
+    },
+    twitter: {
+      title: '@avalancheavax',
+      href: 'avalancheavax',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/avalanche',
+    },
+  },
+  kujira: {
+    web: {
+      title: 'kujira.app',
+      href: 'https://kujira.app/',
+    },
+    twitter: {
+      title: '@TeamKujira',
+      href: 'TeamKujira',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/kujira',
+    },
+  },
 };

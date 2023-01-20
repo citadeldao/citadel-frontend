@@ -494,6 +494,7 @@
     "cancel": "キャンセル",
     "enterYourCitadelPassword": "シタデルのパスワードを入力してください",
     "show": "見せる",
+    "hide": "",
     "yearAbbr": "y",
     "monthAbbr": "メートル",
     "custom": "カスタム",
@@ -1282,6 +1283,21 @@
         },
         "teritori": {
             "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "quicksilver": {
+            "title": "",
+            "description":"",
+            "shortDescription": ""
+        },
+        "avalanche": {
+            "title": "",
+            "description":"",
+            "shortDescription": ""
+        },
+        "kujira":{
+            "title": "Kujira",
             "description": "",
             "shortDescription": ""
         }

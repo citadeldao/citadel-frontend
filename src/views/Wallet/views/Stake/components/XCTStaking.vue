@@ -98,7 +98,7 @@
       <img src="@/assets/gif/loader.gif" alt="" />
     </Modal>
   </teleport>
-  <teleport v-if="showModal" to="body">
+  <teleport v-else-if="showModal" to="body">
     <Modal>
       <ModalContent
         v-if="showSetStakingAmount"
@@ -512,7 +512,8 @@ export default {
         isLoading.value = true;
         const metamaskResult =
           await metamaskConnector.value.sendMetamaskTransaction(
-            resRawTxs.value
+            resRawTxs.value,
+            resRawTxs.value.mem_tx_id
           );
 
         if (metamaskResult.error) {

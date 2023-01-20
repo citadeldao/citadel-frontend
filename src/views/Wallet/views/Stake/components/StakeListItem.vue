@@ -35,6 +35,32 @@
           >
             {{ title }}
           </span>
+          <el-tooltip
+            v-if="!type && item?.providerWebsite"
+            effect="rewards-list-tooltip"
+            placement="top"
+          >
+            <span
+              class="stake-list-item__info-verified"
+              @click.stop="toValidatorPage(item?.providerWebsite)"
+            >
+              <srIsVerified v-if="item?.isVerified" />
+              <srIsNotVerified v-else />
+            </span>
+            <template #content>
+              <div
+                class="rewards-list-tooltip__content"
+                v-if="item?.isVerified"
+              >
+                <span> Staking Rewards </span>
+                <span> Verified Provider </span>
+              </div>
+              <div class="rewards-list-tooltip__content" v-else>
+                <span> Staking Rewards </span>
+                <span> Provider </span>
+              </div>
+            </template>
+          </el-tooltip>
           <Tooltip>
             <template #content>
               <div class="stake-list-item__tooltip">
@@ -104,6 +130,8 @@
 </template>
 
 <script>
+import srIsNotVerified from '@/assets/icons/sr-isNotVerified.svg';
+import srIsVerified from '@/assets/icons/sr-isVerified.svg';
 import { markRaw, ref, computed, inject } from 'vue';
 import { useI18n } from 'vue-i18n';
 import BigNumber from 'bignumber.js';
@@ -119,6 +147,8 @@ export default {
     EditButton,
     Label,
     Tooltip,
+    srIsNotVerified,
+    srIsVerified,
   },
   props: {
     titleMaxWidth: {
@@ -169,6 +199,10 @@ export default {
 
     const onLoadLogo = () => {
       hasLogo.value = true;
+    };
+
+    const toValidatorPage = (url) => {
+      window.open(url, '_blank');
     };
 
     const fee = computed(() => props.item.fee || 0);
@@ -267,6 +301,7 @@ export default {
       onLoadLogo,
       showAmount,
       showEditButton,
+      toValidatorPage,
     };
   },
 };
@@ -285,6 +320,10 @@ export default {
 
   @include md {
     height: 56px;
+  }
+  &__info-verified {
+    margin-left: 8px;
+    cursor: pointer;
   }
 
   &--avaliable {
@@ -598,5 +637,13 @@ export default {
 .label {
   align-items: center;
   margin-top: -6px;
+}
+.rewards-list-tooltip__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
 }
 </style>

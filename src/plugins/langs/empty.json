@@ -496,6 +496,7 @@
     "cancel": "",
     "enterYourCitadelPassword": "",
     "show": "",
+    "hide": "",
     "yearAbbr": "",
     "monthAbbr": "",
     "custom": "",
@@ -1288,6 +1289,21 @@
         },
         "teritori": {
             "title": "",
+            "description": "",
+            "shortDescription": ""
+        },
+        "quicksilver": {
+            "title": "",
+            "description":"",
+            "shortDescription": ""
+        },
+        "avalanche": {
+            "title": "",
+            "description":"",
+            "shortDescription": ""
+        },
+        "kujira":{
+            "title": "Kujira",
             "description": "",
             "shortDescription": ""
         }
