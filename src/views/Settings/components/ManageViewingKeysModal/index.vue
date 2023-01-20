@@ -1,17 +1,24 @@
 <template>
-  <div class="manage-vk__input-wrapper">
-    <Input
-      id="manageVkSearch"
-      v-model="search"
-      :label="$t('viewingKey.searchViewingKeys')"
-      :placeholder="$t('viewingKey.tokenName')"
-      icon="loop"
-      type="text"
-    />
-  </div>
-  <div class="manage-vk__vk-list">
-    <VkItem v-for="(vk, index) in vkList" :key="index" :vk="vk" />
-  </div>
+  <ModalContent
+    v-bind="props"
+    v-click-away="() => $emit('close')"
+    class="manage-vk-modal"
+    @close="() => $emit('close')"
+  >
+    <div class="manage-vk__input-wrapper">
+      <Input
+        id="manageVkSearch"
+        v-model="search"
+        :label="$t('viewingKey.searchViewingKeys')"
+        :placeholder="$t('viewingKey.tokenName')"
+        icon="loop"
+        type="text"
+      />
+    </div>
+    <div class="manage-vk__vk-list">
+      <VkItem v-for="(vk, index) in vkList" :key="index" :vk="vk" />
+    </div>
+  </ModalContent>
 </template>
 <script>
 import Input from '@/components/UI/Input';
@@ -54,6 +61,7 @@ export default {
     return {
       vkList,
       search,
+      props,
     };
   },
 };
@@ -78,6 +86,10 @@ export default {
     min-height: 400px;
     max-height: 625px;
     padding-bottom: 32px;
+  }
+  &-modal {
+    max-width: 850px;
+    width: 100% !important;
   }
 }
 </style>

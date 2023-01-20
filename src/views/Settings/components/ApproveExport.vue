@@ -1,46 +1,55 @@
 <template>
-  <div class="approve-export">
-    <div class="approve-export__input">
-      <Input
-        id="address"
-        v-model="address"
-        :label="$t('address')"
-        type="text"
-        :icon="currentExportWallet.net"
-        :disabled="true"
-        :placeholder="$t('password')"
-        data-qa="settings__export__address-field"
-      />
-    </div>
-    <div class="approve-export__password-input">
-      <Input
-        id="password"
-        v-model="password"
-        :label="$t('enterYourCitadelPassword')"
-        type="password"
-        icon="key"
-        :placeholder="$t('password')"
-        :error="inputError"
-        data-qa="settings__export__password-field"
-        @keyup.enter="$emit('approveExport')"
-      />
-    </div>
-  </div>
+  <ModalContent
+    v-bind="props"
+    v-click-away="() => $emit('close')"
+    data-qa="settings__export"
+    @close="() => $emit('close')"
+    @buttonClick="$emit('approveExport')"
+  >
+    <form class="approve-export">
+      <div class="approve-export__input">
+        <Input
+          id="address"
+          v-model="address"
+          :label="$t('address')"
+          type="text"
+          :icon="currentExportWallet.net"
+          :disabled="true"
+          :placeholder="$t('password')"
+          data-qa="settings__export__address-field"
+        />
+      </div>
+      <div class="approve-export__password-input">
+        <Input
+          id="password"
+          v-model="password"
+          :label="$t('enterYourCitadelPassword')"
+          type="password"
+          icon="key"
+          :placeholder="$t('password')"
+          :error="inputError"
+          data-qa="settings__export__password-field"
+          @keyup.enter="$emit('approveExport')"
+        />
+      </div>
+    </form>
+  </ModalContent>
 </template>
 
 <script>
+import ModalContent from '@/components/ModalContent';
 import Input from '@/components/UI/Input';
 import { inject, ref, watch } from '@vue/runtime-core';
 export default {
   name: 'ApproveExport',
-  components: { Input },
+  components: { ModalContent, Input },
   props: {
     currentExportWallet: {
       type: Object,
       default: () => ({}),
     },
   },
-  emits: ['approveExport'],
+  emits: ['approveExport', 'close'],
   setup(props) {
     const address = ref(props.currentExportWallet.address);
     const password = inject('password');
@@ -53,7 +62,7 @@ export default {
       }
     );
 
-    return { password, inputError, address };
+    return { password, inputError, address, props };
   },
 };
 </script>
