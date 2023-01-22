@@ -45,6 +45,7 @@ export const validatePrivateKey = (net, privateKey) => {
     arbitrum: validateEth,
     optimism: validateEth,
     evmoseth: validateEth,
+    avalanche: validateEth,
 
     btc: validateBtc,
     icon: validateHex,

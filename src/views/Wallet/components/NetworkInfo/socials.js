@@ -719,6 +719,20 @@ export default {
       href: 'https://www.coingecko.com/en/coins/teritori',
     },
   },
+  quicksilver: {
+    web: {
+      title: 'quicksilver.zone',
+      href: 'https://quicksilver.zone/',
+    },
+    twitter: {
+      title: '@quicksilverzone',
+      href: 'quicksilverzone',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/quicksilver',
+    },
+  },
   avalanche: {
     web: {
       title: 'avax.network',
@@ -730,7 +744,7 @@ export default {
     },
     landing: {
       title: 'Coingecko',
-      href: 'https://www.coingecko.com/en/categories/avalanche-ecosystemi',
+      href: 'https://www.coingecko.com/en/coins/avalanche',
     },
   },
   kujira: {

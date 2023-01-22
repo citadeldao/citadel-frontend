@@ -49,6 +49,7 @@ import CryptoCoinJACKAL from './CryptoCoins/CryptoCoinJACKAL';
 import CryptoCoinEVMOSETH from './CryptoCoins/CryptoCoinEVMOSETH';
 import CryptoCoinOMNIFLIX from './CryptoCoins/CryptoCoinOMNIFLIX';
 import CryptoCoinTERITORI from './CryptoCoins/CryptoCoinTERITORI';
+import CryptoCoinQUICKSILVER from './CryptoCoins/CryptoCoinQUICKSILVER';
 import CryptoCoinAVALANCHE from './CryptoCoins/CryptoCoinAVALANCHE';
 import CryptoCoinKUJIRA from './CryptoCoins/CryptoCoinKUJIRA';
 
@@ -105,6 +106,7 @@ export default {
   EVMOSETH: CryptoCoinEVMOSETH,
   OMNIFLIX: CryptoCoinOMNIFLIX,
   TERITORI: CryptoCoinTERITORI,
+  QUICKSILVER: CryptoCoinQUICKSILVER,
   AVALANCHE: CryptoCoinAVALANCHE,
   KUJIRA: CryptoCoinKUJIRA,
 };

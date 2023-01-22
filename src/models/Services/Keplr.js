@@ -1,5 +1,6 @@
 import notify from '@/plugins/notify';
 import { keplrErrors } from '@/config/errors';
+import { keplrNetworksProtobufFormat } from '@/config/availableNets';
 
 export default class keplrConnector {
   constructor() {
@@ -28,6 +29,46 @@ export default class keplrConnector {
         });
       }
     }
+  }
+
+  getSignType(rawTx) {
+    return rawTx.transaction.direct &&
+      rawTx.transaction.json.memo.toLowerCase().includes('permission')
+      ? 'direct'
+      : 'json';
+  }
+
+  async getOutputHash(signer, rawTx, keplrResult) {
+    const defaultTx = {
+      ...keplrResult.signedTx,
+      signType: this.getSignType(rawTx),
+      publicKey: await signer.getPublicKeyDecoded(),
+      signature: keplrResult.signature,
+    };
+
+    const defaultSendTx = rawTx.transaction;
+
+    const protobufTx = {
+      signType: this.getSignType(rawTx),
+      mode: 'sync',
+      tx: {
+        memo: defaultSendTx.json.memo || '',
+        fee: keplrResult.signedTx.fee,
+        msg: defaultSendTx.json.msgs,
+        signatures: [
+          {
+            account_number: keplrResult.fullResponse.signed.account_number,
+            pub_key: keplrResult.fullResponse.signature.pub_key,
+            sequence: keplrResult.fullResponse.signed.sequence,
+            signature: keplrResult.fullResponse.signature.signature,
+          },
+        ],
+      },
+    };
+
+    return keplrNetworksProtobufFormat.includes(signer.net)
+      ? protobufTx
+      : defaultTx;
   }
 
   async sendKeplrTransaction(rawTx, signer, advancedParams = {}) {

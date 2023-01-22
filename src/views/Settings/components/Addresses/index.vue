@@ -87,6 +87,10 @@ export default {
       showSeedModal.value = true;
     };
 
+    const isUserMnemonic = computed(
+      () => !!store.getters['crypto/encodeUserMnemonic']
+    );
+
     const groupWalletsByNet = computed(() => {
       const resultObj = {};
       wallets.value.map((wallet) => {
@@ -149,7 +153,7 @@ export default {
           isLoading.value = false;
           showConfirmDeleteModal.value = false;
           showDeleteAddressesModal.value = false;
-          if (!wallets.value.length) {
+          if (!wallets.value.length && isUserMnemonic.value) {
             showSeedModal.value = true;
           }
         })

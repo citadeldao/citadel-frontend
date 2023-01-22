@@ -512,7 +512,8 @@ export default {
         isLoading.value = true;
         const metamaskResult =
           await metamaskConnector.value.sendMetamaskTransaction(
-            resRawTxs.value
+            resRawTxs.value,
+            resRawTxs.value.mem_tx_id
           );
 
         if (metamaskResult.error) {

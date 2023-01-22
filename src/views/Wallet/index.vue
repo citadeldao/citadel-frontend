@@ -294,7 +294,6 @@ import BigNumber from 'bignumber.js';
 import notify from '@/plugins/notify';
 import { useI18n } from 'vue-i18n';
 import useApi from '@/api/useApi';
-import { keplrNetworksProtobufFormat } from '@/config/availableNets';
 import { keplrNetworks } from '@/config/availableNets';
 
 export default {
@@ -586,32 +585,14 @@ export default {
           return;
         }
 
-        const defaultTx = {
-          ...keplrResult.signedTx,
-          publicKey: await currentWallet.value.getPublicKeyDecoded(),
-          signature: keplrResult.signature,
-        };
-        const defaultSendTx = resRawTxs.value?.transaction || resRawTxs.value;
-        const protobufTx = {
-          mode: 'sync',
-          tx: {
-            memo: defaultSendTx.json.memo || '',
-            fee: keplrResult.signedTx.fee,
-            msg: defaultSendTx.json.msgs,
-            signatures: [
-              {
-                account_number: keplrResult.fullResponse.signed.account_number,
-                pub_key: keplrResult.fullResponse.signature.pub_key,
-                sequence: keplrResult.fullResponse.signed.sequence,
-                signature: keplrResult.fullResponse.signature.signature,
-              },
-            ],
-          },
-        };
+        const hash = await keplrConnector.value.getOutputHash(
+          currentWallet.value,
+          resRawTxs.value,
+          keplrResult
+        );
+
         const data = await useApi('wallet').sendSignedTransaction({
-          hash: keplrNetworksProtobufFormat.includes(currentWallet.value.net)
-            ? protobufTx
-            : defaultTx,
+          hash,
           deviceType: WALLET_TYPES.KEPLR,
           proxy: false,
           network: currentWallet.value.net,
@@ -924,7 +905,8 @@ export default {
 
         const metamaskResult =
           await metamaskConnector.value.sendMetamaskTransaction(
-            restakeAllTxs.value
+            restakeAllTxs.value,
+            restakeAllTxs.value.mem_tx_id
           );
 
         if (metamaskResult.error) {
@@ -1043,7 +1025,8 @@ export default {
 
         const metamaskResult =
           await metamaskConnector.value.sendMetamaskTransaction(
-            claimAllTxs.value
+            claimAllTxs.value,
+            claimAllTxs.value.mem_tx_id
           );
 
         if (metamaskResult.error) {
