@@ -23,7 +23,7 @@
 <script>
 import Input from '@/components/UI/Input';
 import VkItem from './components/VkItem';
-
+import ModalContent from '@/components/ModalContent';
 import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 
@@ -32,6 +32,7 @@ export default {
   components: {
     Input,
     VkItem,
+    ModalContent,
   },
   props: {
     wallet: {

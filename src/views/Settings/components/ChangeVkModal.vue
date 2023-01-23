@@ -47,13 +47,14 @@ import trashCan from '@/assets/icons/trash-can.svg';
 import notify from '@/plugins/notify';
 import { getTokenIcon, tokenIconPlaceholder } from '@/helpers';
 import { computed, ref, inject } from 'vue';
-// import { useStore } from 'vuex';
+import ModalContent from '@/components/ModalContent';
 
 export default {
   name: 'ChangeVkModal',
   components: {
     PrimaryButton,
     trashCan,
+    ModalContent,
   },
   props: {
     vk: {
