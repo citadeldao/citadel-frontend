@@ -39,12 +39,18 @@ export default class keplrConnector {
   }
 
   async getOutputHash(signer, rawTx, keplrResult) {
+    const granter = rawTx.transaction?.json?.fee?.granter;
+
     const defaultTx = {
       ...keplrResult.signedTx,
       signType: this.getSignType(rawTx),
       publicKey: await signer.getPublicKeyDecoded(),
       signature: keplrResult.signature,
     };
+
+    if (granter) {
+      defaultTx.fee.granter = granter;
+    }
 
     const defaultSendTx = rawTx.transaction;
 
@@ -89,12 +95,25 @@ export default class keplrConnector {
         return { signature, signedTx: data.json, fullResponse: res };
       }
 
+      const copiedData = JSON.parse(JSON.stringify(data));
+
+      if (copiedData?.json?.fee?.granter) {
+        delete copiedData.json.fee.granter;
+        copiedData.json.fee.amount[0].amount = '0';
+      }
+
+      if (copiedData?.fee?.granter) {
+        delete copiedData.fee.granter;
+        copiedData.fee.amount[0].amount = '0';
+      }
+
       const res = await window.keplr.signAmino(
-        data.chain_id || data.json.chain_id,
+        copiedData.chain_id || copiedData.json.chain_id,
         signer,
-        data.json || data,
+        copiedData.json || copiedData,
         advancedParams
       );
+
       const signature = Buffer.from(res.signature.signature, 'base64').toString(
         'hex'
       );
