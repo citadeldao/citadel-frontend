@@ -1,39 +1,45 @@
 <template>
-  <div class="change-vk">
-    <div class="change-vk__top">
-      <div class="change-vk__icon-wrapper">
-        <div
-          v-if="showIconPlaceholder"
-          class="change-vk__logo-icon-placeholder"
-        >
-          <span>{{ iconPlaceholder[0] }}</span>
-          <span>{{ iconPlaceholder[1] }}</span>
+  <ModalContent
+    v-bind="props"
+    v-click-away="() => $emit('close')"
+    @close="() => $emit('close')"
+  >
+    <div class="change-vk">
+      <div class="change-vk__top">
+        <div class="change-vk__icon-wrapper">
+          <div
+            v-if="showIconPlaceholder"
+            class="change-vk__logo-icon-placeholder"
+          >
+            <span>{{ iconPlaceholder[0] }}</span>
+            <span>{{ iconPlaceholder[1] }}</span>
+          </div>
+          <img
+            v-else
+            :src="getTokenIcon(vk.code.toLowerCase())"
+            alt=""
+            @error="showIconPlaceholder = true"
+          />
         </div>
-        <img
-          v-else
-          :src="getTokenIcon(vk.code.toLowerCase())"
-          alt=""
-          @error="showIconPlaceholder = true"
-        />
+        <div class="change-vk__name">
+          {{ vk.name }}
+        </div>
+        <div class="change-vk__vk">
+          {{ vk.savedViewingKey.viewingKey }}
+        </div>
       </div>
-      <div class="change-vk__name">
-        {{ vk.name }}
-      </div>
-      <div class="change-vk__vk">
-        {{ vk.savedViewingKey.viewingKey }}
-      </div>
-    </div>
-    <div class="change-vk__bottom">
-      <PrimaryButton @click="createNewVk">
-        {{ $t('viewingKey.createNew') }}
-      </PrimaryButton>
-      <div class="change-vk__delete-btn" @click="deleteVk">
-        <trashCan />
-        &nbsp;
-        <span>{{ $t('viewingKey.deleteKey') }}</span>
+      <div class="change-vk__bottom">
+        <PrimaryButton @click="createNewVk">
+          {{ $t('viewingKey.createNew') }}
+        </PrimaryButton>
+        <div class="change-vk__delete-btn" @click="deleteVk">
+          <trashCan />
+          &nbsp;
+          <span>{{ $t('viewingKey.deleteKey') }}</span>
+        </div>
       </div>
     </div>
-  </div>
+  </ModalContent>
 </template>
 <script>
 import PrimaryButton from '@/components/UI/PrimaryButton.vue';
@@ -87,6 +93,7 @@ export default {
       showIconPlaceholder,
       iconPlaceholder,
       deleteVk,
+      props,
     };
   },
 };
