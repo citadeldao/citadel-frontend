@@ -347,7 +347,9 @@ export default {
       }
     };
 
-    const messageForSign = ref(''); // computed(() => store.getters['extensions/extensionMessageForSign']);
+    const messageForSign = computed(
+      () => store.getters['extensions/extensionMessageForSign']
+    );
 
     const extensionTransactionForSign = computed(
       () => store.getters['extensions/extensionTransactionForSign']
@@ -506,13 +508,22 @@ export default {
       );
     });
 
-    /* watch(() => messageForSign.value, async () => {
-      if (messageForSign.value) {
-        const currentAddress = messageForSign.value.address;
-        const nets = currentApp.value.networks.map(net => { return net.toLowerCase(); });
-        signerWallet.value = privateWallets.value.find(w => w.address.toLowerCase() === currentAddress.toLowerCase() && nets.includes(w.net.toLowerCase()));
+    watch(
+      () => messageForSign.value,
+      async () => {
+        if (messageForSign.value) {
+          const currentAddress = messageForSign.value.address;
+          const nets = currentApp.value.networks.map((net) => {
+            return net.toLowerCase();
+          });
+          signerWallet.value = walletsList.value.find(
+            (w) =>
+              w.address.toLowerCase() === currentAddress.toLowerCase() &&
+              nets.includes(w.net.toLowerCase())
+          );
+        }
       }
-    }); */
+    );
 
     watch(
       () => scrtAddress.value,
@@ -735,6 +746,27 @@ export default {
     };
 
     const signMessage = async () => {
+      if (signerWallet.value.type === WALLET_TYPES.KEPLR) {
+        const keplrResult = await keplrConnector.value.sendKeplrTransaction(
+          messageForSign.value.message,
+          signerWallet.value.address,
+          {
+            preferNoSetFee: true,
+            preferNoSetMemo: true,
+          }
+        );
+
+        if (keplrResult.signature) {
+          msgSuccessSignature.value = keplrResult.signature;
+          sendMSG(keplrResult.signature, extensionsSocketTypes.types.message);
+        }
+        return;
+      }
+
+      if (signerWallet.value.type === WALLET_TYPES.LEDGER) {
+        showLedgerConnect.value = true;
+      }
+
       confirmPassword.value = true;
 
       if (
@@ -744,21 +776,24 @@ export default {
         return;
       }
 
-      if (signerWallet.value.type === WALLET_TYPES.LEDGER) {
-        showLedgerConnect.value = true;
-      }
-
       try {
-        const signResult = await signerWallet.value.signMessage(
-          messageForSign.value.message,
-          password.value,
-          signerWallet.value.derivationPath
-        );
-
-        showLedgerConnect.value = false;
-        msgSuccessSignature.value = signResult;
-
-        sendMSG(msgSuccessSignature.value, extensionsSocketTypes.types.message);
+        // const signResult = await signerWallet.value.signAndSendTransfer({
+        //   walletId: signerWallet.value.id,
+        //   rawTransaction: messageForSign.value.message,
+        //   privateKey:
+        //     password.value &&
+        //     (await signerWallet.value.getPrivateKeyDecoded(password.value)),
+        //   derivationPath: signerWallet.value.derivationPath,
+        //   proxy: false,
+        // });
+        // const signResult = await signerWallet.value.signMessage(
+        //   messageForSign.value.message,
+        //   password.value,
+        //   signerWallet.value.derivationPath
+        // );
+        // showLedgerConnect.value = false;
+        // msgSuccessSignature.value = signResult;
+        // sendMSG(msgSuccessSignature.value, extensionsSocketTypes.types.message);
       } catch (err) {
         showLedgerConnect.value = false;
         notify({

@@ -9,9 +9,7 @@
       </div>
     </div>
     <div v-if="msgSuccessSignature" class="item">
-      <div class="label signature">
-        {{ msgSuccessSignature }}
-      </div>
+      <div class="label signature">Signature: {{ msgSuccessSignature }}</div>
     </div>
     <div
       v-if="
