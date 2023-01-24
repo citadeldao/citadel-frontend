@@ -80,6 +80,16 @@ export default class keplrConnector {
   async sendKeplrTransaction(rawTx, signer, advancedParams = {}) {
     const data = rawTx.transaction || rawTx;
     try {
+      if (data?.json?.fee?.granter || data?.fee?.granter) {
+        window.keplr.defaultOptions = {
+          sign: {
+            disableBalanceCheck: true,
+          },
+        };
+      } else {
+        window.keplr.defaultOptions = {};
+      }
+
       if (data.direct && data.json.memo.toLowerCase().includes('permission')) {
         const res = await window.keplr.signDirect(
           data.chain_id || data.json.chain_id,
@@ -99,12 +109,10 @@ export default class keplrConnector {
 
       if (copiedData?.json?.fee?.granter) {
         delete copiedData.json.fee.granter;
-        copiedData.json.fee.amount[0].amount = '0';
       }
 
       if (copiedData?.fee?.granter) {
         delete copiedData.fee.granter;
-        copiedData.fee.amount[0].amount = '0';
       }
 
       const res = await window.keplr.signAmino(
