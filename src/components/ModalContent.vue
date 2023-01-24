@@ -144,7 +144,7 @@ export default {
       type: [String, Error],
     },
     desc: {
-      type: String,
+      type: [String, Error],
     },
     disabled: {
       type: Boolean,
