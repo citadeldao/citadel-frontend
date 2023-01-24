@@ -137,7 +137,7 @@ import SearchPlaceholder from './SearchPlaceholder.vue';
 import AddressItem from './AddressItem';
 import OverallCard from './OverallCard';
 import AddressPlaceholder from './AddressPlaceholder';
-import citadelLogo from '@/assets/icons/citadelLogoWinter.svg';
+import citadelLogo from '@/assets/icons/citadelLogo.svg';
 import onlyLogo from '@/assets/icons/only-logo.svg';
 import ArrowRight from '@/assets/icons/arrow-rigth.svg';
 
