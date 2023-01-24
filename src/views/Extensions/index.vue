@@ -777,23 +777,23 @@ export default {
       }
 
       try {
-        // const signResult = await signerWallet.value.signAndSendTransfer({
-        //   walletId: signerWallet.value.id,
-        //   rawTransaction: messageForSign.value.message,
-        //   privateKey:
-        //     password.value &&
-        //     (await signerWallet.value.getPrivateKeyDecoded(password.value)),
-        //   derivationPath: signerWallet.value.derivationPath,
-        //   proxy: false,
-        // });
+        const signResult = await signerWallet.value.signAndSendTransfer({
+          walletId: signerWallet.value.id,
+          rawTransaction: { json: messageForSign.value.message },
+          privateKey:
+            password.value &&
+            (await signerWallet.value.getPrivateKeyDecoded(password.value)),
+          derivationPath: signerWallet.value.derivationPath,
+          proxy: false,
+        });
         // const signResult = await signerWallet.value.signMessage(
         //   messageForSign.value.message,
         //   password.value,
         //   signerWallet.value.derivationPath
         // );
-        // showLedgerConnect.value = false;
-        // msgSuccessSignature.value = signResult;
-        // sendMSG(msgSuccessSignature.value, extensionsSocketTypes.types.message);
+        showLedgerConnect.value = false;
+        msgSuccessSignature.value = signResult;
+        sendMSG(msgSuccessSignature.value, extensionsSocketTypes.types.message);
       } catch (err) {
         showLedgerConnect.value = false;
         notify({
