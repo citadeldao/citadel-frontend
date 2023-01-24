@@ -759,6 +759,13 @@ export default {
         if (keplrResult.signature) {
           msgSuccessSignature.value = keplrResult.signature;
           sendMSG(keplrResult.signature, extensionsSocketTypes.types.message);
+          notify({
+            type: 'success',
+            text: `SIGN MESSAGE: ${extensionsSocketTypes.messages.success}`,
+          });
+          store.commit('extensions/SET_MESSAGE_FOR_SIGN', null, {
+            root: true,
+          });
         }
         return;
       }
