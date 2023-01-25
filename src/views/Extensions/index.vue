@@ -745,6 +745,13 @@ export default {
       }
     };
 
+    const showSuccessNotify = () => {
+      notify({
+        type: 'success',
+        text: `SIGN MESSAGE: ${extensionsSocketTypes.messages.success}`,
+      });
+    };
+
     const signMessage = async () => {
       if (signerWallet.value.type === WALLET_TYPES.KEPLR) {
         const keplrResult = await keplrConnector.value.sendKeplrTransaction(
@@ -759,10 +766,7 @@ export default {
         if (keplrResult.signature) {
           msgSuccessSignature.value = keplrResult.signature;
           sendMSG(keplrResult.signature, extensionsSocketTypes.types.message);
-          notify({
-            type: 'success',
-            text: `SIGN MESSAGE: ${extensionsSocketTypes.messages.success}`,
-          });
+          showSuccessNotify();
           store.commit('extensions/SET_MESSAGE_FOR_SIGN', null, {
             root: true,
           });
@@ -784,23 +788,38 @@ export default {
       }
 
       try {
-        const signResult = await signerWallet.value.signAndSendTransfer({
-          walletId: signerWallet.value.id,
-          rawTransaction: { json: messageForSign.value.message },
-          privateKey:
-            password.value &&
-            (await signerWallet.value.getPrivateKeyDecoded(password.value)),
-          derivationPath: signerWallet.value.derivationPath,
-          proxy: false,
-        });
-        // const signResult = await signerWallet.value.signMessage(
-        //   messageForSign.value.message,
-        //   password.value,
-        //   signerWallet.value.derivationPath
-        // );
+        const signResult = await citadel.signTransaction(
+          signerWallet.value.id,
+          { json: messageForSign.value.message },
+          {
+            privateKey:
+              password.value &&
+              (await signerWallet.value.getPrivateKeyDecoded(password.value)),
+            derivationPath: signerWallet.value.derivationPath,
+          }
+        );
+        if (!signResult.error) {
+          sendMSG(
+            signResult.data.signature,
+            extensionsSocketTypes.types.message
+          );
+          showSuccessNotify();
+        } else {
+          notify({
+            type: 'warning',
+            text: signResult.error,
+          });
+          sendMSG(
+            extensionsSocketTypes.messages.failed,
+            extensionsSocketTypes.types.message
+          );
+        }
         showLedgerConnect.value = false;
-        msgSuccessSignature.value = signResult;
-        sendMSG(msgSuccessSignature.value, extensionsSocketTypes.types.message);
+        confirmPassword.value = false;
+        password.value = '';
+        store.commit('extensions/SET_MESSAGE_FOR_SIGN', null, {
+          root: true,
+        });
       } catch (err) {
         showLedgerConnect.value = false;
         notify({
