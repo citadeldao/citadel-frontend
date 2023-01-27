@@ -1,51 +1,61 @@
 <template>
-  <div class="export-modal">
-    <div
-      v-if="currentExportMethod === WALLET_TYPES.ONE_SEED"
-      class="export-modal__mnemonick-phrase"
-    >
-      <div class="export-modal__mnemonick-phrase-list">
-        <span
-          v-for="item in phrase"
-          :key="item"
-          class="export-modal__mnemonick-phrase-list-item"
-          >{{ item }}</span
-        >
+  <ModalContent
+    v-bind="props"
+    v-click-away="() => $emit('close')"
+    @close="() => $emit('close')"
+    @buttonClick="$emit('approveExport')"
+  >
+    <div class="export-modal">
+      <div
+        v-if="currentExportMethod === WALLET_TYPES.ONE_SEED"
+        class="export-modal__mnemonick-phrase"
+      >
+        <div class="export-modal__mnemonick-phrase-list">
+          <span
+            v-for="item in phrase"
+            :key="item"
+            class="export-modal__mnemonick-phrase-list-item"
+            >{{ item }}</span
+          >
+        </div>
+      </div>
+      <div
+        v-if="
+          derivationPath && currentExportMethod !== WALLET_TYPES.PRIVATE_KEY
+        "
+        class="export-modal__mnemonick-derivation"
+      >
+        Derivation path: <span>{{ derivationPath }}</span>
+      </div>
+      <div
+        v-if="currentExportMethod === WALLET_TYPES.PRIVATE_KEY"
+        class="export-modal__private-key"
+      >
+        <span class="export-modal__private-key-key">
+          {{ privateKey }}
+        </span>
+      </div>
+      <div class="export-modal__copy-icon" @click="copyAddress">
+        <transition name="fade1">
+          <span v-if="isCopied" class="export-modal__tooltip">
+            {{ $t('copiedToClipboard') }}
+          </span>
+        </transition>
+        <copyIcon />
       </div>
     </div>
-    <div
-      v-if="derivationPath && currentExportMethod !== WALLET_TYPES.PRIVATE_KEY"
-      class="export-modal__mnemonick-derivation"
-    >
-      Derivation path: <span>{{ derivationPath }}</span>
-    </div>
-    <div
-      v-if="currentExportMethod === WALLET_TYPES.PRIVATE_KEY"
-      class="export-modal__private-key"
-    >
-      <span class="export-modal__private-key-key">
-        {{ privateKey }}
-      </span>
-    </div>
-    <div class="export-modal__copy-icon" @click="copyAddress">
-      <transition name="fade1">
-        <span v-if="isCopied" class="export-modal__tooltip">
-          {{ $t('copiedToClipboard') }}
-        </span>
-      </transition>
-      <copyIcon />
-    </div>
-  </div>
+  </ModalContent>
 </template>
 
 <script>
+import ModalContent from '@/components/ModalContent';
 import copyIcon from '@/assets/icons/copyIcon.svg';
 import { WALLET_TYPES } from '@/config/walletType';
 import { computed, ref } from '@vue/runtime-core';
 import copyToClipboard from '@/helpers/copyToClipboard';
 export default {
   name: 'ExportModal',
-  components: { copyIcon },
+  components: { copyIcon, ModalContent },
   props: {
     currentExportMethod: {
       type: String,
@@ -80,7 +90,7 @@ export default {
       }, 1500);
     };
 
-    return { WALLET_TYPES, phrase, copyAddress, isCopied };
+    return { WALLET_TYPES, phrase, copyAddress, isCopied, props };
   },
 };
 </script>

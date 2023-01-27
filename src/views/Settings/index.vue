@@ -35,76 +35,34 @@
 
     <teleport to="body">
       <Modal v-if="showModal">
-        <ModalContent
+        <ChooseExportType
           v-if="showChooseMethodModal"
-          v-click-away="modalCloseHandler"
-          :title="$t('exportWallet.chooseExportTypeModalTitle')"
-          :desc="$t('exportWallet.chooseExportTypeModalDesc')"
-          :submit-button="false"
-          type="action"
+          v-bind="chooseExportTypeProps"
+          @chooseMethod="chooseMethod"
           @close="modalCloseHandler"
-        >
-          <ChooseExportType
-            :current-export-wallet="currentExportWallet"
-            @chooseMethod="chooseMethod"
-          />
-        </ModalContent>
-        <ModalContent
+        />
+        <ApproveExport
           v-if="showApproveExportModal"
-          v-click-away="modalCloseHandler"
-          :title="approveExportModalData.title"
-          :desc="approveExportModalData.desc"
-          type="action"
-          button-text="show"
-          :disabled="!!inputError"
-          data-qa="settings__export"
+          v-bind="approveExportProps"
+          @approveExport="approveExport"
           @close="modalCloseHandler"
-          @buttonClick="approveExport"
-        >
-          <ApproveExport
-            :current-export-wallet="currentExportWallet"
-            @approveExport="approveExport"
-          />
-        </ModalContent>
-        <ModalContent
+        />
+        <ExportModal
           v-if="showExportModal"
-          v-click-away="modalCloseHandler"
-          :title="exportModalData.title"
-          :desc="exportModalData.desc"
-          type="action"
-          :submit-button="false"
+          v-bind="exportProps"
           @close="modalCloseHandler"
-        >
-          <ExportModal
-            :current-export-method="currentExportMethod"
-            :private-key="decodedPrivateKey"
-            :derivation-path="currentExportWallet.derivationPath"
-            :mnemonic-phrase="decodedMnemonic"
-          />
-        </ModalContent>
-        <ModalContent
+        />
+        <ManageViewingKeysModal
           v-if="manageVkWallets && !changeVk"
-          v-click-away="modalCloseHandler"
-          class="manage-vk-modal"
-          :title="$t('viewingKey.viewingKeys')"
-          :desc="$t('viewingKey.vkListedBelow')"
-          :submit-button="false"
-          type="action"
+          v-bind="manageViewingKeysProps"
           @close="modalCloseHandler"
-        >
-          <ManageViewingKeysModal :wallet="manageVkWallets" />
-        </ModalContent>
-        <ModalContent
+          :wallet="manageVkWallets"
+        />
+        <ChangeVkModal
           v-if="changeVk"
-          v-click-away="handleChangeVkClose"
-          :title="$t('viewingKey.manageVks')"
-          :desc="$t('viewingKey.vkDesc')"
-          :submit-button="false"
-          type="action"
+          v-bind="changeVkProps"
           @close="handleChangeVkClose"
-        >
-          <ChangeVkModal :vk="changeVk" :wallet="manageVkWallets" />
-        </ModalContent>
+        />
       </Modal>
       <div v-if="showCreateVkModal">
         <CreateVkModal
@@ -125,7 +83,6 @@
 import ExportModal from './components/ExportModal.vue';
 import ApproveExport from './components/ApproveExport.vue';
 import ChooseExportType from './components/ChooseExportType.vue';
-import ModalContent from '@/components/ModalContent';
 import Addresses from './components/Addresses';
 import Subscriptions from './components/Subscriptions';
 import TransferData from './components/TransferData';
@@ -156,7 +113,6 @@ export default {
     ChangeEmail,
     Language,
     DeleteAccount,
-    ModalContent,
     ChooseExportType,
     ApproveExport,
     ExportModal,
@@ -330,8 +286,54 @@ export default {
       showApproveExportModal.value = false;
       showExportModal.value = true;
     };
-
+    const chooseExportTypeProps = computed(() => ({
+      title: t('exportWallet.chooseExportTypeModalTitle'),
+      desc: t('exportWallet.chooseExportTypeModalDesc'),
+      submitButton: false,
+      type: 'action',
+      currentExportWallet: currentExportWallet.value,
+    }));
+    const approveExportProps = computed(() => ({
+      title: approveExportModalData.value.title,
+      desc: approveExportModalData.value.desc,
+      type: 'action',
+      buttonText: 'show',
+      disabled: !!inputError.value,
+      dataQa: 'settings__export',
+      currentExportWallet: currentExportWallet.value,
+    }));
+    const exportProps = computed(() => ({
+      title: exportModalData.value.title,
+      desc: exportModalData.value.desc,
+      type: 'action',
+      submitButton: false,
+      currentExportMethod: currentExportMethod.value,
+      privateKey: decodedPrivateKey.value,
+      derivationPath: currentExportWallet.value.derivationPath,
+      mnemonicPhrase: decodedMnemonic.value,
+    }));
+    const manageViewingKeysProps = computed(() => ({
+      title: t('viewingKey.viewingKeys'),
+      desc: t('viewingKey.vkListedBelow'),
+      type: 'action',
+      submitButton: false,
+      wallet: manageVkWallets.value,
+    }));
+    const changeVkProps = computed(() => ({
+      title: t('viewingKey.manageVks'),
+      desc: t('viewingKey.vkDesc'),
+      type: 'action',
+      submitButton: false,
+      wallet: manageVkWallets.value,
+      vk: changeVk.value,
+    }));
+    ManageViewingKeysModal;
     return {
+      chooseExportTypeProps,
+      approveExportProps,
+      exportProps,
+      manageViewingKeysProps,
+      changeVkProps,
       modalCloseHandler,
       showModal,
       exportWallet,
@@ -448,10 +450,6 @@ export default {
       margin-bottom: $card-margin;
     }
   }
-}
-.manage-vk-modal {
-  max-width: 850px;
-  width: 100% !important;
 }
 .container {
   display: flex;
