@@ -48,7 +48,6 @@ import notify from '@/plugins/notify';
 import { getTokenIcon, tokenIconPlaceholder } from '@/helpers';
 import { computed, ref, inject } from 'vue';
 import ModalContent from '@/components/ModalContent';
-// import { useStore } from 'vuex';
 
 export default {
   name: 'ChangeVkModal',

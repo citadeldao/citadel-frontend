@@ -88,7 +88,7 @@ import Subscriptions from './components/Subscriptions';
 import TransferData from './components/TransferData';
 import ChangeEmail from './components/Account/Email';
 import ChangePassword from './components/Account/Password';
-import DeleteAccount from './components/Account/Delete';
+import DeleteAccount from './components/Account/Delete/Delete.vue';
 // import SyncExtension from './components/SyncExtension';
 import Language from './components/Language';
 import CreateVkModal from '@/views/Wallet/components/CreateVkModal/CreateVkModal.vue';
