@@ -101,7 +101,10 @@ export default {
     });
 
     const showPlaceholder = computed(() => {
-      return true; // !balanceHistory.value || Object.keys(balanceHistory.value.list).length <= 1;
+      return (
+        !balanceHistory.value ||
+        Object.keys(balanceHistory.value.list).length <= 1
+      );
     });
 
     onMounted(async () => {
