@@ -753,6 +753,14 @@ export default {
     };
 
     const signMessage = async () => {
+      if (signerWallet.value.type === WALLET_TYPES.LEDGER) {
+        notify({
+          type: 'warning',
+          text: 'Unsupported wallet type',
+        });
+        return;
+      }
+
       if (signerWallet.value.type === WALLET_TYPES.KEPLR) {
         const keplrResult = await keplrConnector.value.sendKeplrTransaction(
           messageForSign.value.message,
@@ -772,10 +780,6 @@ export default {
           });
         }
         return;
-      }
-
-      if (signerWallet.value.type === WALLET_TYPES.LEDGER) {
-        showLedgerConnect.value = true;
       }
 
       confirmPassword.value = true;
