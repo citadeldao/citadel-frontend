@@ -1,6 +1,9 @@
 <template>
   <div class="balance-history">
-    <div v-show="showPlaceholder" class="balance-history-placeholder">
+    <div
+      v-show="!isLoading && showPlaceholder"
+      class="balance-history-placeholder"
+    >
       <balanceHistoryPlaceholder />
       <span class="balance-history-placeholder__text">
         <div>{{ $t('overallPage.maintance') }}</div>
@@ -87,6 +90,7 @@ export default {
     const handleResize = ({ width }) => {
       wrapperWidth.value = width;
     };
+    const isLoading = ref(false);
     const {
       currentTab,
       isExpanded,
@@ -108,6 +112,7 @@ export default {
     });
 
     onMounted(async () => {
+      isLoading.value = true;
       const { balanceHistory } = await store.dispatch(storeAction, {
         list: customList.value,
       });
@@ -116,6 +121,7 @@ export default {
         currentTab.value,
         canvasElement
       );
+      isLoading.value = false;
     });
     watch(
       () => currentTab.value,
@@ -165,6 +171,7 @@ export default {
       showPlaceholder,
       wrapperWidth,
       handleResize,
+      isLoading,
     };
   },
 };
