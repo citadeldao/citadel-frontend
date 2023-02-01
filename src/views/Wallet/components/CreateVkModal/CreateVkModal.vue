@@ -1,128 +1,20 @@
 <template>
   <Modal>
     <!--Create VK Modal -->
-    <ModalContent
+    <Confirm
       v-if="showConfirmModal"
-      v-click-away="closeHandler"
-      :title="$t('viewingKey.confirmOperation')"
-      :desc="`${$t('viewingKey.addVkFor')} ${token.name}`"
-      type="action"
-      :submit-button="false"
+      v-bind="confirmProps"
       @close="closeHandler"
       @buttonClick="confirmClickHandler"
-    >
-      <div v-if="isConfirmModalLoading" class="loader">
-        <Loading />
-      </div>
-      <div class="fields">
-        <div class="field" v-if="appName">
-          <div class="fieldName">
-            {{ $t('app') }}
-          </div>
-          <div class="app-name">
-            <img
-              v-if="appIcon"
-              :src="appIcon"
-              width="22"
-              height="22"
-              class="app-icon"
-            />{{ appName }}
-          </div>
-        </div>
-        <div class="field">
-          <div class="fieldName">
-            {{ $t('sendFrom') }}
-          </div>
-          <div>{{ address }}</div>
-        </div>
-        <div class="field" v-if="!isKeplrWallet">
-          <div class="fieldName">
-            {{ $t('fee') }}
-          </div>
-          <div>
-            <span class="feeAmount">{{ tokenFee }}</span>
-            <span class="feeSign">SCRT</span>
-          </div>
-        </div>
-      </div>
-      <div
-        v-if="PRIVATE_PASSWORD_TYPES.includes(currentWallet.type)"
-        class="createVkPassword"
-      >
-        <Input
-          id="createVkPassword"
-          v-model="password"
-          :label="$t('viewingKey.passwordText')"
-          type="password"
-          icon="key"
-          :placeholder="$t('password')"
-          :error="inputError"
-          @keyup.enter="confirmClickHandler"
-        />
-      </div>
-      <div class="confirm-btn-wrapper">
-        <PrimaryButton
-          ref="primaryButton"
-          :disabled="!!inputError"
-          @click.stop="confirmClickHandler"
-        >
-          {{ $t(`confirm`) }}
-        </PrimaryButton>
-      </div>
-      <div class="goToImportVk">
-        {{ $t('viewingKey.iHaveVk') }}
-        &nbsp;
-        <span @click="goToImportVk">{{ $t('import') }}</span>
-      </div>
-    </ModalContent>
-
-    <!-- Import VK MODAL -->
-    <ModalContent
+      @goToImportVk="goToImportVk"
+    />
+    <Import
       v-if="showImportVkModal"
-      v-click-away="closeHandler"
-      :title="`${$t('viewingKey.importVk')} ${token.name}`"
-      :desc="$t('viewingKey.enterYourVk')"
-      button-text="confirm"
-      type="action"
-      :disabled="!!inputError || !!ivkInputError"
+      v-bind="importProps"
+      @updateIvk="updateIvk"
       @close="closeHandler"
       @buttonClick="confirmImportHandler"
-    >
-      <div v-if="isConfirmModalLoading" class="loader">
-        <Loading />
-      </div>
-      <div class="vk-input">
-        <Input
-          id="importVkInput"
-          v-model="ivk"
-          :label="$t('viewingKey.viewingKey')"
-          type="text"
-          :hard-autocomplete-off="true"
-          icon="key"
-          :error="ivkInputError"
-          @keyup.enter="confirmImportHandler"
-        />
-      </div>
-      <!-- <div
-        v-if="!isHardwareWallet(currentWallet.type)"
-        class="createVkPassword"
-        :class="{ 'mt-40': ivkInputError }"
-      >
-        <Input
-          id="createVkPassword"
-          v-model="password"
-          :label="$t('viewingKey.passwordText')"
-          type="password"
-          :autocomplete="false"
-          :hard-autocomplete-off="true"
-          icon="key"
-          :placeholder="$t('password')"
-          :error="inputError"
-          @keyup.enter="confirmImportHandler"
-        />
-      </div> -->
-    </ModalContent>
-
+    />
     <!--Confirm Ledger Modals-->
     <ConnectLedgerModal
       v-if="showConnectLedgerModal"
@@ -151,39 +43,25 @@
     <!--Error Modal -->
     <ModalContent
       v-if="txError"
+      v-bind="errorProps"
       v-click-away="closeHandler"
-      title="Warning"
-      icon="warningIcon"
-      :desc="txError"
-      button-text="ok"
-      type="warning"
       @close="closeHandler"
       @buttonClick="closeHandler"
     />
     <!--Success Modal -->
     <ModalContent
       v-if="showSuccessModal"
+      v-bind="successModalProps"
       v-click-away="successCloseHandler"
-      title="Success"
-      :desc="$t('sendModal.desc2')"
-      button-text="ok"
-      type="success"
-      icon="success"
       @close="successCloseHandler"
       @buttonClick="successCloseHandler"
     >
-      <SuccessModalContent
-        :show-from="false"
-        :wallet="token"
-        :snip20-token="token"
-        :tx-hash="[txHash]"
-        :viewing-key="viewingKey"
-      />
+      <SuccessModalContent v-bind="successContentProps" />
     </ModalContent>
   </Modal>
 </template>
 <script>
-import { ref, provide, watch, inject, computed } from 'vue';
+import { ref, provide, inject, computed } from 'vue';
 import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 import { isHardwareWallet } from '@/config/walletType';
@@ -194,27 +72,24 @@ import ConfirmLedgerModal from '@/components/Modals/Ledger/ConfirmLedgerModal';
 import ConnectLedgerModal from '@/components/Modals/Ledger/ConnectLedgerModal';
 import OpenAppLedgerModal from '@/components/Modals/Ledger/OpenAppLedgerModal';
 import RejectLedgerModal from '@/components/Modals/Ledger/RejectLedgerModal';
-import PrimaryButton from '@/components/UI/PrimaryButton';
-import Input from '@/components/UI/Input';
-import Loading from '@/components/Loading';
 import useCheckPassword from '@/compositions/useCheckPassword';
 import useLedger from '@/compositions/useLedger';
 import redirectToWallet from '@/router/helpers/redirectToWallet';
 import { WALLET_TYPES, PRIVATE_PASSWORD_TYPES } from '@/config/walletType';
-
+import Confirm from '@/views/Wallet/components/CreateVkModal/Confirm';
+import Import from '@/views/Wallet/components/CreateVkModal/Import';
 export default {
   name: 'CreateVkModal',
   components: {
     Modal,
     ModalContent,
-    Input,
     SuccessModalContent,
-    Loading,
     ConfirmLedgerModal,
     ConnectLedgerModal,
     OpenAppLedgerModal,
     RejectLedgerModal,
-    PrimaryButton,
+    Confirm,
+    Import,
   },
   props: {
     address: {
@@ -270,7 +145,7 @@ export default {
       () => props.currentWallet.type === WALLET_TYPES.KEPLR
     );
 
-    const { password, passwordError, inputError } = useCheckPassword();
+    const { inputError } = useCheckPassword();
     provide('inputError', inputError);
 
     const {
@@ -287,24 +162,12 @@ export default {
     const goToImportVk = () => {
       showConfirmModal.value = false;
       showImportVkModal.value = true;
-      password.value = '';
     };
-    const confirmImportHandler = async () => {
+    const confirmImportHandler = async (ivk) => {
       isConfirmModalLoading.value = true;
       let isError = false;
 
-      // if (
-      //   passwordError.value &&
-      //   !isHardwareWallet(props.currentWallet.type) &&
-      //   !isKeplrWallet.value
-      // ) {
-      //   inputError.value = passwordError.value;
-      //   isConfirmModalLoading.value = false;
-      //   isError = true;
-      // }
-
-      if (!ivk.value) {
-        ivkInputError.value = t('viewingKey.incorrectKey');
+      if (!ivk) {
         isConfirmModalLoading.value = false;
         isError = true;
       }
@@ -316,7 +179,7 @@ export default {
       const { error } = await citadel.importViewingKey(
         props.currentWallet.id,
         props.token.net,
-        ivk.value
+        ivk
       );
 
       if (error) {
@@ -326,16 +189,13 @@ export default {
         return;
       }
 
-      viewingKey.value = ivk.value;
+      viewingKey.value = ivk;
       showImportVkModal.value = false;
       showSuccessModal.value = true;
       isConfirmModalLoading.value = false;
-
-      // await store.dispatch('wallets/getNewWallets','lazy');
     };
 
     const closeHandler = async () => {
-      password.value = '';
       inputError.value = false;
       txError.value = '';
       txHash.value = '';
@@ -357,15 +217,7 @@ export default {
       }
     };
 
-    const confirmClickHandler = async () => {
-      if (
-        passwordError.value &&
-        !isHardwareWallet(props.currentWallet.type) &&
-        props.currentWallet.type !== WALLET_TYPES.KEPLR
-      ) {
-        inputError.value = passwordError.value;
-        return;
-      }
+    const confirmClickHandler = async (password) => {
       let error;
       let transactionHash;
       let vk;
@@ -380,7 +232,7 @@ export default {
             : props.vkType,
           {
             privateKey: await props.currentWallet.getPrivateKeyDecoded(
-              password.value
+              password
             ),
             fee: props.tokenFee,
           }
@@ -449,13 +301,6 @@ export default {
       txHash.value = transactionHash;
     };
 
-    watch(
-      () => ivk.value,
-      () => {
-        ivkInputError.value = '';
-      }
-    );
-
     const connectLedgerCloseHandler = () => {
       showConfirmModal.value = true;
       clearLedgerModals();
@@ -473,13 +318,58 @@ export default {
       clearLedgerModals();
       closeHandler();
     };
-
+    const updateIvk = (value) => (ivk.value = value);
+    const confirmProps = computed(() => ({
+      appName: props.appName,
+      appIcon: props.appIcon,
+      address: props.address,
+      currentWallet: props.currentWallet,
+      tokenFee: props.tokenFee,
+      PRIVATE_PASSWORD_TYPES: PRIVATE_PASSWORD_TYPES,
+      title: t('viewingKey.confirmOperation'),
+      desc: t('viewingKey.addVkFor') + ' ' + props.token.name,
+      type: 'action',
+      loading: isConfirmModalLoading.value,
+      submitButton: false,
+    }));
+    const importProps = computed(() => ({
+      title: t('viewingKey.importVk') + ' ' + props.token.name,
+      desc: t('viewingKey.enterYourVk'),
+      buttonText: 'confirm',
+      type: 'action',
+      loading: isConfirmModalLoading.value,
+    }));
+    const errorProps = computed(() => ({
+      title: 'Warning',
+      icon: 'warningIcon',
+      desc: txError.value,
+      buttonText: 'ok',
+      type: 'warning',
+    }));
+    const successModalProps = computed(() => ({
+      title: 'Success',
+      desc: t('sendModal.desc2'),
+      buttonText: 'ok',
+      type: 'success',
+      icon: 'success',
+    }));
+    const successContentProps = computed(() => ({
+      showFrom: false,
+      wallet: props.token,
+      snip20Token: props.token,
+      txHash: [txHash.value],
+      viewingKey: viewingKey.value,
+    }));
     return {
+      updateIvk,
+      confirmProps,
+      importProps,
+      errorProps,
+      successModalProps,
+      successContentProps,
       showConfirmModal,
       isConfirmModalLoading,
       showFeeSelectModal,
-      password,
-      passwordError,
       closeHandler,
       successCloseHandler,
       amount,
@@ -513,92 +403,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.app-icon {
-  vertical-align: middle;
-  width: 24px;
-  height: 24px;
-  margin-right: 10px;
-}
-
-.app-name {
-  color: #1a53f0;
-  font-weight: 700;
-}
-.createVkPassword {
-  height: 68px;
-  margin-top: 19px;
-  width: 100%;
-}
-
-.vk-input {
-  height: 68px;
-  margin-top: 19px;
-  width: 100%;
-}
-
-.fields {
-  width: 100%;
-  margin-top: 15px;
-  font-size: 14px;
-
-  .field {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 8px;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-
-    .fieldName {
-      color: $fieldName;
-    }
-
-    .feeAmount {
-      color: $red;
-      margin-right: 5px;
-      font-weight: bold;
-    }
-
-    .feeSign {
-      color: $fieldName;
-      font-weight: 400;
-    }
-  }
-}
-
-.loader {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-  background: white;
-  z-index: 10;
-}
-
-.confirm-btn-wrapper {
-  margin-top: 32px;
-}
-
-.goToImportVk {
-  display: flex;
-  justify-content: center;
-  margin-top: 17px;
-  font-weight: 700;
-  color: $too-dark-blue;
-
-  span {
-    color: $dark-blue;
-    border-bottom: 1px solid $dark-blue;
-    cursor: pointer;
-  }
-}
-
-.mt-40 {
-  margin-top: 40px;
-}
-</style>

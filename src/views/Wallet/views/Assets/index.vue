@@ -149,7 +149,7 @@ import Input from '@/components/UI/Input';
 import Loading from '@/components/Loading';
 import AssetsItem from './components/AssetsItem.vue';
 import BalanceCard from './components/BalanceCard.vue';
-import CreateVkModal from '@/views/Wallet/components/CreateVkModal.vue';
+import CreateVkModal from '@/views/Wallet/components/CreateVkModal/CreateVkModal.vue';
 import { sortByAlphabet } from '@/helpers';
 import redirectToWallet from '@/router/helpers/redirectToWallet';
 import { TOKEN_STANDARDS } from '@/config/walletType';
