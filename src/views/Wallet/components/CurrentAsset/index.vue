@@ -49,7 +49,7 @@
 import { ref, inject, markRaw } from 'vue';
 import useWallets from '@/compositions/useWallets';
 import AssetIcon from '@/components/UI/AssetIcon.vue';
-import CreateVkModal from '@/views/Wallet/components/CreateVkModal.vue';
+import CreateVkModal from '@/views/Wallet/components/CreateVkModal/CreateVkModal.vue';
 import redirectToWallet from '@/router/helpers/redirectToWallet';
 import { useRoute } from 'vue-router';
 

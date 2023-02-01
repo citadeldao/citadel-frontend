@@ -91,7 +91,7 @@ import ChangePassword from './components/Account/Password';
 import DeleteAccount from './components/Account/Delete/Delete.vue';
 // import SyncExtension from './components/SyncExtension';
 import Language from './components/Language';
-import CreateVkModal from '@/views/Wallet/components/CreateVkModal.vue';
+import CreateVkModal from '@/views/Wallet/components/CreateVkModal/CreateVkModal.vue';
 import ManageViewingKeysModal from './components/ManageViewingKeysModal';
 import ChangeVkModal from './components/ChangeVkModal.vue';
 import Modal from '@/components/Modal';

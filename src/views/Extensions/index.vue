@@ -177,7 +177,7 @@ import {
 import Loading from '@/components/Loading';
 import { ref, computed, watch, onBeforeUnmount } from 'vue';
 import Modal from '@/components/Modal';
-import CreateVkModal from '@/views/Wallet/components/CreateVkModal.vue';
+import CreateVkModal from '@/views/Wallet/components/CreateVkModal/CreateVkModal.vue';
 import ModalContent from '@/components/ModalContent';
 import { useStore } from 'vuex';
 import Head from './components/Head';
