@@ -1175,6 +1175,7 @@ export default {
       showCreateVkModal,
       showExtensionTransactionModal,
       showConfirmModalLoading,
+
     };
   },
 };
