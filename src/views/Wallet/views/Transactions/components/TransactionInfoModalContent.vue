@@ -3,137 +3,120 @@
     <TxStatuses :info="info" :current-wallet="currentWallet" />
     <InfoBlock :current-wallet="currentWallet" :info="info" />
     <div v-if="info.view" class="inner-tx">
+      <!-- MAIN STRUCTURE AND INNER, WHEN COMPONENTS IN CHILD -->
       <div
-        v-for="(item, ndx) in info.view.filter(filterTypeMethod)"
-        :key="ndx"
-        :class="{ empty: !item.components?.length }"
-        class="inner-tx__view-item"
+        v-for="(struct, indexStruct) in [
+          info.view.filter(filterTypeMethod),
+          innerTxs,
+        ]"
+        :key="indexStruct"
       >
-        <template v-if="item.components">
-          <div
-            :class="{
-              empty: !item.components?.length,
-              last: info.view.length - 1 === ndx,
-            }"
-            class="icon-type"
-          >
-            <img width="32" height="32" :src="item.icon" />
-            <div>{{ item.type }}</div>
-          </div>
-          <div
-            v-for="(component, n) in item.components"
-            :key="n"
-            class="inner-tx__view-item-component"
-          >
+        <div v-if="indexStruct > 0 && struct.length" class="nested">
+          Nested transactions:
+        </div>
+        <div
+          v-for="(item, ndx) in struct"
+          :key="ndx"
+          :class="{ empty: !item.components?.length }"
+          class="inner-tx__view-item"
+        >
+          <template v-if="item.components">
             <div
-              v-if="
-                !['amount_collection', 'text_collection'].includes(
-                  component.type
-                )
-              "
-              class="title"
+              :class="{
+                empty: !item.components?.length,
+                last: info.view.length - 1 === ndx,
+              }"
+              class="icon-type"
             >
-              {{ component.title }}
+              <img width="32" height="32" :src="item.icon" />
+              <div>{{ item.type }}</div>
             </div>
             <div
-              v-if="
-                !['amount_collection', 'text_collection'].includes(
-                  component.type
-                )
-              "
-              class="line"
-            />
-            <div v-if="component.type === 'amount'" class="value">
-              <div class="value-amount">{{ component.value.text }}</div>
-              <div class="value-symbol">{{ component.value.symbol }}</div>
-            </div>
-            <div v-if="component.type === 'text'" class="value">
-              <div class="value-amount">{{ component.value }}</div>
-            </div>
-            <div v-if="component.type === 'dateTime'" class="value">
-              <div class="value-amount">
-                {{ format(new Date(component.value), 'yyyy/MM/dd hh:mm:ss') }}
-              </div>
-            </div>
-            <div v-if="component.type === 'textWithURL'" class="value">
-              <a target="_blank" :href="component.value.url">{{
-                component.value.text
-              }}</a>
-            </div>
-            <!-- structure in type -->
-            <div
-              v-if="component.type === 'amount_collection'"
-              class="flex-value"
+              v-for="(component, n) in item.components"
+              :key="n"
+              class="inner-tx__view-item-component"
             >
               <div
-                v-for="(componentInner, key) in component.value"
-                :key="key"
-                class="inner-tx__view-item-component-flex"
+                v-if="
+                  !['amount_collection', 'text_collection'].includes(
+                    component.type
+                  )
+                "
+                class="title"
               >
-                <div class="value">
-                  <div class="value-symbol">
-                    {{ componentInner.symbol }}
+                {{ component.title }}
+              </div>
+              <div
+                v-if="
+                  !['amount_collection', 'text_collection'].includes(
+                    component.type
+                  )
+                "
+                class="line"
+              />
+              <div v-if="component.type === 'amount'" class="value">
+                <div class="value-amount">{{ component.value.text }}</div>
+                <div class="value-symbol">{{ component.value.symbol }}</div>
+              </div>
+              <div v-if="component.type === 'text'" class="value">
+                <div class="value-amount">{{ component.value }}</div>
+              </div>
+              <div v-if="component.type === 'dateTime'" class="value">
+                <div class="value-amount">
+                  {{ format(new Date(component.value), 'yyyy/MM/dd hh:mm:ss') }}
+                </div>
+              </div>
+              <div v-if="component.type === 'textWithURL'" class="value">
+                <a target="_blank" :href="component.value.url">{{
+                  component.value.text
+                }}</a>
+              </div>
+              <!-- structure in type -->
+              <div
+                v-if="component.type === 'amount_collection'"
+                class="flex-value"
+              >
+                <div
+                  v-for="(componentInner, key) in component.value"
+                  :key="key"
+                  class="inner-tx__view-item-component-flex"
+                >
+                  <div class="value">
+                    <div class="value-symbol">
+                      {{ componentInner.symbol }}
+                    </div>
+                    <div class="title">{{ componentInner.text }}</div>
                   </div>
-                  <div class="title">{{ componentInner.text }}</div>
+                </div>
+              </div>
+              <!-- text_collection -->
+              <div
+                v-if="component.type === 'text_collection'"
+                class="flex-value"
+              >
+                <div
+                  v-for="(componentInner, key) in component.value"
+                  :key="key"
+                  class="inner-tx__view-item-component-flex"
+                >
+                  <div class="value">
+                    <div class="value-symbol">
+                      {{ componentInner.text }}
+                    </div>
+                    <div class="title">{{ componentInner.weight }}</div>
+                  </div>
                 </div>
               </div>
             </div>
-            <!-- text_collection -->
-            <div v-if="component.type === 'text_collection'" class="flex-value">
-              <div
-                v-for="(componentInner, key) in component.value"
-                :key="key"
-                class="inner-tx__view-item-component-flex"
-              >
-                <div class="value">
-                  <div class="value-symbol">
-                    {{ componentInner.text }}
-                  </div>
-                  <div class="title">{{ componentInner.weight }}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
+          </template>
+        </div>
       </div>
     </div>
-    <!-- <div
-      v-if="currentWallet.hasTransactionComment"
-      class="transaction-info-modal-content__textarea"
-    >
-      <div
-        v-if="showPlaceholder"
-        class="transaction-info-modal-content__textarea-placeholder"
-        data-qa="transaction-info-modal__comment-button"
-        @click.stop="togleShowPlaceholder"
-      >
-        <comment />
-        <span class="transaction-info-modal-content__textarea-title">
-          {{ $t('comment') }}
-        </span>
-        <span class="transaction-info-modal-content__textarea-subtitle">
-          {{ $t('commentPlaceholder') }}
-        </span>
-      </div>
-      <div v-else class="transaction-info-modal-content__textarea-textarea">
-        <Textarea
-          id="comment"
-          icon="text"
-          :value="txComment"
-          :label="$t('comment')"
-          :placeholder="$t('enterTextComment')"
-          data-qa="transaction-info-modal__comment-field"
-          @update:value="$emit('update:txComment', $event)"
-        />
-      </div>
-    </div> -->
   </div>
 </template>
 
 <script>
 import { ref, onMounted } from 'vue';
-// import Textarea from '@/components/UI/Textarea';
-// import comment from '@/assets/icons/comment.svg';
 import InfoBlock from './InfoBlock.vue';
 import TxStatuses from './TxStatuses';
 import { format } from 'date-fns';
@@ -142,8 +125,6 @@ export default {
   namae: 'TransactionInfoModalContent',
   components: {
     InfoBlock,
-    // comment,
-    // Textarea,
     TxStatuses,
   },
   props: {
@@ -161,20 +142,34 @@ export default {
   },
   setup(props) {
     const showPlaceholder = ref(!props.info.note);
+    const innerTxs = ref([]);
+    const innerTxsTypes = ['included_tx'];
+
     const togleShowPlaceholder = () => {
       showPlaceholder.value = false;
-      // nextTick(() => document.getElementById('comment').focus());
     };
+
+    const filterTypeMethod = (view) =>
+      !view?.type.toLowerCase().includes('acknowledgement');
+
+    props.info.view.forEach((view) => {
+      view.components.forEach((component) => {
+        if (innerTxsTypes.includes(component.type)) {
+          innerTxs.value = innerTxs.value.concat(component.value);
+        }
+      });
+    });
+
     onMounted(() => {
       togleShowPlaceholder();
     });
-    const filterTypeMethod = (view) =>
-      !view?.type.toLowerCase().includes('acknowledgement');
+
     return {
       filterTypeMethod,
       showPlaceholder,
       togleShowPlaceholder,
       format,
+      innerTxs,
     };
   },
 };
@@ -191,6 +186,13 @@ $blue-dark: #262b61;
 
   .inner-tx {
     margin-top: 25px;
+
+    .nested {
+      display: inline-block;
+      margin-bottom: 5px;
+      border-bottom: 1px dashed $black;
+      font-weight: 700;
+    }
 
     &__view {
       margin-top: 10px;
