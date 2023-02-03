@@ -130,7 +130,7 @@ export default {
     }
   }
 }
-@media (max-height: 700px) {
+@media (max-height: 710px) {
   .disclaimer-with-email {
     font-size: 14px;
     &__title {
