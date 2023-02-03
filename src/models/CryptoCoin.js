@@ -5,7 +5,7 @@ import citadel from '@citadeldao/lib-citadel';
 import { i18n } from '@/plugins/i18n';
 import store from '@/store';
 import router from '@/router';
-import { getErrorText } from '@/config/errors';
+import { /* getErrorText, */ getErrorTextByCode } from '@/config/errors';
 import BigNumber from 'bignumber.js';
 import customErrors from '@/helpers/customErrors';
 
@@ -134,14 +134,21 @@ export default class CryptoCoin {
     if (!error) {
       return { ok: true, data: Array.isArray(data) ? data : [data] };
     }
+    const errorMessage = getErrorTextByCode(error);
 
-    const message = this.getCustomErrorMessage(error);
+    notify({
+      type: 'warning',
+      text: errorMessage,
+    });
+    return { ok: false, error: errorMessage };
 
-    notify(message);
+    // const message = this.getCustomErrorMessage(error);
 
-    console.error(error);
+    // notify(message);
 
-    return { ok: false, error };
+    // console.error(error);
+
+    // return { ok: false, error };
   }
 
   async signAndSendTransfer({ walletId, rawTransaction, ...options }) {
@@ -150,15 +157,20 @@ export default class CryptoCoin {
     if (!res.error) {
       return res;
     }
+    const errorMessage = getErrorTextByCode(res.error);
+    notify({
+      type: 'warning',
+      text: errorMessage,
+    });
+    return { error: errorMessage };
+    // const errorText = getErrorText(res.error?.message?.toLowerCase());
+    // const message = this.getCustomErrorMessage(res.error || errorText);
 
-    const errorText = getErrorText(res.error?.message?.toLowerCase());
-    const message = this.getCustomErrorMessage(res.error || errorText);
+    // notify(message);
 
-    notify(message);
+    // console.error(res.error);
 
-    console.error(res.error);
-
-    return res;
+    // return res;
   }
 
   async prepareTransfer({ walletId, options }) {
@@ -305,12 +317,13 @@ export default class CryptoCoin {
     const res = await citadel.assignToDao(walletId, holderAddress, options);
 
     if (res.error) {
+      const errorMessage = getErrorTextByCode(res.error);
       notify({
         type: 'warning',
-        text: res.error,
+        text: errorMessage,
       });
+      return { error: errorMessage };
     }
-
     return res;
   }
 

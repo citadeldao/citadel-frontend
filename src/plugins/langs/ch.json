@@ -1463,7 +1463,14 @@
     "addComment": "添加评论",
     "editComment": "编辑评论",
     "errors": {
-        "notEnoughFounds": "{code} 不足，无法支付交易手续费"
+        "notEnoughFounds": "{code} 不足，无法支付交易手续费",
+        "notAvailableToStake": "",
+        "200": {
+            "variant1": "",
+            "variant2": ""
+        },
+        "201": "",
+        "901": ""
     },
     "copyToClipboardTitle": "复制查看密钥",
     "showHideKeyTitle": "展示/收起查看密钥",
