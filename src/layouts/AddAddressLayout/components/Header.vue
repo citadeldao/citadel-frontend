@@ -187,7 +187,7 @@ export default {
     );
     const hasWallets = computed(
       () =>
-        wallets.value.filter((w) => w.type !== WALLET_TYPES.PUBLIC_KEY).length
+        !!wallets.value.filter((w) => w.type !== WALLET_TYPES.PUBLIC_KEY).length
     );
 
     const logoutOptions = reactive({

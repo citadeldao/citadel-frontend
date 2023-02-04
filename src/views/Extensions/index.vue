@@ -906,7 +906,10 @@ export default {
           confirmModalCloseHandler();
           showSuccessModal.value = true;
           signLoading.value = false;
-          sendMSG();
+          sendMSG(
+            extensionsSocketTypes.messages.success,
+            extensionsSocketTypes.types.transaction
+          );
         } else {
           signLoading.value = false;
           confirmPassword.value = false;
@@ -1084,7 +1087,10 @@ export default {
           successTx.value = result.data;
           confirmModalCloseHandler();
           showSuccessModal.value = true;
-          sendMSG();
+          sendMSG(
+            extensionsSocketTypes.messages.success,
+            extensionsSocketTypes.types.transaction
+          );
         } else {
           signLoading.value = false;
           confirmModalDisabled.value = false;
@@ -1175,6 +1181,7 @@ export default {
       showCreateVkModal,
       showExtensionTransactionModal,
       showConfirmModalLoading,
+
     };
   },
 };
