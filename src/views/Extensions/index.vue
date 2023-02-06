@@ -305,10 +305,11 @@ export default {
       () => store.getters['extensions/currentAppInfo']
     );
 
-    const sendMSG = (message, type) => {
+    const sendMSG = (message, type, params = {}) => {
       store.dispatch('extensions/sendCustomMsg', {
         token: currentAppInfo.value.token,
         message,
+        params,
         type,
       });
     };
@@ -1081,6 +1082,13 @@ export default {
           typeof result.data[0] === 'string' &&
           [64, 66].includes(result.data[0].length)
         ) {
+          sendMSG(
+            extensionsSocketTypes.messages.success,
+            extensionsSocketTypes.types.message,
+            {
+              mem_tx_id: extensionTransactionForSign.value.mem_tx_id,
+            }
+          );
           signLoading.value = false;
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;

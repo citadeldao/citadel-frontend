@@ -57,7 +57,7 @@ export default {
     },
   },
   actions: {
-    async sendCustomMsg(_, { token, message, type }) {
+    async sendCustomMsg(_, { token, message, type, params = {} }) {
       // eslint-disable-next-line no-unused-vars
       const res = await axios({
         method: 'post',
@@ -65,6 +65,7 @@ export default {
         data: {
           to: 'app',
           from: 'main-front',
+          params,
           type,
           toDeviceId: token,
           message,
