@@ -774,7 +774,10 @@ export default {
 
         if (keplrResult.signature) {
           msgSuccessSignature.value = keplrResult.signature;
-          sendMSG(keplrResult.signature, extensionsSocketTypes.types.message);
+          sendMSG(keplrResult.signature, extensionsSocketTypes.types.message, {
+            base64signature: keplrResult.fullResponse.signature,
+            signature: keplrResult.signature,
+          });
           showSuccessNotify();
           store.commit('extensions/SET_MESSAGE_FOR_SIGN', null, {
             root: true,
