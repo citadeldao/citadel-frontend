@@ -912,7 +912,11 @@ export default {
           signLoading.value = false;
           sendMSG(
             extensionsSocketTypes.messages.success,
-            extensionsSocketTypes.types.transaction
+            extensionsSocketTypes.types.transaction,
+            {
+              base64signature: keplrResult.fullResponse.signature,
+              signature: keplrResult.signature,
+            }
           );
         } else {
           signLoading.value = false;
