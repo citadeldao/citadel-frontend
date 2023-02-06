@@ -54,18 +54,16 @@
         </keep-alive>
       </div>
     </div>
-    <pre
-      class="item-tx"
+    <json-viewer
       v-if="showTx && extensionTransactionForSign?.transaction"
-      >{{
-        JSON.stringify(
-          extensionTransactionForSign.messageScrt ||
-            extensionTransactionForSign.transaction,
-          null,
-          2
-        ).trim()
-      }}</pre
-    >
+      :value="
+        extensionTransactionForSign.messageScrt ||
+        extensionTransactionForSign.transaction
+      "
+      :expand-depth="5"
+      sort
+      class="item-tx"
+    />
     <div
       v-if="signerWallet && PRIVATE_PASSWORD_TYPES.includes(signerWallet.type)"
       class="password-wrap"
