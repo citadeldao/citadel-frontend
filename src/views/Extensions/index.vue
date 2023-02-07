@@ -200,6 +200,7 @@ import MessageInfo from './components/MessageInfo';
 import FrameApp from './components/FrameApp.vue';
 import { parseTagsList, filteredApps } from './components/helpers';
 import EmptyList from '@/components/EmptyList';
+import { signTxByPrivateKey } from '/node_modules/@citadeldao/lib-citadel/src/networkClasses/cosmosNetworks/_BaseCosmosClass/oldSigners/signTxByPrivateKey';
 
 export default {
   name: 'Extensions',
@@ -807,24 +808,17 @@ export default {
           }
         );
 
+        const ress = await signTxByPrivateKey(
+          { json: messageForSign.value.message },
+          await signerWallet.value.getPrivateKeyDecoded(password.value)
+        );
+
         if (!signResult.error) {
           sendMSG(
             signResult.data.signature,
             extensionsSocketTypes.types.message,
             {
-              base64signature: {
-                pub_key: {
-                  type: 'tendermint/PubKeySecp256k1',
-                  value: Buffer.from(
-                    signerWallet.value.publicKey,
-                    'hex'
-                  ).toString('base64'),
-                },
-                signature: Buffer.from(
-                  signResult.data.signature,
-                  'hex'
-                ).toString('base64'),
-              },
+              base64signature: ress.tx.signatures[0],
               signature: signResult.data.signature,
             }
           );
