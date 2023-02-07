@@ -838,6 +838,8 @@
     "overallPage": {
         "noBalance": "You have no balance",
         "noRewards": "You have no rewards",
+        "loading": "Loading...",
+        "selectPeriod": "Please select the time period to create the chart",
         "balanceStructure": {
             "title": "Balance structure"
         },

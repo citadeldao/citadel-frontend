@@ -826,6 +826,8 @@
     "overallPage": {
         "noBalance": "あなたにはバランスがありません",
         "noRewards": "報酬はありません",
+        "loading": "",
+        "selectPeriod": "",
         "balanceStructure": {
             "title": "バランス構造"
         },

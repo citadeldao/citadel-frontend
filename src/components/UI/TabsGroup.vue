@@ -42,33 +42,46 @@ export default {
 .tabs-group {
   display: flex;
   background: $too-ligth-gray;
-  border-radius: 8px;
+  border-radius: 16px;
   padding: 8px;
+
   width: fit-content;
+
+  @include laptop {
+    border-radius: 8px;
+  }
+
   &__item {
     width: 100px;
     height: 52px;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     background: $white;
+
     border-radius: 8px;
-    margin-right: 8px;
     cursor: pointer;
-    @include lg {
-      width: 60px;
-      margin-right: 4px;
+
+    &:not(:last-child) {
+      margin-right: 8px;
+
+      @include md {
+        margin-right: 4px;
+      }
     }
-    @include md {
+
+    @include laptop-standard {
+      width: 60px;
+    }
+
+    @include laptop {
       width: 43px;
       height: 42px;
-      margin-right: 4px;
       border-radius: 4px;
     }
 
-    &:last-child {
-      margin-right: 0px;
-    }
     &:hover {
       background: $blue;
       .tabs-group__item-label {
@@ -77,17 +90,14 @@ export default {
     }
   }
   &__item-label {
-    font-size: 16px;
+    font-size: $default-size;
     line-height: 19px;
     color: $mid-blue;
     font-family: 'Panton_SemiBold';
-    @include lg {
-      font-size: 12px;
+
+    @include laptop-standard {
+      font-size: $small-x;
       line-height: 14px;
-    }
-    @include md {
-      font-size: 11px;
-      line-height: 13px;
     }
   }
 }
@@ -107,27 +117,27 @@ export default {
 .expand {
   width: 100%;
   .tabs-group {
+    border-radius: 16px;
     &__item {
       height: 52px;
       width: 100%;
-      @include lg {
-        height: 52px;
-        width: 100%;
+      border-radius: 8px;
+
+      &:not(:last-child) {
         margin-right: 8px;
+        @include md {
+          margin-right: 8px;
+        }
       }
+
       @include md {
         height: 52px;
         width: 100%;
-        margin-right: 8px;
       }
     }
     &__item-label {
-      @include lg {
-        font-size: 16px;
-        line-height: 19px;
-      }
       @include md {
-        font-size: 16px;
+        font-size: $default-size;
         line-height: 19px;
       }
     }

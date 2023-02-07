@@ -1,31 +1,25 @@
 import BigNumber from 'bignumber.js';
 import { prettyNumber } from '@/helpers/prettyNumber';
+import { getNetworkDataByKey } from '@/helpers/networkConfig';
+import { getMonthName } from '@/helpers/date';
 import Chart from 'chart.js/auto';
 import { chartColors } from './config';
 
-const getDateStr = (dt) => {
-  const days = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
-  ];
-
-  return `${dt.getDate()} ${days[dt.getMonth()]}`;
+const getValueForData = (list, date, net, tab) => {
+  const currentTab = tab.toLowerCase() === 'usd' ? 2 : 1;
+  for (const key in list[date]) {
+    if (key === net) return list[date][key][currentTab];
+  }
+  return -1;
 };
 
-export const createDatasetForRewardsChart = (
+const rewardsChartElement = {};
+
+export const renderRewardsChart = (
   rewardsChart,
   currentTab,
-  showCount = undefined
+  elementId,
+  { showCount = undefined, currency }
 ) => {
   if (!rewardsChart || !rewardsChart.list) {
     return [];
@@ -33,6 +27,16 @@ export const createDatasetForRewardsChart = (
 
   const datasets = {};
   const netSet = new Set();
+
+  const barStyle = {
+    pointRadius: 0,
+    hoverRadius: 9,
+    barThickness: 10,
+    borderRadius: 1,
+    pointBackgroundColor: '#fff',
+    pointHoverBackgroundColor: '#fff',
+    pointHoverBorderWidth: 3,
+  };
 
   for (const key in rewardsChart.list) {
     for (const net in rewardsChart.list[key]) {
@@ -48,24 +52,21 @@ export const createDatasetForRewardsChart = (
 
       if (!datasets[net]) {
         datasets[net] = {
-          net: net,
+          label: getNetworkDataByKey({
+            config: currency,
+            network: net,
+            key: 'name',
+          }),
+          net,
           data: [],
           backgroundColor: chartColors[index],
-          barThickness: 6,
           tooltip: { net },
-          pointBackgroundColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointRadius: 0,
-          hoverRadius: 9,
-          pointHoverBorderWidth: 3,
+          ...barStyle,
         };
       }
 
-      datasets[net].data.push(
-        Object.keys(rewardsChart.list[key]).includes(net)
-          ? rewardsChart.list[key][net][currentTab === 'USD' ? 2 : 1]
-          : 0
-      );
+      const response = getValueForData(rewardsChart.list, key, net, currentTab);
+      datasets[net].data.push(response);
     }
   }
 
@@ -76,52 +77,35 @@ export const createDatasetForRewardsChart = (
     );
   });
 
-  const visible = nets.slice(-showCount);
-  const others = nets.slice(0, -showCount);
-  let othersData = [];
+  const visible = nets.slice(0, showCount);
 
-  for (let i = 0; i < others.length; i++) {
-    if (!othersData.length) {
-      othersData = others[i].data;
-    } else {
-      others[i].data.forEach((dataItem, index) => {
-        othersData[index] = BigNumber(othersData[index])
-          .plus(dataItem)
-          .toNumber();
-      });
+  if (nets.length > showCount) {
+    const others = nets.slice(showCount);
+    let othersData = [];
+
+    for (let i = 0; i < others.length; i++) {
+      if (!othersData.length) {
+        othersData = others[i].data;
+      } else {
+        others[i].data.forEach((dataItem, index) => {
+          othersData[index] = BigNumber(othersData[index])
+            .plus(dataItem)
+            .toNumber();
+        });
+      }
     }
-  }
 
-  return showCount
-    ? [
-        {
-          net: 'Others',
-          data: othersData,
-          backgroundColor: chartColors[11],
-          barThickness: 6,
-          tooltip: { net: 'Others' },
-          pointBackgroundColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointRadius: 0,
-          hoverRadius: 9,
-          pointHoverBorderWidth: 3,
-          nets: others.map((n) => n.net),
-        },
-        ...visible,
-      ]
-    : visible;
-};
+    const other = {
+      label: 'Others',
+      net: 'Others',
+      data: othersData,
+      backgroundColor: chartColors[11],
+      tooltip: { net: 'Others' },
+      nets: others.map((n) => n.net),
+      ...barStyle,
+    };
 
-const rewardsChartElement = {};
-export const renderRewardsChart = (
-  rewardsChart,
-  datasetsArray,
-  currentTab,
-  elementId,
-  currency
-) => {
-  if (!rewardsChart || !rewardsChart.list) {
-    return;
+    visible.push(other);
   }
 
   if (rewardsChartElement[elementId]) {
@@ -129,6 +113,7 @@ export const renderRewardsChart = (
   }
 
   const labels = Object.keys(rewardsChart.list);
+
   const getOrCreateRewardsChartTooltip = (chart) => {
     let tooltipEl = chart.canvas.parentNode.querySelector('div');
 
@@ -209,9 +194,10 @@ export const renderRewardsChart = (
       btcRate.classList.add('chart-tooltip__rate');
 
       titleLines.forEach((title) => {
-        const { net } = datasetsArray[tooltip.dataPoints[0].datasetIndex];
+        const { net } = visible[tooltip.dataPoints[0].datasetIndex];
         const isOthers = net === 'Others';
-        const others = datasetsArray.find((n) => n.net === 'Others');
+
+        const others = visible.find((n) => n.net === 'Others');
         const dayIndex = Object.keys(rewardsChart.list).indexOf(title);
 
         const getRewards = () => {
@@ -235,8 +221,13 @@ export const renderRewardsChart = (
               ? getTotalOf('btc', rewardsChart.list[title]).toFixed(8)
               : Number(rewardsChart.list[title][net][1]).toFixed(8),
           };
+
           const exchangeRate = {
-            currency: isOthers ? null : currency[net].code,
+            currency: getNetworkDataByKey({
+              config: currency,
+              network: net,
+              key: 'code',
+            }),
             usd: isOthers
               ? null
               : BigNumber(rewardsChart.list[title][net][2])
@@ -253,7 +244,11 @@ export const renderRewardsChart = (
             amount: isOthers
               ? others.data[dayIndex]
               : rewardsChart.list[title][net][0],
-            currency: isOthers ? null : currency[net].code,
+            currency: getNetworkDataByKey({
+              config: currency,
+              network: net,
+              key: 'code',
+            }),
             total,
             exchangeRate,
           };
@@ -357,67 +352,90 @@ export const renderRewardsChart = (
     // tooltipEl.style.padding = tooltip.options.padding + 'px ' + tooltip.options.padding + 'px';
   }
 
-  const data = {
-    labels,
-    datasets: datasetsArray,
-  };
+  /**
+   *
+   * @Configurations
+   * Rewards Bar Chart
+   *
+   */
 
-  const config = {
-    type: 'bar',
-    data: data,
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      interaction: {
-        mode: 'point',
-      },
-      plugins: {
-        legend: {
-          display: false,
-        },
-        tooltip: {
-          enabled: false,
-          external: externalTooltipHandler,
-          position: 'nearest',
-          yAlign: 'center',
-          usePointStyle: true,
-        },
-      },
-      scales: {
-        x: {
-          stacked: true,
-          grid: {
-            color: 'transparent',
-          },
-          ticks: {
-            color: '#AFBCCB',
-            // eslint-disable-next-line no-unused-vars
-            callback: function (index) {
-              return getDateStr(
-                new Date(Object.keys(rewardsChart.list)[index])
-              );
-            },
-          },
-        },
-        y: {
-          stacked: true,
-          grid: {
-            borderColor: 'transparent',
-            color: '#BCC2D8',
-            borderDash: [3, 3],
-          },
-          ticks: {
-            color: '#AFBCCB',
-            callback: function (index) {
-              return prettyNumber(index);
-            },
-          },
-        },
+  const PLUGINS = {
+    legend: {
+      position: 'left',
+      align: 'start',
+      labels: {
+        usePointStyle: true,
       },
     },
+
+    title: {
+      display: false,
+    },
+
+    tooltip: {
+      enabled: false,
+      external: externalTooltipHandler,
+      position: 'nearest',
+      yAlign: 'center',
+      usePointStyle: true,
+      intersect: false,
+    },
   };
+
+  const SCALES = {
+    x: {
+      stacked: true,
+      grid: {
+        display: false,
+      },
+      ticks: {
+        color: '#AFBCCB',
+        callback: (index) =>
+          getMonthName(Object.keys(rewardsChart.list)[index]),
+      },
+    },
+    y: {
+      stacked: true,
+      grid: {
+        borderColor: 'transparent',
+        color: '#BCC2D8',
+        borderDash: [3, 3],
+      },
+      ticks: {
+        color: '#AFBCCB',
+        callback: (index) => prettyNumber(index),
+      },
+      suggestedMin: 0,
+      min: 0,
+      beginAtZero: true,
+    },
+  };
+
+  const OPTIONS = {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: {
+      intersect: false,
+      mode: 'point',
+    },
+    plugins: PLUGINS,
+    scales: SCALES,
+    indexAxis: 'x',
+  };
+
+  const data = {
+    labels,
+    datasets: visible,
+  };
+
+  const REWARDS_CHART_CONFIG = {
+    type: 'bar',
+    data,
+    options: OPTIONS,
+  };
+
   rewardsChartElement[elementId] = new Chart(
     document.querySelector(`#${elementId}`),
-    config
+    REWARDS_CHART_CONFIG
   );
 };

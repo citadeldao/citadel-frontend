@@ -2,116 +2,173 @@ import moment from 'moment';
 import notify from '@/plugins/notify';
 import citadel from '@citadeldao/lib-citadel';
 
+const ONE_DAY_MS = 86400000;
+const ONE_MONTH_DAYS_COUNT = 30;
+
 const types = {
-  SET_BALANCE_HISTORY: 'SET_BALANCE_HISTORY',
-  SET_REWARDS_CHART: 'SET_REWARDS_CHART',
+  SET_CHART_LOADING: 'SET_CHART_LOADING',
+  SET_CHART_DATA: 'SET_CHART_DATA',
+};
+
+const REWARDS_METHOD = 'getGraphRewardsSummary';
+const BALANCE_METHOD = 'getBalanceHistory';
+
+const ALL = 'all';
+const CUSTOM = 'custom';
+
+const sendCitadelGraphRequest = async (method, params) => {
+  return await citadel[method](params);
 };
 
 export default {
   namespaced: true,
+
   state: () => ({
-    // balanceHistory may contain data for each custom list and each period of time
-    balanceHistory: {
-      all: {},
+    // Charts data may contain data for each custom list and each period of time
+    charts: {
+      balanceHistory: {
+        all: {},
+      },
+      balanceHistoryExpanded: {
+        all: {},
+      },
+      rewardsChart: {
+        all: {},
+      },
+      rewardsChartExpanded: {
+        all: {},
+      },
     },
-    rewardsChart: {},
+    loading: {
+      balanceHistory: false,
+      balanceHistoryExpanded: false,
+      rewardsChart: false,
+      rewardsChartExpanded: false,
+    },
   }),
+
   getters: {
-    balanceHistory: (state) => state.balanceHistory,
-    rewardsChart: (state) => state.rewardsChart,
+    getCharts:
+      (state) =>
+      (target, list, period = 1) =>
+        state.charts[target][list][period],
+    isLoading: (state) => (target) => state.loading[target],
   },
+
   mutations: {
-    [types.SET_BALANCE_HISTORY](state, { list, blncHistory, period }) {
-      if (!state.balanceHistory[list]) {
-        state.balanceHistory[list] = {};
+    [types.SET_CHART_DATA](state, { list, data, period, target }) {
+      if (!state.charts[target]) {
+        state.charts[target] = {};
       }
 
-      state.balanceHistory[list][period] = blncHistory;
+      if (!state.charts[target][list]) {
+        state.charts[target][list] = {};
+      }
+      if (period !== CUSTOM) {
+        delete state.charts[target][list][CUSTOM];
+      }
+
+      state.charts[target][list][period] = data;
     },
-    [types.SET_REWARDS_CHART](state, { list, rewards, period }) {
-      if (!state.rewardsChart[list]) {
-        state.rewardsChart[list] = {};
-      }
 
-      state.rewardsChart[list][period] = rewards;
+    [types.SET_CHART_LOADING](state, { target, isLoading }) {
+      state.loading[target] = isLoading;
     },
   },
   actions: {
-    // dateFrom and dateTo is send only on custom dates
-    async getBalanceHistory(
+    async fetchChartData(
       { commit, rootGetters },
-      { list, months = 1, dateFrom, dateTo }
+      { months = 1, dateFrom, dateTo, list, target = 'rewardsChart' }
     ) {
-      const days = months * 30;
-      const period = 86400000 * days;
-
-      const res = await citadel.getBalanceHistory({
-        dateFrom: dateFrom
-          ? dateFrom
-          : months === 'all'
-          ? undefined
-          : Number(new Date(Number(new Date()) - period)),
-        dateTo,
-        listId: list === 'all' ? undefined : list,
+      await commit(types.SET_CHART_LOADING, {
+        target,
+        isLoading: true,
       });
-      const todayDate = moment().format('YYYY-MM-DD');
 
-      if (!dateTo || dateTo === todayDate) {
-        res.data.list[todayDate] = {
-          usd: rootGetters['balance/usdWithTokens'],
-          btc: rootGetters['balance/btc'],
-        };
+      const periods = [ALL, CUSTOM];
+
+      // Assigning a method name by the ID of the chart canvas
+      const METHOD = target.startsWith('rewards')
+        ? REWARDS_METHOD
+        : BALANCE_METHOD;
+
+      const isNotCustomDates = !(dateFrom && dateTo);
+
+      let from = dateFrom;
+
+      const listId = list === ALL ? undefined : list;
+
+      // If the date is not "custom" and not "all", we assign it a new value of the period by month
+      if (isNotCustomDates && !periods.includes(months)) {
+        const days = months * ONE_MONTH_DAYS_COUNT;
+        const period = ONE_DAY_MS * days;
+
+        from = Number(new Date(Number(new Date()) - period));
       }
 
-      if (!res.error) {
-        commit(types.SET_BALANCE_HISTORY, {
+      // Resetting custom period data
+      if (isNotCustomDates && months === CUSTOM) {
+        await commit(types.SET_CHART_DATA, {
           list,
-          blncHistory: res.data,
-          period: dateFrom ? 'custom' : months,
+          data: undefined,
+          period: CUSTOM,
+          target,
         });
 
-        return { balanceHistory: res.data, error: null };
+        commit(types.SET_CHART_LOADING, {
+          target,
+          isLoading: false,
+        });
+
+        return { data: [], error: null };
       }
+
+      const params = {
+        dateFrom: from,
+        dateTo,
+        listId,
+      };
+
+      const { data, error } = await sendCitadelGraphRequest(METHOD, params);
+
+      if (!error) {
+        const todayDate = moment().format('YYYY-MM-DD');
+
+        if ((METHOD !== REWARDS_METHOD && !dateTo) || dateTo === todayDate) {
+          data.list[todayDate] = {
+            usd: rootGetters['balance/usdWithTokens'],
+            btc: rootGetters['balance/btc'],
+          };
+        }
+
+        commit(types.SET_CHART_DATA, {
+          list,
+          data,
+          period: dateFrom ? CUSTOM : months,
+          target,
+        });
+
+        commit(types.SET_CHART_LOADING, {
+          target,
+          isLoading: false,
+        });
+
+        return { data, error: null };
+      }
+
+      commit(types.SET_CHART_LOADING, {
+        target,
+        isLoading: false,
+      });
 
       notify({
         type: 'warning',
-        text: res.error,
-      });
-
-      return { balanceHistory: null, error: res.error };
-    },
-    // dateFrom and dateTo is send only on custom dates
-    async getRewardsChart({ commit }, { months = 1, dateFrom, dateTo, list }) {
-      const days = months * 30;
-      const period = 86400000 * days;
-      const res = await citadel.getGraphRewardsSummary({
-        dateFrom: dateFrom
-          ? dateFrom
-          : months === 'all'
-          ? undefined
-          : Number(new Date(Number(new Date()) - period)),
-        dateTo,
-        listId: list === 'all' ? undefined : list,
-      });
-
-      if (!res.error) {
-        commit(types.SET_REWARDS_CHART, {
-          list,
-          rewards: res.data,
-          period: dateFrom ? 'custom' : months,
-        });
-
-        return { rewardsChart: res.data, error: null };
-      }
-
-      notify({
-        type: 'warning',
-        text: res.error,
+        text: error,
       });
 
       return {
-        rewardsChart: null,
-        error: res.error,
+        data: null,
+        error: error,
       };
     },
   },

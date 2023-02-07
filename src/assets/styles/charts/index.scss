@@ -9,10 +9,10 @@
   transform: translate(-50%, -135%);
   transition: all 0.1s ease;
   padding: 12px 15px;
-  box-shadow: 0px 4px 25px rgba(63, 54, 137, 0.25);
+  box-shadow: 0px 4px 25px rgba(63, 54, 137, 0.15);
   font-size: 12px;
   z-index: 2;
-  &--balanceStuct{
+  &--balanceStuct {
     transform: translate(-50%, 0);
     box-shadow: 0px 15px 50px rgba(80, 100, 124, 0.1), 0px 10px 15px rgba(80, 100, 124, 0.16);
     color: $dark-blue;
@@ -20,7 +20,7 @@
   &__wrapper {
     margin: 0;
   }
-  &__section{
+  &__section {
     margin: 15px 14px 17px 19px;
   }
   &__triangle {
@@ -39,7 +39,7 @@
       margin-bottom: 5px;
     }
   }
-  &__title{
+  &__title {
     color: $gray2;
     font-weight: 400;
     margin-bottom: 5px;
@@ -60,21 +60,21 @@
   }
   &__balance-native,
   &__balance-usd,
-  &__balance-btc{
+  &__balance-btc {
     display: flex;
   }
   &__balance-btc {
     &--rewards {
       margin-bottom: 8px;
     }
-    &--balanceStruct{
+    &--balanceStruct {
       margin-bottom: 0;
     }
   }
   &__balance-usd,
   &__balance-native {
     margin-bottom: 2px;
-    &--balanceStruct{
+    &--balanceStruct {
       margin-bottom: 5px;
     }
   }

@@ -144,14 +144,16 @@ textarea{
   .el-input__inner{
   border: none !important;
 }
+
 .el-range-editor.el-input__inner{
-  padding: 0;
-  align-items: flex-end;
-  justify-content: flex-end;
+  display: flex;
+  align-items: center;
+
   width: 100%;
-  height:17px;
+  height: 18px;
+
+  padding: 0;
   border-radius: 8px;
-  margin-top: 7px;
 }
 
 .el-date-editor .el-range-input{
@@ -160,13 +162,13 @@ textarea{
   font-family: 'Panton_SemiBold';
   color: $black;
   height: initial;
-  width: 40%;
+  width: 46%;
 }
 .el-date-editor .el-range-separator{
   letter-spacing: -1px;
   color: $mid-gray;
   padding: 0;
-  padding-bottom: 5px;
+  padding-bottom: 10px;
   height: initial;
   width: initial;
   line-height: initial;
@@ -177,6 +179,10 @@ textarea{
 
 .el-date-editor .el-range__icon{
   display: none;
+  width: 0;
+  height: 0;
+  margin: 0;
+  line-height: 0;
 }
 .el-range-editor.is-disabled input,
 .el-range-editor.is-disabled{
