@@ -5,7 +5,7 @@
     </div>
     <div class="item mt30">
       <div class="item-tx">
-        <json-viewer :value="messageForSign.message" :expand-depth="5" sort />
+        <json-viewer :value="messageForSign.message" />
       </div>
     </div>
     <div
@@ -95,6 +95,8 @@ export default {
   }
 
   .item-tx {
+    display: flex;
+    justify-content: flex-start;
     overflow: auto;
     width: 100%;
     margin-top: 0;
