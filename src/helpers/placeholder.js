@@ -18,7 +18,7 @@ export const getPlaceholderStatus = (chart = '', loading, period, data) => {
       text: CUSTOM_PERIOD,
     };
   } else if (data && data.list) {
-    let notExist = false;
+    let notExist = true;
 
     if (chart.startsWith('balance')) {
       notExist = Object.keys(data.list).length <= 1;
