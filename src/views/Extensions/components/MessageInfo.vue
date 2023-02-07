@@ -8,9 +8,6 @@
         <json-viewer :value="messageForSign.message" :expand-depth="5" sort />
       </div>
     </div>
-    <div v-if="msgSuccessSignature" class="item">
-      <div class="label signature">Signature: {{ msgSuccessSignature }}</div>
-    </div>
     <div
       v-if="
         !msgSuccessSignature &&

@@ -806,10 +806,27 @@ export default {
             derivationPath: signerWallet.value.derivationPath,
           }
         );
+
         if (!signResult.error) {
           sendMSG(
             signResult.data.signature,
-            extensionsSocketTypes.types.message
+            extensionsSocketTypes.types.message,
+            {
+              base64signature: {
+                pub_key: {
+                  type: 'tendermint/PubKeySecp256k1',
+                  value: Buffer.from(
+                    signerWallet.value.publicKey,
+                    'hex'
+                  ).toString('base64'),
+                },
+                signature: Buffer.from(
+                  signResult.data.signature,
+                  'hex'
+                ).toString('base64'),
+              },
+              signature: signResult.data.signature,
+            }
           );
           showSuccessNotify();
         } else {
