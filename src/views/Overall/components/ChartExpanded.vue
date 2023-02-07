@@ -254,8 +254,10 @@ export default {
   }
 
   &__title {
-    font-weight: bold;
-    font-size: 20px;
+    font-family: 'Panton_Bold';
+    font-style: normal;
+    font-weight: 700;
+    font-size: $h5-size;
     color: $black;
   }
 

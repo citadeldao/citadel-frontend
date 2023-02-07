@@ -36,7 +36,7 @@ export default {
     font-family: 'Panton_Bold';
     font-style: normal;
     font-weight: 700;
-    font-size: 20px;
+    font-size: $h5-size;
     color: $black;
   }
 
