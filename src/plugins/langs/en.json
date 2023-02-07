@@ -1317,6 +1317,11 @@
             "title": "Kujira",
             "description": "Kujira is a semi-permissioned sovereign Cosmos L1 platform bringing user-friendly DeFi tools for trading, liquidating, and minting, and targeting everyone, from the novice crypto enthusiasts to the experienced investors.",
             "shortDescription": "Kujira is a decentralized Cosmos L1 platform bringing user-friendly DeFi tools for trading, liquidating, and minting."
+        },
+        "coreum":{
+            "title": "Coreum",
+            "description": "Coreum is a 3rd generation L1 blockchain designed to address DeFi challenges and serve as a core infrastructure for dApps.",
+            "shortDescription": "Coreum is a L1 blockchain aims to serve as a core infrastructure for dApps."
         }
     },
     "uptime": "Uptime",

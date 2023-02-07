@@ -1300,6 +1300,11 @@
             "title": "Kujira",
             "description": "",
             "shortDescription": ""
+        },
+        "coreum":{
+            "title": "Coreum",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "アップタイム",

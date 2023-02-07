@@ -761,4 +761,18 @@ export default {
       href: 'https://www.coingecko.com/en/coins/kujira',
     },
   },
+  coreum: {
+    web: {
+      title: 'coreum',
+      href: 'https://www.coreum.com/',
+    },
+    twitter: {
+      title: '@CoreumOfficial',
+      href: 'CoreumOfficial',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/coreum',
+    },
+  },
 };
