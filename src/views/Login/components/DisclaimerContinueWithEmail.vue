@@ -123,6 +123,27 @@ export default {
     font-weight: 600;
     font-family: 'Panton_SemiBold';
     margin: 20px 0;
+    @include laptop-standard {
+      padding: 5px 15px;
+      font-size: 16px;
+      box-sizing: content-box;
+    }
+  }
+}
+@media (max-height: 710px) {
+  .disclaimer-with-email {
+    font-size: 14px;
+    &__title {
+      font-size: 20px;
+      text-align: center;
+    }
+    &__description,
+    &__guide {
+      width: 100%;
+    }
+    &__head {
+      display: none;
+    }
   }
 }
 </style>

@@ -531,6 +531,9 @@ export default {
           store.dispatch('wallets/getCustomWalletsList');
           store.dispatch('rewards/getRewards');
           store.dispatch('transactions/getMempool');
+          if (window.ethereum?.selectedAddress) {
+            store.dispatch('metamask/connectToMetamask', null, { root: true });
+          }
         }
 
         let searchLoginAddress = store.getters['wallets/wallets'].find((w) => {

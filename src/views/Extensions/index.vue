@@ -305,10 +305,11 @@ export default {
       () => store.getters['extensions/currentAppInfo']
     );
 
-    const sendMSG = (message, type) => {
+    const sendMSG = (message, type, params = {}) => {
       store.dispatch('extensions/sendCustomMsg', {
         token: currentAppInfo.value.token,
         message,
+        params,
         type,
       });
     };
@@ -773,7 +774,10 @@ export default {
 
         if (keplrResult.signature) {
           msgSuccessSignature.value = keplrResult.signature;
-          sendMSG(keplrResult.signature, extensionsSocketTypes.types.message);
+          sendMSG(keplrResult.signature, extensionsSocketTypes.types.message, {
+            base64signature: keplrResult.fullResponse.signature,
+            signature: keplrResult.signature,
+          });
           showSuccessNotify();
           store.commit('extensions/SET_MESSAGE_FOR_SIGN', null, {
             root: true,
@@ -908,7 +912,11 @@ export default {
           signLoading.value = false;
           sendMSG(
             extensionsSocketTypes.messages.success,
-            extensionsSocketTypes.types.transaction
+            extensionsSocketTypes.types.transaction,
+            {
+              base64signature: keplrResult.fullResponse.signature,
+              signature: keplrResult.signature,
+            }
           );
         } else {
           signLoading.value = false;
@@ -1081,6 +1089,13 @@ export default {
           typeof result.data[0] === 'string' &&
           [64, 66].includes(result.data[0].length)
         ) {
+          sendMSG(
+            extensionsSocketTypes.messages.success,
+            extensionsSocketTypes.types.message,
+            {
+              mem_tx_id: extensionTransactionForSign.value.mem_tx_id,
+            }
+          );
           signLoading.value = false;
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;

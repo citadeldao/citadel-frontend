@@ -5,7 +5,7 @@
     </div>
     <div class="item mt30">
       <div class="item-tx">
-        <pre>{{ JSON.stringify(messageForSign.message, null, 2).trim() }}</pre>
+        <json-viewer :value="messageForSign.message" :expand-depth="5" sort />
       </div>
     </div>
     <div v-if="msgSuccessSignature" class="item">

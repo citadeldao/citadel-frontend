@@ -190,7 +190,7 @@ export default {
 
   &__notify {
     width: 460px;
-    height: 80px;
+    min-height: 80px;
     background: #e8f7ff;
     border-radius: 10px;
     font-weight: 600;
@@ -199,11 +199,11 @@ export default {
     display: flex;
     align-items: center;
     box-sizing: border-box;
-    padding: 0 20px;
+    padding: 10px 20px;
     color: #00a3ff;
 
     .icon {
-      width: 70px;
+      width: 90px;
 
       &.wrongNetwork {
         width: 45px;
