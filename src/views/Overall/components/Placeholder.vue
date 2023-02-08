@@ -61,5 +61,9 @@ export default {
   &__text {
     margin-top: 33px;
   }
+
+  @include laptop-standard {
+    min-height: 380px;
+  }
 }
 </style>
