@@ -828,6 +828,8 @@
     "overallPage": {
         "noBalance": "没有可用余额",
         "noRewards": "没有奖励",
+        "loading": "",
+        "selectPeriod": "",
         "balanceStructure": {
             "title": "余额构成"
         },

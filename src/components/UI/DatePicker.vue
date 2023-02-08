@@ -1,29 +1,37 @@
 <template>
   <label class="date-picker" :class="{ disabled: disabled, expand }">
     Select a period
-    <el-date-picker
-      v-model="value"
-      format="DD.MM.YYYY"
-      type="daterange"
-      range-separator="__"
-      start-placeholder="Start date"
-      end-placeholder="End date"
-      :disabled="disabled"
-      @change="changeHandler"
-    />
-    <calendar class="date-picker__icon" />
+
+    <div class="date-picker__row">
+      <CalendarIcon class="date-picker__icon" />
+      <el-date-picker
+        v-model="value"
+        format="DD.MM.YYYY"
+        type="daterange"
+        range-separator="__"
+        start-placeholder="Start date"
+        end-placeholder="End date"
+        :shortcuts="shortcuts"
+        :disabled-date="disabledDate"
+        :disabled="disabled"
+        @change="(val) => $emit('update:date', val)"
+      />
+    </div>
   </label>
 </template>
 
 <script>
-import calendar from '@/assets/icons/input/calendar.svg';
+import CalendarIcon from '@/assets/icons/input/calendar.svg';
 import { ref } from '@vue/reactivity';
 
 export default {
   name: 'DatePicker',
-  components: { calendar },
+  components: { CalendarIcon },
   props: {
-    date: {},
+    date: {
+      type: Array,
+      default: () => [],
+    },
     disabled: {
       type: Boolean,
       default: false,
@@ -34,59 +42,111 @@ export default {
     },
   },
   emits: ['update:date'],
-  setup(props, { emit }) {
+  setup(props) {
     const value = ref(props.date);
-    const changeHandler = (val) => {
-      emit('update:date', val);
-    };
 
-    return { changeHandler, value };
+    const shortcuts = [
+      {
+        text: 'Last week',
+        value: () => {
+          const end = new Date();
+          const start = new Date();
+          start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+          return [start, end];
+        },
+      },
+      {
+        text: 'Last month',
+        value: () => {
+          const end = new Date();
+          const start = new Date();
+          start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+          return [start, end];
+        },
+      },
+      {
+        text: 'Last 3 months',
+        value: () => {
+          const end = new Date();
+          const start = new Date();
+          start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+          return [start, end];
+        },
+      },
+    ];
+
+    const disabledDate = (time) => time.getTime() > Date.now();
+
+    return {
+      disabledDate,
+      value,
+      shortcuts,
+    };
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .date-picker {
+  position: relative;
+
   display: flex;
   flex-direction: column;
-  font-size: 14px;
+
+  font-size: $small-lg;
   line-height: 17px;
+
   color: $mid-gray;
+
+  height: 100%;
   width: 100%;
   min-width: 220px;
-  height: 100%;
-  display: flex;
+
   border: 1px solid $too-ligth-blue;
-  border-radius: 8px;
-  position: relative;
+  border-radius: 16px;
+
   padding: 12px 15px 0 15px;
+
   cursor: pointer;
+
+  @include laptop {
+    font-weight: 600;
+    font-size: $small-x;
+    line-height: 14px;
+
+    border-radius: 8px;
+    height: 56px;
+  }
+
   &__icon {
-    position: absolute;
-    bottom: 15px;
-    left: 16px;
+    width: 15px;
+    margin-right: 8px;
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 7px;
   }
 }
+
 .disabled {
   background-color: $too-ligth-gray;
   .date-picker__icon {
     fill: $mid-blue;
   }
 }
+
 .expand {
   width: 220px;
   height: 68px;
-  @include md {
+
+  @include laptop {
     height: 56px;
-    padding: 11px 17px 0 13px;
     font-size: 12px;
     line-height: 14px;
-  }
-  .date-picker__icon {
-    @include md {
-      left: 14px;
-      bottom: 8px;
-    }
   }
 }
 </style>

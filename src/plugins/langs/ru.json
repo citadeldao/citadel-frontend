@@ -828,6 +828,8 @@
     "overallPage": {
         "noBalance": "У вас нет баланса",
         "noRewards": "У вас пока нет вознаграждений",
+        "loading": "",
+        "selectPeriod": "",
         "balanceStructure": {
             "title": "Структура баланса"
         },
