@@ -317,10 +317,6 @@ export default {
 
     const closeSuccessModal = () => {
       clearStates();
-      sendMSG(
-        extensionsSocketTypes.messages.success,
-        extensionsSocketTypes.types.transaction
-      );
     };
 
     const onSearchHandler = (str) => {
@@ -1113,10 +1109,6 @@ export default {
           successTx.value = result.data;
           confirmModalCloseHandler();
           showSuccessModal.value = true;
-          sendMSG(
-            extensionsSocketTypes.messages.success,
-            extensionsSocketTypes.types.transaction
-          );
         } else {
           signLoading.value = false;
           confirmModalDisabled.value = false;
