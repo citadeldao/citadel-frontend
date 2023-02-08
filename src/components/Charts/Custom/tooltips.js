@@ -363,7 +363,6 @@ export function rewardsTooltipHandler(context, data, labels, config) {
 
   const position = chart.canvas.getBoundingClientRect();
 
-  console.log(tooltipEl.style, tooltipEl.clientWidth);
   tooltipEl.style.opacity = 1;
   tooltipEl.style.position = 'absolute';
   tooltipEl.style.zIndex = '9999';
