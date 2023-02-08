@@ -80,8 +80,6 @@ export default {
       redirectToNewWallet,
     } = useCreateWallets();
 
-    store.dispatch('metamask/connectToMetamask');
-
     const timeOut = setTimeout(() => {
       if (showLoader.value) {
         showLoader.value = false;
