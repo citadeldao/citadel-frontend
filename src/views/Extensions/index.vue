@@ -804,6 +804,7 @@ export default {
               password.value &&
               (await signerWallet.value.getPrivateKeyDecoded(password.value)),
             derivationPath: signerWallet.value.derivationPath,
+            useAlternativeSigner: true,
           }
         );
         if (!signResult.error) {
