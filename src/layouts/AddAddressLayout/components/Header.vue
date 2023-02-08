@@ -361,6 +361,9 @@ export default {
           display: flex;
           align-items: center;
           color: rgb(107, 147, 192);
+          & svg {
+            fill: rgb(107, 147, 192) !important;
+          }
 
           &:hover {
             color: $dark-blue;
@@ -369,7 +372,6 @@ export default {
               fill: $dark-blue !important;
             }
           }
-
           &:not(&:last-child) {
             border-bottom: 1px solid #f0f3fd;
           }
