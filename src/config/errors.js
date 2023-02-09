@@ -28,5 +28,5 @@ export const getErrorTextByCode = (error) => {
         rightApp: error.data.rightApp,
       })
     : t(`errors.${error.code}`);
-  return message ? message : t(`errors.${ERRORS.UNKNOWN_ERROR_CODE}`);
+  return message.includes('errors.') || !message ? '' : message;
 };
