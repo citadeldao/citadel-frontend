@@ -27,6 +27,9 @@ export default function useCurrentWalletRequests() {
       adding.value = resAdding;
       resMaxAmount.value = maxAmount;
       feesError.value = error;
+      fees.value = {
+        medium: { fee: feeInfo.value },
+      };
     } else if (wallet.value.hasFee) {
       if (isSendToAnotherNetwork.value) {
         const { data, error } = await wallet.value.getCrossNetFees(

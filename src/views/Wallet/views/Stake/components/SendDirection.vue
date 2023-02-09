@@ -87,7 +87,7 @@
         />
         <span class="send-direction__line-currency"> {{ wallet?.code }} </span>
         <div
-          v-if="wallet.hasMultiCoinRewards"
+          v-if="showRewardsListToggler"
           class="send-direction__line-show-rewards-list"
           :class="{ active: isShowRewardsList }"
           @click="isShowRewardsList = !isShowRewardsList"
@@ -252,7 +252,21 @@ export default {
       };
     });
 
-    return { txUrl, titles, activeTab, mode, isShowRewardsList, rewardsList };
+    const showRewardsListToggler = computed(
+      () =>
+        (mode.value === 'claim' || activeTab.value === 'claim') &&
+        props.wallet.hasMultiCoinRewards
+    );
+
+    return {
+      txUrl,
+      titles,
+      activeTab,
+      mode,
+      isShowRewardsList,
+      rewardsList,
+      showRewardsListToggler,
+    };
   },
 };
 </script>
