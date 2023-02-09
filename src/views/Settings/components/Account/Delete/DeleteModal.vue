@@ -70,6 +70,7 @@ import exportPrivateKeys from '@/helpers/exportPrivateKeys';
 import { removeStorage } from '@/utils/storage';
 import useWallets from '@/compositions/useWallets';
 import { WALLET_TYPES } from '@/config/walletType';
+import { useRouter } from 'vue-router';
 
 export default {
   name: 'DeleteAccount',
@@ -90,6 +91,7 @@ export default {
   },
   setup(props, { emit }) {
     const store = useStore();
+    const router = useRouter();
     const phrase = ref('');
     const needSaveBackup = ref(true);
     const { wallets } = useWallets();
@@ -108,6 +110,7 @@ export default {
     };
 
     const deleteAccount = async () => {
+      store.dispatch('app/setLoader', true);
       await store.dispatch('auth/deleteAccount');
 
       if (needSaveBackup.value && hasWallets.value) {
@@ -118,6 +121,11 @@ export default {
       await citadel.reset(true);
       removeStorage(keyStorage.value);
       window.location.reload(true);
+
+      setTimeout(async () => {
+        store.dispatch('app/setLoader', false);
+        await router.push({ name: 'Login' });
+      }, 2000);
     };
     watch(
       () => props.show,
@@ -198,6 +206,7 @@ export default {
 
   &__button,
   &__checkbox {
+    height: 24px;
     margin-bottom: 24px;
   }
 }
