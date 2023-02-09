@@ -161,6 +161,7 @@ const getOrCreateRewardsChartTooltip = () => {
 export function rewardsTooltipHandler(context, data, labels, config) {
   // Tooltip Element
   const { chart, tooltip } = context;
+
   const tooltipEl = getOrCreateRewardsChartTooltip();
 
   if (tooltip.opacity === 0) {
@@ -188,7 +189,10 @@ export function rewardsTooltipHandler(context, data, labels, config) {
 
     // title
     const tooltipHead = document.createElement('div');
-    tooltipHead.appendChild(document.createTextNode('Rewards:'));
+    const tooltipHeadDate = document.createElement('span');
+    tooltipHeadDate.appendChild(document.createTextNode(tooltip.title[0]));
+    tooltipHead.appendChild(document.createTextNode(`Rewards:`));
+    tooltipHead.appendChild(tooltipHeadDate);
     tooltipHead.classList.add(
       'chart-tooltip__head',
       'chart-tooltip__head--rewards'

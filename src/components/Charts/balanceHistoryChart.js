@@ -1,59 +1,20 @@
 import Chart from 'chart.js/auto';
 
-import BigNumber from 'bignumber.js';
-
 import { balanceHistoryTooltipHandler } from './Custom/tooltips';
 import { convertToLocalDate } from '@/helpers/date';
 
-const MAX_TICKS_LIMIT = 12;
-const CURRENCY_COLOR = '#BCC2D8';
-const DAY_COLOR = '#000000';
-const MONTH_COLOR = '#AFBCCB';
-const ACTIVE_MONTH_COLOR = '#B7A8FF';
-const CHART_BG_COLOR = 'rgba(255, 87, 34, 0.2)';
-const CHART_BORDER_COLOR = '#FF5722';
-const CHART_POINT_COLOR = '#FFFFFF';
-
-const CHART_STYLE_CONFIG = {
-  tension: 0.4,
-  cubicInterpolationMode: 'monotone',
-  lineTension: 0.2,
-  borderWidth: 3,
-  borderColor: CHART_BORDER_COLOR,
-  backgroundColor: CHART_BG_COLOR,
-  hoverRadius: 9,
-  pointRadius: 4.5,
-  pointBackgroundColor: CHART_POINT_COLOR,
-  pointHoverBackgroundColor: CHART_POINT_COLOR,
-  pointHoverBorderWidth: 3,
-};
-
-const CHART_TICKS_STYLE = {
-  autoSkip: false,
-  maxRotation: 0,
-  padding: 0,
-  font: {
-    lineHeight: 0.7,
-    size: 14,
-    family: 'Panton_Regular',
-  },
-};
-
-const DAY_COLORS_LIST = Array(MAX_TICKS_LIMIT).fill(DAY_COLOR);
-const MONTH_COLORS_LIST = Array(MAX_TICKS_LIMIT).fill(MONTH_COLOR);
+import {
+  LINE_CHART_STYLE_CONFIG,
+  CHART_TICKS_STYLE,
+  MONTH_COLORS_LIST,
+  DAY_COLORS_LIST,
+  COLORS,
+  xLineDates,
+  formatYLineText,
+  dateToRender,
+} from './Custom/config';
 
 const balanceHistoryChart = {};
-
-const createVisibleLabels = (dates) => {
-  const tickGap = Math.round(dates.length / MAX_TICKS_LIMIT) || 1;
-  const visibleLabels = [];
-
-  for (let i = dates.length - 1; i >= 0; i = i - tickGap) {
-    visibleLabels.push(convertToLocalDate(dates[i]));
-  }
-
-  return visibleLabels;
-};
 
 export const renderBalanceHistoryChart = (
   balanceHistory,
@@ -65,8 +26,8 @@ export const renderBalanceHistoryChart = (
   if (balanceHistoryChart[elementId]) balanceHistoryChart[elementId].destroy();
 
   const CHART_LABELS = Object.keys(balanceHistory.list);
+  const visibleLabels = xLineDates(CHART_LABELS);
   const allDates = CHART_LABELS.map(convertToLocalDate);
-  const visibleLabels = createVisibleLabels(CHART_LABELS);
 
   /**
    *
@@ -74,12 +35,6 @@ export const renderBalanceHistoryChart = (
    * Balance History Line Chart
    *
    */
-
-  const dateToRender = (date, type) => {
-    const index = type === 'xMonths' ? 1 : 0;
-    const value = date?.split(' ')[index];
-    return visibleLabels.includes(date) ? value : '';
-  };
 
   const data = [];
 
@@ -93,7 +48,7 @@ export const renderBalanceHistoryChart = (
       label: '',
       data: data,
       fill: true,
-      ...CHART_STYLE_CONFIG,
+      ...LINE_CHART_STYLE_CONFIG,
     },
   ];
 
@@ -114,7 +69,7 @@ export const renderBalanceHistoryChart = (
           context,
           elementId,
           balanceHistory.list,
-          ACTIVE_MONTH_COLOR
+          COLORS.ACTIVE_MONTH
         ),
     },
   };
@@ -126,7 +81,8 @@ export const renderBalanceHistoryChart = (
         tickLength: 21,
       },
       ticks: {
-        callback: (_, index) => dateToRender(allDates[index], 'xMonths'),
+        callback: (_, index) =>
+          dateToRender(visibleLabels, allDates[index], 'xMonths'),
         ...CHART_TICKS_STYLE,
         color: MONTH_COLORS_LIST,
       },
@@ -137,7 +93,8 @@ export const renderBalanceHistoryChart = (
         drawBorder: false,
       },
       ticks: {
-        callback: (_, index) => dateToRender(allDates[index], 'xDays'),
+        callback: (_, index) =>
+          dateToRender(visibleLabels, allDates[index], 'xDays'),
         color: DAY_COLORS_LIST,
         ...CHART_TICKS_STYLE,
       },
@@ -145,15 +102,15 @@ export const renderBalanceHistoryChart = (
     y: {
       grid: {
         borderColor: 'transparent',
-        color: CURRENCY_COLOR,
+        color: COLORS.CURRENCY,
         borderDash: [3, 3],
         drawBorder: false,
         tickLength: 0,
       },
       ticks: {
-        callback: (index) => BigNumber(index).toNumber(),
+        callback: (index) => formatYLineText(index, currentTab),
         ...CHART_TICKS_STYLE,
-        color: MONTH_COLOR,
+        color: COLORS.CURRENCY,
         labelOffset: -10,
         z: 1,
         mirror: true,
