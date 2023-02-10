@@ -116,6 +116,16 @@
   }
 }
 
+.chart-tooltip__head--rewards {
+  display: flex;
+  flex-direction: column;
+  span {
+    color: $slategray1;
+    font-weight: 400;
+    font-size: 10px;
+  }
+}
+
 .chart-tooltip {
   transform: translate(-50%, -137%);
   width: fit-content;

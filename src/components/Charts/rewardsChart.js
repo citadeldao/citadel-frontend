@@ -1,17 +1,30 @@
 import BigNumber from 'bignumber.js';
-import { prettyNumber } from '@/helpers/prettyNumber';
-import { getNetworkDataByKey } from '@/helpers/networkConfig';
-import { getMonthName } from '@/helpers/date';
 import Chart from 'chart.js/auto';
+
 import { chartColors } from './config';
+
+import { convertToLocalDate } from '@/helpers/date';
+import { getNetworkDataByKey } from '@/helpers/networkConfig';
+
 import { rewardsTooltipHandler } from './Custom/tooltips';
+
+import {
+  BAR_CHART_STYLE_CONFIG,
+  CHART_TICKS_STYLE,
+  MONTH_COLORS_LIST,
+  DAY_COLORS_LIST,
+  COLORS,
+  xLineDates,
+  formatYLineText,
+  dateToRender,
+} from './Custom/config';
 
 const getValueForData = (list, date, net, tab) => {
   const currentTab = tab.toLowerCase() === 'usd' ? 2 : 1;
   for (const key in list[date]) {
     if (key === net) return list[date][key][currentTab];
   }
-  return -1;
+  return 0;
 };
 
 const rewardsChartElement = {};
@@ -28,16 +41,6 @@ export const renderRewardsChart = (
 
   const datasets = {};
   const netSet = new Set();
-
-  const barStyle = {
-    pointRadius: 0,
-    hoverRadius: 9,
-    barThickness: 10,
-    borderRadius: 1,
-    pointBackgroundColor: '#fff',
-    pointHoverBackgroundColor: '#fff',
-    pointHoverBorderWidth: 3,
-  };
 
   for (const key in rewardsChart.list) {
     for (const net in rewardsChart.list[key]) {
@@ -62,10 +65,9 @@ export const renderRewardsChart = (
           data: [],
           backgroundColor: chartColors[index],
           tooltip: { net },
-          ...barStyle,
+          ...BAR_CHART_STYLE_CONFIG,
         };
       }
-
       const response = getValueForData(rewardsChart.list, key, net, currentTab);
       datasets[net].data.push(response);
     }
@@ -73,8 +75,8 @@ export const renderRewardsChart = (
 
   const nets = Object.values(datasets).sort((a, b) => {
     return (
-      a.data.reduce((acc, i) => acc + i, 0) -
-      b.data.reduce((acc, i) => acc + i, 0)
+      b.data.reduce((acc, curr) => BigNumber(acc).plus(curr).toString(), 0) -
+      a.data.reduce((acc, curr) => BigNumber(acc).plus(curr).toString(), 0)
     );
   });
 
@@ -103,7 +105,7 @@ export const renderRewardsChart = (
       backgroundColor: chartColors[11],
       tooltip: { net: 'Others' },
       nets: others.map((n) => n.net),
-      ...barStyle,
+      ...BAR_CHART_STYLE_CONFIG,
     };
 
     visible.push(other);
@@ -114,6 +116,8 @@ export const renderRewardsChart = (
   }
 
   const labels = Object.keys(rewardsChart.list);
+  const visibleLabels = xLineDates(labels);
+  const allDates = labels.map(convertToLocalDate);
 
   /**
    *
@@ -121,6 +125,7 @@ export const renderRewardsChart = (
    * Rewards Bar Chart
    *
    */
+
   const PLUGINS = {
     legend: {
       position: 'left',
@@ -129,7 +134,6 @@ export const renderRewardsChart = (
         usePointStyle: true,
       },
     },
-
     title: {
       display: false,
     },
@@ -147,26 +151,51 @@ export const renderRewardsChart = (
 
   const SCALES = {
     x: {
+      display: false,
       stacked: true,
       grid: {
         display: false,
       },
+    },
+    xMonths: {
+      grid: {
+        color: 'transparent',
+        tickLength: 21,
+      },
       ticks: {
-        color: '#AFBCCB',
-        callback: (index) =>
-          getMonthName(Object.keys(rewardsChart.list)[index]),
+        callback: (_, index) =>
+          dateToRender(visibleLabels, allDates[index], 'xMonths'),
+        color: MONTH_COLORS_LIST,
+        ...CHART_TICKS_STYLE,
+      },
+    },
+    xDays: {
+      grid: {
+        color: 'transparent',
+        drawBorder: false,
+      },
+      ticks: {
+        callback: (_, index) =>
+          dateToRender(visibleLabels, allDates[index], 'xDays'),
+        color: DAY_COLORS_LIST,
+        ...CHART_TICKS_STYLE,
       },
     },
     y: {
       stacked: true,
       grid: {
         borderColor: 'transparent',
-        color: '#BCC2D8',
+        color: COLORS.CURRENCY,
         borderDash: [3, 3],
       },
       ticks: {
-        color: '#AFBCCB',
-        callback: (index) => prettyNumber(index),
+        color: COLORS.CURRENCY,
+        ...CHART_TICKS_STYLE,
+        labelOffset: -10,
+        z: 0,
+        mirror: true,
+        crossAlign: 'near',
+        callback: (index) => formatYLineText(index, currentTab),
       },
       suggestedMin: 0,
       min: 0,
