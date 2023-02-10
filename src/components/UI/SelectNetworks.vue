@@ -15,6 +15,7 @@
         :key="network.id"
         :network="network"
         :checked="checked(network.id)"
+        :is-new="isUserMnemonic && newItemIds[network.id]"
         data-qa="add-address__one-seed"
         @check="onCheck"
         @uncheck="prepareRemoveItem"
@@ -61,7 +62,7 @@ import BackButton from '@/components/UI/BackButton';
 // import usePaginationWithSearch from '@/compositions/usePaginationWithSearch';
 import useCheckItem from '@/compositions/useCheckItem';
 import { useStore } from 'vuex';
-import { computed, ref } from '@vue/reactivity';
+import { computed, ref, reactive } from '@vue/reactivity';
 import { onMounted } from 'vue';
 import Input from '@/components/UI/Input';
 import { netsPositionPriority } from '@/config/netsPositionPriority.js';
@@ -82,6 +83,7 @@ export default {
     const { wallets } = useWallets();
     const { isUserMnemonic } = useCreateWallets();
     const { checked, addItem, removeItem, checkedItems } = useCheckItem();
+    const newItemIds = reactive({});
 
     const networks = computed(() =>
       networksList.map((network, index) => ({
@@ -123,6 +125,9 @@ export default {
       networksAmount.value = displayData.value.length;
     };
     const prepareRemoveItem = (id) => {
+      if (newItemIds[id]) {
+        delete newItemIds[id];
+      }
       //удаляем или нет элемент, удаляем если не добавлен(даже если выбран по умолчанию)
       const nonRemovableItem = displayData.value.find((displayedNet) => {
         const findedCheckedNetYetAdded = checkedNetYetAdded.find(
@@ -175,6 +180,7 @@ export default {
       );
     };
     const onCheck = (e) => {
+      newItemIds[e] = !newItemIds[e];
       addItem(e);
       checkedBtnStatus();
     };
@@ -276,6 +282,7 @@ export default {
       networksAmount,
       isDisabledBtn,
       isUserMnemonic,
+      newItemIds,
     };
   },
 };

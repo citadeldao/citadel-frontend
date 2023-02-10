@@ -1,7 +1,7 @@
 <template>
   <div
     class="network-card"
-    :class="{ 'network-card--checked': checked }"
+    :class="{ 'network-card--checked': checked, isNew }"
     @click="toggleChecked"
   >
     <div class="network-card__section">
@@ -50,6 +50,10 @@ export default {
     },
     checked: {
       type: Boolean,
+    },
+    isNew: {
+      type: Boolean,
+      default: false,
     },
   },
   emits: ['uncheck', 'check'],
@@ -165,6 +169,20 @@ export default {
 
       &__select {
         background-color: $white;
+      }
+    }
+  }
+
+  &.isNew {
+    background: linear-gradient(90deg, #f3e7ff 0%, #cde6ff 100%);
+
+    .network-card {
+      &__title {
+        color: $darkslategray;
+      }
+
+      &__percent {
+        color: $blue;
       }
     }
   }
