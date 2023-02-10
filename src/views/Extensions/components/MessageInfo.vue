@@ -5,12 +5,7 @@
     </div>
     <div class="item mt30">
       <div class="item-tx">
-        <pre>{{ JSON.stringify(messageForSign.message, null, 2).trim() }}</pre>
-      </div>
-    </div>
-    <div v-if="msgSuccessSignature" class="item">
-      <div class="label signature">
-        {{ msgSuccessSignature }}
+        <json-viewer :value="messageForSign.message" />
       </div>
     </div>
     <div
@@ -100,6 +95,8 @@ export default {
   }
 
   .item-tx {
+    display: flex;
+    justify-content: flex-start;
     overflow: auto;
     width: 100%;
     margin-top: 0;

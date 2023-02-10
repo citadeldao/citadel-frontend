@@ -29,7 +29,7 @@
             <PrimaryButton
               :disabled="info.buttonDisabled"
               :data-qa="dataQa && `${dataQa}${info.buttonPostfix}`"
-              @click="info.button === 'importAddress' ? toAddAddress : ''"
+              @click="toAddAddress(info.button)"
             >
               {{ $t(info.button) }}
             </PrimaryButton>
@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import { markRaw } from 'vue';
 import placeholderKey from '@/assets/icons/placeholderKey.svg';
 import placeholderQuestion from '@/assets/icons/placeholderQuestion.svg';
 import PrimaryButton from '@/components/UI/PrimaryButton';
@@ -60,8 +61,8 @@ export default {
   },
   setup() {
     const router = useRouter();
-    const toAddAddress = () => {
-      router.push({ name: 'AddAddress' });
+    const toAddAddress = (type) => {
+      router.push({ name: type === 'importAddress' ? 'AddAddress' : '' });
     };
     return { toAddAddress };
   },
@@ -69,7 +70,7 @@ export default {
     return {
       blockInfo: [
         {
-          component: placeholderKey,
+          component: markRaw(placeholderKey),
           title: 'wallet.info.block1Title',
           description: 'wallet.info.block1Info',
           buttonDisabled: false,
@@ -77,7 +78,7 @@ export default {
           buttonPostfix: '__import-address-button',
         },
         {
-          component: placeholderQuestion,
+          component: markRaw(placeholderQuestion),
           title: 'wallet.info.block2Title',
           description: 'wallet.info.block2Info',
           buttonDisabled: true,

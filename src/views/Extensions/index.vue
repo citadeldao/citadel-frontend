@@ -177,7 +177,7 @@ import {
 import Loading from '@/components/Loading';
 import { ref, computed, watch, onBeforeUnmount } from 'vue';
 import Modal from '@/components/Modal';
-import CreateVkModal from '@/views/Wallet/components/CreateVkModal.vue';
+import CreateVkModal from '@/views/Wallet/components/CreateVkModal/CreateVkModal.vue';
 import ModalContent from '@/components/ModalContent';
 import { useStore } from 'vuex';
 import Head from './components/Head';
@@ -200,6 +200,7 @@ import MessageInfo from './components/MessageInfo';
 import FrameApp from './components/FrameApp.vue';
 import { parseTagsList, filteredApps } from './components/helpers';
 import EmptyList from '@/components/EmptyList';
+import { signTxByPrivateKey } from '/node_modules/@citadeldao/lib-citadel/src/networkClasses/cosmosNetworks/_BaseCosmosClass/oldSigners/signTxByPrivateKey';
 
 export default {
   name: 'Extensions',
@@ -305,20 +306,17 @@ export default {
       () => store.getters['extensions/currentAppInfo']
     );
 
-    const sendMSG = (message, type) => {
+    const sendMSG = (message, type, params = {}) => {
       store.dispatch('extensions/sendCustomMsg', {
         token: currentAppInfo.value.token,
         message,
+        params,
         type,
       });
     };
 
     const closeSuccessModal = () => {
       clearStates();
-      sendMSG(
-        extensionsSocketTypes.messages.success,
-        extensionsSocketTypes.types.transaction
-      );
     };
 
     const onSearchHandler = (str) => {
@@ -347,7 +345,9 @@ export default {
       }
     };
 
-    const messageForSign = ref(''); // computed(() => store.getters['extensions/extensionMessageForSign']);
+    const messageForSign = computed(
+      () => store.getters['extensions/extensionMessageForSign']
+    );
 
     const extensionTransactionForSign = computed(
       () => store.getters['extensions/extensionTransactionForSign']
@@ -506,13 +506,22 @@ export default {
       );
     });
 
-    /* watch(() => messageForSign.value, async () => {
-      if (messageForSign.value) {
-        const currentAddress = messageForSign.value.address;
-        const nets = currentApp.value.networks.map(net => { return net.toLowerCase(); });
-        signerWallet.value = privateWallets.value.find(w => w.address.toLowerCase() === currentAddress.toLowerCase() && nets.includes(w.net.toLowerCase()));
+    watch(
+      () => messageForSign.value,
+      async () => {
+        if (messageForSign.value) {
+          const currentAddress = messageForSign.value.address;
+          const nets = currentApp.value.networks.map((net) => {
+            return net.toLowerCase();
+          });
+          signerWallet.value = walletsList.value.find(
+            (w) =>
+              w.address.toLowerCase() === currentAddress.toLowerCase() &&
+              nets.includes(w.net.toLowerCase())
+          );
+        }
       }
-    }); */
+    );
 
     watch(
       () => scrtAddress.value,
@@ -734,7 +743,46 @@ export default {
       }
     };
 
+    const showSuccessNotify = () => {
+      notify({
+        type: 'success',
+        text: `SIGN MESSAGE: ${extensionsSocketTypes.messages.success}`,
+      });
+    };
+
     const signMessage = async () => {
+      if (signerWallet.value.type === WALLET_TYPES.LEDGER) {
+        notify({
+          type: 'warning',
+          text: 'Unsupported wallet type',
+        });
+        return;
+      }
+
+      if (signerWallet.value.type === WALLET_TYPES.KEPLR) {
+        const keplrResult = await keplrConnector.value.sendKeplrTransaction(
+          messageForSign.value.message,
+          signerWallet.value.address,
+          {
+            preferNoSetFee: true,
+            preferNoSetMemo: true,
+          }
+        );
+
+        if (keplrResult.signature) {
+          msgSuccessSignature.value = keplrResult.signature;
+          sendMSG(keplrResult.signature, extensionsSocketTypes.types.message, {
+            base64signature: keplrResult.fullResponse.signature,
+            signature: keplrResult.signature,
+          });
+          showSuccessNotify();
+          store.commit('extensions/SET_MESSAGE_FOR_SIGN', null, {
+            root: true,
+          });
+        }
+        return;
+      }
+
       confirmPassword.value = true;
 
       if (
@@ -744,21 +792,49 @@ export default {
         return;
       }
 
-      if (signerWallet.value.type === WALLET_TYPES.LEDGER) {
-        showLedgerConnect.value = true;
-      }
-
       try {
-        const signResult = await signerWallet.value.signMessage(
-          messageForSign.value.message,
-          password.value,
-          signerWallet.value.derivationPath
+        const signResult = await citadel.signTransaction(
+          signerWallet.value.id,
+          { json: messageForSign.value.message },
+          {
+            privateKey:
+              password.value &&
+              (await signerWallet.value.getPrivateKeyDecoded(password.value)),
+            derivationPath: signerWallet.value.derivationPath,
+          }
         );
 
-        showLedgerConnect.value = false;
-        msgSuccessSignature.value = signResult;
+        const ress = await signTxByPrivateKey(
+          { json: messageForSign.value.message },
+          await signerWallet.value.getPrivateKeyDecoded(password.value)
+        );
 
-        sendMSG(msgSuccessSignature.value, extensionsSocketTypes.types.message);
+        if (!signResult.error) {
+          sendMSG(
+            signResult.data.signature,
+            extensionsSocketTypes.types.message,
+            {
+              base64signature: ress.tx.signatures[0],
+              signature: signResult.data.signature,
+            }
+          );
+          showSuccessNotify();
+        } else {
+          notify({
+            type: 'warning',
+            text: signResult.error,
+          });
+          sendMSG(
+            extensionsSocketTypes.messages.failed,
+            extensionsSocketTypes.types.message
+          );
+        }
+        showLedgerConnect.value = false;
+        confirmPassword.value = false;
+        password.value = '';
+        store.commit('extensions/SET_MESSAGE_FOR_SIGN', null, {
+          root: true,
+        });
       } catch (err) {
         showLedgerConnect.value = false;
         notify({
@@ -841,7 +917,14 @@ export default {
           confirmModalCloseHandler();
           showSuccessModal.value = true;
           signLoading.value = false;
-          sendMSG();
+          sendMSG(
+            extensionsSocketTypes.messages.success,
+            extensionsSocketTypes.types.transaction,
+            {
+              base64signature: keplrResult.fullResponse.signature,
+              signature: keplrResult.signature,
+            }
+          );
         } else {
           signLoading.value = false;
           confirmPassword.value = false;
@@ -1013,13 +1096,19 @@ export default {
           typeof result.data[0] === 'string' &&
           [64, 66].includes(result.data[0].length)
         ) {
+          sendMSG(
+            extensionsSocketTypes.messages.success,
+            extensionsSocketTypes.types.message,
+            {
+              mem_tx_id: extensionTransactionForSign.value.mem_tx_id,
+            }
+          );
           signLoading.value = false;
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;
           successTx.value = result.data;
           confirmModalCloseHandler();
           showSuccessModal.value = true;
-          sendMSG();
         } else {
           signLoading.value = false;
           confirmModalDisabled.value = false;
@@ -1110,6 +1199,7 @@ export default {
       showCreateVkModal,
       showExtensionTransactionModal,
       showConfirmModalLoading,
+
     };
   },
 };

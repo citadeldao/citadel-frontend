@@ -15,6 +15,7 @@ import citadel from '@citadeldao/lib-citadel';
 // import hljsVuePlugin from '@highlightjs/vue-plugin';
 import * as Sentry from '@sentry/vue';
 import { Integrations } from '@sentry/tracing';
+import JsonViewer from 'vue-json-viewer';
 import Vue from 'vue';
 
 const app = createApp(App);
@@ -53,6 +54,7 @@ app
   .use(ElementPlus)
   .use(router)
   .use(Vue3Resize)
+  .use(JsonViewer)
   .component('AppLayout', AppLayout)
   .provide('citadel', citadel)
   .mount('#app');

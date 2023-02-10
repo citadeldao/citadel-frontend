@@ -19,11 +19,11 @@
         "carousel": {
             "stake": {
                 "title": "质押并最大化您的收益",
-                "text": "使用基于DAO的新一代资产管理平台加入加密世界"
+                "text": ""
             },
             "xtc": {
                 "title": "接收XCT以进行质押",
-                "text": "使用基于DAO的新一代资产管理平台加入加密世界"
+                "text": ""
             },
             "dao": {
                 "title": "参与DAO",
@@ -31,15 +31,15 @@
             },
             "buy": {
                 "title": "购买 & 交易加密货币",
-                "text": "使用基于DAO的新一代资产管理平台加入加密世界"
+                "text": ""
             },
             "useCases": {
                 "title": "尝试加密货币用例",
-                "text": "使用基于DAO的新一代资产管理平台加入加密世界"
+                "text": ""
             },
             "keep": {
                 "title": "追踪你的投资组合",
-                "text": "使用基于DAO的新一代资产管理平台加入加密世界"
+                "text": ""
             }
         },
         "whyEmailTitle": "为什么 Citadel.one 需要您的邮箱？",
@@ -828,6 +828,8 @@
     "overallPage": {
         "noBalance": "没有可用余额",
         "noRewards": "没有奖励",
+        "loading": "",
+        "selectPeriod": "",
         "balanceStructure": {
             "title": "余额构成"
         },

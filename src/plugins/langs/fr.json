@@ -19,11 +19,11 @@
         "carousel": {
             "stake": {
                 "title": "Stakez et maximisez vos récompenses ",
-                "text": "Rejoignez le monde des crypto-monnaies avec une plateforme basée sur les DAO pour une gestion d'actifs de nouvelle génération"
+                "text": ""
             },
             "xtc": {
                 "title": "Recevoir des XCT pour le staking",
-                "text": "Rejoignez le monde des crypto-monnaies avec une plateforme basée sur les DAO pour une gestion d'actifs de nouvelle génération"
+                "text": ""
             },
             "dao": {
                 "title": "Participer à la DAO",
@@ -31,15 +31,15 @@
             },
             "buy": {
                 "title": "Acheter et échanger des crypto-monnaies",
-                "text": "Rejoignez le monde des crypto-monnaies avec une plateforme basée sur les DAO pour une gestion d'actifs de nouvelle génération"
+                "text": ""
             },
             "useCases": {
                 "title": "Essayez les cas d'utilisation de la crypto",
-                "text": "Rejoignez le monde des crypto-monnaies avec une plateforme basée sur les DAO pour une gestion d'actifs de nouvelle génération"
+                "text": ""
             },
             "keep": {
                 "title": "Suivre votre portefeuille",
-                "text": "Rejoignez le monde des crypto-monnaies avec une plateforme basée sur les DAO pour une gestion d'actifs de nouvelle génération."
+                "text": ""
             }
         },
         "whyEmailTitle": "Pourquoi Citadel.one exige-t-il mon adresse email ?",
@@ -828,6 +828,8 @@
     "overallPage": {
         "noBalance": "Vous n'avez pas de solde",
         "noRewards": "Vous n'avez aucune récompense",
+        "loading": "",
+        "selectPeriod": "",
         "balanceStructure": {
             "title": "Structure de la balance"
         },

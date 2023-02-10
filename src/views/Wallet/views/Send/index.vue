@@ -1574,6 +1574,9 @@ export default {
       bottom: -22px;
     }
   }
+  &__section-error {
+    bottom: -20px;
+  }
 
   &__section-error-icon {
     margin-right: 8px;

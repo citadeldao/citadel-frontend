@@ -55,11 +55,11 @@
         "carousel": {
             "stake": {
                 "title": "Stake & Maximize your rewards ",
-                "text": "Join the crypto world with a DAO-based platform for next-generation asset management"
+                "text": "Earn passive income with staking and autocompound your rewards!"
             },
             "xtc": {
                 "title": "Receive XCT for staking",
-                "text": "Join the crypto world with a DAO-based platform for next-generation asset management"
+                "text": "Get an additional incentive in XCT for staking with Citadel.one validator!"
             },
             "dao": {
                 "title": "Participate in DAO",
@@ -67,15 +67,15 @@
             },
             "buy": {
                 "title": "Buy & Exchange crypto",
-                "text": "Join the crypto world with a DAO-based platform for next-generation asset management"
+                "text": "Buy crypto or swap your assets via built-in decentralized exchanges"
             },
             "useCases": {
                 "title": "Try the crypto use-cases",
-                "text": "Join the crypto world with a DAO-based platform for next-generation asset management"
+                "text": "Enjoy the extended functionality of your favorite assets with Citadel.one app store!"
             },
             "keep": {
                 "title": "Keep track of your portfolio",
-                "text": "Join the crypto world with a DAO-based platform for next-generation asset management"
+                "text": "Stay on top of your portfolio performance with analytical dashboard and rewards chart!"
             }
         },
         "whyEmailTitle": "Why Citadel.one requires my email?",
@@ -838,6 +838,8 @@
     "overallPage": {
         "noBalance": "You have no balance",
         "noRewards": "You have no rewards",
+        "loading": "Loading...",
+        "selectPeriod": "Please select the time period to create the chart",
         "balanceStructure": {
             "title": "Balance structure"
         },

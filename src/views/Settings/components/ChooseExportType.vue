@@ -1,23 +1,30 @@
 <template>
-  <div class="choose-export-type">
-    <SelectCard
-      v-if="showExportSeed"
-      :method="methods[0]"
-      type="simple"
-      :data-qa="`settings__export--${methods[0].type}`"
-      @click="$emit('chooseMethod', methods[0].methodType)"
-    />
-    <SelectCard
-      v-if="currentExportWallet.privateKeyEncoded"
-      :method="methods[1]"
-      type="simple"
-      :data-qa="`settings__export--${methods[1].type}`"
-      @click="$emit('chooseMethod', methods[1].methodType)"
-    />
-  </div>
+  <ModalContent
+    v-click-away="() => $emit('close')"
+    @close="() => $emit('close')"
+    v-bind="props"
+  >
+    <div class="choose-export-type">
+      <SelectCard
+        v-if="showExportSeed"
+        :method="methods[0]"
+        type="simple"
+        :data-qa="`settings__export--${methods[0].type}`"
+        @click="$emit('chooseMethod', methods[0].methodType)"
+      />
+      <SelectCard
+        v-if="props.currentExportWallet.privateKeyEncoded"
+        :method="methods[1]"
+        type="simple"
+        :data-qa="`settings__export--${methods[1].type}`"
+        @click="$emit('chooseMethod', methods[1].methodType)"
+      />
+    </div>
+  </ModalContent>
 </template>
 
 <script>
+import ModalContent from '@/components/ModalContent';
 import { computed } from 'vue';
 import { i18n } from '@/plugins/i18n';
 import SelectCard from '@/components/SelectCard';
@@ -43,14 +50,23 @@ const methods = [
 ];
 export default {
   name: 'ChooseExportType',
-  components: { SelectCard },
+  components: { SelectCard, ModalContent },
   props: {
+    title: {
+      type: String,
+    },
+    desc: {
+      type: String,
+    },
+    submitButton: Boolean,
+    type: {
+      type: String,
+    },
     currentExportWallet: {
       type: Object,
-      default: () => ({}),
     },
   },
-  emits: ['chooseMethod'],
+  emits: ['chooseMethod', 'close'],
   setup(props) {
     const showExportSeed = computed(() => {
       if (props.currentExportWallet.type === WALLET_TYPES.PUBLIC_KEY) {
@@ -65,7 +81,7 @@ export default {
       return true;
     });
 
-    return { methods, WALLET_TYPES, showExportSeed };
+    return { methods, WALLET_TYPES, showExportSeed, props };
   },
 };
 </script>

@@ -57,15 +57,18 @@ export default class CryptoCoin {
   }
 
   getCustomErrorMessage(error) {
+    const textError = typeof error === 'object' ? JSON.stringify(error) : error;
+
     const message = {
       type: 'warning',
-      text: error,
+      text: textError,
     };
 
     for (const key in customErrors) {
       if (
         customErrors[key].find(
-          (check) => error.includes(check) || error?.message.includes(check)
+          (check) =>
+            textError.includes(check) || textError?.message?.includes(check)
         )
       ) {
         const code = this.code;

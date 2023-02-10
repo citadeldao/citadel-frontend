@@ -2,16 +2,20 @@
   <div class="overall">
     <div class="overall__central-section-wrapper">
       <div class="overall__central-section">
-        <template v-if="isFavouriteList && !hasFavourites">
-          <FavouritesPlaceholder @create-list="$emit('create-list')" />
+        <template v-if="isFavoriteList && !hasFavorites">
+          <FavoritesPlaceholder @create-list="$emit('create-list')" />
         </template>
         <template v-else>
-          <div class="balance-history-chart">
-            <BalanceHistoryChart />
+          <div class="overall__chart-block">
+            <ChartSection
+              name="balance-history"
+              canvas-id="balanceHistory"
+              icon="balance-history-placeholder"
+              :renderer="renderBalanceHistoryChart"
+            />
           </div>
-          <div class="overall__line" />
-          <div class="overall__rewards-chart">
-            <RewardsChart />
+          <div class="overall__chart-block">
+            <ChartSection name="rewards" :renderer="renderRewardsChart" />
           </div>
         </template>
       </div>
@@ -23,19 +27,22 @@
 </template>
 
 <script>
-import BalanceHistoryChart from './components/BalanceHistory/BalanceHistoryChart';
-import RewardsChart from './components/RewardsChart/RewardsChart';
-import BalanceStructureChart from './components/BalanceStructure/BalanceStructureChart';
-import FavouritesPlaceholder from './components/FavouritesPlaceholder';
 import { useStore } from 'vuex';
 import { computed } from 'vue';
+
+import { renderRewardsChart } from '@/components/Charts/rewardsChart';
+import { renderBalanceHistoryChart } from '@/components/Charts/balanceHistoryChart';
+
+import ChartSection from './components/ChartSection';
+import BalanceStructureChart from './components/BalanceStructure/BalanceStructureChart';
+import FavoritesPlaceholder from './components/FavouritesPlaceholder';
+
 export default {
   name: 'Overall',
   components: {
-    BalanceHistoryChart,
-    RewardsChart,
     BalanceStructureChart,
-    FavouritesPlaceholder,
+    FavoritesPlaceholder,
+    ChartSection,
   },
   emits: ['create-list'],
   setup() {
@@ -44,10 +51,10 @@ export default {
     const customWalletsList = computed(() =>
       store.getters['wallets/customWalletsListByName'](activeList.value)
     );
-    const isFavouriteList = computed(
+    const isFavoriteList = computed(
       () => store.getters['wallets/activeList'] === 'Favourites'
     );
-    const hasFavourites = computed(
+    const hasFavorites = computed(
       () =>
         store.getters['wallets/customWalletsListByName']('Favourites').wallets
           .length
@@ -57,11 +64,13 @@ export default {
         activeList.value !== 'all' && !customWalletsList.value.wallets.length
     );
     return {
-      isFavouriteList,
-      hasFavourites,
+      isFavoriteList,
+      hasFavorites,
       customWalletsList,
       activeList,
       isListEmpty,
+      renderRewardsChart,
+      renderBalanceHistoryChart,
     };
   },
 };
@@ -71,48 +80,69 @@ export default {
 .overall {
   display: flex;
   position: relative;
-  //z-index: 10;
+
   &__central-section-wrapper {
+    display: flex;
     flex-grow: 1;
     flex-shrink: 2;
-    display: flex;
-    flex-direction: column;
   }
+
   &__central-section {
     display: flex;
     flex-direction: column;
+    align-items: center;
     background: $white;
-    flex-grow: 1;
-    flex-basis: calc(100vh - 114px);
-    border-radius: 50px 50px 0 0;
-    padding: 38px 36px 31px 45px;
+    border-radius: 50px;
+    padding: 40px 45px;
+    flex: 1 1 50%;
+
     box-shadow: 0 4px 40px rgba(0, 0, 0, 0.1);
+
     @include lg {
       box-shadow: 0 4px 35px rgba(0, 0, 0, 0.1);
     }
+
     @include md {
       box-shadow: 0 4px 28px rgba(0, 0, 0, 0.1);
+      border-radius: 25px;
     }
+
     @include laptop {
       box-shadow: $card-shadow;
       padding: 20px 15px;
       border-radius: 8px;
     }
   }
-  &__balance-history-chart {
-    margin-bottom: 28px;
-    //width: 100%;
-  }
-  &__line {
+
+  &__chart-block {
     width: 100%;
-    height: 4px;
-    background: #eff2fc;
+    min-height: 390px;
+    position: relative;
+
+    &:first-child {
+      margin-bottom: 30px;
+    }
+
+    &:last-child {
+      margin-top: 30px;
+    }
+
+    &:first-child::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 4px;
+      background: #eff2fc;
+      margin: auto;
+      border-radius: 4px;
+      bottom: -30px;
+    }
   }
-  &__rewards-chart {
-    margin-top: 32px;
-  }
+
   &__right-section {
-    margin-left: 27px;
+    margin-left: 30px;
     flex-basis: 400px;
     flex-shrink: 0;
     //overflow: hidden;
