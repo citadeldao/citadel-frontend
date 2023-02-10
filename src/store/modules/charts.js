@@ -50,8 +50,11 @@ export default {
   getters: {
     getCharts:
       (state) =>
-      (target, list, period = 1) =>
-        state.charts[target][list][period],
+      (target, list, period = 1) => {
+        const chartByList = state.charts[target][list];
+        if (!chartByList || chartByList[period]) return {};
+        return chartByList[period];
+      },
     isLoading: (state) => (target) => state.loading[target],
   },
 
