@@ -52,7 +52,7 @@ export default {
       (state) =>
       (target, list, period = 1) => {
         const chartByList = state.charts[target][list];
-        if (!chartByList || chartByList[period]) return {};
+        if (!chartByList || !chartByList[period]) return undefined;
         return chartByList[period];
       },
     isLoading: (state) => (target) => state.loading[target],
