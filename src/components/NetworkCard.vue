@@ -1,7 +1,7 @@
 <template>
   <div
     class="network-card"
-    :class="{ 'network-card--checked': checked, isNew }"
+    :class="{ 'network-card--checked': checked, isNew, emptyMnemonic }"
     @click="toggleChecked"
   >
     <div class="network-card__section">
@@ -52,6 +52,10 @@ export default {
       type: Boolean,
     },
     isNew: {
+      type: Boolean,
+      default: false,
+    },
+    emptyMnemonic: {
       type: Boolean,
       default: false,
     },
@@ -144,8 +148,50 @@ export default {
 
   &--checked,
   &--checked:hover {
-    background: $blue-gradient;
+    background: linear-gradient(90deg, #f3e7ff 0%, #cde6ff 100%);
     box-shadow: none;
+
+    .network-card {
+      &__title {
+        color: $darkslategray;
+      }
+
+      &__percent {
+        color: $blue;
+      }
+    }
+
+    &.emptyMnemonic {
+      .network-card {
+        &__icon {
+          & svg {
+            fill: $dark-blue;
+          }
+
+          &::before {
+            opacity: 0;
+          }
+        }
+
+        &__percent,
+        &__title {
+          color: $white;
+        }
+
+        &__abbr {
+          color: $darkgray;
+        }
+
+        &__select {
+          background-color: $white;
+        }
+      }
+    }
+  }
+
+  &.isNew,
+  &.emptyMnemonic {
+    background: $blue-gradient;
 
     .network-card {
       &__icon {
@@ -169,20 +215,6 @@ export default {
 
       &__select {
         background-color: $white;
-      }
-    }
-  }
-
-  &.isNew {
-    background: linear-gradient(90deg, #f3e7ff 0%, #cde6ff 100%);
-
-    .network-card {
-      &__title {
-        color: $darkslategray;
-      }
-
-      &__percent {
-        color: $blue;
       }
     }
   }
@@ -266,6 +298,106 @@ export default {
   }
 
   &__select {
+    width: 28px;
+    height: 28px;
+    margin-bottom: 19px;
+    min-width: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: $round;
+    background: $too-ligth-blue;
+
+    & svg {
+      width: 14px;
+      height: 10px;
+      fill: $dark-blue;
+    }
+  }
+}
+
+.network-card.emptyMnemonic:not(.network-card--checked) {
+  background: $ghostwhite;
+
+  .network-card__section {
+    display: flex;
+    height: fit-content;
+  }
+
+  .network-card__icon {
+    width: 46px;
+    height: 46px;
+    min-width: 46px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    margin-right: 16px;
+    z-index: 1;
+    position: relative;
+    background: $white;
+
+    @include md {
+      margin-right: 10px;
+    }
+
+    & svg {
+      fill: $mid-blue;
+      max-width: 24px;
+      max-height: 24px;
+    }
+
+    &::before {
+      position: absolute;
+      content: '';
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: $blue-gradient;
+      opacity: 0;
+      z-index: -1;
+      transition: 0.3s all;
+      border-radius: 8px;
+    }
+  }
+
+  .network-card__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .network-card__title {
+    font-size: 16px;
+    line-height: 19px;
+    color: $darkslategray;
+  }
+
+  .network-card__info {
+    display: flex;
+  }
+
+  .network-card__percent {
+    font-family: 'Panton_ExtraBold';
+    font-size: 14px;
+    line-height: 17px;
+    color: $blue;
+    margin-right: 8px;
+
+    @include md {
+      font-size: 12px;
+    }
+  }
+
+  .network-card__abbr {
+    font-size: 14px;
+    line-height: 17px;
+    color: $darkgray;
+  }
+
+  .network-card__select {
     width: 28px;
     height: 28px;
     margin-bottom: 19px;

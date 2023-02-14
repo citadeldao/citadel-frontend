@@ -16,6 +16,7 @@
         :network="network"
         :checked="checked(network.id)"
         :is-new="isUserMnemonic && newItemIds[network.id]"
+        :empty-mnemonic="!isUserMnemonic"
         data-qa="add-address__one-seed"
         @check="onCheck"
         @uncheck="prepareRemoveItem"
