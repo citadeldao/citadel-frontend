@@ -120,12 +120,15 @@ export default {
       await store.dispatch('crypto/resetState');
       await citadel.reset(true);
       removeStorage(keyStorage.value);
-      window.location.reload(true);
+
+      setTimeout(() => {
+        window.location.reload(true);
+      }, 3200);
 
       setTimeout(async () => {
-        store.dispatch('app/setLoader', false);
         await router.push({ name: 'Login' });
-      }, 2000);
+        store.dispatch('app/setLoader', false);
+      }, 3500);
     };
     watch(
       () => props.show,
