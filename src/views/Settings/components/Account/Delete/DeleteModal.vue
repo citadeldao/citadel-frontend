@@ -125,10 +125,9 @@ export default {
         window.location.reload(true);
       }, 3200);
 
-      setTimeout(async () => {
-        await router.push({ name: 'Login' });
-        store.dispatch('app/setLoader', false);
-      }, 3500);
+      setTimeout(() => {
+        router.push({ name: 'Login' });
+      }, 3400);
     };
     watch(
       () => props.show,
