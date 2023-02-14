@@ -80,8 +80,6 @@ export default {
       redirectToNewWallet,
     } = useCreateWallets();
 
-    store.dispatch('metamask/connectToMetamask');
-
     const timeOut = setTimeout(() => {
       if (showLoader.value) {
         showLoader.value = false;
@@ -127,6 +125,7 @@ export default {
           type: 'warning',
           text: t('metamask.changeNetwork'),
         });
+        store.dispatch('metamask/connectToMetamask', null, { root: true });
       }
     };
 
