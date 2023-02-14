@@ -54,10 +54,11 @@
         </keep-alive>
       </div>
     </div>
-    <json-viewer
+    <JsonViewer
       v-if="showTx && extensionTransactionForSign?.transaction"
       :value="
         extensionTransactionForSign.messageScrt ||
+        extensionTransactionForSign.transaction?.json ||
         extensionTransactionForSign.transaction
       "
       :expand-depth="5"

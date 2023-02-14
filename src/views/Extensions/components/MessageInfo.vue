@@ -5,7 +5,7 @@
     </div>
     <div class="item mt30">
       <div class="item-tx">
-        <json-viewer :value="messageForSign.message" />
+        <JsonViewer :value="messageForSign.message" />
       </div>
     </div>
     <div
