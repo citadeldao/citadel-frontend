@@ -76,7 +76,6 @@ export async function socketEventHandler({ eventName, data }) {
       }
 
       if (data.type === 'sign-message') {
-        console.log('DDATA', data);
         store.commit('extensions/SET_MESSAGE_FOR_SIGN', data.message, {
           root: true,
         });
