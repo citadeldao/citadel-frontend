@@ -53,10 +53,7 @@ export default {
         dispatch('rewards/getRewards', null, { root: true });
         await dispatch('transactions/getMempool', null, { root: true });
 
-        if (
-          window.ethereum?.selectedAddress &&
-          store.getters['metamask/metamaskAddress']
-        ) {
+        if (window.ethereum?.selectedAddress) {
           dispatch('metamask/connectToMetamask', null, { root: true });
         }
 
