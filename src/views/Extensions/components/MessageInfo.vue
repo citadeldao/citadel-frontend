@@ -1,11 +1,20 @@
 <template>
   <div class="message-info">
-    <div class="label description">
-      {{ $t('extensions.signMessage') }}
-    </div>
+    <template v-if="messageForSign.meta_info">
+      <div class="label description">
+        {{ $t('extensions.signMessage') }}
+      </div>
+      <div class="meta-info">
+        {{ messageForSign.meta_info }}
+      </div>
+    </template>
+    <div class="label description">Message data</div>
     <div class="item mt30">
       <div class="item-tx">
-        <JsonViewer :value="messageForSign.message" />
+        <!-- <JsonViewer :value="messageForSign.message" /> -->
+        <pre>
+          {{ JSON.stringify(messageForSign.message, null, 2) }}
+        </pre>
       </div>
     </div>
     <div
@@ -79,11 +88,25 @@ export default {
 .message-info {
   width: 100%;
 
+  pre {
+    display: block;
+    unicode-bidi: embed;
+    font-family: monospace;
+    white-space: pre-wrap;
+    color: #47697b;
+    font-size: 12px;
+  }
+
+  .meta-info {
+    margin-top: 10px;
+  }
+
   .label.description {
-    margin: 25px 0 0 0;
+    margin: 20px 0 0 0;
     width: 100%;
     text-align: left;
     font-weight: 700;
+    font-family: 'Panton_Bold';
   }
 
   .password-wrap {
@@ -101,6 +124,8 @@ export default {
     width: 100%;
     margin-top: 0;
     max-height: 260px;
+    background: #d5e1fa52;
+    border-radius: 8px;
   }
 }
 

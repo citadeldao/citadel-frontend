@@ -54,17 +54,15 @@
         </keep-alive>
       </div>
     </div>
-    <JsonViewer
-      v-if="showTx && extensionTransactionForSign?.transaction"
-      :value="
-        extensionTransactionForSign.messageScrt ||
-        extensionTransactionForSign.transaction?.json ||
-        extensionTransactionForSign.transaction
-      "
-      :expand-depth="5"
-      sort
-      class="item-tx"
-    />
+    <div class="item-tx">
+      <pre v-if="showTx && extensionTransactionForSign?.transaction">
+        {{
+          extensionTransactionForSign.messageScrt ||
+          extensionTransactionForSign.transaction?.json ||
+          extensionTransactionForSign.transaction
+        }}
+      </pre>
+    </div>
     <div
       v-if="signerWallet && PRIVATE_PASSWORD_TYPES.includes(signerWallet.type)"
       class="password-wrap"
@@ -156,7 +154,7 @@ export default {
   }
 
   div.code {
-    white-space: pre;
+    // white-space: pre;
   }
 
   .item-tx {
@@ -164,6 +162,17 @@ export default {
     width: 100%;
     margin-top: 0;
     max-height: 260px;
+    background: #d5e1fa52;
+    border-radius: 8px;
+  }
+
+  pre {
+    display: block;
+    unicode-bidi: embed;
+    font-family: monospace;
+    white-space: pre-wrap;
+    color: #47697b;
+    font-size: 12px;
   }
 }
 
