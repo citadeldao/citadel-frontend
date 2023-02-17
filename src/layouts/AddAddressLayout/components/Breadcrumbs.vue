@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter, useRoute } from 'vue-router';
 import useWallets from '@/compositions/useWallets';
@@ -47,6 +47,10 @@ export default {
     const router = useRouter();
     const route = useRoute();
     const { t } = useI18n();
+
+    const favouriteFlag = computed(
+      () => store.getters['wallets/favouriteFlag']
+    );
 
     const isInWallet = computed(() => route.path.includes('wallet'));
     const currentList = computed(() => store.getters['wallets/activeList']);
@@ -92,6 +96,18 @@ export default {
         router.push({ name: 'Overall' });
       }
     };
+
+    watch(
+      () => favouriteFlag.value,
+      (newV) => {
+        if (newV) {
+          if (currentListName.value === 'Favourites') {
+            store.commit('wallets/SET_ACTIVE_LIST', 'all');
+          }
+          store.dispatch('wallets/setFavouriteFlag', false);
+        }
+      }
+    );
 
     return {
       currentListName,
