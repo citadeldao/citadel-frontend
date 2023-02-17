@@ -471,7 +471,7 @@ import Loading from '@/components/Loading';
 import { WALLET_TYPES, TOKEN_STANDARDS } from '@/config/walletType';
 import { screenWidths } from '@/config/sreenWidthThresholds';
 import Tooltip from '@/components/Tooltip';
-import useApi from '@/api/useApi';
+// import useApi from '@/api/useApi';
 import useWallets from '@/compositions/useWallets';
 import notify from '@/plugins/notify';
 
@@ -527,6 +527,7 @@ export default {
   },
   emits: ['prepareClaim', 'prepareXctClaim'],
   setup(props) {
+    const citadel = inject('citadel');
     const loadingSign = ref(false);
     const showSuccessModal = ref(false);
     const { t } = useI18n();
@@ -1183,16 +1184,22 @@ export default {
           keplrResult
         );
 
-        const data = await useApi('wallet').sendSignedTransaction({
-          hash,
-          deviceType: WALLET_TYPES.KEPLR,
-          proxy: false,
-          network: parentWallet.value.net,
-          from: parentWallet.value.address,
-          mem_tx_id: rawTx.value.mem_tx_id,
-        });
+        const data = await citadel.sendSignedTransaction(
+          parentWallet.value.id,
+          {
+            signedTransaction: hash,
+            mem_tx_id: rawTx.value.mem_tx_id,
+            proxy: false,
+            // hash,
+            // deviceType: WALLET_TYPES.KEPLR,
+            // proxy: false,
+            // network: parentWallet.value.net,
+            // from: parentWallet.value.address,
+            // mem_tx_id: rawTx.value.mem_tx_id,
+          }
+        );
 
-        if (data.ok) {
+        if (!data.error) {
           loadingSign.value = false;
           isLoading.value = false;
           showConfirmModal.value = false;
