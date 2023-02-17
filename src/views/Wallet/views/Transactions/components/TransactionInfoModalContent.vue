@@ -245,7 +245,7 @@ $blue-dark: #262b61;
 
       .value {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         margin-bottom: 7px;
 
         .value-amount {
@@ -256,11 +256,15 @@ $blue-dark: #262b61;
           word-break: break-all;
           text-align: right;
           padding-left: 1px;
+          min-width: 40px;
         }
 
         .value-symbol {
           font-size: 13px;
           color: $blue-dark;
+          text-align: right;
+          max-width: 95%;
+          word-break: break-word;
         }
 
         a {
