@@ -1,19 +1,31 @@
 <template>
   <div class="message-info">
     <template v-if="messageForSign.meta_info">
-      <div class="label description">
+      <div class="label description mt-20">
         {{ $t('extensions.signMessage') }}
       </div>
       <div class="meta-info">
         {{ messageForSign.meta_info }}
       </div>
     </template>
-    <div class="label description">Message data</div>
-    <div class="item mt30">
+    <div class="flex-row">
+      <div class="label description">Message data</div>
+      <div>
+        <div :class="{ open: showTx }" class="show" @click="showTx = !showTx">
+          <keep-alive>
+            <component
+              :is="arrowDownIcon"
+              :class="{ open: showTx }"
+              class="arrow-icon"
+            />
+          </keep-alive>
+        </div>
+      </div>
+    </div>
+    <div v-if="showTx" class="item mt30">
       <div class="item-tx">
-        <!-- <JsonViewer :value="messageForSign.message" /> -->
-        <pre>
-          {{ JSON.stringify(messageForSign.message, null, 2) }}
+        <!--eslint-disable-next-line-->
+        <pre>{{ JSON.stringify(messageForSign.message, null, 2) }}
         </pre>
       </div>
     </div>
@@ -42,7 +54,7 @@
   </div>
 </template>
 <script>
-import { ref } from 'vue';
+import { ref, markRaw } from 'vue';
 import Input from '@/components/UI/Input';
 import { PRIVATE_PASSWORD_TYPES } from '@/config/walletType';
 
@@ -71,12 +83,20 @@ export default {
   },
   setup(_, { emit }) {
     const password = ref('');
+    const showTx = ref(false);
+    const arrowDownIcon = ref('');
+
+    import(`@/assets/icons/extensions/arrow_up.svg`).then((val) => {
+      arrowDownIcon.value = markRaw(val.default);
+    });
 
     const onChange = (val) => {
       emit('changePassword', val);
     };
 
     return {
+      arrowDownIcon,
+      showTx,
       password,
       PRIVATE_PASSWORD_TYPES,
       onChange,
@@ -87,6 +107,40 @@ export default {
 <style lang="scss" scoped>
 .message-info {
   width: 100%;
+
+  .mt-20 {
+    margin-top: 20px;
+  }
+
+  .show {
+    width: 32px;
+    height: 32px;
+    background: #6a4bff;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+      transform: rotate(90deg);
+    }
+
+    &.open {
+      background: #4f70cf;
+
+      svg {
+        transform: rotate(0deg);
+      }
+    }
+  }
+
+  .flex-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0 0 0;
+  }
 
   pre {
     display: block;
@@ -102,7 +156,6 @@ export default {
   }
 
   .label.description {
-    margin: 20px 0 0 0;
     width: 100%;
     text-align: left;
     font-weight: 700;
