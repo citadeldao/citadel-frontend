@@ -688,10 +688,7 @@ export default {
       if (!msgSuccessSignature.value) {
         sendMSG(
           extensionsSocketTypes.messages.canceled,
-          extensionsSocketTypes.types.message,
-          {
-            mem_tx_id: extensionTransactionForSign.value.mem_tx_id,
-          }
+          extensionsSocketTypes.types.message
         );
       }
 
