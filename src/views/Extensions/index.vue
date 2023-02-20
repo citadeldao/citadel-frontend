@@ -674,7 +674,10 @@ export default {
 
       sendMSG(
         extensionsSocketTypes.messages.canceled,
-        extensionsSocketTypes.types.transaction
+        extensionsSocketTypes.types.transaction,
+        {
+          mem_tx_id: extensionTransactionForSign.value.mem_tx_id,
+        }
       );
     };
 
@@ -685,7 +688,10 @@ export default {
       if (!msgSuccessSignature.value) {
         sendMSG(
           extensionsSocketTypes.messages.canceled,
-          extensionsSocketTypes.types.message
+          extensionsSocketTypes.types.message,
+          {
+            mem_tx_id: extensionTransactionForSign.value.mem_tx_id,
+          }
         );
       }
 
