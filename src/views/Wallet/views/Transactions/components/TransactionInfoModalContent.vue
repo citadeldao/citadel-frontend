@@ -4,16 +4,14 @@
     <InfoBlock :current-wallet="currentWallet" :info="info" />
     <div v-if="info.view" class="inner-tx">
       <!-- MAIN STRUCTURE AND INNER, WHEN COMPONENTS IN CHILD -->
+      <!-- [, innerTxs] -->
       <div
-        v-for="(struct, indexStruct) in [
-          info.view.filter(filterTypeMethod),
-          innerTxs,
-        ]"
+        v-for="(struct, indexStruct) in [info.view.filter(filterTypeMethod)]"
         :key="indexStruct"
       >
-        <div v-if="indexStruct > 0 && struct.length" class="nested">
+        <!-- <div v-if="indexStruct > 0 && struct.length" class="nested">
           Nested transactions:
-        </div>
+        </div> -->
         <div
           v-for="(item, ndx) in struct"
           :key="ndx"
@@ -34,6 +32,7 @@
             <div
               v-for="(component, n) in item.components"
               :key="n"
+              :class="{ included: component.type === 'included_tx' }"
               class="inner-tx__view-item-component"
             >
               <div
@@ -104,6 +103,61 @@
                       {{ componentInner.text }}
                     </div>
                     <div class="title">{{ componentInner.weight }}</div>
+                  </div>
+                </div>
+              </div>
+              <!-- included_tx -->
+              <div v-if="component.type === 'included_tx'" class="included_tx">
+                <div
+                  v-for="(componentInner, key) in component.value"
+                  :key="key"
+                  class="inner-tx__view-item-component-flex included"
+                >
+                  <!-- icon -->
+                  <div
+                    :class="{
+                      empty: !componentInner.components?.length,
+                    }"
+                    class="icon-type-included"
+                  >
+                    <img width="32" height="32" :src="componentInner.icon" />
+                    <div>{{ componentInner.type }}</div>
+                  </div>
+                  <div
+                    v-for="(includedItem, ndx) in componentInner.components"
+                    :key="ndx"
+                    class="included-components"
+                  >
+                    <div class="included-components__row">
+                      <div class="label">{{ includedItem.title }}</div>
+                      <div class="line" />
+                      <div v-if="includedItem.type === 'textWithURL'">
+                        <a target="_blank" :href="includedItem.value.url">
+                          {{ includedItem.value.text }}
+                        </a>
+                      </div>
+                      <div
+                        v-if="includedItem.type === 'amount'"
+                        class="value-hint"
+                      >
+                        <span
+                          v-pretty-number="{
+                            value: includedItem.value.text,
+                            currency: includedItem.value.symbol,
+                          }"
+                          class="value-amount"
+                        />
+                        <span class="value-symbol">
+                          {{ formatedValueSymbol || currentWallet?.code }}
+                        </span>
+                        <!-- <div class="value-amount">
+                          {{ includedItem.value.text }}
+                        </div>
+                        <div class="value-symbol">
+                          {{ includedItem.value.symbol }}
+                        </div>-->
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -184,6 +238,42 @@ $blue-dark: #262b61;
   display: flex;
   flex-direction: column;
 
+  .included_tx {
+    width: 100%;
+
+    .value-hint {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0;
+
+      .value-amount {
+        font-size: 13px;
+        margin-right: 5px;
+        color: $dark-blue;
+        font-family: 'Panton_Bold';
+        word-break: break-all;
+        text-align: right;
+        padding-left: 1px;
+      }
+
+      .value-symbol {
+        font-size: 13px;
+        color: $blue-dark;
+      }
+    }
+
+    a {
+      color: $blue-dark;
+      text-decoration: none;
+      font-size: 13px;
+
+      &:hover {
+        color: $blue-dark;
+        cursor: pointer;
+      }
+    }
+  }
+
   .inner-tx {
     margin-top: 25px;
 
@@ -206,6 +296,15 @@ $blue-dark: #262b61;
       border-radius: 8px;
       padding: 16px;
       box-sizing: border-box;
+
+      .icon-type-included {
+        align-items: center;
+        display: flex;
+
+        div {
+          margin-left: 10px;
+        }
+      }
 
       .icon-type {
         display: flex;
@@ -284,6 +383,11 @@ $blue-dark: #262b61;
       margin-top: 5px;
       align-items: center;
 
+      &.included {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
       .title {
         font-size: 14px;
         margin-bottom: 7px;
@@ -298,6 +402,32 @@ $blue-dark: #262b61;
       .inner-tx__view-item-component-flex {
         flex-direction: column;
         display: flex;
+
+        .included-components {
+          display: flex;
+          flex-direction: column;
+
+          &__row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 5px;
+          }
+
+          box-sizing: border-box;
+          padding-left: 25px;
+
+          .line {
+            flex-grow: 1;
+            border: 0.01rem dashed #c3ceeb;
+            height: 1px;
+          }
+
+          .label {
+            color: #6b93c0;
+            font-size: 14px;
+          }
+        }
 
         .value {
           display: flex;
