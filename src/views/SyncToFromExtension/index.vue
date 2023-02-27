@@ -225,7 +225,10 @@ export default {
       walletsWithoutDublicates.value = await Promise.all(
         wallets.value.map(async (w) => {
           const exist = await window.citadel.isWalletExists(w.address, w.net);
-          if (!exist && w.privateKeyEncoded) {
+          if (
+            !exist &&
+            (w.privateKeyEncoded || [WALLET_TYPES.LEDGER].includes(w.type))
+          ) {
             return w;
           }
 
@@ -441,13 +444,23 @@ export default {
               );
 
               return {
-                mnemonic: CryptoJS.AES.encrypt(
-                  decodedMnemonic,
-                  passwordExtension.value
-                ).toString(),
+                mnemonic:
+                  w.type === WALLET_TYPES.LEDGER
+                    ? null
+                    : CryptoJS.AES.encrypt(
+                        decodedMnemonic,
+                        passwordExtension.value
+                      ).toString(),
                 wallets: [
                   {
-                    type: WALLET_TYPES.ONE_SEED,
+                    derivationPath:
+                      w.type === WALLET_TYPES.LEDGER ? w.derivationPath : null,
+                    publicKey:
+                      w.type === WALLET_TYPES.LEDGER ? w.publicKey : null,
+                    type:
+                      w.type === WALLET_TYPES.LEDGER
+                        ? WALLET_TYPES.LEDGER
+                        : WALLET_TYPES.ONE_SEED,
                     net: w.net,
                     address: w.address,
                     privateKeyEncoded: encodedKey.data,
