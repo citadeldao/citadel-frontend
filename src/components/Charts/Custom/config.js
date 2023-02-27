@@ -2,6 +2,8 @@ import { convertToLocalDate } from '@/helpers/date';
 import BigNumber from 'bignumber.js';
 import { prettyNumber } from '@/helpers/prettyNumber';
 
+const BTC_USDT_AMOUNT = 0.00001; // 0.00001 BTC ~ 0.25 USDT
+
 export const MAX_TICKS_LIMIT = 12;
 
 export const COLORS = {
@@ -53,10 +55,10 @@ export const DAY_COLORS_LIST = Array(MAX_TICKS_LIMIT).fill(COLORS.DAY);
 export const MONTH_COLORS_LIST = Array(MAX_TICKS_LIMIT).fill(COLORS.MONTH);
 
 export const formatYLineText = (data, tab) => {
-  const currentTab = tab.toLowerCase();
   let formattedValue = prettyNumber(data);
 
-  if (currentTab === 'btc') formattedValue = BigNumber(data).toFixed();
+  if (BTC_USDT_AMOUNT <= data) formattedValue = prettyNumber(data);
+  else formattedValue = BigNumber(data).toFixed();
 
   return `${formattedValue} ${tab}`;
 };
