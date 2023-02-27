@@ -1,5 +1,5 @@
 export const sendSignedTransaction = (data) => ({
-  url: `/transactions/${data.network}/${data.from}/send?version=1.1.0`,
+  url: `/transactions/${data.network}/${data.from}/send?version=${process.env.VUE_APP_API_VERSION}`,
   method: 'post',
   data: {
     signedTransaction: data.hash,
