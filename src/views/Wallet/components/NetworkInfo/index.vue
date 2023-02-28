@@ -106,7 +106,8 @@
       </a>
     </div>
     <!-- Информация по сетке(цены на бирже) -->
-    <div class="network-info__info">
+    <el-skeleton :rows="2" animated :loading="priceLoading" v-if="priceLoading" />
+    <div class="network-info__info" v-else>
       <span class="network-info__info-title"> {{ $t('tokenPrice') }} </span>
       <div class="network-info__info-price">
         <div class="network-info__info-usd-price">
@@ -310,12 +311,16 @@ export default {
 
     setIcon(props.currentWallet.net);
 
+    const priceLoading = ref(false);
+
     const getWalletMarketcap = async () => {
+      priceLoading.value = true;
       const { data } = await props.currentWallet.getMarketcap();
       store.dispatch('profile/setCurrentWalletMarketcap', {
         ...data,
         net: props.currentWallet.net,
       });
+      priceLoading.value = false;
     };
     getWalletMarketcap();
 
@@ -380,6 +385,7 @@ export default {
       iconPlaceholder,
       getTokenIcon,
       tokenDescription,
+      priceLoading,
     };
   },
 };
