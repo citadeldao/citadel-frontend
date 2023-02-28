@@ -338,6 +338,32 @@ export default {
           syncResult &&
           (await Promise.all(
             syncResult.map(async (wallet) => {
+              // ledger
+              if (wallet.type === 'ledger') {
+                const walletLedger = await store.dispatch(
+                  'crypto/createLedgerWallet',
+                  {
+                    derivationPath: wallet.derivationPath,
+                    net: wallet.net,
+                  }
+                );
+                console.log('1111walletLedger', walletLedger);
+                const { newWalletInstance, error } = await store.dispatch(
+                  'crypto/addHardwareWalletToAccount',
+                  { wallet: walletLedger }
+                );
+                console.log('newWalletInstance', newWalletInstance);
+                if (!error) {
+                  await store.dispatch('wallets/pushWallets', {
+                    wallets: [newWalletInstance],
+                  });
+                  return true;
+                } else {
+                  return false;
+                }
+              }
+              //////////
+
               const privateKey = await citadel.decodePrivateKeyByPassword(
                 wallet.net,
                 wallet.privateKeyEncoded,
