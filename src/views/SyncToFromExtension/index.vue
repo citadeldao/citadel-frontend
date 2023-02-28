@@ -344,12 +344,12 @@ export default {
                   'crypto/createNewWalletInstance',
                   { walletOpts: wallet }
                 );
-                console.log('1111walletLedger', walletLedger);
+
                 const { newWalletInstance, error } = await store.dispatch(
                   'crypto/addHardwareWalletToAccount',
                   { wallet: walletLedger }
                 );
-                console.log('newWalletInstance', newWalletInstance);
+
                 if (!error) {
                   await store.dispatch('wallets/pushWallets', {
                     wallets: [newWalletInstance],

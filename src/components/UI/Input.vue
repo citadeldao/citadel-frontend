@@ -219,9 +219,19 @@ export default {
     const inputWidth = ref(0);
 
     if (props.icon) {
-      import(`@/assets/icons/input/${props.icon}.svg`).then((val) => {
-        currentIcon.value = markRaw(val.default);
-      });
+      if (props.icon === 'ledger') {
+        import(`@/assets/icons/input/hardware-dot.svg`).then((val) => {
+          currentIcon.value = markRaw(val.default);
+        });
+      } else if (props.icon === 'privateKey') {
+        import(`@/assets/icons/input/private-dot.svg`).then((val) => {
+          currentIcon.value = markRaw(val.default);
+        });
+      } else {
+        import(`@/assets/icons/input/${props.icon}.svg`).then((val) => {
+          currentIcon.value = markRaw(val.default);
+        });
+      }
     }
 
     const inputType = computed(() => {
