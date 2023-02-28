@@ -107,6 +107,7 @@ import mail from '@/assets/icons/input/mail.svg';
 import error from '@/assets/icons/input/error.svg';
 import { computed, ref, markRaw, watch, nextTick, onMounted } from 'vue';
 import copyToClipboard from '@/helpers/copyToClipboard';
+import { WALLET_TYPES } from '@/config/walletType';
 
 export default {
   name: 'Input',
@@ -219,12 +220,19 @@ export default {
     const inputWidth = ref(0);
 
     if (props.icon) {
-      if (props.icon === 'ledger') {
+      if ([WALLET_TYPES.LEDGER, WALLET_TYPES.TREZOR].includes(props.icon)) {
         import(`@/assets/icons/input/hardware-dot.svg`).then((val) => {
           currentIcon.value = markRaw(val.default);
         });
-      } else if (props.icon === 'privateKey') {
+      } else if (
+        [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(props.icon)
+      ) {
+        // because override type to privateKey
         import(`@/assets/icons/input/private-dot.svg`).then((val) => {
+          currentIcon.value = markRaw(val.default);
+        });
+      } else if (props.icon === WALLET_TYPES.KEPLR) {
+        import(`@/assets/icons/input/keplr-dot.svg`).then((val) => {
           currentIcon.value = markRaw(val.default);
         });
       } else {
