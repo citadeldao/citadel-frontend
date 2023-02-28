@@ -224,11 +224,12 @@ export default {
         import(`@/assets/icons/input/hardware-dot.svg`).then((val) => {
           currentIcon.value = markRaw(val.default);
         });
-      } else if (
-        [WALLET_TYPES.ONE_SEED, WALLET_TYPES.PRIVATE_KEY].includes(props.icon)
-      ) {
-        // because override type to privateKey
+      } else if ([WALLET_TYPES.PRIVATE_KEY].includes(props.icon)) {
         import(`@/assets/icons/input/private-dot.svg`).then((val) => {
+          currentIcon.value = markRaw(val.default);
+        });
+      } else if ([WALLET_TYPES.ONE_SEED].includes(props.icon)) {
+        import(`@/assets/icons/input/oneseed-dot.svg`).then((val) => {
           currentIcon.value = markRaw(val.default);
         });
       } else if (props.icon === WALLET_TYPES.KEPLR) {
