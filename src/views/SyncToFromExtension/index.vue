@@ -337,6 +337,7 @@ export default {
           syncResult &&
           (await Promise.all(
             syncResult.map(async (wallet) => {
+              console.log('WWW', wallet);
               const privateKey = await citadel.decodePrivateKeyByPassword(
                 wallet.net,
                 wallet.privateKeyEncoded,
