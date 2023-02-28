@@ -253,9 +253,27 @@ export default {
     });
 
     // when focus, placeholder = ''
-    const dynamicPlaceholder = computed(() =>
-      focusFlag.value ? '' : props.placeholder
-    );
+    const dynamicPlaceholder = computed(() => {
+      if (focusFlag.value) return '';
+
+      if ([WALLET_TYPES.LEDGER, WALLET_TYPES.TREZOR].includes(props.icon)) {
+        return 'Citadel Hardware';
+      }
+
+      if ([WALLET_TYPES.ONE_SEED].includes(props.icon)) {
+        return 'Citadel One-Seed';
+      }
+
+      if ([WALLET_TYPES.PRIVATE_KEY].includes(props.icon)) {
+        return 'Citadel Private-Key';
+      }
+
+      if ([WALLET_TYPES.KEPLR].includes(props.icon)) {
+        return 'Citadel Keplr';
+      }
+
+      return props.placeholder;
+    });
 
     const placeholderShown = computed(() => {
       return !focusFlag.value && !!dynamicPlaceholder.value && !valueRef.value;
