@@ -63,25 +63,29 @@
 </template>
 
 <script>
+import { useStore } from 'vuex';
+import { ref, computed } from 'vue';
+import { useWindowSize } from 'vue-window-size';
+import moment from 'moment';
+import BigNumber from 'bignumber.js';
+
+import useWallets from '@/compositions/useWallets';
+import { screenWidths } from '@/config/sreenWidthThresholds';
+
+import Loading from '@/components/Loading.vue';
+import DatePicker from '@/components/UI/DatePicker.vue';
+import TabsGroup from '@/components/UI/TabsGroup';
+
+import { getNetworkDataByKey } from '@/helpers/networkConfig';
+
+import { tabsList, tabsListmd } from '@/static/dateTabs';
+
 import RigthSectionPlaceholder from './components/RigthSectionPlaceholder.vue';
 import RewardsPlaceholder from './components/RewardsPlaceholder.vue';
 import StakeBanner from './components/StakeBanner.vue';
 import TotalForRange from './components/TotalForRange.vue';
-import Loading from '@/components/Loading.vue';
 import TotalRewards from './components/TotalRewards.vue';
-import DatePicker from '@/components/UI/DatePicker.vue';
 import Dropdown from './components/Dropdown.vue';
-import TabsGroup from '@/components/UI/TabsGroup';
-import { tabsList, tabsListmd } from '@/static/dateTabs';
-import { ref } from '@vue/reactivity';
-import { computed } from '@vue/runtime-core';
-import { useStore } from 'vuex';
-import BigNumber from 'bignumber.js';
-import { useWindowSize } from 'vue-window-size';
-import moment from 'moment';
-import { screenWidths } from '@/config/sreenWidthThresholds';
-import notify from '@/plugins/notify';
-import useWallets from '@/compositions/useWallets';
 
 export default {
   name: 'Rewards',
@@ -124,22 +128,39 @@ export default {
     );
 
     const data = computed(() => store.getters['rewards/rewardsByRange']);
-    const networks = computed(() => store.getters['networks/networksList']);
+    const networksConfig = computed(() => store.getters['networks/config']);
+
     const { wallets } = useWallets();
     const listData = computed(() => {
       const mixedData = [];
+      const result = {};
 
       for (const item in data.value) {
-        const rewards = [];
+        const [net, token] = item.split('_');
+        let netKey = net;
 
-        for (const reward in data.value[item]) {
-          rewards.push({ value: data.value[item][reward], address: reward });
+        if (token && token !== 'xct') continue;
+        else netKey = item;
+
+        if (!result[netKey]) {
+          result[netKey] = getNetworkDataByKey({
+            config: networksConfig.value,
+            network: netKey,
+            key: 'allKeys',
+          });
+          result[netKey].rewards = [];
         }
 
-        mixedData.push({
-          ...networks.value.find((network) => network.net === item),
-          rewards,
-        });
+        for (const reward in data.value[item]) {
+          result[netKey].rewards.push({
+            value: data.value[item][reward],
+            address: reward,
+          });
+        }
+      }
+
+      for (const item in result) {
+        mixedData.push(result[item]);
       }
 
       return mixedData
@@ -148,6 +169,7 @@ export default {
     });
 
     const currency = computed(() => store.getters['profile/rates']);
+
     const total = computed(() => {
       return listData.value.reduce((total, currentValue) => {
         const totalForNet = currentValue.rewards.reduce(
@@ -156,9 +178,11 @@ export default {
           },
           0
         );
-        const totalForNetInUsd = BigNumber(totalForNet)
-          .times(currency.value[currentValue.net]?.USD)
-          .toNumber();
+
+        const totalForNetInUsd =
+          BigNumber(totalForNet)
+            .times(currency.value[currentValue.net]?.USD)
+            .toNumber() || 0;
 
         return BigNumber(total).plus(totalForNetInUsd).toNumber();
       }, 0);
@@ -175,6 +199,7 @@ export default {
         return BigNumber(total).plus(rewardInUsd).toNumber();
       }, 0);
     });
+
     const totalRewardsInUSD = computed(() =>
       BigNumber(totalRewardsInBTC.value)
         .times(currency.value?.btc.USD)
