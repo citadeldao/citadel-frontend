@@ -341,11 +341,8 @@ export default {
               // ledger
               if (wallet.type === 'ledger') {
                 const walletLedger = await store.dispatch(
-                  'crypto/createLedgerWallet',
-                  {
-                    derivationPath: wallet.derivationPath,
-                    net: wallet.net,
-                  }
+                  'crypto/createNewWalletInstance',
+                  { walletOpts: wallet }
                 );
                 console.log('1111walletLedger', walletLedger);
                 const { newWalletInstance, error } = await store.dispatch(
