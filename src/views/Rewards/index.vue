@@ -179,6 +179,7 @@ export default {
           0
         );
 
+        // Нужно будет добавить цену для XCT
         const totalForNetInUsd =
           BigNumber(totalForNet)
             .times(currency.value[currentValue.net]?.USD)
