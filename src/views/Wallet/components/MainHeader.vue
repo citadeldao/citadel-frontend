@@ -51,10 +51,9 @@
         active-class="main-header__active"
         class="main-header__tabs-item"
         :to="{
-          name: !['oasis'].includes($route.params.net)
-            ? 'WalletTransactions'
-            : 'WalletTransactionsOld',
-          params: { ...$route.params },
+          name: /* !['oasis'].includes($route.params.net)
+            ? */ 'WalletTransactions',
+          /* : 'WalletTransactionsOld' */ params: { ...$route.params },
         }"
         data-qa="wallet__transactions-tab-button"
       >
