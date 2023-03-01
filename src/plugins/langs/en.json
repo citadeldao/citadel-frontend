@@ -1319,6 +1319,11 @@
             "title": "Kujira",
             "description": "Kujira is a semi-permissioned sovereign Cosmos L1 platform bringing user-friendly DeFi tools for trading, liquidating, and minting, and targeting everyone, from the novice crypto enthusiasts to the experienced investors.",
             "shortDescription": "Kujira is a decentralized Cosmos L1 platform bringing user-friendly DeFi tools for trading, liquidating, and minting."
+        },
+        "provenance":{
+            "title": "Provenance",
+            "description": "Provenance is a public, permissionless PoS blockchain built with Cosmos SDK and designed for financial service industries.",
+            "shortDescription": "Provenance is a public, permissionless PoS blockchain for financial services."
         }
     },
     "uptime": "Uptime",
