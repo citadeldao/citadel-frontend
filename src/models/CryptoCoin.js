@@ -188,13 +188,14 @@ export default class CryptoCoin {
       return { data, error };
     }
 
-    const message = this.getCustomErrorMessage(error);
-
-    notify(message);
+    notify({
+      type: 'warning',
+      text: error.toString(),
+    });
 
     console.error(error);
-
-    return { data, error };
+    return { data, error: error.toString() };
+    // const message = this.getCustomErrorMessage(error);
   }
 
   async getBuildBridgeTransaction({ walletId, token, ...options }) {

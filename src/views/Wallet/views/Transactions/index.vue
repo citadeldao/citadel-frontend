@@ -157,7 +157,15 @@
 </template>
 
 <script>
-import { ref, computed, inject, nextTick, watch, onMounted } from 'vue';
+import {
+  ref,
+  computed,
+  inject,
+  nextTick,
+  watch,
+  onMounted,
+  onUnmounted,
+} from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
 import TransactionInfoModalContent from './components/TransactionInfoModalContent.vue';
@@ -205,18 +213,28 @@ export default {
   setup(props) {
     const width = ref(null);
     const onResizeFn = () => {
-      width.value = document.querySelector('.wallet__main').offsetWidth - 150;
+      const walletDiv = document.querySelector('.wallet__main');
+
+      if (!walletDiv || walletDiv?.offsetWidth) return;
+
       if (window.innerWidth < 1920) {
-        width.value = document.querySelector('.wallet__main').offsetWidth - 116;
+        width.value = walletDiv.offsetWidth - 116;
+      } else if (window.innerWidth <= 1280) {
+        width.value = walletDiv.offsetWidth - 100;
       }
-      if (window.innerWidth <= 1280) {
-        width.value = document.querySelector('.wallet__main').offsetWidth - 100;
-      }
+
+      width.value = walletDiv.offsetWidth - 150;
     };
+
     onMounted(() => {
-      onResizeFn();
+      nextTick(() =>
+        window.addEventListener('resize', () => onResizeFn(), true)
+      );
     });
-    window.addEventListener('resize', () => onResizeFn(), true);
+
+    onUnmounted(() => {
+      window.removeEventListener('resize', onResizeFn);
+    });
 
     const currentKtAddress = inject('currentKtAddress');
     const currentAddress = computed(() =>

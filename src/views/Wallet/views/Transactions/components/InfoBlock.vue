@@ -235,7 +235,7 @@ export default {
   &__line-to,
   &__line-currency {
     font-size: 14px;
-    line-height: 30px;
+    // line-height: 30px;
     word-break: break-word;
   }
   &__line-to {

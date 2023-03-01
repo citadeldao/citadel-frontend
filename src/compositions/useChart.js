@@ -1,12 +1,15 @@
 import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
-import BigNumber from 'bignumber.js';
 import moment from 'moment';
 import { useWindowSize } from 'vue-window-size';
-import { createDatasetForRewardsChart } from '@/components/Charts/rewardsChart';
+
 import { screenWidths } from '@/config/sreenWidthThresholds';
+
+import { createDatasetForRewardsChart } from '@/components/Charts/rewardsChart';
+
+// import { getNetworkDataByKey } from '@/helpers/networkConfig';
+
 import { tabsList2, tabsListmd2 } from '@/static/dateTabs';
-import notify from '@/plugins/notify';
 
 export default function useChart({
   canvasElement,
@@ -25,6 +28,7 @@ export default function useChart({
   const networksConfig = computed(() => store.getters['networks/config']);
 
   const { width } = useWindowSize();
+
   const tabs = computed(() =>
     width.value < screenWidths.lg ? tabsListmd2 : tabsList2
   );
@@ -37,135 +41,115 @@ export default function useChart({
         )?.id
   );
 
-  const balanceHistory = computed(
-    () => store.getters[storeGetter][customList.value]?.[currentFilterTab.value]
-  );
-  const rewardsChart = computed(
-    () => store.getters[storeGetter][customList.value]?.[currentFilterTab.value]
-  );
-  const datasetsArray = computed(() =>
-    createDatasetForRewardsChart(
-      rewardsChart.value,
-      currentTab.value,
-      showCount
+  const chartData = computed(() =>
+    store.getters[storeGetter](
+      canvasElement,
+      customList.value,
+      currentFilterTab.value
     )
   );
 
-  const netsPercent = computed(() => {
-    const hasOthers = !!datasetsArray.value.find((n) => n.net === 'Others');
-    // sum of all rewards in all networks
-    const maxValue = datasetsArray.value.reduce(
-      (maxVal, c) =>
-        BigNumber(maxVal)
-          .plus(c.data.reduce((sum, i) => BigNumber(sum).plus(i).toNumber(), 0))
-          .toNumber(),
-      0
-    );
-    let netsPercents = datasetsArray.value
-      .map((c) => {
-        const sumOfData = c.data.reduce(
-          (sum, i) => BigNumber(sum).plus(i).toNumber(),
-          0
-        );
+  const datasetsArray = computed(() =>
+    createDatasetForRewardsChart(chartData.value, currentTab.value, showCount)
+  );
 
-        return {
-          percent: BigNumber(sumOfData)
-            .dividedBy(maxValue)
-            .multipliedBy(100)
-            .toNumber(),
-          name:
-            c.net === 'Others' ? 'Others' : networksConfig.value?.[c.net]?.name,
-          color: c.backgroundColor,
-        };
-      })
-      .sort((a, b) =>
-        a.percent > b.percent ? -1 : a.percent < b.percent ? 1 : 0
-      );
+  // const netsPercent = computed(() => {
+  //   const hasOthers = !!datasetsArray.value.find((n) => n.net === 'Others');
+  //   // sum of all rewards in all networks
+  //   const maxValue = datasetsArray.value.reduce(
+  //     (maxVal, c) =>
+  //       BigNumber(maxVal)
+  //         .plus(c.data.reduce((sum, i) => BigNumber(sum).plus(i).toNumber(), 0))
+  //         .toNumber(),
+  //     0
+  //   );
+  //   let netsPercents = datasetsArray.value
+  //     .map((c) => {
+  //       const sumOfData = c.data.reduce(
+  //         (sum, i) => BigNumber(sum).plus(i).toNumber(),
+  //         0
+  //       );
 
-    const others = netsPercents.find((n) => n.name === 'Others');
+  //       return {
+  //         percent: BigNumber(sumOfData)
+  //           .dividedBy(maxValue)
+  //           .multipliedBy(100)
+  //           .toNumber(),
+  //         color: c.backgroundColor,
+  //         name: getNetworkDataByKey({
+  //           config: networksConfig.value,
+  //           network: c.net,
+  //           key: 'name',
+  //         }),
+  //       };
+  //     })
+  //     .sort((a, b) =>
+  //       a.percent > b.percent ? -1 : a.percent < b.percent ? 1 : 0
+  //     );
 
-    netsPercents = netsPercents.filter((n) => n.name !== 'Others');
+  //   const others = netsPercents.find((n) => n.name === 'Others');
 
-    if (hasOthers && others.percent !== 0) {
-      netsPercents.push(others);
-    }
+  //   netsPercents = netsPercents.filter((n) => n.name !== 'Others');
 
-    return netsPercents;
-  });
+  //   if (hasOthers && others?.percent !== 0) {
+  //     netsPercents.push(others);
+  //   }
+
+  //   return netsPercents;
+  // });
 
   const dateChangeHandler = async (val) => {
-    const from = +moment(val[0]);
-    const to = +moment(val[1]);
-    const now = +moment();
+    const from = moment(val[0]).valueOf();
+    const to = moment(val[1]).valueOf();
 
     if (from || to) {
-      if (to > now || from > now) {
-        notify({
-          type: 'warning',
-          text: 'Incorrect Date',
-        });
-      } else {
-        const dateFrom = +moment(from).startOf('day');
-        const dateTo = +moment(to).endOf('day');
-        await store.dispatch(storeAction, {
-          list: customList.value,
-          dateFrom,
-          dateTo,
-        });
-      }
+      const dateFrom = moment(from).startOf('day').valueOf();
+      const dateTo = moment(to).endOf('day').valueOf();
+
+      await store.dispatch(storeAction, {
+        list: customList.value,
+        dateFrom,
+        dateTo,
+        target: canvasElement,
+      });
+
+      render(chartData.value, currentTab.value, canvasElement, {
+        currency: networksConfig.value,
+        showCount,
+      });
     }
   };
 
-  const currentFilterTabChangeBalanceHistoryHandler = async () => {
-    if (currentFilterTab.value === 'custom') {
-      return;
-    }
-
-    if (!balanceHistory.value) {
+  const filterTabChangeHandler = async () => {
+    if (!chartData.value) {
       await store.dispatch(storeAction, {
         list: customList.value,
         months: currentFilterTab.value,
+        target: canvasElement,
       });
     }
 
-    render(balanceHistory.value, currentTab.value, canvasElement);
-  };
-
-  const currentFilterTabChangeRewardsChartHandler = async () => {
-    if (currentFilterTab.value === 'custom') {
-      return;
-    }
-
-    if (!rewardsChart.value) {
-      await store.dispatch(storeAction, {
-        list: customList.value,
-        months: currentFilterTab.value,
-      });
-    }
-
-    render(
-      rewardsChart.value,
-      datasetsArray.value,
-      currentTab.value,
-      canvasElement,
-      networksConfig.value
-    );
+    render(chartData.value, currentTab.value, canvasElement, {
+      currency: networksConfig.value,
+      showCount,
+    });
   };
 
   return {
-    currentFilterTab,
-    currentTab,
-    info: networksConfig,
-    rewardsChart,
+    chartData,
     datasetsArray,
-    netsPercent,
+    info: networksConfig,
+
+    currentTab,
+    currentFilterTab,
+
     tabs,
-    dateChangeHandler,
-    currentFilterTabChangeBalanceHistoryHandler,
-    currentFilterTabChangeRewardsChartHandler,
-    isExpanded,
-    balanceHistory,
     customList,
+
+    isExpanded,
     isToggleHovered,
+
+    dateChangeHandler,
+    filterTabChangeHandler,
   };
 }

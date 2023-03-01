@@ -18,12 +18,14 @@ const types = {
   SET_HIDDEN_WALLETS: 'SET_HIDDEN_WALLETS',
   ADD_WALLET_TO_HIDDEN: 'ADD_WALLET_TO_HIDDEN',
   REMOVE_WALLET_FROM_HIDDEN: 'REMOVE_WALLET_FROM_HIDDEN',
+  SET_FAVOURITE_WALLET: 'SET_FAVOURITE_WALLET',
 };
 const LS_HIDDEN_WALLETS_KEY = 'hidden_wallets';
 
 export default {
   namespaced: true,
   state: () => ({
+    favouriteFlag: false,
     walletsStructure: null,
     wallets: [],
     currentWallet: null,
@@ -34,6 +36,7 @@ export default {
   }),
 
   getters: {
+    favouriteFlag: (state) => state.favouriteFlag,
     walletsStructure: (state) => state.walletsStructure,
     wallets: (state, getters, rootState, rootGetters) =>
       state.wallets.filter(({ net }) =>
@@ -89,6 +92,9 @@ export default {
   },
 
   mutations: {
+    [types.SET_FAVOURITE_WALLET](state, value) {
+      state.favouriteFlag = value;
+    },
     removeWallet(state, { net, address }) {
       state.wallets = state.wallets.filter(
         (w) =>
@@ -181,6 +187,9 @@ export default {
     },
   },
   actions: {
+    setFavouriteFlag({ commit }, value) {
+      commit(types.SET_FAVOURITE_WALLET, value);
+    },
     async getNewWallets(
       { getters, dispatch, rootGetters, commit },
       mode = 'lazy'

@@ -1020,7 +1020,7 @@ export default {
       }),
       //for crossnetwork transfer
       token: props.currentWallet.net,
-      toNetwork: bridgeTargetNet.value,
+      toNetwork: isSendToAnotherNetwork.value ? bridgeTargetNet.value : null,
     }));
 
     const showModal = ref(false);
@@ -1537,7 +1537,6 @@ export default {
     width: 100%;
     height: 68px;
     margin-bottom: 16px;
-    z-index: 10;
     position: relative;
   }
 
@@ -1573,6 +1572,9 @@ export default {
 
       bottom: -22px;
     }
+  }
+  &__section-error {
+    bottom: -20px;
   }
 
   &__section-error-icon {

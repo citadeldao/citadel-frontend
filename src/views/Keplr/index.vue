@@ -48,6 +48,7 @@
           :network="chain"
           icon-path="networks"
           :checked="!!selectedCoins.find((coin) => coin.label === chain.label)"
+          :empty-mnemonic="true"
           @check="onSelectCoin"
           @uncheck="onSelectCoin"
         />

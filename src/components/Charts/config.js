@@ -1,6 +1,6 @@
 export const chartColors = [
   '#BD00FF',
-  '#FF3D00',
+  '#7DF89F',
   '#0044FF',
   '#FFC107',
   '#00C2FF',
@@ -16,9 +16,9 @@ export const chartColors = [
   '#0A0039',
   '#5639E0',
   '#0A0039',
-  '#7DF89F',
   '#5E0B4B',
   '#FF54DB',
+  '#FF3D00',
   '#5E0B0B',
   '#ED4242',
   '#5E280B',

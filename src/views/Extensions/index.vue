@@ -200,6 +200,7 @@ import MessageInfo from './components/MessageInfo';
 import FrameApp from './components/FrameApp.vue';
 import { parseTagsList, filteredApps } from './components/helpers';
 import EmptyList from '@/components/EmptyList';
+import { signTxByPrivateKey } from '/node_modules/@citadeldao/lib-citadel/src/networkClasses/cosmosNetworks/_BaseCosmosClass/oldSigners/signTxByPrivateKey';
 
 export default {
   name: 'Extensions',
@@ -316,10 +317,6 @@ export default {
 
     const closeSuccessModal = () => {
       clearStates();
-      sendMSG(
-        extensionsSocketTypes.messages.success,
-        extensionsSocketTypes.types.transaction
-      );
     };
 
     const onSearchHandler = (str) => {
@@ -673,12 +670,15 @@ export default {
       password.value = '';
       signLoading.value = false;
       confirmPassword.value = false;
-      store.commit('extensions/SET_TRANSACTION_FOR_SIGN', null, { root: true });
 
       sendMSG(
         extensionsSocketTypes.messages.canceled,
-        extensionsSocketTypes.types.transaction
+        extensionsSocketTypes.types.transaction,
+        {
+          mem_tx_id: extensionTransactionForSign.value.mem_tx_id,
+        }
       );
+      store.commit('extensions/SET_TRANSACTION_FOR_SIGN', null, { root: true });
     };
 
     const closeSignMessageModal = () => {
@@ -806,10 +806,20 @@ export default {
             derivationPath: signerWallet.value.derivationPath,
           }
         );
+
+        const ress = await signTxByPrivateKey(
+          { json: messageForSign.value.message },
+          await signerWallet.value.getPrivateKeyDecoded(password.value)
+        );
+
         if (!signResult.error) {
           sendMSG(
             signResult.data.signature,
-            extensionsSocketTypes.types.message
+            extensionsSocketTypes.types.message,
+            {
+              base64signature: ress.tx.signatures[0],
+              signature: signResult.data.signature,
+            }
           );
           showSuccessNotify();
         } else {
@@ -1102,10 +1112,6 @@ export default {
           successTx.value = result.data;
           confirmModalCloseHandler();
           showSuccessModal.value = true;
-          sendMSG(
-            extensionsSocketTypes.messages.success,
-            extensionsSocketTypes.types.transaction
-          );
         } else {
           signLoading.value = false;
           confirmModalDisabled.value = false;
