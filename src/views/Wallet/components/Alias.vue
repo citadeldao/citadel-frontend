@@ -239,6 +239,7 @@ export default {
     const toggleFavorite = async () => {
       if (isFavorite.value) {
         await removeFromFavorite();
+        store.dispatch('wallets/setFavouriteFlag', true);
       } else {
         await addToFavorite();
       }

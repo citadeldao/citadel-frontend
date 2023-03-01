@@ -670,12 +670,15 @@ export default {
       password.value = '';
       signLoading.value = false;
       confirmPassword.value = false;
-      store.commit('extensions/SET_TRANSACTION_FOR_SIGN', null, { root: true });
 
       sendMSG(
         extensionsSocketTypes.messages.canceled,
-        extensionsSocketTypes.types.transaction
+        extensionsSocketTypes.types.transaction,
+        {
+          mem_tx_id: extensionTransactionForSign.value.mem_tx_id,
+        }
       );
+      store.commit('extensions/SET_TRANSACTION_FOR_SIGN', null, { root: true });
     };
 
     const closeSignMessageModal = () => {

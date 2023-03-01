@@ -62,7 +62,7 @@ export default {
         debug: JSON.parse(process.env.VUE_APP_DEBUG_LIB),
         appURL: process.env.VUE_APP_BACKEND_URL_APPS,
         socketURL: process.env.VUE_APP_BACKEND_WS_URL,
-        backendApiVersion: '1.1.0',
+        backendApiVersion: process.env.VUE_APP_API_VERSION,
       });
 
       // for tests
