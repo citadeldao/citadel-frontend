@@ -1479,6 +1479,7 @@
             "variant2": "Ledger Error: Please open {rightApp} app on the Ledger!"
         },
         "201": "Ledger Error: Transaction has been rejected",
+        "202": "Ledger Error: Reconnect your device",
         "901": "Unknown error"
     },
     "minBalanceNote": "At least {amount} should be remained on your balance to keep receiving your staking rewards. Otherwise rewards will be burnt."
