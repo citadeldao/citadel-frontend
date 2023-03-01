@@ -95,10 +95,18 @@ export default class MetamaskConnector {
       try {
         return await Promise.all(
           txs.map(async (tx) => {
-            return await window.ethereum.request({
+            const txHash = await window.ethereum.request({
               method: 'eth_sendTransaction',
               params: [tx],
             });
+            if (txHash?.length > 0 && memTxId) {
+              store.dispatch('extensions/putMempoolChangeStatus', {
+                hash: txHash,
+                mempool_id: memTxId,
+              });
+            }
+
+            return txHash;
           })
         );
       } catch (err) {
