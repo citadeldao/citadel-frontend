@@ -106,125 +106,133 @@
       </a>
     </div>
     <!-- Информация по сетке(цены на бирже) -->
-    <el-skeleton :rows="2" animated :loading="priceLoading" v-if="priceLoading" />
-    <div class="network-info__info" v-else>
-      <span class="network-info__info-title"> {{ $t('tokenPrice') }} </span>
-      <div class="network-info__info-price">
-        <div class="network-info__info-usd-price">
-          <span class="network-info__usd-prise">
-            <span class="network-info__usd-currency">$</span>
-            <span
-              v-pretty-number="{ value: marketcap?.priceUsd, currency: 'USD' }"
-            />
-          </span>
-          <div class="network-info__info-price-change">
-            <span
-              class="network-info__info-price-change-value"
-              :class="{ decrease: usdDecriase }"
-              ><span
+    <el-skeleton :rows="6" animated :loading="priceLoading" v-if="priceLoading" />
+    <div v-else>
+      <div class="network-info__info">
+        <span class="network-info__info-title"> {{ $t('tokenPrice') }} </span>
+        <div class="network-info__info-price">
+          <div class="network-info__info-usd-price">
+            <span class="network-info__usd-prise">
+              <span class="network-info__usd-currency">$</span>
+              <span
                 v-pretty-number="{
-                  value: marketcap?.priceUsdDelta24pct,
-                  currency: '%',
+                  value: marketcap?.priceUsd,
+                  currency: 'USD',
                 }"
               />
-              <span class="network-info__info-price-change-percent">%</span>
             </span>
-            <priceDown v-if="usdDecriase" />
-            <priceUp v-else />
+            <div class="network-info__info-price-change">
+              <span
+                class="network-info__info-price-change-value"
+                :class="{ decrease: usdDecriase }"
+                ><span
+                  v-pretty-number="{
+                    value: marketcap?.priceUsdDelta24pct,
+                    currency: '%',
+                  }"
+                />
+                <span class="network-info__info-price-change-percent">%</span>
+              </span>
+              <priceDown v-if="usdDecriase" />
+              <priceUp v-else />
+            </div>
           </div>
-        </div>
-        <div class="network-info__info-btc-price">
-          <span class="network-info__btc-prise">
-            <span
-              v-pretty-number="{ value: marketcap?.priceBtc, currency: 'BTC' }"
-            />
-            <span class="network-info__btc-currency">BTC</span>
-          </span>
-          <div class="network-info__info-price-change">
-            <span
-              class="network-info__info-price-change-value"
-              :class="{ decrease: btcDecriase }"
-              ><span
+          <div class="network-info__info-btc-price">
+            <span class="network-info__btc-prise">
+              <span
                 v-pretty-number="{
-                  value: marketcap?.priceBtcDelta24pct,
-                  currency: '%',
+                  value: marketcap?.priceBtc,
+                  currency: 'BTC',
                 }"
               />
-              <span class="network-info__info-price-change-percent">%</span>
+              <span class="network-info__btc-currency">BTC</span>
             </span>
-            <priceDown v-if="btcDecriase" />
-            <priceUp v-else />
+            <div class="network-info__info-price-change">
+              <span
+                class="network-info__info-price-change-value"
+                :class="{ decrease: btcDecriase }"
+                ><span
+                  v-pretty-number="{
+                    value: marketcap?.priceBtcDelta24pct,
+                    currency: '%',
+                  }"
+                />
+                <span class="network-info__info-price-change-percent">%</span>
+              </span>
+              <priceDown v-if="btcDecriase" />
+              <priceUp v-else />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <!-- Дополнительная информация по сетке -->
-    <div class="network-info__additional">
-      <div v-if="apy" class="network-info__additional-info-line">
-        <span class="network-info__additional-info-title">
-          APY
-          <Tooltip>
-            <template #content>
-              <span :style="{ maxWidth: '200px', display: 'flex' }">
-                {{ $t('netInfoGeneral.apyTooltip') }}
-              </span>
-            </template>
-            <template #default>
-              <info />
-            </template>
-          </Tooltip>
-        </span>
-        <div class="network-info__additional-info-white-space" />
-        <span class="network-info__additional-info-value">
-          <span v-pretty-number="{ value: apy, currency: '%' }" />
-          <span class="network-info__additional-info-percent"> % </span>
-        </span>
+      <!-- Дополнительная информация по сетке -->
+      <div class="network-info__additional">
+        <div v-if="apy" class="network-info__additional-info-line">
+          <span class="network-info__additional-info-title">
+            APY
+            <Tooltip>
+              <template #content>
+                <span :style="{ maxWidth: '200px', display: 'flex' }">
+                  {{ $t('netInfoGeneral.apyTooltip') }}
+                </span>
+              </template>
+              <template #default>
+                <info />
+              </template>
+            </Tooltip>
+          </span>
+          <div class="network-info__additional-info-white-space" />
+          <span class="network-info__additional-info-value">
+            <span v-pretty-number="{ value: apy, currency: '%' }" />
+            <span class="network-info__additional-info-percent"> % </span>
+          </span>
+        </div>
+        <div v-if="inflation" class="network-info__additional-info-line">
+          <span class="network-info__additional-info-title">
+            {{ $t('netInfoGeneral.inflation') }}
+            <Tooltip>
+              <template #content>
+                <span :style="{ maxWidth: '200px', display: 'flex' }">
+                  {{ $t('netInfoGeneral.inflationTooltip') }}
+                </span>
+              </template>
+              <template #default>
+                <info />
+              </template>
+            </Tooltip>
+          </span>
+          <div class="network-info__additional-info-white-space" />
+          <span class="network-info__additional-info-value">
+            <span v-pretty-number="{ value: inflation, currency: '%' }" />
+            <span class="network-info__additional-info-percent"> % </span>
+          </span>
+        </div>
+        <div v-if="stakingRatio" class="network-info__additional-info-line">
+          <span class="network-info__additional-info-title">
+            {{ $t('netInfoGeneral.staked') }}
+            <Tooltip>
+              <template #content>
+                <span :style="{ maxWidth: '200px', display: 'flex' }">
+                  {{ $t('netInfoGeneral.stakingRatioTooltip') }}
+                </span>
+              </template>
+              <template #default>
+                <info />
+              </template>
+            </Tooltip>
+          </span>
+          <div class="network-info__additional-info-white-space" />
+          <span class="network-info__additional-info-value">
+            <span v-pretty-number="{ value: stakingRatio, currency: '%' }" />
+            <span class="network-info__additional-info-percent"> % </span>
+          </span>
+        </div>
       </div>
-      <div v-if="inflation" class="network-info__additional-info-line">
-        <span class="network-info__additional-info-title">
-          {{ $t('netInfoGeneral.inflation') }}
-          <Tooltip>
-            <template #content>
-              <span :style="{ maxWidth: '200px', display: 'flex' }">
-                {{ $t('netInfoGeneral.inflationTooltip') }}
-              </span>
-            </template>
-            <template #default>
-              <info />
-            </template>
-          </Tooltip>
-        </span>
-        <div class="network-info__additional-info-white-space" />
-        <span class="network-info__additional-info-value">
-          <span v-pretty-number="{ value: inflation, currency: '%' }" />
-          <span class="network-info__additional-info-percent"> % </span>
-        </span>
+      <div class="network-info__note">
+        <p>
+          {{ tokenDescription }}
+        </p>
       </div>
-      <div v-if="stakingRatio" class="network-info__additional-info-line">
-        <span class="network-info__additional-info-title">
-          {{ $t('netInfoGeneral.staked') }}
-          <Tooltip>
-            <template #content>
-              <span :style="{ maxWidth: '200px', display: 'flex' }">
-                {{ $t('netInfoGeneral.stakingRatioTooltip') }}
-              </span>
-            </template>
-            <template #default>
-              <info />
-            </template>
-          </Tooltip>
-        </span>
-        <div class="network-info__additional-info-white-space" />
-        <span class="network-info__additional-info-value">
-          <span v-pretty-number="{ value: stakingRatio, currency: '%' }" />
-          <span class="network-info__additional-info-percent"> % </span>
-        </span>
-      </div>
-    </div>
-    <div class="network-info__note">
-      <p>
-        {{ tokenDescription }}
-      </p>
     </div>
     <teleport v-if="showModal" to="body">
       <Modal>
@@ -285,9 +293,10 @@ export default {
     },
   },
   setup(props) {
-    const currentIcon = ref();
-    const { t, te } = useI18n();
     const store = useStore();
+    const currentIcon = ref();
+
+    const { t, te } = useI18n();
 
     const tokenDescription = computed(() => {
       return props.isCurrentToken ||
