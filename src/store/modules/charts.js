@@ -2,9 +2,6 @@ import moment from 'moment';
 import notify from '@/plugins/notify';
 import citadel from '@citadeldao/lib-citadel';
 
-const ONE_DAY_MS = 86400000;
-const ONE_MONTH_DAYS_COUNT = 30;
-
 const types = {
   SET_CHART_LOADING: 'SET_CHART_LOADING',
   SET_CHART_DATA: 'SET_CHART_DATA',
@@ -103,10 +100,10 @@ export default {
 
       // If the date is not "custom" and not "all", we assign it a new value of the period by month
       if (isNotCustomDates && !periods.includes(months)) {
-        const days = months * ONE_MONTH_DAYS_COUNT;
-        const period = ONE_DAY_MS * days;
-
-        from = Number(new Date(Number(new Date()) - period));
+        const time = new Date();
+        time.setHours(0, 0, 0);
+        time.setMonth(time.getMonth() - months);
+        from = Number(time);
       }
 
       // Resetting custom period data

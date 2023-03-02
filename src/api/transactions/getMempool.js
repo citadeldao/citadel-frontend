@@ -3,7 +3,7 @@ export const getMempool = () => ({
   method: 'get',
   data: {
     params: {
-      version: '1.1.0',
+      version: process.env.VUE_APP_API_VERSION,
     },
   },
 });

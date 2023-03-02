@@ -43,8 +43,7 @@
       <div class="label">
         {{ $t('extensions.transactionData') }}
       </div>
-      <div class="show" @click="showTx = !showTx">
-        {{ $t('extensions.showLabel') }}
+      <div :class="{ open: showTx }" class="show" @click="showTx = !showTx">
         <keep-alive>
           <component
             :is="arrowDownIcon"
@@ -55,8 +54,8 @@
       </div>
     </div>
     <div class="item-tx">
-      <pre v-if="showTx && extensionTransactionForSign?.transaction">
-        {{
+      <!--eslint-disable-next-line-->
+      <pre v-if="showTx && extensionTransactionForSign?.transaction">{{
           extensionTransactionForSign.messageScrt ||
           extensionTransactionForSign.transaction?.json ||
           extensionTransactionForSign.transaction
@@ -127,7 +126,7 @@ export default {
       emit('changePassword', val);
     };
 
-    import(`@/assets/icons/extensions/arrow_down.svg`).then((val) => {
+    import(`@/assets/icons/extensions/arrow_up.svg`).then((val) => {
       arrowDownIcon.value = markRaw(val.default);
     });
 
@@ -223,22 +222,27 @@ export default {
 
   .arrow-icon {
     &.open {
-      transform: rotate(180deg);
+      transform: rotate(0deg);
     }
   }
 
   .show {
-    z-index: 0;
-    color: #6b93c0;
-    border-bottom: 1px dotted #6b93c0;
-    text-transform: lowercase;
+    width: 32px;
+    height: 32px;
+    background: #6a4bff;
+    border-radius: 4px;
     cursor: pointer;
     display: flex;
+    justify-content: center;
     align-items: center;
 
+    &.open {
+      background: #4f70cf;
+    }
+
     svg {
-      margin-top: 2px;
-      margin-left: 4px;
+      transform: rotate(90deg);
+      fill: $white !important;
     }
   }
 

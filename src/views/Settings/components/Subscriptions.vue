@@ -13,7 +13,7 @@
           :value="subscriptions.rewardsDigest"
           :label="$t('settings.subscriptions.rewardsDigest')"
           :info="$t('settings.subscriptions.rewardsDigestTooltip')"
-          :disabled="isDisabled.rewardsDigest"
+          :disabled="profileInfo.login ? isDisabled.rewardsDigest : true"
           @change="changeSubscriptionState('rewardsDigest')"
         />
 
@@ -22,7 +22,7 @@
           :value="subscriptions.newsletter"
           :label="$t('settings.subscriptions.newsletter')"
           :info="$t('settings.subscriptions.newsletterTooltip')"
-          :disabled="isDisabled.newsletter"
+          :disabled="profileInfo.login ? isDisabled.newsletter : true"
           @change="changeSubscriptionState('newsletter')"
         />
       </div>
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 import Checkbox from '@/components/UI/Checkbox';
@@ -56,7 +56,9 @@ export default {
       newsletter: false,
     });
 
-    if (store.getters['profile/info'].login) {
+    const profileInfo = computed(() => store.getters['profile/info']);
+
+    if (profileInfo.value.login) {
       store.dispatch('subscriptions/getSubscriptions').then(() => {
         subscriptions.value = store.getters['subscriptions/subscriptions'];
       });
@@ -90,6 +92,7 @@ export default {
     };
 
     return {
+      profileInfo,
       subscriptions,
       isDisabled,
       changeSubscriptionState,

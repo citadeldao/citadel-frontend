@@ -41,6 +41,8 @@ if (process.env.VUE_APP_SENTRY_DSN) {
       'Operation not allowed',
       'code, message, stack',
       'Non-Error promise',
+      'ebfidpplhabeedpnhjnobghokpiioolj',
+      'pmmbeeacafhbpgmlkacpadheejlhhkbf',
     ],
     environment: process.env.NODE_ENV,
     tracesSampleRate: 0.3,
