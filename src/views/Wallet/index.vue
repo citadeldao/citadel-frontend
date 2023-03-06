@@ -176,33 +176,6 @@
           @changeComment="onChangeComment"
           @success="successClickHandler"
         />
-        <!-- <ModalContent
-          v-else-if="showClaimSuccessModal"
-          v-click-away="claimModalCloseHandler"
-          title="Success"
-          :desc="$t('txWaitTitle')"
-          button-text="ok"
-          type="success"
-          icon="success"
-          @close="claimModalCloseHandler"
-          @buttonClick="successClickHandler"
-        >
-          <SuccessModalContent
-            v-model:txComment="txComment"
-            :to="currentToken ? '' : currentWallet.address"
-            :wallet="currentToken || currentWallet"
-            :amount="
-              currentToken
-                ? totalAmount
-                : currentWallet.balance.claimableRewards
-            "
-            :tx-hash="txHash"
-            :show-from="false"
-            type="reward"
-            :fee="mode === 'claim' ? claimFee : fee"
-          />
-        </ModalContent> -->
-
         <!--Confirm Ledger Modals-->
         <ConnectLedgerModal
           v-else-if="showConnectLedgerModal"
