@@ -402,7 +402,8 @@ export default {
         );
       }
 
-      if (currentAppInfo?.value?.token || selectedApp.value.citadelApp) {
+      if (selectedApp.value.id) {
+        // (currentAppInfo?.value?.token || selectedApp.value.citadelApp) {
         const nets = selectedApp.value.networks.map((net) => {
           return net.toLowerCase();
         });
