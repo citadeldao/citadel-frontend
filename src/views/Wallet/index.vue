@@ -163,7 +163,20 @@
             @submitSend="claim"
           />
         </ModalContent>
-        <ModalContent
+        <ClaimSuccess
+          v-else-if="showClaimSuccessModal"
+          :claim-modal-close-handler="claimModalCloseHandler"
+          :fee="fee"
+          :claim-fee="claimFee"
+          :current-token="currentToken"
+          :current-wallet="currentWallet"
+          :total-amount="totalAmount"
+          :mode="mode"
+          :tx-hash="txHash"
+          @changeComment="onChangeComment"
+          @success="successClickHandler"
+        />
+        <!-- <ModalContent
           v-else-if="showClaimSuccessModal"
           v-click-away="claimModalCloseHandler"
           title="Success"
@@ -188,7 +201,7 @@
             type="reward"
             :fee="mode === 'claim' ? claimFee : fee"
           />
-        </ModalContent>
+        </ModalContent> -->
 
         <!--Confirm Ledger Modals-->
         <ConnectLedgerModal
@@ -231,7 +244,6 @@
 <script>
 import BalanceAndPledged from './components/BalanceAndPledged.vue';
 import XCTCalculator from './components/XCTCalculator';
-import SuccessModalContent from './views/Send/components/SuccessModalContent.vue';
 import ActionModalContent from './views/Stake/components/ActionModalContent.vue';
 import ModalContent from '@/components/ModalContent';
 import AliasQrCard from './components/AliasQrCard';
@@ -264,6 +276,7 @@ import useApi from '@/api/useApi';
 import { keplrNetworks } from '@/config/availableNets';
 import ClaimModal from './views/components/ClaimModal';
 import ClaimModalXCT from './views/components/ClaimModalXCT';
+import ClaimSuccess from './views/components/ClaimSuccess';
 
 export default {
   name: 'Wallet',
@@ -276,7 +289,6 @@ export default {
     Modal,
     ModalContent,
     ActionModalContent,
-    SuccessModalContent,
     XCTCalculator,
     ConfirmLedgerModal,
     ConnectLedgerModal,
@@ -289,6 +301,7 @@ export default {
     KiChainStub,
     ClaimModal,
     ClaimModalXCT,
+    ClaimSuccess,
   },
   setup() {
     const { t } = useI18n();
@@ -451,6 +464,11 @@ export default {
     const resRawTxs = ref();
     const txComment = ref('');
     const adding = ref();
+
+    const onChangeComment = (comment) => {
+      txComment.value = comment;
+    };
+
     const prepareClaim = async () => {
       if (isLoading.value) {
         return;
@@ -1178,6 +1196,7 @@ export default {
       adding,
       ktAddresses,
       mode,
+      onChangeComment,
     };
   },
 };
