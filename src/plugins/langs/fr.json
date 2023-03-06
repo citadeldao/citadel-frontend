@@ -868,6 +868,7 @@
         "inflation": "Inflation",
         "inflationTooltip": "Pour l'inflation (inflation du réseau), nous prenons en compte tous les jetons nouvellement émis et tous les fonds de réserve qui sont distribués comme récompenses",
         "priceChart": " graphique des prix",
+        "apy": "APY",
         "apyTooltip": "Le rendement annuel en pourcentage est compté dans l’Inflation du staking / staké",
         "stakingRatioTooltip": "Pourcentage de jetons éligibles qui sont stakés",
         "dayTradingVol": "Volume trading 24 heures",

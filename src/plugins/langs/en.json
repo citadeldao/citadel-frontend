@@ -878,6 +878,7 @@
         "inflation": "Inflation",
         "inflationTooltip": "For the Inflation (Network Inflation) we take into account all newly-minted tokens & all reserve-funds that are being distributed as rewards",
         "priceChart": " price chart",
+        "apy": "APY",
         "apyTooltip": "Annual Percentage Yield is counted as Staking Inflation / Staked",
         "stakingRatioTooltip": "Percentage of eligible tokens that are being staked",
         "dayTradingVol": "24 hour trading vol",

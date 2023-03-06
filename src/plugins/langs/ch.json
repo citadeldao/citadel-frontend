@@ -868,6 +868,7 @@
         "inflation": "通胀率",
         "inflationTooltip": "为解决通胀（网络通货膨胀），我们考虑将所有新铸代币和储备资金作为奖励分配。",
         "priceChart": "价格表",
+        "apy": "APY",
         "apyTooltip": "年收益率百分比（APY）的计算为 质押通膨 / 质押金额",
         "stakingRatioTooltip": "已质押的符合条件代币的百分比",
         "dayTradingVol": "24小时交易量",
