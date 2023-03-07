@@ -377,9 +377,9 @@ export default {
       hideArtefactsForFullScreen();
 
       if (!selectedApp.value.citadelApp) {
-        await store.dispatch('extensions/fetchExtensionInfo', {
-          appId: selectedApp.value.id,
-        });
+        // await store.dispatch('extensions/fetchExtensionInfo', {
+        //   appId: selectedApp.value.id,
+        // });
       }
 
       const nets = selectedApp.value.networks.map((net) => {
