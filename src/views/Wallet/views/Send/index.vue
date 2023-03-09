@@ -413,29 +413,29 @@
           @close="errorCloseHandler"
           @buttonClick="errorClickHandler"
         />
-        <!--Success Modal -->
-        <ModalContent
-          v-if="showSuccessModal && !txError"
-          v-click-away="successCloseHandler"
-          title="Success"
-          desc="The transaction is in progress"
-          button-text="ok"
-          type="success"
-          icon="success"
-          @close="successCloseHandler"
-          @buttonClick="successClickHandler"
-        >
-          <SuccessModalContent
-            v-model:txComment="txComment"
-            :to="toAddress"
-            :wallet="currentWallet"
-            :amount="amount"
-            :fee="fee.fee"
-            type="transfer"
-            :tx-hash="txHash"
-          />
-        </ModalContent>
       </template>
+      <!--Success Modal -->
+      <ModalContent
+        v-if="showSuccessModal && !txError && !isLoading"
+        v-click-away="successCloseHandler"
+        title="Success"
+        desc="The transaction is in progress"
+        button-text="ok"
+        type="success"
+        icon="success"
+        @close="successCloseHandler"
+        @buttonClick="successClickHandler"
+      >
+        <SuccessModalContent
+          v-model:txComment="txComment"
+          :to="toAddress"
+          :wallet="currentWallet"
+          :amount="amount"
+          :fee="fee.fee"
+          type="transfer"
+          :tx-hash="txHash"
+        />
+      </ModalContent>
     </Modal>
   </teleport>
 </template>
@@ -584,6 +584,10 @@ export default {
     );
     const keplrConnector = computed(
       () => store.getters['keplr/keplrConnector']
+    );
+
+    const txFromMempool = computed(
+      () => store.getters['transactions/txFromMempool']
     );
 
     const currentWalletType = computed(() => {
@@ -744,6 +748,26 @@ export default {
       dataLoaded.value = false;
     };
     loadData();
+
+    watch(
+      () => txFromMempool.value,
+      (newV) => {
+        const tx = Object.assign({}, newV);
+        if (
+          loadingSign.value &&
+          props.currentWallet.address?.toLowerCase() ===
+            tx.holder?.toLowerCase()
+        ) {
+          showModal.value = true;
+          showConfirmModal.value = false;
+          isLoading.value = false;
+          loadingSign.value = false;
+          showSuccessModal.value = true;
+          txHash.value = [tx.hash];
+        }
+        store.dispatch('transactions/resetMempoolTx');
+      }
+    );
 
     watch(
       () => props.currentWallet,
