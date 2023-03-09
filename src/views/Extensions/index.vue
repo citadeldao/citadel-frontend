@@ -432,14 +432,13 @@ export default {
           });
         }
 
-        selectedApp.value.url += `?token=${currentAppInfo.value?.token}`; // &wallets=${JSON.stringify(wallets)}
-        currentApp.value = selectedApp.value;
-
         const res = await store.dispatch('extensions/getExtensionTokenAuth', {
           extensionId: selectedApp.value.id,
           wallets,
         });
-        console.log('>>>>>', res);
+
+        selectedApp.value.url += `?token=${res?.data?.token}`; // &wallets=${JSON.stringify(wallets)}
+        currentApp.value = selectedApp.value;
       }
     };
 
