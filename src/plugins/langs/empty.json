@@ -1466,7 +1466,14 @@
     "minAmountError": "",
     "errors": {
         "notEnoughFounds": "",
-        "notAvailableToStake": ""
+        "notAvailableToStake": "",
+        "200": {
+            "variant1": "",
+            "variant2": ""
+        },
+        "201": "",
+        "202": "",
+        "901": ""
     },
     "minBalanceNote": ""
 }

@@ -1470,7 +1470,15 @@
     "addComment": "Ajouter un commentaire",
     "editComment": "Modifier le commentaire",
     "errors": {
-        "notEnoughFounds": "Pas assez de {code} pour payer les frais de transaction"
+        "notEnoughFounds": "Pas assez de {code} pour payer les frais de transaction",
+        "notAvailableToStake": "",
+        "200": {
+            "variant1": "",
+            "variant2": ""
+        },
+        "201": "",
+        "202": "",
+        "901": ""
     },
     "copyToClipboardTitle": "Copie de la clé de visualisation",
     "showHideKeyTitle": "Afficher / Masquer la clé de visualisation",
