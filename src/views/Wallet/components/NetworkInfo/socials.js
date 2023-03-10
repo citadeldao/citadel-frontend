@@ -761,4 +761,18 @@ export default {
       href: 'https://www.coingecko.com/en/coins/kujira',
     },
   },
+  provenance: {
+    web: {
+      title: 'provenance.io',
+      href: 'https://www.provenance.io/',
+    },
+    twitter: {
+      title: '@provenancefdn',
+      href: 'provenancefdn',
+    },
+    // landing: {
+    //   title: 'Coingecko',
+    //   href: 'https://www.coingecko.com/en/coins/kujira',
+    // },
+  },
 };

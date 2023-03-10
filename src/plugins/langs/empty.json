@@ -1308,6 +1308,11 @@
             "title": "Kujira",
             "description": "",
             "shortDescription": ""
+        },
+        "provenance":{
+            "title": "Provenance",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "",
