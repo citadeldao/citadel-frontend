@@ -53,6 +53,7 @@ import CryptoCoinQUICKSILVER from './CryptoCoins/CryptoCoinQUICKSILVER';
 import CryptoCoinAVALANCHE from './CryptoCoins/CryptoCoinAVALANCHE';
 import CryptoCoinKUJIRA from './CryptoCoins/CryptoCoinKUJIRA';
 import CryptoCoinPROVENANCE from './CryptoCoins/CryptoCoinPROVENANCE';
+import CryptoCoinSUI from './CryptoCoins/CryptoCoinSUI';
 
 export default {
   // nets
@@ -111,4 +112,5 @@ export default {
   AVALANCHE: CryptoCoinAVALANCHE,
   KUJIRA: CryptoCoinKUJIRA,
   PROVENANCE: CryptoCoinPROVENANCE,
+  SUI: CryptoCoinSUI,
 };

@@ -1313,6 +1313,11 @@
             "title": "Provenance",
             "description": "",
             "shortDescription": ""
+        },
+        "sui":{
+            "title": "Sui",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "",

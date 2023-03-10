@@ -1324,6 +1324,11 @@
             "title": "Provenance",
             "description": "Provenance is a public, permissionless PoS blockchain built with Cosmos SDK and designed for financial service industries.",
             "shortDescription": "Provenance is a public, permissionless PoS blockchain for financial services."
+        },
+        "sui":{
+            "title": "Sui",
+            "description": "Sui is a permissionless L1 PoS blockchain that aims to provide high throughput at low costs and instant settlement while serving next gen dApps.",
+            "shortDescription": "Sui is a L1 PoS blockchain that aims to serve the next gen dApps."
         }
     },
     "uptime": "Uptime",
