@@ -10,488 +10,803 @@
       >
         <div class="policy">
           <h1>Privacy policy</h1>
+          <br />
           <p>
-            <b style="color: #59779a">Last updated: </b>
-            <b style="color: #6a4bff">June 16, 2020</b>
+            Citadel.one Ltd (<span class="bold">“Citadel.one”</span>,
+            <span class="bold">“we”</span>, <span class="bold">“our”</span> or
+            <span class="bold">“us”</span>) collects information about you from
+            various sources to provide the Services to you, to protect our
+            legitimate interests, to analyze and improve our Services, to
+            communicate with you, and to comply with our legal and regulatory
+            obligations. This Privacy Policy (<span class="bold"
+              >“Privacy Policy”</span
+            >) covers our treatment of the personally identifiable information
+            that we gather when you access or use our Services.
           </p>
-          <p style="margin-bottom: 16px">
-            This Privacy Policy describes Our policies and procedures on the
-            collection, use and disclosure of Your information when You use the
-            Service and tells You about Your privacy rights and how the law
-            protects You. We use Your Personal data to provide and improve the
-            Service. By using the Service, You agree to the collection and use
-            of information in accordance with this Privacy Policy.
-          </p>
-          <h2>Interpretation and Definitions</h2>
-          <h3>Interpretation</h3>
+          <br />
           <p>
-            The words of which the initial letter is capitalized have meanings
-            defined under the following conditions.
+            From time to time, we may revise or amend this Privacy Policy to
+            reflect changes in law, our Personal Data collection and use
+            practices, the features of the Services, or advances in technology.
+            This Privacy Policy does not cover the practices of entities we do
+            not own or control, or people we do not manage.
           </p>
+          <br />
           <p>
-            The following definitions shall have the same meaning regardless of
-            whether they appear in singular or in plural.
+            Our Privacy Policy applies to all Services we offer, but excludes
+            any products, applications or services that have separate privacy
+            policies which do not incorporate this Privacy Policy. For the
+            purposes of data protection laws of the European Union (<span
+              class="bold"
+              >“EU”</span
+            >), and other relevant jurisdictions where Customers are located
+            (<span class="bold">“Data Protection Laws”</span>), Citadel.one is a
+            data controller (i.e., the company who is responsible for, and
+            controls the processing of, your Personal Data).
           </p>
-          <h3>Definitions</h3>
-          <h4>For the purposes of this Privacy Policy:</h4>
-          <ul>
-            <li>
-              <p>
-                <span class="bold">You</span> means the individual accessing or
-                using the Service, or the company, or other legal entity on
-                behalf of which such individual is accessing or using the
-                Service, as applicable.
-              </p>
-            </li>
-            <li>
-              <p>
-                <span class="bold">Company</span> (referred to as either "the
-                Company", "We", "Us" or "Our" in this Agreement) refers to
-                Citadel.One Pte. Ltd., Intershore Chambers, P.O. Box 4342, Road
-                Town, Tortola, British Virgin Islands.
-              </p>
-            </li>
-            <li>
-              <p>
-                <span class="bold">Affiliate</span> means an entity that
-                controls, is controlled by or is under common control with a
-                party, where "control" means ownership of 50% or more of the
-                shares, equity interest or other securities entitled to vote for
-                election of directors or other managing authority.
-              </p>
-            </li>
-            <li>
-              <p>
-                <span class="bold">Account</span> means a unique account created
-                for You to access our Service or parts of our Service.
-              </p>
-            </li>
-            <li>
-              <p>
-                <span class="bold">Website</span> refers to https://citadel.one
-              </p>
-            </li>
-            <li>
-              <p><span class="bold">Service</span> refers to the Website.</p>
-            </li>
-            <li>
-              <p>
-                <span class="bold">Country</span> refers to: British Virgin
-                Islands
-              </p>
-            </li>
-            <li>
-              <p>
-                <span class="bold">Service Provider</span> means any natural or
-                legal person who processes the data on behalf of the Company. It
-                refers to third-party companies or individuals employed by the
-                Company to facilitate the Service, to provide the Service on
-                behalf of the Company, to perform services related to the
-                Service or to assist the Company in analyzing how the Service is
-                used.
-              </p>
-            </li>
-            <li>
-              <p>
-                <span class="bold">Third-party Social Media Service</span>
-                refers to any website or any social network website through
-                which a User can log in or create an account to use the Service.
-              </p>
-            </li>
-            <li>
-              <p>
-                <span class="bold">Personal Data</span> is any information that
-                relates to an identified or identifiable individual.
-              </p>
-            </li>
-            <li>
-              <p>
-                <span class="bold">Cookies</span> are small files that are
-                placed on Your computer, mobile device or any other device by a
-                website, containing the details of Your browsing history on that
-                website among its many uses.
-              </p>
-            </li>
-            <li>
-              <p>
-                <span class="bold">Device</span> means any device that can
-                access the Service such as a computer, a cellphone or a digital
-                tablet.
-              </p>
-            </li>
-            <li>
-              <p>
-                <span class="bold">Usage Data</span> refers to data collected
-                automatically, either generated by the use of the Service or
-                from the Service infrastructure itself (for example, the
-                duration of a page visit).
-              </p>
-            </li>
-          </ul>
-          <h2>Collecting and Using Your Personal Data</h2>
-          <h3>Types of Data Collected</h3>
-          <h4>Personal Data</h4>
+          <br />
           <p>
-            While using Our Service, We may ask You to provide Us with certain
-            personally identifiable information that can be used to contact or
-            identify You. Personally identifiable information may include, but
-            is not limited to:
+            The access and/or use of our Services implies acceptance of this
+            Privacy Policy as well as the conditions and provisions included in
+            the Terms of Use. The terms used in this Privacy Policy shall have
+            the same meanings as in the Terms of Use except as otherwise
+            provided herein. For the avoidance of doubt the term
+            <span class="bold">“Services”</span> shall include the Website
+            <a
+              style="text-decoration: none; color: #00a3ff; font-weight: 600"
+              href="https://citadel.one"
+              target="_blank"
+              >https://citadel.one</a
+            >, the Platform and the services provided by Citadel.one as defined
+            in the Terms of Use.
           </p>
-          <ul>
-            <li>Email address</li>
-            <li>Usage Data</li>
-          </ul>
-          <h4>Usage Data</h4>
-          <p>Usage Data is collected automatically when using the Service.</p>
+          <br />
+          <h2>What data we collect</h2>
           <p>
-            Usage Data may include information such as Your Device's Internet
-            Protocol address (e.g. IP address), browser type, browser version,
-            the pages of our Service that You visit, the time and date of Your
-            visit, the time spent on those pages, unique device identifiers and
-            other diagnostic data.
-          </p>
-          <p>
-            When You access the Service by or through a mobile device, We may
-            collect certain information automatically, including, but not
-            limited to, the type of mobile device You use, Your mobile device
-            unique ID, the IP address of Your mobile device, Your mobile
-            operating system, the type of mobile Internet browser You use,
-            unique device identifiers and other diagnostic data.
-          </p>
-          <p>
-            We may also collect information that Your browser sends whenever You
-            visit our Service or when You access the Service by or through a
-            mobile device.
-          </p>
-          <h4>Tracking Technologies and Cookies</h4>
-          <p>
-            We use Cookies and similar tracking technologies to track the
-            activity on Our Service and store certain information. Tracking
-            technologies used are beacons, tags, and scripts to collect and
-            track information and to improve and analyze Our Service.
-          </p>
-          <p>
-            You can instruct Your browser to refuse all Cookies or to indicate
-            when a Cookie is being sent. However, if You do not accept Cookies,
-            You may not be able to use some parts of our Service.
-          </p>
-          <p>
-            Cookies can be "Persistent" or "Session" Cookies. Persistent Cookies
-            remain on your personal computer or mobile device when You go
-            offline, while Session Cookies are deleted as soon as You close your
-            web browser. Learn more about cookies here: Cookies: What Do They
-            Do?
-          </p>
-          <p>
-            We use both session and persistent Cookies for the purposes set out
-            below:
+            To the fullest extent permitted under applicable Data Protection
+            Laws, we may collect the following data and information
+            (collectively, <span class="bold">“Personal Data”</span>):
           </p>
           <ul>
             <li>
-              <h4 class="bold">Necessary / Essential Cookies</h4>
-              <p>Type: <b class="type">Session Cookies</b></p>
-              <p>Administered by: <b class="administered">Us</b></p>
               <p>
-                Purpose: These Cookies are essential to provide You with
-                services available through the Website and to enable You to use
-                some of its features. They help to authenticate users and
-                prevent fraudulent use of user accounts. Without these Cookies,
-                the services that You have asked for cannot be provided, and We
-                only use these Cookies to provide You with those services.
+                Full name, country of residence, username, and data included in
+                government-issued identification documents;
+              </p>
+            </li>
+            <li><p>Distributed ledger network wallet addresses;</p></li>
+            <li>
+              <p>
+                Information about how you access and use our Services, such as
+                your actions on the Services, including your interactions with
+                others on the Services, photos or media you upload to the
+                Services, your username, and other User Content you provide.
               </p>
             </li>
             <li>
-              <h4 class="bold">Cookies Policy / Notice Acceptance Cookies</h4>
-              <p>Type: <b class="type">Persistent Cookies</b></p>
-              <p>Administered by: <b class="administered">Us</b></p>
               <p>
-                Purpose: These Cookies identify if users have accepted the use
-                of cookies on the Website.
+                Communications between Citadel.one and you including emails,
+                social media messages, job applications, customer support
+                inquiries;
               </p>
             </li>
             <li>
-              <h4 class="bold">Functionality Cookies</h4>
-              <p>Type: <b class="type">Persistent Cookies</b></p>
-              <p>Administered by: <b class="administered">Us</b></p>
               <p>
-                Purpose: These Cookies allow us to remember choices You make
-                when You use the Website, such as remembering your login details
-                or language preference. The purpose of these Cookies is to
-                provide You with a more personal experience and to avoid You
-                having to re-enter your preferences every time You use the
-                Website.
+                Current and historical information concerning your geographic
+                location, GPS location, transaction location, and IP addresses
+                that you use when you use and/or access our Services. We may use
+                third-party services such as the Google Maps API to gather
+                information about your location. Google uses various
+                technologies to determine your location, including IP address,
+                GPS, and other sensors that may, for example, provide Google
+                with information on nearby devices, Wi-Fi access points, and
+                cell towers (see Google’s
+                <a
+                  style="
+                    text-decoration: none;
+                    color: #00a3ff;
+                    font-weight: 600;
+                  "
+                  href="https://policies.google.com/privacy"
+                  target="_blank"
+                  >Privacy Policy</a
+                >
+                to learn more);
               </p>
             </li>
             <li>
-              <h4 class="bold">Tracking and Performance Cookies</h4>
-              <p>Type: <b class="type">Persistent Cookies</b></p>
-              <p>Administered by: <b class="administered">Third-Parties</b></p>
               <p>
-                Purpose: These Cookies are used to track information about
-                traffic to the Website and how users use the Website. The
-                information gathered via these Cookies may directly or
-                indirectly identify you as an individual visitor. This is
-                because the information collected is typically linked to a
-                pseudonymous identifier associated with the device you use to
-                access the Website. We may also use these Cookies to test new
-                advertisements, pages, features or new functionality of the
-                Website to see how our users react to them.
+                Information about your device and its software, such as your IP
+                address, browser type, Internet service provider, platform type,
+                device type, operating system, date and time stamp, a unique ID
+                (that allows us to uniquely identify your browser, mobile
+                device, or your account), and other similar information.
               </p>
             </li>
           </ul>
+          <br />
           <p>
-            For more information about the cookies we use and your choices
-            regarding cookies, please visit our Cookies Policy.
+            We may monitor, record, and store your personal information in order
+            to protect your safety or the safety of other users, comply with
+            relevant laws, to assist with regulatory or law enforcement efforts,
+            to protect and defend our rights and property, or for other reasons
+            relating to our provision of the Services. By using the Services,
+            you consent to the recording, storage, and disclosure of such
+            information you send or receive for these purposes. For the
+            avoidance of doubt, Citadel.one will never store passwords, private
+            keys, or seed phrases of Non-Custodial Wallets created by Users
+            through our Services.
           </p>
-          <h3>Use of Your Personal Data</h3>
-          <p>The Company may use Personal Data for the following purposes:</p>
-          <ul>
-            <li>
-              <span class="bold">To provide and maintain our Service</span>,
-              including to monitor the usage of our Service.
-            </li>
-            <li>
-              <span class="bold">To manage Your Account</span>: to manage Your
-              registration as a user of the Service. The Personal Data You
-              provide can give You access to different functionalities of the
-              Service that are available to You as a registered user.
-            </li>
-            <li>
-              <span class="bold">For the performance of a contract</span>: the
-              development, compliance and undertaking of the purchase contract
-              for the products, items or services You have purchased or of any
-              other contract with Us through the Service.
-            </li>
-            <li>
-              <span class="bold">To contact You</span>: To contact You by email,
-              telephone calls, SMS, or other equivalent forms of electronic
-              communication, such as a mobile application's push notifications
-              regarding updates or informative communications related to the
-              functionalities, products or contracted services, including the
-              security updates, when necessary or reasonable for their
-              implementation.
-            </li>
-            <li>
-              <span class="bold">To provide You</span> with news, special offers
-              and general information about other goods, services and events
-              which we offer that are similar to those that you have already
-              purchased or enquired about unless You have opted not to receive
-              such information.
-            </li>
-            <li>
-              <span class="bold">To manage Your requests</span>: To attend and
-              manage Your requests to Us.
-            </li>
-          </ul>
+          <br />
           <p>
-            We may share your personal information in the following situations:
+            The Services are not available to anyone under the age of eighteen
+            (18) (<span class="bold">“Minors”</span>). Citadel.one will never
+            knowingly and intentionally collect Personal Data from Minors. If
+            you are a parent or guardian of a Minor and you believe or are aware
+            that a Minor has provided us with Personal Data, please contact us
+            immediately. If we become aware that we have collected Personal Data
+            from Minors with or without verification of parental consent, we
+            will take measures to delete that information from our systems.
+          </p>
+          <br />
+          <h2>How we collect Personal Data</h2>
+          <p>
+            To the fullest extent permitted under applicable Data Protection
+            Laws, we collect Personal Data about you and any other party whose
+            details you provide to us when you:
           </p>
           <ul>
+            <li><p>Access or use our Services;</p></li>
+            <li><p>Create an account;</p></li>
             <li>
-              <span class="bold">With Service Providers</span>: We may share
-              Your personal information with Service Providers to monitor and
-              analyze the use of our Service, to contact You.
+              <p>
+                Complete online forms (including call back requests), take part
+                in surveys, post on any forums, download information such as
+                white papers or other publications or participate in any other
+                interactive areas that appear within our Services;
+              </p>
+            </li>
+            <li><p>Interact with us using social media;</p></li>
+            <li>
+              <p>
+                Provide your contact details to us when registering to use or
+                access any services we make available or when you update those
+                details; and
+              </p>
             </li>
             <li>
-              <span class="bold">For Business transfers</span>: We may share or
-              transfer Your personal information in connection with, or during
-              negotiations of, any merger, sale of Company assets, financing, or
-              acquisition of all or a portion of our business to another
-              company.
-            </li>
-            <li>
-              <span class="bold">With Affiliates</span>: We may share Your
-              information with Our affiliates, in which case we will require
-              those affiliates to honor this Privacy Policy. Affiliates include
-              Our parent company and any other subsidiaries, joint venture
-              partners or other companies that We control or that are under
-              common control with Us.
-            </li>
-            <li>
-              <span class="bold">With Business partners</span>: We may share
-              Your information with Our business partners to offer You certain
-              products, services or promotions.
-            </li>
-            <li>
-              <span class="bold">With other users</span>: when You share
-              personal information or otherwise interact in the public areas
-              with other users, such information may be viewed by all users and
-              may be publicly distributed outside. If You interact with other
-              users or register through a Third-Party Social Media Service, Your
-              contacts on the Third-Party Social Media Service may see You name,
-              profile, pictures and description of Your activity. Similarly,
-              other users will be able to view descriptions of Your activity,
-              communicate with You and view Your profile.
+              <p>Contact us or otherwise connect with us, online or offline.</p>
             </li>
           </ul>
-          <h3>Retention of Your Personal Data</h3>
+          <br />
           <p>
-            The Company will retain Your Personal Data only for as long as is
-            necessary for the purposes set out in this Privacy Policy. We will
-            retain and use Your Personal Data to the extent necessary to comply
-            with our legal obligations (for example, if we are required to
-            retain your data to comply with applicable laws), resolve disputes,
-            and enforce our legal agreements and policies.
+            We will also collect Personal Data where you only partially complete
+            and/or abandon any information inputted through our Services and/or
+            other online forms and may use this information to contact you to
+            remind you to complete any outstanding information and/or for
+            marketing purposes.
           </p>
+          <br />
           <p>
-            The Company will also retain Usage Data for internal analysis
-            purposes. Usage Data is generally retained for a shorter period of
-            time, except when this data is used to strengthen the security or to
-            improve the functionality of Our Service, or We are legally
-            obligated to retain this data for longer time periods.
+            We may also collect information from your devices (including mobile
+            devices) and applications you or your users use to access and use
+            our Services (for example, we may collect the device identification
+            number and type, location information and connection information
+            such as statistics on your page views, traffic to and from the
+            Services, referral URL, ad data, your Internet Protocol (IP)
+            address, your browsing history and your web log information) and we
+            will ask for your permission before we do so. We may do this using
+            cookies or similar technologies (as described below).
           </p>
-          <h3>Transfer of Your Personal Data</h3>
+          <br />
           <p>
-            Your information, including Personal Data, is processed at the
-            Company's operating offices and in any other places where the
-            parties involved in the processing are located. It means that this
-            information may be transferred to — and maintained on — computers
-            located outside of Your state, province, country or other
-            governmental jurisdiction where the data protection laws may differ
-            than those from Your jurisdiction.
+            If you intend to give us Personal Data about someone else, you are
+            responsible for ensuring that you comply with any obligation and
+            consent obligations under applicable Data Protections Laws. Insofar
+            as required by applicable Data Protection Laws, you must ensure that
+            beforehand you have their explicit consent to do so and that you
+            explain to them how we collect, use, disclose and retain their
+            Personal Data, or direct them to read our Privacy Policy.
           </p>
+          <br />
+          <h2>How we use your Personal Data</h2>
           <p>
-            Your consent to this Privacy Policy followed by Your submission of
-            such information represents Your agreement to that transfer.
+            To the fullest extent permitted under applicable under Data
+            Protection Laws, we use your information to:
           </p>
+          <ul>
+            <li>
+              <p>
+                Provide any information or Services that you have requested or
+                ordered;
+              </p>
+            </li>
+            <li>
+              <p>
+                Compare information for accuracy and to verify it with third
+                parties;
+              </p>
+            </li>
+            <li><p>Provide, maintain, protect and improve our Services;</p></li>
+            <li>
+              <p>
+                Manage, monitor, and administer your use of the Services and
+                provide an enhanced, personal, user experience;
+              </p>
+            </li>
+            <li>
+              <p>
+                Manage our relationship with you (for example, customer services
+                and technical support activities);
+              </p>
+            </li>
+            <li>
+              <p>
+                Undertake internal testing of the Services or systems to test
+                and improve their security and performance (in these
+                circumstances, we would de-identify any information used for
+                such testing purposes);
+              </p>
+            </li>
+            <li>
+              <p>
+                Provide you with any information that we are required to send
+                you to comply with our regulatory or legal obligations;
+              </p>
+            </li>
+            <li>
+              <p>
+                Detect, prevent, investigate or remediate, crime, illegal or
+                Prohibited Activities or to otherwise protect our legal rights
+                (including liaison with regulators and law enforcement agencies
+                for these purposes);
+              </p>
+            </li>
+            <li>
+              <p>
+                Contact you to see if you would like to take part in our
+                customer research (for example, feedback on your use of our
+                Services);
+              </p>
+            </li>
+            <li>
+              <p>
+                Monitor, carry out statistical analysis and benchmarking
+                (provided that in such circumstances it is on an aggregated
+                basis which will not be linked back to you or any living
+                individual);
+              </p>
+            </li>
+            <li>
+              <p>
+                Deliver advertising, marketing (including but not limited to
+                in-product messaging) or information which may be useful to you;
+              </p>
+            </li>
+            <li>
+              <p>
+                Deliver joint content and services with third parties with whom
+                you have a separate relationship (for example, social media
+                providers); and
+              </p>
+            </li>
+            <li>
+              <p>
+                In addition to the legal and commercial uses listed above, we
+                may be required to provide any and all of your Personal Data to
+                governmental authorities as necessary to comply with the law. To
+                the extent required by Data Protection Laws, or where we have a
+                legitimate and lawful purpose for doing so, we retain
+                information about you after your withdrawal of funds through the
+                Services, the closure of your Account, if the registration of an
+                Account is declined or if you decide not to proceed with the
+                registration of an Account.
+              </p>
+            </li>
+          </ul>
+          <br />
+          <p>Our Services may contain technology that enables us to:</p>
+          <br />
+          <ul>
+            <li>
+              <p>
+                Check specific information from your device or systems directly
+                relevant to your use of the Services, applications or Services
+                against our records to make sure the Services services are being
+                used in accordance with our end-user agreements and to
+                troubleshoot any problems;
+              </p>
+            </li>
+            <li>
+              <p>
+                Obtain information relating to any technical errors or other
+                issues with our Services;
+              </p>
+            </li>
+            <li>
+              <p>
+                Collect information about how you use the features of our
+                Services; and
+              </p>
+            </li>
+            <li>
+              <p>
+                Gather statistical information about the operating system and
+                environment from which you access our Services.
+              </p>
+            </li>
+          </ul>
+          <br />
           <p>
-            The Company will take all steps reasonably necessary to ensure that
-            Your data is treated securely and in accordance with this Privacy
-            Policy and no transfer of Your Personal Data will take place to an
-            organization or a country unless there are adequate controls in
-            place including the security of Your data and other personal
-            information.
+            If you become a follower in Citadel.one's social networks, the
+            processing of Personal Data will be governed by the policies of the
+            Social Network, as well as by their terms of use, privacy policies
+            and regulations that belong to the social network that corresponds
+            in each case and that you have previously accepted.
           </p>
-          <h3>Disclosure of Your Personal Data</h3>
-          <h4>Business Transactions</h4>
+          <br />
           <p>
-            If the Company is involved in a merger, acquisition or asset sale,
-            Your Personal Data may be transferred. We will provide notice before
-            Your Personal Data is transferred and becomes subject to a different
+            Citadel.one will treat your Personal Data in order to correctly
+            manage your presence in the social network, inform him of
+            Citadel.one activities, Services, as well as for any other purpose
+            that the rules of the social networks allow.
+          </p>
+          <br />
+          <p>
+            In no case will Citadel.one use the profiles of followers in social
+            networks to send advertising individually.
+          </p>
+          <br />
+          <h2>Parties with whom we may share your Personal Data</h2>
+          <p>We may share your Personal Data with:</p>
+          <ul>
+            <li>
+              <p>
+                Third-Party Internet and Marketing Services Vendors such as
+                Active Campaign, Facebook, Discord, Telegram, GoogleCloud,
+                Google Analytics, Mixpanel, Sentry;
+              </p>
+            </li>
+            <li>
+              <p>
+                Government and State Authorities to respond to subpoenas, court
+                orders, legal process, law-enforcement requests, legal claims,
+                or government inquiries and to protect and defend the rights,
+                interests, safety, and security of Citadel.one, our affiliates,
+                Customers, or the public;
+              </p>
+            </li>
+            <li>
+              <p>
+                Citadel.one Entities and Citadel.one’s Affiliated Entities, as
+                defined in the Terms of Use;
+              </p>
+            </li>
+            <li>
+              <p>
+                Third-Parties in connection to corporate transactions such as
+                the sale of a website, a merger, consolidation, reorganization,
+                financing, change or control or acquisition of all or a portion
+                of our business by another company or third party, asset sale,
+                initial public offering, or in the unlikely event of bankruptcy
+                or similar proceeding.
+              </p>
+            </li>
+          </ul>
+          <br />
+          <h2>Data Retention</h2>
+          <p>
+            We will retain your Personal Data for as long as it is necessary for
+            the purposes of performing a contract, comply with our legal
+            obligations, and protect our legitimate interests.
+          </p>
+          <br />
+          <h2>Persons who may access your Personal Data</h2>
+          <p>
+            Citadel.one’s authorized personnel, including but not limited to our
+            Compliance Officers, shall have access to your Personal Data on a
+            need-to-know basis. Our Compliance Officers and other authorized
+            personnel are bound to confidentiality and non-disclosure
+            agreements, and subject to strict company policies related to the
+            access and use of the data.
+          </p>
+          <br />
+          <p>
+            We may engage from time to time to third-party service providers.
+            Where applicable, we will enter into a data processing agreement
+            with these third-parties to ensure data security and protection of
+            your Personal Data against Data Beaches. Such Data Processors will
+            only process your Personal Data to the extent required for the
+            provision of services for which they are engaged.
+          </p>
+          <br />
+          <p>
+            We may provide your Personal Data to competent authorities upon
+            their request to the extent legally required or to the extent
+            necessary to defend our rights in legal proceedings or
+            investigations.
+          </p>
+          <br />
+          <h2>Data Security</h2>
+          <p>
+            To protect your Personal Data, Citadel.one takes all reasonable
+            precautions and follows the best practices of the industry to
+            prevent the loss, misuse, improper access, disclosure, alteration or
+            destruction of the same.
+          </p>
+          <br />
+          <p>
+            In addition to the purposes described in this section, we may also
+            use information we gather to deliver targeted and interest-based
+            advertising, marketing (including in-product messaging) or
+            information to you which may be useful, based on your use of the
+            Services or any other information we have about you (depending on
+            the Services, you may able to configure these features to suit your
+            preferences).
+          </p>
+          <br />
+          <h2>Legal basis for processing in the EU</h2>
+          <p>
+            In the EU, we collect your Personal Data for the following purposes:
+          </p>
+          <ul>
+            <li>
+              <p>
+                Based on your consent, for marketing purposes, which can be
+                revoked at any time;
+              </p>
+            </li>
+            <li>
+              <p>
+                Where necessary to perform any contract we enter into, or have
+                entered into, with you to provide Services or provide access to
+                our Services;
+              </p>
+            </li>
+            <li>
+              <p>
+                Where necessary for our legitimate business interests (or those
+                of a third party) when your interests and fundamental rights do
+                not override those interests; and
+              </p>
+            </li>
+            <li>
+              <p>
+                Where we need to comply with a legal or regulatory obligation
+                either in the EU or elsewhere.
+              </p>
+            </li>
+          </ul>
+          <br />
+          <p>You have the following rights:</p>
+          <ul>
+            <li><p>The right to access your own Personal Data;</p></li>
+            <li>
+              <p>
+                The right to have your Personal Data rectified if it is
+                inaccurate or incomplete;
+              </p>
+            </li>
+            <li>
+              <p>
+                The right to request deletion or removal of your Personal Data
+                where there is no good reason for processing to continue;
+              </p>
+            </li>
+            <li>
+              <p>
+                The right to restrict processing of your Personal Data where
+                there is no good reason for processing to continue;
+              </p>
+            </li>
+            <li>
+              <p>
+                The right to data portability to enable moving, copying or
+                transferring of Personal Data from one platform to another;
+              </p>
+            </li>
+            <li>
+              <p>
+                The right to object to the processing of your Personal Data in
+                certain circumstances; and
+              </p>
+            </li>
+            <li>
+              <p>
+                Rights relating to profiling and automated decision making
+                resulting from the processing of your Personal Data.
+              </p>
+            </li>
+          </ul>
+          <br />
+          <p>
+            The exercise of these rights is personal and therefore must be
+            exercised directly by the interested party, requesting it directly
+            to Citadel.one, which means that any Customer, user, subscriber or
+            collaborator who has provided their data at any time can contact
+            Citadel.one and request information about the data that it has
+            stored and how it has been obtained, request the rectification of
+            the same, request the portability of your Personal Data, oppose the
+            processing, limit its use or request the cancellation of that data
+            in Citadel.one's files.
+          </p>
+          <br />
+          <p>
+            To exercise the rights of access, rectification, cancellation,
+            portability and opposition, you must send an email to the Data
+            Protection Officer of Citadel.one
+            <a class="social-link" href="mailto:info@citadel.one"
+              >info@citadel.one</a
+            >
+            together with a valid proof of identity such as a Government-issued
+            ID document.
+          </p>
+          <br />
+          <h2>Content from other Services</h2>
+          <p>
+            The Services may include embedded content (for example, videos,
+            images, articles, etc.). The embedded content of other internet
+            websites behaves in exactly the same way as if you had visited other
+            internet websites.
+          </p>
+          <br />
+          <p>
+            These internet websites may collect data about you, use cookies,
+            embed an additional third-party tracking code, and monitor your
+            interaction using this code.
+          </p>
+          <br />
+          <h2>Cookies policy</h2>
+          <p>
+            Our Services use cookies. By accessing our Services we will inform
+            you, through a pop-up banner, of our use of cookies.
+          </p>
+          <ul>
+            <li>
+              <p>About cookies</p>
+              <p>
+                Cookies are files, often with unique identifiers, that web
+                servers send to Internet browsers and can then be sent back to
+                the server each time the browser requests a page from the
+                server.Web servers use cookies to identify and track users while
+                browsing the different pages of Services, as well as to identify
+                users returning to Services.
+              </p>
+              <p>
+                Cookies can be “persistent” cookies or “session cookies”. A
+                persistent cookie consists of a text file sent by a web server
+                to an Internet browser, which is stored by the browser and
+                remains valid until the defined expiration date (unless the user
+                deletes it before the expiration date ). On the other hand, a
+                session cookie expires at the end of the user's session, when
+                the Internet browser is closed.
+              </p>
+            </li>
+            <li>
+              <p>Cookies from the Services</p>
+              <p>
+                On our Services, including our Website, and mobile applications,
+                we use session and persistent cookies.
+              </p>
+              <p>We will send you the following cookies:</p>
+              <p style="margin-left: 15px">a. Session Cookies</p>
+              <p style="margin-left: 15px">
+                b. Google Analytics, Sentry: This cookie allows us to identify
+                unique users, unique sessions, regulate the rate of requests and
+                store information about user sessions and campaigns.
+              </p>
+              <p>
+                Cookie 1 is a session cookie, while Cookie 2 is a persistent
+                cookie.
+              </p>
+            </li>
+            <li>
+              <p>How we use cookies</p>
+              <p>
+                Cookies do not contain personally identifiable information, but
+                we have the possibility of linking the Personal Data we store
+                about you with the information obtained and stored from
+                cookies.We use the information we obtain from the use of our
+                cookies for the following purposes:
+              </p>
+              <p style="margin-left: 15px">
+                a. Recognize your computer when you access and/or use our
+                Services.
+              </p>
+              <p style="margin-left: 15px">
+                b. Improve the usability of the Services.
+              </p>
+              <p style="margin-left: 15px">
+                c. Analyze the use of our Services.
+              </p>
+              <p style="margin-left: 15px">d. Manage the Services.</p>
+              <p style="margin-left: 15px">e. Third party cookies</p>
+              <p>
+                When you use the Services, you may also be sent third-party
+                cookies.
+              </p>
+              <p>
+                Our service providers can send you cookies. They use the
+                information they obtain through their cookies for the following
+                purposes:
+              </p>
+              <p style="margin-left: 15px">
+                a. Track your browser on different Services.
+              </p>
+              <p style="margin-left: 15px">
+                b. Create a profile of your Internet browsing.
+              </p>
+              <p style="margin-left: 15px">
+                c. Select specific ads that may be of interest.
+              </p>
+            </li>
+            <li>
+              <p>Deletion and blocking of cookies</p>
+              <p>
+                You can, at any time, restrict, block or delete cookies from the
+                Services. To do this, you must modify the configuration of your
+                browser regarding the use of cookies through the “Preferences”,
+                “Options” or “Tools” menu (the name of the menus or the
+                procedure to access the cookie options vary depending on the
+                browser used). Most browsers allow you to refuse to accept
+                cookies and to delete cookies. The methods for doing so vary
+                from browser to browser, and from version to version. You can
+                however obtain up-to-date information about blocking and
+                deleting cookies via these links:
+              </p>
+              <ul>
+                <li>
+                  <p>
+                    <a
+                      class="social-link"
+                      href="https://support.google.com/chrome/answer/95647"
+                      target="_blank"
+                      >https://support.google.com/chrome/answer/95647</a
+                    >
+                    (Chrome);
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    <a
+                      class="social-link"
+                      href="https://support.mozilla.org/en-US/kb/enable-and-disable-cookies-website-preferences"
+                      target="_blank"
+                      >https://support.mozilla.org/en-US/kb/enable-and-disable-cookies-website-preferences</a
+                    >
+                    (Firefox);
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    <a
+                      class="social-link"
+                      href="https://help.opera.com/en/latest/security-and-privacy/"
+                      target="_blank"
+                      >https://help.opera.com/en/latest/security-and-privacy/</a
+                    >
+                    (Opera);
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    <a
+                      class="social-link"
+                      href="https://support.microsoft.com/en-gb/help/17442/windows-internet-explorer-delete-manage-cookies"
+                      target="_blank"
+                      >https://support.microsoft.com/en-gb/help/17442/windows-internet-explorer-delete-manage-cookies</a
+                    >
+                    (Internet Explorer);
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    <a
+                      class="social-link"
+                      href="https://support.apple.com/en-gb/guide/safari/manage-cookies-and-website-data-sfri11471/mac"
+                      target="_blank"
+                      >https://support.apple.com/en-gb/guide/safari/manage-cookies-and-website-data-sfri11471/mac</a
+                    >
+                    (Safari); and
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    <a
+                      class="social-link"
+                      href="https://privacy.microsoft.com/en-us/windows-10-microsoft-edge-and-privacy"
+                      target="_blank"
+                      >https://privacy.microsoft.com/en-us/windows-10-microsoft-edge-and-privacy</a
+                    >
+                    (Edge).
+                  </p>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <br />
+          <h2>Navigation</h2>
+          <p>
+            When accessing and/or using the Services, non-identifying data may
+            be collected, which may include the IP address, geolocation, a
+            record of how services and Services are used, browsing habits and
+            other data that cannot be used to identify the User.
+          </p>
+          <br />
+          <p>
+            The Services use the following third-party analysis services: Google
+            Analytics
+          </p>
+          <br />
+          <p>
+            Citadel.one uses the information obtained to obtain statistical
+            data, analyze trends, administer the Services, study navigation
+            patterns and to gather demographic information.
+          </p>
+          <br />
+          <h2>Accuracy and veracity of Personal Data</h2>
+          <br />
+          <p>
+            You agree that the information provided to Citadel.one is correct,
+            complete, accurate and current. You are solely responsible for the
+            veracity and correctness of the data you submit when access and/or
+            using the Services, exonerating Citadel.one from any responsibility
+            in this regard.
+          </p>
+          <br />
+          <h2>Acceptance and consent</h2>
+          <p>
+            You declare to have been informed of the conditions on protection of
+            Personal Data, You accept and consent to the treatment of the same
+            by Citadel.one in the manner and for the purposes indicated in this
             Privacy Policy.
           </p>
-          <h4>Law enforcement</h4>
+          <br />
+          <h2>Revocability</h2>
           <p>
-            Under certain circumstances, the Company may be required to disclose
-            Your Personal Data if required to do so by law or in response to
-            valid requests by public authorities (e.g. a court or a government
-            agency).
-          </p>
-          <h4>Other legal requirements</h4>
-          <p>
-            The Company may disclose Your Personal Data in the good faith belief
-            that such action is necessary to:
-          </p>
-          <ul>
-            <li>Comply with a legal obligation</li>
-            <li>Protect and defend the rights or property of the Company</li>
-            <li>
-              Prevent or investigate possible wrongdoing in connection with the
-              Service
-            </li>
-            <li>
-              Protect the personal safety of Users of the Service or the public
-            </li>
-            <li>Protect against legal liability</li>
-          </ul>
-          <h3>Security of Your Personal Data</h3>
-          <p>
-            The security of Your Personal Data is important to Us, but remember
-            that no method of transmission over the Internet, or method of
-            electronic storage is 100% secure. While We strive to use
-            commercially acceptable means to protect Your Personal Data, We
-            cannot guarantee its absolute security.
-          </p>
-          <h2 style="margin-top: 20px; margin-bottom: 12px">
-            Detailed Information on the Processing of Your Personal Data
-          </h2>
-          <p>
-            Service Providers have access to Your Personal Data only to perform
-            their tasks on Our behalf and are obligated not to disclose or use
-            it for any other purpose.
-          </p>
-          <h3>Types of Data Collected</h3>
-          <h4>Analytics</h4>
-          <p>
-            We may use third-party Service providers to monitor and analyze the
-            use of our Service.
-          </p>
-          <p class="bold">Mixpanel</p>
-          <p>Mixpanel is provided by Mixpanel Inc.</p>
-          <p>
-            You can prevent Mixpanel from using your information for analytics
-            purposes by opting-out. To opt-out of Mixpanel service, please visit
-            this page: https://mixpanel.com/optout/
-          </p>
-          <p>
-            For more information on what type of information Mixpanel collects,
-            please visit the Terms of Use page of Mixpanel:
-            <a
-              href="https://mixpanel.com/terms/"
-              style="text-decoration: none; color: #00a3ff; font-weight: 600"
-              >https://mixpanel.com/terms/</a
+            To exercise the rights of access, rectification, cancellation,
+            portability and opposition, you must send an email to
+            <a class="social-link" href="mailto:info@citadel.one"
+              >info@citadel.one</a
             >
+            along with your valid proof of ID such as a Government-issued
+            identification document. The exercise of your rights do not include
+            any Personal Data that Citadel.one is obliged to keep for
+            administrative, performance of contracts, legal or security
+            purposes.
           </p>
-          <h2 style="margin-top: 20px; margin-bottom: 12px">
-            Children's Privacy
-          </h2>
+          <br />
+          <h2>Change of Operatorship</h2>
           <p>
-            Our Service does not address anyone under the age of 13. We do not
-            knowingly collect personally identifiable information from anyone
-            under the age of 13. If You are a parent or guardian and You are
-            aware that Your child has provided Us with Personal Data, please
-            contact Us. If We become aware that We have collected Personal Data
-            from anyone under the age of 13 without verification of parental
-            consent, We take steps to remove that information from Our servers.
+            In case of incorporation, acquisition, merger or any other causes
+            that cause the change of Operatorship of the Services, you expressly
+            consent that your registration data and information are transferred
+            by Citadel.one to the new Operator. When and if this occurs,
+            Citadel.one will comply, in any case, with the duty of information
+            to you.
           </p>
+          <br />
+          <h2>Changes to the Privacy Policy</h2>
           <p>
-            If We need to rely on consent as a legal basis for processing Your
-            information and Your country requires consent from a parent, We may
-            require Your parent's consent before We collect and use that
-            information.
+            Citadel.one reserves the right to modify this Privacy Policy to
+            adapt it to legislative developments, as well as to industry
+            practices. Citadel.one may notify you of changes to this Privacy
+            Policy by email or through the Services.
           </p>
-          <h2 style="margin-top: 20px; margin-bottom: 12px">
-            Links to Other Websites
-          </h2>
+          <br />
+          <h2>Services Operator</h2>
           <p>
-            Our Service may contain links to other websites that are not
-            operated by Us. If You click on a third party link, You will be
-            directed to that third party's site. We strongly advise You to
-            review the Privacy Policy of every site You visit.
+            The Services are operated by Citadel.one, a BVI business company
+            with its registered office address at Intershore Chambers, Road
+            Town, Tortola, BVI.
           </p>
+          <br />
+          <h2>Contact</h2>
           <p>
-            We have no control over and assume no responsibility for the
-            content, privacy policies or practices of any third party sites or
-            services.
-          </p>
-          <h2 style="margin-top: 20px; margin-bottom: 12px">
-            Changes to this Privacy Policy
-          </h2>
-          <p>
-            We may update our Privacy Policy from time to time. We will notify
-            You of any changes by posting the new Privacy Policy on this page.
-          </p>
-          <p>
-            We will let You know via email and/or a prominent notice on Our
-            Service, prior to the change becoming effective and update the "Last
-            updated" date at the top of this Privacy Policy.
-          </p>
-          <p>
-            You are advised to review this Privacy Policy periodically for any
-            changes. Changes to this Privacy Policy are effective when they are
-            posted on this page.
-          </p>
-          <h2 style="margin-top: 20px; margin-bottom: 12px">Contact Us</h2>
-          <p>
-            If you have any questions about this Privacy Policy, You can contact
-            us:
-          </p>
-          <p>
-            By email:
-            <a
-              style="color: #6a4bff; font-weight: 600; text-decoration: none"
-              href="mailto:support@citadel.one"
-              >support@citadel.one</a
+            In case you have any questions or complaints about the Privacy
+            Policy, you can contact our data protection officer via email to
+            <a class="social-link" href="mailto:info@citadel.one"
+              >info@citadel.one</a
             >
           </p>
         </div>
@@ -538,6 +853,13 @@ export default {
   font-size: 16px;
   line-height: 30px;
   color: #59779a;
+
+  .social-link {
+    text-decoration: none;
+    color: #00a3ff;
+    font-weight: 600;
+  }
+
   h1 {
     font-weight: 700;
     font-size: 20px;
