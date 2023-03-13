@@ -1205,11 +1205,6 @@
             "description": "IRISnet (a.k.a IRIS Hub) is designed to be the foundation for the next generation distributed applications. Built with Cosmos-SDK, IRIS Hub enables cross-chain interoperability through a unified service model, while providing a variety of modules to support DeFi applications.",
             "shortDescription": "The IRIS network is an internet of blockchains intended to provide a technology foundation that facilitates construction of distributed business applications."
         },
-        "cerberus": {
-            "title": "Cerberus network",
-            "description": "The Cerberus blockchain is a completely permissionless blockchain where anyone can join the network and run a validator. The community will have the ability to gain value from the coin by staking Cerberus ($CRBRUS) with validators and liquidity pools. In the second half of 2022, Cerberus team plans to focus on launching its NFT project.",
-            "shortDescription": "Cerberus is the first three-headed meme-coin and NFT project in the Cosmos."
-        },
         "mantle": {
             "title": "AssetMantle network",
             "description": "With AssetMantle, you can easily create dedicated marketplaces for a wide range of products from specific sellers or groups of sellers. Consider it as Shopify for NFTs where instead of listing products on an ‘Amazon for NFTs’ (such as OpenSea), creators and artists can create their own Shopify-style stores for their specific NFT.",

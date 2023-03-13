@@ -23,7 +23,6 @@ export const cosmosNetworks = [
   'regen',
   'starname',
   'emoney',
-  'cerberus',
   'iris',
   'gbridge',
   'axelar',

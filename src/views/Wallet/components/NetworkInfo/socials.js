@@ -215,20 +215,6 @@ export default {
       href: 'https://www.coingecko.com/en/coins/akash-network',
     },
   },
-  cerberus: {
-    twitter: {
-      title: '@CerberusZone',
-      href: 'CerberusZone',
-    },
-    web: {
-      title: 'cerberus.zone',
-      href: 'https://cerberus.zone/',
-    },
-    landing: {
-      title: 'Coingecko',
-      href: 'https://www.coingecko.com/en/coins/cerberus',
-    },
-  },
   bsc: {
     web: {
       title: 'binance.com',
