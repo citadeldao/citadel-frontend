@@ -1319,6 +1319,11 @@
             "title": "Kujira",
             "description": "Kujira is a semi-permissioned sovereign Cosmos L1 platform bringing user-friendly DeFi tools for trading, liquidating, and minting, and targeting everyone, from the novice crypto enthusiasts to the experienced investors.",
             "shortDescription": "Kujira is a decentralized Cosmos L1 platform bringing user-friendly DeFi tools for trading, liquidating, and minting."
+        },
+        "provenance":{
+            "title": "Provenance",
+            "description": "Provenance is a public, permissionless PoS blockchain built with Cosmos SDK and designed for financial service industries.",
+            "shortDescription": "Provenance is a public, permissionless PoS blockchain for financial services."
         }
     },
     "uptime": "Uptime",
@@ -1473,7 +1478,14 @@
     "minAmountError": "Minimum amount is {minAmount} {code}",
     "errors": {
         "notEnoughFounds": "Not enough {code} to pay the transaction fee",
-        "notAvailableToStake": "Validator is unavailable for stake"
+        "notAvailableToStake": "Validator is unavailable for stake",
+        "200": {
+            "variant1": "Ledger Error: Please close {currentApp} and open the {rightApp} app on your Ledger device.",
+            "variant2": "Ledger Error: Please open {rightApp} app on the Ledger!"
+        },
+        "201": "Ledger Error: Transaction has been rejected",
+        "202": "Ledger Error: Reconnect your device",
+        "901": "Unknown error"
     },
     "minBalanceNote": "At least {amount} should be remained on your balance to keep receiving your staking rewards. Otherwise rewards will be burnt."
 }

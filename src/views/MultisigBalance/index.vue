@@ -338,10 +338,7 @@ export default {
 
     onMounted(async () => {
       if (window.ethereum?.selectedAddress) {
-        await store.dispatch('metamask/connectToMetamask', null, {
-          root: true,
-        });
-
+        await store.dispatch('metamask/connectToMetamask');
         if (metamaskConnector.value.network === 'bsc') {
           const metamaskNet = metamaskConnector.value.network;
           const metamaskAddress =
@@ -363,10 +360,11 @@ export default {
         .filter((w) => w?.net === 'bsc' && w?.type !== WALLET_TYPES.PUBLIC_KEY)
         .concat([mergeWallet.value])
         .map((w) => ({
-          id: w.address,
-          title: w.address,
+          id: w?.address,
+          title: w?.address,
           icon: 'bsc',
         }))
+        .filter((w) => !!w.title)
     );
 
     const incorrectPassword = computed(

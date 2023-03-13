@@ -167,7 +167,7 @@ export default {
 
     if (type.value?.title === '???') {
       // eslint-disable-next-line
-        type.value.title = props.transaction.view[0].type;
+        type.value.title = props.transaction.view[0]?.type;
       type.value.icon = 'unknown';
     }
 

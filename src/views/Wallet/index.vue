@@ -282,7 +282,7 @@ import ConnectLedgerModal from '@/components/Modals/Ledger/ConnectLedgerModal';
 import OpenAppLedgerModal from '@/components/Modals/Ledger/OpenAppLedgerModal';
 import RejectLedgerModal from '@/components/Modals/Ledger/RejectLedgerModal';
 import { useStore } from 'vuex';
-import { computed, onMounted, provide, ref, watch } from 'vue';
+import { computed, onMounted, provide, ref, watch, inject } from 'vue';
 import useWallets from '@/compositions/useWallets';
 import useCheckPassword from '@/compositions/useCheckPassword';
 import useKtAddresses from '@/compositions/useKtAddresses';
@@ -293,7 +293,7 @@ import { OUR_TOKEN } from '@/config/walletType';
 import BigNumber from 'bignumber.js';
 import notify from '@/plugins/notify';
 import { useI18n } from 'vue-i18n';
-import useApi from '@/api/useApi';
+// import useApi from '@/api/useApi';
 import { keplrNetworks } from '@/config/availableNets';
 
 export default {
@@ -325,6 +325,7 @@ export default {
     const store = useStore();
     const route = useRoute();
     const rewardsList = ref([]);
+    const citadel = inject('citadel');
     provide('rewardsList', rewardsList);
     const { currency, currentWallet, isHardwareWallet, currentToken } =
       useWallets();
@@ -591,16 +592,24 @@ export default {
           keplrResult
         );
 
-        const data = await useApi('wallet').sendSignedTransaction({
-          hash,
-          deviceType: WALLET_TYPES.KEPLR,
-          proxy: false,
-          network: currentWallet.value.net,
-          from: currentWallet.value.address,
-          mem_tx_id: resRawTxs.value.mem_tx_id,
-        });
+        // const data = await useApi('wallet').sendSignedTransaction({
+        //   hash,
+        //   deviceType: WALLET_TYPES.KEPLR,
+        //   proxy: false,
+        //   network: currentWallet.value.net,
+        //   from: currentWallet.value.address,
+        //   mem_tx_id: resRawTxs.value.mem_tx_id,
+        // });
+        const data = await citadel.sendSignedTransaction(
+          currentWallet.value.id,
+          {
+            signedTransaction: hash,
+            mem_tx_id: resRawTxs.value.mem_tx_id,
+            proxy: false,
+          }
+        );
 
-        if (data.ok) {
+        if (!data.error) {
           txHash.value = [data.data.txhash];
           showConfirmUnstakedClaim.value = false;
           showClaimSuccessModal.value = true;

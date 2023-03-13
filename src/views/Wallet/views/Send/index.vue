@@ -413,29 +413,29 @@
           @close="errorCloseHandler"
           @buttonClick="errorClickHandler"
         />
-        <!--Success Modal -->
-        <ModalContent
-          v-if="showSuccessModal && !txError"
-          v-click-away="successCloseHandler"
-          title="Success"
-          desc="The transaction is in progress"
-          button-text="ok"
-          type="success"
-          icon="success"
-          @close="successCloseHandler"
-          @buttonClick="successClickHandler"
-        >
-          <SuccessModalContent
-            v-model:txComment="txComment"
-            :to="toAddress"
-            :wallet="currentWallet"
-            :amount="amount"
-            :fee="fee.fee"
-            type="transfer"
-            :tx-hash="txHash"
-          />
-        </ModalContent>
       </template>
+      <!--Success Modal -->
+      <ModalContent
+        v-if="showSuccessModal && !txError && !isLoading"
+        v-click-away="successCloseHandler"
+        title="Success"
+        desc="The transaction is in progress"
+        button-text="ok"
+        type="success"
+        icon="success"
+        @close="successCloseHandler"
+        @buttonClick="successClickHandler"
+      >
+        <SuccessModalContent
+          v-model:txComment="txComment"
+          :to="toAddress"
+          :wallet="currentWallet"
+          :amount="amount"
+          :fee="fee.fee"
+          type="transfer"
+          :tx-hash="txHash"
+        />
+      </ModalContent>
     </Modal>
   </teleport>
 </template>
@@ -471,7 +471,7 @@ import Loading from '@/components/Loading';
 import { WALLET_TYPES, TOKEN_STANDARDS } from '@/config/walletType';
 import { screenWidths } from '@/config/sreenWidthThresholds';
 import Tooltip from '@/components/Tooltip';
-import useApi from '@/api/useApi';
+// import useApi from '@/api/useApi';
 import useWallets from '@/compositions/useWallets';
 import notify from '@/plugins/notify';
 
@@ -527,6 +527,7 @@ export default {
   },
   emits: ['prepareClaim', 'prepareXctClaim'],
   setup(props) {
+    const citadel = inject('citadel');
     const loadingSign = ref(false);
     const showSuccessModal = ref(false);
     const { t } = useI18n();
@@ -583,6 +584,10 @@ export default {
     );
     const keplrConnector = computed(
       () => store.getters['keplr/keplrConnector']
+    );
+
+    const txFromMempool = computed(
+      () => store.getters['transactions/txFromMempool']
     );
 
     const currentWalletType = computed(() => {
@@ -743,6 +748,26 @@ export default {
       dataLoaded.value = false;
     };
     loadData();
+
+    watch(
+      () => txFromMempool.value,
+      (newV) => {
+        const tx = Object.assign({}, newV);
+        if (
+          loadingSign.value &&
+          props.currentWallet.address?.toLowerCase() ===
+            tx.holder?.toLowerCase()
+        ) {
+          showModal.value = true;
+          showConfirmModal.value = false;
+          isLoading.value = false;
+          loadingSign.value = false;
+          showSuccessModal.value = true;
+          txHash.value = [tx.hash];
+        }
+        store.dispatch('transactions/resetMempoolTx');
+      }
+    );
 
     watch(
       () => props.currentWallet,
@@ -1183,16 +1208,22 @@ export default {
           keplrResult
         );
 
-        const data = await useApi('wallet').sendSignedTransaction({
-          hash,
-          deviceType: WALLET_TYPES.KEPLR,
-          proxy: false,
-          network: parentWallet.value.net,
-          from: parentWallet.value.address,
-          mem_tx_id: rawTx.value.mem_tx_id,
-        });
+        const data = await citadel.sendSignedTransaction(
+          parentWallet.value.id,
+          {
+            signedTransaction: hash,
+            mem_tx_id: rawTx.value.mem_tx_id,
+            proxy: false,
+            // hash,
+            // deviceType: WALLET_TYPES.KEPLR,
+            // proxy: false,
+            // network: parentWallet.value.net,
+            // from: parentWallet.value.address,
+            // mem_tx_id: rawTx.value.mem_tx_id,
+          }
+        );
 
-        if (data.ok) {
+        if (!data.error) {
           loadingSign.value = false;
           isLoading.value = false;
           showConfirmModal.value = false;
