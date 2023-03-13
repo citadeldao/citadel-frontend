@@ -86,6 +86,16 @@ import StakeBanner from './components/StakeBanner.vue';
 import TotalForRange from './components/TotalForRange.vue';
 import TotalRewards from './components/TotalRewards.vue';
 import Dropdown from './components/Dropdown.vue';
+import TabsGroup from '@/components/UI/TabsGroup';
+import { tabsList, tabsListmd } from '@/static/dateTabs';
+import { ref } from '@vue/reactivity';
+import { computed } from '@vue/runtime-core';
+import { useStore } from 'vuex';
+import BigNumber from 'bignumber.js';
+import { useWindowSize } from 'vue-window-size';
+import moment from 'moment';
+import { screenWidths } from '@/config/sreenWidthThresholds';
+import useWallets from '@/compositions/useWallets';
 
 export default {
   name: 'Rewards',

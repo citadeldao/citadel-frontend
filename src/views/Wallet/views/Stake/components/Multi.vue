@@ -351,7 +351,7 @@
 
 <script>
 import MinBalanceWarning from '@/views/Wallet/views/Stake/components/MinBalanceWarning';
-import { computed, ref } from 'vue';
+import { computed, ref, inject } from 'vue';
 import { useStore } from 'vuex';
 import BigNumber from 'bignumber.js';
 import WalletButtonsPanel from '@/components/WalletButtonsPanel';
@@ -379,7 +379,7 @@ import useWallets from '@/compositions/useWallets';
 import LargeStakeListItem from './LargeStakeListItem.vue';
 
 import useStaking from '@/compositions/useStaking';
-import useApi from '@/api/useApi';
+// import useApi from '@/api/useApi';
 import notify from '@/plugins/notify';
 
 export default {
@@ -425,6 +425,7 @@ export default {
   },
   emits: ['showPlaceholder', 'prepareClaim', 'prepareXctClaim', 'stake'],
   setup(props, { emit }) {
+    const citadel = inject('citadel');
     const {
       showModal,
       modalCloseHandler,
@@ -650,16 +651,22 @@ export default {
           keplrResult
         );
 
-        const data = await useApi('wallet').sendSignedTransaction({
-          hash,
-          deviceType: WALLET_TYPES.KEPLR,
-          proxy: false,
-          network: props.currentWallet.net,
-          from: props.currentWallet.address,
-          mem_tx_id: resRawTxs.value.mem_tx_id,
-        });
+        const data = await citadel.sendSignedTransaction(
+          props.currentWallet.id,
+          {
+            signedTransaction: hash,
+            mem_tx_id: resRawTxs.value.mem_tx_id,
+            proxy: false,
+            // hash,
+            // deviceType: WALLET_TYPES.KEPLR,
+            // proxy: false,
+            // network: props.currentWallet.net,
+            // from: props.currentWallet.address,
+            // mem_tx_id: resRawTxs.value.mem_tx_id,
+          }
+        );
 
-        if (data.ok) {
+        if (!data.error) {
           txHash.value = [data.data.txhash];
           updateShowConfirmTransaction(false);
           updateShowSuccessModal(true);

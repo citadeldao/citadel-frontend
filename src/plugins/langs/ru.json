@@ -1309,6 +1309,11 @@
             "title": "Kujira",
             "description": "",
             "shortDescription": ""
+        },
+        "provenance":{
+            "title": "Provenance",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "Подтверждено блоков",
@@ -1465,7 +1470,15 @@
     "addComment": "Добавить комментарий",
     "editComment": "Изменить комментарий",
     "errors": {
-        "notEnoughFounds": "Недостаточно {code} для оплаты комиссии за транзакцию"
+        "notEnoughFounds": "Недостаточно {code} для оплаты комиссии за транзакцию",
+        "notAvailableToStake": "",
+        "200": {
+            "variant1": "",
+            "variant2": ""
+        },
+        "201": "",
+        "202": "",
+        "901": ""
     },
     "copyToClipboardTitle": "Копировать ключ просмотра",
     "showHideKeyTitle": "Показать / скрыть кнопку просмотра",

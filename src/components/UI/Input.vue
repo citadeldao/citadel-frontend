@@ -107,6 +107,7 @@ import mail from '@/assets/icons/input/mail.svg';
 import error from '@/assets/icons/input/error.svg';
 import { computed, ref, markRaw, watch, nextTick, onMounted } from 'vue';
 import copyToClipboard from '@/helpers/copyToClipboard';
+import { WALLET_TYPES } from '@/config/walletType';
 
 export default {
   name: 'Input',
@@ -219,9 +220,27 @@ export default {
     const inputWidth = ref(0);
 
     if (props.icon) {
-      import(`@/assets/icons/input/${props.icon}.svg`).then((val) => {
-        currentIcon.value = markRaw(val.default);
-      });
+      if ([WALLET_TYPES.LEDGER, WALLET_TYPES.TREZOR].includes(props.icon)) {
+        import(`@/assets/icons/input/hardware-dot.svg`).then((val) => {
+          currentIcon.value = markRaw(val.default);
+        });
+      } else if ([WALLET_TYPES.PRIVATE_KEY].includes(props.icon)) {
+        import(`@/assets/icons/input/private-dot.svg`).then((val) => {
+          currentIcon.value = markRaw(val.default);
+        });
+      } else if ([WALLET_TYPES.ONE_SEED].includes(props.icon)) {
+        import(`@/assets/icons/input/oneseed-dot.svg`).then((val) => {
+          currentIcon.value = markRaw(val.default);
+        });
+      } else if (props.icon === WALLET_TYPES.KEPLR) {
+        import(`@/assets/icons/input/keplr-dot.svg`).then((val) => {
+          currentIcon.value = markRaw(val.default);
+        });
+      } else {
+        import(`@/assets/icons/input/${props.icon}.svg`).then((val) => {
+          currentIcon.value = markRaw(val.default);
+        });
+      }
     }
 
     const inputType = computed(() => {
@@ -235,9 +254,27 @@ export default {
     });
 
     // when focus, placeholder = ''
-    const dynamicPlaceholder = computed(() =>
-      focusFlag.value ? '' : props.placeholder
-    );
+    const dynamicPlaceholder = computed(() => {
+      if (focusFlag.value) return '';
+
+      if ([WALLET_TYPES.LEDGER, WALLET_TYPES.TREZOR].includes(props.icon)) {
+        return 'Citadel Hardware';
+      }
+
+      if ([WALLET_TYPES.ONE_SEED].includes(props.icon)) {
+        return 'Citadel One-Seed';
+      }
+
+      if ([WALLET_TYPES.PRIVATE_KEY].includes(props.icon)) {
+        return 'Citadel Private-Key';
+      }
+
+      if ([WALLET_TYPES.KEPLR].includes(props.icon)) {
+        return 'Citadel Keplr';
+      }
+
+      return props.placeholder;
+    });
 
     const placeholderShown = computed(() => {
       return !focusFlag.value && !!dynamicPlaceholder.value && !valueRef.value;

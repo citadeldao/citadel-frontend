@@ -6,6 +6,7 @@ import notify from '@/plugins/notify';
 import citadel from '@citadeldao/lib-citadel';
 import BigNumber from 'bignumber.js';
 import useWallets from '@/compositions/useWallets';
+import { getErrorTextByCode } from '@/config/errors';
 
 const getDefaultState = () => {
   return {
@@ -257,34 +258,32 @@ export default {
           ...walletOpts,
           derivationPath,
         });
+        if (error) {
+          const errorMessage = getErrorTextByCode(error);
+          notify({
+            type: 'warning',
+            text: errorMessage,
+          });
+
+          return {
+            walletInstance: {},
+            alreadyExist: false,
+            error: errorMessage,
+          };
+        }
         const walletInstance = await dispatch('createNewWalletInstance', {
           walletOpts: data,
         });
 
-        if (!error) {
-          const existingWallet =
-            rootGetters['wallets/walletByAddress'](walletInstance);
-
-          return {
-            walletInstance,
-            alreadyExist:
-              !!existingWallet &&
-              existingWallet.type !== WALLET_TYPES.PUBLIC_KEY,
-          };
-        }
-
-        notify({
-          type: 'warning',
-          text: error,
-        });
+        const existingWallet =
+          rootGetters['wallets/walletByAddress'](walletInstance);
 
         return {
-          walletInstance: {},
-          alreadyExist: false,
+          walletInstance,
+          alreadyExist:
+            !!existingWallet && existingWallet.type !== WALLET_TYPES.PUBLIC_KEY,
         };
       } catch (error) {
-        console.error(error);
-
         return { error: error.message || error };
       }
     },
