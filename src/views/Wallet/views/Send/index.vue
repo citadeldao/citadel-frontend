@@ -1035,18 +1035,22 @@ export default {
 
     const currentKtAddress = inject('currentKtAddress');
     // Prepare and Send tx
-    const transferParams = computed(() => ({
-      amount: amount.value,
-      toAddress: toAddress.value,
-      kt: currentKtAddress.value && currentKtAddress.value.address,
-      memo: memo.value,
-      ...(props.currentWallet.fee_key && {
-        [props.currentWallet.fee_key]: fee.value[props.currentWallet.fee_key],
-      }),
+    const transferParams = computed(() => {
+      const data = {
+        amount: amount.value,
+        toAddress: toAddress.value,
+        kt: currentKtAddress.value && currentKtAddress.value.address,
+        memo: memo.value,
+        ...(props.currentWallet.fee_key && {
+          [props.currentWallet.fee_key]: fee.value[props.currentWallet.fee_key],
+        }),
+        toNetwork: isSendToAnotherNetwork.value ? bridgeTargetNet.value : null,
+      };
       //for crossnetwork transfer
-      token: props.currentWallet.net,
-      toNetwork: isSendToAnotherNetwork.value ? bridgeTargetNet.value : null,
-    }));
+      if (isSendToAnotherNetwork.value) data.token = props.currentWallet.net;
+
+      return data;
+    });
 
     const showModal = ref(false);
     const showConfirmModal = ref(false);

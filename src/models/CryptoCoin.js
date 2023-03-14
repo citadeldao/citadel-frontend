@@ -182,7 +182,6 @@ export default class CryptoCoin {
   }
 
   async prepareTransfer({ walletId, options }) {
-    options?.token && delete options.token;
     const { error, data } = await citadel.prepareTransfer(walletId, options);
 
     if (!error) {
