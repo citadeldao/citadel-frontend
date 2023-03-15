@@ -22,7 +22,6 @@ import CryptoCoinSTARNAME from './CryptoCoins/CryptoCoinSTARNAME';
 import CryptoCoinEMONEY from './CryptoCoins/CryptoCoinEMONEY';
 import CryptoCoinETH from './CryptoCoins/CryptoCoinETH';
 import CryptoCoinBAND from './CryptoCoins/CryptoCoinBAND';
-import CryptoCoinCERBERUS from './CryptoCoins/CryptoCoinCERBERUS';
 import CryptoCoinGBRIDGE from './CryptoCoins/CryptoCoinGBRIDGE';
 import CryptoCoinKONSTELLATION from './CryptoCoins/CryptoCoinKONSTELLATION';
 import CryptoCoinMANTLE from './CryptoCoins/CryptoCoinMANTLE';
@@ -89,7 +88,6 @@ export default {
   KAVA: CryptoCoinKAVA,
   BSC: CryptoCoinBSC,
   POLKADOT: CryptoCoinPOLKADOT,
-  CERBERUS: CryptoCoinCERBERUS,
   GBRIDGE: CryptoCoinGBRIDGE,
   KONSTELLATION: CryptoCoinKONSTELLATION,
   MANTLE: CryptoCoinMANTLE,

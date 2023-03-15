@@ -28,7 +28,6 @@ export const ledgerNets = [
   'regen',
   'starname',
   'emoney',
-  'cerberus',
   'gbridge',
   'axelar',
   'konstellation',
@@ -98,11 +97,6 @@ export const keplrNetworks = [
     label: 'Starname',
     key: 'iov-mainnet-ibc',
     net: 'starname',
-  },
-  {
-    label: 'Cerberus',
-    key: 'cerberus-chain-1',
-    net: 'cerberus',
   },
   { label: 'Konstellation', key: 'darchub', net: 'konstellation' },
   {
