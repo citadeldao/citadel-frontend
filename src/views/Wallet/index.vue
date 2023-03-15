@@ -113,31 +113,36 @@
     </teleport>
     <teleport v-if="showClaimModal" to="body">
       <Modal>
-        <ModalContent
+        <ClaimModal
           v-if="showConfirmClaim"
-          v-click-away="claimModalCloseHandler"
-          :title="$t('claim.confirmModalTitle')"
-          :desc="$t('claim.confirmModalDesc')"
-          button-text="confirm"
-          type="action"
+          :claim-modal-close-handler="claimModalCloseHandler"
+          :is-loading="isLoading"
+          :input-error="!!inputError"
+          :current-wallet="currentWallet"
+          :fee="fee"
+          :is-hardware-wallet="isHardwareWallet"
+          :adding="adding"
+          @claim="claim"
+        />
+        <ClaimModalXCT
+          v-if="showXctConfirmClaim"
+          :disabled="disabled"
           :loading="isLoading"
-          :disabled="!!inputError"
-          @close="claimModalCloseHandler"
-          @buttonClick="claim"
-        >
-          <ActionModalContent
-            :to="currentWallet.address"
-            :wallet="currentWallet"
-            :staking-amount="currentWallet.balance.claimableRewards"
-            :staking-fee="fee"
-            :hide-password="
-              isHardwareWallet ||
-              [WALLET_TYPES.KEPLR].includes(currentWallet.type)
-            "
-            :adding="adding"
-            @submitSend="claim"
-          />
-        </ModalContent>
+          :claim-fee="claimFee"
+          :current-token="currentToken"
+          :claim-options="claimOptions"
+          :xct-rewards="xctRewards"
+          :dao-rewards="daoRewards"
+          :total-amount="totalAmount"
+          :hide-password="
+            isHardwareWallet || currentWalletType === WALLET_TYPES.METAMASK
+          "
+          :claim-modal-close-handler="claimModalCloseHandler"
+          @updateOptions="updateOptions"
+          @buttonClick="restakeXctRewards"
+          @submitSend="restakeXctRewards"
+          @claimXctRewards="claimXctRewards"
+        />
         <ModalContent
           v-if="showConfirmUnstakedClaim"
           v-click-away="claimModalCloseHandler"
@@ -158,70 +163,19 @@
             @submitSend="claim"
           />
         </ModalContent>
-        <ModalContent
-          v-if="showXctConfirmClaim"
-          v-click-away="claimModalCloseHandler"
-          :title="$t('claim.confirmModalTitle')"
-          :desc="$t('claim.confirmModalDesc')"
-          button-text="restake"
-          type="action"
-          :disabled="disabled"
-          :loading="isLoading"
-          :has-slot="true"
-          @close="claimModalCloseHandler"
-          @buttonClick="restakeXctRewards"
-        >
-          <template #default>
-            <XCTConfirmClaimModal
-              :fee="claimFee"
-              :current-token="currentToken"
-              :claim-options="claimOptions"
-              :xct-rewards="xctRewards"
-              :hide-password="
-                isHardwareWallet || currentWalletType === WALLET_TYPES.METAMASK
-              "
-              :dao-rewards="daoRewards"
-              :total-amount="totalAmount"
-              @update:options="updateOptions"
-              @submitSend="restakeXctRewards"
-            />
-          </template>
-          <template #cancelButton>
-            <span
-              class="wallet__modal-claim-button"
-              :class="{ 'wallet__modal-claim-button--disabled': disabled }"
-              @click="claimXctRewards"
-              >{{ $t('claim.claim') }}</span
-            >
-          </template>
-        </ModalContent>
-        <ModalContent
+        <ClaimSuccess
           v-else-if="showClaimSuccessModal"
-          v-click-away="claimModalCloseHandler"
-          title="Success"
-          :desc="$t('txWaitTitle')"
-          button-text="ok"
-          type="success"
-          icon="success"
-          @close="claimModalCloseHandler"
-          @buttonClick="successClickHandler"
-        >
-          <SuccessModalContent
-            v-model:txComment="txComment"
-            :to="currentToken ? '' : currentWallet.address"
-            :wallet="currentToken || currentWallet"
-            :amount="
-              currentToken
-                ? totalAmount
-                : currentWallet.balance.claimableRewards
-            "
-            :tx-hash="txHash"
-            :show-from="false"
-            type="reward"
-            :fee="mode === 'claim' ? claimFee : fee"
-          />
-        </ModalContent>
-
+          :claim-modal-close-handler="claimModalCloseHandler"
+          :fee="fee"
+          :claim-fee="claimFee"
+          :current-token="currentToken"
+          :current-wallet="currentWallet"
+          :total-amount="totalAmount"
+          :mode="mode"
+          :tx-hash="txHash"
+          @changeComment="onChangeComment"
+          @success="successClickHandler"
+        />
         <!--Confirm Ledger Modals-->
         <ConnectLedgerModal
           v-else-if="showConnectLedgerModal"
@@ -262,9 +216,7 @@
 
 <script>
 import BalanceAndPledged from './components/BalanceAndPledged.vue';
-import XCTConfirmClaimModal from './views/Stake/components/XCTConfirmClaimModal.vue';
 import XCTCalculator from './components/XCTCalculator';
-import SuccessModalContent from './views/Send/components/SuccessModalContent.vue';
 import ActionModalContent from './views/Stake/components/ActionModalContent.vue';
 import ModalContent from '@/components/ModalContent';
 import AliasQrCard from './components/AliasQrCard';
@@ -295,6 +247,9 @@ import notify from '@/plugins/notify';
 import { useI18n } from 'vue-i18n';
 // import useApi from '@/api/useApi';
 import { keplrNetworks } from '@/config/availableNets';
+import ClaimModal from './views/components/ClaimModal';
+import ClaimModalXCT from './views/components/ClaimModalXCT';
+import ClaimSuccess from './views/components/ClaimSuccess';
 
 export default {
   name: 'Wallet',
@@ -307,18 +262,19 @@ export default {
     Modal,
     ModalContent,
     ActionModalContent,
-    SuccessModalContent,
     XCTCalculator,
     ConfirmLedgerModal,
     ConnectLedgerModal,
     OpenAppLedgerModal,
     RejectLedgerModal,
-    XCTConfirmClaimModal,
     BalanceAndPledged,
     KtAddresses,
     Loading,
     ClaimUnstakedBlock,
     KiChainStub,
+    ClaimModal,
+    ClaimModalXCT,
+    ClaimSuccess,
   },
   setup() {
     const { t } = useI18n();
@@ -482,6 +438,11 @@ export default {
     const resRawTxs = ref();
     const txComment = ref('');
     const adding = ref();
+
+    const onChangeComment = (comment) => {
+      txComment.value = comment;
+    };
+
     const prepareClaim = async () => {
       if (isLoading.value) {
         return;
@@ -554,7 +515,7 @@ export default {
     };
 
     const claim = async () => {
-      showConfirmClaim.value = false;
+      // showConfirmClaim.value = false;
       // KEPLR
       if (currentWallet.value.type === WALLET_TYPES.KEPLR) {
         isLoading.value = true;
@@ -1217,6 +1178,7 @@ export default {
       adding,
       ktAddresses,
       mode,
+      onChangeComment,
     };
   },
 };
