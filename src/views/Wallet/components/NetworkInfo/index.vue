@@ -106,124 +106,98 @@
       </a>
     </div>
     <!-- Информация по сетке(цены на бирже) -->
-    <div class="network-info__info">
-      <span class="network-info__info-title"> {{ $t('tokenPrice') }} </span>
-      <div class="network-info__info-price">
-        <div class="network-info__info-usd-price">
-          <span class="network-info__usd-prise">
-            <span class="network-info__usd-currency">$</span>
-            <span
-              v-pretty-number="{ value: marketcap?.priceUsd, currency: 'USD' }"
-            />
-          </span>
-          <div class="network-info__info-price-change">
-            <span
-              class="network-info__info-price-change-value"
-              :class="{ decrease: usdDecriase }"
-              ><span
+    <el-skeleton :rows="6" animated :loading="loading" v-if="loading" />
+    <div v-else>
+      <div class="network-info__info">
+        <span class="network-info__info-title"> {{ $t('tokenPrice') }} </span>
+        <div class="network-info__info-price">
+          <div class="network-info__info-usd-price">
+            <span class="network-info__usd-prise">
+              <span class="network-info__usd-currency">$</span>
+              <span
                 v-pretty-number="{
-                  value: marketcap?.priceUsdDelta24pct,
-                  currency: '%',
+                  value: marketcap?.priceUsd,
+                  currency: 'USD',
                 }"
               />
-              <span class="network-info__info-price-change-percent">%</span>
             </span>
-            <priceDown v-if="usdDecriase" />
-            <priceUp v-else />
+            <div class="network-info__info-price-change">
+              <span
+                class="network-info__info-price-change-value"
+                :class="{ decrease: usdDecrease }"
+                ><span
+                  v-pretty-number="{
+                    value: marketcap?.priceUsdDelta24pct,
+                    currency: '%',
+                  }"
+                />
+                <span class="network-info__info-price-change-percent">%</span>
+              </span>
+              <priceDown v-if="usdDecrease" />
+              <priceUp v-else />
+            </div>
           </div>
-        </div>
-        <div class="network-info__info-btc-price">
-          <span class="network-info__btc-prise">
-            <span
-              v-pretty-number="{ value: marketcap?.priceBtc, currency: 'BTC' }"
-            />
-            <span class="network-info__btc-currency">BTC</span>
-          </span>
-          <div class="network-info__info-price-change">
-            <span
-              class="network-info__info-price-change-value"
-              :class="{ decrease: btcDecriase }"
-              ><span
+          <div class="network-info__info-btc-price">
+            <span class="network-info__btc-prise">
+              <span
                 v-pretty-number="{
-                  value: marketcap?.priceBtcDelta24pct,
-                  currency: '%',
+                  value: marketcap?.priceBtc,
+                  currency: 'BTC',
                 }"
               />
-              <span class="network-info__info-price-change-percent">%</span>
+              <span class="network-info__btc-currency">BTC</span>
             </span>
-            <priceDown v-if="btcDecriase" />
-            <priceUp v-else />
+            <div class="network-info__info-price-change">
+              <span
+                class="network-info__info-price-change-value"
+                :class="{ decrease: btcDecrease }"
+                ><span
+                  v-pretty-number="{
+                    value: marketcap?.priceBtcDelta24pct,
+                    currency: '%',
+                  }"
+                />
+                <span class="network-info__info-price-change-percent">%</span>
+              </span>
+              <priceDown v-if="btcDecrease" />
+              <priceUp v-else />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <!-- Дополнительная информация по сетке -->
-    <div class="network-info__additional">
-      <div v-if="apy" class="network-info__additional-info-line">
-        <span class="network-info__additional-info-title">
-          APY
-          <Tooltip>
-            <template #content>
-              <span :style="{ maxWidth: '200px', display: 'flex' }">
-                {{ $t('netInfoGeneral.apyTooltip') }}
-              </span>
-            </template>
-            <template #default>
-              <info />
-            </template>
-          </Tooltip>
-        </span>
-        <div class="network-info__additional-info-white-space" />
-        <span class="network-info__additional-info-value">
-          <span v-pretty-number="{ value: apy, currency: '%' }" />
-          <span class="network-info__additional-info-percent"> % </span>
-        </span>
+
+      <!-- Дополнительная информация по сетке -->
+      <div class="network-info__additional">
+        <div
+          class="network-info__additional-info-line"
+          v-for="info in marketInfo"
+          :key="info"
+        >
+          <span class="network-info__additional-info-title">
+            {{ $t(`netInfoGeneral.${info.key}`) }}
+            <Tooltip>
+              <template #content>
+                <span class="tooltip-span">
+                  {{ $t(`netInfoGeneral.${info.key}Tooltip`) }}
+                </span>
+              </template>
+              <template #default>
+                <info />
+              </template>
+            </Tooltip>
+          </span>
+          <div class="network-info__additional-info-white-space" />
+          <span class="network-info__additional-info-value">
+            <span v-pretty-number="{ value: info.value, currency: '%' }" />
+            <span class="network-info__additional-info-percent"> % </span>
+          </span>
+        </div>
       </div>
-      <div v-if="inflation" class="network-info__additional-info-line">
-        <span class="network-info__additional-info-title">
-          {{ $t('netInfoGeneral.inflation') }}
-          <Tooltip>
-            <template #content>
-              <span :style="{ maxWidth: '200px', display: 'flex' }">
-                {{ $t('netInfoGeneral.inflationTooltip') }}
-              </span>
-            </template>
-            <template #default>
-              <info />
-            </template>
-          </Tooltip>
-        </span>
-        <div class="network-info__additional-info-white-space" />
-        <span class="network-info__additional-info-value">
-          <span v-pretty-number="{ value: inflation, currency: '%' }" />
-          <span class="network-info__additional-info-percent"> % </span>
-        </span>
+      <div class="network-info__note">
+        <p>
+          {{ tokenDescription }}
+        </p>
       </div>
-      <div v-if="stakingRatio" class="network-info__additional-info-line">
-        <span class="network-info__additional-info-title">
-          {{ $t('netInfoGeneral.staked') }}
-          <Tooltip>
-            <template #content>
-              <span :style="{ maxWidth: '200px', display: 'flex' }">
-                {{ $t('netInfoGeneral.stakingRatioTooltip') }}
-              </span>
-            </template>
-            <template #default>
-              <info />
-            </template>
-          </Tooltip>
-        </span>
-        <div class="network-info__additional-info-white-space" />
-        <span class="network-info__additional-info-value">
-          <span v-pretty-number="{ value: stakingRatio, currency: '%' }" />
-          <span class="network-info__additional-info-percent"> % </span>
-        </span>
-      </div>
-    </div>
-    <div class="network-info__note">
-      <p>
-        {{ tokenDescription }}
-      </p>
     </div>
     <teleport v-if="showModal" to="body">
       <Modal>
@@ -284,9 +258,9 @@ export default {
     },
   },
   setup(props) {
+    const store = useStore();
     const currentIcon = ref();
     const { t, te } = useI18n();
-    const store = useStore();
 
     const tokenDescription = computed(() => {
       return props.isCurrentToken ||
@@ -310,34 +284,56 @@ export default {
 
     setIcon(props.currentWallet.net);
 
+    const loading = ref(false);
     const getWalletMarketcap = async () => {
+      loading.value = true;
       const { data } = await props.currentWallet.getMarketcap();
       store.dispatch('profile/setCurrentWalletMarketcap', {
         ...data,
         net: props.currentWallet.net,
       });
+      loading.value = false;
     };
     getWalletMarketcap();
 
     const marketcap = computed(
       () => store.getters['profile/currentWalletMarketcap']
     );
-    const apy = computed(() => {
-      const currencyYield = marketcap.value?.yield;
 
-      if (!currencyYield) {
-        return 0;
+    const marketInfo = computed(() => {
+      const info = [];
+      if (marketcap.value['yield']) {
+        let currencyYield = marketcap.value['yield'];
+
+        if (typeof currencyYield === 'number') {
+          currencyYield = +currencyYield.toFixed(0);
+        }
+
+        info.push({
+          key: 'apy',
+          value: currencyYield,
+        });
       }
 
-      return typeof currencyYield === 'number'
-        ? +currencyYield.toFixed(2)
-        : currencyYield;
-    });
-    const inflation = computed(() => marketcap.value?.inflation);
-    const stakingRatio = computed(() => marketcap.value?.stakingRate);
+      if (marketcap.value['inflation']) {
+        info.push({
+          key: 'inflation',
+          value: marketcap.value['inflation'],
+        });
+      }
 
-    const usdDecriase = computed(() => marketcap.value?.priceUsdDelta24pct < 0);
-    const btcDecriase = computed(() => marketcap.value?.priceBtcDelta24pct < 0);
+      if (marketcap.value['stakingRate']) {
+        info.push({
+          key: 'staked',
+          value: marketcap.value['stakingRate'],
+        });
+      }
+
+      return info;
+    });
+
+    const usdDecrease = computed(() => marketcap.value?.priceUsdDelta24pct < 0);
+    const btcDecrease = computed(() => marketcap.value?.priceBtcDelta24pct < 0);
 
     const socials = computed(() => socialLinks[props.currentWallet.net]);
 
@@ -367,11 +363,8 @@ export default {
       currentIcon,
       prettyNumber,
       marketcap,
-      usdDecriase,
-      btcDecriase,
-      apy,
-      inflation,
-      stakingRatio,
+      usdDecrease,
+      btcDecrease,
       socials,
       showModal,
       modalCloseHandler,
@@ -380,6 +373,8 @@ export default {
       iconPlaceholder,
       getTokenIcon,
       tokenDescription,
+      loading,
+      marketInfo,
     };
   },
 };
@@ -689,6 +684,10 @@ export default {
     font-size: 16px;
     line-height: 19px;
 
+    &:deep(.tooltip-span) {
+      display: flex;
+      max-width: 220px;
+    }
     & svg {
       margin-left: 3px;
     }
