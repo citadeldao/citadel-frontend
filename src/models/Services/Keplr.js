@@ -32,10 +32,7 @@ export default class keplrConnector {
   }
 
   getSignType(rawTx) {
-    return rawTx.transaction.direct &&
-      rawTx.transaction.json.memo.toLowerCase().includes('permission')
-      ? 'direct'
-      : 'json';
+    return rawTx.directSignKeplrRequired ? 'direct' : 'json';
   }
 
   async getOutputHash(signer, rawTx, keplrResult) {
@@ -90,7 +87,7 @@ export default class keplrConnector {
         window.keplr.defaultOptions = {};
       }
 
-      if (data.direct && data.json.memo.toLowerCase().includes('permission')) {
+      if (this.getSignType(rawTx) === 'direct') {
         const res = await window.keplr.signDirect(
           data.chain_id || data.json.chain_id,
           signer,
