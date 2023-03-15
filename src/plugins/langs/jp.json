@@ -564,6 +564,8 @@
     "amount": "額",
     "to": "に",
     "sendAssetsToAnotherNetwork": "アセットを別のネットワークに送信する",
+    "bridgeTitle": "",
+    "bridgeTitleBtn": "",
     "rewards": "報酬",
     "stakingRatio": "ステーキング率",
     "inflation": "インフレーション",

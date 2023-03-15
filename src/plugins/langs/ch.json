@@ -566,6 +566,8 @@
     "amount": "金额",
     "to": "至",
     "sendAssetsToAnotherNetwork": "将资产转至其他网络",
+    "bridgeTitleBtn": "",
+    "bridgeTitle": "",
     "rewards": "奖励",
     "stakingRatio": "质押比例",
     "inflation": "通胀",

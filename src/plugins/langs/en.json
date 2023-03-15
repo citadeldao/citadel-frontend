@@ -574,6 +574,8 @@
     "amount": "Amount",
     "to": "To",
     "sendAssetsToAnotherNetwork": "Send assets to another network",
+    "bridgeTitle": "If you want to send assets to another network, please use <span style='font-weight: 700; font-family: Panton_SemiBold;'>«Bridge»</span> option.",
+    "bridgeTitleBtn": "Bridge",
     "rewards": "Rewards",
     "stakingRatio": "Staking ratio",
     "inflation": "Inflation",
