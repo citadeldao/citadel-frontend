@@ -7,16 +7,15 @@ export const getNetworkDataByKey = ({
 
   const [net, token] = network.split('_');
 
-  if (net === 'Others') return null;
+  const isNetExist = config[net];
 
-  let result = null;
-
-  if (config[net]) result = config[net];
-
-  if (token && result) {
-    result = config[net].tokens[`${net}_${token}`];
+  if (token && isNetExist) {
+    return config[net].tokens[`${net}_${token}`][key];
+  } else if (config[net]) {
+    return config[net][key];
   }
 
-  if (key === 'allKeys') return result;
-  else return result[key];
+  if (net === 'Others') return null;
+
+  return null;
 };
