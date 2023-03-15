@@ -566,6 +566,8 @@
     "amount": "Сумма",
     "to": "На",
     "sendAssetsToAnotherNetwork": "Отправить активы в другую сеть",
+    "bridgeTitle": "",
+    "bridgeTitleBtn": "",
     "rewards": "Вознаграждения",
     "stakingRatio": "Застейканные активы",
     "inflation": "Инфляция",

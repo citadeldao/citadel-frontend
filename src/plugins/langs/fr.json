@@ -566,6 +566,8 @@
     "amount": "Montant",
     "to": "À",
     "sendAssetsToAnotherNetwork": "Envoyer des actifs à un autre réseau",
+    "bridgeTitle": "",
+    "bridgeTitleBtn": "",
     "rewards": "Récompenses",
     "stakingRatio": "Ratio de staking",
     "inflation": "Inflation",

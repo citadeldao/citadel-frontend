@@ -570,6 +570,8 @@
     "amount": "",
     "to": "",
     "sendAssetsToAnotherNetwork": "",
+    "bridgeTitle": "",
+    "bridgeTitleBtn": "",
     "rewards": "",
     "stakingRatio": "",
     "inflation": "",
