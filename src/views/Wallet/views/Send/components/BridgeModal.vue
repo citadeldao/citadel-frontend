@@ -147,7 +147,9 @@
         <div class="bridge__fee">
           Transaction Fee:
           <div class="amount">{{ fee.fee }}</div>
-          <div class="symbol">{{ currentWallet.code }}</div>
+          <div class="symbol">
+            {{ currentWallet.parentCoin?.code || currentWallet.code }}
+          </div>
         </div>
       </div>
     </div>

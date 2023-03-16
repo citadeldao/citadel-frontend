@@ -81,7 +81,7 @@
             :placeholder="$t('selectAddress')"
             :disabled="isSendToAnotherNetwork && !bridgeTargetNet"
             :show-error-text="showErrorText"
-            :error="incorrectAddress"
+            :error="!showBridgeModal && incorrectAddress"
             data-qa="send__to-field"
             @focus="showNetworkTargetWallets = true"
           />
@@ -99,7 +99,10 @@
             />
           </div>
           <transition name="fade">
-            <div v-if="incorrectAddress" class="send__section-error">
+            <div
+              v-if="!showBridgeModal && incorrectAddress"
+              class="send__section-error"
+            >
               <error class="send__section-error-icon" />
               <span class="send__section-error-text">
                 {{ incorrectAddress }}
@@ -123,13 +126,13 @@
             placeholder="0.0"
             icon="coins"
             :show-error-text="showErrorText"
-            :error="insufficientFunds"
+            :error="!showBridgeModal && insufficientFunds"
             data-qa="send__amount-field"
             :show-set-max="maxAmountParent !== 0"
           />
           <transition name="fade">
             <div
-              v-if="insufficientFunds"
+              v-if="!showBridgeModal && insufficientFunds"
               class="send__section-error"
               :class="{
                 doNotHaveEnoughFunds: maxAmountParent === 0 || maxAmount === 0,
