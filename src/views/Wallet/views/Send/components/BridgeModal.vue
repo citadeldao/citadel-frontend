@@ -169,6 +169,7 @@ import error from '@/assets/icons/input/error.svg';
 import { useI18n } from 'vue-i18n';
 import Tooltip from '@/components/Tooltip';
 import info from '@/assets/icons/info.svg';
+import amountInputValidation from '@/helpers/amountInputValidation';
 
 export default {
   components: {
@@ -222,12 +223,15 @@ export default {
 
     const { t } = useI18n();
 
-    const insufficientFunds = computed(() => {
-      if (+amount.value > +props.maxAmount) {
-        return t('insufficientFunds');
-      }
-      return false;
-    });
+    const insufficientFunds = computed(() =>
+      amountInputValidation({
+        amount: amount.value,
+        wallet: props.currentWallet,
+        maxAmount: +props.maxAmount,
+        type: 'send',
+        maxAmountParent: +props.maxAmountParent,
+      })
+    );
 
     const incorrectAddress = computed(() => {
       // for networks that has not selfSend
