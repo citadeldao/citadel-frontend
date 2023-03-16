@@ -9,7 +9,6 @@
     :loading="loading"
     :has-slot="true"
     @close="claimModalCloseHandler"
-    @buttonClick="$emit('buttonClick')"
   >
     <template #default>
       <XCTConfirmClaimModal
