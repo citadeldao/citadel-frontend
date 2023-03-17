@@ -2,7 +2,7 @@ import { convertToLocalDate } from '@/helpers/date';
 import BigNumber from 'bignumber.js';
 import { prettyNumber } from '@/helpers/prettyNumber';
 
-const BTC_USDT_AMOUNT = 0.00001; // 0.00001 BTC ~ 0.25 USDT
+const BTC_USDT_AMOUNT = 0.000001;
 
 export const MAX_TICKS_LIMIT = 12;
 
