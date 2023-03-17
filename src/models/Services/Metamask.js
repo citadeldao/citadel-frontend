@@ -25,10 +25,9 @@ export default class MetamaskConnector {
     this.network = this.networks[this.chainId];
   }
 
-  async updateChainNetwork() {
-    const chainId = await this.ethereum.request({ method: 'eth_chainId' });
+  async updateChainId() {
+    const chainId = await window.ethereum.request({ method: 'eth_chainId' });
     this.chainId = parseInt(chainId, 16);
-    this.network = this.networks[this.chainId];
   }
 
   setCustomListeners() {
@@ -36,8 +35,9 @@ export default class MetamaskConnector {
       this.accounts = accounts;
     });
 
-    this.ethereum.on('chainChanged', async function () {
-      await this.updateChainNetwork();
+    this.ethereum.on('chainChanged', async () => {
+      await this.updateChainId();
+      this.network = this.networks[this.chainId];
     });
 
     this.ethereum.on('close', function () {
@@ -65,8 +65,8 @@ export default class MetamaskConnector {
 
     if (accounts && accounts.length) {
       this.accounts = accounts;
-
-      await this.updateChainNetwork();
+      await this.setChainId();
+      this.network = this.networks[this.chainId];
     }
   }
 
@@ -79,7 +79,7 @@ export default class MetamaskConnector {
 
   async signMessage(message, signer) {
     const { ERROR } = this.ethereum._log.levels;
-    this.ethereum._log.disableAll(ERROR); // disable 
+    this.ethereum._log.disableAll(ERROR); // disable
 
     try {
       return await this.ethereum.request({
