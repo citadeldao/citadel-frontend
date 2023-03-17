@@ -573,6 +573,7 @@ export default {
         if (!data.error) {
           txHash.value = [data.data.txhash];
           showConfirmUnstakedClaim.value = false;
+          showConfirmClaim.value = false;
           showClaimSuccessModal.value = true;
           isLoading.value = false;
         } else {
