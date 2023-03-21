@@ -755,11 +755,11 @@ export default {
 
     const signMessage = async () => {
       if (signerWallet.value.type === WALLET_TYPES.LEDGER) {
-        notify({
-          type: 'warning',
-          text: 'Unsupported wallet type',
-        });
-        return;
+        // notify({
+        //   type: 'warning',
+        //   text: 'Unsupported wallet type',
+        // });
+        // return;
       }
 
       if (signerWallet.value.type === WALLET_TYPES.KEPLR) {
