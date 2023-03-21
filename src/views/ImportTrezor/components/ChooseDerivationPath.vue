@@ -30,6 +30,7 @@ import { useStore } from 'vuex';
 import { ref, computed, inject } from 'vue';
 import Modal from '@/components/Modal';
 import { WALLET_TYPES } from '@/config/walletType';
+import CryptoCoin from '@/models/CryptoCoin';
 
 export default {
   name: 'ChooseDerivationPath',
@@ -48,6 +49,21 @@ export default {
     const showModal = ref(true);
     const showLoader = ref(true);
 
+    const pathOptions = ref(
+      props.net === 'evmos'
+        ? [
+            CryptoCoin.getDerivationPathTemplates(
+              props.net,
+              WALLET_TYPES.TREZOR
+            )[0],
+          ]
+        : CryptoCoin.getDerivationPathTemplates(props.net, WALLET_TYPES.TREZOR)
+    );
+
+    const currentPathDerivation = ref(
+      (pathOptions.value && pathOptions.value[0].key) || ''
+    );
+
     const { checked, addSingleItem, checkedItems } = useCheckItem();
     const store = useStore();
 
@@ -60,7 +76,8 @@ export default {
       try {
         isCustomLoading.value = true;
         const wallet = await store.dispatch('crypto/createTrezorWallet', {
-          derivationPath: customPath,
+          derivationPath:
+            customPath || currentPathDerivation.value.replace('N', 0),
           net: props.net,
         });
 
@@ -72,10 +89,13 @@ export default {
           throw wallet.error;
         }
 
-        customWallet.value = wallet;
-        addSingleItem(wallet.walletInstance);
-        isCustomLoading.value = false;
-        showLoader.value = false;
+        if (wallet.walletInstance) {
+          customWallet.value = wallet;
+          addSingleItem(wallet.walletInstance);
+
+          isCustomLoading.value = false;
+          showLoader.value = false;
+        }
       } catch (err) {
         console.error(err);
         customWallet.value = false;
