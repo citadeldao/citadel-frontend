@@ -564,6 +564,8 @@
     "amount": "額",
     "to": "に",
     "sendAssetsToAnotherNetwork": "アセットを別のネットワークに送信する",
+    "bridgeTitle": "",
+    "bridgeTitleBtn": "",
     "rewards": "報酬",
     "stakingRatio": "ステーキング率",
     "inflation": "インフレーション",
@@ -866,6 +868,7 @@
         "inflation": "インフレーション",
         "inflationTooltip": "インフレーション (ネットワーク インフレーション) については、新しく作成されたすべてのトークンと、報酬として配布されているすべての準備金を考慮に入れます。",
         "priceChart": "価格表",
+        "apy": "APY",
         "apyTooltip": "年間利回りはステーキング インフレーション / ステーキングとしてカウントされます",
         "stakingRatioTooltip": "ステークされている適格なトークンの割合",
         "dayTradingVol": "24時間取引量",
@@ -1193,11 +1196,6 @@
             "description": "IRISnet (別名 IRIS Hub) は、次世代の分散アプリケーションの基盤となるように設計されています。  Cosmos-SDK で構築された IRIS Hub は、DeFi アプリケーションをサポートするさまざまなモジュールを提供しながら、統一されたサービス モデルを通じてクロスチェーンの相互運用性を実現します。",
             "shortDescription": "IRIS ネットワークは、分散型ビジネス アプリケーションの構築を容易にする技術基盤を提供することを目的としたブロックチェーンのインターネットです。"
         },
-        "cerberus": {
-            "title": "ケルベロスネットワーク",
-            "description": "Cerberus ブロックチェーンは、誰でもネットワークに参加してバリデーターを実行できる、完全に許可のないブロックチェーンです。 コミュニティは、バリデーターと流動性プールを使用して Cerberus ($CRBRUS) をステーキングすることで、コインから価値を得ることができます。  2022 年後半、Cerberus チームは NFT プロジェクトの立ち上げに注力する予定です。",
-            "shortDescription": "Cerberus は、Cosmos で最初の 3 つの頭を持つミームコインおよび NFT プロジェクトです。"
-        },
         "mantle": {
             "title": "AssetMantle ネットワーク",
             "description": "AssetMantle を使用すると、特定の販売者または販売者グループの幅広い製品専用のマーケットプレイスを簡単に作成できます。 クリエイターやアーティストが「NFT 向け Amazon」（OpenSea など）に商品を掲載する代わりに、特定の NFT 向けに独自の Shopify スタイルのストアを作成できる、NFT 向け Shopify と考えてください。",
@@ -1300,6 +1298,11 @@
         },
         "kujira":{
             "title": "Kujira",
+            "description": "",
+            "shortDescription": ""
+        },
+        "provenance":{
+            "title": "Provenance",
             "description": "",
             "shortDescription": ""
         }
@@ -1458,7 +1461,15 @@
     "addComment": "コメントを追加する",
     "editComment": "コメントを編集",
     "errors": {
-        "notEnoughFounds": "取引手数料を支払うのに十分な {code} がありません"
+        "notEnoughFounds": "取引手数料を支払うのに十分な {code} がありません",
+        "notAvailableToStake": "",
+        "200": {
+            "variant1": "",
+            "variant2": ""
+        },
+        "201": "",
+        "202": "",
+        "901": ""
     },
     "copyToClipboardTitle": "閲覧キーをコピー",
     "showHideKeyTitle": "表示キーの表示/非表示",

@@ -22,7 +22,6 @@ import CryptoCoinSTARNAME from './CryptoCoins/CryptoCoinSTARNAME';
 import CryptoCoinEMONEY from './CryptoCoins/CryptoCoinEMONEY';
 import CryptoCoinETH from './CryptoCoins/CryptoCoinETH';
 import CryptoCoinBAND from './CryptoCoins/CryptoCoinBAND';
-import CryptoCoinCERBERUS from './CryptoCoins/CryptoCoinCERBERUS';
 import CryptoCoinGBRIDGE from './CryptoCoins/CryptoCoinGBRIDGE';
 import CryptoCoinKONSTELLATION from './CryptoCoins/CryptoCoinKONSTELLATION';
 import CryptoCoinMANTLE from './CryptoCoins/CryptoCoinMANTLE';
@@ -52,6 +51,7 @@ import CryptoCoinTERITORI from './CryptoCoins/CryptoCoinTERITORI';
 import CryptoCoinQUICKSILVER from './CryptoCoins/CryptoCoinQUICKSILVER';
 import CryptoCoinAVALANCHE from './CryptoCoins/CryptoCoinAVALANCHE';
 import CryptoCoinKUJIRA from './CryptoCoins/CryptoCoinKUJIRA';
+import CryptoCoinPROVENANCE from './CryptoCoins/CryptoCoinPROVENANCE';
 
 export default {
   // nets
@@ -88,7 +88,6 @@ export default {
   KAVA: CryptoCoinKAVA,
   BSC: CryptoCoinBSC,
   POLKADOT: CryptoCoinPOLKADOT,
-  CERBERUS: CryptoCoinCERBERUS,
   GBRIDGE: CryptoCoinGBRIDGE,
   KONSTELLATION: CryptoCoinKONSTELLATION,
   MANTLE: CryptoCoinMANTLE,
@@ -109,4 +108,5 @@ export default {
   QUICKSILVER: CryptoCoinQUICKSILVER,
   AVALANCHE: CryptoCoinAVALANCHE,
   KUJIRA: CryptoCoinKUJIRA,
+  PROVENANCE: CryptoCoinPROVENANCE,
 };

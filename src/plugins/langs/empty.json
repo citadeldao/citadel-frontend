@@ -570,6 +570,8 @@
     "amount": "",
     "to": "",
     "sendAssetsToAnotherNetwork": "",
+    "bridgeTitle": "",
+    "bridgeTitleBtn": "",
     "rewards": "",
     "stakingRatio": "",
     "inflation": "",
@@ -872,6 +874,7 @@
         "inflation": "",
         "inflationTooltip": "",
         "priceChart": "",
+        "apy": "",
         "apyTooltip": "",
         "stakingRatioTooltip": "",
         "dayTradingVol": "",
@@ -1199,11 +1202,6 @@
             "description": "",
             "shortDescription": ""
         },
-        "cerberus": {
-            "title": "",
-            "description": "",
-            "shortDescription": ""
-        },
         "mantle": {
             "title": "",
             "description": "",
@@ -1306,6 +1304,11 @@
         },
         "kujira":{
             "title": "Kujira",
+            "description": "",
+            "shortDescription": ""
+        },
+        "provenance":{
+            "title": "Provenance",
             "description": "",
             "shortDescription": ""
         }
@@ -1461,7 +1464,14 @@
     "minAmountError": "",
     "errors": {
         "notEnoughFounds": "",
-        "notAvailableToStake": ""
+        "notAvailableToStake": "",
+        "200": {
+            "variant1": "",
+            "variant2": ""
+        },
+        "201": "",
+        "202": "",
+        "901": ""
     },
     "minBalanceNote": ""
 }
