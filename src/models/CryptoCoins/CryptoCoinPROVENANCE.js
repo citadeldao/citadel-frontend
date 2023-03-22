@@ -1,7 +1,7 @@
 import CryptoCoin from '../CryptoCoin';
-export default class CryptoCoinCERBERUS extends CryptoCoin {
-  constructor(opts, api) {
-    super(opts, api);
+export default class CryptoCoinPROVENANCE extends CryptoCoin {
+  constructor(opts) {
+    super(opts);
     this.privateKeyEncoded = opts.privateKeyEncoded || null;
     this.publicKey = opts.publicKey || null;
     this.hasRedelegation = true;

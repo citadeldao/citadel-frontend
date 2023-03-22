@@ -127,6 +127,7 @@ export default {
           type: 'warning',
           text: t('metamask.changeNetwork'),
         });
+        store.dispatch('metamask/connectToMetamask', null, { root: true });
       }
     };
 

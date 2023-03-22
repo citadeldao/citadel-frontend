@@ -80,7 +80,6 @@ import BigNumber from 'bignumber.js';
 import { useWindowSize } from 'vue-window-size';
 import moment from 'moment';
 import { screenWidths } from '@/config/sreenWidthThresholds';
-import notify from '@/plugins/notify';
 import useWallets from '@/compositions/useWallets';
 
 export default {
@@ -180,16 +179,26 @@ export default {
         .times(currency.value?.btc.USD)
         .toNumber()
     );
+
+    const formatFromTo = (month = null, from = null, to = null) => {
+      const fromTime = !from ? new Date() : new Date(from);
+      const toTime = !to ? new Date() : new Date(to);
+
+      fromTime.setHours(0, 0, 0, 0);
+      toTime.setHours(23, 59, 59, 59);
+
+      if (month) fromTime.setMonth(fromTime.getMonth() - month);
+
+      return {
+        from: Number(fromTime),
+        to: Number(toTime),
+      };
+    };
+
     const dateChangeHandler = (val) => {
       if (val.length > 0) {
-        if (+moment(val[0]).format('x') > +moment().format('x')) {
-          notify({
-            type: 'warning',
-            text: 'Incorrect Date',
-          });
-        } else {
-          loadData(moment(val[0]).format('x'), moment(val[1]).format('x'));
-        }
+        const { from, to } = formatFromTo(null, val[0], val[1]);
+        loadData(from, to);
       }
     };
 
@@ -200,7 +209,8 @@ export default {
         isLoading.value = false;
       } else if (val !== 'custom') {
         date.value = [];
-        loadData(Date.now() - 1000 * 60 * 60 * 24 * 31 * val, Date.now());
+        const { from, to } = formatFromTo(val);
+        loadData(Number(from), Number(to));
       }
     };
 

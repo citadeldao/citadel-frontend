@@ -5,7 +5,7 @@ import citadel from '@citadeldao/lib-citadel';
 import { i18n } from '@/plugins/i18n';
 import store from '@/store';
 import router from '@/router';
-import { getErrorText } from '@/config/errors';
+import { getErrorText, getErrorTextByCode } from '@/config/errors';
 import BigNumber from 'bignumber.js';
 import customErrors from '@/helpers/customErrors';
 
@@ -57,15 +57,18 @@ export default class CryptoCoin {
   }
 
   getCustomErrorMessage(error) {
+    const textError = typeof error === 'object' ? JSON.stringify(error) : error;
+
     const message = {
       type: 'warning',
-      text: error,
+      text: textError,
     };
 
     for (const key in customErrors) {
       if (
         customErrors[key].find(
-          (check) => error.includes(check) || error?.message.includes(check)
+          (check) =>
+            textError.includes(check) || textError?.message?.includes(check)
         )
       ) {
         const code = this.code;
@@ -135,13 +138,24 @@ export default class CryptoCoin {
       return { ok: true, data: Array.isArray(data) ? data : [data] };
     }
 
-    const message = this.getCustomErrorMessage(error);
+    const errorMessage = getErrorTextByCode(error);
 
-    notify(message);
+    if (errorMessage) {
+      notify({
+        type: 'warning',
+        text: errorMessage,
+      });
 
-    console.error(error);
+      return { ok: false, error: errorMessage };
+    } else {
+      const message = this.getCustomErrorMessage(error);
 
-    return { ok: false, error };
+      notify(message);
+
+      console.error(error);
+
+      return { ok: false, error };
+    }
   }
 
   async signAndSendTransfer({ walletId, rawTransaction, ...options }) {
@@ -150,15 +164,21 @@ export default class CryptoCoin {
     if (!res.error) {
       return res;
     }
+    const errorMessage = getErrorTextByCode(res.error);
 
-    const errorText = getErrorText(res.error?.message?.toLowerCase());
-    const message = this.getCustomErrorMessage(res.error || errorText);
-
-    notify(message);
-
-    console.error(res.error);
-
-    return res;
+    if (errorMessage) {
+      notify({
+        type: 'warning',
+        text: errorMessage,
+      });
+      return { error: errorMessage };
+    } else {
+      const errorText = getErrorText(res.error?.message?.toLowerCase());
+      const message = this.getCustomErrorMessage(res.error || errorText);
+      notify(message);
+      console.error(res.error);
+      return res;
+    }
   }
 
   async prepareTransfer({ walletId, options }) {
@@ -168,13 +188,14 @@ export default class CryptoCoin {
       return { data, error };
     }
 
-    const message = this.getCustomErrorMessage(error);
-
-    notify(message);
+    notify({
+      type: 'warning',
+      text: error.toString(),
+    });
 
     console.error(error);
-
-    return { data, error };
+    return { data, error: error.toString() };
+    // const message = this.getCustomErrorMessage(error);
   }
 
   async getBuildBridgeTransaction({ walletId, token, ...options }) {
@@ -305,12 +326,13 @@ export default class CryptoCoin {
     const res = await citadel.assignToDao(walletId, holderAddress, options);
 
     if (res.error) {
+      const errorMessage = getErrorTextByCode(res.error);
       notify({
         type: 'warning',
-        text: res.error,
+        text: errorMessage,
       });
+      return { error: errorMessage };
     }
-
     return res;
   }
 

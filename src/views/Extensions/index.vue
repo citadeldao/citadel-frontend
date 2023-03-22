@@ -192,7 +192,7 @@ import notify from '@/plugins/notify';
 import useWallets from '@/compositions/useWallets';
 import extensionsSocketTypes from '@/config/extensionsSocketTypes';
 
-import useApi from '@/api/useApi';
+// import useApi from '@/api/useApi';
 // import { keplrNetworksProtobufFormat } from '@/config/availableNets';
 import citadel from '@citadeldao/lib-citadel';
 import TransactionInfo from './components/TransactionInfo';
@@ -200,6 +200,7 @@ import MessageInfo from './components/MessageInfo';
 import FrameApp from './components/FrameApp.vue';
 import { parseTagsList, filteredApps } from './components/helpers';
 import EmptyList from '@/components/EmptyList';
+import { signTxByPrivateKey } from '/node_modules/@citadeldao/lib-citadel/src/networkClasses/cosmosNetworks/_BaseCosmosClass/oldSigners/signTxByPrivateKey';
 
 export default {
   name: 'Extensions',
@@ -316,10 +317,6 @@ export default {
 
     const closeSuccessModal = () => {
       clearStates();
-      sendMSG(
-        extensionsSocketTypes.messages.success,
-        extensionsSocketTypes.types.transaction
-      );
     };
 
     const onSearchHandler = (str) => {
@@ -673,12 +670,15 @@ export default {
       password.value = '';
       signLoading.value = false;
       confirmPassword.value = false;
-      store.commit('extensions/SET_TRANSACTION_FOR_SIGN', null, { root: true });
 
       sendMSG(
         extensionsSocketTypes.messages.canceled,
-        extensionsSocketTypes.types.transaction
+        extensionsSocketTypes.types.transaction,
+        {
+          mem_tx_id: extensionTransactionForSign.value.mem_tx_id,
+        }
       );
+      store.commit('extensions/SET_TRANSACTION_FOR_SIGN', null, { root: true });
     };
 
     const closeSignMessageModal = () => {
@@ -755,11 +755,11 @@ export default {
 
     const signMessage = async () => {
       if (signerWallet.value.type === WALLET_TYPES.LEDGER) {
-        notify({
-          type: 'warning',
-          text: 'Unsupported wallet type',
-        });
-        return;
+        // notify({
+        //   type: 'warning',
+        //   text: 'Unsupported wallet type',
+        // });
+        // return;
       }
 
       if (signerWallet.value.type === WALLET_TYPES.KEPLR) {
@@ -807,10 +807,20 @@ export default {
             useAlternativeSigner: true,
           }
         );
+
+        const ress = await signTxByPrivateKey(
+          { json: messageForSign.value.message },
+          await signerWallet.value.getPrivateKeyDecoded(password.value)
+        );
+
         if (!signResult.error) {
           sendMSG(
             signResult.data.signature,
-            extensionsSocketTypes.types.message
+            extensionsSocketTypes.types.message,
+            {
+              base64signature: ress.tx.signatures[0],
+              signature: signResult.data.signature,
+            }
           );
           showSuccessNotify();
         } else {
@@ -894,16 +904,24 @@ export default {
           keplrResult
         );
 
-        const data = await useApi('wallet').sendSignedTransaction({
-          hash,
-          deviceType: WALLET_TYPES.KEPLR,
-          proxy: false,
-          network: signerWallet.value.net,
-          from: signerWallet.value.address,
-          mem_tx_id: extensionTransactionForSign.value.mem_tx_id || null,
-        });
+        // const data = await useApi('wallet').sendSignedTransaction({
+        //   hash,
+        //   deviceType: WALLET_TYPES.KEPLR,
+        //   proxy: false,
+        //   network: signerWallet.value.net,
+        //   from: signerWallet.value.address,
+        //   mem_tx_id: extensionTransactionForSign.value.mem_tx_id || null,
+        // });
+        const data = await citadel.sendSignedTransaction(
+          signerWallet.value.id,
+          {
+            signedTransaction: hash,
+            mem_tx_id: extensionTransactionForSign.value.mem_tx_id || null,
+            proxy: false,
+          }
+        );
 
-        if (data.ok) {
+        if (!data.error) {
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;
           successTx.value = [data.data.txhash];
@@ -1103,10 +1121,6 @@ export default {
           successTx.value = result.data;
           confirmModalCloseHandler();
           showSuccessModal.value = true;
-          sendMSG(
-            extensionsSocketTypes.messages.success,
-            extensionsSocketTypes.types.transaction
-          );
         } else {
           signLoading.value = false;
           confirmModalDisabled.value = false;

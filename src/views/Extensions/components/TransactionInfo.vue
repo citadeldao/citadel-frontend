@@ -43,8 +43,7 @@
       <div class="label">
         {{ $t('extensions.transactionData') }}
       </div>
-      <div class="show" @click="showTx = !showTx">
-        {{ $t('extensions.showLabel') }}
+      <div :class="{ open: showTx }" class="show" @click="showTx = !showTx">
         <keep-alive>
           <component
             :is="arrowDownIcon"
@@ -54,18 +53,15 @@
         </keep-alive>
       </div>
     </div>
-    <pre
-      class="item-tx"
-      v-if="showTx && extensionTransactionForSign?.transaction"
-      >{{
-        JSON.stringify(
+    <div class="item-tx">
+      <!--eslint-disable-next-line-->
+      <pre v-if="showTx && extensionTransactionForSign?.transaction">{{
           extensionTransactionForSign.messageScrt ||
-            extensionTransactionForSign.transaction,
-          null,
-          2
-        ).trim()
-      }}</pre
-    >
+          extensionTransactionForSign.transaction?.json ||
+          extensionTransactionForSign.transaction
+        }}
+      </pre>
+    </div>
     <div
       v-if="signerWallet && PRIVATE_PASSWORD_TYPES.includes(signerWallet.type)"
       class="password-wrap"
@@ -130,7 +126,7 @@ export default {
       emit('changePassword', val);
     };
 
-    import(`@/assets/icons/extensions/arrow_down.svg`).then((val) => {
+    import(`@/assets/icons/extensions/arrow_up.svg`).then((val) => {
       arrowDownIcon.value = markRaw(val.default);
     });
 
@@ -157,7 +153,7 @@ export default {
   }
 
   div.code {
-    white-space: pre;
+    // white-space: pre;
   }
 
   .item-tx {
@@ -165,6 +161,17 @@ export default {
     width: 100%;
     margin-top: 0;
     max-height: 260px;
+    background: #d5e1fa52;
+    border-radius: 8px;
+  }
+
+  pre {
+    display: block;
+    unicode-bidi: embed;
+    font-family: monospace;
+    white-space: pre-wrap;
+    color: #47697b;
+    font-size: 12px;
   }
 }
 
@@ -215,22 +222,27 @@ export default {
 
   .arrow-icon {
     &.open {
-      transform: rotate(180deg);
+      transform: rotate(0deg);
     }
   }
 
   .show {
-    z-index: 0;
-    color: #6b93c0;
-    border-bottom: 1px dotted #6b93c0;
-    text-transform: lowercase;
+    width: 32px;
+    height: 32px;
+    background: #6a4bff;
+    border-radius: 4px;
     cursor: pointer;
     display: flex;
+    justify-content: center;
     align-items: center;
 
+    &.open {
+      background: #4f70cf;
+    }
+
     svg {
-      margin-top: 2px;
-      margin-left: 4px;
+      transform: rotate(90deg);
+      fill: $white !important;
     }
   }
 

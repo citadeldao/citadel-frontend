@@ -15,6 +15,9 @@ import citadel from '@citadeldao/lib-citadel';
 // import hljsVuePlugin from '@highlightjs/vue-plugin';
 import * as Sentry from '@sentry/vue';
 import { Integrations } from '@sentry/tracing';
+// import JsonViewer from 'vue-json-viewer';
+import JsonViewer from 'vue3-json-viewer';
+import 'vue3-json-viewer/dist/index.css';
 import Vue from 'vue';
 
 const app = createApp(App);
@@ -38,6 +41,8 @@ if (process.env.VUE_APP_SENTRY_DSN) {
       'Operation not allowed',
       'code, message, stack',
       'Non-Error promise',
+      'ebfidpplhabeedpnhjnobghokpiioolj',
+      'pmmbeeacafhbpgmlkacpadheejlhhkbf',
     ],
     environment: process.env.NODE_ENV,
     tracesSampleRate: 0.3,
@@ -53,6 +58,7 @@ app
   .use(ElementPlus)
   .use(router)
   .use(Vue3Resize)
+  .use(JsonViewer)
   .component('AppLayout', AppLayout)
   .provide('citadel', citadel)
   .mount('#app');

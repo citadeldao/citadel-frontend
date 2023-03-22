@@ -13,11 +13,13 @@ const types = {
   SET_MEMPOOL: 'SET_MEMPOOL',
   ADD_TO_MEMPOOL: 'ADD_TO_MEMPOOL',
   REMOVE_FROM_MEMPOOL: 'REMOVE_FROM_MEMPOOL',
+  RESET_MEMPOOL_TX: 'RESET_MEMPOOL_TX',
 };
 
 export default {
   namespaced: true,
   state: () => ({
+    txFromMempool: null,
     transactions: null,
     isTransactionsLoading: false,
     transactionsCount: 0,
@@ -25,6 +27,7 @@ export default {
   }),
 
   getters: {
+    txFromMempool: (state) => state.txFromMempool,
     transactions: (state) =>
       state.transactions?.map(
         ({
@@ -59,6 +62,9 @@ export default {
     [types.SET_TRANSACTIONS_COUNT](state, count) {
       state.transactionsCount = count;
     },
+    [types.RESET_MEMPOOL_TX](state) {
+      state.txFromMempool = null;
+    },
     [types.SET_MEMPOOL](state, mempool) {
       // saving txs in state
       for (const tx of mempool) {
@@ -87,6 +93,7 @@ export default {
       }
     },
     [types.REMOVE_FROM_MEMPOOL](state, tx) {
+      state.txFromMempool = tx;
       state.mempool = state.mempool.filter(
         (c) =>
           !(c.hash === tx.hash) &&
@@ -101,6 +108,9 @@ export default {
   },
 
   actions: {
+    resetMempoolTx({ commit }) {
+      commit(types.RESET_MEMPOOL_TX);
+    },
     async getTransactions({ commit, rootGetters }, { walletId, ...options }) {
       commit(types.SET_TRANSACTIONS, null);
       commit(types.SET_IS_TRANSACTIONS_LOADING, true);

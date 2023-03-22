@@ -40,7 +40,7 @@
               v-model.trim="aliases[`${wallet.net}_${wallet.address}`]"
               :label="$t('catPage.inputLabel')"
               type="text"
-              :icon="inputTypeIcon"
+              :icon="wallet.type || inputTypeIcon"
               :placeholder="walletTypePlaceholder"
               :data-qa="dataQa && `${dataQa}__cat-modal__alias-field`"
             />

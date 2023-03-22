@@ -27,7 +27,7 @@ export default function useLedger() {
   };
 
   const getCustomErrorMessage = (error) => {
-    let message = error;
+    let message = typeof error === 'object' ? JSON.stringify(error) : error;
 
     for (const key in customErrors) {
       if (

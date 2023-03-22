@@ -570,6 +570,8 @@
     "amount": "",
     "to": "",
     "sendAssetsToAnotherNetwork": "",
+    "bridgeTitle": "",
+    "bridgeTitleBtn": "",
     "rewards": "",
     "stakingRatio": "",
     "inflation": "",
@@ -832,6 +834,8 @@
     "overallPage": {
         "noBalance": "",
         "noRewards": "",
+        "loading": "",
+        "selectPeriod": "",
         "balanceStructure": {
             "title": ""
         },
@@ -870,6 +874,7 @@
         "inflation": "",
         "inflationTooltip": "",
         "priceChart": "",
+        "apy": "",
         "apyTooltip": "",
         "stakingRatioTooltip": "",
         "dayTradingVol": "",
@@ -1197,11 +1202,6 @@
             "description": "",
             "shortDescription": ""
         },
-        "cerberus": {
-            "title": "",
-            "description": "",
-            "shortDescription": ""
-        },
         "mantle": {
             "title": "",
             "description": "",
@@ -1309,6 +1309,11 @@
         },
         "coreum":{
             "title": "Coreum",
+            "description": "",
+            "shortDescription": ""
+        },
+        "provenance":{
+            "title": "Provenance",
             "description": "",
             "shortDescription": ""
         }
@@ -1464,7 +1469,14 @@
     "minAmountError": "",
     "errors": {
         "notEnoughFounds": "",
-        "notAvailableToStake": ""
+        "notAvailableToStake": "",
+        "200": {
+            "variant1": "",
+            "variant2": ""
+        },
+        "201": "",
+        "202": "",
+        "901": ""
     },
     "minBalanceNote": ""
 }

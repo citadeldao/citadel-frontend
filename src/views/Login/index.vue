@@ -542,6 +542,9 @@ export default {
         });
 
         if (loginWith.value === 'metamask') {
+          if (window.ethereum?.selectedAddress) {
+            store.dispatch('metamask/connectToMetamask', null, { root: true });
+          }
           searchLoginAddress = store.getters['wallets/wallets'].find((w) => {
             return (
               w.address.toLowerCase() === address.toLowerCase() && w.net === net

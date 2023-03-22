@@ -19,11 +19,11 @@
         "carousel": {
             "stake": {
                 "title": "质押并最大化您的收益",
-                "text": "使用基于DAO的新一代资产管理平台加入加密世界"
+                "text": ""
             },
             "xtc": {
                 "title": "接收XCT以进行质押",
-                "text": "使用基于DAO的新一代资产管理平台加入加密世界"
+                "text": ""
             },
             "dao": {
                 "title": "参与DAO",
@@ -31,15 +31,15 @@
             },
             "buy": {
                 "title": "购买 & 交易加密货币",
-                "text": "使用基于DAO的新一代资产管理平台加入加密世界"
+                "text": ""
             },
             "useCases": {
                 "title": "尝试加密货币用例",
-                "text": "使用基于DAO的新一代资产管理平台加入加密世界"
+                "text": ""
             },
             "keep": {
                 "title": "追踪你的投资组合",
-                "text": "使用基于DAO的新一代资产管理平台加入加密世界"
+                "text": ""
             }
         },
         "whyEmailTitle": "为什么 Citadel.one 需要您的邮箱？",
@@ -566,6 +566,8 @@
     "amount": "金额",
     "to": "至",
     "sendAssetsToAnotherNetwork": "将资产转至其他网络",
+    "bridgeTitleBtn": "",
+    "bridgeTitle": "",
     "rewards": "奖励",
     "stakingRatio": "质押比例",
     "inflation": "通胀",
@@ -828,6 +830,8 @@
     "overallPage": {
         "noBalance": "没有可用余额",
         "noRewards": "没有奖励",
+        "loading": "",
+        "selectPeriod": "",
         "balanceStructure": {
             "title": "余额构成"
         },
@@ -866,6 +870,7 @@
         "inflation": "通胀率",
         "inflationTooltip": "为解决通胀（网络通货膨胀），我们考虑将所有新铸代币和储备资金作为奖励分配。",
         "priceChart": "价格表",
+        "apy": "APY",
         "apyTooltip": "年收益率百分比（APY）的计算为 质押通膨 / 质押金额",
         "stakingRatioTooltip": "已质押的符合条件代币的百分比",
         "dayTradingVol": "24小时交易量",
@@ -1193,11 +1198,6 @@
             "description": "IRISnet（即 IRIS Hub）为新一代去中心化应用程序而设，致力于成为这些应用的基础设施。IRIS Hub 采用 Cosmos SDK 构建，通过统一的服务模型实现跨链交互，同时提供多种模块以支持 DeFi 应用程序。",
             "shortDescription": "IRIS 网络是一个区块链网络，旨在为去中心化业务应用的构建提供技术基础。"
         },
-        "cerberus": {
-            "title": "Cerberus 网络\n",
-            "description": "Cerberus 区块链是一个完全无许可的区块链，任何人都可以加入网络并运行验证节点。社区将能够通过质押 Cerberus（$CRBRU）验证节点和流动性池并从中获取收益。2022年下半年，Cerberus 团队计划专注于启动其 NFT 项目。",
-            "shortDescription": "Cerberus 是 Cosmos 生态第一个形象为三头犬的 MEME 币以及 NFT 项目。"
-        },
         "mantle": {
             "title": "AssetMantle 网络\n",
             "description": "使用 AssetMantle，您可以轻松地为特定卖家或卖家群体的各种产品创建专用市场。想象将它视为一个 NFT 的‘Shopify’，而不是简单地将产品在 NFT 市场中的 ‘Amazon’（如 OpenSea）上架。创作者和艺术家可以为自己的独特 NFT 创建属于他们自己的 Shopify 风格商店。",
@@ -1310,6 +1310,11 @@
         },
         "coreum":{
             "title": "Coreum",
+            "description": "",
+            "shortDescription": ""
+        },
+        "provenance":{
+            "title": "Provenance",
             "description": "",
             "shortDescription": ""
         }
@@ -1468,7 +1473,15 @@
     "addComment": "添加评论",
     "editComment": "编辑评论",
     "errors": {
-        "notEnoughFounds": "{code} 不足，无法支付交易手续费"
+        "notEnoughFounds": "{code} 不足，无法支付交易手续费",
+        "notAvailableToStake": "",
+        "200": {
+            "variant1": "",
+            "variant2": ""
+        },
+        "201": "",
+        "202": "",
+        "901": ""
     },
     "copyToClipboardTitle": "复制查看密钥",
     "showHideKeyTitle": "展示/收起查看密钥",

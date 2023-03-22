@@ -104,39 +104,6 @@
   <teleport to="body">
     <Modal v-if="showModal">
       <ModalContent
-        v-if="showEditCommentModal"
-        v-click-away="modalCloseHandler"
-        has-slot
-        :title="$t('transactionsPage.editCommentModalTitle')"
-        :desc="$t('transactionsPage.editCommentModalDesc')"
-        button-text="save"
-        type="action"
-        @buttonClick="modalCloseHandler"
-        @close="modalCloseHandler"
-      >
-        <template #default>
-          <div class="transactions__edit-comment-modal-content">
-            <div class="transactions__edit-comment-modal-content-textarea">
-              <Textarea
-                id="prevComment"
-                v-model:value="txComment"
-                icon="text"
-                :label="$t('comment')"
-                :placeholder="$t('enterTextComment')"
-              />
-            </div>
-          </div>
-        </template>
-        <template #cancelButton>
-          <span
-            class="transactions__edit-comment-modal-cancel"
-            @click="modalCloseHandler"
-          >
-            {{ $t('cancel') }}
-          </span>
-        </template>
-      </ModalContent>
-      <ModalContent
         v-if="showTransactionInfoModal"
         v-click-away="modalCloseHandler"
         :title="currentTransaction?.formatedStatus?.headerTitle"
@@ -157,11 +124,18 @@
 </template>
 
 <script>
-import { ref, computed, inject, nextTick, watch, onMounted } from 'vue';
+import {
+  ref,
+  computed,
+  inject,
+  nextTick,
+  watch,
+  onMounted,
+  onUnmounted,
+} from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
 import TransactionInfoModalContent from './components/TransactionInfoModalContent.vue';
-import Textarea from '@/components/UI/Textarea';
 import TableRow from './components/TableRow.vue';
 import Loading from '@/components/Loading';
 import WalletButtonsPanel from '@/components/WalletButtonsPanel';
@@ -180,7 +154,6 @@ export default {
     WalletButtonsPanel,
     Modal,
     ModalContent,
-    Textarea,
     TransactionInfoModalContent,
   },
   props: {
@@ -205,18 +178,28 @@ export default {
   setup(props) {
     const width = ref(null);
     const onResizeFn = () => {
-      width.value = document.querySelector('.wallet__main').offsetWidth - 150;
+      const walletDiv = document.querySelector('.wallet__main');
+
+      if (!walletDiv || walletDiv?.offsetWidth) return;
+
       if (window.innerWidth < 1920) {
-        width.value = document.querySelector('.wallet__main').offsetWidth - 116;
+        width.value = walletDiv.offsetWidth - 116;
+      } else if (window.innerWidth <= 1280) {
+        width.value = walletDiv.offsetWidth - 100;
       }
-      if (window.innerWidth <= 1280) {
-        width.value = document.querySelector('.wallet__main').offsetWidth - 100;
-      }
+
+      width.value = walletDiv.offsetWidth - 150;
     };
+
     onMounted(() => {
-      onResizeFn();
+      nextTick(() =>
+        window.addEventListener('resize', () => onResizeFn(), true)
+      );
     });
-    window.addEventListener('resize', () => onResizeFn(), true);
+
+    onUnmounted(() => {
+      window.removeEventListener('resize', onResizeFn);
+    });
 
     const currentKtAddress = inject('currentKtAddress');
     const currentAddress = computed(() =>
@@ -543,25 +526,6 @@ export default {
   }
   &__total-amount {
     color: $mid-gray;
-  }
-  &__edit-comment-modal-cancel {
-    font-size: 18px;
-    line-height: 27px;
-    font-family: 'Panton_Bold';
-    text-decoration-line: underline;
-    color: $too-dark-blue;
-    margin-top: 24px;
-    cursor: pointer;
-    &:hover {
-      color: $blue;
-    }
-  }
-  &__edit-comment-modal-content {
-    padding-top: 24px;
-    width: 100%;
-  }
-  &__edit-comment-modal-content-textarea {
-    height: 120px;
   }
 }
 .transaction {

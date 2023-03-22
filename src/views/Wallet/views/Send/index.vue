@@ -31,7 +31,16 @@
           })
         "
       />
-      <div v-if="itemsNetworks.length && bridgeTargetNet" class="send__section">
+      <div
+        v-if="itemsNetworks.length && bridgeTargetNet"
+        class="bridge-section"
+      >
+        <div v-html="$t('bridgeTitle')" />
+        <div class="btn" @click="showBridge">
+          {{ $t('bridgeTitleBtn') }}
+        </div>
+      </div>
+      <!-- <div v-if="itemsNetworks.length && bridgeTargetNet" class="send__section">
         <div class="send__switch">
           <span>{{ $t('sendAssetsToAnotherNetwork') }}</span>
           <el-switch
@@ -56,7 +65,7 @@
             @click="showNetworkTargetWallets = false"
           />
         </div>
-      </div>
+      </div> -->
       <div class="send__section">
         <div
           class="send__section-input"
@@ -72,7 +81,7 @@
             :placeholder="$t('selectAddress')"
             :disabled="isSendToAnotherNetwork && !bridgeTargetNet"
             :show-error-text="showErrorText"
-            :error="incorrectAddress"
+            :error="!showBridgeModal && incorrectAddress"
             data-qa="send__to-field"
             @focus="showNetworkTargetWallets = true"
           />
@@ -90,7 +99,10 @@
             />
           </div>
           <transition name="fade">
-            <div v-if="incorrectAddress" class="send__section-error">
+            <div
+              v-if="!showBridgeModal && incorrectAddress"
+              class="send__section-error"
+            >
               <error class="send__section-error-icon" />
               <span class="send__section-error-text">
                 {{ incorrectAddress }}
@@ -114,13 +126,13 @@
             placeholder="0.0"
             icon="coins"
             :show-error-text="showErrorText"
-            :error="insufficientFunds"
+            :error="!showBridgeModal && insufficientFunds"
             data-qa="send__amount-field"
             :show-set-max="maxAmountParent !== 0"
           />
           <transition name="fade">
             <div
-              v-if="insufficientFunds"
+              v-if="!showBridgeModal && insufficientFunds"
               class="send__section-error"
               :class="{
                 doNotHaveEnoughFunds: maxAmountParent === 0 || maxAmount === 0,
@@ -212,13 +224,6 @@
         </transition>
       </div>
       <div v-if="isSendToAnotherNetwork" class="send__info">
-        <div v-if="false" class="send__info-banner">
-          <bannerInfo />
-          <p>
-            {{ $t('sendBannerInfo') }}<a href="#">{{ $t('link') }}</a
-            >.
-          </p>
-        </div>
         <div v-if="false" class="send__info-info">
           <span class="send__info-line">
             {{ $t('price') }}:
@@ -262,6 +267,28 @@
       @prepareXctClaim="$emit('prepareXctClaim')"
     />
   </div>
+  <teleport v-if="showBridgeModal" to="body">
+    <Modal>
+      <BridgeModal
+        :items-networks="itemsNetworks"
+        :network-target-wallets="networkTargetWallets"
+        :max-amount="maxAmount"
+        :is-loading="prepareLoading"
+        :max-amount-parent="maxAmountParent"
+        :fee="fee"
+        :current-wallet="currentWallet"
+        :current-token="currentToken"
+        @selectBridgeNetwork="selectBridgeNetwork"
+        @close="
+          () => {
+            hideBridge();
+            successCloseHandler = {};
+          }
+        "
+        @prepareBridge="onPrepareBridge"
+      />
+    </Modal>
+  </teleport>
   <teleport v-if="showModal" to="body">
     <Modal>
       <div v-if="isLoading" class="loader">
@@ -271,7 +298,6 @@
         <!--Confirm Modal -->
         <ModalContent
           v-if="showConfirmModal"
-          v-click-away="confirmModalCloseHandler"
           :title="$t('sendModal.title1')"
           :desc="$t('sendModal.desc1')"
           button-text="confirm"
@@ -284,14 +310,14 @@
             v-model:password="password"
             :hide-fee="!!isSendToAnotherNetwork"
             :password-error="passwordError"
-            :to="toAddress"
+            :to="prepareBridgeData.toAddress || toAddress"
             :wallet="currentWallet"
-            :amount="amount"
+            :amount="prepareBridgeData.amount || amount"
             :confirm-clicked="confirmClicked"
             :max-amount="maxAmount"
             :total-amount="totalAmount"
             :fees="fees"
-            :memo="memo"
+            :memo="prepareBridgeData.memo || memo"
             :fee-type="feeType"
             :hide-password="
               isHardwareWallet ||
@@ -415,7 +441,7 @@
         />
         <!--Success Modal -->
         <ModalContent
-          v-if="showSuccessModal && !txError"
+          v-if="showSuccessModal && !txError && !isLoading"
           v-click-away="successCloseHandler"
           title="Success"
           desc="The transaction is in progress"
@@ -427,9 +453,9 @@
         >
           <SuccessModalContent
             v-model:txComment="txComment"
-            :to="toAddress"
+            :to="prepareBridgeData.toAddress || toAddress"
             :wallet="currentWallet"
-            :amount="amount"
+            :amount="prepareBridgeData.amount || amount"
             :fee="fee.fee"
             type="transfer"
             :tx-hash="txHash"
@@ -453,10 +479,8 @@ import ConfirmLedgerModal from '@/components/Modals/Ledger/ConfirmLedgerModal';
 import ConnectLedgerModal from '@/components/Modals/Ledger/ConnectLedgerModal';
 import OpenAppLedgerModal from '@/components/Modals/Ledger/OpenAppLedgerModal';
 import RejectLedgerModal from '@/components/Modals/Ledger/RejectLedgerModal';
-import bannerInfo from '@/assets/icons/banner-info.svg';
 import info from '@/assets/icons/info.svg';
 import Info from '@/components/Info';
-import Select from '@/components/UI/Select';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import Input from '@/components/UI/Input';
 import WalletButtonsPanel from '@/components/WalletButtonsPanel';
@@ -471,7 +495,7 @@ import Loading from '@/components/Loading';
 import { WALLET_TYPES, TOKEN_STANDARDS } from '@/config/walletType';
 import { screenWidths } from '@/config/sreenWidthThresholds';
 import Tooltip from '@/components/Tooltip';
-import useApi from '@/api/useApi';
+// import useApi from '@/api/useApi';
 import useWallets from '@/compositions/useWallets';
 import notify from '@/plugins/notify';
 
@@ -480,6 +504,7 @@ import AddressItem from '@/layouts/AddAddressLayout/components/CutomLists/compon
 import { getDecorateLabel } from '@/config/decorators';
 import amountInputValidation from '@/helpers/amountInputValidation';
 import MinBalanceWarning from '@/views/Wallet/views/Stake/components/MinBalanceWarning';
+import BridgeModal from './components/BridgeModal';
 
 export default {
   name: 'Send',
@@ -488,10 +513,8 @@ export default {
     Tooltip,
     Input,
     PrimaryButton,
-    Select,
     info,
     Info,
-    bannerInfo,
     Modal,
     ModalContent,
     ActionModalContent,
@@ -506,6 +529,7 @@ export default {
     RejectLedgerModal,
     AddressItem,
     MinBalanceWarning,
+    BridgeModal,
   },
   props: {
     currentWallet: {
@@ -527,6 +551,7 @@ export default {
   },
   emits: ['prepareClaim', 'prepareXctClaim'],
   setup(props) {
+    const citadel = inject('citadel');
     const loadingSign = ref(false);
     const showSuccessModal = ref(false);
     const { t } = useI18n();
@@ -544,6 +569,23 @@ export default {
       width.value < screenWidths.xl ? false : true
     );
     // const prepareBuildTransaction = ref({});
+
+    const prepareBridgeData = ref({});
+
+    const showBridge = () => {
+      showBridgeModal.value = true;
+      isSendToAnotherNetwork.value = true;
+    };
+
+    const hideBridge = () => {
+      showBridgeModal.value = false;
+      isSendToAnotherNetwork.value = false;
+    };
+
+    const onPrepareBridge = (data) => {
+      prepareBridgeData.value = data;
+      submitHandler(prepareBridgeData.value);
+    };
 
     const {
       formatedFee: fees,
@@ -576,6 +618,8 @@ export default {
       isLedgerWallet,
     } = useLedger();
 
+    const showBridgeModal = ref(false);
+
     const showNetworkTargetWallets = ref(false);
 
     const metamaskConnector = computed(
@@ -583,6 +627,10 @@ export default {
     );
     const keplrConnector = computed(
       () => store.getters['keplr/keplrConnector']
+    );
+
+    const txFromMempool = computed(
+      () => store.getters['transactions/txFromMempool']
     );
 
     const currentWalletType = computed(() => {
@@ -745,6 +793,26 @@ export default {
     loadData();
 
     watch(
+      () => txFromMempool.value,
+      (newV) => {
+        const tx = Object.assign({}, newV);
+        if (
+          loadingSign.value &&
+          props.currentWallet.address?.toLowerCase() ===
+            tx.holder?.toLowerCase()
+        ) {
+          showModal.value = true;
+          showConfirmModal.value = false;
+          isLoading.value = false;
+          loadingSign.value = false;
+          showSuccessModal.value = true;
+          txHash.value = [tx.hash];
+        }
+        store.dispatch('transactions/resetMempoolTx');
+      }
+    );
+
+    watch(
       () => props.currentWallet,
       (newVal, oldVal) => {
         if (
@@ -815,7 +883,7 @@ export default {
 
     const openFeeSelectModal = () => {
       setLastCorrectFee(fee.value, feeType.value);
-      showConfirmModal.value = false;
+      // showConfirmModal.value = false;
       showFeeSelectModal.value = true;
     };
 
@@ -903,7 +971,9 @@ export default {
     };
 
     const totalAmount = computed(() =>
-      BigNumber(amount.value).plus(fee.value.fee).toNumber()
+      BigNumber(prepareBridgeData.value.amount || amount.value)
+        .plus(fee.value.fee)
+        .toNumber()
     );
 
     // Error Handlers
@@ -1010,65 +1080,46 @@ export default {
 
     const currentKtAddress = inject('currentKtAddress');
     // Prepare and Send tx
-    const transferParams = computed(() => ({
-      amount: amount.value,
-      toAddress: toAddress.value,
-      kt: currentKtAddress.value && currentKtAddress.value.address,
-      memo: memo.value,
-      ...(props.currentWallet.fee_key && {
-        [props.currentWallet.fee_key]: fee.value[props.currentWallet.fee_key],
-      }),
+    const transferParams = computed(() => {
+      const data = {
+        amount: amount.value,
+        toAddress: toAddress.value,
+        kt: currentKtAddress.value && currentKtAddress.value.address,
+        memo: memo.value,
+        ...(props.currentWallet.fee_key && {
+          [props.currentWallet.fee_key]: fee.value[props.currentWallet.fee_key],
+        }),
+        toNetwork: isSendToAnotherNetwork.value ? bridgeTargetNet.value : null,
+      };
       //for crossnetwork transfer
-      token: props.currentWallet.net,
-      toNetwork: bridgeTargetNet.value,
-    }));
+      if (isSendToAnotherNetwork.value) data.token = props.currentWallet.net;
+
+      return data;
+    });
 
     const showModal = ref(false);
     const showConfirmModal = ref(false);
 
     const selectBridgeNetwork = async (key) => {
       await getFees(key);
+
       bridgeTargetNet.value = key;
       toAddress.value = '';
     };
 
-    const submitHandler = async () => {
+    const submitHandler = async (bridgeData) => {
       if (prepareLoading.value) {
         return;
       }
 
-      // bridge
-      // if (isSendToAnotherNetwork.value) {
-      //   prepareLoading.value = true;
-      //   prepareBuildTransaction.value =
-      //     await props.currentWallet.getBuildBridgeTransaction({
-      //       walletId: props.currentWallet.id,
-      //       token: props.currentWallet.net,
-      //       toNetwork: bridgeTargetNet.value,
-      //       toAddress: toAddress.value,
-      //       amount: amount.value,
-      //     });
-      //   prepareLoading.value = false;
-
-      //   if (prepareBuildTransaction.value.ok) {
-      //     showConnectLedgerModal.value = false;
-      //     showAppLedgerModal.value = false;
-      //     showConfirmLedgerModal.value = false;
-      //     showRejectedLedgerModal.value = false;
-      //     showConfirmModal.value = true;
-      //     showModal.value = true;
-      //   } else {
-      //     showConfirmModal.value = false;
-      //     showModal.value = false;
-      //     clearTxData();
-      //   }
-
-      //   return;
-      // }
-
       prepareLoading.value = true;
+
       try {
-        await prepareTransfer(transferParams.value);
+        await prepareTransfer(
+          bridgeData?.amount
+            ? { ...bridgeData, fee: transferParams.value.fee }
+            : transferParams.value
+        );
         prepareLoading.value = false;
       } catch (err) {
         prepareLoading.value = false;
@@ -1097,7 +1148,11 @@ export default {
         fee.value !== defaultFee.value &&
         !props.currentWallet.hasResource
       ) {
-        await prepareTransfer(transferParams.value);
+        await prepareTransfer(
+          prepareBridgeData.value.amount
+            ? { ...prepareBridgeData.value, fee: transferParams.value.fee }
+            : transferParams.value
+        );
 
         if (rawTxError.value) {
           showConfirmModal.value = false;
@@ -1127,6 +1182,7 @@ export default {
           showConfirmModal.value = false;
           showSuccessModal.value = true;
           txHash.value = [metamaskResult.txHash];
+          hideBridge();
         }
 
         isLoading.value = false;
@@ -1153,6 +1209,7 @@ export default {
           );
           loadingSign.value = false;
           isLoading.value = false;
+          hideBridge();
         } catch (err) {
           isLoading.value = false;
           loadingSign.value = false;
@@ -1183,21 +1240,28 @@ export default {
           keplrResult
         );
 
-        const data = await useApi('wallet').sendSignedTransaction({
-          hash,
-          deviceType: WALLET_TYPES.KEPLR,
-          proxy: false,
-          network: parentWallet.value.net,
-          from: parentWallet.value.address,
-          mem_tx_id: rawTx.value.mem_tx_id,
-        });
+        const data = await citadel.sendSignedTransaction(
+          parentWallet.value.id,
+          {
+            signedTransaction: hash,
+            mem_tx_id: rawTx.value.mem_tx_id,
+            proxy: false,
+            // hash,
+            // deviceType: WALLET_TYPES.KEPLR,
+            // proxy: false,
+            // network: parentWallet.value.net,
+            // from: parentWallet.value.address,
+            // mem_tx_id: rawTx.value.mem_tx_id,
+          }
+        );
 
-        if (data.ok) {
+        if (!data.error) {
           loadingSign.value = false;
           isLoading.value = false;
           showConfirmModal.value = false;
           showSuccessModal.value = true;
           txHash.value = [data.data.txhash];
+          hideBridge();
           return;
         } else {
           loadingSign.value = false;
@@ -1254,6 +1318,7 @@ export default {
             loadingSign.value = false;
             disableBtn.value = false;
             confirmClicked.value = false;
+            hideBridge();
           } catch (e) {
             confirmClicked.value = false;
             disableBtn.value = false;
@@ -1290,6 +1355,7 @@ export default {
     };
 
     const confirmModalCloseHandler = () => {
+      prepareBridgeData.value = {};
       password.value = '';
       inputError.value = false;
       passwordError.value = '';
@@ -1344,6 +1410,8 @@ export default {
       loadData();
       confirmModalCloseHandler();
       txComment.value = '';
+      hideBridge();
+      prepareBridgeData.value = {};
     };
     const errorClickHandler = confirmModalCloseHandler;
 
@@ -1439,6 +1507,11 @@ export default {
       showSuccessModal,
       confirmClicked,
       onChangePassword,
+      showBridgeModal,
+      showBridge,
+      hideBridge,
+      onPrepareBridge,
+      prepareBridgeData,
     };
   },
 };
@@ -1462,6 +1535,42 @@ export default {
   width: 100%;
   flex-grow: 1;
   padding: 34px 0 120px 0;
+
+  .bridge-section {
+    margin-bottom: 15px;
+    height: 58px;
+    width: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    background: #fff1ed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    span {
+      font-family: 'Panton_SemiBold';
+    }
+
+    .btn {
+      width: 80px;
+      height: 40px;
+      border-radius: 4px;
+      background: #ff5722;
+      color: $white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 700;
+      margin-left: 10px;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
 
   &__min-balance-note {
     margin-bottom: 25px;
@@ -1537,7 +1646,6 @@ export default {
     width: 100%;
     height: 68px;
     margin-bottom: 16px;
-    z-index: 10;
     position: relative;
   }
 
@@ -1573,6 +1681,9 @@ export default {
 
       bottom: -22px;
     }
+  }
+  &__section-error {
+    bottom: -20px;
   }
 
   &__section-error-icon {
@@ -1757,59 +1868,6 @@ export default {
     }
     @include md {
       flex-direction: column;
-    }
-  }
-
-  &__info-banner {
-    order: 1;
-    width: 49.5%;
-    max-width: 545px;
-    margin-bottom: 40px;
-    background: $banner-blue;
-    border-radius: 16px;
-    padding: 18px 12px 13px 19px;
-    height: 100px;
-    display: flex;
-
-    & p {
-      width: 457px;
-      margin: 0px;
-      font-size: 14px;
-      line-height: 23px;
-      color: $ligth-blue;
-      @include lg {
-        width: 473px;
-      }
-      @include md {
-        line-height: 20px;
-        width: 360px;
-      }
-
-      & a {
-        color: $royalblue1;
-        font-family: 'Panton_Bold';
-      }
-    }
-
-    & svg {
-      margin-right: 15px;
-      width: 42px;
-      height: 42px;
-    }
-
-    @include lg {
-      order: 2;
-      width: 100%;
-      max-width: 573px;
-      margin-bottom: 30px;
-      padding: 18px 24px 13px 19px;
-    }
-    @include md {
-      order: 2;
-      width: 100%;
-      max-width: 469px;
-      margin-bottom: 16px;
-      padding: 20px 16px 19px 19px;
     }
   }
 

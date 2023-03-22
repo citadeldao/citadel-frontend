@@ -11,7 +11,7 @@
         "lint:style": "stylelint 'src/**/*.vue' --fix"
     },
     "dependencies": {
-        "@citadeldao/lib-citadel": "1.37.7",
+        "@citadeldao/lib-citadel": "^1.39.10",
         "@open-wc/webpack-import-meta-loader": "^0.4.7",
         "@sentry/tracing": "^6.16.1",
         "@sentry/vue": "^6.16.1",
@@ -42,6 +42,7 @@
         "vue-router": "^4.0.0-0",
         "vue-window-size": "^1.1.2",
         "vue3-click-away": "^1.2.1",
+        "vue3-json-viewer": "^2.2.2",
         "vue3-resize": "^0.2.0",
         "vuedraggable": "^4.0.1",
         "vuex": "^4.0.0-0",
