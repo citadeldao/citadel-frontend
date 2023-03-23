@@ -1,7 +1,8 @@
 import BigNumber from 'bignumber.js';
 import Chart from 'chart.js/auto';
 
-import { chartColors } from './config';
+import { chartColors, OTHERS_COLOR } from './config';
+import { coinColors, ethCoinColors } from './coinColors';
 
 import { convertToLocalDate } from '@/helpers/date';
 import { getNetworkDataByKey } from '@/helpers/networkConfig';
@@ -55,6 +56,20 @@ export const renderRewardsChart = (
       const net = netArray[index];
 
       if (!datasets[net]) {
+        const code = getNetworkDataByKey({
+          config: currency,
+          network: net,
+          key: 'code',
+        });
+
+        let backgroundColor = chartColors[index];
+
+        if (ethCoinColors[net]) {
+          backgroundColor = ethCoinColors[net];
+        } else if (coinColors[code]) {
+          backgroundColor = coinColors[code];
+        }
+
         datasets[net] = {
           label: getNetworkDataByKey({
             config: currency,
@@ -63,11 +78,12 @@ export const renderRewardsChart = (
           }),
           net,
           data: [],
-          backgroundColor: chartColors[index],
+          backgroundColor,
           tooltip: { net },
           ...BAR_CHART_STYLE_CONFIG,
         };
       }
+
       const response = getValueForData(rewardsChart.list, key, net, currentTab);
       datasets[net].data.push(response);
     }
@@ -102,7 +118,7 @@ export const renderRewardsChart = (
       label: 'Others',
       net: 'Others',
       data: othersData,
-      backgroundColor: chartColors[11],
+      backgroundColor: OTHERS_COLOR,
       tooltip: { net: 'Others' },
       nets: others.map((n) => n.net),
       ...BAR_CHART_STYLE_CONFIG,
