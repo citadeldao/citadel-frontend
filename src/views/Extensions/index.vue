@@ -377,9 +377,9 @@ export default {
       hideArtefactsForFullScreen();
 
       if (!selectedApp.value.citadelApp) {
-        // await store.dispatch('extensions/fetchExtensionInfo', {
-        //   appId: selectedApp.value.id,
-        // });
+        await store.dispatch('extensions/fetchExtensionInfo', {
+          appId: selectedApp.value.id,
+        });
       }
 
       const nets = selectedApp.value.networks.map((net) => {
@@ -402,8 +402,7 @@ export default {
         );
       }
 
-      if (selectedApp.value.id) {
-        // (currentAppInfo?.value?.token || selectedApp.value.citadelApp) {
+      if (currentAppInfo?.value?.token || selectedApp.value.citadelApp) {
         const nets = selectedApp.value.networks.map((net) => {
           return net.toLowerCase();
         });
@@ -432,13 +431,8 @@ export default {
           });
         }
 
-        const res = await store.dispatch('extensions/getExtensionTokenAuth', {
-          extensionId: selectedApp.value.id,
-          wallets,
-        });
-
         selectedApp.value.url += `?token=${
-          res?.data?.token
+          currentAppInfo.value?.token
         }&wallets=${JSON.stringify(wallets)}`;
         currentApp.value = selectedApp.value;
       }
