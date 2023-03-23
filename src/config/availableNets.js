@@ -113,7 +113,7 @@ export const keplrNetworks = [
   { label: 'Teritori', key: 'teritori-1', net: 'teritori' },
   { label: 'Quicksilver', key: 'quicksilver-2', net: 'quicksilver' },
   { label: 'Kujira', key: 'kaiyo-1', net: 'kujira' },
-  { label: 'Orai', key: 'Oraichain', net: 'orai' },
+  { label: 'Coreum', key: 'coreum-mainnet-1', net: 'coreum' },
   { label: 'Orai', key: 'Oraichain', net: 'orai' },
   { label: 'Provenance', key: 'pio-mainnet-1', net: 'provenance' },
 ];
