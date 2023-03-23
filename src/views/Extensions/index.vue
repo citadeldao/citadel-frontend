@@ -437,7 +437,9 @@ export default {
           wallets,
         });
 
-        selectedApp.value.url += `?token=${res?.data?.token}`; // &wallets=${JSON.stringify(wallets)}
+        selectedApp.value.url += `?token=${
+          res?.data?.token
+        }&wallets=${JSON.stringify(wallets)}`;
         currentApp.value = selectedApp.value;
       }
     };
