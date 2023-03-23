@@ -192,7 +192,7 @@ import notify from '@/plugins/notify';
 import useWallets from '@/compositions/useWallets';
 import extensionsSocketTypes from '@/config/extensionsSocketTypes';
 
-import useApi from '@/api/useApi';
+// import useApi from '@/api/useApi';
 // import { keplrNetworksProtobufFormat } from '@/config/availableNets';
 import citadel from '@citadeldao/lib-citadel';
 import TransactionInfo from './components/TransactionInfo';
@@ -759,11 +759,11 @@ export default {
 
     const signMessage = async () => {
       if (signerWallet.value.type === WALLET_TYPES.LEDGER) {
-        notify({
-          type: 'warning',
-          text: 'Unsupported wallet type',
-        });
-        return;
+        // notify({
+        //   type: 'warning',
+        //   text: 'Unsupported wallet type',
+        // });
+        // return;
       }
 
       if (signerWallet.value.type === WALLET_TYPES.KEPLR) {
@@ -808,6 +808,7 @@ export default {
               password.value &&
               (await signerWallet.value.getPrivateKeyDecoded(password.value)),
             derivationPath: signerWallet.value.derivationPath,
+            useAlternativeSigner: true,
           }
         );
 
@@ -907,16 +908,24 @@ export default {
           keplrResult
         );
 
-        const data = await useApi('wallet').sendSignedTransaction({
-          hash,
-          deviceType: WALLET_TYPES.KEPLR,
-          proxy: false,
-          network: signerWallet.value.net,
-          from: signerWallet.value.address,
-          mem_tx_id: extensionTransactionForSign.value.mem_tx_id || null,
-        });
+        // const data = await useApi('wallet').sendSignedTransaction({
+        //   hash,
+        //   deviceType: WALLET_TYPES.KEPLR,
+        //   proxy: false,
+        //   network: signerWallet.value.net,
+        //   from: signerWallet.value.address,
+        //   mem_tx_id: extensionTransactionForSign.value.mem_tx_id || null,
+        // });
+        const data = await citadel.sendSignedTransaction(
+          signerWallet.value.id,
+          {
+            signedTransaction: hash,
+            mem_tx_id: extensionTransactionForSign.value.mem_tx_id || null,
+            proxy: false,
+          }
+        );
 
-        if (data.ok) {
+        if (!data.error) {
           confirmModalDisabled.value = false;
           showLedgerConnect.value = false;
           successTx.value = [data.data.txhash];

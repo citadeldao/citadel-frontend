@@ -574,6 +574,8 @@
     "amount": "Amount",
     "to": "To",
     "sendAssetsToAnotherNetwork": "Send assets to another network",
+    "bridgeTitle": "If you want to send assets to another network, please use <span style='font-weight: 700; font-family: Panton_SemiBold;'>«Bridge»</span> option.",
+    "bridgeTitleBtn": "Bridge",
     "rewards": "Rewards",
     "stakingRatio": "Staking ratio",
     "inflation": "Inflation",
@@ -878,6 +880,7 @@
         "inflation": "Inflation",
         "inflationTooltip": "For the Inflation (Network Inflation) we take into account all newly-minted tokens & all reserve-funds that are being distributed as rewards",
         "priceChart": " price chart",
+        "apy": "APY",
         "apyTooltip": "Annual Percentage Yield is counted as Staking Inflation / Staked",
         "stakingRatioTooltip": "Percentage of eligible tokens that are being staked",
         "dayTradingVol": "24 hour trading vol",
@@ -1205,11 +1208,6 @@
             "description": "IRISnet (a.k.a IRIS Hub) is designed to be the foundation for the next generation distributed applications. Built with Cosmos-SDK, IRIS Hub enables cross-chain interoperability through a unified service model, while providing a variety of modules to support DeFi applications.",
             "shortDescription": "The IRIS network is an internet of blockchains intended to provide a technology foundation that facilitates construction of distributed business applications."
         },
-        "cerberus": {
-            "title": "Cerberus network",
-            "description": "The Cerberus blockchain is a completely permissionless blockchain where anyone can join the network and run a validator. The community will have the ability to gain value from the coin by staking Cerberus ($CRBRUS) with validators and liquidity pools. In the second half of 2022, Cerberus team plans to focus on launching its NFT project.",
-            "shortDescription": "Cerberus is the first three-headed meme-coin and NFT project in the Cosmos."
-        },
         "mantle": {
             "title": "AssetMantle network",
             "description": "With AssetMantle, you can easily create dedicated marketplaces for a wide range of products from specific sellers or groups of sellers. Consider it as Shopify for NFTs where instead of listing products on an ‘Amazon for NFTs’ (such as OpenSea), creators and artists can create their own Shopify-style stores for their specific NFT.",
@@ -1319,6 +1317,16 @@
             "title": "Kujira",
             "description": "Kujira is a semi-permissioned sovereign Cosmos L1 platform bringing user-friendly DeFi tools for trading, liquidating, and minting, and targeting everyone, from the novice crypto enthusiasts to the experienced investors.",
             "shortDescription": "Kujira is a decentralized Cosmos L1 platform bringing user-friendly DeFi tools for trading, liquidating, and minting."
+        },
+        "coreum":{
+            "title": "Coreum",
+            "description": "Coreum is a 3rd generation L1 blockchain designed to address DeFi challenges and serve as a core infrastructure for dApps.",
+            "shortDescription": "Coreum is a L1 blockchain aims to serve as a core infrastructure for dApps."
+        },
+        "provenance":{
+            "title": "Provenance Blockchain",
+            "description": "Provenance Blockchain is a public, permissionless PoS blockchain built with Cosmos SDK and designed for financial service industries.",
+            "shortDescription": "Provenance Blockchain is a public, permissionless PoS blockchain for financial services."
         }
     },
     "uptime": "Uptime",
@@ -1473,7 +1481,14 @@
     "minAmountError": "Minimum amount is {minAmount} {code}",
     "errors": {
         "notEnoughFounds": "Not enough {code} to pay the transaction fee",
-        "notAvailableToStake": "Validator is unavailable for stake"
+        "notAvailableToStake": "Validator is unavailable for stake",
+        "200": {
+            "variant1": "Ledger Error: Please close {currentApp} and open the {rightApp} app on your Ledger device.",
+            "variant2": "Ledger Error: Please open {rightApp} app on the Ledger!"
+        },
+        "201": "Ledger Error: Transaction has been rejected",
+        "202": "Ledger Error: Reconnect your device",
+        "901": "Unknown error"
     },
     "minBalanceNote": "At least {amount} should be remained on your balance to keep receiving your staking rewards. Otherwise rewards will be burnt."
 }

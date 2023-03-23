@@ -80,7 +80,6 @@ import BigNumber from 'bignumber.js';
 import { useWindowSize } from 'vue-window-size';
 import moment from 'moment';
 import { screenWidths } from '@/config/sreenWidthThresholds';
-import notify from '@/plugins/notify';
 import useWallets from '@/compositions/useWallets';
 
 export default {

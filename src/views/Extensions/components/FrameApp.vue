@@ -52,6 +52,10 @@ export default {
   &.fullScreen {
     width: 100%;
     box-sizing: border-box;
+
+    iframe {
+      height: calc(100vh - 120px);
+    }
   }
 
   .close-icon {
