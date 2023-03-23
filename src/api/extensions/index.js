@@ -8,7 +8,6 @@ import { getDevAccount } from './getDevAccount';
 import { connectDevApp } from './connectDevApp';
 import { disconnectApp } from './disconnectApp';
 import { disconnectAccount } from './disconnectAccount';
-import { getExtensionTokenAuth } from './getExtensionTokenAuth';
 
 export const extensions = {
   getExtensionsInfo,
@@ -21,5 +20,4 @@ export const extensions = {
   connectDevApp,
   disconnectApp,
   disconnectAccount,
-  getExtensionTokenAuth,
 };
