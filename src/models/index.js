@@ -51,6 +51,7 @@ import CryptoCoinTERITORI from './CryptoCoins/CryptoCoinTERITORI';
 import CryptoCoinQUICKSILVER from './CryptoCoins/CryptoCoinQUICKSILVER';
 import CryptoCoinAVALANCHE from './CryptoCoins/CryptoCoinAVALANCHE';
 import CryptoCoinKUJIRA from './CryptoCoins/CryptoCoinKUJIRA';
+import CryptoCoinCOREUM from './CryptoCoins/CryptoCoinCOREUM';
 import CryptoCoinPROVENANCE from './CryptoCoins/CryptoCoinPROVENANCE';
 
 export default {
@@ -108,5 +109,6 @@ export default {
   QUICKSILVER: CryptoCoinQUICKSILVER,
   AVALANCHE: CryptoCoinAVALANCHE,
   KUJIRA: CryptoCoinKUJIRA,
+  COREUM: CryptoCoinCOREUM,
   PROVENANCE: CryptoCoinPROVENANCE,
 };

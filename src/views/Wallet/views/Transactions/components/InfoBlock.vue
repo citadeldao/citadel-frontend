@@ -8,7 +8,11 @@
             ><linkIcon class="info-block__link-icon"
           /></a>
         </div>
+        <div v-show="!activateEdit" class="comment-btn" @click="setComment">
+          {{ $t('addComment') }}
+        </div>
         <div
+          v-if="false"
           :class="{ hasComment: info.note }"
           class="comment-btn"
           @click="setComment"
@@ -29,6 +33,7 @@
       <textarea
         v-if="activateEdit"
         v-model.trim="customNote"
+        @blur="onCommentLeave"
         id="editComment"
         rows="4"
         class="comment-field"
@@ -105,6 +110,10 @@ export default {
       return findType?.value?.symbol || '';
     });
 
+    const onCommentLeave = () => {
+      setComment();
+    };
+
     const setComment = async () => {
       if (activateEdit.value) {
         if (
@@ -128,7 +137,7 @@ export default {
       nextTick(() => document.getElementById('editComment').focus());
     };
 
-    return { txUrl, customNote, activateEdit, setComment, formatedValueSymbol };
+    return { txUrl, customNote, activateEdit, setComment, onCommentLeave, formatedValueSymbol };
   },
 };
 </script>
