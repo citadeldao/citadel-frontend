@@ -248,6 +248,7 @@ export default {
     const showConfirmModalLoading = ref(false);
     const selectedTags = ref([]);
     const localAppMode = ref(false);
+    const tokenAuth = ref(false);
 
     let keplrTimer = null;
     const firstAddressChecked = ref(false);
@@ -302,13 +303,13 @@ export default {
       clearStates();
     };
 
-    const currentAppInfo = computed(
-      () => store.getters['extensions/currentAppInfo']
-    );
+    // const currentAppInfo = computed(
+    //   () => store.getters['extensions/currentAppInfo']
+    // );
 
     const sendMSG = (message, type, params = {}) => {
       store.dispatch('extensions/sendCustomMsg', {
-        token: currentAppInfo.value.token,
+        token: tokenAuth.value,
         message,
         params,
         type,
@@ -436,9 +437,10 @@ export default {
           extensionId: selectedApp.value.id,
           wallets,
         });
+        tokenAuth.value = res?.data?.token;
 
         selectedApp.value.url += `?token=${
-          res?.data?.token
+          tokenAuth.value
         }&wallets=${JSON.stringify(wallets)}`;
         currentApp.value = selectedApp.value;
       }
@@ -729,7 +731,7 @@ export default {
 
         data &&
           store.dispatch('extensions/sendCustomMsg', {
-            token: currentAppInfo.value.token,
+            token: tokenAuth.value,
             message: {
               address: signerWallet.value.address,
               balance: data.calculatedBalance,
