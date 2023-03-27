@@ -9,7 +9,7 @@
           /></a>
         </div>
         <div v-show="!activateEdit" class="comment-btn" @click="setComment">
-          {{ $t('addComment') }}
+          {{ info.note ? $t('editComment') : $t('addComment') }}
         </div>
         <div
           v-if="false"
@@ -30,6 +30,9 @@
     <div v-if="info.note || activateEdit">
       <div class="comment-label">{{ $t('comment') }}</div>
       <div v-if="!activateEdit" class="comment-value">{{ info.note }}</div>
+      <div v-if="savedCommentFlag" class="comment-success">
+        {{ $t('savedComment') }}
+      </div>
       <textarea
         v-if="activateEdit"
         v-model.trim="customNote"
@@ -91,6 +94,7 @@ export default {
   setup(props) {
     const store = useStore();
     const activateEdit = ref(false);
+    const savedCommentFlag = ref(false);
     const customNote = ref(props.info.note);
     const txUrl = computed(() =>
       props.currentWallet?.getTxUrl(props.currentWallet.id, props.info.hash)
@@ -110,8 +114,12 @@ export default {
       return findType?.value?.symbol || '';
     });
 
-    const onCommentLeave = () => {
-      setComment();
+    const onCommentLeave = async () => {
+      await setComment();
+      savedCommentFlag.value = true;
+      setTimeout(() => {
+        savedCommentFlag.value = false;
+      }, 2000);
     };
 
     const setComment = async () => {
@@ -137,7 +145,7 @@ export default {
       nextTick(() => document.getElementById('editComment').focus());
     };
 
-    return { txUrl, customNote, activateEdit, setComment, onCommentLeave, formatedValueSymbol };
+    return { txUrl, customNote, activateEdit, savedCommentFlag, setComment, onCommentLeave, formatedValueSymbol };
   },
 };
 </script>
@@ -184,6 +192,12 @@ export default {
       border: 1px solid #c3ceeb;
       outline: none;
     }
+  }
+
+  .comment-success {
+    font-size: 14px;
+    margin: 5px 0;
+    color: $green;
   }
 
   .comment-label {

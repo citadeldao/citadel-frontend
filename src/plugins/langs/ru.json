@@ -1472,6 +1472,7 @@
     "txWaitTitle": "Завершение транзакции может занять некоторое время",
     "addComment": "Добавить комментарий",
     "editComment": "Изменить комментарий",
+    "savedComment": "",
     "errors": {
         "notEnoughFounds": "Недостаточно {code} для оплаты комиссии за транзакцию",
         "notAvailableToStake": "",

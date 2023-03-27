@@ -1465,6 +1465,7 @@
     "txWaitTitle": "取引が完了するまでに時間がかかる場合があります",
     "addComment": "コメントを追加する",
     "editComment": "コメントを編集",
+    "savedComment": "",
     "errors": {
         "notEnoughFounds": "取引手数料を支払うのに十分な {code} がありません",
         "notAvailableToStake": "",

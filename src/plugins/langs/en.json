@@ -532,6 +532,7 @@
     "fee": "Fee",
     "addComment": "Add comment",
     "editComment": "Edit comment",
+    "savedComment": "Commentary has been saved",
     "comment": "Comment",
     "export": "Export",
     "timeDate": "Time & Data",
