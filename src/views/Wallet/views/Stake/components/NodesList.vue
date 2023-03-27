@@ -31,7 +31,7 @@
         :icon="currentWallet?.net"
         :current-wallet="currentWallet"
         :chosen="isChosen(item)"
-        :show-tag="mode === 'stake'"
+        :show-tag="showTag"
         @click="setNode(item)"
       />
     </div>
@@ -188,7 +188,14 @@ export default {
       });
     });
 
+    const showTag = computed(() => {
+      if (redelegationDirection.value === 'from' || mode.value === 'unstake')
+        return false;
+      return true;
+    });
+
     return {
+      showTag,
       keyword,
       displayData,
       hasScrollbar,
