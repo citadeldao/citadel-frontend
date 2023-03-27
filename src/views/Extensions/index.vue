@@ -248,6 +248,7 @@ export default {
     const showConfirmModalLoading = ref(false);
     const selectedTags = ref([]);
     const localAppMode = ref(false);
+    const tokenAuth = ref(false);
 
     let keplrTimer = null;
     const firstAddressChecked = ref(false);
@@ -302,13 +303,13 @@ export default {
       clearStates();
     };
 
-    const currentAppInfo = computed(
-      () => store.getters['extensions/currentAppInfo']
-    );
+    // const currentAppInfo = computed(
+    //   () => store.getters['extensions/currentAppInfo']
+    // );
 
     const sendMSG = (message, type, params = {}) => {
       store.dispatch('extensions/sendCustomMsg', {
-        token: currentAppInfo.value.token,
+        token: tokenAuth.value,
         message,
         params,
         type,
@@ -377,9 +378,9 @@ export default {
       hideArtefactsForFullScreen();
 
       if (!selectedApp.value.citadelApp) {
-        await store.dispatch('extensions/fetchExtensionInfo', {
-          appId: selectedApp.value.id,
-        });
+        // await store.dispatch('extensions/fetchExtensionInfo', {
+        //   appId: selectedApp.value.id,
+        // });
       }
 
       const nets = selectedApp.value.networks.map((net) => {
@@ -402,7 +403,8 @@ export default {
         );
       }
 
-      if (currentAppInfo?.value?.token || selectedApp.value.citadelApp) {
+      if (selectedApp.value.id) {
+        // (currentAppInfo?.value?.token || selectedApp.value.citadelApp) {
         const nets = selectedApp.value.networks.map((net) => {
           return net.toLowerCase();
         });
@@ -431,8 +433,14 @@ export default {
           });
         }
 
+        const res = await store.dispatch('extensions/getExtensionTokenAuth', {
+          extensionId: selectedApp.value.id,
+          wallets,
+        });
+        tokenAuth.value = res?.data?.token;
+
         selectedApp.value.url += `?token=${
-          currentAppInfo.value?.token
+          tokenAuth.value
         }&wallets=${JSON.stringify(wallets)}`;
         currentApp.value = selectedApp.value;
       }
@@ -723,7 +731,7 @@ export default {
 
         data &&
           store.dispatch('extensions/sendCustomMsg', {
-            token: currentAppInfo.value.token,
+            token: tokenAuth.value,
             message: {
               address: signerWallet.value.address,
               balance: data.calculatedBalance,
