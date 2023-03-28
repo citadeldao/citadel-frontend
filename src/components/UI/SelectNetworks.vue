@@ -47,7 +47,7 @@
       </template>
       <PrimaryButton
         data-qa="Get-started"
-        :disabled="!checkedItems.length || isDisabledBtn"
+        :disabled="!Object.keys(newItemIds).length || isDisabledBtn"
         @click="clickHandler"
       >
         {{ $t('addToOneSeed.getStartedBtn') }}

@@ -20,7 +20,7 @@
             :class="{ disabled: chainList.length === 0 }"
             @click="
               chainList.length !== 0
-                ? (selectedCoins = [].concat(chains))
+                ? (selectedCoins = [].concat(chainList))
                 : null
             "
           >
