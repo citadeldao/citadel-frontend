@@ -192,7 +192,7 @@ export const renderRewardsChart = (
         color: COLORS.CURRENCY,
         ...CHART_TICKS_STYLE,
         labelOffset: -10,
-        z: 0,
+        z: 1,
         mirror: true,
         crossAlign: 'near',
         callback: (index) => formatYLineText(index, currentTab),
