@@ -8,6 +8,7 @@
       type="text"
       icon="loop"
       clearable
+      @clear="onClear"
     />
     <div class="select-networks__selects">
       <div class="select" @click="selectAll">
@@ -273,8 +274,8 @@ export default {
     };
 
     const selectAll = () => {
-      keyword.value = '';
-      handleClickMore();
+      // keyword.value = '';
+      // handleClickMore();
       displayData.value.forEach((item) => {
         if (!isUserMnemonic.value) {
           if (!checkedItems.value.includes(item.id)) {
@@ -291,13 +292,14 @@ export default {
     };
 
     const unselectAll = () => {
-      keyword.value = '';
-      handleKeyword();
+      // keyword.value = '';
+      // handleKeyword();
       displayData.value.forEach((item) => {
         if (!isUserMnemonic.value) {
-          if (!netsPositionPriority.includes(item.net)) {
-            prepareRemoveItem(item.id);
-          }
+          prepareRemoveItem(item.id);
+          // if (!netsPositionPriority.includes(item.net)) {
+          //
+          // }
         } else {
           if (newItemIds[item.id]) {
             prepareRemoveItem(item.id);
@@ -306,12 +308,18 @@ export default {
       });
     };
 
+    const onClear = () => {
+      keyword.value = '';
+      handleKeyword();
+    };
+
     onMounted(() => {
       prepareSelectedItems();
       checkedBtnStatus();
       if (isUserMnemonic.value) showAllNetworks();
     });
     return {
+      onClear,
       selectAll,
       unselectAll,
       route,
