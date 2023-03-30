@@ -76,7 +76,7 @@ export default {
   border: 1px dashed #bcc2d8;
   border-radius: 4px;
 
-  flex: 0 49%;
+  flex: 100%;
 
   &:not(:last-child) {
     margin-bottom: 15px;
