@@ -203,12 +203,14 @@ export default {
     const snip20TokenFee = ref(null);
     const snip20Token = ref(null);
     const mainIsLoading = inject('isLoading');
+
     const filterList = ref([
       { icon: 'byAlphabet', value: 'byAlphabet' },
       { icon: 'byAlphabetReverse', value: 'byAlphabetReverse' },
       { icon: 'byValue', value: 'byValue' },
       { icon: 'byValueReverse', value: 'byValueReverse' },
     ]);
+
     const filterValue = ref(filterList.value[3].value);
 
     const isNotLinkedSnip20 = (token) => {
@@ -280,6 +282,7 @@ export default {
           return data;
       }
     });
+
     const filteredItems = computed(() => {
       const indexXCT = filteredTokens.value.findIndex(
         (e) => e.net === OUR_TOKEN
@@ -291,11 +294,14 @@ export default {
         // eslint-disable-next-line vue/no-side-effects-in-computed-properties
         filteredTokens.value.splice(0, 0, xctItem);
       }
-      if (!keyword.value) {
-        return filteredTokens.value;
-      }
 
-      return filteredTokens.value.filter(
+      const tokens = filteredTokens.value.filter(
+        (token) => token.name && token.net
+      );
+
+      if (!keyword.value) return tokens;
+
+      return tokens.filter(
         (item) =>
           item.name.toLowerCase().includes(keyword.value.toLowerCase()) ||
           item.code.toLowerCase().includes(keyword.value.toLowerCase())
@@ -316,6 +322,7 @@ export default {
           store.getters['profile/rates'][stateCurrentWallet.value.net].USD
         )
         .toNumber();
+
       return BigNumber(
         props.tokenList.reduce((acc, token) => {
           const availableUSD = BigNumber(token.tokenBalance.mainBalance)
@@ -327,12 +334,14 @@ export default {
         .plus(nativeTokenBalance)
         .toNumber();
     });
+
     const filteredTokensList = computed(() => {
       if (!keyword.value) {
         return props.tokenList.filter((e) => isNotLinkedSnip20(e) || e.linked);
       }
       return props.tokenList;
     });
+
     const {
       displayData,
       currentPage,
