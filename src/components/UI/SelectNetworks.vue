@@ -2,13 +2,23 @@
   <div class="select-networks">
     <Input
       id="assetsSearch"
+      v-model="keyword"
       @input="handleKeyword"
       :label="$t('searchNetworks')"
       type="text"
       icon="loop"
       clearable
+      @clear="onClear"
     />
-
+    <div class="select-networks__selects">
+      <div class="select" @click="selectAll">
+        {{ $t('keplr.selectAll') }}
+      </div>
+      <div class="unselect" @click="unselectAll">
+        <p>{{ $t('keplr.unselectAll') }}</p>
+        <closeIcon class="close-icon" />
+      </div>
+    </div>
     <div class="select-networks__networks">
       <NetworkCard
         v-for="network in displayData.slice(0, networksAmount)"
@@ -72,9 +82,11 @@ import useCreateWallets from '@/compositions/useCreateWallets';
 import { WALLET_TYPES } from '@/config/walletType.js';
 import { isNullDerivationPath } from '@/helpers';
 import { useRoute } from 'vue-router';
+import closeIcon from '@/assets/icons/close.svg';
+
 export default {
   name: 'SelectNetworks',
-  components: { NetworkCard, PrimaryButton, BackButton, Input },
+  components: { NetworkCard, PrimaryButton, BackButton, Input, closeIcon },
   emits: ['selectNets'],
   setup(props, { emit }) {
     const route = useRoute();
@@ -251,9 +263,8 @@ export default {
       showAllNetworks();
       isShowMoreClicked = true;
     };
-    const handleKeyword = (value) => {
-      keyword.value = value;
-      if (value) {
+    const handleKeyword = () => {
+      if (keyword.value) {
         showAllNetworks();
       } else if (!isUserMnemonic.value && !isShowMoreClicked) {
         networksAmount.value = 6;
@@ -261,12 +272,56 @@ export default {
         showAllNetworks();
       }
     };
+
+    const selectAll = () => {
+      // keyword.value = '';
+      // handleClickMore();
+      displayData.value.forEach((item) => {
+        if (!isUserMnemonic.value) {
+          if (!checkedItems.value.includes(item.id)) {
+            onCheck(item.id);
+          }
+        } else {
+          if (!checked(item.id)) {
+            if (!checkedItems.value.includes(item.id)) {
+              onCheck(item.id);
+            }
+          }
+        }
+      });
+    };
+
+    const unselectAll = () => {
+      // keyword.value = '';
+      // handleKeyword();
+      displayData.value.forEach((item) => {
+        if (!isUserMnemonic.value) {
+          prepareRemoveItem(item.id);
+          // if (!netsPositionPriority.includes(item.net)) {
+          //
+          // }
+        } else {
+          if (newItemIds[item.id]) {
+            prepareRemoveItem(item.id);
+          }
+        }
+      });
+    };
+
+    const onClear = () => {
+      keyword.value = '';
+      handleKeyword();
+    };
+
     onMounted(() => {
       prepareSelectedItems();
       checkedBtnStatus();
       if (isUserMnemonic.value) showAllNetworks();
     });
     return {
+      onClear,
+      selectAll,
+      unselectAll,
       route,
       displayData,
       checked,
@@ -303,7 +358,7 @@ export default {
     min-height: 68px;
     height: 68px;
     max-width: 891px;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
   }
 
   &__networks {
@@ -342,6 +397,43 @@ export default {
       margin: 15px 0 25px;
       color: #6b93c0;
       font-size: 14px;
+    }
+  }
+
+  &__selects {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 0 0 25px;
+
+    .input {
+      height: 68px;
+    }
+
+    .select {
+      color: #00a3ff;
+      border-bottom: 1px dotted #00a3ff;
+      cursor: pointer;
+    }
+
+    .unselect {
+      display: flex;
+      align-items: center;
+      color: #fa3b33;
+      p {
+        margin: 0 8px 0 0;
+        border-bottom: 1px dotted #fa3b33;
+      }
+      cursor: pointer;
+    }
+    .select,
+    .unselect {
+      transition: 0.2s;
+      &.disabled {
+        opacity: 0;
+        cursor: initial;
+      }
     }
   }
 }
