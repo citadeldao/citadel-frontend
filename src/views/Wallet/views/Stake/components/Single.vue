@@ -287,7 +287,10 @@ export default {
       isLoading,
       fee,
       mode,
-    } = useStaking(props.stakeNodes, props.list);
+    } = useStaking(
+      () => props.stakeNodes,
+      () => props.list
+    );
 
     const { isHardwareWallet } = useWallets();
     const {
