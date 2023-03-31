@@ -6,24 +6,7 @@
           {{ $t('overallPage.balanceStructure.title') }}
         </div>
         <div class="balance-structure-expanded__tabs">
-          <div class="balance-structure-expanded__network-tabs">
-            <NetworkTab
-              :id="1"
-              v-model:currentTab="currentTab"
-              class="chart-top__tab"
-              value="USD"
-              icon="USD"
-              data-qa="balance-structure-modal__currency--usd"
-            />
-            <NetworkTab
-              :id="2"
-              v-model:currentTab="currentTab"
-              class="chart-top__tab"
-              value="BTC"
-              icon="btc"
-              data-qa="balance-structure-modal__currency--btc"
-            />
-          </div>
+          <div class="balance-structure-expanded__network-tabs"></div>
           <div
             class="balance-structure-expanded__toggle-info"
             data-qa="balance-structure-modal__expand-button--hide"
@@ -40,18 +23,15 @@
           v-for="(item, index) in balanceStructure"
           :key="index"
           :item="item"
-          :current-tab="currentTab"
-          :max-percent="maxPercent"
         />
       </div>
     </div>
   </Modal>
 </template>
 <script>
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import useWallets from '@/compositions/useWallets';
 import Modal from '@/components/Modal';
-import NetworkTab from '@/components/UI/NetworkTab';
 import toggleInfoClose from '@/assets/icons/toggle-info-close.svg';
 import BalanceStructureExpandedItem from '@/views/Overall/components/BalanceStructure/BalanceStructureExpandedItem';
 
@@ -60,30 +40,13 @@ export default {
   components: {
     BalanceStructureExpandedItem,
     Modal,
-    NetworkTab,
     toggleInfoClose,
   },
   setup() {
     const { balanceStructure } = useWallets();
-    const currentTab = ref('USD');
     const isToggleHovered = ref(false);
 
-    // used to render color-bars relative to highest percent
-    const maxPercent = computed(() => {
-      let maxPrcnt = 0;
-
-      for (const network of Object.values(balanceStructure)) {
-        if (maxPrcnt < network.percent) {
-          maxPrcnt = network.percent;
-        }
-      }
-
-      return !maxPrcnt ? 100 : maxPrcnt;
-    });
-
     return {
-      currentTab,
-      maxPercent,
       isToggleHovered,
       balanceStructure,
     };
@@ -99,24 +62,22 @@ export default {
   border-radius: 16px;
   padding: 45px;
   overflow: hidden;
+
   @include lg {
     width: 1000px;
     height: 600px;
-  }
-  @include md {
-    width: 820px;
-    height: 586px;
   }
 
   &__top {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 60px;
+    margin-bottom: 20px;
   }
 
   &__title {
-    font-size: 20px;
+    font-family: 'Panton_Bold';
     font-weight: 700;
+    font-size: $h5-size;
   }
 
   &__tabs {
@@ -155,13 +116,16 @@ export default {
 
   &__list {
     overflow: scroll;
-    //height: 100%;
-    height: 460px;
+    min-height: 250px;
+    height: 550px;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0 5px 20px 0;
+
     @include lg {
-      height: 400px;
-    }
-    @include md {
-      height: 400px;
+      height: 475px;
     }
   }
 }

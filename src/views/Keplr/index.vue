@@ -20,7 +20,7 @@
             :class="{ disabled: chainList.length === 0 }"
             @click="
               chainList.length !== 0
-                ? (selectedCoins = [].concat(chains))
+                ? (selectedCoins = [].concat(chainList))
                 : null
             "
           >
@@ -29,7 +29,7 @@
           <div
             class="unselect"
             :class="{ disabled: chainList.length === 0 }"
-            @click="chainList.length !== 0 ? (selectedCoins = []) : null"
+            @click="unselectAll"
           >
             <p>{{ $t('keplr.unselectAll') }}</p>
             <closeIcon class="close-icon" />
@@ -258,6 +258,16 @@ export default {
       );
     });
 
+    const unselectAll = () => {
+      if (chainList.value.length) {
+        selectedCoins.value = selectedCoins.value.filter((selected) => {
+          const res = chainList.value.find((ch) => ch.net === selected.net);
+
+          return !res;
+        });
+      }
+    };
+
     const onChainsSearch = (value) => (search.value = value);
 
     return {
@@ -267,6 +277,7 @@ export default {
       cancel,
       onSelectCoin,
       selectedCoins,
+      unselectAll,
       importWallets,
       loadingImport,
       importedAddresses,

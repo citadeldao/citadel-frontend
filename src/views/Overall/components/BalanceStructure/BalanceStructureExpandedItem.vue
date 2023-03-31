@@ -1,45 +1,54 @@
 <template>
-  <div class="item">
-    <div class="item__dot-wrapper">
-      <div class="item__dot" :style="{ 'background-color': item.color }" />
-    </div>
-    <div class="item__title-wrapper">
-      <div class="item__title">
-        {{ shortNameCrypto(item.name) }}
+  <div class="balance-struct">
+    <div class="balance-struct_top">
+      <div
+        class="balance-struct__dot"
+        :style="{ 'background-color': item.color }"
+      />
+      <div class="balance-struct__title-wrapper">
+        <p class="balance-struct__title">
+          {{ shortNameCrypto(item.name) }}
+        </p>
+        <div>
+          <span
+            v-pretty-number="{ value: item.percent, currency: '%' }"
+            class="balance-struct__percent"
+          />
+          <span class="balance-struct__percent-sign">%</span>
+        </div>
       </div>
     </div>
-    <div class="item__percent-wrapper">
-      <span v-pretty-number="item.percent.toFixed(2)" class="item__percent" />
-      <span class="item__percent-sign">%</span>
+
+    <div v-if="item.balance" class="balance-struct__balance-wrapper">
+      <div>
+        <span
+          v-pretty-number="{ value: item.balance, currency: item.code }"
+          class="balance-struct__balance"
+        />
+        <span class="balance-struct__code">{{ item.code }}</span>
+      </div>
+      <div>
+        <span
+          v-pretty-number="{ value: BTC, currency: 'BTC' }"
+          class="balance-struct__balance"
+        />
+        <span class="balance-struct__code">BTC</span>
+      </div>
+      <div>
+        <span
+          v-pretty-number="{ value: USD, currency: 'USD' }"
+          class="balance-struct__balance"
+        />
+        <span class="balance-struct__code">USD</span>
+      </div>
     </div>
-    <div class="item__bar-wrapper">
-      <div
-        class="item__bar"
-        :style="{ 'background-color': item.color, 'flex-basis': `${percent}%` }"
-      />
-    </div>
-    <div v-if="item.balance" class="item__balance-wrapper">
-      <span
-        v-pretty-number="{ value: item.balance, currency: item.code }"
-        class="item__balance"
-      />
-      &nbsp;
-      <span class="item__code">{{ item.code }}</span>
-    </div>
-    <span v-if="item.balance" class="item__balance-divider">/</span>
-    <div class="item__balance-wrapper item__common-balance-wrapper">
-      <span
-        v-pretty-number="{ value: commonBalance, currency: currentTab }"
-        class="item__balance"
-      />
-      &nbsp;
-      <span class="item__code">{{ currentTab }}</span>
-    </div>
+
+    <!-- <span v-if="item.balance" class="balance-struct__balance-divider">/</span> -->
+    <!-- <div class="balance-struct__balance-wrapper balance-struct__common-balance-wrapper"></div> -->
   </div>
 </template>
 <script>
 import { computed } from 'vue';
-import BigNumber from 'bignumber.js';
 import { shortNameCrypto } from '@/helpers';
 
 export default {
@@ -49,122 +58,98 @@ export default {
       type: Object,
       default: () => ({}),
     },
-    currentTab: {
-      type: String,
-      default: 'USD',
-    },
-    maxPercent: {
-      type: [String, Number],
-      default: 100,
-    },
   },
   setup(props) {
-    const commonBalance = computed(() =>
-      props.currentTab === 'BTC' ? props.item.btc : props.item.usd
-    );
-    const percent = computed(() => {
-      const res = BigNumber(props.item.percent)
-        .dividedBy(props.maxPercent)
-        .multipliedBy(100)
-        .toNumber();
-
-      return res < 1 ? 1 : res;
-    });
+    const BTC = computed(() => props.item.btc);
+    const USD = computed(() => props.item.usd);
 
     return {
       shortNameCrypto,
-      commonBalance,
-      percent,
+      BTC,
+      USD,
     };
   },
 };
 </script>
 <style lang="scss" scoped>
-.item {
-  border-bottom: 1px dashed #bcc2d8;
+.balance-struct {
+  border: 1px dashed #bcc2d8;
+  border-radius: 4px;
+
+  flex: 0 49%;
+
+  &:not(:last-child) {
+    margin-bottom: 15px;
+  }
+
   display: flex;
   align-items: center;
-  margin-bottom: 34px;
-  padding-bottom: 11px;
-  font-size: 14px;
+  justify-content: space-between;
+  flex-wrap: wrap;
 
-  &:last-child {
-    margin-bottom: 0;
+  font-size: 14px;
+  padding: 15px 20px;
+
+  &_top {
+    display: flex;
+    align-items: center;
+    width: 60%;
+    margin-right: auto;
   }
-  &__dot-wrapper {
-    flex-basis: 17px;
-    min-width: 17px;
-  }
+
   &__dot {
     width: 10px;
     height: 10px;
     border-radius: 50%;
+    margin-right: 10px;
   }
   &__title-wrapper {
-    flex-basis: 90px;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column-reverse;
   }
+
   &__title {
+    font-family: 'Panton_SemiBold';
     font-weight: bold;
     color: $black;
+    margin: 5px 0 0;
   }
-  &__percent-wrapper {
-    flex-basis: 65px;
-  }
+
   &__percent {
+    font-size: $h4-size;
     color: $dark-blue;
     font-weight: 700;
+    font-family: 'Panton_Regular' !important;
   }
+
   &__percent-sign {
     font-weight: 400;
     color: $mid-gray;
   }
-  &__bar-wrapper {
-    flex-basis: 750px;
-    display: flex;
-    align-items: center;
-    flex-shrink: 1;
-    overflow: hidden;
-    @include lg {
-      flex-basis: 550px;
-    }
-    @include md {
-      flex-basis: 420px;
-    }
-  }
-  &__bar {
-    //max-width: 670px;
-    height: 8px;
-    margin-right: 8%;
-    //width: 100%;
-    //@include lg {
-    //  max-width: 535px;
-    //}
-    //@include md {
-    //  max-width: 395px;
-    //}
-  }
+
   &__balance-wrapper {
-    min-width: 90px;
     display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 40%;
+    & > div {
+      text-align: right;
+    }
   }
+
   &__balance {
     color: $dark-blue;
     font-weight: bold;
   }
+
   &__code {
-    //float: right;
+    display: inline-block;
     font-weight: 400;
     color: $mid-gray;
-  }
-  &__balance-divider {
-    color: $mid-gray;
-  }
-  &__common-balance-wrapper {
-    //justify-content: flex-end;
-    margin-left: 36px;
-    @include md {
-      margin-left: 12px;
-    }
+    width: 50px;
+    text-align: left;
+    margin-left: 5px;
   }
 }
 </style>
