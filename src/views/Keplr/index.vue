@@ -85,6 +85,7 @@ import PrimaryButton from '@/components/UI/PrimaryButton';
 import KeplrConnector from '@/models/Services/Keplr';
 import closeIcon from '@/assets/icons/close.svg';
 import { INPUT_TYPE_ICON } from '@/config/newWallets';
+import axios from 'axios';
 
 const { t } = i18n.global;
 
@@ -106,6 +107,7 @@ export default {
     const loadingImport = ref(false);
     const showSuccess = ref(false);
     const walletLoading = ref(false);
+    const keplrChains = ref([]);
 
     const chains = ref(keplrNetworks);
 
@@ -147,32 +149,50 @@ export default {
     const importWallets = async () => {
       loadingImport.value = true;
       importedAddresses.value = [];
+
+      const addToWallet = (accs, c) => {
+        const find = privateWallets.value.find(
+          (w) => w.address === accs[0].address
+        );
+
+        if (!find) {
+          importedAddresses.value.push({
+            address: accs[0].address,
+            pubkey: Buffer.from(accs[0].pubkey).toString('hex'),
+            net: c.net,
+            key: c.key,
+          });
+        }
+      };
+
       await Promise.all(
         selectedCoins.value.map(async (c) => {
           try {
             const accs = await new KeplrConnector().connect(c.key);
-
-            const find = privateWallets.value.find(
-              (w) => w.address === accs[0].address
-            );
-
-            if (!find) {
-              importedAddresses.value.push({
-                address: accs[0].address,
-                pubkey: Buffer.from(accs[0].pubkey).toString('hex'),
-                net: c.net,
-                key: c.key,
-              });
-            }
+            addToWallet(accs, c);
 
             return true;
           } catch (err) {
-            notify({
-              type: 'warning',
-              text: `${c.label} - ${err}`,
-            });
+            const chainToSuggest = keplrChains.value.find(
+              (ch) => ch.chainName === c.label
+            );
+            if (chainToSuggest) {
+              try {
+                await window.keplr.experimentalSuggestChain(chainToSuggest);
+                const accs = await new KeplrConnector().connect(c.key);
+                addToWallet(accs, c);
 
-            return false;
+                return true;
+              } catch (err) {
+                return false;
+              }
+            } else {
+              notify({
+                type: 'warning',
+                text: `${c.label} - ${err}`,
+              });
+              return false;
+            }
           }
         })
       );
@@ -231,6 +251,14 @@ export default {
     };
 
     onMounted(async () => {
+      const res = await axios.get(
+        'https://keplr-chain-registry.vercel.app/api/chains'
+      );
+
+      if (res.data?.chains) {
+        keplrChains.value = res.data?.chains;
+      }
+
       store.commit('newWallets/setCatPageProps', {
         inputTypeIcon: INPUT_TYPE_ICON.KEPLR,
         walletTypePlaceholder: 'Citadel Keplr',
