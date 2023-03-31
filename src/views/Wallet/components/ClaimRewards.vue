@@ -57,7 +57,7 @@
         >
         <div class="claim-rewards__rewards-list-tooltip">
           <el-tooltip
-            v-if="currentWallet.hasMultiCoinRewards"
+            v-if="currentWallet?.hasMultiCoinRewards"
             placement="bottom"
             effect="rewards-list-tooltip"
             :disabled="!rewardsList.length"

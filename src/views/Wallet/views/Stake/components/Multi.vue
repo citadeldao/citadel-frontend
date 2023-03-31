@@ -708,6 +708,7 @@ export default {
             derivationPath: props.currentWallet.derivationPath,
           });
           showConfirmLedgerModal.value = false;
+          if (res.error) throw res.error;
         } catch (e) {
           ledgerErrorHandler(e);
 

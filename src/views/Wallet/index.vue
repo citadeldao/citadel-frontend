@@ -349,7 +349,7 @@ export default {
     });
 
     const getWalletRewards = async () => {
-      if (currentWallet?.value.hasMultiCoinRewards) {
+      if (currentWallet?.value?.hasMultiCoinRewards) {
         const data = await currentWallet?.value.getRewardsById();
         rewardsList.value = data.total.filter((item) => item.code);
       }
