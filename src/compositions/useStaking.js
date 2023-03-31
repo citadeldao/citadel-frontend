@@ -16,7 +16,7 @@ export default function useStaking(stakeNodes, list) {
   const currentToken = computed(() => store.getters['subtokens/currentToken']);
 
   const isMultiple = computed(() => currentWallet.value.net === 'polkadot');
-  const isSifchain = computed(() => currentWallet.value.net === 'sifchain');
+  // const isSifchain = computed(() => currentWallet.value.net === 'sifchain');
 
   provide('isMultiple', isMultiple)
   const isLoading = ref(false);
@@ -210,7 +210,7 @@ export default function useStaking(stakeNodes, list) {
     if (isMultiple.value && list.length) {
       await getDelegationFee('stake', list);
     }
-    if (initialStakingNode && !isSifchain.value) {
+    if (initialStakingNode /* && !isSifchain.value */) {
       await updateSelectedNode(initialStakingNode.value);
     }
     updateShowModal(true);
@@ -218,7 +218,8 @@ export default function useStaking(stakeNodes, list) {
   };
 
   const initialStakingNode = computed(() => {
-    return stakeNodes.find(n => n.name === OUR_NODE);
+    const firstNode = stakeNodes[0]
+    if(firstNode.tags.find(item => item.name.toLowerCase() === 'recommended')) return firstNode;
   });
 
   const toUnstake = async () => {
