@@ -303,7 +303,7 @@
         />
         <ModalContent
           v-if="showSuccessModal"
-          v-click-away="finalClose"
+          v-click-away="successClickHandler"
           title="Success"
           :desc="$t('txWaitTitle')"
           button-text="ok"
@@ -467,7 +467,10 @@ export default {
       isMultiple,
       disabledPolkadot,
       isWithoutDelegation,
-    } = useStaking(props.stakeNodes, props.list);
+    } = useStaking(
+      () => props.stakeNodes,
+      () => props.list
+    );
     const keplrConnector = computed(
       () => store.getters['keplr/keplrConnector']
     );
@@ -705,6 +708,7 @@ export default {
             derivationPath: props.currentWallet.derivationPath,
           });
           showConfirmLedgerModal.value = false;
+          if (res.error) throw res.error;
         } catch (e) {
           ledgerErrorHandler(e);
 

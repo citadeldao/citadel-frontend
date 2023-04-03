@@ -48,7 +48,8 @@
           </div>
         </div>
       </div>
-      <div class="balance-structure-list-wrapper">
+      <div id="legend-container"></div>
+      <!-- <div class="balance-structure-list-wrapper">
         <div class="balance-structure-list">
           <BalanceStructureItem
             v-for="(item, index) in balanceStructure"
@@ -59,7 +60,7 @@
             :current-tab="currentTab"
           />
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
   <teleport to="body">
@@ -74,7 +75,6 @@
 import { ref, computed, watch, onMounted } from 'vue';
 import { useWindowSize } from 'vue-window-size';
 import useWallets from '@/compositions/useWallets';
-import BalanceStructureItem from '@/views/Overall/components/BalanceStructure/BalanceStructureItem';
 import BalanceStructureExpanded from '@/views/Overall/components/BalanceStructure/BalanceStructureExpanded';
 import NetworkTab from '@/components/UI/NetworkTab';
 import { renderBalanceStructChart } from '@/components/Charts/balanceStructChart';
@@ -85,7 +85,6 @@ import balanceStructurePlaceholder from '@/assets/icons/overall/balance-sctructu
 export default {
   name: 'BalanceStructure',
   components: {
-    BalanceStructureItem,
     balanceStructurePlaceholder,
     NetworkTab,
     toggleInfo,
@@ -104,26 +103,32 @@ export default {
     const isExpanded = ref(false);
     const isToggleHovered = ref(false);
     const isEmpty = computed(() => !Object.keys(balanceStructure.value).length);
+
+    const refreshChart = async () => {
+      if (!isEmpty.value) {
+        await renderBalanceStructChart(balanceStructure, currentTab.value);
+      }
+    };
+
     onMounted(() => {
       if (balanceStructure.value && !isEmpty.value) {
-        renderBalanceStructChart(balanceStructure);
+        renderBalanceStructChart(balanceStructure, currentTab.value);
       }
     });
-    // watch(
-    //   () => balanceStructure.value,
-    //   async () => {
-    //     if (!isEmpty.value) {
-    //       await renderBalanceStructChart(balanceStructure);
-    //     }
-    //   }
-    // );
+
+    watch(
+      () => balanceStructure.value,
+      async () => await refreshChart()
+    );
+
     watch(
       () => width.value,
-      async () => {
-        if (!isEmpty.value) {
-          await renderBalanceStructChart(balanceStructure);
-        }
-      }
+      async () => await refreshChart()
+    );
+
+    watch(
+      () => currentTab.value,
+      async () => await refreshChart()
     );
 
     return {
@@ -174,6 +179,7 @@ export default {
     font-weight: bold;
     font-size: 22px;
     line-height: 26px;
+    font-family: 'Panton_Bold';
     color: $black;
     @include lg {
       margin-bottom: 17px;

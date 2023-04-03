@@ -8,7 +8,12 @@
             ><linkIcon class="info-block__link-icon"
           /></a>
         </div>
-        <div v-show="!activateEdit" class="comment-btn" @click="setComment">
+        <div
+          v-show="!activateEdit"
+          :class="{ hasComment: info.note }"
+          class="comment-btn"
+          @click="setComment"
+        >
           {{ info.note ? $t('editComment') : $t('addComment') }}
         </div>
         <div
@@ -28,11 +33,10 @@
       </div>
     </div>
     <div v-if="info.note || activateEdit">
-      <div class="comment-label">{{ $t('comment') }}</div>
-      <div v-if="!activateEdit" class="comment-value">{{ info.note }}</div>
-      <div v-if="savedCommentFlag" class="comment-success">
-        {{ $t('savedComment') }}
+      <div :class="{ saved: savedCommentFlag }" class="comment-label">
+        {{ savedCommentFlag ? $t('savedComment') : $t('comment') }}
       </div>
+      <div v-if="!activateEdit" class="comment-value">{{ info.note }}</div>
       <textarea
         v-if="activateEdit"
         v-model.trim="customNote"
@@ -152,6 +156,7 @@ export default {
 
 <style lang="scss" scoped>
 .info-block {
+  position: relative;
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
@@ -204,6 +209,10 @@ export default {
     margin-top: 5px;
     font-size: 18px;
     font-weight: 700;
+
+    &.saved {
+      color: $green;
+    }
   }
 
   .comment-value {
@@ -245,6 +254,9 @@ export default {
         &.hasComment {
           background: rgba(236, 99, 55, 0.2);
           color: #ff5722;
+          position: absolute;
+          top: 30px;
+          right: 0;
         }
 
         &:hover {

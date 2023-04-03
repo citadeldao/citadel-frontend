@@ -16,7 +16,7 @@ export default function useStaking(stakeNodes, list) {
   const currentToken = computed(() => store.getters['subtokens/currentToken']);
 
   const isMultiple = computed(() => currentWallet.value.net === 'polkadot');
-  const isSifchain = computed(() => currentWallet.value.net === 'sifchain');
+  // const isSifchain = computed(() => currentWallet.value.net === 'sifchain');
 
   provide('isMultiple', isMultiple)
   const isLoading = ref(false);
@@ -207,10 +207,10 @@ export default function useStaking(stakeNodes, list) {
     showSuccessModal.value = value;
   };
   const toStake = async () => {
-    if (isMultiple.value && list.length) {
-      await getDelegationFee('stake', list);
+    if (isMultiple.value && list().length) {
+      await getDelegationFee('stake', list());
     }
-    if (initialStakingNode && !isSifchain.value) {
+    if (initialStakingNode /* && !isSifchain.value */) {
       await updateSelectedNode(initialStakingNode.value);
     }
     updateShowModal(true);
@@ -218,7 +218,8 @@ export default function useStaking(stakeNodes, list) {
   };
 
   const initialStakingNode = computed(() => {
-    return stakeNodes.find(n => n.name === OUR_NODE);
+    const firstNode = stakeNodes[0]
+    if(firstNode.tags.find(item => item.name.toLowerCase() === 'recommended')) return firstNode;
   });
 
   const toUnstake = async () => {
@@ -227,7 +228,7 @@ export default function useStaking(stakeNodes, list) {
     updateShowModal(true);
 
     if (currentWallet.value.net === 'polkadot') {
-      await updateSelectedNode(list)
+      await updateSelectedNode(list())
       updateShowChooseNode(true);
 
       return;
@@ -236,14 +237,14 @@ export default function useStaking(stakeNodes, list) {
   };
   const initialSelectedNodeRedelegateFrom = computed(() => {
     if (isMultiple.value) {
-      return list
+      return list()
     }
-    const filteredList = list.filter(({ name }) => name !== OUR_NODE);
+    const filteredList = list().filter(({ name }) => name !== OUR_NODE);
     if (filteredList.length > 0) {
       return filteredList[0];
     }
 
-    return list[0];
+    return list()[0];
 
   });
   const toRedelegate = async () => {
@@ -270,8 +271,8 @@ export default function useStaking(stakeNodes, list) {
   provide('inputError', inputError);
 
   const stakeNodesWithValue = computed(() => {
-    const data = stakeNodes.map((item) => {
-      const stakedNode = list.find((i) => {
+    const data = stakeNodes().map((item) => {
+      const stakedNode = list().find((i) => {
         return i.address?.toLowerCase() === item.address?.toLowerCase();
       });
       if (stakedNode) {
@@ -335,7 +336,7 @@ export default function useStaking(stakeNodes, list) {
   });
   const disabledPolkadot = computed(() => {
     if (((activeTab.value === 'redelegate' || mode.value === 'redelegate') && (!selectedNode.value || !selectedNodeForRedelegation.value))
-      || (!selectedNode.value && !list.length) || insufficientFunds.value || amount.value <= 0 || !resEnough.value || insufficientAdditionalFee.value) {
+      || (!selectedNode.value && !list().length) || insufficientFunds.value || amount.value <= 0 || !resEnough.value || insufficientAdditionalFee.value) {
       return true;
     }
 
@@ -376,8 +377,8 @@ export default function useStaking(stakeNodes, list) {
             ? stakeNodesWithValue.value
               .filter(({ address }) => address.toLowerCase() !== selectedNode?.value?.address?.toLowerCase())
             : redelegationDirection.value === 'from'
-              ? list.filter(({ address }) => address.toLowerCase() !== selectedNodeForRedelegation?.value?.address?.toLowerCase())
-              : list,
+              ? list().filter(({ address }) => address.toLowerCase() !== selectedNodeForRedelegation?.value?.address?.toLowerCase())
+              : list(),
       };
     } else if (mode.value === 'stake') {
       return {
@@ -415,7 +416,7 @@ export default function useStaking(stakeNodes, list) {
             net: currentWallet.value.name,
             perioud: currentWallet.value.unstakeingPerioud,
           })}`,
-        list: list,
+        list: list(),
       };
     }
   });
