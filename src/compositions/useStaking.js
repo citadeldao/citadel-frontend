@@ -218,8 +218,8 @@ export default function useStaking(stakeNodes, list) {
   };
 
   const initialStakingNode = computed(() => {
-    const firstNode = stakeNodes[0]
-    if(firstNode.tags.find(item => item.name.toLowerCase() === 'recommended')) return firstNode;
+    const firstNode = stakeNodes()[0]
+    if(firstNode?.tags?.find(item => item.name.toLowerCase() === 'recommended')) return firstNode;
   });
 
   const toUnstake = async () => {
@@ -239,7 +239,7 @@ export default function useStaking(stakeNodes, list) {
     if (isMultiple.value) {
       return list()
     }
-    const filteredList = list().filter(({ name }) => name !== OUR_NODE);
+    const filteredList = list().filter(({ address }) => address !== stakeNodes()[0].address);
     if (filteredList.length > 0) {
       return filteredList[0];
     }
