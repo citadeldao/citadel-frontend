@@ -189,7 +189,11 @@ export default {
     });
 
     const showTag = computed(() => {
-      if (redelegationDirection.value === 'from' || mode.value === 'unstake')
+      if (
+        (mode.value === 'redelegate' &&
+          redelegationDirection.value === 'from') ||
+        mode.value === 'unstake'
+      )
         return false;
       return true;
     });
