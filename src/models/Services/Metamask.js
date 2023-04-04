@@ -167,8 +167,8 @@ export default class MetamaskConnector {
         });
       }
 
-      return { 
-        txHash 
+      return {
+        txHash,
       };
     } catch (err) {
       return { error: 'Metamask sign tx error' };
