@@ -173,8 +173,10 @@ export default {
 
             return true;
           } catch (err) {
-            const chainToSuggest = keplrChains.value.find(
-              (ch) => ch.chainName === c.label
+            const chainToSuggest = keplrChains.value.find((ch) =>
+              [c.label.toLowerCase(), c.net.toLowerCase()].includes(
+                ch.chainName.toLowerCase()
+              )
             );
             if (chainToSuggest) {
               try {
