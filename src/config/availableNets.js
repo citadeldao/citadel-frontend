@@ -51,6 +51,7 @@ export const ledgerNets = [
   'avalanche',
   'kujira',
   'provenance',
+  'coreum',
 ];
 
 export const metamaskNets = [
