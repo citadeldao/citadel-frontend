@@ -19,7 +19,7 @@
           <component :is="icon" :width="32" :height="32" />
         </keep-alive>
         <span class="table-row__type-block-type">
-          {{ transaction.view[0]?.type || type.title }}
+          {{ transaction?.view[0]?.type || type.title }}
         </span>
         <div
           v-if="transaction.view && transaction.view.length > 1"
@@ -161,13 +161,13 @@ export default {
       const data = useTransaction(props.transaction);
       type = data.type;
     } else {
-      const data = useTransaction(props.transaction.view[0]);
+      const data = useTransaction(props.transaction?.view[0]);
       type = data.type;
     }
 
     if (type.value?.title === '???') {
       // eslint-disable-next-line
-        type.value.title = props.transaction.view[0]?.type;
+        type.value.title = props.transaction?.view[0]?.type;
       type.value.icon = 'unknown';
     }
 
