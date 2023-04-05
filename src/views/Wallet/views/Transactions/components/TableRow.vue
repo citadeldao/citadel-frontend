@@ -155,6 +155,7 @@ export default {
   setup(props) {
     const { t } = useI18n();
     let type;
+    console.log('PROP TX', props.transaction);
 
     const global = computed(() => window);
     if (props.transaction.type) {
