@@ -178,7 +178,15 @@ export default {
                 ch.chainName.toLowerCase()
               )
             );
-            if (chainToSuggest) {
+            if (!chainToSuggest) {
+              notify({
+                type: 'warning',
+                text: `${c.label} - ${err}`,
+              });
+
+              return false;
+            }
+            if (selectedCoins.value.length === 1) {
               try {
                 await window.keplr.experimentalSuggestChain(chainToSuggest);
                 const accs = await new KeplrConnector().connect(c.key);
@@ -191,9 +199,8 @@ export default {
             } else {
               notify({
                 type: 'warning',
-                text: `${c.label} - ${err}`,
+                text: `Select only one ${c.label} network which is not in Keplr`,
               });
-              return false;
             }
           }
         })
