@@ -10,7 +10,7 @@
     >
       <div class="table-row__type-block">
         <img
-          v-if="transaction?.view[0]?.icon"
+          v-if="transaction?.view && transaction?.view[0]?.icon"
           width="32"
           height="32"
           :src="transaction?.view[0]?.icon"
@@ -19,7 +19,7 @@
           <component :is="icon" :width="32" :height="32" />
         </keep-alive>
         <span class="table-row__type-block-type">
-          {{ transaction?.view[0]?.type || type.title }}
+          {{ type.title || transaction?.view[0]?.type }}
         </span>
         <div
           v-if="transaction.view && transaction.view.length > 1"
@@ -154,20 +154,27 @@ export default {
   emits: ['editComment', 'showTransactionInfo'],
   setup(props) {
     const { t } = useI18n();
-    let type;
-    console.log('PROP TX', props.transaction);
 
+    const type = ref({
+      title: '???',
+      icon: 'unknown',
+    });
+
+    console.log('PROP TX', props.transaction);
     const global = computed(() => window);
+
     if (props.transaction.type) {
       const data = useTransaction(props.transaction);
-      type = data.type;
-    } else if (props.transactions?.view) {
+      type.value = data.type.value;
+    } else {
       const data = useTransaction(props.transaction.view[0]);
-      type = data.type;
+      type.value = data.type.value;
+      // eslint-disable-next-line vue/no-setup-props-destructure
+      type.value.title = props.transaction?.view[0]?.type;
     }
 
-    if (type.value?.title === '???' && props.transaction?.view) {
-      // eslint-disable-next-line
+    if (type.value.title === '???' && props.transaction?.view) {
+      // eslint-disable-next-line vue/no-setup-props-destructure
       type.value.title = props.transaction?.view[0]?.type;
       type.value.icon = 'unknown';
     }
