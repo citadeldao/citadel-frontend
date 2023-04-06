@@ -161,12 +161,12 @@ export default {
     if (props.transaction.type) {
       const data = useTransaction(props.transaction);
       type = data.type;
-    } else if (props.transactions.view) {
+    } else if (props.transactions?.view) {
       const data = useTransaction(props.transaction.view[0]);
       type = data.type;
     }
 
-    if (type.value?.title === '???' && props.transaction.view) {
+    if (type.value?.title === '???' && props.transaction?.view) {
       // eslint-disable-next-line
       type.value.title = props.transaction?.view[0]?.type;
       type.value.icon = 'unknown';
