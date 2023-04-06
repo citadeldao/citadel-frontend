@@ -1472,6 +1472,7 @@
     "txWaitTitle": "La transaction peut prendre un certain temps avant de s'achever",
     "addComment": "Ajouter un commentaire",
     "editComment": "Modifier le commentaire",
+    "savedComment": "",
     "errors": {
         "notEnoughFounds": "Pas assez de {code} pour payer les frais de transaction",
         "notAvailableToStake": "",

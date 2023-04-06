@@ -1472,6 +1472,7 @@
     "txWaitTitle": "请等待片刻至交易完成",
     "addComment": "添加评论",
     "editComment": "编辑评论",
+    "savedComment": "",
     "errors": {
         "notEnoughFounds": "{code} 不足，无法支付交易手续费",
         "notAvailableToStake": "",

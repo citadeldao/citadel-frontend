@@ -206,7 +206,7 @@ export default {
     const filterTypeMethod = (view) =>
       !view?.type.toLowerCase().includes('acknowledgement');
 
-    props.info.view.forEach((view) => {
+    props.info?.view?.forEach((view) => {
       view.components.forEach((component) => {
         if (innerTxsTypes.includes(component.type)) {
           innerTxs.value = innerTxs.value.concat(component.value);
