@@ -173,11 +173,13 @@ export default {
 
             return true;
           } catch (err) {
-            const chainToSuggest = keplrChains.value.find((ch) =>
-              [c.label.toLowerCase(), c.net.toLowerCase()].includes(
-                ch.chainName.toLowerCase()
-              )
+            const chainToSuggest = keplrChains.value.find(
+              (ch) =>
+                [c.label.toLowerCase(), c.net.toLowerCase()].includes(
+                  ch.chainName.toLowerCase()
+                ) || c.key.toLowerCase() === ch.chainId.toLowerCase()
             );
+
             if (!chainToSuggest) {
               notify({
                 type: 'warning',
