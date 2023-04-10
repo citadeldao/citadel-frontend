@@ -215,20 +215,6 @@ export default {
       href: 'https://www.coingecko.com/en/coins/akash-network',
     },
   },
-  cerberus: {
-    twitter: {
-      title: '@CerberusZone',
-      href: 'CerberusZone',
-    },
-    web: {
-      title: 'cerberus.zone',
-      href: 'https://cerberus.zone/',
-    },
-    landing: {
-      title: 'Coingecko',
-      href: 'https://www.coingecko.com/en/coins/cerberus',
-    },
-  },
   bsc: {
     web: {
       title: 'binance.com',
@@ -759,6 +745,20 @@ export default {
     landing: {
       title: 'Coingecko',
       href: 'https://www.coingecko.com/en/coins/kujira',
+    },
+  },
+  coreum: {
+    web: {
+      title: 'coreum',
+      href: 'https://www.coreum.com/',
+    },
+    twitter: {
+      title: '@CoreumOfficial',
+      href: 'CoreumOfficial',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/coreum',
     },
   },
   provenance: {

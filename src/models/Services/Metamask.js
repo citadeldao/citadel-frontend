@@ -13,66 +13,85 @@ export default class MetamaskConnector {
       9001: 'evmoseth',
       43114: 'avalanche',
     };
+
+    this.ethereum = null;
+
     this.accounts = [];
+
     this.web3 = new Web3(Web3.givenProvider);
+
     this.chainId = window.ethereum && +window.ethereum.networkVersion;
+
     this.network = this.networks[this.chainId];
   }
 
-  /* get network() {
-    return this.networks[this.chainId];
-  } */
+  async updateChainId() {
+    const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+    this.chainId = parseInt(chainId, 16);
+  }
+
+  setCustomListeners() {
+    this.ethereum.on('accountsChanged', function (accounts) {
+      this.accounts = accounts;
+    });
+
+    this.ethereum.on('chainChanged', async () => {
+      await this.updateChainId();
+      this.network = this.networks[this.chainId];
+    });
+
+    this.ethereum.on('close', function () {
+      this.accounts = [];
+    });
+  }
 
   async connect() {
-    if (window.ethereum) {
-      const accounts = await window.ethereum.request({
-        method: 'eth_requestAccounts',
-      });
+    const { ethereum = null } = window;
 
-      if (accounts && accounts.length) {
-        this.accounts = accounts;
-        this.chainId = parseInt(
-          await window.ethereum.request({ method: 'eth_chainId' }),
-          16
-        );
-        this.network = this.networks[this.chainId];
-
-        window.ethereum.on('accountsChanged', (accounts) => {
-          this.accounts = accounts;
-        });
-
-        window.ethereum.on('chainChanged', async () => {
-          this.chainId = parseInt(
-            await window.ethereum.request({ method: 'eth_chainId' }),
-            16
-          );
-          this.network = this.networks[this.chainId];
-        });
-
-        window.ethereum.on('close', () => {
-          this.accounts = [];
-        });
-      }
-    } else {
-      notify({
+    if (!ethereum) {
+      return notify({
         type: 'warning',
         text: 'Metamask extension not found',
       });
     }
+
+    this.ethereum = ethereum;
+
+    this.setCustomListeners();
+
+    const accounts = await this.ethereum.request({
+      method: 'eth_requestAccounts',
+    });
+
+    if (accounts && accounts.length) {
+      this.accounts = accounts;
+      await this.setChainId();
+      this.network = this.networks[this.chainId];
+    }
   }
 
   async changeNetwork(network) {
-    await window.ethereum.request({
+    await this.ethereum.request({
       method: 'wallet_switchEthereumChain',
       params: [{ chainId: network || '0x1' }], // chainId must be in hexadecimal numbers
     });
   }
 
   async signMessage(message, signer) {
-    return await window.ethereum.request({
-      method: 'personal_sign',
-      params: [signer, this.web3.utils.utf8ToHex(message)],
-    });
+    const { ERROR } = this.ethereum._log.levels;
+    this.ethereum._log.disableAll(ERROR); // disable
+
+    try {
+      return await this.ethereum.request({
+        method: 'personal_sign',
+        params: [signer, this.web3.utils.utf8ToHex(message)],
+      });
+    } catch (error) {
+      console.warn('🔴 MetamaskConnector.error:', {
+        code: error.code,
+        message: error.message,
+      });
+    }
   }
 
   async sendMetamaskTransaction(rawTx, memTxId) {
@@ -95,10 +114,18 @@ export default class MetamaskConnector {
       try {
         return await Promise.all(
           txs.map(async (tx) => {
-            return await window.ethereum.request({
+            const txHash = await window.ethereum.request({
               method: 'eth_sendTransaction',
               params: [tx],
             });
+            if (txHash?.length > 0 && memTxId) {
+              store.dispatch('extensions/putMempoolChangeStatus', {
+                hash: txHash,
+                mempool_id: memTxId,
+              });
+            }
+
+            return txHash;
           })
         );
       } catch (err) {
@@ -128,7 +155,7 @@ export default class MetamaskConnector {
     };
 
     try {
-      const txHash = await window.ethereum.request({
+      const txHash = await this.ethereum.request({
         method: 'eth_sendTransaction',
         params: [tx],
       });
@@ -140,7 +167,9 @@ export default class MetamaskConnector {
         });
       }
 
-      return { txHash };
+      return {
+        txHash,
+      };
     } catch (err) {
       return { error: 'Metamask sign tx error' };
     }

@@ -225,7 +225,10 @@ export default {
       walletsWithoutDublicates.value = await Promise.all(
         wallets.value.map(async (w) => {
           const exist = await window.citadel.isWalletExists(w.address, w.net);
-          if (!exist && w.privateKeyEncoded) {
+          if (
+            !exist &&
+            (w.privateKeyEncoded || [WALLET_TYPES.LEDGER].includes(w.type))
+          ) {
             return w;
           }
 
@@ -329,11 +332,35 @@ export default {
         } catch (err) {
           syncLoading.value = false;
         }
+        console.log('syncResult WWW', syncResult);
         const newWallets = syncResult;
         const result =
           syncResult &&
           (await Promise.all(
             syncResult.map(async (wallet) => {
+              // ledger
+              if (wallet.type === 'ledger') {
+                const walletLedger = await store.dispatch(
+                  'crypto/createNewWalletInstance',
+                  { walletOpts: wallet }
+                );
+
+                const { newWalletInstance, error } = await store.dispatch(
+                  'crypto/addHardwareWalletToAccount',
+                  { wallet: walletLedger }
+                );
+
+                if (!error) {
+                  await store.dispatch('wallets/pushWallets', {
+                    wallets: [newWalletInstance],
+                  });
+                  return true;
+                } else {
+                  return false;
+                }
+              }
+              //////////
+
               const privateKey = await citadel.decodePrivateKeyByPassword(
                 wallet.net,
                 wallet.privateKeyEncoded,
@@ -441,13 +468,23 @@ export default {
               );
 
               return {
-                mnemonic: CryptoJS.AES.encrypt(
-                  decodedMnemonic,
-                  passwordExtension.value
-                ).toString(),
+                mnemonic:
+                  w.type === WALLET_TYPES.LEDGER
+                    ? null
+                    : CryptoJS.AES.encrypt(
+                        decodedMnemonic,
+                        passwordExtension.value
+                      ).toString(),
                 wallets: [
                   {
-                    type: WALLET_TYPES.ONE_SEED,
+                    derivationPath:
+                      w.type === WALLET_TYPES.LEDGER ? w.derivationPath : null,
+                    publicKey:
+                      w.type === WALLET_TYPES.LEDGER ? w.publicKey : null,
+                    type:
+                      w.type === WALLET_TYPES.LEDGER
+                        ? WALLET_TYPES.LEDGER
+                        : WALLET_TYPES.ONE_SEED,
                     net: w.net,
                     address: w.address,
                     privateKeyEncoded: encodedKey.data,

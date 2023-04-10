@@ -104,39 +104,6 @@
   <teleport to="body">
     <Modal v-if="showModal">
       <ModalContent
-        v-if="showEditCommentModal"
-        v-click-away="modalCloseHandler"
-        has-slot
-        :title="$t('transactionsPage.editCommentModalTitle')"
-        :desc="$t('transactionsPage.editCommentModalDesc')"
-        button-text="save"
-        type="action"
-        @buttonClick="modalCloseHandler"
-        @close="modalCloseHandler"
-      >
-        <template #default>
-          <div class="transactions__edit-comment-modal-content">
-            <div class="transactions__edit-comment-modal-content-textarea">
-              <Textarea
-                id="prevComment"
-                v-model:value="txComment"
-                icon="text"
-                :label="$t('comment')"
-                :placeholder="$t('enterTextComment')"
-              />
-            </div>
-          </div>
-        </template>
-        <template #cancelButton>
-          <span
-            class="transactions__edit-comment-modal-cancel"
-            @click="modalCloseHandler"
-          >
-            {{ $t('cancel') }}
-          </span>
-        </template>
-      </ModalContent>
-      <ModalContent
         v-if="showTransactionInfoModal"
         v-click-away="modalCloseHandler"
         :title="currentTransaction?.formatedStatus?.headerTitle"
@@ -169,7 +136,6 @@ import {
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
 import TransactionInfoModalContent from './components/TransactionInfoModalContent.vue';
-import Textarea from '@/components/UI/Textarea';
 import TableRow from './components/TableRow.vue';
 import Loading from '@/components/Loading';
 import WalletButtonsPanel from '@/components/WalletButtonsPanel';
@@ -188,7 +154,6 @@ export default {
     WalletButtonsPanel,
     Modal,
     ModalContent,
-    Textarea,
     TransactionInfoModalContent,
   },
   props: {
@@ -358,7 +323,7 @@ export default {
       const index = transactions.value.findIndex(
         (e) => e.hash === transaction.hash
       );
-      transaction.date = transactions.value[index].date;
+      transaction.date = transactions.value[index]?.date || new Date();
       currentTransaction.value = transaction;
       txComment.value = transaction.note;
       showModal.value = true;
@@ -561,25 +526,6 @@ export default {
   }
   &__total-amount {
     color: $mid-gray;
-  }
-  &__edit-comment-modal-cancel {
-    font-size: 18px;
-    line-height: 27px;
-    font-family: 'Panton_Bold';
-    text-decoration-line: underline;
-    color: $too-dark-blue;
-    margin-top: 24px;
-    cursor: pointer;
-    &:hover {
-      color: $blue;
-    }
-  }
-  &__edit-comment-modal-content {
-    padding-top: 24px;
-    width: 100%;
-  }
-  &__edit-comment-modal-content-textarea {
-    height: 120px;
   }
 }
 .transaction {

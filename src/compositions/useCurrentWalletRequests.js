@@ -3,6 +3,7 @@ import store from '@/store';
 import { pickKeys } from '@/utils/object';
 import CryptoCoin from '@/models/CryptoCoin';
 import BigNumber from 'bignumber.js';
+import { WALLET_TYPES } from '@/config/walletType';
 
 export default function useCurrentWalletRequests() {
   const currentWallet = computed(() => store.getters['wallets/currentWallet']);
@@ -112,6 +113,7 @@ export default function useCurrentWalletRequests() {
     const { error } = res;
 
     if (error) {
+      if (wallet.value.type === WALLET_TYPES.LEDGER) throw error;
       txError.value = error;
     } else {
       txHash.value = data;

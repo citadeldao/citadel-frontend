@@ -70,7 +70,7 @@ export default {
       padding-right: 25px;
     }
     @include md {
-      padding-left: 0;
+      padding-left: 25px;
       padding-right: 25px;
     }
     @include laptop {

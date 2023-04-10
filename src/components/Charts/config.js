@@ -1,3 +1,5 @@
+export const OTHERS_COLOR = '#c3c3c3';
+
 export const chartColors = [
   '#BD00FF',
   '#7DF89F',

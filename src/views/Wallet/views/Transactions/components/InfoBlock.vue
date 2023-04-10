@@ -9,6 +9,15 @@
           /></a>
         </div>
         <div
+          v-show="!activateEdit"
+          :class="{ hasComment: info.note }"
+          class="comment-btn"
+          @click="setComment"
+        >
+          {{ info.note ? $t('editComment') : $t('addComment') }}
+        </div>
+        <div
+          v-if="false"
           :class="{ hasComment: info.note }"
           class="comment-btn"
           @click="setComment"
@@ -24,11 +33,14 @@
       </div>
     </div>
     <div v-if="info.note || activateEdit">
-      <div class="comment-label">{{ $t('comment') }}</div>
+      <div :class="{ saved: savedCommentFlag }" class="comment-label">
+        {{ savedCommentFlag ? $t('savedComment') : $t('comment') }}
+      </div>
       <div v-if="!activateEdit" class="comment-value">{{ info.note }}</div>
       <textarea
         v-if="activateEdit"
         v-model.trim="customNote"
+        @blur="onCommentLeave"
         id="editComment"
         rows="4"
         class="comment-field"
@@ -86,6 +98,7 @@ export default {
   setup(props) {
     const store = useStore();
     const activateEdit = ref(false);
+    const savedCommentFlag = ref(false);
     const customNote = ref(props.info.note);
     const txUrl = computed(() =>
       props.currentWallet?.getTxUrl(props.currentWallet.id, props.info.hash)
@@ -104,6 +117,14 @@ export default {
       });
       return findType?.value?.symbol || '';
     });
+
+    const onCommentLeave = async () => {
+      await setComment();
+      savedCommentFlag.value = true;
+      setTimeout(() => {
+        savedCommentFlag.value = false;
+      }, 2000);
+    };
 
     const setComment = async () => {
       if (activateEdit.value) {
@@ -128,13 +149,14 @@ export default {
       nextTick(() => document.getElementById('editComment').focus());
     };
 
-    return { txUrl, customNote, activateEdit, setComment, formatedValueSymbol };
+    return { txUrl, customNote, activateEdit, savedCommentFlag, setComment, onCommentLeave, formatedValueSymbol };
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .info-block {
+  position: relative;
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
@@ -177,10 +199,20 @@ export default {
     }
   }
 
+  .comment-success {
+    font-size: 14px;
+    margin: 5px 0;
+    color: $green;
+  }
+
   .comment-label {
     margin-top: 5px;
     font-size: 18px;
     font-weight: 700;
+
+    &.saved {
+      color: $green;
+    }
   }
 
   .comment-value {
@@ -222,6 +254,9 @@ export default {
         &.hasComment {
           background: rgba(236, 99, 55, 0.2);
           color: #ff5722;
+          position: absolute;
+          top: 30px;
+          right: 0;
         }
 
         &:hover {

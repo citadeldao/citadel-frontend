@@ -532,6 +532,7 @@
     "fee": "",
     "addComment": "",
     "editComment": "",
+    "savedComment": "",
     "comment": "",
     "export": "",
     "timeDate": "",
@@ -570,6 +571,8 @@
     "amount": "",
     "to": "",
     "sendAssetsToAnotherNetwork": "",
+    "bridgeTitle": "",
+    "bridgeTitleBtn": "",
     "rewards": "",
     "stakingRatio": "",
     "inflation": "",
@@ -872,6 +875,7 @@
         "inflation": "",
         "inflationTooltip": "",
         "priceChart": "",
+        "apy": "",
         "apyTooltip": "",
         "stakingRatioTooltip": "",
         "dayTradingVol": "",
@@ -1199,11 +1203,6 @@
             "description": "",
             "shortDescription": ""
         },
-        "cerberus": {
-            "title": "",
-            "description": "",
-            "shortDescription": ""
-        },
         "mantle": {
             "title": "",
             "description": "",
@@ -1306,6 +1305,11 @@
         },
         "kujira":{
             "title": "Kujira",
+            "description": "",
+            "shortDescription": ""
+        },
+        "coreum":{
+            "title": "Coreum",
             "description": "",
             "shortDescription": ""
         },

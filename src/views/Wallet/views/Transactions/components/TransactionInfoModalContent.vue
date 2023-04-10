@@ -206,7 +206,7 @@ export default {
     const filterTypeMethod = (view) =>
       !view?.type.toLowerCase().includes('acknowledgement');
 
-    props.info.view.forEach((view) => {
+    props.info?.view?.forEach((view) => {
       view.components.forEach((component) => {
         if (innerTxsTypes.includes(component.type)) {
           innerTxs.value = innerTxs.value.concat(component.value);
@@ -297,6 +297,11 @@ $blue-dark: #262b61;
       padding: 16px;
       box-sizing: border-box;
 
+      &.empty {
+        min-height: 40px;
+        background: transparent;
+      }
+
       .icon-type-included {
         align-items: center;
         display: flex;
@@ -314,6 +319,8 @@ $blue-dark: #262b61;
         top: -44px;
 
         &.empty {
+          top: 0;
+
           &.last {
             top: -5px;
           }

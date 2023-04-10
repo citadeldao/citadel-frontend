@@ -72,6 +72,12 @@ export default {
         },
       });
     },
+    async getExtensionTokenAuth(_, { extensionId, wallets }) {
+      return await extensionsApi.getExtensionTokenAuth({
+        extensionId,
+        wallets,
+      });
+    },
     async connectToDevCenter(_, { token }) {
       return await extensionsApi.connectToDevCenter({ token });
     },

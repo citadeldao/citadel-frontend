@@ -3,7 +3,7 @@ import citadel from '@citadeldao/lib-citadel';
 import notify from '@/plugins/notify';
 import { i18n } from '@/plugins/i18n';
 import customErrors from '@/helpers/customErrors';
-import { /* getErrorText, */ getErrorTextByCode } from '@/config/errors';
+import { getErrorText, getErrorTextByCode } from '@/config/errors';
 
 const { t } = i18n.global;
 
@@ -86,14 +86,12 @@ export default class CryptoToken extends CryptoCoin {
         type: 'warning',
         text: errorMessage,
       });
-      return res;
+      return { error: errorMessage };
     } else {
-      const message = this.getCustomErrorMessage(res.error);
-
+      const errorText = getErrorText(res.error?.message?.toLowerCase());
+      const message = this.getCustomErrorMessage(res.error || errorText);
       notify(message);
-
       console.error(res.error);
-
       return res;
     }
   }

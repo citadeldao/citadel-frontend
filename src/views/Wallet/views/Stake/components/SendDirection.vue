@@ -255,7 +255,7 @@ export default {
     const showRewardsListToggler = computed(
       () =>
         (mode.value === 'claim' || activeTab.value === 'claim') &&
-        props.wallet.hasMultiCoinRewards
+        props?.wallet?.hasMultiCoinRewards
     );
 
     return {
