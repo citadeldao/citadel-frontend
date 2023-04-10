@@ -1,8 +1,35 @@
 import useApi from '@/api/useApi';
 import { prettyNumber } from '@/helpers/prettyNumber';
-
+import { getStorage } from '@/utils/storage';
 import citadel from '@citadeldao/lib-citadel';
 import notify from '@/plugins/notify';
+
+function compareArrays(arr1, arr2, key1, key2, key3) {
+  if (arr1.length !== arr2.length) {
+    return false;
+  }
+
+  for (let i = 0; i < arr1.length; i++) {
+    const match = arr2.find(
+      (obj) =>
+        obj[key1] === arr1[i][key1] &&
+        obj[key2] === arr1[i][key2] &&
+        obj[key3] === arr1[i][key3]
+    );
+    if (!match) {
+      return false;
+    }
+    for (const key in arr1[i]) {
+      if (key !== key1 && key !== key2 && key !== key3) {
+        if (arr1[i][key] !== match[key]) {
+          return false;
+        }
+      }
+    }
+  }
+
+  return true;
+}
 
 const api = useApi('auth');
 
@@ -56,7 +83,7 @@ export default {
     },
   },
   actions: {
-    async getInfo({ commit, dispatch }) {
+    async getInfo({ commit, dispatch, rootGetters }) {
       const { data, error } = await citadel.init({
         backendUrl: process.env.VUE_APP_BACKEND_URL,
         publicBackendUrl: process.env.VUE_APP_PUBLIC_BACKEND_URL,
@@ -79,7 +106,141 @@ export default {
           ...data.user,
         };
         commit(types.SET_INFO, info);
+        commit('crypto/setUserId', info.id, { root: true });
+        citadel.addEventListener('storageChangedExternally', async () => {
+          //sync wallet list between browser tabs
 
+          await dispatch('wallets/getNewWallets', 'lazy', { root: true });
+          const userId = rootGetters['profile/info'].id;
+          // get current wallet list from ls
+          const currentWalletList =
+            JSON.parse(getStorage(`user_${userId}`))?.wallets?.wallets || [];
+          // get current wallet list from citadel.lib
+          const libWalletList =
+            JSON.parse(getStorage(`lib-wallets-${userId}`)) || {};
+          const libCurrentWalletListArray = Object.values(libWalletList);
+          //filter ls list with citadel.lib list
+          const filteredCurrentWalletList = currentWalletList.filter((item) => {
+            return libCurrentWalletListArray.some(
+              (wallet) => item.id === wallet.id
+            );
+          });
+          if (
+            currentWalletList.length &&
+            !compareArrays(
+              filteredCurrentWalletList,
+              libCurrentWalletListArray,
+              'net',
+              'address',
+              'type'
+            )
+          ) {
+            Promise.all(
+              currentWalletList.map((item) => {
+                return dispatch(
+                  'crypto/createNewWalletInstance',
+                  { walletOpts: item },
+                  { root: true }
+                );
+              })
+            ).then((values) => {
+              // pushing them in vuex
+              dispatch(
+                'wallets/pushWallets',
+                { wallets: values },
+                { root: true }
+              );
+              // remove new added wallets from ls
+              // removeStorage(syncWalletsLsKey)
+            });
+          }
+
+          // update walletList in case of deleted wallets in another tab
+          // await dispatch('wallets/getNewWallets', 'lazy', { root: true });
+          // const userId = rootGetters['profile/info'].id;
+          // const cryptoData = JSON.parse(getStorage(`user_${userId}`)).crypto
+          // // update encoded mnemonic and passwordhash
+          // if(cryptoData){
+          //   const vuexMnemonic = rootGetters['crypto/encodeUserMnemonic']
+          //   const vuexPasswordHash = rootGetters['crypto/passwordHash']
+          //   const lsMnemonic = cryptoData.mnemonic
+          //   const lsPasswordHash = cryptoData.passwordHash
+          //   console.log('qaaaaaqqq1111', vuexMnemonic, lsMnemonic, vuexMnemonic === lsMnemonic);
+          //   console.log('qaaaaaqqq2222', vuexPasswordHash, lsPasswordHash, vuexPasswordHash === lsPasswordHash);
+          //   if(vuexMnemonic !== lsMnemonic)commit('crypto/setUserMnemonic', lsMnemonic, { root: true })
+          //   if(vuexPasswordHash !== lsPasswordHash)commit('crypto/setPasswordHash', lsPasswordHash, { root: true })
+          // }
+          // // get new addedWallets from ls
+          // const syncWalletsLsKey = `user_${userId}_syncWallets`;
+          // let syncWallets = JSON.parse(getStorage(syncWalletsLsKey))
+
+          // // get current wallet list from citadel.lib for fltering missing(deleted) wallets
+          // const libCurrentWalletList = JSON.parse(getStorage(`lib-wallets-${userId}`)) || {}
+          // const libCurrentWalletListArray = Object.values(libCurrentWalletList)
+          // const currentStoreList = rootGetters['wallets/wallets']
+
+          // console.log('qaaaaqqq', syncWallets);
+          // if(syncWallets){
+          //   // detecting if changes have been made in another tab(comparing the lengths of citadel.lib wallet list and vuex list)
+          //   let isAnotherTab = !currentStoreList.length || currentStoreList.length !== libCurrentWalletListArray.length
+          //   // in case if previous condition is false, we also check the structure of that two lists
+          //   if (!isAnotherTab) {
+          //     isAnotherTab = currentStoreList.some(wallet => {
+          //       return !libCurrentWalletListArray.find(w =>
+          //         w.type === wallet.type && w.net === wallet.net &&
+          //         w.address.toLowerCase() === wallet.address.toLowerCase()
+          //       )
+          //     })
+          //   }
+          //   // check if there are new added wallets and is changes have been made in another tab
+          //   if(isAnotherTab && syncWallets && Array.isArray(syncWallets)){
+          //     //filter added wallets with citadel.lib wallets
+          //     syncWallets = syncWallets.filter((item) =>{
+          //       console.log('test999');
+          //         return libCurrentWalletListArray.some(
+          //         (wallet) => item.id === wallet.id
+          //       )
+          //       });
+          //     // if there are new wallets,create new instances
+          //     Promise.all(syncWallets.map(item => {
+          //       return dispatch('crypto/createNewWalletInstance', { walletOpts: item }, { root: true })
+          //     })).then((values) => {
+          //       // pushing them in vuex
+          //       dispatch('wallets/pushWallets', { wallets: values }, { root: true })
+          //       // remove new added wallets from ls
+          //       removeStorage(syncWalletsLsKey)
+          //     });
+          //   };
+          // }
+
+          // const syncWalletsLsKey = `user_${userId}_syncWallets`;
+          // // get new addedWallets from ls
+          // const syncWallets = JSON.parse(localStorage.getItem(syncWalletsLsKey));
+          // // get current wallet list from citadel.lib
+          // const libCurrentWalletList = JSON.parse(localStorage.getItem(`lib-wallets-${userId}`)) || {};
+          // // make list from ids
+          // const libWalletIds = Object.keys(libCurrentWalletList);
+
+          // await dispatch('wallets/getNewWallets', 'lazy', { root: true });
+
+          // const currentStoreList = rootGetters['wallets/wallets'];
+          // // make list from ids
+          // const currentWalletIds = currentStoreList.map(wallet => wallet.id);
+          // // detecting if changes have been made in another tab(comparing the lengths of citadel.lib wallet list and vuex list, and structure)
+          // const isAnotherTab = !currentWalletIds.length || currentWalletIds.length !== libWalletIds.length ||
+          //   currentWalletIds.some(id => !libWalletIds.includes(id));
+
+          // if (isAnotherTab && syncWallets && Array.isArray(syncWallets)) {
+          //   Promise.all(syncWallets.map(item => {
+          //     return dispatch('crypto/createNewWalletInstance', { walletOpts: item }, { root: true })
+          //   })).then((values) => {
+          //     // pushing them in vuex
+          //     dispatch('wallets/pushWallets', { wallets: values }, { root: true })
+          //     // remove new added wallets from ls
+          //     removeStorage(syncWalletsLsKey)
+          //   });
+          // }
+        });
         return { error };
       }
 

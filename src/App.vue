@@ -53,6 +53,22 @@ export default {
     );
     onMounted(() => {
       store.dispatch('i18n/init');
+      window.addEventListener('focus', function () {
+        const lsMnemonic = localStorage.getItem(
+          `${store.getters['profile/info'].id}_syncEncodeUserMnemonic`
+        );
+        const lsPasswordHash = localStorage.getItem(
+          `${store.getters['profile/info'].id}_syncPasswordHash`
+        );
+        store.commit(
+          'crypto/setUserMnemonic',
+          lsMnemonic === 'null' ? null : lsMnemonic
+        );
+        store.commit(
+          'crypto/setPasswordHash',
+          lsPasswordHash === 'null' ? null : lsPasswordHash
+        );
+      });
     });
 
     const closeMobileModal = () => {
