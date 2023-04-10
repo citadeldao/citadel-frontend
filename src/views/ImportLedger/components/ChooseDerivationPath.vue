@@ -37,6 +37,7 @@
       <DerivationPathCard
         :wallet="customWallet.walletInstance"
         type="custom"
+        :selected-custom-path="selectedCustomPath?.replace('N', '0')"
         :exist="customWallet.alreadyExist"
         :checked="checked(customWallet.walletInstance)"
         :waiting="isCustomLoading"
@@ -96,6 +97,7 @@ export default {
     const numberOfPaths = ref(5);
     const wallets = ref([]);
     const maxPaths = ref(20);
+    const selectedCustomPath = ref(null);
     const pathOptions = ref(
       props.net === 'evmos'
         ? [
@@ -168,6 +170,11 @@ export default {
     const customWallet = ref(false);
     const setCustomWallet = async (customPath) => {
       isCustomLoading.value = true;
+
+      selectedCustomPath.value = null;
+      setTimeout(() => {
+        selectedCustomPath.value = customPath;
+      }, 100);
 
       const wallet = await store.dispatch('crypto/createLedgerWallet', {
         derivationPath: customPath,
@@ -246,6 +253,7 @@ export default {
       generateNewPath,
       maxPaths,
       numberOfPaths,
+      selectedCustomPath,
     };
   },
 };
