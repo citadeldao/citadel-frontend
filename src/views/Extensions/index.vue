@@ -1,48 +1,24 @@
 <template>
   <div class="extensions">
-    <!-- <img class="" :src="currentApp && currentApp.bg" /> -->
     <teleport to="body">
       <Modal v-if="showSuccessModal">
         <!-- SHOW SUCCESS MODAL -->
-        <ModalContent
-          v-click-away="closeSuccessModal"
-          :title="$t('success')"
-          :desc="$t('txWaitTitle')"
-          button-text="ok"
-          type="success"
-          icon="success"
-          @close="closeSuccessModal"
-          @buttonClick="successClickHandler"
-        >
-          <SuccessModalContent
-            v-model:txComment="txComment"
-            :show-from="false"
-            :wallet="signerWallet || metamaskSigner"
-            :tx-hash="successTx"
-            :fee="extensionTransactionForSign?.fee"
-            :type="extensionTransactionForSign?.type"
-          />
-        </ModalContent>
+        <SuccessModal
+          :close-success-modal="closeSuccessModal"
+          :success-click-handler="successClickHandler"
+          :wallet="signerWallet || metamaskSigner"
+          :success-tx="successTx"
+          :extension-transaction-for-sign="extensionTransactionForSign"
+          @changeComment="onChangeComment"
+        />
       </Modal>
       <!-- CONFIRM RESTORE ONESEED -->
-      <Modal v-if="showAppInfoModal">
-        <ModalContent
-          show-success-icon
-          v-click-away="
-            () => {
-              showAppInfoModal ? (showAppInfoModal = false) : null;
-            }
-          "
-          width="600px"
-          :title="selectedApp.name"
-          :desc="selectedApp.short_description"
-          :internal-icon="selectedApp.logo"
-          type="action"
-          :submit-button="false"
-          @close="showAppInfoModal = false"
-        >
-          <AppInfo :app="selectedApp" @launchApp="onLaunchApp" />
-        </ModalContent>
+      <Modal v-if="showAppInfoModal && selectedApp">
+        <InfoModal
+          :selected-app="selectedApp"
+          :on-launch-app="onOpenApp"
+          :on-close="closeAppInfoModal"
+        />
       </Modal>
     </teleport>
     <Head
@@ -94,36 +70,26 @@
       />
     </Modal>
     <Modal v-if="showExtensionTransactionModal">
-      <ModalContent
-        :title="selectedApp.name"
-        :desc="selectedApp.short_description"
-        button-text="confirm"
-        type="action"
-        :internal-icon="selectedApp.logo"
-        :disabled="confirmModalDisabled"
-        :loading="signLoading"
-        class="modal-content"
-        @close="confirmModalCloseHandlerWithRequest"
-        @buttonClick="confirmClickHandler"
-      >
-        <div v-if="showConfirmModalLoading" class="loader">
-          <Loading />
-        </div>
-        <TransactionInfo
-          v-else
-          :extension-transaction-for-sign="extensionTransactionForSign"
-          :metamask-signer="metamaskSigner"
-          :signer-wallet="signerWallet"
-          :incorrect-password="incorrectPassword"
-          :confirm-password="confirmPassword"
-          @confirmInput="confirmClickHandler"
-          @changePassword="
-            (pass) => {
-              password = pass;
-            }
-          "
-        />
-      </ModalContent>
+      <TransactionModal
+        :selected-app="selectedApp"
+        :confirm-modal-disabled="confirmModalDisabled"
+        :sign-loading="signLoading"
+        :confirm-modal-close-handler-with-request="
+          confirmModalCloseHandlerWithRequest
+        "
+        :confirm-click-handler="confirmClickHandler"
+        :show-confirm-modal-loading="showConfirmModalLoading"
+        :extension-transaction-for-sign="extensionTransactionForSign"
+        :metamask-signer="metamaskSigner"
+        :signer-wallet="signerWallet"
+        :incorrect-password="incorrectPassword"
+        :confirm-password="confirmPassword"
+        @changePassword="
+          (pass) => {
+            password = pass;
+          }
+        "
+      />
     </Modal>
     <!-- CREATE VK MODAL FOR SECRET APP-->
     <teleport v-if="showCreateVkModal" to="body">
@@ -182,8 +148,7 @@ import ModalContent from '@/components/ModalContent';
 import { useStore } from 'vuex';
 import Head from './components/Head';
 import AppBlock from './components/AppBlock';
-import AppInfo from './components/AppInfo';
-import SuccessModalContent from '@/views/Wallet/views/Send/components/SuccessModalContent.vue';
+
 import { WALLET_TYPES, PRIVATE_PASSWORD_TYPES } from '@/config/walletType';
 import { sha3_256 } from 'js-sha3';
 import { useRouter, useRoute } from 'vue-router';
@@ -195,12 +160,14 @@ import extensionsSocketTypes from '@/config/extensionsSocketTypes';
 // import useApi from '@/api/useApi';
 // import { keplrNetworksProtobufFormat } from '@/config/availableNets';
 import citadel from '@citadeldao/lib-citadel';
-import TransactionInfo from './components/TransactionInfo';
 import MessageInfo from './components/MessageInfo';
 import FrameApp from './components/FrameApp.vue';
 import { parseTagsList, filteredApps } from './components/helpers';
 import EmptyList from '@/components/EmptyList';
 import { signTxByPrivateKey } from '/node_modules/@citadeldao/lib-citadel/src/networkClasses/cosmosNetworks/_BaseCosmosClass/oldSigners/signTxByPrivateKey';
+import SuccessModal from './SuccessModal.vue';
+import InfoModal from './InfoModal.vue';
+import TransactionModal from './TransactionModal';
 
 export default {
   name: 'Extensions',
@@ -209,15 +176,15 @@ export default {
     CreateVkModal,
     Head,
     AppBlock,
-    AppInfo,
-    SuccessModalContent,
     Loading,
     Modal,
     ModalContent,
-    TransactionInfo,
     MessageInfo,
     FrameApp,
     EmptyList,
+    SuccessModal,
+    InfoModal,
+    TransactionModal,
   },
   setup() {
     const signLoading = ref(false);
@@ -489,8 +456,9 @@ export default {
       localAppMode.value = false;
       selectedApp.value = Object.assign(
         {},
-        extensionsList.value.find((a) => +a.id === +app.id)
+        extensionsList.value.find((a) => +a.id === (+app.id || +app?.app?.id))
       );
+
       router.push({
         name: 'Extensions',
         params: { name: selectedApp.value.slug },
@@ -1150,22 +1118,18 @@ export default {
       }
     };
 
-    const onLaunchApp = () => {
-      if (selectedApp.value.citadelApp) {
-        router.push({ name: 'multisender' });
-        localAppMode.value = true;
-        return;
-      }
+    const onChangeComment = (comm) => {
+      txComment.value = comm;
+    };
 
-      router.push({
-        name: 'Extensions',
-        params: { name: selectedApp.value.name },
-      });
+    const closeAppInfoModal = () => {
+      showAppInfoModal.value = false;
     };
 
     /* eslint-disable */
     return {
-      onLaunchApp,
+      onChangeComment,
+      closeAppInfoModal,
       showFullScreen,
       router,
       assetsDomain,
