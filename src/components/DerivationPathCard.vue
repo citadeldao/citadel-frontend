@@ -36,10 +36,11 @@
               spellcheck="false"
               @blur="setCustomPath"
             />
-            <div class="derives-separator">
+            <div v-if="hasInitialCustomSecond" class="derives-separator">
               {{ separator }}
             </div>
             <input
+              v-if="hasInitialCustomSecond"
               v-model="customSecond"
               class="derivation-path-card__input-mini"
               type="text"
@@ -114,6 +115,9 @@ export default {
       type: Boolean,
       default: false,
     },
+    selectedCustomPath: {
+      type: [null, String],
+    },
   },
   emits: ['uncheck', 'check', 'changePath'],
   setup(props, { emit }) {
@@ -125,10 +129,16 @@ export default {
     );
     const balance = ref(null);
     const isloadingBalance = ref(false);
-    const customPath = ref(props.wallet?.derivationPath);
+    const customPath = ref(
+      props.selectedCustomPath || props.wallet?.derivationPath
+    );
 
     // check [m, 44, ...] after split and shifted NDX
-    const shiftIndex = props.wallet?.derivationPath.includes('m') ? 0 : 1;
+    const shiftIndex = (
+      props.selectedCustomPath || props.wallet?.derivationPath
+    ).includes('m')
+      ? 0
+      : 1;
     const firstPiceIndexStart = computed(() =>
       props.wallet.net === 'polkadot' &&
       props.wallet.type !== WALLET_TYPES.LEDGER
@@ -150,21 +160,29 @@ export default {
 
     // splited paths for change one item
     const customFirst = ref(
-      props.wallet?.derivationPath?.split(separator.value)[
-        firstPiceIndexStart.value - shiftIndex
-      ]
+      (props.selectedCustomPath || props.wallet?.derivationPath)?.split(
+        separator.value
+      )[firstPiceIndexStart.value - shiftIndex]
     );
+
     const customSecond = ref(
-      props.wallet?.derivationPath?.split(separator.value)[
-        secondPiceIndexStart.value - shiftIndex
-      ]
+      (props.selectedCustomPath || props.wallet?.derivationPath)?.split(
+        separator.value
+      )[secondPiceIndexStart.value - shiftIndex]
     );
+
     const customThird = ref(
-      props.wallet?.derivationPath?.split(separator.value)[
-        thirdPiceIndexStart.value - shiftIndex
-      ]
+      (props.selectedCustomPath || props.wallet?.derivationPath)?.split(
+        separator.value
+      )[thirdPiceIndexStart.value - shiftIndex]
     );
+
     const hasInitialCustomThird = ref(false);
+    const hasInitialCustomSecond = ref(false);
+
+    if (customSecond.value) {
+      hasInitialCustomSecond.value = true;
+    }
 
     if (customThird.value) {
       hasInitialCustomThird.value = true;
@@ -172,8 +190,8 @@ export default {
 
     // prefix not custom paths
     const prefixDerivation = computed(() => {
-      if (props.wallet?.derivationPath) {
-        return props.wallet?.derivationPath
+      if (props.selectedCustomPath || props.wallet?.derivationPath) {
+        return (props.selectedCustomPath || props.wallet?.derivationPath)
           .split(separator.value)
           .slice(0, firstPiceIndexStart.value - shiftIndex)
           .join(separator.value);
@@ -204,8 +222,12 @@ export default {
       const thirdValue = customThird.value
         ? `${separator.value}${customThird.value}`
         : '';
+
+      const secondValue = customSecond.value
+        ? `${separator.value}${customSecond.value}`
+        : '';
       // concated prefix + paths
-      const customPath = `${prefixDerivation.value}${separator.value}${customFirst.value}${separator.value}${customSecond.value}${thirdValue}`;
+      const customPath = `${prefixDerivation.value}${separator.value}${customFirst.value}${secondValue}${thirdValue}`;
       const isPath = /^m?\/?44'?[/]/gm.test(customPath);
 
       if (
@@ -215,26 +237,34 @@ export default {
       ) {
         // customPath.value = props.wallet?.derivationPath;
         customFirst.value = ref(
-          props.wallet?.derivationPath?.split(separator.value)[
-            firstPiceIndexStart.value - shiftIndex
-          ]
+          (props.selectedCustomPath || props.wallet?.derivationPath)?.split(
+            separator.value
+          )[firstPiceIndexStart.value - shiftIndex]
         );
-        customSecond.value = ref(
-          props.wallet?.derivationPath?.split(separator.value)[
-            secondPiceIndexStart.value - shiftIndex
-          ]
-        );
-        customThird.value = ref(
-          props.wallet?.derivationPath?.split(separator.value)[
-            thirdPiceIndexStart.value - shiftIndex
-          ]
-        );
+
+        if (secondValue) {
+          customSecond.value = ref(
+            (props.selectedCustomPath || props.wallet?.derivationPath)?.split(
+              separator.value
+            )[secondPiceIndexStart.value - shiftIndex]
+          );
+        }
+
+        if (thirdValue) {
+          customThird.value = ref(
+            (props.selectedCustomPath || props.wallet?.derivationPath)?.split(
+              separator.value
+            )[thirdPiceIndexStart.value - shiftIndex]
+          );
+        }
 
         return;
       }
 
       const customPathSplit = customPath.split(separator.value);
-      const originalSplit = props.wallet?.derivationPath.split(separator.value);
+      const originalSplit = (
+        props.selectedCustomPath || props.wallet?.derivationPath
+      ).split(separator.value);
 
       if (
         (customPathSplit[0] !== originalSplit[0] ||
@@ -250,8 +280,7 @@ export default {
         return;
       }
 
-      props.wallet.derivationPath !== customPath &&
-        emit('changePath', customPath);
+      emit('changePath', customPath);
     };
 
     const icon = ref();
@@ -268,6 +297,8 @@ export default {
         }
       }
     };
+
+    setCustomPath();
 
     const { width } = useWindowSize();
     const name = computed(() =>
@@ -289,6 +320,7 @@ export default {
       customSecond,
       customThird,
       hasInitialCustomThird,
+      hasInitialCustomSecond,
       separator,
     };
   },
