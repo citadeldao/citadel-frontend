@@ -1,5 +1,10 @@
 <template>
-  <div class="min-balance-warning">
+  <div class="min-balance-warning" :class="[`_${variant}`]">
+    <closeIcon
+      v-if="hasClose"
+      class="min-balance-warning__close-icon"
+      @click.stop="$emit('closeBanner')"
+    />
     <keep-alive>
       <component :is="currentIcon" class="min-balance-warning__icon" />
     </keep-alive>
@@ -8,6 +13,7 @@
 </template>
 
 <script>
+import closeIcon from '@/assets/icons/close-icon.svg';
 import { markRaw, ref } from '@vue/reactivity';
 export default {
   name: 'MinBalanceWarning',
@@ -18,6 +24,18 @@ export default {
     content: {
       type: String,
     },
+    variant: {
+      type: String,
+      default: 'warning',
+    },
+    hasClose: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  emits: ['closeBanner'],
+  components: {
+    closeIcon,
   },
   setup(props) {
     const currentIcon = ref();
@@ -32,11 +50,27 @@ export default {
 
 <style lang="scss" scoped>
 .min-balance-warning {
-  background: $ligth-red;
   border-radius: 10px;
   padding: 16px;
   display: flex;
   align-items: center;
+  position: relative;
+  &._warning {
+    background: $ligth-red;
+    .min-balance-warning__content {
+      color: $red;
+    }
+  }
+  &._info {
+    background: #e8f7ff;
+    .min-balance-warning__content {
+      color: $ligth-blue;
+    }
+    .min-balance-warning__icon,
+    .min-balance-warning__close-icon {
+      fill: $ligth-blue;
+    }
+  }
   &__icon {
     width: 24px;
     height: 24px;
@@ -47,7 +81,17 @@ export default {
     font-weight: 600;
     font-size: 14px;
     line-height: 16px;
-    color: $red;
+  }
+  &__close-icon {
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    cursor: pointer;
+    width: 10px;
+    height: 10px;
+    &:hover {
+      fill: $dark-blue !important;
+    }
   }
 }
 </style>

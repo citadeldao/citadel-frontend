@@ -156,3 +156,11 @@ export const getDecimalCount = (num) => {
 export const isNullDerivationPath = (wallet) => {
   return wallet?.derivationPath?.slice(-2).replace(/\D/g, '') === '0';
 };
+
+export const getMiddleCutText = (text, maxLength = 50) => {
+  const tailsLength = Math.floor((maxLength - 3) / 2);
+
+  return text.length > maxLength
+    ? `${text.slice(0, tailsLength)}...${text.slice(-tailsLength)}`
+    : text;
+};

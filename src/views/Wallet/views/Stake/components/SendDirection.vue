@@ -67,13 +67,13 @@
     <div v-if="titles.title1" class="send-direction__line">
       <span class="send-direction__line-title">{{ $t(titles.title1) }}: </span>
       <span class="send-direction__line-from">
-        {{ wallet?.address }}
+        {{ getMiddleCutText(wallet?.address) }}
       </span>
     </div>
     <div v-if="to && !currentToken" class="send-direction__line">
       <span class="send-direction__line-title"> {{ $t(titles.title2) }}: </span>
       <span class="send-direction__line-to">
-        {{ to }}
+        {{ getMiddleCutText(to) }}
       </span>
     </div>
     <div class="send-direction__line">
@@ -157,6 +157,7 @@
 </template>
 
 <script>
+import { getMiddleCutText } from '@/helpers';
 import linkIcon from '@/assets/icons/link.svg';
 import arrowDown from '@/assets/icons/arrow-down.svg';
 import { computed, inject, ref } from 'vue';
@@ -259,6 +260,7 @@ export default {
     );
 
     return {
+      getMiddleCutText,
       txUrl,
       titles,
       activeTab,

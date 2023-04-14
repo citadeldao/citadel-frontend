@@ -12,7 +12,10 @@
       </span>
       - {{ $t('balanceTooltipInfo.stakedBalanceBalanceInfo') }}
     </span>
-    <span class="balance-tooltip-info__line">
+    <span
+      v-if="currentWallet.unstakePerioud"
+      class="balance-tooltip-info__line"
+    >
       <span class="balance-tooltip-info__line-label">
         {{ $t('balanceTooltipInfo.frozenBalance') }}
       </span>

@@ -1,5 +1,5 @@
 <template>
-  <div class="checkbox">
+  <div class="checkbox" @click.stop="stop">
     <input
       :id="id"
       type="checkbox"
@@ -72,8 +72,10 @@ export default {
       emit('update:value', !props.value);
       emit('change', !props.value);
     };
-
-    return { changeHandler };
+    const stop = () => {
+      return;
+    };
+    return { changeHandler, stop };
   },
 };
 </script>

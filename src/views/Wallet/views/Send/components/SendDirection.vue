@@ -3,13 +3,13 @@
     <div v-if="showFrom" class="send-direction__line">
       <span class="send-direction__line-title">{{ $t('sendFrom') }}: </span>
       <span class="send-direction__line-from">
-        {{ address }}
+        {{ getMiddleCutText(address) }}
       </span>
     </div>
     <div v-if="to" class="send-direction__line">
       <span class="send-direction__line-title"> {{ $t('sendTo') }}: </span>
       <span class="send-direction__line-to">
-        {{ to }}
+        {{ getMiddleCutText(to) }}
       </span>
     </div>
     <div
@@ -107,6 +107,7 @@
 </template>
 
 <script>
+import { getMiddleCutText } from '@/helpers';
 import linkIcon from '@/assets/icons/link.svg';
 import vision from '@/assets/icons/input/vision.svg';
 import hide from '@/assets/icons/input/hide.svg';
@@ -223,6 +224,7 @@ export default {
       copyValue,
       isCopied,
       address,
+      getMiddleCutText,
     };
   },
 };

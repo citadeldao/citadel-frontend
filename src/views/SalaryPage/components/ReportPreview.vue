@@ -78,7 +78,6 @@ export default {
     const onPasteJSON = (jsonStr) => {
       try {
         reportData.value = JSON.parse(jsonStr);
-        console.log('reportData', reportData.value);
         if (
           reportData.value &&
           reportData.value.length &&

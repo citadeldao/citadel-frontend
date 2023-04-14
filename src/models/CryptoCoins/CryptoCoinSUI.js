@@ -5,8 +5,10 @@ export default class CryptoCoinSUI extends CryptoCoin {
     super(opts);
     this.privateKeyEncoded = opts.privateKeyEncoded || null;
     this.publicKey = opts.publicKey || null;
-    this.hasRedelegation = true;
-    this.hasMultiCoinRewards = true;
+    this.minStakingAmount = 1;
+    this.hasFee = false;
+    this.hasMultiUnstake = true;
+    this.hasResource = true;
   }
 
   getPublicKeyDecoded() {
