@@ -343,6 +343,7 @@
         "unstakeNote": "After the confirmation of unstaking transaction, your assets will be locked for {unstakeingPerioud} days.Unstaked assets will be depicted in the frozen balance section."
     },
     "singleStake": {
+        "claimUnstakeNote": "Here is <strong style='color:#0a2778;'>no unstaking period</strong> for {code}. You will receive all accrued rewards when unstaking.",
         "chooseNodeModalDescUnstake": "Choose a node and set the amount you want to unstake. Take into account that there is <strong style='color:#0a2778;'>no unstaking period</strong> for {code}. Your assets will be unstaked instantly.",
         "chooseNodeModalDesc": "To stake your assets, choose node and set the amount for delegation. Take into account that there is <strong style='color:#0a2778;'>no unstaking period</strong> for",
         "actionModalTitle": "Confirm redelegation",
@@ -580,7 +581,7 @@
     "bridgeTitleBtn": "Bridge",
     "rewards": "Rewards",
     "claimNote": "Stake your {code} not to miss",
-    "autoclaimNote":  "Your rewards accumulate automatically. At the next epoch you will receive.",
+    "autoclaimNote":  "Your rewards will be claimed automatically after unstaking the transaction.",
     "nodeObjectStatusNote": "Status: Pending. You will be able to unstake at the next epoch.",
     "rewardsSummary": "Rewards Summary",
     "stakingRatio": "Staking ratio",

@@ -343,6 +343,7 @@
         "unstakeNote": "确认解除质押交易后，您的资产将被冻结 {unstakeingPerioud} 天。解除质押部分的资产将展示在冻结余额处。"
     },
     "singleStake": {
+        "claimUnstakeNote": "",
         "chooseNodeModalDescUnstake": "",
         "chooseNodeModalDesc": "如需质押您的资产，选择节点并设置质押金额。请注意此处 <strong style='color:#0a2778;'> 可立即解锁 </strong> ",
         "actionModalTitle": "确认质押",

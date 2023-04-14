@@ -343,6 +343,7 @@
         "unstakeNote": ""
     },
     "singleStake": {
+        "claimUnstakeNote": "",
         "chooseNodeModalDescUnstake": "",
         "chooseNodeModalDesc": "",
         "actionModalTitle": "",

@@ -64,7 +64,7 @@ export default {
   &._info {
     background: #e8f7ff;
     .min-balance-warning__content {
-      color: $ligth-blue;
+      color: $ligth-blue !important;
     }
     .min-balance-warning__icon,
     .min-balance-warning__close-icon {

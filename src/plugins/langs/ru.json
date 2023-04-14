@@ -343,6 +343,7 @@
         "unstakeNote": "После подтверждения транзакции отмены стейкинга, ваши активы будут заблокированы на {unstakeingPerioud} дней. После отмены стейкинга активы будут показаны в разделе замороженного баланса."
     },
     "singleStake": {
+        "claimUnstakeNote": "",
         "chooseNodeModalDescUnstake": "",
         "chooseNodeModalDesc": "Чтобы застейкать активы, выберите валидатора и укажите сумму. Примите во внимание, что <strong style='color:#0a2778;'>no unstaking period</strong> периода заморозки токенов при анстейкинге нет. ",
         "actionModalTitle": "Подтвердите ределегацию",

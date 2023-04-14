@@ -413,7 +413,7 @@ export default function useStaking(stakeNodes, list) {
             perioudTo: currentWallet.value.unstakePerioudTo,
             link: currentWallet.value.unstakePerioudLink,
           })}`: currentWallet.value.hasMultiUnstake ?
-          `${t('singleStake.chooseNodeModalDescUnstake',{code: currentWallet.value.code})}`
+          `${t('singleStake.claimUnstakeNote',{code: currentWallet.value.code})}`
           : `${t(currentWallet.value.messages.unstakeingPrefix ? currentWallet.value.messages.unstakeingPrefix : 'unstaking.defaultPrefix')} ${t('unstaking.chooseNodeModalDesc', {
             net: currentWallet.value.name,
             perioud: currentWallet.value.unstakeingPerioud,

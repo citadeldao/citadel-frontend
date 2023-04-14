@@ -480,7 +480,7 @@ export default {
       showBanner.value = false;
     };
     const bannerContent = computed(() => {
-      if (props.currentWallet.hasClaim === 'unstake') return 'qaq';
+      if (props.currentWallet.hasClaim === 'unstake') return t('autoclaimNote');
       return t('minBalanceNote', {
         amount: `<span style='font-weight: 800;font-family: Panton_ExtraBold;'>${props.currentWallet.minBalance} ${props.currentWallet.code}</span>`,
       });

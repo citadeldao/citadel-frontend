@@ -343,6 +343,7 @@
         "unstakeNote": "Après la confirmation de la transaction de déblocage, vos actifs seront bloqués pendant {unstakeingPerioud} jours. Les actifs débloqués seront représentés dans la section des soldes bloqués."
     },
     "singleStake": {
+        "claimUnstakeNote": "",
         "chooseNodeModalDescUnstake": "",
         "chooseNodeModalDesc": "Pour staker vos actifs, choisissez le nœud et fixez le montant de la délégation. Prenez en compte qu'il n'y a <strong style='color:#0a2778;'>pas de période d'unstaking</strong> pour les",
         "actionModalTitle": "Confirmer la redélégation",

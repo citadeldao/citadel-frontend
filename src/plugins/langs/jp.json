@@ -341,6 +341,7 @@
         "unstakeNote": "ステーキング解除トランザクションの確認後、資産は {unstakeingPerioud} 日間ロックされます。ステーキングされていない資産は凍結残高セクションに表示されます。"
     },
     "singleStake": {
+        "claimUnstakeNote": "",
         "chooseNodeModalDescUnstake": "",
         "chooseNodeModalDesc": "資産を賭けるには、ノードを選択し、委任の金額を設定します。  <strong style='color:#0a2778;'>ステーク解除期間がない</strong>ことに注意してください。",
         "actionModalTitle": "再委任の確認",
