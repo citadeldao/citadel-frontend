@@ -208,19 +208,14 @@
         </ModalContent>
 
         <!-- if NOT POLKADOT -->
-        <ModalContent
+        <ChooseStakingNodeModal
           v-else-if="showChooseNode"
-          v-click-away="modalCloseHandler"
-          :title="$t(chooseNodeModalData.title)"
-          :desc="chooseNodeModalData.desc"
-          type="action"
-          width="600px"
-          :button-text="chooseNodeModalData.button"
+          :stake-nodes="stakeNodes"
+          :modal-close-handler="modalCloseHandler"
+          :choose-node-modal-data="chooseNodeModalData"
           :disabled="disabled"
-          :loading="isLoading"
-          data-qa="staking"
-          @close="modalCloseHandler"
-          @buttonClick="prepareDelegation"
+          :is-loading="isLoading"
+          :prepare-delegation="prepareDelegation"
         >
           <ChooseStakingNode
             v-model:activeTab="activeTab"
@@ -229,25 +224,18 @@
             :list="list"
             @nextStep="prepareDelegation"
           />
-        </ModalContent>
-        <ModalContent
+        </ChooseStakingNodeModal>
+
+        <!-- node list modal -->
+        <NodeListModal
           v-if="showNodesList"
-          v-click-away="modalCloseHandler"
-          :title="nodesListModalData.title"
-          :desc="nodesListModalData.desc"
-          type="action"
-          width="600px"
-          :submit-button="false"
-          @close="nodesListModalCloseHandler"
-        >
-          <NodesList
-            :staked-nodes="list"
-            :max-height="currentWallet.hasMultiUnstake ? '350px' : '400px'"
-            :nodes-list="nodesListModalData.list"
-            :current-wallet="currentWallet"
-            :is-multiple-mode="isMultiple"
-          />
-        </ModalContent>
+          :modal-close-handler="modalCloseHandler"
+          :nodes-list-modal-data="nodesListModalData"
+          :nodes-list-modal-close-handler="nodesListModalCloseHandler"
+          :list="list"
+          :current-wallet="currentWallet"
+          :is-multiple-mode="isMultiple"
+        />
 
         <ModalContent
           v-if="showConfirmTransaction"
@@ -311,38 +299,26 @@
           @close="rejectedLedgerCloseHandler"
           @buttonClick="rejectedLedgerClickHandler"
         />
-        <ModalContent
+        <SuccessModal
           v-if="showSuccessModal"
-          v-click-away="successClickHandler"
-          title="Success"
-          :desc="$t('txWaitTitle')"
-          button-text="ok"
-          type="success"
-          icon="success"
-          data-qa="staking-success"
-          @close="finalClose"
-          @buttonClick="successClickHandler"
-        >
-          <SuccessModalContent
-            v-model:tx-comment="txComment"
-            :to="
-              mode === 'redelegate' || activeTab === 'redelegate'
-                ? selectedNodeForRedelegation?.address
-                : selectedNode?.address
-            "
-            :wallet="currentWallet"
-            :amount="amount"
-            :fee="fee"
-            :type="mode"
-            :tx-hash="txHash"
-            :mode="mode"
-            :active-tab="activeTab"
-            :is-multiple="isMultiple"
-            :redelegation-node-address="selectedNode?.address"
-            :selected-node="selectedNode || list"
-            data-qa="staking-success"
-          />
-        </ModalContent>
+          :success-click-handler="successClickHandler"
+          :final-close="finalClose"
+          :to="
+            mode === 'redelegate' || activeTab === 'redelegate'
+              ? selectedNodeForRedelegation?.address
+              : selectedNode?.address
+          "
+          :current-wallet="currentWallet"
+          :amount="amount"
+          :fee="fee"
+          :tx-hash="txHash"
+          :mode="mode"
+          :active-tab="activeTab"
+          :is-multiple="isMultiple"
+          :selected-node="selectedNode"
+          :selected="selectedNode || list"
+          @changeComment="onChangeComment"
+        />
         <ModalContent
           v-if="showWarningModal"
           v-click-away="finalClose"
@@ -367,21 +343,19 @@ import { computed, ref, inject, provide } from 'vue';
 import { useStore } from 'vuex';
 import BigNumber from 'bignumber.js';
 import WalletButtonsPanel from '@/components/WalletButtonsPanel';
-import SuccessModalContent from '../../Send/components/SuccessModalContent.vue';
+// import SuccessModalContent from '../../Send/components/SuccessModalContent.vue';
 import ActionModalContent from './ActionModalContent.vue';
 import ConfirmLedgerModal from '@/components/Modals/Ledger/ConfirmLedgerModal';
 import ConnectLedgerModal from '@/components/Modals/Ledger/ConnectLedgerModal';
 import OpenAppLedgerModal from '@/components/Modals/Ledger/OpenAppLedgerModal';
 import RejectLedgerModal from '@/components/Modals/Ledger/RejectLedgerModal';
 import StakePlaceholder from './StakePlaceholder.vue';
-import NodesList from './NodesList.vue';
 import Modal from '@/components/Modal';
 import ModalContent from '@/components/ModalContent';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import StakeListItem from './StakeListItem.vue';
 import StakeChart from './StakeChart.vue';
 import LockBanner from './LockBanner.vue';
-import ChooseStakingNode from './ChooseStakingNode.vue';
 import PolkadotChooseStakingNode from './PolkadotChooseStakingNode.vue';
 import { WALLET_TYPES } from '@/config/walletType';
 import { shareInValue } from '@/helpers';
@@ -389,6 +363,10 @@ import useLedger from '@/compositions/useLedger';
 import useWallets from '@/compositions/useWallets';
 
 import LargeStakeListItem from './LargeStakeListItem.vue';
+import ChooseStakingNodeModal from './ChooseStakingNodeModal';
+import NodeListModal from './NodeListModal';
+import ChooseStakingNode from './ChooseStakingNode';
+import SuccessModal from './SuccessModal';
 
 import useStaking from '@/compositions/useStaking';
 // import useApi from '@/api/useApi';
@@ -404,18 +382,20 @@ export default {
     PrimaryButton,
     Modal,
     ModalContent,
-    ChooseStakingNode,
     PolkadotChooseStakingNode,
-    NodesList,
     StakePlaceholder,
     ActionModalContent,
-    SuccessModalContent,
+    // SuccessModalContent,
     WalletButtonsPanel,
     ConfirmLedgerModal,
     ConnectLedgerModal,
     OpenAppLedgerModal,
     RejectLedgerModal,
     LargeStakeListItem,
+    ChooseStakingNode,
+    ChooseStakingNodeModal,
+    NodeListModal,
+    SuccessModal,
   },
   props: {
     currentWallet: {
@@ -791,10 +771,15 @@ export default {
       modalCloseHandler();
     };
 
+    const onChangeComment = (comm) => {
+      txComment.value = comm;
+    };
+
     return {
       bannerContent,
       closeBanner,
       showBanner,
+      onChangeComment,
       txComment,
       successClickHandler,
       buttonsPannelData,

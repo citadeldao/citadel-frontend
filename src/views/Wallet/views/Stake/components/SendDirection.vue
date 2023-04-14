@@ -124,7 +124,11 @@
     <div class="send-direction__line">
       <span class="send-direction__line-title"> {{ $t('fee') }}: </span>
       <div v-if="wallet.hasResource">
-        <template v-for="item in adding" :key="item.name">
+        <div
+          class="send-direction__resource-item"
+          v-for="item in adding"
+          :key="item.name"
+        >
           <span
             v-pretty-number="item.current || item.value"
             class="send-direction__line-fee-amount"
@@ -132,8 +136,7 @@
           <span class="send-direction__line-currency">
             {{ item.nameForUser }}
           </span>
-          &nbsp;&nbsp;
-        </template>
+        </div>
       </div>
       <div v-else>
         <span
@@ -388,6 +391,11 @@ export default {
   &__line-delegate-to,
   &__line-fee-amount {
     color: $red;
+  }
+  &__resource-item {
+    &:not(:last-child) {
+      margin-right: 5px;
+    }
   }
 }
 </style>
