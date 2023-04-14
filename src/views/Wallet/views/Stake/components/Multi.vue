@@ -309,38 +309,6 @@
           :selected="selectedNode || list"
           @changeComment="onChangeComment"
         />
-        <!-- <ModalContent
-          v-if="showSuccessModal"
-          v-click-away="successClickHandler"
-          title="Success"
-          :desc="$t('txWaitTitle')"
-          button-text="ok"
-          type="success"
-          icon="success"
-          data-qa="staking-success"
-          @close="finalClose"
-          @buttonClick="successClickHandler"
-        >
-          <SuccessModalContent
-            v-model:tx-comment="txComment"
-            :to="
-              mode === 'redelegate' || activeTab === 'redelegate'
-                ? selectedNodeForRedelegation?.address
-                : selectedNode?.address
-            "
-            :wallet="currentWallet"
-            :amount="amount"
-            :fee="fee"
-            :type="mode"
-            :tx-hash="txHash"
-            :mode="mode"
-            :active-tab="activeTab"
-            :is-multiple="isMultiple"
-            :redelegation-node-address="selectedNode?.address"
-            :selected-node="selectedNode || list"
-            data-qa="staking-success"
-          />
-        </ModalContent> -->
         <ModalContent
           v-if="showWarningModal"
           v-click-away="finalClose"
