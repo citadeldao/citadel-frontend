@@ -172,6 +172,9 @@ export default {
     };
     onMounted(async () => {
       await setCustomWallet();
+      setTimeout(() => {
+        addSingleItem(wallets.value[0].walletInstance);
+      }, 500);
     });
     return {
       selectedCustomPath,
