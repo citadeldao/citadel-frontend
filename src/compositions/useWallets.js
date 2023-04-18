@@ -90,9 +90,13 @@ export default function useWallets(wallet = null, showCount = undefined) {
    *
    */
 
-  const NETWORK = wallet?.net || ACTUAL_WALLET.value?.net;
-  const CURRENCY_RATE = computed(() => store.getters[GETTERS.RATES]?.[NETWORK]);
-  const MARKETCAP = computed(() => store.getters[GETTERS.MARKET]?.[NETWORK]);
+  const NETWORK = computed(() => wallet?.net || ACTUAL_WALLET.value?.net);
+  const CURRENCY_RATE = computed(
+    () => store.getters[GETTERS.RATES]?.[NETWORK.value]
+  );
+  const MARKETCAP = computed(
+    () => store.getters[GETTERS.MARKET]?.[NETWORK.value]
+  );
 
   /**
    *
