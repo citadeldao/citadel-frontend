@@ -50,7 +50,7 @@ export const ledgerNets = [
   'quicksilver',
   'avalanche',
   'kujira',
-  'provenance',
+  // 'provenance',
   'coreum',
 ];
 
