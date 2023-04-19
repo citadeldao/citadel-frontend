@@ -21,12 +21,13 @@
 import Modal from '@/components/Modal';
 import MobileAppModal from './components/MobileAppModal';
 import NewWalletsModal from '@/components/Modals/NewWallets';
-import { computed, onMounted, ref } from 'vue';
+import { computed, inject, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import Toasts from '@/components/Toasts.vue';
 import AppLayout from './layouts/AppLayout';
 import { useWindowSize } from 'vue-window-size';
 import { screenWidths } from '@/config/sreenWidthThresholds';
+import { useRouter } from 'vue-router';
 // import { isMobile } from 'mobile-device-detect';
 
 export default {
@@ -39,8 +40,10 @@ export default {
     NewWalletsModal,
   },
   setup() {
+    const citadel = inject('citadel');
     const isClosed = ref(false);
     const store = useStore();
+    const router = useRouter();
     const { width } = useWindowSize();
     const showModal = computed(() => {
       return width.value < screenWidths.md && !isClosed.value; // !!(width.value < screenWidths.md && !isClosed.value && isMobile)
@@ -53,7 +56,16 @@ export default {
     );
     onMounted(() => {
       store.dispatch('i18n/init');
-      window.addEventListener('focus', function () {
+      window.addEventListener('focus', async function () {
+        const isAuthenticated = JSON.parse(
+          localStorage.getItem('isAuthenticated')
+        );
+        if (!isAuthenticated) {
+          store.commit('auth/SET_USERNAME', null);
+          store.commit('auth/SET_IS_AUTHENTICATED', null);
+          await citadel.reset(false);
+          router.push({ name: 'Login' });
+        }
         const lsMnemonic = localStorage.getItem(
           `${store.getters['profile/info'].id}_syncEncodeUserMnemonic`
         );
