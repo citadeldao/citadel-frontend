@@ -428,39 +428,25 @@
         />
 
         <!--Error Modal -->
-        <ModalContent
+        <ModalError
           v-if="txError"
-          v-click-away="errorCloseHandler"
-          title="Warning"
-          icon="warningIcon"
-          :desc="txError"
-          button-text="ok"
-          type="warning"
-          @close="errorCloseHandler"
-          @buttonClick="errorClickHandler"
+          :error-close-handler="errorCloseHandler"
+          :error-click-handler="errorClickHandler"
+          :tx-error="txError"
         />
+
         <!--Success Modal -->
-        <ModalContent
+        <ModalSuccess
           v-if="showSuccessModal && !txError && !isLoading"
-          v-click-away="successCloseHandler"
-          title="Success"
-          desc="The transaction is in progress"
-          button-text="ok"
-          type="success"
-          icon="success"
-          @close="successCloseHandler"
-          @buttonClick="successClickHandler"
-        >
-          <SuccessModalContent
-            v-model:txComment="txComment"
-            :to="prepareBridgeData.toAddress || toAddress"
-            :wallet="currentWallet"
-            :amount="prepareBridgeData.amount || amount"
-            :fee="fee.fee"
-            type="transfer"
-            :tx-hash="txHash"
-          />
-        </ModalContent>
+          :success-close-handler="successCloseHandler"
+          :success-click-handler="successClickHandler"
+          :to-address="prepareBridgeData.toAddress || toAddress"
+          :amount="prepareBridgeData.amount || amount"
+          :current-wallet="currentWallet"
+          :fee="fee.fee"
+          :tx-hash="txHash"
+          @changeComment="onChangeComment"
+        />
       </template>
     </Modal>
   </teleport>
@@ -470,7 +456,6 @@
 import error from '@/assets/icons/input/error.svg';
 import { useWindowSize } from 'vue-window-size';
 import ActionModalContent from './components/ActionModalContent.vue';
-import SuccessModalContent from './components/SuccessModalContent.vue';
 // import ChangingModalContent from '@/views/Wallet/views/Send/components/ChangingModalContent.vue';
 import SelectFeeModal from '@/views/Wallet/views/Send/components/SelectFeeModal';
 import Modal from '@/components/Modal';
@@ -505,6 +490,8 @@ import { getDecorateLabel } from '@/config/decorators';
 import amountInputValidation from '@/helpers/amountInputValidation';
 import MinBalanceWarning from '@/views/Wallet/views/Stake/components/MinBalanceWarning';
 import BridgeModal from './components/BridgeModal';
+import ModalError from './ModalError.vue';
+import ModalSuccess from './ModalSuccess.vue';
 
 export default {
   name: 'Send',
@@ -518,7 +505,6 @@ export default {
     Modal,
     ModalContent,
     ActionModalContent,
-    SuccessModalContent,
     Loading,
     error,
     // ChangingModalContent,
@@ -530,6 +516,8 @@ export default {
     AddressItem,
     MinBalanceWarning,
     BridgeModal,
+    ModalError,
+    ModalSuccess,
   },
   props: {
     currentWallet: {
@@ -1427,7 +1415,12 @@ export default {
       successCloseHandler();
     };
 
+    const onChangeComment = (comm) => {
+      txComment.value = comm;
+    };
+
     return {
+      onChangeComment,
       switchChangeHandler,
       WALLET_TYPES,
       isHardwareWallet,
