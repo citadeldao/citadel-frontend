@@ -8,6 +8,15 @@
       @close="$emit('setChangeModal')"
     >
       <form>
+        <div class="checkbox">
+          <Checkbox
+            id="savePassword"
+            v-model:value="savePasswordFlag"
+            :label="$t('settings.changePassword.notRemember')"
+            info=""
+            @input="onCheckRemember"
+          />
+        </div>
         <div class="input-wrapper">
           <Input
             id="password"
@@ -23,6 +32,7 @@
             "
             :show-error-text="true"
             :style="{ marginTop: '25px' }"
+            :hard-autocomplete-off="!rememberPassword"
             @input="onChangeOldPassword"
           />
         </div>
@@ -45,6 +55,7 @@
                 : ''
             "
             :show-error-text="true"
+            :hard-autocomplete-off="!rememberPassword"
             @input="onChangeNewPassword"
           />
         </div>
@@ -62,7 +73,7 @@
 
 <script>
 import PrimaryButton from '@/components/UI/PrimaryButton';
-import { computed, ref, inject } from 'vue';
+import { computed, ref, inject, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import useWallets from '@/compositions/useWallets';
 import { sha3_256 } from 'js-sha3';
@@ -71,6 +82,8 @@ import CryptoCoin from '@/models/CryptoCoin';
 import Modal from '@/components/Modal';
 import ModalContent from '@/components/ModalContent';
 import Input from '@/components/UI/Input';
+import Checkbox from '@/components/UI/Checkbox';
+
 export default {
   name: 'ChangePassword',
   components: {
@@ -78,6 +91,7 @@ export default {
     Modal,
     ModalContent,
     Input,
+    Checkbox,
   },
   props: {
     show: {
@@ -86,10 +100,11 @@ export default {
       required: true,
     },
   },
-  setup(props, { emit }) {
+  setup(_, { emit }) {
     const store = useStore();
     const { wallets } = useWallets();
     const citadel = inject('citadel');
+    const savePasswordFlag = ref(false);
 
     const oldPassword = ref('');
     const newPassword = ref('');
@@ -101,6 +116,14 @@ export default {
       emit('setSuccessModal');
       window.location.reload();
     };
+
+    const onCheckRemember = () => {
+      store.dispatch('profile/setRememberPassword', !savePasswordFlag.value);
+    };
+
+    const rememberPassword = computed(
+      () => store.getters['profile/rememberPassword']
+    );
 
     const oldPasswordHash = computed(
       () => store.getters['crypto/passwordHash']
@@ -183,7 +206,12 @@ export default {
     const changePassword = () => {
       emit('setChangeModal', true);
     };
+
+    onMounted(() => {
+      savePasswordFlag.value = rememberPassword.value;
+    });
     return {
+      rememberPassword,
       changePassword,
       oldPasswordHash,
       oldPassword,
@@ -194,6 +222,8 @@ export default {
       updatePassword,
       startUpdate,
       closeSuccessModal,
+      savePasswordFlag,
+      onCheckRemember,
     };
   },
 };
@@ -216,6 +246,11 @@ form {
       margin: 75px 0 20px 0;
     }
   }
+}
+
+.checkbox {
+  max-height: 35px;
+  margin-top: 12px;
 }
 
 .change-password-card {

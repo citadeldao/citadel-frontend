@@ -12,6 +12,7 @@ export default function initPersistedstate(store) {
       'wallets.wallets',
       'crypto.passwordHash',
       'extensions.extensionsList',
+      'profile.rememberPassword',
     ],
     storage: {
       getItem: (key) => {
