@@ -9,6 +9,7 @@ export default class CryptoCoinSUI extends CryptoCoin {
     this.hasFee = false;
     this.hasMultiUnstake = true;
     this.hasResource = true;
+    this.hideMemo = true;
   }
 
   getPublicKeyDecoded() {
