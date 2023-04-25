@@ -174,7 +174,8 @@ export default {
       await setCustomWallet();
       setTimeout(() => {
         addSingleItem(wallets.value[0].walletInstance);
-      }, 500);
+        console.log('set 0 derivation');
+      }, 1500);
     });
     return {
       selectedCustomPath,
