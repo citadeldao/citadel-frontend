@@ -808,6 +808,7 @@
             "placeholder": ""
         },
         "changePassword": {
+            "notRemember": "",
             "btnTitle": "",
             "btnUpdate": "",
             "modalTitle": "",

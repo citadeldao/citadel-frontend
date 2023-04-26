@@ -2,9 +2,11 @@
   <div class="change-password-card">
     <h5 class="change-password-card__title">
       {{ $t('settings.changePassword.title') }}
-      <Tooltip :text="$t('settings.changePassword.tooltip')">
-        <Info></Info>
-      </Tooltip>
+      <div class="ml-5">
+        <Tooltip :text="$t('settings.changePassword.tooltip')">
+          <Info></Info>
+        </Tooltip>
+      </div>
     </h5>
     <div class="settings-wrap">
       <span class="change-password-card__description">
@@ -87,6 +89,10 @@ export default {
   &__title {
     display: flex;
     align-items: center;
+
+    .ml-5 {
+      margin-left: 5px;
+    }
   }
 
   .input-wrapper {

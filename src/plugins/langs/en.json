@@ -814,6 +814,7 @@
             "placeholder": "Enter confirmation"
         },
         "changePassword": {
+            "notRemember": "Do not remember payment password",
             "btnTitle": "Change password",
             "btnUpdate": "Update",
             "modalTitle": "Password change",

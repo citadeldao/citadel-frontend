@@ -780,6 +780,7 @@
             "placeholder": "Tapez 'supprimer'"
         },
         "changePassword": {
+            "notRemember": "",
             "btnTitle": "Modifier le mot de passe",
             "btnUpdate": "Mise à jour",
             "modalTitle": "Changement du mot de passe",

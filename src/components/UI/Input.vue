@@ -22,7 +22,7 @@
       :disabled="disabled"
       spellcheck="false"
       :style="{ background }"
-      :readonly="hardAutocompleteOff"
+      :readonly="hardAutocompleteOff || resetAutocomplete"
       onfocus="this.removeAttribute('readonly')"
       :data-qa="dataQa"
       @input="inputHandler"
@@ -108,6 +108,7 @@ import error from '@/assets/icons/input/error.svg';
 import { computed, ref, markRaw, watch, nextTick, onMounted } from 'vue';
 import copyToClipboard from '@/helpers/copyToClipboard';
 import { WALLET_TYPES } from '@/config/walletType';
+import { useStore } from 'vuex';
 
 export default {
   name: 'Input',
@@ -204,6 +205,7 @@ export default {
   },
   emits: ['update:modelValue', 'focus', 'blur', 'input', 'clear', 'iconClick'],
   setup(props, { emit }) {
+    const store = useStore();
     const valueRef = ref('');
     const currentIcon = ref();
     const focusFlag = ref(false);
@@ -211,6 +213,7 @@ export default {
     const isCopied = ref(false);
     const isTypeCurrency = computed(() => props.type === 'currency');
     const currencyOffset = ref(0);
+    const resetAutocomplete = ref(false);
 
     // DOM
     const currencyTextRef = ref(null);
@@ -364,6 +367,13 @@ export default {
       if (props.autofocus) {
         inputRef.value.focus();
       }
+
+      if (
+        props.type === 'password' &&
+        store.getters['profile/rememberPassword']
+      ) {
+        resetAutocomplete.value = store.getters['profile/rememberPassword'];
+      }
     });
 
     const inputHandler = () => {
@@ -426,6 +436,7 @@ export default {
       setMax,
       copyValue,
       clearInput,
+      resetAutocomplete,
     };
   },
 };

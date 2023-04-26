@@ -778,6 +778,7 @@
             "placeholder": "「削除」と入力します"
         },
         "changePassword": {
+            "notRemember": "",
             "btnTitle": "パスワードを変更する",
             "btnUpdate": "アップデート",
             "modalTitle": "パスワードの変更",

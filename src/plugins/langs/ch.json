@@ -780,6 +780,7 @@
             "placeholder": "delete"
         },
         "changePassword": {
+            "notRemember": "",
             "btnTitle": "更改密码",
             "btnUpdate": "更新",
             "modalTitle": "密码更改",
