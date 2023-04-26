@@ -13,11 +13,13 @@ const types = {
   SET_RATES: 'SET_RATES',
   SET_CURRENT_WALLET_MARKETCAP: 'SET_CURRENT_WALLET_MARKETCAP',
   SET_CHANGE_EMAIL_TIMER: 'SET_CHANGE_EMAIL_TIMER',
+  SET_REMEMBER_PASSWORD: 'SET_REMEMBER_PASSWORD',
 };
 
 export default {
   namespaced: true,
   state: {
+    rememberPassword: false,
     info: {
       info: null,
       marketcaps: {},
@@ -27,6 +29,7 @@ export default {
     changeEmailTimer: null,
   },
   getters: {
+    rememberPassword: (state) => state.rememberPassword,
     info: (state) => state.info,
     formatYeldByNet: (state) => (net) =>
       prettyNumber(state.marketcaps?.[net]?.yield),
@@ -36,6 +39,9 @@ export default {
     changeEmailTimer: (state) => state.changeEmailTimer,
   },
   mutations: {
+    [types.SET_REMEMBER_PASSWORD](state, value) {
+      state.rememberPassword = value;
+    },
     [types.SET_INFO](state, info) {
       state.info = info;
     },
@@ -187,6 +193,9 @@ export default {
       } catch (error) {
         return { ok: false, error };
       }
+    },
+    setRememberPassword({ commit }, value) {
+      commit(types.SET_REMEMBER_PASSWORD, value);
     },
   },
 };

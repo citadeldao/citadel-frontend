@@ -1,9 +1,9 @@
 <template>
   <div class="networks">
-    <div v-for="(item, ndx) in coins.slice(0, 6)" :key="ndx" class="item">
+    <div v-for="(item, ndx) in coins?.slice(0, 6)" :key="ndx" class="item">
       <NetworkItem :icon="item" />
       <div>
-        {{ store.getters['networks/configByNet'](item.toLowerCase()).name }}
+        {{ store.getters['networks/configByNet'](item?.toLowerCase())?.name }}
       </div>
     </div>
   </div>

@@ -7,7 +7,7 @@
             <div class="title">
               <div v-if="showAllNetworks" class="networks-wrap">
                 <div
-                  v-for="(network, ndx) in app.networks.slice(6)"
+                  v-for="(network, ndx) in app.networks?.slice(6)"
                   :key="ndx"
                   class="network-item"
                 >
@@ -20,7 +20,7 @@
               </div>
               <div class="label">{{ $t('extensions.networks') }}</div>
               <span
-                v-if="app.networks.length > 6"
+                v-if="app.networks?.length > 6"
                 class="showmore"
                 @mouseover="onMouseOver"
                 @mouseleave="onMouseLeave"
@@ -36,7 +36,7 @@
             </div>
             <div
               class="description"
-              v-html="app.description.replaceAll('\n', '<br>')"
+              v-html="app.description?.replaceAll('\n', '<br>')"
             />
           </div>
         </div>
