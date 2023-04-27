@@ -9,15 +9,9 @@
 
   <teleport to="body">
     <Modal v-if="showModal">
-      <ModalContent
+      <WarningModal
         v-if="showWarningModal"
-        title="Warning"
-        icon="warningIcon"
-        :desc="$t('customLists.warningModalDesc')"
-        button-text="ok"
-        type="warning"
-        @close="warningModalClickHandler"
-        @buttonClick="warningModalClickHandler"
+        :warning-modal-click-handler="warningModalClickHandler"
       />
       <ModalContent
         v-else
@@ -54,19 +48,11 @@
       </ModalContent>
     </Modal>
     <Modal v-if="showDeleteModal">
-      <ModalContent
-        v-click-away="deleteModalCloseHandler"
-        button-text="save"
-        type="warning"
-        :submit-button="false"
-        @close="deleteModalCloseHandler"
-      >
-        <DeleteListModalContent
-          :is-loading="isLoading"
-          @deleteClick="deleteList"
-          @cancelClick="deleteModalCloseHandler"
-        />
-      </ModalContent>
+      <DeleteListModal
+        :delete-modal-close-handler="deleteModalCloseHandler"
+        :is-loading="isLoading"
+        @delete="deleteList"
+      />
     </Modal>
   </teleport>
 </template>
@@ -84,8 +70,11 @@ import Modal from '@/components/Modal';
 import ModalContent from '@/components/ModalContent';
 import CustomListsItems from './components/CustomListsItems.vue';
 import CustomListModalContent from './components/CustomListModalContent';
-import DeleteListModalContent from './components/DeleteListModalContent';
+// import DeleteListModalContent from './components/DeleteListModalContent';
 import removeIcon from '@/assets/icons/settings/remove.svg';
+
+import WarningModal from './WarningModal';
+import DeleteListModal from './DeleteListModal';
 
 const CUSTOM_LIST_MODAL = 'custom-list-modal';
 
@@ -96,8 +85,10 @@ export default {
     ModalContent,
     CustomListsItems,
     CustomListModalContent,
-    DeleteListModalContent,
+    // DeleteListModalContent,
     removeIcon,
+    WarningModal,
+    DeleteListModal,
   },
   setup() {
     const store = useStore();
@@ -177,6 +168,7 @@ export default {
 
     const showDeleteModal = ref(false);
     const toDeleteList = () => {
+      console.log('????');
       showDeleteModal.value = true;
     };
 

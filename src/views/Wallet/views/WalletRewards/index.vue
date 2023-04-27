@@ -47,42 +47,26 @@
   </teleport>
   <teleport v-if="showModal" to="body">
     <Modal>
-      <ModalContent
+      <AssignedAddressesModal
         v-if="showAssignedAddressesModal"
-        v-click-away="modalCloseHandler"
-        :submit-button="false"
-        :title="$t('xct.assignedAddressesModalTitle')"
-        :desc="$t('xct.assignedAddressesModalDesc')"
-        type="action"
-        @close="modalCloseHandler"
-      >
-        <AssignedAddressesModalContent :list="assignedAddresses" />
-      </ModalContent>
-      <ModalContent
+        :modal-close-handler="modalCloseHandler"
+        :assigned-addresses="assignedAddresses"
+      />
+
+      <AddressAssigningInfoModal
         v-if="showAddressAssigningInfo"
-        v-click-away="modalCloseHandler"
-        :title="$t('xct.addressAssigningInfoModalTitle')"
-        :desc="$t('xct.addressAssigningInfoModalDesc')"
-        type="action"
-        button-text="next"
-        @close="modalCloseHandler"
-        @buttonClick="toUnassignedAddresses"
-      >
-        <AddressAssigningInfo />
-      </ModalContent>
-      <ModalContent
+        :modal-close-handler="modalCloseHandler"
+        :to-unassigned-addresses="toUnassignedAddresses"
+      />
+
+      <UnassignedAddressesModal
         v-if="showUnassignedAddressesModal"
-        v-click-away="modalCloseHandler"
-        :title="$t('xct.unassignedAddressesModalTitle')"
-        :desc="$t('xct.unassignedAddressesModalDesc')"
-        type="action"
-        button-text="next"
-        :disabled="!checkedAddresses.length"
-        @close="modalCloseHandler"
-        @buttonClick="toApproveAssign"
-      >
-        <UnassignedAddressesModalContenet :list="unassignedAddresses" />
-      </ModalContent>
+        :modal-close-handler="modalCloseHandler"
+        :checked-addresses="checkedAddresses"
+        :unassigned-addresses="unassignedAddresses"
+        :to-approve-assign="toApproveAssign"
+      />
+
       <ModalContent
         v-if="showApproveAsignWithPasswordModal"
         v-click-away="modalCloseHandler"
@@ -115,48 +99,28 @@
           >
         </template>
       </ModalContent>
-      <ModalContent
+
+      <NewAssignedAddressesModal
         v-if="showNewAssignedAddressesModal"
-        v-click-away="successClickHandler"
-        :title="$t('xct.newAssignedAddressesModalTitle')"
-        :desc="$t('xct.unassignedAddressesModalDesc')"
-        type="action"
-        button-text="ok"
-        @close="successClickHandler"
-        @buttonClick="successClickHandler"
-      >
-        <NewAssignedAddressesModal
-          :list="newAssignedAddresses"
-          :current-wallet="currentWallet"
-        />
-      </ModalContent>
-      <ModalContent
+        :success-click-handler="successClickHandler"
+        :new-assigned-addresses="newAssignedAddresses"
+        :current-wallet="currentWallet"
+      />
+
+      <HardwareAddressModal
         v-if="showHardwareAddressesModal"
-        v-click-away="successClickHandler"
-        :title="$t('hardwareWallet')"
-        :desc="$t('xct.hardwareAddressesModalDesc')"
-        type="action"
-        button-text="finish"
-        @close="successClickHandler"
-        @buttonClick="hardwareAdressesModalClick"
-      >
-        <HardwareAddressesModal
-          :list="hardwareAddresses"
-          @signHardwareAddress="signHardwareAddress"
-        />
-      </ModalContent>
+        :success-click-handler="successClickHandler"
+        :hardware-addresses="hardwareAddresses"
+        :hardware-adresses-modal-click="hardwareAdressesModalClick"
+        :sign-hardware-address="signHardwareAddress"
+      />
     </Modal>
   </teleport>
 </template>
 
 <script>
 import RewardsBlock from './components/RewardsBlock';
-import HardwareAddressesModal from './components/HardwareAddressesModal.vue';
-import NewAssignedAddressesModal from './components/NewAssignedAddressesModal.vue';
 import ApproveAssignWithPassword from './components/ApproveAssignWithPassword';
-import UnassignedAddressesModalContenet from './components/UnassignedAddressesModalContenet';
-import AddressAssigningInfo from './components/AddressAssigningInfo';
-import AssignedAddressesModalContent from './components/AssignedAddressesModalContent';
 import ModalContent from '@/components/ModalContent';
 import Modal from '@/components/Modal';
 import InfoBlocks from './components/InfoBlocks.vue';
@@ -173,6 +137,11 @@ import { sortByAlphabet } from '@/helpers';
 import useWallets from '@/compositions/useWallets';
 import notify from '@/plugins/notify';
 import { useRouter } from 'vue-router';
+import AssignedAddressesModal from './AssignedAddressesModal';
+import AddressAssigningInfoModal from './AddressAssigningInfoModal';
+import UnassignedAddressesModal from './UnassignedAddressesModal';
+import NewAssignedAddressesModal from './NewAssignedAddressesModal';
+import HardwareAddressModal from './HardwareAddressModal';
 
 export default {
   name: 'WalletRewards',
@@ -184,13 +153,15 @@ export default {
     InfoBlocks,
     ModalContent,
     Modal,
-    AssignedAddressesModalContent,
-    AddressAssigningInfo,
-    UnassignedAddressesModalContenet,
+
     ApproveAssignWithPassword,
-    NewAssignedAddressesModal,
-    HardwareAddressesModal,
     RewardsBlock,
+
+    AssignedAddressesModal,
+    AddressAssigningInfoModal,
+    UnassignedAddressesModal,
+    NewAssignedAddressesModal,
+    HardwareAddressModal,
   },
   props: {
     currentWallet: {

@@ -35,9 +35,12 @@
     <div class="choose-derivation-path__custom">
       <span>Custom</span>
       <DerivationPathCard
-        v-if="customWallet"
+        v-if="
+          (pathOptions.length > 1 ? selectedCustomPath : true) && customWallet
+        "
         :wallet="customWallet.walletInstance"
         type="custom"
+        :selected-custom-path="selectedCustomPath.replace('N', '0')"
         :exist="customWallet.alreadyExist"
         :checked="checked(customWallet.walletInstance)"
         @changePath="setCustomWallet"
@@ -89,9 +92,14 @@ export default {
     const wallets = ref([]);
     const isInvalid = ref(false);
     const maxPaths = ref(20);
+    const selectedCustomPath = ref(null);
     currentPath.value = pathOptions.value[0].key;
 
     const selectCustomPathFormat = (pathFormat) => {
+      selectedCustomPath.value = null;
+      setTimeout(() => {
+        selectedCustomPath.value = pathFormat;
+      }, 100);
       Promise.all(
         [...Array(numberOfPaths.value)].map((_, pathIndex) => {
           return store.dispatch('crypto/createWalletByMnemonic', {
@@ -164,8 +172,13 @@ export default {
     };
     onMounted(async () => {
       await setCustomWallet();
+      setTimeout(() => {
+        addSingleItem(wallets.value[0].walletInstance);
+        console.log('set 0 derivation');
+      }, 1500);
     });
     return {
+      selectedCustomPath,
       maxPaths,
       generateNewPath,
       clickHandler,

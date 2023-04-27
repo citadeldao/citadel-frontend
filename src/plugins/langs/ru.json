@@ -770,6 +770,7 @@
             "placeholder": "Введите 'delete'"
         },
         "changePassword": {
+            "notRemember": "",
             "btnTitle": "Изменить пароль",
             "btnUpdate": "Обновление",
             "modalTitle": "Изменение пароля",
