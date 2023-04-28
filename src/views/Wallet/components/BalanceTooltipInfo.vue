@@ -65,7 +65,10 @@
         days.
       </span>
     </span>
-    <div v-if="currentWallet.hasResource" class="balance-tooltip-info__balance">
+    <div
+      v-if="currentWallet.hasResource && rsources.length"
+      class="balance-tooltip-info__balance"
+    >
       <span class="balance-tooltip-info__balance-title"
         >{{ $t('balance') }}:</span
       >
