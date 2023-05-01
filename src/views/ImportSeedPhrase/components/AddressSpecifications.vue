@@ -5,7 +5,7 @@
         <Autocomplete
           id="networks"
           v-model:value="search"
-          :items="networks"
+          :items="networks.filter((t) => t.icon !== 'tez')"
           :label="$t('network')"
           :placeholder="$t('selectNetwork')"
           initial-icon="citadel"

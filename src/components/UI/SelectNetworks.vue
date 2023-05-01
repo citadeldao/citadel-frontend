@@ -103,14 +103,16 @@ export default {
     const newItemIds = reactive({});
 
     const networks = computed(() =>
-      networksList.map((network, index) => ({
-        id: index,
-        title: network.name,
-        percent: store.getters['profile/formatYeldByNet'](network.net),
-        abbr: network.code,
-        icon: network.net,
-        net: network.net,
-      }))
+      networksList
+        .map((network, index) => ({
+          id: index,
+          title: network.name,
+          percent: store.getters['profile/formatYeldByNet'](network.net),
+          abbr: network.code,
+          icon: network.net,
+          net: network.net,
+        }))
+        .filter((n) => n.net !== 'tez')
     );
 
     const keyword = ref(''); //search networks
