@@ -2,7 +2,7 @@ export const ledgerNets = [
   'btc',
   'eth',
   'bsc',
-  'tez',
+  // 'tez',
   'polkadot',
   'cosmos',
   'osmosis',
@@ -64,7 +64,7 @@ export const metamaskNets = [
   'avalanche',
 ];
 
-export const trezorNets = ['btc', 'eth', 'bsc', 'tez'];
+export const trezorNets = ['btc', 'eth', 'bsc']; // 'tez'
 
 export const keplrNetworksProtobufFormat = ['emoney'];
 export const keplrNetworks = [

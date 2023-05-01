@@ -1,1 +1,1 @@
-export const netsWithoutPrivateKeys = ['polkadot'];
+export const netsWithoutPrivateKeys = ['polkadot', 'tez'];
