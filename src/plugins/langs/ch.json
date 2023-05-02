@@ -343,6 +343,8 @@
         "unstakeNote": "确认解除质押交易后，您的资产将被冻结 {unstakeingPerioud} 天。解除质押部分的资产将展示在冻结余额处。"
     },
     "singleStake": {
+        "claimUnstakeNote": "",
+        "chooseNodeModalDescUnstake": "",
         "chooseNodeModalDesc": "如需质押您的资产，选择节点并设置质押金额。请注意此处 <strong style='color:#0a2778;'> 可立即解锁 </strong> ",
         "actionModalTitle": "确认质押",
         "actionModalDesc": "您的资产将从当前的验证节点取消质押，并质押至新选择的节点",
@@ -569,6 +571,10 @@
     "bridgeTitleBtn": "",
     "bridgeTitle": "",
     "rewards": "奖励",
+    "claimNote": "",
+    "autoclaimNote":  "",
+    "nodeObjectStatusNote": "",
+    "rewardsSummary": "",
     "stakingRatio": "质押比例",
     "inflation": "通胀",
     "tokenPrice": "代币价格",
@@ -1316,6 +1322,11 @@
         },
         "provenance":{
             "title": "Provenance",
+            "description": "",
+            "shortDescription": ""
+        },
+        "sui":{
+            "title": "Sui",
             "description": "",
             "shortDescription": ""
         }

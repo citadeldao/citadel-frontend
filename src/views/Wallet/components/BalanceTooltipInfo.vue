@@ -12,7 +12,10 @@
       </span>
       - {{ $t('balanceTooltipInfo.stakedBalanceBalanceInfo') }}
     </span>
-    <span class="balance-tooltip-info__line">
+    <span
+      v-if="currentWallet.unstakePerioud"
+      class="balance-tooltip-info__line"
+    >
       <span class="balance-tooltip-info__line-label">
         {{ $t('balanceTooltipInfo.frozenBalance') }}
       </span>
@@ -62,7 +65,10 @@
         days.
       </span>
     </span>
-    <div v-if="currentWallet.hasResource" class="balance-tooltip-info__balance">
+    <div
+      v-if="currentWallet.hasResource && rsources.length"
+      class="balance-tooltip-info__balance"
+    >
       <span class="balance-tooltip-info__balance-title"
         >{{ $t('balance') }}:</span
       >

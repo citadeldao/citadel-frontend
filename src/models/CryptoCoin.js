@@ -221,7 +221,9 @@ export default class CryptoCoin {
   async prepareDelegation({ walletId, ...options }) {
     /* redelegateNodeAddress */
     const formatedNodeAddresses = Array.isArray(options.nodeAddresses)
-      ? options.nodeAddresses.map((item) => item.address)
+      ? options.nodeAddresses.map(
+          (item) => item.address || item.stakedSuiObjectId
+        )
       : [options.nodeAddresses];
     const formatedRedelegateNodeAddress = Array.isArray(
       options.redelegateNodeAddress

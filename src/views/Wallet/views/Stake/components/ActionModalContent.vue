@@ -1,7 +1,11 @@
 <template>
   <div class="action-modal-content">
     <div
-      v-if="!currentToken && (activeTab === 'unstake' || mode === 'unstake')"
+      v-if="
+        !currentToken &&
+        (activeTab === 'unstake' || mode === 'unstake') &&
+        wallet.unstakeingPerioud
+      "
       class="action-modal-content__info"
     >
       <exclamation class="action-modal-content__info-icon" />

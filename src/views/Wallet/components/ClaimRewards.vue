@@ -14,10 +14,8 @@
   >
     <div class="claim-rewards__section">
       <div>
-        <span class="claim-rewards__title"
-          >{{
-            $t(currentWalletInfo?.claimableRewards ? 'claimRewards' : 'rewards')
-          }}
+        <span class="claim-rewards__title">
+          {{ $t(title) }}
         </span>
         <div class="claim-rewards__tooltip">
           <Tooltip v-if="currentWallet.claimRewardsMessage">
@@ -31,16 +29,8 @@
         </div>
       </div>
 
-      <span class="claim-rewards__note"
-        >{{
-          !apy
-            ? $t('noApyNote')
-            : currentWalletInfo?.claimableRewards
-            ? currentWallet?.net === 'osmosis'
-              ? $t('accruedDaily')
-              : $t('youHave')
-            : `Stake your ${currentWallet.code} not to miss`
-        }}
+      <span class="claim-rewards__note">
+        {{ subtitle }}
       </span>
       <span
         v-if="apy || currentWalletInfo?.claimableRewards"
@@ -101,13 +91,7 @@
     >
       <claimBlockLock />
     </div>
-    <div
-      v-if="
-        currentWallet?.type !== WALLET_TYPES.PUBLIC_KEY ||
-        currentWalletType === WALLET_TYPES.METAMASK
-      "
-      class="claim-rewards__button"
-    >
+    <div v-if="showClaimButton" class="claim-rewards__button">
       <hotSale class="claim-rewards__button-shadow-icon" />
       <RoundArrowButton
         :disabled="disabled"
@@ -137,6 +121,7 @@ import { ref, computed, inject } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import Tooltip from '@/components/UI/Tooltip';
+import { useI18n } from 'vue-i18n';
 
 export default {
   name: 'ClaimRewards',
@@ -165,6 +150,7 @@ export default {
   emits: ['prepareClaim', 'prepareXctClaim'],
   setup(props, { emit }) {
     const store = useStore();
+    const { t } = useI18n();
     const rewardsList = inject('rewardsList');
     const width = computed(() => {
       if (window.innerWidth <= 1286 && window.innerWidth >= 1280) {
@@ -198,6 +184,37 @@ export default {
       () => store.getters['metamask/metamaskConnector']
     );
 
+    const showClaimButton = computed(() => {
+      if (currentWalletType.value === WALLET_TYPES.PUBLIC_KEY) return false;
+      if (
+        currentWalletInfo.value?.claimableRewards &&
+        props.currentWallet.hasClaim === 'unstake'
+      )
+        return false;
+      return true;
+    });
+
+    const title = computed(() =>
+      currentWalletInfo?.value?.claimableRewards &&
+      props.currentWallet.hasClaim === 'unstake'
+        ? 'rewardsSummary'
+        : currentWalletInfo?.value?.claimableRewards
+        ? 'claimRewards'
+        : 'rewards'
+    );
+
+    const subtitle = computed(() =>
+      props.currentWallet.hasClaim === 'unstake' &&
+      currentWalletInfo?.value?.claimableRewards
+        ? t('autoclaimNote')
+        : !apy.value
+        ? t('noApyNote')
+        : currentWalletInfo?.value?.claimableRewards
+        ? props.currentWallet?.net === 'osmosis'
+          ? t('accruedDaily')
+          : t('youHave')
+        : t('claimNote', { code: props.currentWallet.code })
+    );
     const currentWalletType = computed(() => {
       const metamaskNet = metamaskConnector.value.network;
       const metamaskAddress =
@@ -239,6 +256,9 @@ export default {
     };
 
     return {
+      subtitle,
+      title,
+      showClaimButton,
       rewardsList,
       width,
       reward,

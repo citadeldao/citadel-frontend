@@ -343,6 +343,8 @@
         "unstakeNote": "Après la confirmation de la transaction de déblocage, vos actifs seront bloqués pendant {unstakeingPerioud} jours. Les actifs débloqués seront représentés dans la section des soldes bloqués."
     },
     "singleStake": {
+        "claimUnstakeNote": "",
+        "chooseNodeModalDescUnstake": "",
         "chooseNodeModalDesc": "Pour staker vos actifs, choisissez le nœud et fixez le montant de la délégation. Prenez en compte qu'il n'y a <strong style='color:#0a2778;'>pas de période d'unstaking</strong> pour les",
         "actionModalTitle": "Confirmer la redélégation",
         "actionModalDesc": "Vos actifs seront unstakés des validateurs actuels et mis en staking sur le nouveau validateur choisi une fois",
@@ -569,6 +571,10 @@
     "bridgeTitle": "",
     "bridgeTitleBtn": "",
     "rewards": "Récompenses",
+    "claimNote": "",
+    "autoclaimNote":  "",
+    "nodeObjectStatusNote": "",
+    "rewardsSummary": "",
     "stakingRatio": "Ratio de staking",
     "inflation": "Inflation",
     "tokenPrice": "Prix du jeton",
@@ -1316,6 +1322,11 @@
         },
         "provenance":{
             "title": "Provenance",
+            "description": "",
+            "shortDescription": ""
+        },
+        "sui":{
+            "title": "Sui",
             "description": "",
             "shortDescription": ""
         }

@@ -36,39 +36,52 @@
       <paperPlane />
       {{ $t(button2) }}
     </button>
-    <transition name="fade">
-      <button
-        v-if="currentWallet.hasClaim && [STAKE, REWARDS].includes(type)"
-        class="wallet-buttons-panel__button wallet-buttons-panel__button-rewards"
-        :data-qa="
-          dataQa &&
-          `${dataQa}__${currentWalletInfo?.stake ? 'rewards' : 'earn'}-button`
-        "
-        @click="claimButtonHandler"
+    <!-- <transition name="fade"> -->
+    <template v-if="currentWallet.hasClaim && [STAKE, REWARDS].includes(type)">
+      <el-tooltip
+        effect="light"
+        :content="$t('autoclaimNote')"
+        :disabled="currentWallet.hasClaim !== 'unstake'"
+        placement="top"
       >
-        <hotSale />
-        <span
-          v-if="!showRedelegationButton"
-          class="wallet-buttons-panel__button-rewards-rewards"
+        <button
+          class="wallet-buttons-panel__button wallet-buttons-panel__button-rewards"
+          :class="{
+            notAllowed:
+              currentWallet.hasClaim === 'unstake' &&
+              currentWalletInfo?.claimableRewards,
+          }"
+          :data-qa="
+            dataQa &&
+            `${dataQa}__${currentWalletInfo?.stake ? 'rewards' : 'earn'}-button`
+          "
+          @click="claimButtonHandler"
         >
-          {{ $t('rewards') }}
-        </span>
-        <div class="wallet-buttons-panel__button-rewards-count">
-          <span class="wallet-buttons-panel__button-rewards-value">
-            {{ prettyNumber(rewardCount) }}
-          </span>
-          <span class="wallet-buttons-panel__button-rewards-currency">
-            {{ rewardCurrency }}
-          </span>
+          <hotSale />
           <span
-            v-if="!currentWalletInfo?.claimableRewards"
-            class="wallet-buttons-panel__button-rewards-apy"
+            v-if="!showRedelegationButton"
+            class="wallet-buttons-panel__button-rewards-rewards"
           >
-            APY
+            {{ $t('rewards') }}
           </span>
-        </div>
-      </button>
-    </transition>
+          <div class="wallet-buttons-panel__button-rewards-count">
+            <span class="wallet-buttons-panel__button-rewards-value">
+              {{ prettyNumber(rewardCount) }}
+            </span>
+            <span class="wallet-buttons-panel__button-rewards-currency">
+              {{ rewardCurrency }}
+            </span>
+            <span
+              v-if="!currentWalletInfo?.claimableRewards"
+              class="wallet-buttons-panel__button-rewards-apy"
+            >
+              APY
+            </span>
+          </div>
+        </button>
+      </el-tooltip>
+    </template>
+    <!-- </transition> -->
   </div>
 </template>
 
@@ -164,6 +177,11 @@ export default {
     });
 
     const claimButtonHandler = () => {
+      if (
+        props.currentWallet.hasClaim === 'unstake' &&
+        currentWalletInfo?.value?.claimableRewards
+      )
+        return;
       if (currentWalletInfo.value?.claimableRewards) {
         props.currentToken ? emit('prepareXctClaim') : emit('prepareClaim');
         emit('prepareClaim');
