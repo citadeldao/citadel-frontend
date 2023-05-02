@@ -343,6 +343,8 @@
         "unstakeNote": ""
     },
     "singleStake": {
+        "claimUnstakeNote": "",
+        "chooseNodeModalDescUnstake": "",
         "chooseNodeModalDesc": "",
         "actionModalTitle": "",
         "actionModalDesc": "",
@@ -574,6 +576,10 @@
     "bridgeTitle": "",
     "bridgeTitleBtn": "",
     "rewards": "",
+    "claimNote": "",
+    "autoclaimNote":  "",
+    "nodeObjectStatusNote": "",
+    "rewardsSummary": "",
     "stakingRatio": "",
     "inflation": "",
     "tokenPrice": "",
@@ -1316,6 +1322,11 @@
         },
         "provenance":{
             "title": "Provenance",
+            "description": "",
+            "shortDescription": ""
+        },
+        "sui":{
+            "title": "Sui",
             "description": "",
             "shortDescription": ""
         }

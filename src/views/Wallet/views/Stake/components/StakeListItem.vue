@@ -184,6 +184,10 @@ export default {
       type: String,
       default: 'edit',
     },
+    isModal: {
+      type: Boolean,
+      default: true,
+    },
   },
   emits: ['editClick'],
   setup(props, { emit }) {
@@ -270,6 +274,7 @@ export default {
     };
 
     const showEditButton = computed(() => {
+      if (!props.isModal && props.currentWallet.hasMultiUnstake) return false;
       if (editMode.value && !props.redelegationNodeTo) {
         return false;
       } else if (

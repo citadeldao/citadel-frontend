@@ -18,7 +18,31 @@
       class="nodes-list__empty"
     />
     <div
-      v-if="displayData.length"
+      v-if="
+        displayData.length &&
+        currentWallet.hasMultiUnstake &&
+        mode === 'unstake'
+      "
+      ref="nodesListRefMulti"
+      class="nodes-list__nodes"
+      :class="{ 'nodes-list__nodes--scrollbar': hasScrollbarMulti }"
+      :style="{ maxHeight }"
+    >
+      <NestedNodesListItem
+        v-for="item in displayData"
+        :key="item.address"
+        :selectedItems="items"
+        :item="item"
+        :icon="currentWallet?.net"
+        :current-wallet="currentWallet"
+        :chosen="isChosen(item)"
+        :show-tag="showTag"
+        @toggleNode="toggleNode"
+        @toggleNodeList="toggleNodeList"
+      />
+    </div>
+    <div
+      v-else
       ref="nodesListRef"
       class="nodes-list__nodes"
       :class="{ 'nodes-list__nodes--scrollbar': hasScrollbar }"
@@ -35,12 +59,16 @@
         @click="setNode(item)"
       />
     </div>
+
     <div v-if="errorMsg" class="nodes-list__error">
       <error />
       &nbsp;
       {{ $t(`polkadot.error.${errorMsg}`) }}
     </div>
-    <div v-if="isMultipleMode" class="nodes-list__next">
+    <div
+      v-if="isMultipleMode || currentWallet.hasMultiUnstake"
+      class="nodes-list__next"
+    >
       <PrimaryButton :disabled="!items.length" @click="setMultipleNodes()">
         {{ $t('next') }}
       </PrimaryButton>
@@ -49,13 +77,15 @@
 </template>
 
 <script>
+import BigNumber from 'bignumber.js';
 import { nextTick, onMounted } from 'vue';
+import NestedNodesListItem from './NestedNodesListItem.vue';
 import NodesListItem from './NodesListItem.vue';
 import error from '@/assets/icons/input/error.svg';
 import Input from '@/components/UI/Input';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import { ref } from '@vue/reactivity';
-import { computed, inject } from '@vue/runtime-core';
+import { computed, inject, watch } from '@vue/runtime-core';
 import EmptyList from '@/components/EmptyList';
 
 export default {
@@ -66,6 +96,7 @@ export default {
     PrimaryButton,
     error,
     EmptyList,
+    NestedNodesListItem,
   },
   props: {
     nodesList: {
@@ -91,8 +122,12 @@ export default {
   },
   setup(props) {
     const nodesListRef = ref(null);
+    const nodesListRefMulti = ref(null);
+
     const keyword = ref('');
     const hasScrollbar = ref(false);
+    const hasScrollbarMulti = ref(false);
+
     const items = ref([]);
     const errorMsg = ref('');
 
@@ -106,6 +141,7 @@ export default {
       );
     });
     const mode = inject('mode');
+
     const updateSelectedNode = inject('updateSelectedNode');
     const updateShowChooseNode = inject('updateShowChooseNode');
     const updateShowNodesList = inject('updateShowNodesList');
@@ -113,6 +149,9 @@ export default {
     const updateSelectedNodeForRedelegation = inject(
       'updateSelectedNodeForRedelegation'
     );
+    const updateShowConfirmTransaction = inject('updateShowConfirmTransaction');
+    const prepareDelegation = inject('prepareDelegation');
+
     const updateAmount = inject('updateAmount');
     const resMaxAmount = inject('resMaxAmount');
 
@@ -163,9 +202,32 @@ export default {
         .some((addr) => addr === item.address);
     };
 
+    watch(
+      () => items.value,
+      (newVal) => {
+        if (props.currentWallet.hasMultiUnstake) {
+          const totalSum = newVal.reduce(
+            (total, currentObject) =>
+              BigNumber(total).plus(currentObject.value).toNumber(),
+            0
+          );
+          updateAmount(totalSum);
+        }
+      },
+      { deep: true }
+    );
+
     const setMultipleNodes = async () => {
+      if (props.currentWallet.hasMultiUnstake) {
+        await updateSelectedNode(items.value);
+        await prepareDelegation();
+        updateShowNodesList(false);
+        updateShowConfirmTransaction(true);
+        return;
+      }
       updateShowChooseNode(true);
       updateShowNodesList(false);
+
       const chosenAddresses = items.value.map((c) => c.address);
 
       if (mode.value === 'redelegate') {
@@ -182,9 +244,9 @@ export default {
 
     onMounted(() => {
       nextTick(() => {
-        if (nodesListRef.value.offsetHeight >= 400) {
-          hasScrollbar.value = true;
-        }
+        if (nodesListRef?.value?.offsetHeight >= 400) hasScrollbar.value = true;
+        if (nodesListRefMulti?.value?.offsetHeight >= 350)
+          hasScrollbarMulti.value = true;
       });
     });
 
@@ -198,7 +260,43 @@ export default {
       return true;
     });
 
+    const toggleNode = (list) => {
+      list.forEach((object) => {
+        if (
+          items.value.some(
+            (node) => JSON.stringify(object) === JSON.stringify(node)
+          )
+        ) {
+          items.value = items.value.filter(
+            (item) => item.stakedSuiObjectId !== object.stakedSuiObjectId
+          );
+        } else {
+          items.value.push(object);
+        }
+      });
+    };
+    const toggleNodeList = (list, isSelected) => {
+      list.forEach((object) => {
+        if (isSelected) {
+          items.value = items.value.filter(
+            (node) => node.stakedSuiObjectId !== object.stakedSuiObjectId
+          );
+        } else {
+          if (
+            !items.value.some(
+              (node) => JSON.stringify(object) === JSON.stringify(node)
+            )
+          )
+            items.value.push(object);
+        }
+      });
+    };
+
     return {
+      hasScrollbarMulti,
+      nodesListRefMulti,
+      toggleNodeList,
+      toggleNode,
       showTag,
       keyword,
       displayData,

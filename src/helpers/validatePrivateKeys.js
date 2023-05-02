@@ -52,6 +52,7 @@ export const validatePrivateKey = (net, privateKey) => {
     iost: validateIost,
     tez: validateTezos,
     oasis: validateOasis,
+    sui: validateEth,
   };
 
   return (coins[net] && coins[net](privateKey)) || validateHex(privateKey);

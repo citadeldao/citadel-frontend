@@ -10,7 +10,7 @@
   >
     <NodesList
       :staked-nodes="list"
-      max-height="400px"
+      :max-height="currentWallet.hasMultiUnstake ? '350px' : '400px'"
       :nodes-list="nodesListModalData.list"
       :current-wallet="currentWallet"
       :is-multiple-mode="isMultiple"
