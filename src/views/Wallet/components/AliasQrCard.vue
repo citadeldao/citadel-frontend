@@ -12,7 +12,7 @@
         background="#f0f3fd"
         class="alias-qr-card__qr"
       />
-      <h4>{{ currentWallet.address }}</h4>
+      <h4>{{ getMiddleCutText(currentWallet.address) }}</h4>
       <PrimaryButton :disabled="isCopying" @click="clickHandler">
         {{ $t(isCopied ? 'copied' : 'copy') }}
       </PrimaryButton>
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import { getMiddleCutText } from '@/helpers';
 import QrcodeVue from 'qrcode.vue';
 import closeIcon from '@/assets/icons/close-icon.svg';
 import PrimaryButton from '@/components/UI/PrimaryButton';
@@ -61,6 +62,7 @@ export default {
       clickHandler,
       isCopied,
       isCopying,
+      getMiddleCutText,
     };
   },
 };

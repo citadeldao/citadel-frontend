@@ -343,6 +343,8 @@
         "unstakeNote": "After the confirmation of unstaking transaction, your assets will be locked for {unstakeingPerioud} days.Unstaked assets will be depicted in the frozen balance section."
     },
     "singleStake": {
+        "claimUnstakeNote": "Here is <strong style='color:#0a2778;'>no unstaking period</strong> for {code}. You will receive all accrued rewards when unstaking.",
+        "chooseNodeModalDescUnstake": "Choose a node and set the amount you want to unstake. Take into account that there is <strong style='color:#0a2778;'>no unstaking period</strong> for {code}. Your assets will be unstaked instantly.",
         "chooseNodeModalDesc": "To stake your assets, choose node and set the amount for delegation. Take into account that there is <strong style='color:#0a2778;'>no unstaking period</strong> for",
         "actionModalTitle": "Confirm redelegation",
         "actionModalDesc": "Your assets will be unstaked from the current validators and staked to the newly chosen once",
@@ -578,6 +580,10 @@
     "bridgeTitle": "If you want to send assets to another network, please use <span style='font-weight: 700; font-family: Panton_SemiBold;'>«Bridge»</span> option.",
     "bridgeTitleBtn": "Bridge",
     "rewards": "Rewards",
+    "claimNote": "Stake your {code} not to miss",
+    "autoclaimNote":  "Your rewards will be claimed automatically after unstaking the transaction.",
+    "nodeObjectStatusNote": "Status: Pending. You will be able to unstake at the next epoch.",
+    "rewardsSummary": "Rewards Summary",
     "stakingRatio": "Staking ratio",
     "inflation": "Inflation",
     "tokenPrice": "Token price",
@@ -1329,6 +1335,11 @@
             "title": "Provenance Blockchain",
             "description": "Provenance Blockchain is a public, permissionless PoS blockchain built with Cosmos SDK and designed for financial service industries.",
             "shortDescription": "Provenance Blockchain is a public, permissionless PoS blockchain for financial services."
+        },
+        "sui":{
+            "title": "Sui",
+            "description": "Sui is a permissionless L1 PoS blockchain that aims to provide high throughput at low costs and instant settlement while serving next gen dApps.",
+            "shortDescription": "Sui is a L1 PoS blockchain that aims to serve the next gen dApps."
         }
     },
     "uptime": "Uptime",

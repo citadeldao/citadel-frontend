@@ -1,4 +1,4 @@
-import moment from 'moment';
+// import moment from 'moment';
 import notify from '@/plugins/notify';
 import citadel from '@citadeldao/lib-citadel';
 
@@ -77,7 +77,7 @@ export default {
   },
   actions: {
     async fetchChartData(
-      { commit, rootGetters },
+      { commit /* , rootGetters */ },
       { months = 1, dateFrom, dateTo, list, target = 'rewardsChart' }
     ) {
       await commit(types.SET_CHART_LOADING, {
@@ -132,14 +132,14 @@ export default {
       const { data, error } = await sendCitadelGraphRequest(METHOD, params);
 
       if (!error) {
-        const todayDate = moment().format('YYYY-MM-DD');
+        // const todayDate = moment().format('YYYY-MM-DD');
 
-        if ((METHOD !== REWARDS_METHOD && !dateTo) || dateTo === todayDate) {
-          data.list[todayDate] = {
-            usd: rootGetters['balance/usdWithTokens'],
-            btc: rootGetters['balance/btc'],
-          };
-        }
+        // if ((METHOD !== REWARDS_METHOD && !dateTo) || dateTo === todayDate) {
+        //   data.list[todayDate] = {
+        //     usd: rootGetters['balance/usdWithTokens'],
+        //     btc: rootGetters['balance/btc'],
+        //   };
+        // }
 
         commit(types.SET_CHART_DATA, {
           list,

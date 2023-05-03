@@ -162,10 +162,10 @@ export default function useWallets(wallet = null, showCount = undefined) {
         .plus(balance)
         .toNumber();
       obj[item.net].usd = BigNumber(obj[item.net].usd)
-        .plus(BigNumber(balance).multipliedBy(item.tokenBalance.price.USD))
+        .plus(BigNumber(balance).multipliedBy(item.tokenBalance.price.USD || 0))
         .toNumber();
       obj[item.net].btc = BigNumber(obj[item.net].btc)
-        .plus(BigNumber(balance).multipliedBy(item.tokenBalance.price.BTC))
+        .plus(BigNumber(balance).multipliedBy(item.tokenBalance.price.BTC || 0))
         .toNumber();
 
       return obj;
@@ -241,7 +241,10 @@ export default function useWallets(wallet = null, showCount = undefined) {
   const balanceStructure = computed(() => {
     const getTotalValue = (list, key) => {
       return list.reduce(
-        (total, coin) => BigNumber(total).plus(coin[key]).toNumber(),
+        (total, coin) =>
+          BigNumber(total)
+            .plus(coin[key] || 0)
+            .toNumber(),
         0
       );
     };

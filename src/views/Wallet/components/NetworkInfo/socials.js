@@ -775,4 +775,18 @@ export default {
     //   href: 'https://www.coingecko.com/en/coins/kujira',
     // },
   },
+  sui: {
+    web: {
+      title: 'sui.io',
+      href: 'https://sui.io/',
+    },
+    twitter: {
+      title: '@SuiNetwork',
+      href: 'SuiNetwork',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/sui',
+    },
+  },
 };

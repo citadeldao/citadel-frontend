@@ -146,7 +146,7 @@ export default function useStaking(stakeNodes, list) {
   provide('getDelegationFee', getDelegationFee);
   const selectedNode = ref();
   const updateSelectedNode = async (value) => {
-    amount.value = '';
+    if(!currentWallet.value.hasMultiUnstake) amount.value = '';
     selectedNode.value = value;
     if ((activeTab.value === 'redelegate' || mode.value === 'redelegate') && value && selectedNodeForRedelegation.value) {
       await getDelegationFee('redelegate', selectedNodeForRedelegation.value, value);
@@ -345,7 +345,6 @@ export default function useStaking(stakeNodes, list) {
   });
   const showWarningModal = ref(false);
   const finalClose = () => {
-    console.log('FinalClose');
     updateShowModal(false);
     updateSelectedNode('');
     updateSelectedNodeForRedelegation('');
@@ -388,6 +387,8 @@ export default function useStaking(stakeNodes, list) {
           net: currentWallet.value.name,
           perioud: currentWallet.value.unstakeingPerioud,
         })}`:
+         currentWallet.value.hasMultiUnstake ?
+         `${t('singleStake.chooseNodeModalDesc')} ${currentWallet.value.code}`:
          currentWallet.value.unstakePerioudFrom ?
           `${t('staking.chooseNodeModalDescWithFrom', {
             net: currentWallet.value.name,
@@ -411,7 +412,8 @@ export default function useStaking(stakeNodes, list) {
             perioudFrom: currentWallet.value.unstakePerioudFrom,
             perioudTo: currentWallet.value.unstakePerioudTo,
             link: currentWallet.value.unstakePerioudLink,
-          })}`
+          })}`: currentWallet.value.hasMultiUnstake ?
+          `${t('singleStake.claimUnstakeNote',{code: currentWallet.value.code})}`
           : `${t(currentWallet.value.messages.unstakeingPrefix ? currentWallet.value.messages.unstakeingPrefix : 'unstaking.defaultPrefix')} ${t('unstaking.chooseNodeModalDesc', {
             net: currentWallet.value.name,
             perioud: currentWallet.value.unstakeingPerioud,
@@ -489,7 +491,9 @@ export default function useStaking(stakeNodes, list) {
       return {
         title: 'staking.Stake',
         button: 'staking.Stake',
-        desc: currentWallet.value.unstakePerioudFrom ?
+        desc: currentWallet.value.hasMultiUnstake ?
+        `${t('singleStake.chooseNodeModalDesc')} ${currentWallet.value.code}`:
+        currentWallet.value.unstakePerioudFrom ?
           `${t('staking.chooseNodeModalDescWithFrom', {
             net: currentWallet.value.name,
             perioudFrom: currentWallet.value.unstakePerioudFrom,

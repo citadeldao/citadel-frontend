@@ -11,15 +11,18 @@
       >
         <LockBanner @showPlaceholder="$emit('showPlaceholder')" />
       </div>
+
       <MinBalanceWarning
-        v-if="currentWallet.minBalance"
+        v-if="
+          currentWallet.minBalance ||
+          (currentWallet.hasClaim === 'unstake' && showBanner)
+        "
+        :variant="currentWallet.hasClaim === 'unstake' ? 'info' : ''"
         class="multi__min-balance-note"
         icon="exclamation"
-        :content="
-          $t('minBalanceNote', {
-            amount: `<span style='font-weight: 800;font-family: Panton_ExtraBold;'>${currentWallet.minBalance} ${currentWallet.code}</span>`,
-          })
-        "
+        :hasClose="currentWallet.hasClaim === 'unstake'"
+        @closeBanner="closeBanner"
+        :content="bannerContent"
       />
       <div v-if="list.length > 0" class="multi__stake-chart">
         <StakeChart :chart-data="chartData" />
@@ -55,9 +58,13 @@
             :item="item"
             :current-wallet="currentWallet"
             :balance="currentWallet.balance"
+            :isModal="false"
           />
         </div>
-        <div class="multi__stake-list-item multi__stake-list-item--md">
+        <div
+          v-if="currentWallet.unstakeingPerioud"
+          class="multi__stake-list-item multi__stake-list-item--md"
+        >
           <StakeListItem
             icon="citadel"
             type="frozen"
@@ -83,7 +90,10 @@
             :balance="currentWallet.balance"
           />
         </div>
-        <div class="multi__stake-list-item multi__stake-list-item--xl">
+        <div
+          v-if="currentWallet.unstakeingPerioud"
+          class="multi__stake-list-item multi__stake-list-item--xl"
+        >
           <StakeListItem
             icon="citadel"
             type="frozen"
@@ -326,8 +336,10 @@
 </template>
 
 <script>
+import { useI18n } from 'vue-i18n';
+import { getStorage, setStorage } from '@/utils/storage';
 import MinBalanceWarning from '@/views/Wallet/views/Stake/components/MinBalanceWarning';
-import { computed, ref, inject } from 'vue';
+import { computed, ref, inject, provide } from 'vue';
 import { useStore } from 'vuex';
 import BigNumber from 'bignumber.js';
 import WalletButtonsPanel from '@/components/WalletButtonsPanel';
@@ -406,6 +418,7 @@ export default {
   emits: ['showPlaceholder', 'prepareClaim', 'prepareXctClaim', 'stake'],
   setup(props, { emit }) {
     const citadel = inject('citadel');
+    const { t } = useI18n();
     const {
       showModal,
       modalCloseHandler,
@@ -459,6 +472,19 @@ export default {
     const disabledConfirm = computed(
       () => passwordIncorrect.value && !isHardwareWallet.value
     );
+
+    if (getStorage('showBanner') === null) setStorage('showBanner', true);
+    const showBanner = ref(JSON.parse(getStorage('showBanner')));
+    const closeBanner = () => {
+      setStorage('showBanner', false);
+      showBanner.value = false;
+    };
+    const bannerContent = computed(() => {
+      if (props.currentWallet.hasClaim === 'unstake') return t('autoclaimNote');
+      return t('minBalanceNote', {
+        amount: `<span style='font-weight: 800;font-family: Panton_ExtraBold;'>${props.currentWallet.minBalance} ${props.currentWallet.code}</span>`,
+      });
+    });
 
     const {
       showConnectLedgerModal,
@@ -567,9 +593,11 @@ export default {
       isLoading.value = true;
       const { rawTxs, ok } = await props.currentWallet.prepareDelegation({
         walletId: props.currentWallet.id,
-        nodeAddresses: isMultiple.value
-          ? selectedNode.value || props.list
-          : selectedNode.value?.address,
+        nodeAddresses:
+          isMultiple.value ||
+          (props.currentWallet.hasMultiUnstake && mode.value === 'unstake')
+            ? selectedNode.value || props.list
+            : selectedNode.value?.address,
         amount: amount.value,
         type: activeTab.value || mode.value,
         redelegateNodeAddress: isMultiple.value
@@ -583,6 +611,7 @@ export default {
 
       if (ok) {
         resRawTxs.value = rawTxs;
+        if (rawTxs.resourcesForTx) adding.value = rawTxs.resourcesForTx.adding;
         updateShowChooseNode(false);
         updateShowConfirmTransaction(true);
         isLoading.value = false;
@@ -593,6 +622,7 @@ export default {
       isLoading.value = false;
     };
 
+    provide('prepareDelegation', prepareDelegation);
     const txError = ref();
 
     const stake = async () => {
@@ -746,6 +776,9 @@ export default {
     };
 
     return {
+      bannerContent,
+      closeBanner,
+      showBanner,
       onChangeComment,
       txComment,
       successClickHandler,

@@ -17,11 +17,11 @@ export const renderBalanceStructChart = (
   const PERCENTS = [];
 
   for (const key in balanceStructure.value) {
-    if (balanceStructure.value[key].percent > 2) {
-      BACKGROUND_COLOR.push(balanceStructure.value[key].color);
-      LABELS.push(balanceStructure.value[key].net);
-      PERCENTS.push(balanceStructure.value[key].percent);
-    }
+    // if (balanceStructure.value[key].percent > 2) {
+    BACKGROUND_COLOR.push(balanceStructure.value[key].color);
+    LABELS.push(balanceStructure.value[key].net);
+    PERCENTS.push(balanceStructure.value[key].percent);
+    // }
   }
 
   const data = {

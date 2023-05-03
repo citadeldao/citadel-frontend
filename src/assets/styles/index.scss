@@ -348,3 +348,7 @@ background-color: #F0F3FD;
 .el-popper.is-rewards-list-tooltip .el-popper__arrow::before {
   background: $white;
 }
+
+.notAllowed{
+  cursor: not-allowed !important;
+}
