@@ -3,6 +3,7 @@ import initPersistedstate from '@/plugins/persistedstate';
 // import { SocketManager } from '@/utils/socket';
 import { socketEventHandler } from '@/utils/socketEventHandler';
 import citadel from '@citadeldao/lib-citadel';
+import { setStorage } from '@/utils/storage';
 
 const types = {
   SET_LOADER: 'SET_LOADER',
@@ -34,7 +35,7 @@ export default {
     setRouteLoader({ commit }, loadingState) {
       commit(types.SET_ROUTE_LOADER, loadingState);
     },
-    async initDefaultState({ dispatch }) {
+    async initDefaultState({ dispatch, rootGetters }) {
       dispatch('setLoader', true);
       const { error } = await dispatch('profile/getInfo', null, { root: true });
 
@@ -47,6 +48,16 @@ export default {
           await dispatch('wallets/getNewWallets', 'lazy', { root: true });
         });
         await dispatch('setWallets');
+        //save encodedMnemonic and passwordHash for sync in other tabs
+        const userId = rootGetters['profile/info'].id;
+        setStorage(
+          `${userId}_syncEncodeUserMnemonic`,
+          rootGetters['crypto/encodeUserMnemonic']
+        );
+        setStorage(
+          `${userId}_syncPasswordHash`,
+          rootGetters['crypto/passwordHash']
+        );
         // await dispatch('wallets/getNewWallets','lazy', { root: true });
         // dispatch('wallets/getNewWallets','detail', { root: true });
         dispatch('wallets/getCustomWalletsList', null, { root: true });
