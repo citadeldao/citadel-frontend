@@ -66,7 +66,7 @@ export default {
     const setSuccessModal = (value) => (showSuccessModal.value = !!value);
     const closeSuccessModal = () => {
       showSuccessModal.value = false;
-      window.location.reload();
+      // window.location.reload();
     };
 
     return {
