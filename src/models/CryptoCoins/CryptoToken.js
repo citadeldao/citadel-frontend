@@ -25,6 +25,7 @@ export default class CryptoToken extends CryptoCoin {
         ? 'balanceTooltipInfo.frozenBalanceBalanceInfo2'
         : '',
     };
+    this.isFavorite = opts.config.favorite || false;
   }
 
   getCustomErrorMessage(error) {
