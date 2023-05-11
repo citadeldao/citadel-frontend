@@ -45,6 +45,10 @@
             <deleteX class="drag-input__delete-icon" @click="removeFile" />
           </div>
           <span>{{ file.name }}</span>
+          <div v-if="backup?.backupDate" class="backup-date">
+            {{ new Date(backup.backupDate).toLocaleDateString() }}
+            {{ new Date(backup.backupDate).toLocaleTimeString() }}
+          </div>
         </div>
       </div>
     </div>
@@ -157,6 +161,7 @@ export default {
     };
 
     return {
+      backup,
       clickHandler,
       file,
       handleFileInput,
@@ -203,6 +208,12 @@ export default {
     @include md {
       margin-bottom: 24px;
     }
+  }
+
+  .backup-date {
+    margin-top: 5px;
+    font-size: 14px;
+    color: $mid-blue;
   }
 }
 .drag-input {

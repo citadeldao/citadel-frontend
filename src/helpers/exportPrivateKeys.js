@@ -21,6 +21,7 @@ export const downLoadWallets = (backup) => {
 export default (keyStorage) => {
   const storage = getStorage(keyStorage) && JSON.parse(getStorage(keyStorage));
   const backup = storage && {
+    backupDate: +new Date(),
     mnemonic: storage.crypto.mnemonic,
     passwordHash: storage.crypto.passwordHash,
     wallets: storage.wallets.wallets.filter(
