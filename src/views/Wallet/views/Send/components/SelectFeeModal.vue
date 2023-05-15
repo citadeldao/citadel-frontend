@@ -26,7 +26,13 @@
             </span>
             <span class="fee-radio__amount">
               <span v-pretty-number="{ value: fee.fee, currency }" />
-              {{ currency }}
+              {{ currency }} - <span class="fee-radio__dollar">$</span
+              ><span
+                class="fee-radio__dollar"
+                v-pretty-number="{
+                  value: fee.fee * rates.USD,
+                }"
+              />
             </span>
           </span>
           <checkmark class="fee-radio__checkmark" />
@@ -166,7 +172,7 @@ export default {
       showFeeErrorModal.value = false;
     };
 
-    const { currentWallet } = useWallets();
+    const { currentWallet, currency: rates } = useWallets();
 
     const validateFee = () => {
       if (selectedFeeAmount.value > currentWallet.value.balance.mainBalance) {
@@ -201,6 +207,7 @@ export default {
       handleClickConfirm,
       inputHandler,
       changeHandler,
+      rates,
     };
   },
 };
@@ -231,6 +238,10 @@ export default {
     width: 100px;
     font-family: 'Panton_SemiBold';
     text-transform: capitalize;
+    color: $mid-blue;
+  }
+
+  &__dollar {
     color: $mid-blue;
   }
 
@@ -267,6 +278,7 @@ export default {
         }
 
         &__type,
+        &__dollar,
         &__amount {
           color: $white;
         }
