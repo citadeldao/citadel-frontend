@@ -16,7 +16,7 @@ const MONTHS = [
 ];
 
 export default function defaultDate(date) {
-  return date ? moment(date).format('DD.MM.YYYY hh:mm') : '';
+  return date ? moment(date).format('DD.MM.YYYY HH:mm:ss') : '';
 }
 
 export const getMonthName = (dateTime) => {
