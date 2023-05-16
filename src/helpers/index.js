@@ -164,3 +164,8 @@ export const getMiddleCutText = (text, maxLength = 50) => {
     ? `${text.slice(0, tailsLength)}...${text.slice(-tailsLength)}`
     : text;
 };
+
+export const cutNumberWithDecimals = (number, decimals = 8) => {
+  const numberStr = String(number);
+  return numberStr.substring(0, numberStr.indexOf('.') + decimals + 1);
+};

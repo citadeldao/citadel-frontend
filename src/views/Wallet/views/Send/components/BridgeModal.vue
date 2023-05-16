@@ -73,6 +73,7 @@
           id="amount"
           v-model="amount"
           type="currency"
+          :decimals="currentWallet?.config?.decimals"
           :currency="currentWallet.code"
           :label="$t('amount')"
           :max="maxAmount"
