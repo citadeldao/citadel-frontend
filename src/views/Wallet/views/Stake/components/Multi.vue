@@ -1,7 +1,11 @@
 <template>
   <div>
     <StakePlaceholder
-      v-if="!list.length > 0 && currentWallet.type !== WALLET_TYPES.PUBLIC_KEY"
+      v-if="
+        !list.length > 0 &&
+        currentWallet.type !== WALLET_TYPES.PUBLIC_KEY &&
+        !stakeWithoutDelegation
+      "
       @click:placeholder="toStake"
     />
     <div v-else class="multi">
@@ -27,7 +31,10 @@
       <div v-if="list.length > 0" class="multi__stake-chart">
         <StakeChart :chart-data="chartData" />
       </div>
-      <div v-if="list.length > 0" class="multi__stake-list">
+      <div
+        v-if="list.length > 0 || stakeWithoutDelegation"
+        class="multi__stake-list"
+      >
         <div class="multi__stake-list-item multi__stake-list-item--md">
           <StakeListItem
             icon="citadel"
@@ -464,6 +471,12 @@ export default {
       () => props.stakeNodes,
       () => props.list
     );
+    const stakeWithoutDelegation = computed(() => {
+      if (!props.currentWallet.hasStake === 'finalStakeAndDelegation') return 0;
+      return BigNumber(props.currentWallet.balance.stake)
+        .minus(props.currentWallet.balance.delegatedBalance)
+        .toNumber();
+    });
     const keplrConnector = computed(
       () => store.getters['keplr/keplrConnector']
     );
@@ -776,6 +789,7 @@ export default {
     };
 
     return {
+      stakeWithoutDelegation,
       bannerContent,
       closeBanner,
       showBanner,
