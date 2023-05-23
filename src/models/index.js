@@ -54,6 +54,7 @@ import CryptoCoinKUJIRA from './CryptoCoins/CryptoCoinKUJIRA';
 import CryptoCoinCOREUM from './CryptoCoins/CryptoCoinCOREUM';
 import CryptoCoinPROVENANCE from './CryptoCoins/CryptoCoinPROVENANCE';
 import CryptoCoinSUI from './CryptoCoins/CryptoCoinSUI';
+import CryptoCoinNOLUS from './CryptoCoins/CryptoCoinNOLUS';
 
 export default {
   // nets
@@ -113,4 +114,5 @@ export default {
   COREUM: CryptoCoinCOREUM,
   PROVENANCE: CryptoCoinPROVENANCE,
   SUI: CryptoCoinSUI,
+  NOLUS: CryptoCoinNOLUS,
 };
