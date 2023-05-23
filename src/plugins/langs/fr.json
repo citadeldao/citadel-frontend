@@ -1329,6 +1329,11 @@
             "title": "Sui",
             "description": "",
             "shortDescription": ""
+        },
+        "nolus":{
+            "title": "Nolus",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "Disponibilité",

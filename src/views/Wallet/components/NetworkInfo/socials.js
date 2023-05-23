@@ -789,4 +789,18 @@ export default {
       href: 'https://www.coingecko.com/en/coins/sui',
     },
   },
+  nolus: {
+    web: {
+      title: 'nolus.io',
+      href: 'https://nolus.io/',
+    },
+    twitter: {
+      title: '@NolusProtocol',
+      href: 'NolusProtocol',
+    },
+    // landing: {
+    //   title: 'Coingecko',
+    //   href: 'https://www.coingecko.com/en/coins/sui',
+    // },
+  },
 };

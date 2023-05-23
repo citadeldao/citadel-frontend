@@ -1324,6 +1324,11 @@
             "title": "Quicksilver",
             "description": "Quicksilver Protocol – это суверенная зона Cosmos-SDK, обеспечивающая ликвидный стейкинг для экосистемы Cosmos Interchain.",
             "shortDescription": "Quicksilver – это зона ликвидного стейкинга для Interchain"
+        },
+        "nolus":{
+            "title": "Nolus",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "Подтверждено блоков",
