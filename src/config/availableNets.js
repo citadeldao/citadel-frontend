@@ -52,6 +52,7 @@ export const ledgerNets = [
   'kujira',
   'provenance',
   'coreum',
+  'sui',
 ];
 
 export const metamaskNets = [
