@@ -59,6 +59,7 @@
             id="amount"
             v-model="selectedCustomFee"
             type="currency"
+            :decimals="decimals"
             :label="$t('fee')"
             :currency="currency"
             icon="coins"
@@ -105,6 +106,10 @@ export default {
     checkmark,
   },
   props: {
+    decimals: {
+      type: [Number, String],
+      default: 0,
+    },
     feeType: {
       type: String,
       default: 'medium',

@@ -73,7 +73,11 @@ export default {
             privateKeyEncoded: currentWallet.privateKeyEncoded,
             publicKey: currentWallet.publicKey,
             linked: tokenBalance.linked,
-            parentCoin: { net: currentWallet.net, code: currentWallet.code },
+            parentCoin: {
+              net: currentWallet.net,
+              code: currentWallet.code,
+              decimals: currentWallet?.config?.decimals,
+            },
             fee_key: currentWallet.fee_key,
             id: currentWallet.id,
             savedViewingKey: item.savedViewingKey,

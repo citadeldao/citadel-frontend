@@ -28,6 +28,7 @@
         :value="amount"
         :label="$t('amount')"
         type="currency"
+        :decimals="currentWallet?.config?.decimals"
         :currency="currentWallet.code"
         :max="maxAmount"
         icon="coins"
