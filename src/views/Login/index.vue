@@ -455,7 +455,12 @@ export default {
         connectedToWeb3.value = true;
 
         if (loginWith.value === 'keplr') {
-          await store.dispatch('keplr/connectToKeplr', keplrNetworks[0].key);
+          try {
+            await store.dispatch('keplr/connectToKeplr', keplrNetworks[0].key);
+          } catch (err) {
+            onApproveCancel();
+            onLoginWeb3();
+          }
         }
 
         if (loginWith.value === 'metamask') {
