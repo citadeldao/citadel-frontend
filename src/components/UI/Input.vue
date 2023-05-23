@@ -109,6 +109,7 @@ import { computed, ref, markRaw, watch, nextTick, onMounted } from 'vue';
 import copyToClipboard from '@/helpers/copyToClipboard';
 import { WALLET_TYPES } from '@/config/walletType';
 import { useStore } from 'vuex';
+import { getDecimalCount, cutNumberWithDecimals } from '@/helpers';
 
 export default {
   name: 'Input',
@@ -201,6 +202,10 @@ export default {
     dataQa: {
       type: [String, null],
       default: null,
+    },
+    decimals: {
+      type: [Number, String],
+      default: 0,
     },
   },
   emits: ['update:modelValue', 'focus', 'blur', 'input', 'clear', 'iconClick'],
@@ -377,6 +382,14 @@ export default {
     });
 
     const inputHandler = () => {
+      if (props.decimals && getDecimalCount(valueRef.value) > +props.decimals) {
+        const validValue = cutNumberWithDecimals(
+          valueRef.value,
+          +props.decimals
+        );
+        valueRef.value = validValue;
+        return;
+      }
       emit('input', prepareModelValue(valueRef.value));
     };
 
