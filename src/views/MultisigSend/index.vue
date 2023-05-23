@@ -52,6 +52,7 @@
             <Input
               id="amount"
               v-model="amount"
+              :decimals="6"
               type="currency"
               currency="XCT"
               :label="$t('amount')"

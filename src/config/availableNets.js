@@ -61,6 +61,7 @@ export const keplrNetworks = [
   { label: 'Coreum', key: 'coreum-mainnet-1', net: 'coreum' },
   { label: 'Orai', key: 'Oraichain', net: 'orai' },
   { label: 'Provenance', key: 'pio-mainnet-1', net: 'provenance' },
+  { label: 'Nolus', key: 'pirin-1', net: 'nolus' },
 ];
 
 export const showAssetsExep = ['secret', 'bsc'];

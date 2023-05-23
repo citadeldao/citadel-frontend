@@ -114,6 +114,7 @@
           <Input
             id="amount"
             v-model="amount"
+            :decimals="currentWallet?.config?.decimals"
             type="currency"
             :currency="currentWallet.code"
             :label="$t('amount')"
@@ -394,6 +395,11 @@
               :custom-fee="customFee"
               :currency="
                 currentToken ? currentToken.parentCoin.code : currentWallet.code
+              "
+              :decimals="
+                currentToken
+                  ? currentToken.parentCoin.decimals
+                  : currentWallet?.config?.decimals
               "
               :balance="balance"
               @close="closeFeeSelectModal"

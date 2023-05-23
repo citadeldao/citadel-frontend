@@ -30,6 +30,7 @@
         id="amount"
         :value="amount"
         :label="$t('amount')"
+        :decimals="currentWallet?.config?.decimals"
         type="currency"
         :currency="currentWallet.code"
         :max="maxAmount"

@@ -206,7 +206,7 @@ export default {
         net: wallet.net,
         address: wallet.address,
       });
-      balance.value = delegationBalance.calculatedBalance;
+      balance.value = delegationBalance?.calculatedBalance || 0;
       isloadingBalance.value = false;
     };
     loadBalance(props.wallet);

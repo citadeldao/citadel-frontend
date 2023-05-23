@@ -61,12 +61,19 @@ export default {
 
     const setBackup = (payload) => {
       backup.value = payload;
+      const list = backup.value.privateWallets || backup.value.wallets;
 
-      if (
-        isPasswordHash.value &&
-        (backup.value.privateWallets || backup.value.wallets)
-      ) {
-        const list = backup.value.privateWallets || backup.value.wallets;
+      const isOnlyHardware = list.every((w) =>
+        ['ledger', 'trezor', '3', 3, '4', 4].includes(w.type)
+      );
+
+      if (isOnlyHardware) {
+        finalStep();
+        return;
+      }
+
+      if (isPasswordHash.value && list) {
+        // const list = backup.value.privateWallets || backup.value.wallets;
         privateWalletsMode.value = true;
         setTimeout(() => {
           localStorage.setItem(
