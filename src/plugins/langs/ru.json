@@ -1332,6 +1332,7 @@
     "jailed": "Заблокировано",
     "sendAssetsDestination": "Сеть назначения",
     "keplr": {
+        "notAddAtOnce": "",
         "notFound": "Keplr не найден в вашем браузере",
         "cancel": "Отменить",
         "importWallet": "Импортировать кошелек",

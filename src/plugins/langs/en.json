@@ -1348,6 +1348,7 @@
     "jailed": "JAILED",
     "sendAssetsDestination": "Destination network",
     "keplr": {
+        "notAddAtOnce": "You cannot add selected chains at once",
         "notFound": "Keplr not found in your browser",
         "cancel": "Cancel",
         "importWallet": "Import wallet",

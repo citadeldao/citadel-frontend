@@ -165,6 +165,22 @@ export default {
         }
       };
 
+      const chainsToAdd = selectedCoins.value.map((c) => c.key);
+
+      // can approve all at once ??
+      try {
+        await window.keplr.enable(chainsToAdd);
+      } catch (err) {
+        notify({
+          type: 'warning',
+          text: t('keplr.notAddAtOnce'),
+        });
+        loadingImport.value = false;
+        importedAddresses.value = [];
+        return;
+      }
+      // ----
+
       await Promise.all(
         selectedCoins.value.map(async (c) => {
           try {
