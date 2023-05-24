@@ -66,23 +66,36 @@
       </span>
     </span>
     <div
-      v-if="currentWallet.hasResource && rsources.length"
+      v-if="currentWallet.hasResource && resources.length"
       class="balance-tooltip-info__balance"
     >
       <span class="balance-tooltip-info__balance-title"
         >{{ $t('balance') }}:</span
       >
       <span
-        v-for="item in rsources"
+        v-for="item in resources"
         :key="item.name"
         class="balance-tooltip-info__balance-line"
         >{{ item.nameForUser }} -
         <span
-          v-pretty-number="item.current"
+          v-pretty-number="{ value: item.current, currency: item.nameForUser }"
           class="balance-tooltip-info__balance-amount"
         />
         {{ item.nameForUser }}
       </span>
+    </div>
+    <div
+      v-if="currentWallet.hasResource && resources.length"
+      class="balance-tooltip-info__balance"
+    >
+      <template v-for="item in resources" :key="item.name">
+        <span class="balance-tooltip-info__balance-line"
+          >{{ item.nameForUser }}
+        </span>
+        <span class="balance-tooltip-info__line">
+          {{ $t(`${item.name}-desc`) }}
+        </span>
+      </template>
     </div>
   </div>
 </template>
@@ -97,13 +110,13 @@ export default {
     },
   },
   setup(props) {
-    const rsources = computed(() => {
+    const resources = computed(() => {
       return props.currentWallet.balance.adding.filter(
         (item) => item.isResource
       );
     });
 
-    return { rsources };
+    return { resources };
   },
 };
 </script>
