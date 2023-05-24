@@ -167,37 +167,21 @@
             {{ $t('migration.agree') }}
           </PrimaryButton>
         </ModalContent>
+
         <!-- approve export -->
-        <ModalContent
+        <ApproveExport
           v-if="showApproveModal"
-          :title="$t('exportWallet.approveExportModalTitle1')"
-          :desc="$t('exportWallet.approveExportModalDesc1')"
-          type="action"
-          button-text="show"
-          :disabled="!!inputErrorExport"
+          v-bind="approveExportProps"
+          @approveExport="approveExport"
           @close="approveModalCloseHandler"
-          @buttonClick="approveExport"
-        >
-          <ApproveExport
-            :current-export-wallet="currentExportWallet"
-            @approveExport="approveExport"
-          />
-        </ModalContent>
+        />
+
         <!-- export private -->
-        <ModalContent
+        <ExportModal
           v-if="showExportModal"
-          :title="$t('exportWallet.exportModalTitle1')"
-          :desc="$t('exportWallet.exportModalDesc')"
-          type="action"
-          :submit-button="false"
+          v-bind="exportProps"
           @close="exportModalCloseHandler"
-        >
-          <ExportModal
-            current-export-method="privateKey"
-            :private-key="decodedPrivateKey"
-            :mnemonic-phrase="''"
-          />
-        </ModalContent>
+        />
       </Modal>
     </teleport>
   </div>
@@ -220,6 +204,7 @@ import { useStore } from 'vuex';
 import { computed, provide, ref, markRaw, inject } from '@vue/runtime-core';
 import useWallets from '@/compositions/useWallets';
 import CryptoCoin from '@/models/CryptoCoin';
+import { useI18n } from 'vue-i18n';
 
 export default {
   name: 'MigrationLayout',
@@ -245,6 +230,7 @@ export default {
     },
   },
   setup(props) {
+    const { t } = useI18n();
     const citadel = inject('citadel');
     const store = useStore();
     const forgotModalFlag = ref(false);
@@ -418,11 +404,12 @@ export default {
                 wallet.privateKeyEncoded,
                 migrationPassword.value
               );
-              privateKeyEncoded = citadel.encodePrivateKeyByPassword(
+              privateKeyEncoded = await citadel.encodePrivateKeyByPassword(
                 wallet.net,
                 privateKey.data,
                 password.value
               );
+
               formatedWallet.privateKeyEncoded = privateKeyEncoded.data;
             }
             if (wallet.mnemonicEncoded) {
@@ -445,6 +432,7 @@ export default {
             'crypto/createNewWalletInstance',
             { walletOpts: formatedWallet }
           );
+
           await store.dispatch('wallets/pushWallets', {
             wallets: [newInstance],
           });
@@ -486,7 +474,29 @@ export default {
       startMigration();
     }
 
+    const approveExportProps = computed(() => ({
+      title: t('exportWallet.approveExportModalTitle1'),
+      desc: t('exportWallet.approveExportModalDesc1'),
+      type: 'action',
+      buttonText: 'show',
+      disabled: !!inputErrorExport.value,
+      dataQa: 'settings__export',
+      currentExportWallet: currentExportWallet.value,
+    }));
+
+    const exportProps = computed(() => ({
+      title: t('exportWallet.exportModalTitle1'),
+      desc: t('exportWallet.exportModalDesc'),
+      type: 'action',
+      submitButton: false,
+      currentExportMethod: 'privateKey',
+      privateKey: decodedPrivateKey.value,
+      derivationPath: currentExportWallet.value.derivationPath,
+    }));
+
     return {
+      exportProps,
+      approveExportProps,
       onChangeMainPassword,
       password,
       forgotIcon,

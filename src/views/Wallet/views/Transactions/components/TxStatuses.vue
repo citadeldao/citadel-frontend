@@ -80,7 +80,7 @@ export default {
     const formatedDate = computed(() => {
       return {
         first: format(new Date(props.info.date), 'yyyy/MM/dd'),
-        second: format(new Date(props.info.date), 'hh:mm:ss'),
+        second: format(new Date(props.info.date), 'HH:mm:ss'),
       };
     });
     return {

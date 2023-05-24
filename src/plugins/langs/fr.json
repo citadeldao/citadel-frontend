@@ -843,7 +843,7 @@
             "title": "Structure de la balance"
         },
         "balanceHistory": {
-            "title": "Historique du solde"
+            "title": ""
         },
         "rewardsChart": {
             "title": "Tableau des récompenses"
@@ -1327,6 +1327,11 @@
         },
         "sui":{
             "title": "Sui",
+            "description": "",
+            "shortDescription": ""
+        },
+        "nolus":{
+            "title": "Nolus",
             "description": "",
             "shortDescription": ""
         }

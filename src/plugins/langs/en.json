@@ -854,7 +854,7 @@
             "title": "Balance structure"
         },
         "balanceHistory": {
-            "title": "Balance history"
+            "title": "Wallets balance history"
         },
         "rewardsChart": {
             "title": "Rewards Chart"
@@ -1340,6 +1340,11 @@
             "title": "Sui",
             "description": "Sui is a permissionless L1 PoS blockchain that aims to provide high throughput at low costs and instant settlement while serving next gen dApps.",
             "shortDescription": "Sui is a L1 PoS blockchain that aims to serve the next gen dApps."
+        },
+        "nolus":{
+            "title": "Nolus",
+            "description": "Nolus Protocol is a Web3 financial suite that offers an innovative approach to money markets with a novel Lease solution to develop the DeFi space further",
+            "shortDescription": "Nolus Protocol is a Web3 financial suite that offers a Lease solution to develop the DeFi space further"
         }
     },
     "uptime": "Uptime",

@@ -7,6 +7,7 @@ import citadel from '@citadeldao/lib-citadel';
 import BigNumber from 'bignumber.js';
 import useWallets from '@/compositions/useWallets';
 import { getErrorTextByCode } from '@/config/errors';
+import { setStorage, removeStorage } from '@/utils/storage';
 
 const getDefaultState = () => {
   return {
@@ -14,6 +15,7 @@ const getDefaultState = () => {
     migrationPassword: null,
     privateWallets: [],
     passwordHash: null,
+    userId: null,
   };
 };
 
@@ -25,6 +27,7 @@ export default {
     migrationPassword: null,
     privateWallets: null,
     passwordHash: null,
+    userId: null,
   }),
 
   getters: {
@@ -36,17 +39,24 @@ export default {
   },
 
   mutations: {
+    setUserId(state, id) {
+      state.userId = id;
+    },
     setNewMnemonic(state, newMnemonic) {
       state.newMnemonic = newMnemonic;
     },
     resetState(state) {
+      removeStorage(`${state.userId}_syncEncodeUserMnemonic`);
+      removeStorage(`${state.userId}_syncPasswordHash`);
       Object.assign(state, getDefaultState());
     },
     setUserMnemonic(state, mnemonic) {
       state.mnemonic = mnemonic;
+      setStorage(`${state.userId}_syncEncodeUserMnemonic`, mnemonic);
     },
     setPasswordHash(state, passwordHash) {
       state.passwordHash = passwordHash;
+      setStorage(`${state.userId}_syncPasswordHash`, passwordHash);
     },
     setMigrationPassword(state, migrationPassword) {
       state.migrationPassword = migrationPassword;

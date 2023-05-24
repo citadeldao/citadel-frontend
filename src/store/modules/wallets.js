@@ -104,7 +104,7 @@ export default {
     addImportedToWallets(state, wallet) {
       state.wallets.push(wallet);
     },
-    pushWallets(state, { wallets, root = false }) {
+    pushWallets(state, { wallets, root = false /* , rootGetters */ }) {
       const data = state.wallets;
 
       for (const wallet of wallets) {
@@ -133,7 +133,24 @@ export default {
 
           data.splice(searchIndex, 1);
         }
-
+        // // get new added wallet list ls key
+        // const syncWalletsLsKey = `user_${rootGetters['profile/info'].id}_syncWallets`
+        // // get new added wallet list
+        // let syncWallets = JSON.parse(getStorage(syncWalletsLsKey))
+        // // if list do not exist add empty array
+        // if(!syncWallets) syncWallets = []
+        // // forming list
+        // syncWallets = [...syncWallets, wallet]
+        // // making list from unique objects
+        // syncWallets = syncWallets.reduce((accumulator, currentObject) => {
+        //   const index = accumulator.findIndex(obj => obj.id === currentObject.id)
+        //   if (index === -1) {
+        //     accumulator.push(currentObject)
+        //   }
+        //   return accumulator
+        // }, [])
+        // // save it in ls for using in onother browser tab
+        // setStorage(syncWalletsLsKey, JSON.stringify(syncWallets))
         data.push(wallet);
       }
 
@@ -205,6 +222,9 @@ export default {
             commit(types.SET_WALLETS_STRUCTURE, walletsList);
             const formatedList = walletsList
               .map((item) => {
+                // console.log('xerrrrr',JSON.parse(getStorage(`user_${rootGetters['profile/info'].id}`)));
+                // const currentWalletList = JSON.parse(getStorage(`user_${rootGetters['profile/info'].id}`))?.wallets?.wallets || [];
+
                 const found = getters.wallets.find(
                   ({ net, address }) =>
                     address.toLowerCase() === item.address.toLowerCase() &&
@@ -259,8 +279,8 @@ export default {
       commit('setWallets', wallets);
     },
 
-    async pushWallets({ commit }, { wallets, root = false }) {
-      commit('pushWallets', { wallets, root });
+    async pushWallets({ commit, rootGetters }, { wallets, root = false }) {
+      commit('pushWallets', { wallets, root, rootGetters });
     },
 
     async renameWalletTitle(context, { walletId, title }) {
@@ -282,14 +302,22 @@ export default {
       commit(types.SET_LOADED, value);
     },
 
-    async removeWallet({ commit, getters, dispatch }, { wallet, walletId }) {
+    async removeWallet(
+      { commit, getters, dispatch /* , rootGetters */ },
+      { wallet, walletId }
+    ) {
       try {
         await citadel.removeWalletById(walletId);
 
         if (getters.walletByAddress(wallet)) {
           commit('removeWallet', wallet);
         }
-
+        // const syncWalletsKey = `user_${rootGetters['profile/info'].id}_syncWallets`
+        // const syncWallets = JSON.parse(getStorage(syncWalletsKey))
+        // if(syncWallets){
+        //   const filteredList = syncWallets.filter(item => item.id !== walletId)
+        //   JSON.parse(setStorage(syncWalletsKey, JSON.stringify(filteredList)))
+        // }
         dispatch('removeWalletFromHidden', wallet);
       } catch (e) {
         console.error(e);

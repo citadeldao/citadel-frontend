@@ -841,7 +841,7 @@
             "title": "バランス構造"
         },
         "balanceHistory": {
-            "title": "残高履歴"
+            "title": ""
         },
         "rewardsChart": {
             "title": "報酬表"
@@ -1320,6 +1320,11 @@
         },
         "sui":{
             "title": "Sui",
+            "description": "",
+            "shortDescription": ""
+        },
+        "nolus":{
+            "title": "Nolus",
             "description": "",
             "shortDescription": ""
         }

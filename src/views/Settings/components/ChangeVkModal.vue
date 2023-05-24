@@ -32,7 +32,11 @@
         <PrimaryButton @click="createNewVk">
           {{ $t('viewingKey.createNew') }}
         </PrimaryButton>
-        <div class="change-vk__delete-btn" @click="deleteVk">
+        <div
+          v-if="!vk.isFavorite"
+          class="change-vk__delete-btn"
+          @click="deleteVk"
+        >
           <trashCan />
           &nbsp;
           <span>{{ $t('viewingKey.deleteKey') }}</span>
