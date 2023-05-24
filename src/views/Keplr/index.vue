@@ -173,11 +173,14 @@ export default {
       } catch (err) {
         notify({
           type: 'warning',
-          text: t('keplr.notAddAtOnce'),
+          text: err.toString(),
         });
-        loadingImport.value = false;
-        importedAddresses.value = [];
-        return;
+
+        if (err.toString().toLowerCase().includes('rejected')) {
+          loadingImport.value = false;
+          importedAddresses.value = [];
+          return;
+        }
       }
       // ----
 
