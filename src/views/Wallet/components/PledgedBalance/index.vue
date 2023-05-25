@@ -16,7 +16,7 @@
       <span class="pledged-balance__title-title">
         {{ $t('pledgedBalance') }}
       </span>
-      <Tooltip :width="width" left="-156px">
+      <el-tooltip placement="bottom" effect="rewards-list-tooltip">
         <info />
         <template #content>
           <span class="pledged-balance__tooltip-info">
@@ -31,7 +31,7 @@
             >{{ $t('pledgeDescription.part5') }}
           </span>
         </template>
-      </Tooltip>
+      </el-tooltip>
     </span>
     <span class="pledged-balance__info"
       >{{ currentWallet.code }} {{ $t('lockedForiGasGeneration') }}
@@ -125,7 +125,6 @@
 </template>
 
 <script>
-import { computed } from 'vue';
 import claimBlockLock from '@/assets/icons/claim-block-lock.svg';
 import { WALLET_TYPES } from '@/config/walletType';
 import ActionModalContent from './../../views/Stake/components/ActionModalContent.vue';
@@ -135,7 +134,6 @@ import Modal from '@/components/Modal';
 import ModalContent from '@/components/ModalContent';
 import RoundArrowButton from '@/components/UI/RoundArrowButton';
 import info from '@/assets/icons/info.svg';
-import Tooltip from '@/components/Tooltip';
 import { inject } from '@vue/runtime-core';
 
 export default {
@@ -143,7 +141,6 @@ export default {
   components: {
     info,
     RoundArrowButton,
-    Tooltip,
     Modal,
     ModalContent,
     ChooseMode,
@@ -179,16 +176,8 @@ export default {
     const txComment = inject('txComment');
     const password = inject('password');
     const actionModalData = inject('actionModalData');
-    const width = computed(() => {
-      if (window.innerWidth <= 1286 && window.innerWidth >= 1280) {
-        return '310px';
-      } else if (window.innerWidth <= 1024) {
-        return '280px';
-      }
-      return '326px';
-    });
+
     return {
-      width,
       showModal,
       isLoading,
       modalCloseHandler,
@@ -310,6 +299,8 @@ export default {
     font-size: 12px;
     line-height: 16px;
     color: $mid-blue;
+    max-width: 305px;
+    display: block;
   }
 
   &__tooltip-info-gas {

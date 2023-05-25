@@ -13,16 +13,16 @@
     <div class="balance__header">
       <div class="balance__title">
         <h4>{{ $t('balance') }}</h4>
-        <BalanceTooltip
+        <el-tooltip
           v-if="currentWallet?.hasStake || currentWallet?.hasResource"
-          :left="leftBalanceTooltip"
-          :width="widthBalanceTooltip"
+          placement="bottom"
+          effect="rewards-list-tooltip"
         >
           <info />
           <template #content>
             <BalanceTooltipInfo :current-wallet="currentWallet" />
           </template>
-        </BalanceTooltip>
+        </el-tooltip>
       </div>
       <div class="balance__tab-current" @click="showTabs">
         <NetworkTab
@@ -157,7 +157,7 @@
         <span class="balance__pledged-balance-title-title">
           {{ $t('pledgedBalance') }}
         </span>
-        <BalanceTooltip :width="width" :left="left">
+        <el-tooltip placement="bottom" effect="rewards-list-tooltip">
           <info />
           <template #content>
             <span class="balance__pledged-balance-tooltip-info">
@@ -172,7 +172,7 @@
               >{{ $t('pledgeDescription.part5') }}
             </span>
           </template>
-        </BalanceTooltip>
+        </el-tooltip>
       </div>
       <span class="balance__info-value">
         <span
@@ -198,7 +198,6 @@ import BigNumber from 'bignumber.js';
 import BalanceTooltipInfo from './BalanceTooltipInfo';
 import CurrentAsset from './CurrentAsset';
 import Tooltip from '@/components/UI/Tooltip';
-import { default as BalanceTooltip } from '@/components/Tooltip';
 import NetworkTab from '@/components/UI/NetworkTab';
 import RoundArrowButton from '@/components/UI/RoundArrowButton';
 import { WALLET_TYPES } from '@/config/walletType';
@@ -215,7 +214,6 @@ export default {
     clock,
     Tooltip,
     BalanceTooltipInfo,
-    BalanceTooltip,
     RoundArrowButton,
     claimBlockLock,
     CurrentAsset,
@@ -356,30 +354,7 @@ export default {
       dropdownClass.value = '';
       isOpened.value = false;
     };
-    const width = computed(() => {
-      if (window.innerWidth <= 1024) {
-        return '192px';
-      }
-      return '240px';
-    });
-    const left = computed(() => {
-      if (window.innerWidth <= 1286 && window.innerWidth >= 1280) {
-        return '-180px';
-      }
-      return '-113px';
-    });
-    const widthBalanceTooltip = computed(() => {
-      if (window.innerWidth <= 1024) {
-        return '238px';
-      }
-      return '326px';
-    });
-    const leftBalanceTooltip = computed(() => '-113px');
     return {
-      leftBalanceTooltip,
-      widthBalanceTooltip,
-      width,
-      left,
       currentTab,
       balance,
       mainBalance,
@@ -591,6 +566,8 @@ export default {
     font-size: 12px;
     line-height: 16px;
     color: $mid-blue;
+    max-width: 195px;
+    display: block;
   }
 
   &__pledged-balance-tooltip-info-gas {

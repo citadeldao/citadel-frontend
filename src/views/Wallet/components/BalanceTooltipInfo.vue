@@ -125,6 +125,7 @@ export default {
 .balance-tooltip-info {
   display: flex;
   flex-direction: column;
+  width: 330px;
   &__line,
   &__line-label,
   &__period,
