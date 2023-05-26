@@ -1506,5 +1506,10 @@
     "changeKeyTitle": "Modifier la clé de visualisation",
     "anotherAddress": "Autre adresse",
     "notFoundPlaceholderText": "Rien n'a été trouvé pour votre requête",
-    "minBalanceNote": ""
+    "minBalanceNote": "",
+    "filterAll": "",
+    "filterHot": "",
+    "filterCosmos": "",
+    "filterEvm": "",
+    "filterOthers": ""
 }

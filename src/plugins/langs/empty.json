@@ -1496,5 +1496,10 @@
         "202": "",
         "901": ""
     },
-    "minBalanceNote": ""
+    "minBalanceNote": "",
+    "filterAll": "",
+    "filterHot": "",
+    "filterCosmos": "",
+    "filterEvm": "",
+    "filterOthers": ""
 }

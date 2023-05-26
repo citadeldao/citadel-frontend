@@ -1508,5 +1508,10 @@
         "202": "Ledger Error: Reconnect your device",
         "901": "Unknown error"
     },
-    "minBalanceNote": "At least {amount} should be remained on your balance to keep receiving your staking rewards. Otherwise rewards will be burnt."
+    "minBalanceNote": "At least {amount} should be remained on your balance to keep receiving your staking rewards. Otherwise rewards will be burnt.",
+    "filterAll": "All",
+    "filterHot": "Hot",
+    "filterCosmos": "Cosmos",
+    "filterEvm": "EVM",
+    "filterOthers": "Others"
 }
