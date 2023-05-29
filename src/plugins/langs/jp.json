@@ -1499,5 +1499,10 @@
     "changeKeyTitle": "閲覧キーの変更",
     "anotherAddress": "別のアドレス",
     "notFoundPlaceholderText": "クエリに一致するものが見つかりませんでした",
-    "minBalanceNote": ""
+    "minBalanceNote": "",
+    "filterAll": "",
+    "filterHot": "",
+    "filterCosmos": "",
+    "filterEvm": "",
+    "filterOthers": ""
 }

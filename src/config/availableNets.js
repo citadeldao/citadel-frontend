@@ -1,3 +1,85 @@
+import { i18n } from '@/plugins/i18n';
+const { t } = i18n.global;
+
+export const networksFilterItems = [
+  {
+    value: 'all',
+    label: `${t('filterAll')}`,
+  },
+  {
+    value: 'hot',
+    label: `${t('filterHot')}`,
+  },
+  {
+    value: 'cosmos',
+    label: `${t('filterCosmos')}`,
+  },
+  {
+    value: 'evm',
+    label: `${t('filterEvm')}`,
+  },
+  {
+    value: 'others',
+    label: `${t('filterOthers')}`,
+  },
+];
+
+export const networksFilterCategory = {
+  hot: ['btc', 'eth', 'bsc', 'sui', 'arbitrum', 'polkadot', 'tron'],
+  cosmos: [
+    'akash',
+    'axelar',
+    'band',
+    'bitsong',
+    'cheqd',
+    'chihuahua',
+    'comdex',
+    'coreum',
+    'cosmos',
+    'crescent',
+    'emoney',
+    'evmos',
+    'fetch',
+    'gbridge',
+    'injective',
+    'iris',
+    'jackal',
+    'juno',
+    'kava',
+    'kichain',
+    'konstellation',
+    'kujira',
+    'lum',
+    'mantle',
+    'omniflix',
+    'orai',
+    'persistence',
+    'provenance',
+    'quicksilver',
+    'regen',
+    'rizon',
+    'secret',
+    'sentinel',
+    'sifchain',
+    'stafi',
+    'stargaze',
+    'starname',
+    'stride',
+    'teritori',
+    'umee',
+  ],
+  evm: [
+    'eth',
+    'bsc',
+    'arbitrum',
+    'polygon',
+    'avalanche',
+    'evmoseth',
+    'optimism',
+  ],
+  others: ['icon', 'iost', 'oasis'],
+};
+
 export const metamaskNets = [
   'bsc',
   'eth',

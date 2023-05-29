@@ -1506,5 +1506,10 @@
     "changeKeyTitle": "更改查看密钥",
     "anotherAddress": "其它地址",
     "notFoundPlaceholderText": "您的请求未找到结果",
-    "minBalanceNote": ""
+    "minBalanceNote": "",
+    "filterAll": "",
+    "filterHot": "",
+    "filterCosmos": "",
+    "filterEvm": "",
+    "filterOthers": ""
 }
