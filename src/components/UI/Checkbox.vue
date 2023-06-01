@@ -28,8 +28,8 @@
 
 <script>
 import Tooltip from '@/components/UI/Tooltip';
-import checkmark from '@/assets/icons/input/checkmark.svg';
-import checkmarkDisabled from '@/assets/icons/input/checkmark-disabled.svg';
+import checkmark from '@/assets/icons/networks/checkmark.svg';
+import checkmarkDisabled from '@/assets/icons/networks/checkmark-disabled.svg';
 import info from '@/assets/icons/info.svg';
 
 export default {

@@ -58,7 +58,7 @@ export default {
     const currentIcon = ref();
 
     if (props.icon) {
-      import(`@/assets/icons/input/${props.icon}.svg`).then((val) => {
+      import(`@/assets/icons/networks/${props.icon}.svg`).then((val) => {
         currentIcon.value = markRaw(val.default);
       });
     }
@@ -115,6 +115,8 @@ export default {
   &__icon {
     left: 17px;
     top: 34px;
+    max-width: 14px;
+    max-height: 16px;
   }
 }
 </style>

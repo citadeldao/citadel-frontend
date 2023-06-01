@@ -141,7 +141,7 @@ import citadelLogo from '@/assets/icons/citadelLogo.svg';
 import onlyLogo from '@/assets/icons/only-logo.svg';
 import ArrowRight from '@/assets/icons/arrow-rigth.svg';
 
-import loop from '@/assets/icons/input/loop.svg';
+import loop from '@/assets/icons/networks/loop.svg';
 
 export default {
   name: 'Sidebar',

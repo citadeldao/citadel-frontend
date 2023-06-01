@@ -166,7 +166,7 @@ import Input from '@/components/UI/Input';
 import AddressItem from '@/layouts/AddAddressLayout/components/CutomLists/components/AddressItem';
 import { useWindowSize } from 'vue-window-size';
 import { screenWidths } from '@/config/sreenWidthThresholds';
-import error from '@/assets/icons/input/error.svg';
+import error from '@/assets/icons/networks/error.svg';
 import { useI18n } from 'vue-i18n';
 import Tooltip from '@/components/Tooltip';
 import info from '@/assets/icons/info.svg';

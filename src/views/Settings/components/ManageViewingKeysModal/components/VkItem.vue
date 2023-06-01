@@ -55,7 +55,7 @@
 <script>
 import { ref, computed, inject } from 'vue';
 import { getTokenIcon, tokenIconPlaceholder } from '@/helpers';
-import vision from '@/assets/icons/input/vision.svg';
+import vision from '@/assets/icons/networks/vision.svg';
 import copyIcon from '@/assets/icons/copyIcon.svg';
 import lockRefresh from '@/assets/icons/lock-refresh.svg';
 import copyToClipboard from '@/helpers/copyToClipboard';

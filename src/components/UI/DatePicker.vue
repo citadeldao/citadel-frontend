@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import CalendarIcon from '@/assets/icons/input/calendar.svg';
+import CalendarIcon from '@/assets/icons/networks/calendar.svg';
 import { ref } from '@vue/reactivity';
 
 export default {

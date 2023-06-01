@@ -81,7 +81,7 @@ import BigNumber from 'bignumber.js';
 import { nextTick, onMounted } from 'vue';
 import NestedNodesListItem from './NestedNodesListItem.vue';
 import NodesListItem from './NodesListItem.vue';
-import error from '@/assets/icons/input/error.svg';
+import error from '@/assets/icons/networks/error.svg';
 import Input from '@/components/UI/Input';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import { ref } from '@vue/reactivity';
