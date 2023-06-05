@@ -51,10 +51,7 @@
         active-class="main-header__active"
         class="main-header__tabs-item"
         :to="{
-          name:
-            currentToken?.config?.standard !== 'snip20'
-              ? 'WalletTransactions'
-              : 'WalletTransactionsOld',
+          name: 'WalletTransactions',
           params: { ...$route.params },
         }"
         data-qa="wallet__transactions-tab-button"

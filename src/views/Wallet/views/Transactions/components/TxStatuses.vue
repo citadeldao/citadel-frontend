@@ -32,7 +32,7 @@
         </Tooltip>
       </div>
     </div>
-    <div class="tx-statuses__item">
+    <div v-if="info.date" class="tx-statuses__item">
       <div class="icon">
         <calendar />
       </div>
