@@ -1335,6 +1335,7 @@
     "jailed": "投獄された",
     "sendAssetsDestination": "宛先ネットワーク",
     "keplr": {
+        "notAddAtOnce": "",
         "notFound": "ブラウザに Keplr が見つかりません",
         "cancel": "キャンセル",
         "importWallet": "ウォレットのインポート",

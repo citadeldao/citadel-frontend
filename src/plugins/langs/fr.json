@@ -1342,6 +1342,7 @@
     "jailed": "EMPRISONNÉ",
     "sendAssetsDestination": "Réseau de destination",
     "keplr": {
+        "notAddAtOnce": "",
         "notFound": "Keplr n'a pas été trouvé dans votre navigateur",
         "cancel": "Annuler",
         "importWallet": "Importer un portefeuille",

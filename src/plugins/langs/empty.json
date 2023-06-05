@@ -1342,6 +1342,7 @@
     "jailed": "",
     "sendAssetsDestination": "",
     "keplr": {
+        "notAddAtOnce": "",
         "notFound": "",
         "cancel": "",
         "importWallet": "",
