@@ -87,11 +87,7 @@
               v-show="
                 (loginWith.value === 'metamask' && !isShow) || showMetamask
               "
-              :name="
-                metamaskConnector.network === 'bsc'
-                  ? 'Binance Smart Chain'
-                  : 'Ethereum'
-              "
+              :name="metamaskNetsInfo[metamaskConnector.network] || ''"
               :network="metamaskConnector?.network"
               :loading="addLoading"
               :address="metamaskAddress"
@@ -177,6 +173,7 @@ const WALLET_MENU_TYPE = {
   social: 'sosical',
   web3: 'web3',
 };
+import { metamaskNets, metamaskNetsInfo } from '@/config/availableNets';
 
 export default {
   name: 'Login',
@@ -498,7 +495,7 @@ export default {
         address = metamaskConnector.value.accounts[0];
         net = metamaskConnector.value.network;
 
-        if (!net || !['bsc', 'eth'].includes(net)) {
+        if (!net || !metamaskNets.includes(net)) {
           notify({
             type: 'warning',
             text: t('login.confirmAddressTitleAnother'),
@@ -809,6 +806,7 @@ export default {
       verificationError,
       showEmailModal,
       codeFromEmail,
+      metamaskNetsInfo,
     };
   },
 };
