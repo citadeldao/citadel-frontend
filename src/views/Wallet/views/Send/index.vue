@@ -558,6 +558,7 @@ export default {
     const amount = ref('');
     const memo = ref('');
     const prepareLoading = ref(false);
+    const { currentWallet: parentWallet } = useWallets();
     const { width } = useWindowSize();
     const showErrorText = computed(() =>
       width.value < screenWidths.xl ? false : true
@@ -835,17 +836,22 @@ export default {
 
     // Calc Max Amount Parent
     const maxAmountParent = computed(() => {
-      if (balance.value?.adding && balance.value?.adding.length > 0) {
-        return balance.value?.adding[0].current > fee.value.fee
-          ? BigNumber(balance.value?.adding[0].current)
-              .minus(fee.value.fee)
-              .toNumber()
-          : 0;
-      }
-
-      return balance.value?.mainBalance > fee.value.fee
-        ? BigNumber(balance.value?.mainBalance).minus(fee.value.fee).toNumber()
+      return parentWallet.value.balance?.mainBalance > fee.value.fee
+        ? BigNumber(parentWallet.value.balance?.mainBalance)
+            .minus(fee.value.fee)
+            .toNumber()
         : 0;
+      // if (balance.value?.adding && balance.value?.adding.length > 0) {
+      //   return balance.value?.adding[0].current > fee.value.fee
+      //     ? BigNumber(balance.value?.adding[0].current)
+      //         .minus(fee.value.fee)
+      //         .toNumber()
+      //     : 0;
+      // }
+
+      // return balance.value?.mainBalance > fee.value.fee
+      //   ? BigNumber(balance.value?.mainBalance).minus(fee.value.fee).toNumber()
+      //   : 0;
     });
 
     // Calc Max Amount
@@ -1225,8 +1231,6 @@ export default {
         }
 
         isLoading.value = true;
-
-        const { currentWallet: parentWallet } = useWallets();
 
         const hash = await keplrConnector.value.getOutputHash(
           parentWallet.value,
