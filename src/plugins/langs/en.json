@@ -1514,5 +1514,9 @@
     "filterHot": "Hot",
     "filterCosmos": "Cosmos",
     "filterEvm": "EVM",
-    "filterOthers": "Others"
+    "filterOthers": "Others",
+    "rateModal": {
+        "title": "Select display currency",
+        "description": "Your balance will be converted to the selected currency"
+    }
 }

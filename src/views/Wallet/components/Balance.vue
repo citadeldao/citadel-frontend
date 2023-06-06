@@ -1,5 +1,18 @@
 <template>
   <div class="balance">
+    <Modal v-if="showRateModal">
+      <RateModal
+        :current-wallet="currentWallet"
+        :wallet-current-rate="walletCurrentRate"
+        @close="showRateModal = false"
+        @changeCurrentRate="onChangeCurrentRate"
+        v-click-away="
+          () => {
+            showRateModal = false;
+          }
+        "
+      />
+    </Modal>
     <div
       v-if="$store.getters['wallets/currentWallet'].hasSubtoken"
       class="balance__current-asset"
@@ -46,19 +59,38 @@
             :icon="currentWallet.net"
             :data-qa="`wallet__balance--${currentWallet.code.toLowerCase()}`"
             @click="onClickNetworkTab"
+            class="left-tab"
           />
         </div>
         <div class="balance__tab">
           <NetworkTab
             :id="2"
             v-model:currentTab="currentTab"
-            value="USD"
+            :value="walletCurrentRate"
             icon="USD"
             data-qa="wallet__balance--usd"
+            @mouseover="hideSettingsLine = false"
+            @mouseleave="hideSettingsLine = true"
             @click="onClickNetworkTab"
+            class="center-tab"
+          />
+          <div
+            class="line right"
+            v-if="
+              hideSettingsLine &&
+              !['BTC', 'USD', 'EUR', 'RUB'].includes(currentTab)
+            "
           />
         </div>
-        <div v-if="currentWallet.net !== 'btc'" class="balance__tab">
+        <div
+          class="balance__tab settings"
+          @mouseover="hideSettingsLine = false"
+          @mouseleave="hideSettingsLine = true"
+          @click="toggleRateModal"
+        >
+          <SettingsUsdIcon />
+        </div>
+        <!-- <div v-if="currentWallet.net !== 'btc'" class="balance__tab">
           <NetworkTab
             :id="3"
             v-model:currentTab="currentTab"
@@ -66,8 +98,9 @@
             icon="btc"
             data-qa="wallet__balance--btc"
             @click="onClickNetworkTab"
+            class="right-tab"
           />
-        </div>
+        </div>-->
       </div>
     </div>
     <span class="balance__balance">
@@ -206,10 +239,15 @@ import info from '@/assets/icons/info.svg';
 import clock from '@/assets/icons/clock2.svg';
 import claimBlockLock from '@/assets/icons/claim-block-lock.svg';
 import ArrowDown from '@/assets/icons/arrow-down.svg';
+import SettingsUsdIcon from '@/assets/icons/settingsusd.svg';
+import RateModal from './RateModal';
+import Modal from '@/components/Modal';
 
 export default {
   name: 'Balance',
   components: {
+    Modal,
+    SettingsUsdIcon,
     NetworkTab,
     info,
     clock,
@@ -220,6 +258,7 @@ export default {
     claimBlockLock,
     CurrentAsset,
     ArrowDown,
+    RateModal,
   },
   props: {
     currentWallet: {
@@ -238,8 +277,11 @@ export default {
   },
   setup(props) {
     const { t } = useI18n();
+    const walletCurrentRate = ref('USD');
     const openPledgeModal = inject('openPledgeModal');
     const currentTab = ref(props.currentWallet.code);
+    const hideSettingsLine = ref(true);
+    const showRateModal = ref(false);
     const currentCurrency = computed(() => {
       if (props.isCurrentToken) {
         return props.currentWallet?.tokenBalance?.price[currentTab.value];
@@ -254,6 +296,41 @@ export default {
         : currentKtAddress.value
         ? currentKtAddress.value.balance
         : props.currentWallet.balance;
+
+      // custom rates calc
+      let usdRateWalletRate;
+
+      if (props.isCurrentToken) {
+        usdRateWalletRate = props.currentWallet?.tokenBalance?.price['USD'];
+      } else {
+        usdRateWalletRate = props.currency['USD'];
+      }
+
+      if (['EUR', 'RUB'].includes(currentTab.value)) {
+        return {
+          mainBalance: !window.fx
+            ? 0
+            : window
+                .fx(BigNumber(usdRateWalletRate).times(mainBalance).toNumber())
+                .from('USD')
+                .to(currentTab.value),
+          stake: !window.fx
+            ? 0
+            : window
+                .fx(BigNumber(usdRateWalletRate).times(stake).toNumber())
+                .from('USD')
+                .to(currentTab.value),
+          frozenBalance: !window.fx
+            ? 0
+            : window
+                .fx(
+                  BigNumber(usdRateWalletRate).times(frozenBalance).toNumber()
+                )
+                .from('USD')
+                .to(currentTab.value),
+        };
+      }
+      // ------
 
       if (currentTab.value === props.currentWallet.code) {
         return {
@@ -284,6 +361,22 @@ export default {
 
       if (balance === 0) {
         return balance;
+      }
+
+      let usdRateWalletRate;
+      if (props.isCurrentToken) {
+        usdRateWalletRate = props.currentWallet?.tokenBalance?.price['USD'];
+      } else {
+        usdRateWalletRate = props.currency['USD'];
+      }
+
+      if (['EUR', 'RUB'].includes(currentTab.value)) {
+        return !window.fx
+          ? 0
+          : window
+              .fx(BigNumber(usdRateWalletRate).times(balance).toNumber())
+              .from('USD')
+              .to(currentTab.value);
       }
 
       if (currentTab.value === props.currentWallet.code) {
@@ -337,6 +430,16 @@ export default {
         icon: 'USD',
         dataQA: 'wallet__balance--usd',
       },
+      RUB: {
+        value: 'RUB',
+        icon: 'RUB',
+        dataQA: 'wallet__balance--rub',
+      },
+      EUR: {
+        value: 'EUR',
+        icon: 'EUR',
+        dataQA: 'wallet__balance--eur',
+      },
     };
 
     balanceTabs[props.currentWallet.code] = {
@@ -375,6 +478,18 @@ export default {
       return '326px';
     });
     const leftBalanceTooltip = computed(() => '-113px');
+
+    const onChangeCurrentRate = (currentRate) => {
+      walletCurrentRate.value = currentRate;
+      currentTab.value = currentRate;
+    };
+
+    const toggleRateModal = () => {
+      showRateModal.value = true;
+      isOpened.value = false;
+      dropdownClass.value = '';
+    };
+
     return {
       leftBalanceTooltip,
       widthBalanceTooltip,
@@ -391,6 +506,11 @@ export default {
       showTabs,
       isOpened,
       onClickNetworkTab,
+      hideSettingsLine,
+      showRateModal,
+      walletCurrentRate,
+      onChangeCurrentRate,
+      toggleRateModal,
     };
   },
 };
@@ -457,7 +577,68 @@ export default {
   }
 
   &__tab {
-    margin-right: 8px;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    &.settings {
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 50px;
+      height: 30px;
+      background: #f0f3fd;
+      border-top-right-radius: 6px;
+      border-bottom-right-radius: 6px;
+
+      @include md {
+        width: 24px;
+        height: 24px;
+      }
+
+      @include laptop {
+        width: 48px;
+        border-radius: 0;
+        border-left: 1px solid #c3ceeb;
+        border-right: 1px solid #c3ceeb;
+      }
+
+      svg {
+        fill: #6b93c0;
+      }
+
+      &:hover {
+        background: #0a2778;
+
+        svg {
+          fill: #fff;
+        }
+      }
+    }
+
+    .line {
+      width: 1px;
+      height: 15px;
+      background: #c3ceeb;
+      position: absolute;
+      right: 0px;
+    }
+
+    .left-tab {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .center-tab {
+      border-radius: 0;
+    }
+
+    .right-tab {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+    // margin-right: 8px;
 
     &:last-child {
       margin-right: 0;
