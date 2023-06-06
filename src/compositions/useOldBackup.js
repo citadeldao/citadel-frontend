@@ -13,6 +13,8 @@ export default function useOldBackup() {
   const citadel2FormatWallets = ref([]);
   const oldPasswordHash = ref('');
 
+  const networksList = computed(() => store.getters['networks/networksList']);
+
   const { wallets } = useWallets();
   const networksConfig = computed(() => store.getters['networks/config']);
   const oldBackupKey = computed(
@@ -38,6 +40,8 @@ export default function useOldBackup() {
     FileSaver.saveAs(blob, `${filename}.citadel`);
   };
 
+  console.log('existOldBackup.value', existOldBackup.value);
+
   if (existOldBackup.value) {
     existOldBackup.value.forEach((wallet) => {
       // oneseed and get passwordHash
@@ -46,7 +50,11 @@ export default function useOldBackup() {
       }
 
       wallet.coins = wallet.coins
-        .filter((coin) => !oldTokens.includes(coin.coin))
+        .filter(
+          (coin) =>
+            !oldTokens.includes(coin.coin) &&
+            networksList.value.find((conf) => coin.net === conf.net)
+        )
         .map((coin) => {
           let type = '';
 
