@@ -40,8 +40,6 @@ export default function useOldBackup() {
     FileSaver.saveAs(blob, `${filename}.citadel`);
   };
 
-  console.log('existOldBackup.value', existOldBackup.value);
-
   if (existOldBackup.value) {
     existOldBackup.value.forEach((wallet) => {
       // oneseed and get passwordHash
