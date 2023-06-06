@@ -41,7 +41,7 @@
 import AutocompleteItem from './components/AutocompleteItem';
 import { ref, markRaw, watch, computed } from 'vue';
 import useCurrentIcon from '@/compositions/useCurrentIcon';
-import error from '@/assets/icons/input/error.svg';
+import error from '@/assets/icons/networks/error.svg';
 
 export default {
   name: 'Autocomplete',
