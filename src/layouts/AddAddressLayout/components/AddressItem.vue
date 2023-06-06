@@ -71,7 +71,7 @@ export default {
     const { width } = useWindowSize();
     const route = useRoute();
     const icon = ref();
-    import(`@/assets/icons/token/${props.wallet.net}.svg`).then((val) => {
+    import(`@/assets/icons/networks/${props.wallet.net}.svg`).then((val) => {
       icon.value = markRaw(val.default);
     });
 
@@ -200,6 +200,8 @@ export default {
     position: relative;
     & svg {
       fill: $white;
+      max-width: 18px;
+      max-height: 20px;
     }
     @include md {
       width: 32px;
