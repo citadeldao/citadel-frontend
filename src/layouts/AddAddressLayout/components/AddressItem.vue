@@ -74,6 +74,7 @@ export default {
     console.log('test111', props.wallet.net);
     try {
       import(`@/assets/icons/networks/${props.wallet.net}.svg`).then((val) => {
+        console.log('test33', val);
         icon.value = markRaw(val.default);
       });
     } catch (e) {
