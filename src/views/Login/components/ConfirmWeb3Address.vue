@@ -64,6 +64,7 @@ import { markRaw, ref, watch, computed } from 'vue';
 import warningSvg from '@/assets/icons/newLogin/warning.svg';
 import refreshSvg from '@/assets/icons/newLogin/refresh.svg';
 import PrimaryButton from '@/components/UI/PrimaryButton';
+import { metamaskNets } from '@/config/availableNets';
 
 export default {
   components: {
@@ -97,11 +98,10 @@ export default {
   setup(props) {
     const icon = ref();
     const rerenderIcon = ref(true);
-    const metamaskNetworks = ref(['eth', 'bsc']);
 
     const supportNetworks = computed(() => {
       if (props?.address?.startsWith('0x') && props?.address?.length === 42) {
-        return metamaskNetworks.value.includes(props.network);
+        return metamaskNets.includes(props.network);
       }
       return true;
     });

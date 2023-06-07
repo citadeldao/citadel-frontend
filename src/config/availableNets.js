@@ -90,6 +90,16 @@ export const metamaskNets = [
   'avalanche',
 ];
 
+export const metamaskNetsInfo = {
+  bsc: 'Binance Smart Chain',
+  eth: 'Ethereum',
+  arbitrum: 'Arbitrum One',
+  polygon: 'Polygon',
+  avalanche: 'Avalanche',
+  evmoseth: 'Evmos EVM',
+  optimism: 'Optimism',
+};
+
 export const trezorNets = ['btc', 'eth', 'bsc']; // 'tez'
 
 export const keplrNetworksProtobufFormat = ['emoney'];
