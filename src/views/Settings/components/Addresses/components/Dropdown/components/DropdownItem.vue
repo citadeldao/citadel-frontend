@@ -106,7 +106,7 @@ import removeIcon from '@/assets/icons/settings/remove.svg';
 import keyIcon from '@/assets/icons/settings/key.svg';
 import notificationIcon from '@/assets/icons/settings/notification.svg';
 import exportIcon from '@/assets/icons/settings/export.svg';
-import visionIcon from '@/assets/icons/input/vision.svg';
+import visionIcon from '@/assets/icons/networks/vision.svg';
 import { addressTextWidth, formattedWalletAddress } from '@/helpers';
 import { useWindowSize } from 'vue-window-size';
 import { screenWidths } from '@/config/sreenWidthThresholds';

@@ -57,7 +57,7 @@ export default {
   emits: ['uncheck', 'check'],
   setup(props, { emit }) {
     const icon = ref();
-    import(`@/assets/icons/token/${props.address.net}.svg`).then((val) => {
+    import(`@/assets/icons/networks/${props.address.net}.svg`).then((val) => {
       icon.value = markRaw(val.default);
     });
     const walletName = computed(
@@ -101,6 +101,8 @@ export default {
     & svg {
       pointer-events: none;
       fill: $white;
+      max-width: 18px;
+      max-height: 20px;
     }
   }
   &__done {
