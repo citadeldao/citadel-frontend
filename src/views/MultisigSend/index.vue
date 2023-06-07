@@ -71,14 +71,14 @@
             <span class="multisig-balance__info-title">{{
               $t('multisigSend.available')
             }}</span>
-            <BalanceTooltip left="-128px" width="280px">
+            <el-tooltip placement="bottom" effect="rewards-list-tooltip">
               <info class="info-icon" />
               <template #content>
                 <div class="hint">
                   {{ $t('multisigSend.availableHint') }}
                 </div>
               </template>
-            </BalanceTooltip>
+            </el-tooltip>
             <div class="multisig-balance__info-white-space" />
             <span class="multisig-balance__info-value">
               <span
@@ -96,14 +96,14 @@
             <span class="multisig-balance__info-title">{{
               $t('multisigSend.spend')
             }}</span>
-            <BalanceTooltip left="-88px" width="200px">
+            <el-tooltip placement="bottom" effect="rewards-list-tooltip">
               <info class="info-icon" />
               <template #content>
                 <div class="hint">
                   {{ $t('multisigSend.spendHint') }}
                 </div>
               </template>
-            </BalanceTooltip>
+            </el-tooltip>
             <div class="multisig-balance__info-white-space" />
             <span class="multisig-balance__info-value">
               <span
@@ -121,14 +121,14 @@
             <span class="multisig-balance__info-title">{{
               $t('multisigSend.total')
             }}</span>
-            <BalanceTooltip left="-88px" width="200px">
+            <el-tooltip placement="bottom" effect="rewards-list-tooltip">
               <info class="info-icon" />
               <template #content>
                 <div class="hint">
                   {{ $t('multisigSend.totalHint') }}
                 </div>
               </template>
-            </BalanceTooltip>
+            </el-tooltip>
             <div class="multisig-balance__info-white-space" />
             <span class="multisig-balance__info-value">
               <span
@@ -146,14 +146,14 @@
             <span class="multisig-balance__info-title">{{
               $t('multisigSend.claimable')
             }}</span>
-            <BalanceTooltip left="-88px" width="200px">
+            <el-tooltip placement="bottom" effect="rewards-list-tooltip">
               <info class="info-icon" />
               <template #content>
                 <div class="hint">
                   {{ $t('multisigSend.claimableHint') }}
                 </div>
               </template>
-            </BalanceTooltip>
+            </el-tooltip>
             <div class="multisig-balance__info-white-space" />
             <span class="multisig-balance__info-value">
               <span
@@ -321,7 +321,6 @@ import PrimaryButton from '@/components/UI/PrimaryButton';
 import info from '@/assets/icons/info.svg';
 import Modal from '@/components/Modal';
 import ModalContent from '@/components/ModalContent';
-import { default as BalanceTooltip } from '@/components/Tooltip';
 import { WALLET_TYPES, PRIVATE_PASSWORD_TYPES } from '@/config/walletType';
 import Loading from '@/components/Loading';
 import Input from '@/components/UI/Input';
@@ -340,7 +339,6 @@ export default {
     Input,
     Autocomplete,
     PrimaryButton,
-    BalanceTooltip,
     info,
   },
   setup() {
@@ -563,6 +561,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.hint {
+  color: #6b93c0;
+  font-size: 14px;
+  font-family: 'Panton_Regular';
+  max-width: 180px;
+  display: block;
+}
 .multisig-balance {
   width: 940px;
   margin: auto;
@@ -712,12 +717,6 @@ export default {
 
   .info-icon {
     margin-left: 5px;
-  }
-
-  .hint {
-    color: #6b93c0;
-    font-size: 14px;
-    font-family: 'Panton_Regular';
   }
 
   .claim-btn {

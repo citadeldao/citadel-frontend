@@ -1,4 +1,8 @@
 {
+    "Bandwidth-desc": "Bandwidth measures transaction size and enables feeless transactions. All transaction types consume Bandwidth Points, with each byte requiring one point, equal to the transaction's byte count.",
+    "Energy-desc": "Energy represents the resources consumed by running a smart contract, with each instruction using a specific amount. Contract complexity determines the energy consumption, which is calculated and deducted per instruction.",
+    "RAM-desc": "iRAM is an additional commission token it IOST network that is purchased separately. It serves as storage resources on the IOST network, just like the traditional RAM which is used to store data in the computer.",
+    "GAS-desc": "iGAS are the transaction fees to be paid when you make a transaction on the IOST mainnet. You can pledge your IOST to get iGAS.",
     "login": {
         "continueEmail1": "Email will help you to",
         "continueEmail2": "easily switch",

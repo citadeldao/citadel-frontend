@@ -118,14 +118,18 @@
           <span class="bridge__memo-title">
             {{ $t('memo') }}
           </span>
-          <Tooltip left="-75px" width="200px" class="bridge__memo-tooltip">
+          <el-tooltip
+            placement="bottom"
+            effect="rewards-list-tooltip"
+            class="bridge__memo-tooltip"
+          >
             <info />
             <template #content>
               <span class="bridge__memo-tooltip-text">{{
                 $t('memoTooltip')
               }}</span>
             </template>
-          </Tooltip>
+          </el-tooltip>
           <el-switch
             v-model="showMemo"
             active-color="#6a4bff"
@@ -168,7 +172,6 @@ import { useWindowSize } from 'vue-window-size';
 import { screenWidths } from '@/config/sreenWidthThresholds';
 import error from '@/assets/icons/networks/error.svg';
 import { useI18n } from 'vue-i18n';
-import Tooltip from '@/components/Tooltip';
 import info from '@/assets/icons/info.svg';
 import amountInputValidation from '@/helpers/amountInputValidation';
 
@@ -181,7 +184,6 @@ export default {
     ModalContent,
     bannerInfo,
     AddressItem,
-    Tooltip,
   },
   props: {
     isLoading: {
@@ -403,6 +405,8 @@ export default {
   &__memo-tooltip-text {
     font-size: 12px;
     color: $mid-blue;
+    max-width: 178px;
+    display: block;
   }
 
   &__memo-input {
