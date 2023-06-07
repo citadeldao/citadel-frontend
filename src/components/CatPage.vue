@@ -96,7 +96,7 @@ export default {
     const icons = reactive({});
     props.data.map((wallet) => {
       aliases[`${wallet.net}_${wallet.address}`] = '';
-      import(`@/assets/icons/token/${wallet?.net}.svg`).then((val) => {
+      import(`@/assets/icons/networks/${wallet?.net}.svg`).then((val) => {
         icons[wallet?.net] = markRaw(val.default);
       });
     });
@@ -309,6 +309,8 @@ export default {
 
     & svg {
       fill: $white;
+      max-width: 18px;
+      max-height: 20px;
     }
   }
 

@@ -1,4 +1,8 @@
 {
+    "Bandwidth-desc": "",
+    "Energy-desc": "",
+    "RAM-desc": "",
+    "GAS-desc": "",
     "login": {
         "login": "ログインする",
         "signup": "サインアップ",
@@ -1335,6 +1339,7 @@
     "jailed": "投獄された",
     "sendAssetsDestination": "宛先ネットワーク",
     "keplr": {
+        "notAddAtOnce": "",
         "notFound": "ブラウザに Keplr が見つかりません",
         "cancel": "キャンセル",
         "importWallet": "ウォレットのインポート",
@@ -1504,5 +1509,9 @@
     "filterHot": "",
     "filterCosmos": "",
     "filterEvm": "",
-    "filterOthers": ""
+    "filterOthers": "",
+    "rateModal": {
+        "title": "",
+        "description": ""
+    }
 }

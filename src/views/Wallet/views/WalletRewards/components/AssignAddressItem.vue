@@ -41,7 +41,7 @@
       </div>
       <div class="assign-address-item__address">
         <span class="assign-address-item__address-address">
-          {{ address.address }}
+          {{ getMiddleCutText(address.address) }}
         </span>
         <div
           v-if="type !== 'newAssigned'"
@@ -85,6 +85,7 @@ import EditButton from '@/components/UI/EditButton';
 import info from '@/assets/icons/info.svg';
 import done from '@/assets/icons/step/done.svg';
 import { ref, markRaw, computed } from 'vue';
+import { getMiddleCutText } from '@/helpers';
 
 export default {
   name: 'AssignAddressItem',
@@ -105,7 +106,7 @@ export default {
   emits: ['uncheck', 'check', 'signHardwareAddress'],
   setup(props, { emit }) {
     const icon = ref();
-    import(`@/assets/icons/token/${props.address.net}.svg`).then((val) => {
+    import(`@/assets/icons/networks/${props.address.net}.svg`).then((val) => {
       icon.value = markRaw(val.default);
     });
 
@@ -127,7 +128,7 @@ export default {
         ? '284px'
         : props.address.assignedTo
         ? '360px'
-        : ''
+        : '380px'
     );
 
     return {
@@ -135,6 +136,7 @@ export default {
       toggleChecked,
       walletName,
       maxWidth,
+      getMiddleCutText,
     };
   },
 };
@@ -161,6 +163,8 @@ export default {
     & svg {
       pointer-events: none;
       fill: $white;
+      max-width: 18px;
+      max-height: 20px;
     }
   }
   &__done {
@@ -227,10 +231,6 @@ export default {
     font-size: 12px;
     line-height: 14px;
     color: $mid-gray;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    max-width: 300px;
   }
   &__address-balance {
     display: flex;

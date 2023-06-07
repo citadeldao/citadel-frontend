@@ -106,14 +106,14 @@ export default {
       return true;
     });
 
-    import(`@/assets/icons/token/${props.network}.svg`).then((val) => {
+    import(`@/assets/icons/networks/${props.network}.svg`).then((val) => {
       icon.value = markRaw(val.default);
     });
 
     watch(
       () => props.network,
       () => {
-        import(`@/assets/icons/token/${props.network}.svg`).then((val) => {
+        import(`@/assets/icons/networks/${props.network}.svg`).then((val) => {
           icon.value = markRaw(val.default);
         });
       }
@@ -155,9 +155,10 @@ export default {
       height: 40px;
       border-radius: 50%;
       background: #6a4bff;
-
       svg {
-        fill: #fff;
+        fill: $white;
+        max-width: 21px;
+        max-height: 21px;
       }
     }
 

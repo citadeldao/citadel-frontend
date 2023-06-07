@@ -112,8 +112,8 @@
 <script>
 import { getMiddleCutText } from '@/helpers';
 import linkIcon from '@/assets/icons/link.svg';
-import vision from '@/assets/icons/input/vision.svg';
-import hide from '@/assets/icons/input/hide.svg';
+import vision from '@/assets/icons/networks/vision.svg';
+import hide from '@/assets/icons/networks/hide.svg';
 import copyIcon from '@/assets/icons/copyIcon.svg';
 import copyToClipboard from '@/helpers/copyToClipboard';
 import { computed, inject, ref } from 'vue';

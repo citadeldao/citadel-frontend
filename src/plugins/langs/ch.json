@@ -1,4 +1,8 @@
 {
+    "Bandwidth-desc": "",
+    "Energy-desc": "",
+    "RAM-desc": "",
+    "GAS-desc": "",
     "login": {
         "login": "登录",
         "signup": "注册",
@@ -1342,6 +1346,7 @@
     "jailed": "禁止",
     "sendAssetsDestination": "目标网络",
     "keplr": {
+        "notAddAtOnce": "",
         "notFound": "在您的浏览器未找到 Keplr ",
         "cancel": "取消",
         "importWallet": "导入钱包",
@@ -1511,5 +1516,9 @@
     "filterHot": "",
     "filterCosmos": "",
     "filterEvm": "",
-    "filterOthers": ""
+    "filterOthers": "",
+    "rateModal": {
+        "title": "",
+        "description": ""
+    }
 }

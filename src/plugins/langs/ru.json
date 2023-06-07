@@ -1,4 +1,8 @@
 {
+    "Bandwidth-desc": "",
+    "Energy-desc": "",
+    "RAM-desc": "",
+    "GAS-desc": "",
     "login": {
         "login": "Вход",
         "signup": "Регистрация",
@@ -1337,6 +1341,7 @@
     "jailed": "Заблокировано",
     "sendAssetsDestination": "Сеть назначения",
     "keplr": {
+        "notAddAtOnce": "",
         "notFound": "Keplr не найден в вашем браузере",
         "cancel": "Отменить",
         "importWallet": "Импортировать кошелек",
@@ -1502,5 +1507,9 @@
     "filterHot": "",
     "filterCosmos": "",
     "filterEvm": "",
-    "filterOthers": ""
+    "filterOthers": "",
+    "rateModal": {
+        "title": "",
+        "description": ""
+    }
 }

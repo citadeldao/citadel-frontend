@@ -44,7 +44,7 @@
 <script>
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import CryptoCoin from '@/models/CryptoCoin';
-import error from '@/assets/icons/input/error.svg';
+import error from '@/assets/icons/networks/error.svg';
 import { useI18n } from 'vue-i18n';
 import { ref, inject, nextTick, computed, watch } from 'vue';
 

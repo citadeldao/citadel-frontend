@@ -29,23 +29,21 @@
       >
         <vision class="vk-item__vision-svg" />
       </div>
-      <div
-        class="vk-item__btn"
-        @click="copyValue"
-        :title="$t('copyToClipboardTitle')"
+      <el-tooltip
+        placement="bottom"
+        effect="rewards-list-tooltip"
+        :content="
+          isCopied ? $t('copiedToClipboard') : $t('copyToClipboardTitle')
+        "
       >
-        <Tooltip left="-40px" width="100px">
+        <div
+          class="vk-item__btn"
+          @click="copyValue"
+          :title="$t('copyToClipboardTitle')"
+        >
           <copyIcon />
-          <template #content>
-            <span v-if="!isCopied">
-              {{ $t('copyToClipboardTitle') }}
-            </span>
-            <span v-if="isCopied">
-              {{ $t('copiedToClipboard') }}
-            </span>
-          </template>
-        </Tooltip>
-      </div>
+        </div>
+      </el-tooltip>
       <div class="vk-item__btn" @click="change" :title="$t('changeKeyTitle')">
         <lockRefresh />
       </div>
@@ -55,11 +53,10 @@
 <script>
 import { ref, computed, inject } from 'vue';
 import { getTokenIcon, tokenIconPlaceholder } from '@/helpers';
-import vision from '@/assets/icons/input/vision.svg';
+import vision from '@/assets/icons/networks/vision.svg';
 import copyIcon from '@/assets/icons/copyIcon.svg';
 import lockRefresh from '@/assets/icons/lock-refresh.svg';
 import copyToClipboard from '@/helpers/copyToClipboard';
-import Tooltip from '@/components/Tooltip';
 
 export default {
   name: 'VkItem',
@@ -67,7 +64,6 @@ export default {
     vision,
     copyIcon,
     lockRefresh,
-    Tooltip,
   },
   props: {
     vk: {

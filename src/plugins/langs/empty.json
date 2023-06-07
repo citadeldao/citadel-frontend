@@ -1,4 +1,8 @@
 {
+    "Bandwidth-desc": "",
+    "Energy-desc": "",
+    "RAM-desc": "",
+    "GAS-desc": "",
     "login": {
         "continueEmail1": "",
         "continueEmail2": "",
@@ -1342,6 +1346,7 @@
     "jailed": "",
     "sendAssetsDestination": "",
     "keplr": {
+        "notAddAtOnce": "",
         "notFound": "",
         "cancel": "",
         "importWallet": "",
@@ -1501,5 +1506,9 @@
     "filterHot": "",
     "filterCosmos": "",
     "filterEvm": "",
-    "filterOthers": ""
+    "filterOthers": "",
+    "rateModal": {
+        "title": "",
+        "description": ""
+    }
 }

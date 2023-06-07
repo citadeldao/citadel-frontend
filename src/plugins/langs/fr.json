@@ -1,4 +1,8 @@
 {
+    "Bandwidth-desc": "",
+    "Energy-desc": "",
+    "RAM-desc": "",
+    "GAS-desc": "",
     "login": {
         "login": "Connexion",
         "signup": "S'inscrire",
@@ -1342,6 +1346,7 @@
     "jailed": "EMPRISONNÉ",
     "sendAssetsDestination": "Réseau de destination",
     "keplr": {
+        "notAddAtOnce": "",
         "notFound": "Keplr n'a pas été trouvé dans votre navigateur",
         "cancel": "Annuler",
         "importWallet": "Importer un portefeuille",
@@ -1511,5 +1516,9 @@
     "filterHot": "",
     "filterCosmos": "",
     "filterEvm": "",
-    "filterOthers": ""
+    "filterOthers": "",
+    "rateModal": {
+        "title": "",
+        "description": ""
+    }
 }
