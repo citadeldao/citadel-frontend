@@ -50,6 +50,9 @@ export default {
     const oldFormat = ref(false);
     const privateWalletsMode = ref(false); // citadel accs, when has oneseed
     const { isPasswordHash } = useCreateWallets();
+
+    const networksList = computed(() => store.getters['networks/networksList']);
+
     onMounted(() => {
       store.commit('newWallets/setCatPageProps', {
         dataQa: 'add-address__existing__file',
@@ -111,7 +114,10 @@ export default {
 
     const finalStep = async () => {
       store.commit('newWallets/setLoader', true);
-      const list = backup.value.privateWallets || backup.value.wallets;
+      const list = (backup.value.privateWallets || backup.value.wallets).filter(
+        (w) => networksList.value.find((conf) => w.net === conf.net)
+      );
+
       await Promise.all(
         list.map(async (wallet) => {
           if (wallet.net) {
