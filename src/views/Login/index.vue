@@ -701,7 +701,10 @@ export default {
     const onRefreshWeb3Metamask = async () => {
       mmRefresh.value = true;
       metamaskConnector.value.disconnect();
-      await store.dispatch('metamask/connectToMetamask');
+      // await store.dispatch('metamask/connectToMetamask');
+      await metamaskConnector.value.changeNetwork(window.ethereum.chainId);
+      await metamaskConnector.value.connect();
+      await store.dispatch('metamask/connectToMetamask', null, { root: true });
       mmRefresh.value = false;
     };
 
