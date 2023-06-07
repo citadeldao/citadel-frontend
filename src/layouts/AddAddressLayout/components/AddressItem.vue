@@ -71,9 +71,14 @@ export default {
     const { width } = useWindowSize();
     const route = useRoute();
     const icon = ref();
-    import(`@/assets/icons/networks/${props.wallet.net}.svg`).then((val) => {
-      icon.value = markRaw(val.default);
-    });
+    console.log('test111', props.wallet.net);
+    try {
+      import(`@/assets/icons/networks/${props.wallet.net}.svg`).then((val) => {
+        icon.value = markRaw(val.default);
+      });
+    } catch (e) {
+      console.log('test222', e);
+    }
 
     const metamaskConnector = computed(
       () => store.getters['metamask/metamaskConnector']
