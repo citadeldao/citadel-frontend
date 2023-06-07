@@ -463,7 +463,7 @@
 </template>
 
 <script>
-import error from '@/assets/icons/input/error.svg';
+import error from '@/assets/icons/networks/error.svg';
 import { useWindowSize } from 'vue-window-size';
 import ActionModalContent from './components/ActionModalContent.vue';
 // import ChangingModalContent from '@/views/Wallet/views/Send/components/ChangingModalContent.vue';

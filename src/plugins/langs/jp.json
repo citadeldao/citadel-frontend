@@ -1339,6 +1339,7 @@
     "jailed": "投獄された",
     "sendAssetsDestination": "宛先ネットワーク",
     "keplr": {
+        "notAddAtOnce": "",
         "notFound": "ブラウザに Keplr が見つかりません",
         "cancel": "キャンセル",
         "importWallet": "ウォレットのインポート",
@@ -1503,5 +1504,14 @@
     "changeKeyTitle": "閲覧キーの変更",
     "anotherAddress": "別のアドレス",
     "notFoundPlaceholderText": "クエリに一致するものが見つかりませんでした",
-    "minBalanceNote": ""
+    "minBalanceNote": "",
+    "filterAll": "",
+    "filterHot": "",
+    "filterCosmos": "",
+    "filterEvm": "",
+    "filterOthers": "",
+    "rateModal": {
+        "title": "",
+        "description": ""
+    }
 }

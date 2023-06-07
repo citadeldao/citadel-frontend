@@ -94,7 +94,7 @@ import { useI18n } from 'vue-i18n';
 import Input from '@/components/UI/Input';
 import Modal from '@/components/Modal';
 import ModalContent from '@/components/ModalContent';
-import checkmark from '@/assets/icons/input/checkmark.svg';
+import checkmark from '@/assets/icons/networks/checkmark.svg';
 import useWallets from '@/compositions/useWallets';
 
 export default {

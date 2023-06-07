@@ -1346,6 +1346,7 @@
     "jailed": "EMPRISONNÉ",
     "sendAssetsDestination": "Réseau de destination",
     "keplr": {
+        "notAddAtOnce": "",
         "notFound": "Keplr n'a pas été trouvé dans votre navigateur",
         "cancel": "Annuler",
         "importWallet": "Importer un portefeuille",
@@ -1510,5 +1511,14 @@
     "changeKeyTitle": "Modifier la clé de visualisation",
     "anotherAddress": "Autre adresse",
     "notFoundPlaceholderText": "Rien n'a été trouvé pour votre requête",
-    "minBalanceNote": ""
+    "minBalanceNote": "",
+    "filterAll": "",
+    "filterHot": "",
+    "filterCosmos": "",
+    "filterEvm": "",
+    "filterOthers": "",
+    "rateModal": {
+        "title": "",
+        "description": ""
+    }
 }

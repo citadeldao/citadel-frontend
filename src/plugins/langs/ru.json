@@ -1341,6 +1341,7 @@
     "jailed": "Заблокировано",
     "sendAssetsDestination": "Сеть назначения",
     "keplr": {
+        "notAddAtOnce": "",
         "notFound": "Keplr не найден в вашем браузере",
         "cancel": "Отменить",
         "importWallet": "Импортировать кошелек",
@@ -1501,5 +1502,14 @@
     "transactionFeeSimulate": "Мы моделируем транзакцию заранее, чтобы оценить комиссию. Сумма может варьироваться.",
     "seedPhrase": "Seed-фраза",
     "minBalanceNote": "На вашем балансе должно находиться не менее {amount}, чтобы продолжать получать вознаграждения за стейкинг. В противном случае вознаграждения будут сожжены.",
-    "hide": "скрыть"
+    "hide": "скрыть",
+    "filterAll": "",
+    "filterHot": "",
+    "filterCosmos": "",
+    "filterEvm": "",
+    "filterOthers": "",
+    "rateModal": {
+        "title": "",
+        "description": ""
+    }
 }

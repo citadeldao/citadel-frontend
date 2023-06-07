@@ -284,7 +284,7 @@ export default {
     };
 
     const icon = ref();
-    import(`@/assets/icons/token/${props.wallet.net}.svg`).then((val) => {
+    import(`@/assets/icons/networks/${props.wallet.net}.svg`).then((val) => {
       icon.value = markRaw(val.default);
     });
 
@@ -419,8 +419,8 @@ export default {
       height: 32px;
     }
     & svg {
-      max-width: 24px;
-      max-height: 24px;
+      max-width: 18px;
+      max-height: 20px;
       fill: $mid-blue;
     }
   }

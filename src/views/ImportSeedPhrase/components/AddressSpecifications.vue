@@ -71,7 +71,7 @@ import useSelectNetwork from '@/compositions/useSelectNetwork';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import CryptoCoin from '@/models/CryptoCoin';
 import { useI18n } from 'vue-i18n';
-import error from '@/assets/icons/input/error.svg';
+import error from '@/assets/icons/networks/error.svg';
 import models from '@/models';
 
 export default {

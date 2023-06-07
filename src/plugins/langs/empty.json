@@ -1346,6 +1346,7 @@
     "jailed": "",
     "sendAssetsDestination": "",
     "keplr": {
+        "notAddAtOnce": "",
         "notFound": "",
         "cancel": "",
         "importWallet": "",
@@ -1500,5 +1501,14 @@
         "202": "",
         "901": ""
     },
-    "minBalanceNote": ""
+    "minBalanceNote": "",
+    "filterAll": "",
+    "filterHot": "",
+    "filterCosmos": "",
+    "filterEvm": "",
+    "filterOthers": "",
+    "rateModal": {
+        "title": "",
+        "description": ""
+    }
 }

@@ -100,11 +100,11 @@
 <script>
 import closeIcon from '@/assets/icons/close-icon-round.svg';
 import copy from '@/assets/icons/copy.svg';
-import info from '@/assets/icons/input/info.svg';
-import vision from '@/assets/icons/input/vision.svg';
-import hide from '@/assets/icons/input/hide.svg';
-import mail from '@/assets/icons/input/mail.svg';
-import error from '@/assets/icons/input/error.svg';
+import info from '@/assets/icons/networks/info.svg';
+import vision from '@/assets/icons/networks/vision.svg';
+import hide from '@/assets/icons/networks/hide.svg';
+import mail from '@/assets/icons/networks/mail.svg';
+import error from '@/assets/icons/networks/error.svg';
 import { computed, ref, markRaw, watch, nextTick, onMounted } from 'vue';
 import copyToClipboard from '@/helpers/copyToClipboard';
 import { WALLET_TYPES } from '@/config/walletType';
@@ -229,23 +229,23 @@ export default {
 
     if (props.icon) {
       if ([WALLET_TYPES.LEDGER, WALLET_TYPES.TREZOR].includes(props.icon)) {
-        import(`@/assets/icons/input/hardware-dot.svg`).then((val) => {
+        import(`@/assets/icons/networks/hardware-dot.svg`).then((val) => {
           currentIcon.value = markRaw(val.default);
         });
       } else if ([WALLET_TYPES.PRIVATE_KEY].includes(props.icon)) {
-        import(`@/assets/icons/input/private-dot.svg`).then((val) => {
+        import(`@/assets/icons/networks/private-dot.svg`).then((val) => {
           currentIcon.value = markRaw(val.default);
         });
       } else if ([WALLET_TYPES.ONE_SEED].includes(props.icon)) {
-        import(`@/assets/icons/input/oneseed-dot.svg`).then((val) => {
+        import(`@/assets/icons/networks/oneseed-dot.svg`).then((val) => {
           currentIcon.value = markRaw(val.default);
         });
       } else if (props.icon === WALLET_TYPES.KEPLR) {
-        import(`@/assets/icons/input/keplr-dot.svg`).then((val) => {
+        import(`@/assets/icons/networks/keplr-dot.svg`).then((val) => {
           currentIcon.value = markRaw(val.default);
         });
       } else {
-        import(`@/assets/icons/input/${props.icon}.svg`).then((val) => {
+        import(`@/assets/icons/networks/${props.icon}.svg`).then((val) => {
           currentIcon.value = markRaw(val.default);
         });
       }

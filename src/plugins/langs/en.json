@@ -1357,6 +1357,7 @@
     "jailed": "JAILED",
     "sendAssetsDestination": "Destination network",
     "keplr": {
+        "notAddAtOnce": "You cannot add selected chains at once",
         "notFound": "Keplr not found in your browser",
         "cancel": "Cancel",
         "importWallet": "Import wallet",
@@ -1512,5 +1513,14 @@
         "202": "Ledger Error: Reconnect your device",
         "901": "Unknown error"
     },
-    "minBalanceNote": "At least {amount} should be remained on your balance to keep receiving your staking rewards. Otherwise rewards will be burnt."
+    "minBalanceNote": "At least {amount} should be remained on your balance to keep receiving your staking rewards. Otherwise rewards will be burnt.",
+    "filterAll": "All",
+    "filterHot": "Hot",
+    "filterCosmos": "Cosmos",
+    "filterEvm": "EVM",
+    "filterOthers": "Others",
+    "rateModal": {
+        "title": "Select display currency",
+        "description": "Your balance will be converted to the selected currency"
+    }
 }
