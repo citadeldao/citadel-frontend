@@ -17,11 +17,14 @@ export default function useChart({
   storeGetter,
   render,
   showCount,
+  noCurrency,
 }) {
   const store = useStore();
+  const currentWallet = computed(() => store.getters['wallets/currentWallet']);
+  const currentToken = computed(() => store.getters['subtokens/currentToken']);
 
   const currentFilterTab = ref(1);
-  const currentTab = ref('USD');
+  const currentTab = ref(noCurrency ? null : 'USD');
   const isExpanded = ref(false);
   const isToggleHovered = ref(false);
 
@@ -111,6 +114,7 @@ export default function useChart({
         dateFrom,
         dateTo,
         target: canvasElement,
+        net: currentToken?.value?.net || currentWallet?.value?.net,
       });
 
       render(chartData.value, currentTab.value, canvasElement, {
@@ -126,6 +130,7 @@ export default function useChart({
         list: customList.value,
         months: currentFilterTab.value,
         target: canvasElement,
+        net: currentToken?.value?.net || currentWallet?.value?.net,
       });
     }
 

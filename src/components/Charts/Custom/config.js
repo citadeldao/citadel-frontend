@@ -60,7 +60,7 @@ export const formatYLineText = (data, tab) => {
   if (BTC_USDT_AMOUNT <= data) formattedValue = prettyNumber(data);
   else formattedValue = BigNumber(data).toFixed();
 
-  return `${formattedValue} ${tab}`;
+  return `${formattedValue} ${tab || 'USD'}`;
 };
 
 export const xLineDates = (dates) => {
@@ -68,14 +68,13 @@ export const xLineDates = (dates) => {
   const visibleLabels = [];
 
   for (let i = dates.length - 1; i >= 0; i = i - tickGap) {
-    visibleLabels.push(convertToLocalDate(dates[i]));
+    visibleLabels.push(dates[i]);
   }
-
   return visibleLabels;
 };
 
 export const dateToRender = (visibleLabels, date, type) => {
   const index = type === 'xMonths' ? 1 : 0;
-  const value = date?.split(' ')[index];
+  const value = convertToLocalDate(date)?.split(' ')[index];
   return visibleLabels.includes(date) ? value : '';
 };

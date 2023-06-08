@@ -332,7 +332,6 @@ export default {
         } catch (err) {
           syncLoading.value = false;
         }
-        console.log('syncResult WWW', syncResult);
         const newWallets = syncResult;
         const result =
           syncResult &&
@@ -500,7 +499,6 @@ export default {
             emit('close');
           }
         } catch (err) {
-          console.log(err, 'error');
           syncLoading.value = false;
         }
       }

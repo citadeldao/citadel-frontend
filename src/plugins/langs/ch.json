@@ -841,6 +841,7 @@
     "overallPage": {
         "noBalance": "没有可用余额",
         "noRewards": "没有奖励",
+        "noPrice": "",
         "loading": "",
         "selectPeriod": "",
         "balanceStructure": {

@@ -259,8 +259,6 @@ export default {
       return isLastPage ? total.value : pageLimit.value * currentPage.value;
     });
 
-    console.log('lastItemOnPage', total.value, pageLimit.value);
-
     getTransactions(props.currentWallet.id, currentPage.value, pageLimit.value);
 
     watch(

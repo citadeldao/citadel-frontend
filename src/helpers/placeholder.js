@@ -2,9 +2,15 @@ const CUSTOM_PERIOD = 'selectPeriod';
 const LOADING = 'loading';
 const NO_REWARDS = 'noRewards';
 const NO_BALANCE = 'noBalance';
+const NO_PRICE = 'noPrice';
 
 export const getPlaceholderStatus = (chart = '', loading, period, data) => {
-  const NO_DATA = chart.startsWith('rewards') ? NO_REWARDS : NO_BALANCE;
+  const NO_DATA = chart.startsWith('rewards')
+    ? NO_REWARDS
+    : chart.startsWith('balance')
+    ? NO_BALANCE
+    : NO_PRICE;
+
   const isCustom = period === 'custom';
 
   if (loading) {
