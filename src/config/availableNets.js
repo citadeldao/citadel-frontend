@@ -52,6 +52,7 @@ export const networksFilterCategory = {
     'lum',
     'mantle',
     'omniflix',
+    'osmosis',
     'orai',
     'persistence',
     'provenance',
