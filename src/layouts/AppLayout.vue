@@ -152,7 +152,7 @@ export default {
 
             const hasTokens = store.getters['subtokens/formatedSubtokens'](
               false,
-              currentWallet && currentWallet.some((t) => t.net === token)
+              currentWallet
             );
 
             const checkAddress = !findAddressWithNet(wallets.value, {
