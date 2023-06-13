@@ -1,7 +1,6 @@
 import Chart from 'chart.js/auto';
 
 import { balanceHistoryTooltipHandler } from './Custom/tooltips';
-import { convertToLocalDate } from '@/helpers/date';
 
 import {
   LINE_CHART_STYLE_CONFIG,
@@ -27,7 +26,7 @@ export const renderBalanceHistoryChart = (
 
   const CHART_LABELS = Object.keys(balanceHistory.list);
   const visibleLabels = xLineDates(CHART_LABELS);
-  const allDates = CHART_LABELS.map(convertToLocalDate);
+  const allDates = CHART_LABELS;
 
   /**
    *
@@ -39,7 +38,9 @@ export const renderBalanceHistoryChart = (
   const data = [];
 
   for (const period in balanceHistory.list) {
-    const record = balanceHistory.list[period][currentTab?.toLowerCase()];
+    const record = currentTab
+      ? balanceHistory.list[period][currentTab?.toLowerCase()]
+      : balanceHistory.list[period];
     if (record) data.push(record);
   }
 
@@ -49,6 +50,7 @@ export const renderBalanceHistoryChart = (
       data: data,
       fill: true,
       ...LINE_CHART_STYLE_CONFIG,
+      ...(!currentTab && { pointRadius: 0 }),
     },
   ];
 
@@ -84,6 +86,7 @@ export const renderBalanceHistoryChart = (
         callback: (_, index) =>
           dateToRender(visibleLabels, allDates[index], 'xMonths'),
         ...CHART_TICKS_STYLE,
+        padding: 3,
         color: MONTH_COLORS_LIST,
       },
     },
@@ -140,7 +143,6 @@ export const renderBalanceHistoryChart = (
     data: CHART_DATA,
     options: OPTIONS,
   };
-
   balanceHistoryChart[elementId] = new Chart(
     document.querySelector(`#${elementId}`),
     config

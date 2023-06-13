@@ -841,6 +841,7 @@
     "overallPage": {
         "noBalance": "Vous n'avez pas de solde",
         "noRewards": "Vous n'avez aucune récompense",
+        "noPrice": "",
         "loading": "",
         "selectPeriod": "",
         "balanceStructure": {
