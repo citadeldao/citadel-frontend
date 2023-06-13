@@ -846,6 +846,7 @@
     "overallPage": {
         "noBalance": "",
         "noRewards": "",
+        "noPrice": "",
         "loading": "",
         "selectPeriod": "",
         "balanceStructure": {

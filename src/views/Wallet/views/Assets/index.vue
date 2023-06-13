@@ -32,6 +32,7 @@
             icon="loop"
             :placeholder="$t('inputToken')"
             clearable
+            hard-autocomplete-off
           />
         </div>
         <div class="assets__sort">

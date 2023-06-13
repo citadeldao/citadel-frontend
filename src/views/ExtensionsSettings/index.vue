@@ -406,7 +406,6 @@ export default {
 
         isLoading.value = false;
       } catch (err) {
-        console.log('err', err);
         isLoading.value = false;
       }
     };

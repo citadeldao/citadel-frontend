@@ -82,7 +82,7 @@
         "approveKeplrTitle": "Подтвердить на Keplr",
         "approveMetamaskTitle": "Подтвердить на Metamask",
         "approveDescription": "На экране появится окно расширения браузера для подтверждения подключения к кошельку.",
-        "confirmAddressTitleAnother": "На данный момент мы не поддерживаем выбранную сеть.<br>Измените сеть на Ethereum или BSC в Metamask",
+        "confirmAddressTitleAnother": "На данный момент мы не поддерживаем выбранную сеть.<br>Измените сеть на Ethereum или BSC, Arbitrum, Avalanche, Optimism, Polygon, Evmoseth в Metamask",
         "confirmAddressTitleMetamaskEth": "Вход осуществляется через выбранную учетную запись Metamask. Обязательно используйте ее для входа в систему в будущем.<br>Вы можете использовать для входа только сеть Ethereum или BSC.",
         "confirmAddressTitleMetamaskBSC": "Вход осуществляется через выбранную учетную запись Metamask. Обязательно используйте ее для входа в систему в будущем.<br>Вы можете использовать для входа только сеть Ethereum или BSC.",
         "confirmAddressTitleKeplr": "Вход осуществляется через выбранную учетную запись Keplr. Обязательно используйте ее для входа в систему в будущем.<br>Вы можете использовать для входа только сеть Cosmos.",
@@ -837,6 +837,7 @@
     "overallPage": {
         "noBalance": "У вас нет баланса",
         "noRewards": "У вас пока нет вознаграждений",
+        "noPrice": "",
         "balanceStructure": {
             "title": "Структура баланса"
         },

@@ -65,7 +65,7 @@ export default class MetamaskConnector {
 
     if (accounts && accounts.length) {
       this.accounts = accounts;
-      await this.setChainId();
+      await this.updateChainId();
       this.network = this.networks[this.chainId];
     }
   }

@@ -241,7 +241,7 @@
           :nodes-list-modal-close-handler="nodesListModalCloseHandler"
           :list="list"
           :current-wallet="currentWallet"
-          :is-multiple-mode="isMultiple"
+          :is-multiple="isMultiple"
         />
 
         <ModalContent

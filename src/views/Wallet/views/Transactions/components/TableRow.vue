@@ -160,7 +160,6 @@ export default {
       icon: 'unknown',
     });
 
-    console.log('PROP TX', props.transaction);
     const global = computed(() => window);
 
     if (props.transaction.type) {

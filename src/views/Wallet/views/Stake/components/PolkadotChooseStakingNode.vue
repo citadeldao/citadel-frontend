@@ -147,7 +147,6 @@
         icon="curve-arrow"
         :options="polkadotRewardDestinationOptions"
         value-key="key"
-        data-qa=""
         @change="rewardDestinationOptionChangeHandler"
       />
     </div>

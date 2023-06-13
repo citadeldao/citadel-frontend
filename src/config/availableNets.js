@@ -52,6 +52,7 @@ export const networksFilterCategory = {
     'lum',
     'mantle',
     'omniflix',
+    'osmosis',
     'orai',
     'persistence',
     'provenance',
@@ -89,6 +90,16 @@ export const metamaskNets = [
   'evmoseth',
   'avalanche',
 ];
+
+export const metamaskNetsInfo = {
+  bsc: 'Binance Smart Chain',
+  eth: 'Ethereum',
+  arbitrum: 'Arbitrum One',
+  polygon: 'Polygon',
+  avalanche: 'Avalanche',
+  evmoseth: 'Evmos EVM',
+  optimism: 'Optimism',
+};
 
 export const trezorNets = ['btc', 'eth', 'bsc']; // 'tez'
 
