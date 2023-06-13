@@ -321,7 +321,7 @@ export default {
       const index = transactions.value.findIndex(
         (e) => e.hash === transaction.hash
       );
-      transaction.date = transactions.value[index]?.date || new Date();
+      transaction.date = transactions.value[index]?.date;
       currentTransaction.value = transaction;
       txComment.value = transaction.note;
       showModal.value = true;
