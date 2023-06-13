@@ -67,7 +67,7 @@
               </div>
               <div v-if="component.type === 'textWithURL'" class="value">
                 <a target="_blank" :href="component.value.url">{{
-                  component.value.text
+                  getMiddleCutText(component.value.text)
                 }}</a>
               </div>
               <!-- structure in type -->
@@ -174,6 +174,7 @@ import { ref, onMounted } from 'vue';
 import InfoBlock from './InfoBlock.vue';
 import TxStatuses from './TxStatuses';
 import { format } from 'date-fns';
+import { getMiddleCutText } from '@/helpers';
 
 export default {
   namae: 'TransactionInfoModalContent',
@@ -224,6 +225,7 @@ export default {
       togleShowPlaceholder,
       format,
       innerTxs,
+      getMiddleCutText,
     };
   },
 };
