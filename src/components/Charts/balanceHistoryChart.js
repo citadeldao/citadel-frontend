@@ -50,6 +50,7 @@ export const renderBalanceHistoryChart = (
       data: data,
       fill: true,
       ...LINE_CHART_STYLE_CONFIG,
+      ...(!currentTab && { pointRadius: 0 }),
     },
   ];
 
