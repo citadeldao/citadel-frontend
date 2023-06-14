@@ -179,5 +179,8 @@ export default {
         error: error,
       };
     },
+    resetData({ commit }, key) {
+      commit(types.RESET_DATA, key);
+    },
   },
 };
