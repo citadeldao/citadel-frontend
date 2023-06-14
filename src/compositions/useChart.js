@@ -17,14 +17,15 @@ export default function useChart({
   storeGetter,
   render,
   showCount,
-  noCurrency,
+  hasFiat,
 }) {
   const store = useStore();
   const currentWallet = computed(() => store.getters['wallets/currentWallet']);
   const currentToken = computed(() => store.getters['subtokens/currentToken']);
 
   const currentFilterTab = ref(1);
-  const currentTab = ref(noCurrency ? null : 'USD');
+  const currentTab = ref(hasFiat ? null : 'USD');
+  const currentFiat = ref(hasFiat ? 'USD' : null);
   const isExpanded = ref(false);
   const isToggleHovered = ref(false);
 
@@ -48,7 +49,8 @@ export default function useChart({
     store.getters[storeGetter](
       canvasElement,
       customList.value,
-      currentFilterTab.value
+      currentFilterTab.value,
+      currentFiat.value
     )
   );
 
@@ -115,12 +117,18 @@ export default function useChart({
         dateTo,
         target: canvasElement,
         net: currentToken?.value?.net || currentWallet?.value?.net,
+        fiat: currentFiat.value,
       });
-
-      render(chartData.value, currentTab.value, canvasElement, {
-        currency: networksConfig.value,
-        showCount,
-      });
+      render(
+        chartData.value,
+        currentTab.value,
+        canvasElement,
+        {
+          currency: networksConfig.value,
+          showCount,
+        },
+        currentFiat.value
+      );
     }
   };
 
@@ -131,13 +139,20 @@ export default function useChart({
         months: currentFilterTab.value,
         target: canvasElement,
         net: currentToken?.value?.net || currentWallet?.value?.net,
+        fiat: currentFiat.value,
       });
     }
 
-    render(chartData.value, currentTab.value, canvasElement, {
-      currency: networksConfig.value,
-      showCount,
-    });
+    render(
+      chartData.value,
+      currentTab.value,
+      canvasElement,
+      {
+        currency: networksConfig.value,
+        showCount,
+      },
+      currentFiat.value
+    );
   };
 
   return {
@@ -147,6 +162,8 @@ export default function useChart({
 
     currentTab,
     currentFilterTab,
+
+    currentFiat,
 
     tabs,
     customList,
