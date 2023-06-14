@@ -1,19 +1,18 @@
 <template>
-  <div class="expand__wrap" :class="{ expand__border: isNotFound }">
-    <div v-if="isLoading" class="loader">
+  <div class="expand__wrap">
+    <!-- <div v-if="isLoading" class="loader">
       <Loading />
-    </div>
+    </div> -->
 
-    <div class="expand__header" v-if="!isLoading">
-      <div class="header__title" v-if="!isNotFound">
+    <div class="expand__header">
+      <div class="header__title">
         {{ currentWallet.name }} {{ $t('Network') }}
       </div>
 
       <!-- Ссылки на соцсети сеток для 1280 px -->
-      <Socials :socials="socials" class="socials-lg" v-if="!isNotFound" />
+      <Socials :socials="socials" class="socials-lg" />
 
       <div
-        v-if="!isNotFound"
         class="header__icon"
         data-qa="wallet__network-info-modal__expand-button"
         @click="$emit('close', $event)"
@@ -22,13 +21,8 @@
       </div>
     </div>
 
-    <ExpandInfoPlaceholder v-if="isNotFound" />
-
-    <div id="expand-rate-chart-wrap" class="content__wrap" v-if="!isNotFound">
-      <div
-        class="expand__content"
-        v-if="!isLoading && currencyHistory !== null"
-      >
+    <div id="expand-rate-chart-wrap" class="content__wrap">
+      <div class="expand__content">
         <div class="left-section">
           <!-- Ссылки на соцсети сеток для 1920 px -->
           <Socials :socials="socials" class="socials" />
@@ -182,21 +176,27 @@
           </div>
           <div class="chart__controls">
             <TabsGroup
-              v-model:currentValue="currentTab"
+              v-model:currentValue="currentFilterTab"
               class="chart__tabs"
               :tabs="tabs"
               expand
               data-qa="wallet__network-info-modal__period"
-              @update:currentValue="currentTabChangeHandler"
+              @update:currentValue="filterTabChangeHandler"
             />
-            <div v-if="currentTab === 'custom'" class="chart__date-picker">
-              <DatePicker
-                v-model:date="date"
-                @update:date="dateChangeHandler"
-              />
+            <div
+              v-if="currentFilterTab === 'custom'"
+              class="chart__date-picker"
+            >
+              <DatePicker @update:date="dateChangeHandler" />
             </div>
           </div>
-          <RateHistoryChart :data="currencyHistory" />
+          <ChartPlaceholder v-if="placeholder.show" :text="placeholder.text" />
+
+          <div class="chart-rendered" v-show="!placeholder.show">
+            <div class="chart__chart">
+              <canvas :id="canvasId" class="chart__canvas" />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -204,34 +204,33 @@
 </template>
 
 <script>
+import ChartPlaceholder from '@/views/Overall/components/Placeholder';
+import { getPlaceholderStatus } from '@/helpers/placeholder';
+import useChart from '@/compositions/useChart';
+import { renderBalanceHistoryChart as renderRateHistoryChart } from '@/components/Charts/balanceHistoryChart';
+
 import info from '@/assets/icons/info.svg';
 import DatePicker from '@/components/UI/DatePicker.vue';
 import TabsGroup from '@/components/UI/TabsGroup';
 import Socials from './components/Socials';
-import { tabsList } from '@/static/dateTabs';
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import constrictIcon from '@/assets/icons/network-info/constrict.svg';
 import Tooltip from '@/components/UI/Tooltip';
-import RateHistoryChart from './components/RateHistoryChart';
 import { useStore } from 'vuex';
-import moment from 'moment';
 import { useI18n } from 'vue-i18n';
-import notify from '@/plugins/notify';
-import Loading from '@/components/Loading';
-import ExpandInfoPlaceholder from './components/ExpandPlaceholder.vue';
+// import ExpandInfoPlaceholder from './components/ExpandPlaceholder.vue';
 
 export default {
   name: 'NetworkInfoExpand',
   components: {
+    ChartPlaceholder,
     info,
     DatePicker,
     TabsGroup,
     constrictIcon,
     Socials,
     Tooltip,
-    RateHistoryChart,
-    Loading,
-    ExpandInfoPlaceholder,
+    // ExpandInfoPlaceholder,
   },
   props: {
     currentWallet: {
@@ -255,56 +254,7 @@ export default {
   setup(props) {
     const store = useStore();
     const { t, te } = useI18n();
-    const currentTab = ref(1);
-    const tabs = tabsList;
     const date = ref([]);
-    const dateChangeHandler = ([from, to]) => {
-      const timeZoneOffset = moment(from).utcOffset();
-      const dateFrom = +moment(from).add(timeZoneOffset, 'minutes');
-      const dateTo = +moment(to).add(timeZoneOffset, 'minutes');
-
-      if (from || to) {
-        if (dateFrom > dateTo) {
-          notify({
-            type: 'warning',
-            text: 'Incorrect Date',
-          });
-        } else {
-          loadData(dateFrom, dateTo);
-        }
-      }
-    };
-    const currentTabChangeHandler = (val) => {
-      let newVal = val;
-
-      if (val === 'all') {
-        newVal = 36;
-      }
-
-      if (val !== 'custom') {
-        date.value = [];
-        loadData(Date.now() - 86400000 * 31 * newVal, Date.now());
-      }
-    };
-    const currencyHistory = ref(null);
-    const isLoading = ref(false);
-    const loadData = async (from, to) => {
-      isLoading.value = true;
-
-      const data = await store.dispatch('networks/getCurrencyHistoryByRange', {
-        from,
-        to,
-        net: props.currentWallet.net,
-      });
-
-      if (data.data !== null) {
-        currencyHistory.value = data.data;
-      }
-
-      isLoading.value = false;
-    };
-
-    loadData(Date.now() - 86400000 * 31 * currentTab.value, Date.now());
 
     const description = computed(() => {
       const description = te(`netInfo.${props.currentWallet.net}.description`)
@@ -316,23 +266,68 @@ export default {
       return description.includes('netInfo') ? '' : description;
     });
 
-    const isNotFound = computed(
-      () =>
-        !isLoading.value &&
-        (currencyHistory.value === null ||
-          JSON.stringify(currencyHistory.value) === '{}')
+    const canvasId = ref('rateHistory');
+    const action = ref('charts/fetchChartData');
+    const getter = ref('charts/getCharts');
+    const loading = ref('charts/isLoading');
+
+    const {
+      currentFilterTab,
+      info,
+      tabs,
+      chartData,
+      dateChangeHandler,
+      filterTabChangeHandler,
+    } = useChart({
+      canvasElement: canvasId.value,
+      storeAction: action.value,
+      storeGetter: getter.value,
+      render: renderRateHistoryChart,
+      noCurrency: true,
+    });
+
+    const callChartRender = async (data) => {
+      await renderRateHistoryChart(data, null, canvasId.value, {
+        currency: info.value,
+      });
+    };
+
+    const sendStoreAction = async () => {
+      const { data } = await store.dispatch(action.value, {
+        net: props.currentWallet.net,
+        target: canvasId.value,
+      });
+
+      await callChartRender(data);
+    };
+
+    onMounted(async () => {
+      await sendStoreAction();
+    });
+
+    const isLoading = computed(() =>
+      store.getters[loading.value](canvasId.value)
+    );
+
+    const placeholder = computed(() =>
+      getPlaceholderStatus(
+        canvasId.value,
+        isLoading.value,
+        currentFilterTab.value,
+        chartData.value
+      )
     );
 
     return {
-      currentTab,
+      canvasId,
+      currentFilterTab,
       tabs,
       date,
       dateChangeHandler,
-      currentTabChangeHandler,
-      currencyHistory,
+      filterTabChangeHandler,
       description,
       isLoading,
-      isNotFound,
+      placeholder,
     };
   },
 };
@@ -384,6 +379,16 @@ export default {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 28px;
+    padding-left: 45px;
+    padding-right: 45px;
+    @include lg {
+      padding-left: 37px;
+      padding-right: 37px;
+    }
+    @include md {
+      padding-left: 37px;
+      padding-right: 37px;
+    }
   }
 
   &__wrap {
@@ -392,26 +397,33 @@ export default {
     max-width: 1440px;
 
     background: $white;
-    padding: 45px;
+    padding: 45px 0;
     border-radius: 16px;
 
     min-height: 200px;
     max-height: 80vh;
 
     @include lg {
-      padding: 37px;
+      padding: 37px 0;
     }
     @include md {
-      padding: 37px;
+      padding: 37px 0;
     }
 
     .content__wrap {
+      padding-left: 45px;
+      padding-right: 45px;
+
       @include lg {
-        height: calc(80vh - 90px - 81px);
+        padding-left: 37px;
+        padding-right: 37px;
+        height: calc(80vh - 80px - 81px);
         overflow-y: scroll;
       }
       @include md {
-        height: calc(80vh - 90px - 81px);
+        padding-left: 37px;
+        padding-right: 37px;
+        height: calc(80vh - 80px - 81px);
         overflow-y: scroll;
       }
     }
@@ -426,13 +438,13 @@ export default {
     @include lg {
       display: block;
       max-width: 728px;
-      padding-right: 5px;
+      // padding-right: 5px;
     }
     @include md {
       display: block;
       max-width: 728px;
-      padding-right: 5px;
-      margin-bottom: 24px;
+      // padding-right: 5px;
+      // margin-bottom: 24px;
     }
   }
 
@@ -462,24 +474,71 @@ export default {
     margin-bottom: 39px;
   }
 
-  &__tabs {
-    width: 646px;
-    @include lg {
-      width: 480px;
-    }
-    @include md {
-      width: 480px;
-    }
-  }
+  // &__tabs {
+  //   width: 646px;
+  //   @include lg {
+  //     width: 480px;
+  //   }
+  //   @include md {
+  //     width: 480px;
+  //   }
+  // }
+
+  // &__date-picker {
+  //   width: 220px;
+  //   height: 68px;
+  //   margin-left: 22px;
+  // }
 
   &__date-picker {
     width: 220px;
-    height: 68px;
+    // height: 68px;
     margin-left: 22px;
+
+    @include lg {
+      margin-left: 8px;
+    }
+
+    @include md {
+      margin-left: 8px;
+    }
   }
 
   &__content {
     position: relative;
+  }
+  &-rendered {
+    position: relative;
+
+    width: 100%;
+
+    height: 300px;
+    // height: 410px !important;
+
+    &__text {
+      margin-top: 33px;
+    }
+
+    // @include md {
+    //   height: 350px !important;
+    // }
+
+    // @include laptop {
+    //   height: 300px !important;
+    // }
+  }
+  &__chart {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    canvas {
+      height: 100%;
+    }
+  }
+
+  &__canvas {
+    width: 100%;
+    height: 100%;
   }
 }
 
@@ -558,5 +617,10 @@ export default {
   align-items: center;
   background-color: rgba($black, 0.2);
   border-radius: 16px;
+}
+.chart-placeholder {
+  min-height: 300px;
+  margin-bottom: 1px;
+  height: 300px;
 }
 </style>

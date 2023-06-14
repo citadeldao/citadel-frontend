@@ -1,4 +1,8 @@
 {
+    "Bandwidth-desc": "",
+    "Energy-desc": "",
+    "RAM-desc": "",
+    "GAS-desc": "",
     "login": {
         "continueEmail1": "",
         "continueEmail2": "",
@@ -842,6 +846,7 @@
     "overallPage": {
         "noBalance": "",
         "noRewards": "",
+        "noPrice": "",
         "loading": "",
         "selectPeriod": "",
         "balanceStructure": {
@@ -1342,6 +1347,7 @@
     "jailed": "",
     "sendAssetsDestination": "",
     "keplr": {
+        "notAddAtOnce": "",
         "notFound": "",
         "cancel": "",
         "importWallet": "",
@@ -1496,5 +1502,14 @@
         "202": "",
         "901": ""
     },
-    "minBalanceNote": ""
+    "minBalanceNote": "",
+    "filterAll": "",
+    "filterHot": "",
+    "filterCosmos": "",
+    "filterEvm": "",
+    "filterOthers": "",
+    "rateModal": {
+        "title": "",
+        "description": ""
+    }
 }

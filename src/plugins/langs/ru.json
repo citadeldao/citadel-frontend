@@ -1,4 +1,8 @@
 {
+    "Bandwidth-desc": "",
+    "Energy-desc": "",
+    "RAM-desc": "",
+    "GAS-desc": "",
     "login": {
         "login": "Вход",
         "signup": "Регистрация",
@@ -78,7 +82,7 @@
         "approveKeplrTitle": "Подтвердить на Keplr",
         "approveMetamaskTitle": "Подтвердить на Metamask",
         "approveDescription": "На экране появится окно расширения браузера для подтверждения подключения к кошельку.",
-        "confirmAddressTitleAnother": "На данный момент мы не поддерживаем выбранную сеть.<br>Измените сеть на Ethereum или BSC в Metamask",
+        "confirmAddressTitleAnother": "На данный момент мы не поддерживаем выбранную сеть.<br>Измените сеть на Ethereum или BSC, Arbitrum, Avalanche, Optimism, Polygon, Evmoseth в Metamask",
         "confirmAddressTitleMetamaskEth": "Вход осуществляется через выбранную учетную запись Metamask. Обязательно используйте ее для входа в систему в будущем.<br>Вы можете использовать для входа только сеть Ethereum или BSC.",
         "confirmAddressTitleMetamaskBSC": "Вход осуществляется через выбранную учетную запись Metamask. Обязательно используйте ее для входа в систему в будущем.<br>Вы можете использовать для входа только сеть Ethereum или BSC.",
         "confirmAddressTitleKeplr": "Вход осуществляется через выбранную учетную запись Keplr. Обязательно используйте ее для входа в систему в будущем.<br>Вы можете использовать для входа только сеть Cosmos.",
@@ -833,6 +837,7 @@
     "overallPage": {
         "noBalance": "У вас нет баланса",
         "noRewards": "У вас пока нет вознаграждений",
+        "noPrice": "",
         "balanceStructure": {
             "title": "Структура баланса"
         },
@@ -1337,6 +1342,7 @@
     "jailed": "Заблокировано",
     "sendAssetsDestination": "Сеть назначения",
     "keplr": {
+        "notAddAtOnce": "",
         "notFound": "Keplr не найден в вашем браузере",
         "cancel": "Отменить",
         "importWallet": "Импортировать кошелек",
@@ -1497,5 +1503,14 @@
     "transactionFeeSimulate": "Мы моделируем транзакцию заранее, чтобы оценить комиссию. Сумма может варьироваться.",
     "seedPhrase": "Seed-фраза",
     "minBalanceNote": "На вашем балансе должно находиться не менее {amount}, чтобы продолжать получать вознаграждения за стейкинг. В противном случае вознаграждения будут сожжены.",
-    "hide": "скрыть"
+    "hide": "скрыть",
+    "filterAll": "",
+    "filterHot": "",
+    "filterCosmos": "",
+    "filterEvm": "",
+    "filterOthers": "",
+    "rateModal": {
+        "title": "",
+        "description": ""
+    }
 }

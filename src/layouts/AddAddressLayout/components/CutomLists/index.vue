@@ -168,7 +168,6 @@ export default {
 
     const showDeleteModal = ref(false);
     const toDeleteList = () => {
-      console.log('????');
       showDeleteModal.value = true;
     };
 

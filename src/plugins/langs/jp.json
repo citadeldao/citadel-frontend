@@ -1,4 +1,8 @@
 {
+    "Bandwidth-desc": "",
+    "Energy-desc": "",
+    "RAM-desc": "",
+    "GAS-desc": "",
     "login": {
         "login": "ログインする",
         "signup": "サインアップ",
@@ -78,9 +82,9 @@
         "approveKeplrTitle": "Keplr 経由で承認する",
         "approveMetamaskTitle": "メタマスク経由で承認",
         "approveDescription": "ウォレット接続を承認するポップアップブラウザ拡張機能が表示されます。",
-        "confirmAddressTitleAnother": "現時点では、選択したネットワークはサポートされていません。<br>メタマスクでイーサリアムまたは BSC ネットワークを変更してください",
-        "confirmAddressTitleMetamaskEth": "ログインは、選択した Metamask アカウントを介して行われます。 今後のログインには必ず使用してください。<br>ログインには Ethereum または BSC ネットワークのみを使用できます。",
-        "confirmAddressTitleMetamaskBSC": "ログインは、選択した Metamask アカウントを介して行われます。 今後のログインには必ず使用してください。<br>ログインには Ethereum または BSC ネットワークのみを使用できます。",
+        "confirmAddressTitleAnother": "現時点では、選択したネットワークはサポートされていません。<br>メタマスクでイーサリアムまたは BSC, Arbitrum, Avalanche, Optimism, Polygon, Evmoseth ネットワークを変更してください",
+        "confirmAddressTitleMetamaskEth": "ログインは、選択した Metamask アカウントを介して行われます。 今後のログインには必ず使用してください。<br>ログインには Ethereum または BSC, Arbitrum, Avalanche, Optimism, Polygon, Evmoseth ネットワークのみを使用できます。",
+        "confirmAddressTitleMetamaskBSC": "ログインは、選択した Metamask アカウントを介して行われます。 今後のログインには必ず使用してください。<br>ログインには Ethereum または BSC, Arbitrum, Avalanche, Optimism, Polygon, Evmoseth ネットワークのみを使用できます。",
         "confirmAddressTitleKeplr": "ログインは、選択した Keplr アカウントを介して行われます。 今後のログインには必ず使用してください。<br>ログインには Cosmos ネットワークのみを使用できます。",
         "changeLangTitle": "言語選択",
         "changeLangDescription": "<span style='font-weight: bold; の操作に最も便利な言語を選択してください。  font-family: Panton_Bold;'>Citadel.one</span> プラットフォーム",
@@ -835,6 +839,7 @@
     "overallPage": {
         "noBalance": "あなたにはバランスがありません",
         "noRewards": "報酬はありません",
+        "noPrice": "",
         "loading": "",
         "selectPeriod": "",
         "balanceStructure": {
@@ -1335,6 +1340,7 @@
     "jailed": "投獄された",
     "sendAssetsDestination": "宛先ネットワーク",
     "keplr": {
+        "notAddAtOnce": "",
         "notFound": "ブラウザに Keplr が見つかりません",
         "cancel": "キャンセル",
         "importWallet": "ウォレットのインポート",
@@ -1499,5 +1505,14 @@
     "changeKeyTitle": "閲覧キーの変更",
     "anotherAddress": "別のアドレス",
     "notFoundPlaceholderText": "クエリに一致するものが見つかりませんでした",
-    "minBalanceNote": ""
+    "minBalanceNote": "",
+    "filterAll": "",
+    "filterHot": "",
+    "filterCosmos": "",
+    "filterEvm": "",
+    "filterOthers": "",
+    "rateModal": {
+        "title": "",
+        "description": ""
+    }
 }

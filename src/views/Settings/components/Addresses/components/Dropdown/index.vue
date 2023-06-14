@@ -179,7 +179,8 @@ export default {
       background: $mid-blue;
       & svg {
         fill: white;
-        height: 24px;
+        max-width: 22px;
+        max-height: 24px;
         margin: auto;
       }
 

@@ -1,15 +1,21 @@
 <template>
   <div class="select-networks">
-    <Input
-      id="assetsSearch"
-      v-model="keyword"
-      @input="handleKeyword"
-      :label="$t('searchNetworks')"
-      type="text"
-      icon="loop"
-      clearable
-      @clear="onClear"
-    />
+    <div class="select-networks__controls-filter">
+      <Input
+        id="assetsSearch"
+        v-model="keyword"
+        @input="handleKeyword"
+        :label="$t('searchNetworks')"
+        type="text"
+        icon="loop"
+        clearable
+        @clear="onClear"
+      />
+      <NetworksFilter
+        class="filter-networks"
+        @changeCategory="onChangeCategory"
+      />
+    </div>
     <div class="select-networks__selects">
       <div class="select" @click="selectAll">
         {{ $t('keplr.selectAll') }}
@@ -40,7 +46,9 @@
         :current-page="currentPage"
         @current-change="setCurrentPage"
       /> -->
-      <template v-if="networksAmount !== displayData.length">
+      <template
+        v-if="networksAmount !== displayData.length && !activeNetworksCategory"
+      >
         <div v-if="!keyword" class="more" @click="handleClickMore">
           <div>{{ $t('addToOneSeed.moreNetworks') }}</div>
           <BackButton :is-down="true" data-qa="More networks" />
@@ -87,10 +95,19 @@ import { WALLET_TYPES } from '@/config/walletType.js';
 import { isNullDerivationPath } from '@/helpers';
 import { useRoute } from 'vue-router';
 import closeIcon from '@/assets/icons/close.svg';
+import NetworksFilter from '@/components/UI/NetworksFilter';
+import { networksFilterCategory } from '@/config/availableNets';
 
 export default {
   name: 'SelectNetworks',
-  components: { NetworkCard, PrimaryButton, BackButton, Input, closeIcon },
+  components: {
+    NetworkCard,
+    NetworksFilter,
+    PrimaryButton,
+    BackButton,
+    Input,
+    closeIcon,
+  },
   emits: ['selectNets'],
   setup(props, { emit }) {
     const route = useRoute();
@@ -101,6 +118,23 @@ export default {
     const { isUserMnemonic } = useCreateWallets();
     const { checked, addItem, removeItem, checkedItems } = useCheckItem();
     const newItemIds = reactive({});
+
+    // filter
+    const isChangedCategory = ref(false);
+    const activeNetworksCategory = ref('');
+    const onChangeCategory = (category) => {
+      isChangedCategory.value = true;
+      if (category === 'all') {
+        keyword.value = '';
+        onClear();
+        activeNetworksCategory.value = '';
+      } else {
+        activeNetworksCategory.value = networksFilterCategory[category];
+      }
+      setTimeout(() => {
+        showAllNetworks();
+      }, 0);
+    };
 
     const networks = computed(() =>
       networksList
@@ -131,12 +165,26 @@ export default {
         return preferredOrder.indexOf(a.net) - preferredOrder.indexOf(b.net);
       });
       if (!keyword.value) {
-        return nets;
+        if (!activeNetworksCategory.value) return nets;
+
+        return nets.filter((coin) =>
+          activeNetworksCategory.value.includes(coin.net)
+        );
       }
+
+      if (!activeNetworksCategory.value) {
+        return nets.filter(
+          (item) =>
+            item.title.toLowerCase().includes(keyword.value.toLowerCase()) ||
+            item.abbr.toLowerCase().includes(keyword.value.toLowerCase())
+        );
+      }
+
       return nets.filter(
         (item) =>
-          item.title.toLowerCase().includes(keyword.value.toLowerCase()) ||
-          item.abbr.toLowerCase().includes(keyword.value.toLowerCase())
+          activeNetworksCategory.value.includes(item.net) &&
+          (item.title.toLowerCase().includes(keyword.value.toLowerCase()) ||
+            item.abbr.toLowerCase().includes(keyword.value.toLowerCase()))
       );
     });
 
@@ -345,6 +393,9 @@ export default {
       isDisabledBtn,
       isUserMnemonic,
       newItemIds,
+      activeNetworksCategory,
+      isChangedCategory,
+      onChangeCategory,
     };
   },
 };
@@ -360,10 +411,19 @@ export default {
   max-width: 891px;
   margin: 0 auto 40px;
 
+  &__controls-filter {
+    width: 100%;
+    display: flex;
+
+    .filter-networks {
+      margin-left: 13px;
+    }
+  }
+
   .input {
     min-height: 68px;
     height: 68px;
-    max-width: 891px;
+    max-width: 100%; // 891px;
     margin-bottom: 20px;
   }
 
@@ -371,7 +431,7 @@ export default {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start; // center;
     gap: 0 10px;
   }
   &__controls {

@@ -196,7 +196,7 @@ export default {
     const hasLogo = ref(false);
 
     if (props.icon) {
-      import(`@/assets/icons/token/${props.icon}.svg`).then((val) => {
+      import(`@/assets/icons/networks/${props.icon}.svg`).then((val) => {
         currentIcon.value = markRaw(val.default);
       });
     }

@@ -12,7 +12,7 @@
   </teleport>
   <teleport v-if="newWalletsModalShow" to="body">
     <Modal>
-      <NewWalletsModal data-qa="" />
+      <NewWalletsModal />
     </Modal>
   </teleport>
 </template>

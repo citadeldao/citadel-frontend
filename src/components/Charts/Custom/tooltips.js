@@ -3,6 +3,9 @@ import BigNumber from 'bignumber.js';
 import { prettyNumber } from '@/helpers/prettyNumber';
 import { getNetworkDataByKey } from '@/helpers/networkConfig';
 
+import { i18n } from '@/plugins/i18n';
+const { t } = i18n.global;
+
 const balanceHistoryTooltip = (chart) => {
   let tooltipEl = chart.canvas.parentNode.querySelector('div');
 
@@ -60,7 +63,9 @@ export const balanceHistoryTooltipHandler = (context, id, data, active) => {
 
     // title
     const tooltipHead = document.createElement('div');
-    tooltipHead.appendChild(document.createTextNode('Balance:'));
+    const isBalance = id.startsWith('balance');
+    const title = isBalance ? 'balance' : 'price';
+    tooltipHead.appendChild(document.createTextNode(`${t(title)}:`));
     tooltipHead.classList.add('chart-tooltip__head');
 
     // date
@@ -79,7 +84,9 @@ export const balanceHistoryTooltipHandler = (context, id, data, active) => {
       tooltipDate.appendChild(document.createTextNode(formattedDate));
 
       usdDiv.appendChild(
-        document.createTextNode(prettyNumber(data[title].usd))
+        document.createTextNode(
+          prettyNumber(isBalance ? data[title].usd : data[title])
+        )
       );
       const usdSign = document.createElement('span');
       usdSign.appendChild(document.createTextNode(' USD'));
@@ -106,7 +113,9 @@ export const balanceHistoryTooltipHandler = (context, id, data, active) => {
     tooltipBody.appendChild(tooltipHead);
     tooltipBody.appendChild(tooltipDate);
     tooltipBody.appendChild(usdDiv);
-    tooltipBody.appendChild(btcDiv);
+    if (isBalance) {
+      tooltipBody.appendChild(btcDiv);
+    }
   }
 
   const { offsetLeft: positionX, offsetTop: positionY } = chart.canvas;

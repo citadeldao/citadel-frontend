@@ -369,6 +369,7 @@ export default {
             await loadXCTInfo();
             await checkKeplrAddress();
             await getWalletRewards();
+            await store.dispatch('charts/resetData', 'rateHistory');
           }
         }
       },

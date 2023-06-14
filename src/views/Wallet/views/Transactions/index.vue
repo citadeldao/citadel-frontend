@@ -259,8 +259,6 @@ export default {
       return isLastPage ? total.value : pageLimit.value * currentPage.value;
     });
 
-    console.log('lastItemOnPage', total.value, pageLimit.value);
-
     getTransactions(props.currentWallet.id, currentPage.value, pageLimit.value);
 
     watch(
@@ -323,7 +321,7 @@ export default {
       const index = transactions.value.findIndex(
         (e) => e.hash === transaction.hash
       );
-      transaction.date = transactions.value[index]?.date || new Date();
+      transaction.date = transactions.value[index]?.date;
       currentTransaction.value = transaction;
       txComment.value = transaction.note;
       showModal.value = true;

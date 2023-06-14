@@ -194,14 +194,18 @@
           <span class="send__memo-title">
             {{ $t('memo') }}
           </span>
-          <Tooltip left="-95px" width="200px" class="send__memo-tooltip">
+          <el-tooltip
+            placement="bottom"
+            effect="rewards-list-tooltip"
+            class="send__memo-tooltip"
+          >
             <info />
             <template #content>
               <span class="send__memo-tooltip-text">{{
                 $t('memoTooltip')
               }}</span>
             </template>
-          </Tooltip>
+          </el-tooltip>
           <el-switch
             v-model="showMemo"
             active-color="#6a4bff"
@@ -459,7 +463,7 @@
 </template>
 
 <script>
-import error from '@/assets/icons/input/error.svg';
+import error from '@/assets/icons/networks/error.svg';
 import { useWindowSize } from 'vue-window-size';
 import ActionModalContent from './components/ActionModalContent.vue';
 // import ChangingModalContent from '@/views/Wallet/views/Send/components/ChangingModalContent.vue';
@@ -485,7 +489,6 @@ import useCheckPassword from '@/compositions/useCheckPassword';
 import Loading from '@/components/Loading';
 import { WALLET_TYPES, TOKEN_STANDARDS } from '@/config/walletType';
 import { screenWidths } from '@/config/sreenWidthThresholds';
-import Tooltip from '@/components/Tooltip';
 // import useApi from '@/api/useApi';
 import useWallets from '@/compositions/useWallets';
 import notify from '@/plugins/notify';
@@ -503,7 +506,6 @@ export default {
   name: 'Send',
   components: {
     SelectFeeModal,
-    Tooltip,
     Input,
     PrimaryButton,
     info,
@@ -558,6 +560,7 @@ export default {
     const amount = ref('');
     const memo = ref('');
     const prepareLoading = ref(false);
+    const { currentWallet: parentWallet } = useWallets();
     const { width } = useWindowSize();
     const showErrorText = computed(() =>
       width.value < screenWidths.xl ? false : true
@@ -835,17 +838,22 @@ export default {
 
     // Calc Max Amount Parent
     const maxAmountParent = computed(() => {
-      if (balance.value?.adding && balance.value?.adding.length > 0) {
-        return balance.value?.adding[0].current > fee.value.fee
-          ? BigNumber(balance.value?.adding[0].current)
-              .minus(fee.value.fee)
-              .toNumber()
-          : 0;
-      }
-
-      return balance.value?.mainBalance > fee.value.fee
-        ? BigNumber(balance.value?.mainBalance).minus(fee.value.fee).toNumber()
+      return parentWallet.value.balance?.mainBalance > fee.value.fee
+        ? BigNumber(parentWallet.value.balance?.mainBalance)
+            .minus(fee.value.fee)
+            .toNumber()
         : 0;
+      // if (balance.value?.adding && balance.value?.adding.length > 0) {
+      //   return balance.value?.adding[0].current > fee.value.fee
+      //     ? BigNumber(balance.value?.adding[0].current)
+      //         .minus(fee.value.fee)
+      //         .toNumber()
+      //     : 0;
+      // }
+
+      // return balance.value?.mainBalance > fee.value.fee
+      //   ? BigNumber(balance.value?.mainBalance).minus(fee.value.fee).toNumber()
+      //   : 0;
     });
 
     // Calc Max Amount
@@ -1225,8 +1233,6 @@ export default {
         }
 
         isLoading.value = true;
-
-        const { currentWallet: parentWallet } = useWallets();
 
         const hash = await keplrConnector.value.getOutputHash(
           parentWallet.value,
@@ -1791,6 +1797,8 @@ export default {
   &__memo-tooltip-text {
     font-size: 12px;
     color: $mid-blue;
+    max-width: 178px;
+    display: block;
   }
 
   &__advanced-settings {

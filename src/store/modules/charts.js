@@ -5,10 +5,12 @@ import citadel from '@citadeldao/lib-citadel';
 const types = {
   SET_CHART_LOADING: 'SET_CHART_LOADING',
   SET_CHART_DATA: 'SET_CHART_DATA',
+  RESET_DATA: 'RESET_DATA',
 };
 
 const REWARDS_METHOD = 'getGraphRewardsSummary';
 const BALANCE_METHOD = 'getBalanceHistory';
+const RATES_METHOD = 'getCurrencyHistoryByRange';
 
 const ALL = 'all';
 const CUSTOM = 'custom';
@@ -35,12 +37,16 @@ export default {
       rewardsChartExpanded: {
         all: {},
       },
+      rateHistory: {
+        all: {},
+      },
     },
     loading: {
       balanceHistory: false,
       balanceHistoryExpanded: false,
       rewardsChart: false,
       rewardsChartExpanded: false,
+      rateHistory: false,
     },
   }),
 
@@ -56,6 +62,9 @@ export default {
   },
 
   mutations: {
+    [types.RESET_DATA](state, key) {
+      state.charts[key] = { all: {} };
+    },
     [types.SET_CHART_DATA](state, { list, data, period, target }) {
       if (!state.charts[target]) {
         state.charts[target] = {};
@@ -78,7 +87,7 @@ export default {
   actions: {
     async fetchChartData(
       { commit /* , rootGetters */ },
-      { months = 1, dateFrom, dateTo, list, target = 'rewardsChart' }
+      { months = 1, dateFrom, dateTo, list, target = 'rewardsChart', net }
     ) {
       await commit(types.SET_CHART_LOADING, {
         target,
@@ -90,7 +99,9 @@ export default {
       // Assigning a method name by the ID of the chart canvas
       const METHOD = target.startsWith('rewards')
         ? REWARDS_METHOD
-        : BALANCE_METHOD;
+        : target.startsWith('balance')
+        ? BALANCE_METHOD
+        : RATES_METHOD;
 
       const isNotCustomDates = !(dateFrom && dateTo);
 
@@ -125,8 +136,9 @@ export default {
 
       const params = {
         dateFrom: from,
-        dateTo,
+        dateTo: dateTo,
         listId,
+        net,
       };
 
       const { data, error } = await sendCitadelGraphRequest(METHOD, params);
@@ -170,6 +182,9 @@ export default {
         data: null,
         error: error,
       };
+    },
+    resetData({ commit }, key) {
+      commit(types.RESET_DATA, key);
     },
   },
 };

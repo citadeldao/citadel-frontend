@@ -115,31 +115,34 @@ export default {
 }
 
 .expand {
-  width: 100%;
+  // width: 100%;
   .tabs-group {
-    border-radius: 16px;
+    // border-radius: 16px;
     &__item {
-      height: 52px;
-      width: 100%;
-      border-radius: 8px;
+      width: 60px;
+      // height: 52px;
+      // width: 100%;
+      // border-radius: 8px;
 
-      &:not(:last-child) {
-        margin-right: 8px;
-        @include md {
-          margin-right: 8px;
-        }
-      }
+      // &:not(:last-child) {
+      //   margin-right: 8px;
+      //   @include md {
+      //     margin-right: 8px;
+      //   }
+      // }
 
-      @include md {
-        height: 52px;
-        width: 100%;
-      }
+      // @include md {
+      //   height: 52px;
+      //   width: 100%;
+      // }
     }
     &__item-label {
-      @include md {
-        font-size: $default-size;
-        line-height: 19px;
-      }
+      font-size: $small-x;
+      line-height: 14px;
+      // @include md {
+      //   font-size: $default-size;
+      //   line-height: 19px;
+      // }
     }
   }
 }

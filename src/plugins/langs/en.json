@@ -1,4 +1,8 @@
 {
+    "Bandwidth-desc": "Bandwidth measures transaction size and enables feeless transactions. All transaction types consume Bandwidth Points, with each byte requiring one point, equal to the transaction's byte count.",
+    "Energy-desc": "Energy represents the resources consumed by running a smart contract, with each instruction using a specific amount. Contract complexity determines the energy consumption, which is calculated and deducted per instruction.",
+    "RAM-desc": "iRAM is an additional commission token it IOST network that is purchased separately. It serves as storage resources on the IOST network, just like the traditional RAM which is used to store data in the computer.",
+    "GAS-desc": "iGAS are the transaction fees to be paid when you make a transaction on the IOST mainnet. You can pledge your IOST to get iGAS.",
     "login": {
         "continueEmail1": "Email will help you to",
         "continueEmail2": "easily switch",
@@ -24,9 +28,9 @@
         "approveKeplrTitle": "Approve via Keplr",
         "approveMetamaskTitle": "Approve via Metamask",
         "approveDescription": "A pop-up browser extension will appear to approve the wallet connection.",
-        "confirmAddressTitleAnother": "At the moment, we don't support the selected network.<br>Change Ethereum or BSC network in Metamask",
-        "confirmAddressTitleMetamaskEth": "The login is proceed via the chosen Metamask account. Make sure to use it for future logins.<br>You can use only Ethereum or BSC network for login.",
-        "confirmAddressTitleMetamaskBSC": "The login is proceed via the chosen Metamask account. Make sure to use it for future logins.<br>You can use only Ethereum or BSC network for login.",
+        "confirmAddressTitleAnother": "At the moment, we don't support the selected network.<br>Change Ethereum or BSC, Arbitrum, Avalanche, Optimism, Polygon, Evmoseth network in Metamask",
+        "confirmAddressTitleMetamaskEth": "The login is proceed via the chosen Metamask account. Make sure to use it for future logins.<br>You can use only Ethereum or BSC, Arbitrum, Avalanche, Optimism, Polygon, Evmoseth network for login.",
+        "confirmAddressTitleMetamaskBSC": "The login is proceed via the chosen Metamask account. Make sure to use it for future logins.<br>You can use only Ethereum or BSC, Arbitrum, Avalanche, Optimism, Polygon, Evmoseth network for login.",
         "confirmAddressTitleKeplr": "The login is proceed via the chosen Keplr account. Make sure to use it for future logins.<br>You can use only Cosmos network for login.",
         "changeLangTitle": "Language selection",
         "changeLangDescription": "Choose the most convenient language for you to interact with <span style='font-weight: bold; font-family: Panton_Bold;'>Citadel.one</span> platform",
@@ -600,7 +604,7 @@
     "frozen": "Frozen",
     "available": "Available",
     "staked": "Staked",
-    "balance": "balance",
+    "balance": "Balance",
     "transactions": "transactions",
     "send": "Send",
     "stake": "stake",
@@ -848,6 +852,7 @@
     "overallPage": {
         "noBalance": "You have no balance",
         "noRewards": "You have no rewards",
+        "noPrice": "There is no price for this coin",
         "loading": "Loading...",
         "selectPeriod": "Please select the time period to create the chart",
         "balanceStructure": {
@@ -1353,6 +1358,7 @@
     "jailed": "JAILED",
     "sendAssetsDestination": "Destination network",
     "keplr": {
+        "notAddAtOnce": "You cannot add selected chains at once",
         "notFound": "Keplr not found in your browser",
         "cancel": "Cancel",
         "importWallet": "Import wallet",
@@ -1508,5 +1514,14 @@
         "202": "Ledger Error: Reconnect your device",
         "901": "Unknown error"
     },
-    "minBalanceNote": "At least {amount} should be remained on your balance to keep receiving your staking rewards. Otherwise rewards will be burnt."
+    "minBalanceNote": "At least {amount} should be remained on your balance to keep receiving your staking rewards. Otherwise rewards will be burnt.",
+    "filterAll": "All",
+    "filterHot": "Hot",
+    "filterCosmos": "Cosmos",
+    "filterEvm": "EVM",
+    "filterOthers": "Others",
+    "rateModal": {
+        "title": "Select display currency",
+        "description": "Your balance will be converted to the selected currency"
+    }
 }
