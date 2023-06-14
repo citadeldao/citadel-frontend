@@ -5,6 +5,7 @@ import citadel from '@citadeldao/lib-citadel';
 const types = {
   SET_CHART_LOADING: 'SET_CHART_LOADING',
   SET_CHART_DATA: 'SET_CHART_DATA',
+  RESET_DATA: 'RESET_DATA',
 };
 
 const REWARDS_METHOD = 'getGraphRewardsSummary';
@@ -61,6 +62,9 @@ export default {
   },
 
   mutations: {
+    [types.RESET_DATA](state, key) {
+      state.charts[key] = { all: {} };
+    },
     [types.SET_CHART_DATA](state, { list, data, period, target }) {
       if (!state.charts[target]) {
         state.charts[target] = {};
