@@ -387,8 +387,8 @@ export default function useStaking(stakeNodes, list) {
           net: currentWallet.value.name,
           perioud: currentWallet.value.unstakeingPerioud,
         })}`:
-         currentWallet.value.hasMultiUnstake ?
-         `${t('singleStake.chooseNodeModalDesc')} ${currentWallet.value.code}`:
+        //  currentWallet.value.hasMultiUnstake ?
+        //  `${t('singleStake.chooseNodeModalDesc')} ${currentWallet.value.code}`:
          currentWallet.value.unstakePerioudFrom ?
           `${t('staking.chooseNodeModalDescWithFrom', {
             net: currentWallet.value.name,
@@ -412,8 +412,8 @@ export default function useStaking(stakeNodes, list) {
             perioudFrom: currentWallet.value.unstakePerioudFrom,
             perioudTo: currentWallet.value.unstakePerioudTo,
             link: currentWallet.value.unstakePerioudLink,
-          })}`: currentWallet.value.hasMultiUnstake ?
-          `${t('singleStake.claimUnstakeNote',{code: currentWallet.value.code})}`
+          })}`/* : currentWallet.value.hasMultiUnstake ?
+          `${t('singleStake.claimUnstakeNote',{code: currentWallet.value.code})}` */
           : `${t(currentWallet.value.messages.unstakeingPrefix ? currentWallet.value.messages.unstakeingPrefix : 'unstaking.defaultPrefix')} ${t('unstaking.chooseNodeModalDesc', {
             net: currentWallet.value.name,
             perioud: currentWallet.value.unstakeingPerioud,
@@ -491,8 +491,8 @@ export default function useStaking(stakeNodes, list) {
       return {
         title: 'staking.Stake',
         button: 'staking.Stake',
-        desc: currentWallet.value.hasMultiUnstake ?
-        `${t('singleStake.chooseNodeModalDesc')} ${currentWallet.value.code}`:
+        desc: /* currentWallet.value.hasMultiUnstake ?
+        `${t('singleStake.chooseNodeModalDesc')} ${currentWallet.value.code}`: */
         currentWallet.value.unstakePerioudFrom ?
           `${t('staking.chooseNodeModalDescWithFrom', {
             net: currentWallet.value.name,
