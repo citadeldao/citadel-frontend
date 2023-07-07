@@ -188,7 +188,7 @@
                 v-if="currentFilterTab === 'custom'"
                 class="chart__date-picker"
               >
-                <DatePicker @update:date="dateChangeHandler" />
+                <DatePicker @update:date="customDateChangeHandler" />
               </div>
             </div>
             <div v-if="showFiatTabs" class="chart__controls-fiat">
@@ -236,6 +236,7 @@ import constrictIcon from '@/assets/icons/network-info/constrict.svg';
 import Tooltip from '@/components/UI/Tooltip';
 import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
+import moment from 'moment';
 // import ExpandInfoPlaceholder from './components/ExpandPlaceholder.vue';
 
 export default {
@@ -273,8 +274,11 @@ export default {
   setup(props) {
     const store = useStore();
     const { t, te } = useI18n();
-    const date = ref([]);
-
+    const customDate = ref([]);
+    const customDateChangeHandler = (val) => {
+      customDate.value = val;
+      dateChangeHandler(val);
+    };
     const description = computed(() => {
       const description = te(`netInfo.${props.currentWallet.net}.description`)
         ? t(`netInfo.${props.currentWallet.net}.description`)
@@ -324,7 +328,12 @@ export default {
       const { data } = await store.dispatch(action.value, {
         net: props.currentWallet.net,
         fiat: currentFiat.value,
+        list: 'all',
         target: canvasId.value,
+        ...(currentFilterTab.value === 'custom' && {
+          dateFrom: moment(customDate.value[0]).startOf('day').valueOf(),
+          dateTo: moment(customDate.value[1]).endOf('day').valueOf(),
+        }),
       });
 
       await callChartRender(data);
@@ -348,6 +357,13 @@ export default {
     );
 
     watch(
+      () => currentFilterTab.value,
+      async () => {
+        customDate.value = [];
+      }
+    );
+
+    watch(
       () => currentFiat.value,
       async () => {
         sendStoreAction();
@@ -359,8 +375,8 @@ export default {
       canvasId,
       currentFilterTab,
       tabs,
-      date,
       dateChangeHandler,
+      customDateChangeHandler,
       filterTabChangeHandler,
       description,
       isLoading,

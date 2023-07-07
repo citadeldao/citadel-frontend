@@ -48,7 +48,7 @@ export default function useChart({
   const chartData = computed(() =>
     store.getters[storeGetter](
       canvasElement,
-      customList.value,
+      currentFiat.value ? 'all' : customList.value,
       currentFilterTab.value,
       currentFiat.value
     )
@@ -112,7 +112,7 @@ export default function useChart({
       const dateTo = moment(to).endOf('day').valueOf();
 
       await store.dispatch(storeAction, {
-        list: customList.value,
+        list: currentFiat.value ? 'all' : customList.value,
         dateFrom,
         dateTo,
         target: canvasElement,
@@ -135,7 +135,7 @@ export default function useChart({
   const filterTabChangeHandler = async () => {
     if (!chartData.value) {
       await store.dispatch(storeAction, {
-        list: customList.value,
+        list: currentFiat.value ? 'all' : customList.value,
         months: currentFilterTab.value,
         target: canvasElement,
         net: currentToken?.value?.net || currentWallet?.value?.net,
