@@ -175,19 +175,36 @@
             {{ currentWallet.code }} {{ $t('netInfoGeneral.priceChart') }}
           </div>
           <div class="chart__controls">
-            <TabsGroup
-              v-model:currentValue="currentFilterTab"
-              class="chart__tabs"
-              :tabs="tabs"
-              expand
-              data-qa="wallet__network-info-modal__period"
-              @update:currentValue="filterTabChangeHandler"
-            />
-            <div
-              v-if="currentFilterTab === 'custom'"
-              class="chart__date-picker"
-            >
-              <DatePicker @update:date="dateChangeHandler" />
+            <div class="chart__controls-date">
+              <TabsGroup
+                v-model:currentValue="currentFilterTab"
+                class="chart__tabs"
+                :tabs="tabs"
+                expand
+                data-qa="wallet__network-info-modal__period"
+                @update:currentValue="filterTabChangeHandler"
+              />
+              <div
+                v-if="currentFilterTab === 'custom'"
+                class="chart__date-picker"
+              >
+                <DatePicker @update:date="customDateChangeHandler" />
+              </div>
+            </div>
+            <div v-if="showFiatTabs" class="chart__controls-fiat">
+              <NetworkTab
+                v-model:currentTab="currentFiat"
+                value="USD"
+                icon="USD"
+                :data-qa="`${canvasId}-modal__currency--usd`"
+              />
+              <NetworkTab
+                v-model:currentTab="currentFiat"
+                class="btc-tab"
+                value="BTC"
+                icon="btc"
+                :data-qa="`${canvasId}-modal__currency--btc`"
+              />
             </div>
           </div>
           <ChartPlaceholder v-if="placeholder.show" :text="placeholder.text" />
@@ -204,6 +221,7 @@
 </template>
 
 <script>
+import NetworkTab from '@/components/UI/NetworkTab';
 import ChartPlaceholder from '@/views/Overall/components/Placeholder';
 import { getPlaceholderStatus } from '@/helpers/placeholder';
 import useChart from '@/compositions/useChart';
@@ -213,11 +231,12 @@ import info from '@/assets/icons/info.svg';
 import DatePicker from '@/components/UI/DatePicker.vue';
 import TabsGroup from '@/components/UI/TabsGroup';
 import Socials from './components/Socials';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import constrictIcon from '@/assets/icons/network-info/constrict.svg';
 import Tooltip from '@/components/UI/Tooltip';
 import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
+import moment from 'moment';
 // import ExpandInfoPlaceholder from './components/ExpandPlaceholder.vue';
 
 export default {
@@ -230,6 +249,7 @@ export default {
     constrictIcon,
     Socials,
     Tooltip,
+    NetworkTab,
     // ExpandInfoPlaceholder,
   },
   props: {
@@ -254,8 +274,11 @@ export default {
   setup(props) {
     const store = useStore();
     const { t, te } = useI18n();
-    const date = ref([]);
-
+    const customDate = ref([]);
+    const customDateChangeHandler = (val) => {
+      customDate.value = val;
+      dateChangeHandler(val);
+    };
     const description = computed(() => {
       const description = te(`netInfo.${props.currentWallet.net}.description`)
         ? t(`netInfo.${props.currentWallet.net}.description`)
@@ -271,6 +294,8 @@ export default {
     const getter = ref('charts/getCharts');
     const loading = ref('charts/isLoading');
 
+    const showFiatTabs = computed(() => props.currentWallet.net !== 'btc');
+
     const {
       currentFilterTab,
       info,
@@ -278,24 +303,37 @@ export default {
       chartData,
       dateChangeHandler,
       filterTabChangeHandler,
+      currentFiat,
     } = useChart({
       canvasElement: canvasId.value,
       storeAction: action.value,
       storeGetter: getter.value,
       render: renderRateHistoryChart,
-      noCurrency: true,
+      hasFiat: true,
     });
 
     const callChartRender = async (data) => {
-      await renderRateHistoryChart(data, null, canvasId.value, {
-        currency: info.value,
-      });
+      await renderRateHistoryChart(
+        data,
+        null,
+        canvasId.value,
+        {
+          currency: info.value,
+        },
+        currentFiat.value
+      );
     };
 
     const sendStoreAction = async () => {
       const { data } = await store.dispatch(action.value, {
         net: props.currentWallet.net,
+        fiat: currentFiat.value,
+        list: 'all',
         target: canvasId.value,
+        ...(currentFilterTab.value === 'custom' && {
+          dateFrom: moment(customDate.value[0]).startOf('day').valueOf(),
+          dateTo: moment(customDate.value[1]).endOf('day').valueOf(),
+        }),
       });
 
       await callChartRender(data);
@@ -318,16 +356,32 @@ export default {
       )
     );
 
+    watch(
+      () => currentFilterTab.value,
+      async () => {
+        customDate.value = [];
+      }
+    );
+
+    watch(
+      () => currentFiat.value,
+      async () => {
+        sendStoreAction();
+      }
+    );
+
     return {
+      currentFiat,
       canvasId,
       currentFilterTab,
       tabs,
-      date,
       dateChangeHandler,
+      customDateChangeHandler,
       filterTabChangeHandler,
       description,
       isLoading,
       placeholder,
+      showFiatTabs,
     };
   },
 };
@@ -469,8 +523,17 @@ export default {
   }
 
   &__controls {
-    display: flex;
-    justify-content: flex-start;
+    &-date {
+      display: flex;
+      justify-content: flex-start;
+    }
+    &-fiat {
+      margin-top: 20px;
+      display: flex;
+      .btc-tab {
+        margin-left: 8px;
+      }
+    }
     margin-bottom: 39px;
   }
 

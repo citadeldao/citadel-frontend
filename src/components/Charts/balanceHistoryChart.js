@@ -18,7 +18,9 @@ const balanceHistoryChart = {};
 export const renderBalanceHistoryChart = (
   balanceHistory,
   currentTab,
-  elementId
+  elementId,
+  _,
+  currentFiat
 ) => {
   if (!balanceHistory || !balanceHistory.list) return;
 
@@ -71,7 +73,8 @@ export const renderBalanceHistoryChart = (
           context,
           elementId,
           balanceHistory.list,
-          COLORS.ACTIVE_MONTH
+          COLORS.ACTIVE_MONTH,
+          currentFiat
         ),
     },
   };
@@ -111,7 +114,7 @@ export const renderBalanceHistoryChart = (
         tickLength: 0,
       },
       ticks: {
-        callback: (index) => formatYLineText(index, currentTab),
+        callback: (index) => formatYLineText(index, currentTab, currentFiat),
         ...CHART_TICKS_STYLE,
         color: COLORS.CURRENCY,
         labelOffset: -10,

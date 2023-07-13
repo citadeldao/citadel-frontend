@@ -662,6 +662,11 @@ export default {
             });
             addLoading.value = false;
           }
+        } else {
+          addLoading.value = false;
+          onApproveCancel();
+          onLoginWeb3();
+          return;
         }
       };
 

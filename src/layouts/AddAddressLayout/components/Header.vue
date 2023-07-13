@@ -138,6 +138,7 @@ import exportPrivateKeys from '@/helpers/exportPrivateKeys';
 import PrivacyModal from '@/components/Modals/Privacy';
 import TermsModal from '@/components/Modals/Terms';
 import { XCT_GOVERNANCE_APP, WALLET_TYPES } from '@/config/walletType';
+import useCreateWallets from '@/compositions/useCreateWallets';
 
 export default {
   name: 'Header',
@@ -167,6 +168,7 @@ export default {
     const citadel = inject('citadel');
     const showPrivacy = ref(false);
     const showTerms = ref(false);
+    const { isUserMnemonic, isPasswordHash } = useCreateWallets();
 
     const metamaskConnector = computed(
       () => store.getters['metamask/metamaskConnector']
@@ -187,7 +189,10 @@ export default {
     );
     const hasWallets = computed(
       () =>
-        !!wallets.value.filter((w) => w.type !== WALLET_TYPES.PUBLIC_KEY).length
+        !!wallets.value.filter((w) => w.type !== WALLET_TYPES.PUBLIC_KEY)
+          .length &&
+        !!isUserMnemonic.value &&
+        !!isPasswordHash.value
     );
 
     const logoutOptions = reactive({
