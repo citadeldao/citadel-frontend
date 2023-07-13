@@ -54,13 +54,13 @@ export const CHART_TICKS_STYLE = {
 export const DAY_COLORS_LIST = Array(MAX_TICKS_LIMIT).fill(COLORS.DAY);
 export const MONTH_COLORS_LIST = Array(MAX_TICKS_LIMIT).fill(COLORS.MONTH);
 
-export const formatYLineText = (data, tab) => {
+export const formatYLineText = (data, tab, fiat) => {
   let formattedValue = prettyNumber(data);
 
   if (BTC_USDT_AMOUNT <= data) formattedValue = prettyNumber(data);
   else formattedValue = BigNumber(data).toFixed();
 
-  return `${formattedValue} ${tab || 'USD'}`;
+  return `${formattedValue} ${tab || fiat}`;
 };
 
 export const xLineDates = (dates) => {
