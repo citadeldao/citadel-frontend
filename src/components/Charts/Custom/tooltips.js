@@ -28,7 +28,13 @@ const balanceHistoryTooltip = (chart) => {
   return tooltipEl;
 };
 
-export const balanceHistoryTooltipHandler = (context, id, data, active) => {
+export const balanceHistoryTooltipHandler = (
+  context,
+  id,
+  data,
+  active,
+  currentFiat
+) => {
   // Tooltip Element
   const { chart, tooltip } = context;
   const tooltipEl = balanceHistoryTooltip(chart);
@@ -94,7 +100,9 @@ export const balanceHistoryTooltipHandler = (context, id, data, active) => {
       usdDiv.appendChild(usdSign);
 
       btcDiv.appendChild(
-        document.createTextNode(prettyNumber(data[title].btc))
+        document.createTextNode(
+          prettyNumber(isBalance ? data[title].btc : data[title])
+        )
       );
       const btcSign = document.createElement('span');
       btcSign.appendChild(document.createTextNode(' BTC'));
@@ -112,7 +120,8 @@ export const balanceHistoryTooltipHandler = (context, id, data, active) => {
     // Add new children
     tooltipBody.appendChild(tooltipHead);
     tooltipBody.appendChild(tooltipDate);
-    tooltipBody.appendChild(usdDiv);
+    const firstLineCont = !isBalance && currentFiat === 'BTC' ? btcDiv : usdDiv;
+    tooltipBody.appendChild(firstLineCont);
     if (isBalance) {
       tooltipBody.appendChild(btcDiv);
     }

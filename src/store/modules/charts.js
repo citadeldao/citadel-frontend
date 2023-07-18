@@ -53,10 +53,14 @@ export default {
   getters: {
     getCharts:
       (state) =>
-      (target, list, period = 1) => {
+      (target, list, period = 1, fiat) => {
         const chartByList = state.charts[target][list];
         if (!chartByList || !chartByList[period]) return undefined;
-        return chartByList[period];
+        if (fiat) {
+          return chartByList[period][fiat];
+        } else {
+          return chartByList[period];
+        }
       },
     isLoading: (state) => (target) => state.loading[target],
   },
@@ -65,7 +69,7 @@ export default {
     [types.RESET_DATA](state, key) {
       state.charts[key] = { all: {} };
     },
-    [types.SET_CHART_DATA](state, { list, data, period, target }) {
+    [types.SET_CHART_DATA](state, { list, data, period, target, fiat }) {
       if (!state.charts[target]) {
         state.charts[target] = {};
       }
@@ -76,8 +80,12 @@ export default {
       if (period !== CUSTOM) {
         delete state.charts[target][list][CUSTOM];
       }
-
-      state.charts[target][list][period] = data;
+      if (fiat) {
+        state.charts[target][list][period] = {};
+        state.charts[target][list][period][fiat] = data;
+      } else {
+        state.charts[target][list][period] = data;
+      }
     },
 
     [types.SET_CHART_LOADING](state, { target, isLoading }) {
@@ -87,7 +95,7 @@ export default {
   actions: {
     async fetchChartData(
       { commit /* , rootGetters */ },
-      { months = 1, dateFrom, dateTo, list, target = 'rewardsChart', net }
+      { months = 1, dateFrom, dateTo, list, target = 'rewardsChart', net, fiat }
     ) {
       await commit(types.SET_CHART_LOADING, {
         target,
@@ -124,6 +132,7 @@ export default {
           data: undefined,
           period: CUSTOM,
           target,
+          fiat,
         });
 
         commit(types.SET_CHART_LOADING, {
@@ -139,6 +148,7 @@ export default {
         dateTo: dateTo,
         listId,
         net,
+        fiat,
       };
 
       const { data, error } = await sendCitadelGraphRequest(METHOD, params);
@@ -158,6 +168,7 @@ export default {
           data,
           period: dateFrom ? CUSTOM : months,
           target,
+          fiat,
         });
 
         commit(types.SET_CHART_LOADING, {
