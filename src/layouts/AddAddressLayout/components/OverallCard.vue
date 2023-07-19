@@ -1,8 +1,8 @@
 <template>
   <div :class="{ active: route.path.includes('overall') }" class="overall-card">
     <div class="hide-balance">
-      <showIcon v-if="showBalance" @click.stop="toggleShowBalance(false)" />
-      <hideIcon v-else @click.stop="toggleShowBalance(true)" />
+      <showIcon v-if="!showBalance" @click.stop="toggleShowBalance(true)" />
+      <hideIcon v-else @click.stop="toggleShowBalance(false)" />
     </div>
     <span class="overall-card__title">
       {{ title === 'all' ? $t('layouts.addAddressLayout.overall') : title }}
