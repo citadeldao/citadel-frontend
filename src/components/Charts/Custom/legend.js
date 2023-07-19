@@ -1,5 +1,7 @@
 import { prettyNumber } from '@/helpers/prettyNumber';
 import { shortNameCrypto } from '@/helpers';
+import store from '@/store';
+import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
 
 const getOrCreateLegendList = (chart, id) => {
   const legendContainer = document.getElementById(id);
@@ -36,13 +38,19 @@ export const htmlLegendPlugin = {
     const items = chart.options.plugins.legend.labels.generateLabels(chart);
 
     items.forEach((item) => {
+      const showBalance = store.getters['balance/showBalance'];
       const currentCoin = this?.data[item.text];
       item.text = currentCoin?.name || item.text;
       item.percent = currentCoin?.percent;
 
       if (this.currency.toLowerCase() === 'usd') {
-        item.price = `$ ${prettyNumber(currentCoin?.usd)}`;
-      } else item.price = `${prettyNumber(currentCoin?.btc)} BTC`;
+        item.price = `$ ${
+          showBalance ? prettyNumber(currentCoin?.usd) : HIDE_BALANCE_MASK
+        }`;
+      } else
+        item.price = `${
+          showBalance ? prettyNumber(currentCoin?.btc) : HIDE_BALANCE_MASK
+        } BTC`;
 
       const li = document.createElement('li');
 

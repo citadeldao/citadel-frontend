@@ -81,6 +81,7 @@ import { renderBalanceStructChart } from '@/components/Charts/balanceStructChart
 import { chartColors } from '@/components/Charts/config';
 import toggleInfo from '@/assets/icons/toggle-info.svg';
 import balanceStructurePlaceholder from '@/assets/icons/overall/balance-sctructure-placeholder.svg';
+import { useStore } from 'vuex';
 
 export default {
   name: 'BalanceStructure',
@@ -97,12 +98,14 @@ export default {
     },
   },
   setup() {
+    const store = useStore();
     const { width } = useWindowSize();
     const { balanceStructure } = useWallets(null, 5);
     const currentTab = ref('USD');
     const isExpanded = ref(false);
     const isToggleHovered = ref(false);
     const isEmpty = computed(() => !Object.keys(balanceStructure.value).length);
+    const showBalance = computed(() => store.getters['balance/showBalance']);
 
     const refreshChart = async () => {
       if (!isEmpty.value) {
@@ -115,6 +118,11 @@ export default {
         renderBalanceStructChart(balanceStructure, currentTab.value);
       }
     });
+
+    watch(
+      () => showBalance.value,
+      async () => await refreshChart()
+    );
 
     watch(
       () => balanceStructure.value,
