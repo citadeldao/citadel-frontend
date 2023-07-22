@@ -36,6 +36,7 @@ import Loading from '@/components/Loading';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import useLedger from '@/compositions/useLedger';
 import { useStore } from 'vuex';
+import TransportWebBLE from '@ledgerhq/hw-transport-web-ble';
 
 export default {
   name: 'ConnectDevice',
@@ -43,6 +44,9 @@ export default {
   props: {
     net: {
       type: String,
+    },
+    isBluetooth: {
+      type: [Boolean, String],
     },
   },
   setup(props) {
@@ -52,7 +56,29 @@ export default {
 
     const { ledgerError, ledgerErrorHandler } = useLedger();
 
+    const onSelectDevice = (transport) => {
+      window.ledgerTransport = transport;
+
+      transport.on('disconnect', () => {
+        window.ledgerTransport = null;
+        console.log('disconnect bluetooth');
+        ledgerErrorHandler('Disconnect');
+        isLoading.value = false;
+      });
+      console.log(window.ledgerTransport);
+    };
+
+    const createBLE = async () => {
+      const transport = await TransportWebBLE.create();
+      onSelectDevice(transport);
+    };
+
     const checkLedger = async () => {
+      if (props.isBluetooth) {
+        createBLE();
+        return;
+      }
+
       isLoading.value = true;
 
       const { error } = await store.dispatch('crypto/createLedgerWallet', {

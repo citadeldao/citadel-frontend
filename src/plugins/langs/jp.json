@@ -354,6 +354,11 @@
         "delegateTo": "に委任する"
     },
     "ledger": {
+        "title": "",
+        "btTitle1": "",
+        "usbTitle1": "",
+        "btDesc": "",
+        "usbDesc": "",
         "connect": {
             "title": "元帳を接続する",
             "desc": "ハードウェアウォレットをコンピュータに接続してください"

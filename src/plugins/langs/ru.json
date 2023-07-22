@@ -356,6 +356,11 @@
         "delegateTo": "Делегировать на"
     },
     "ledger": {
+        "title": "",
+        "btTitle1": "",
+        "usbTitle1": "",
+        "btDesc": "",
+        "usbDesc": "",
         "connect": {
             "title": "Присоедините Ledger",
             "desc": "Пожалуйста, присоедините ваш аппаратный кошелек к компьютеру"

@@ -12,6 +12,7 @@
     },
     "dependencies": {
         "@citadeldao/lib-citadel": "1.41.7",
+        "@ledgerhq/hw-transport-web-ble": "^6.27.17",
         "@open-wc/webpack-import-meta-loader": "^0.4.7",
         "@sentry/tracing": "^6.16.1",
         "@sentry/vue": "^6.16.1",
