@@ -2,7 +2,7 @@ import useWallets from '@/compositions/useWallets';
 import notify from '@/plugins/notify';
 import BigNumber from 'bignumber.js';
 import citadel from '@citadeldao/lib-citadel';
-import CryptoToken from '@/models/CryptoCoins/CryptoToken';
+import CryptoToken from '@/models/CryptoToken';
 import { OUR_TOKEN } from '@/config/walletType';
 
 const types = {

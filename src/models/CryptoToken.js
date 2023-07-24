@@ -1,4 +1,4 @@
-import CryptoCoin from '../CryptoCoin';
+import CryptoCoin from './CryptoCoin';
 import citadel from '@citadeldao/lib-citadel';
 import notify from '@/plugins/notify';
 import { i18n } from '@/plugins/i18n';
