@@ -15,12 +15,12 @@
         <BalanceCard
           type="red"
           :text="$t('wallet.info.totalAssets')"
-          :value="balanceUSD"
+          :value="showBalance ? balanceUSD : HIDE_BALANCE_MASK"
         />
         <BalanceCard
           type="blue"
           :text="$t('wallet.info.availableAssets')"
-          :value="balanceAvailableUSD"
+          :value="showBalance ? balanceAvailableUSD : HIDE_BALANCE_MASK"
         />
 
         <div class="assets__search">
@@ -161,6 +161,7 @@ import Card from '@/components/UI/Card';
 import useWallets from '@/compositions/useWallets';
 import { OUR_TOKEN, WALLET_TYPES } from '@/config/walletType';
 import { showAssetsExep } from '@/config/availableNets';
+import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
 
 export default {
   name: 'AssetsBlock',
@@ -204,6 +205,8 @@ export default {
     const snip20TokenFee = ref(null);
     const snip20Token = ref(null);
     const mainIsLoading = inject('isLoading');
+
+    const showBalance = computed(() => store.getters['balance/showBalance']);
 
     const filterList = ref([
       { icon: 'byAlphabet', value: 'byAlphabet' },
@@ -403,6 +406,8 @@ export default {
       balanceAvailableUSD,
       WALLET_TYPES,
       showAssetsExep,
+      showBalance,
+      HIDE_BALANCE_MASK,
     };
   },
 };

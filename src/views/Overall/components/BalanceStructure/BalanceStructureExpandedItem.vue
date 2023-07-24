@@ -22,21 +22,30 @@
     <div v-if="item.balance" class="balance-struct__balance-wrapper">
       <div>
         <span
-          v-pretty-number="{ value: item.balance, currency: item.code }"
+          v-pretty-number="{
+            value: showBalance ? item.balance : HIDE_BALANCE_MASK,
+            currency: item.code,
+          }"
           class="balance-struct__balance"
         />
         <span class="balance-struct__code">{{ item.code }}</span>
       </div>
       <div>
         <span
-          v-pretty-number="{ value: BTC, currency: 'BTC' }"
+          v-pretty-number="{
+            value: showBalance ? BTC : HIDE_BALANCE_MASK,
+            currency: 'BTC',
+          }"
           class="balance-struct__balance"
         />
         <span class="balance-struct__code">BTC</span>
       </div>
       <div>
         <span
-          v-pretty-number="{ value: USD, currency: 'USD' }"
+          v-pretty-number="{
+            value: showBalance ? USD : HIDE_BALANCE_MASK,
+            currency: 'USD',
+          }"
           class="balance-struct__balance"
         />
         <span class="balance-struct__code">USD</span>
@@ -50,6 +59,8 @@
 <script>
 import { computed } from 'vue';
 import { shortNameCrypto } from '@/helpers';
+import { useStore } from 'vuex';
+import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
 
 export default {
   name: 'BalanceStructureExpandedItem',
@@ -60,13 +71,17 @@ export default {
     },
   },
   setup(props) {
+    const store = useStore();
     const BTC = computed(() => props.item.btc);
     const USD = computed(() => props.item.usd);
+    const showBalance = computed(() => store.getters['balance/showBalance']);
 
     return {
       shortNameCrypto,
       BTC,
       USD,
+      showBalance,
+      HIDE_BALANCE_MASK,
     };
   },
 };

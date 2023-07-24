@@ -36,7 +36,12 @@
         v-if="apy || currentWalletInfo?.claimableRewards"
         class="claim-rewards__info"
       >
-        <span v-pretty-number="{ value: reward, currency }" />
+        <span
+          v-pretty-number="{
+            value: !showBalance ? HIDE_BALANCE_MASK : reward,
+            currency,
+          }"
+        />
         <span class="claim-rewards__currency">
           {{ currency }}
         </span>
@@ -66,11 +71,11 @@
                   <span
                     class="claim-rewards__rewrd-item_value"
                     v-pretty-number="{
-                      value: item.amount,
+                      value: !showBalance ? HIDE_BALANCE_MASK : item.amount,
                       currency: item.code,
                     }"
                   >
-                    {{ item.amount }}
+                    {{ !showBalance ? HIDE_BALANCE_MASK : item.amount }}
                   </span>
                   <span class="claim-rewards__rewrd-item_currency">
                     {{ item.code }}
@@ -123,6 +128,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import Tooltip from '@/components/UI/Tooltip';
 import { useI18n } from 'vue-i18n';
+import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
 
 export default {
   name: 'ClaimRewards',
@@ -153,6 +159,7 @@ export default {
     const store = useStore();
     const { t } = useI18n();
     const rewardsList = inject('rewardsList');
+    const showBalance = computed(() => store.getters['balance/showBalance']);
     const width = computed(() => {
       if (window.innerWidth <= 1286 && window.innerWidth >= 1280) {
         return '310px';
@@ -272,6 +279,8 @@ export default {
       apy,
       currentWalletType,
       hasCustomClaimInfoNets,
+      showBalance,
+      HIDE_BALANCE_MASK,
     };
   },
 };
