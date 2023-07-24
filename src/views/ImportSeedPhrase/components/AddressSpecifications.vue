@@ -72,7 +72,8 @@ import PrimaryButton from '@/components/UI/PrimaryButton';
 import CryptoCoin from '@/models/CryptoCoin';
 import { useI18n } from 'vue-i18n';
 import error from '@/assets/icons/networks/error.svg';
-import models from '@/models';
+//import models from '@/models';
+import { hasNoAdvancedSettingsNets } from '@/config/availableNets';
 
 export default {
   name: 'AddressSpecifications',
@@ -93,7 +94,9 @@ export default {
 
     const showAdvancedToggle = computed(
       () =>
-        !models[netByTitle[search?.value]?.toUpperCase()]?.hasNoAdvancedSettings
+        !hasNoAdvancedSettingsNets.includes(
+          netByTitle[search?.value]?.toLowerCase()
+        ) //models[netByTitle[search?.value]?.toUpperCase()]?.hasNoAdvancedSettings
     );
 
     const onFocus = () => {

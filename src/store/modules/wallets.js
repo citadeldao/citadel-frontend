@@ -1,4 +1,5 @@
-import models from '@/models';
+//import models from '@/models';
+import CryptoCoin from '@/models/CryptoCoin';
 import { findWalletInArray } from '@/helpers';
 import { sortByAlphabet } from '@/helpers';
 import { getStorage, removeStorage, setStorage } from '@/utils/storage';
@@ -238,12 +239,12 @@ export default {
 
       for (const walletOpts of list) {
         const { currency } = useWallets(walletOpts);
-        const WalletConstructor = models[walletOpts.net.toUpperCase()];
+        // const WalletConstructor = models[walletOpts.net.toUpperCase()];
         walletOpts.config = rootGetters['networks/configByNet'](walletOpts.net);
         walletOpts.balanceUSD = BigNumber(walletOpts.balance.calculatedBalance)
           .times(currency.value.USD)
           .toNumber();
-        wallets.push(new WalletConstructor(walletOpts));
+        wallets.push(new /* WalletConstructor */ CryptoCoin(walletOpts));
       }
 
       dispatch('pushWallets', {

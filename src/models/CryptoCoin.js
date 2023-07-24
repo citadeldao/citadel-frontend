@@ -21,11 +21,13 @@ export default class CryptoCoin {
     this.name = opts?.config?.name;
     this.code = opts?.config?.code;
     this.address = opts?.address;
-    // this.mnemonicEncoded = opts?.mnemonicEncoded || null;
+    this.mnemonicEncoded = opts?.mnemonicEncoded || null;
     this.privateKeyEncoded = opts?.privateKeyEncoded || null;
+    this.privateKeyHash = opts?.privateKeyHash || null;
+    this.savedViewingKeys = opts?.savedViewingKeys || null;
     this.publicKey = opts?.publicKey || null;
     this.derivationPath = opts?.derivationPath;
-    this.fee_key = opts?.config?.fee_key;
+    this.fee_key = opts?.config?.feeKey;
     this.config = { ...opts?.config, tokens: {} };
     this.subtokensList = opts?.subtokensList || [];
     this.subtokenBalanceUSD = opts?.subtokenBalanceUSD || 0;
@@ -36,20 +38,33 @@ export default class CryptoCoin {
     this.hasExchange = opts?.config?.methods?.exchange || false;
     this.hasStake = opts?.config?.methods?.stake || false;
     this.hasClaim = opts?.config?.methods?.claim || false;
-    this.hasPledged = false;
-    this.hasFee = true;
     this.importedFromSeed = opts?.importedFromSeed || false;
     this.decimals = opts?.config?.decimals;
-    this.hasCustomFee = opts?.config?.fee_key === 'fee';
+    this.hasCustomFee = this.fee_key === 'fee';
     this.minAmount = BigNumber(0.1)
       .exponentiatedBy(opts?.config?.decimals)
       .toNumber()
       .toFixed(opts?.config?.decimals);
     this.unstakeingPerioud = opts?.config?.unstakeingPerioud;
-
-    this.messages = {
-      frozenBalance: 'balanceTooltipInfo.frozenBalanceBalanceInfo2',
-    };
+    this.hasRedelegation = opts?.config?.methods?.redelegation;
+    this.hideMemo = opts?.config?.methods?.hideMemo;
+    this.hasXCT = opts?.config?.methods?.hasXCT;
+    this.shortName = opts?.config?.methods?.shortName;
+    this.unstakePerioudLink = opts?.config?.methods?.unstakePerioudLink;
+    this.hideCustomFee = opts?.config?.methods?.hideCustomFee;
+    this.hasNoFee = opts?.config?.methods?.hasNoFee;
+    this.hasPledged = opts?.config?.methods?.hasPledged;
+    this.hasResource = opts?.config?.methods?.hasResource;
+    this.hasMultiCoinRewards = opts?.config?.methods?.hasMultiCoinRewards;
+    this.minSendAmount = opts?.config?.methods?.minSendAmount;
+    this.minStakingAmount = opts?.config?.methods?.minStakingAmount;
+    this.hasClaimUnstaked = opts?.config?.methods?.hasClaimUnstaked;
+    this.maxNodes = opts?.config?.methods?.maxNodes;
+    this.minBalance = opts?.config?.methods?.minBalance;
+    this.hasMultiUnstake = opts?.config?.methods?.hasMultiUnstake;
+    this.isSingleStake = opts?.config?.methods?.isSingleStake;
+    this.hasKtAddresses = opts?.config?.methods?.hasKtAddresses;
+    this.noSelfSend = opts?.config?.methods?.noSelfSend;
     this.isCosmosNetwork = cosmosNetworks.includes(this.net);
     opts.config?.nativeTokenName
       ? (this.nativeTokenName = opts.config.nativeTokenName)
@@ -461,11 +476,11 @@ export default class CryptoCoin {
     return { error };
   }
 
-  getFormattedPublicKey() {
-    return typeof this.publicKey === 'string'
-      ? this.publicKey
-      : Buffer.from(this.publicKey).toString('hex');
-  }
+  // getFormattedPublicKey() {
+  //   return typeof this.publicKey === 'string'
+  //     ? this.publicKey
+  //     : Buffer.from(this.publicKey).toString('hex');
+  // }
 
   async getTxDuration({ type, fee }) {
     const { data, error } = await citadel.getTransactionDuration(this.net, {

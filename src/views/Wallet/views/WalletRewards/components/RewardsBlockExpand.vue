@@ -214,7 +214,6 @@ export default {
     const rewardsList = computed(() =>
       rewards.value
         .reduce((accum, item) => {
-          console.log(item.net);
           const netIndex = accum.findIndex(({ net }) => net === item.net);
           const rewards = { address: item.address, value: item.rewards };
           let newAccum = accum;

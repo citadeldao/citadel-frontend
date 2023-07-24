@@ -3,7 +3,7 @@
     v-if="
       (type === STAKE || button2 !== SWAP || currentWallet.hasClaim) &&
       (!isViewOnly ||
-        currentToken.config.net === 'bsc_xct' ||
+        currentToken.config.net === OUR_TOKEN ||
         currentToken.balanceUSD) &&
       type !== TRANSACTIONS
     "
@@ -86,6 +86,7 @@
 </template>
 
 <script>
+import { OUR_TOKEN } from '@/config/walletType';
 import redelegate from '@/assets/icons/redelegate.svg';
 // import useWallets from '@/compositions/useWallets';
 import hotSale from '@/assets/icons/hot-sale.svg';
@@ -206,6 +207,7 @@ export default {
       SWAP: 'swap',
       TRANSACTIONS: 'transactions',
       REWARDS: 'rewards',
+      OUR_TOKEN,
     };
   },
 };
