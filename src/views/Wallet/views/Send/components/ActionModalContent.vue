@@ -29,7 +29,7 @@
         @select-fee="$emit('select-fee')"
       />
     </div>
-
+    <LedgerProtocol />
     <div class="action-modal-content__total-amount">
       <span class="action-modal-content__total-amount-title">
         {{ $t('totalAmount') }}:
@@ -122,10 +122,11 @@ import Fees from '@/components/Fees';
 import Input from '@/components/UI/Input';
 import { computed, inject } from '@vue/runtime-core';
 import { useStore } from 'vuex';
+import LedgerProtocol from '@/components/LedgerProtocol';
 
 export default {
   name: 'ActionModalContent',
-  components: { Input, Fees, SendDirection },
+  components: { Input, Fees, SendDirection, LedgerProtocol },
   props: {
     confirmClicked: {
       type: Boolean,
