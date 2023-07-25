@@ -47,10 +47,10 @@ export default {
             item.net
           );
 
-          const config =
-            rootGetters['networks/configByNet'](currentWallet.net)?.tokens?.[
-              item.net
-            ] || null;
+          // const config =
+          //   rootGetters['networks/configByNet'](currentWallet.net)?.tokens?.[
+          //     item.net
+          //   ] || null;
           const tokenBalance = item.tokenBalance || {
             adding: [],
             delegatedBalance: 0,
@@ -82,7 +82,7 @@ export default {
             fee_key: currentWallet.fee_key,
             id: currentWallet.id,
             // savedViewingKey: item.savedViewingKey,
-            config,
+            // config,
             actions,
             hasXCT: currentWallet.hasXCT,
             balanceUSD: BigNumber(tokenBalance.calculatedBalance)
