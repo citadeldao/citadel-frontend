@@ -13,7 +13,10 @@
       <div
         class="choose-type"
         @click="
-          $router.push({ name: 'ImportLedger', params: { isBluetooth: true } })
+          $router.push({
+            name: 'ImportLedger',
+            params: { isBluetooth: 'bluetooth' },
+          })
         "
       >
         <bluetoothIcon />

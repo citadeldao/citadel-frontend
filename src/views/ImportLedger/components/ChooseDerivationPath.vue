@@ -86,6 +86,9 @@ export default {
     net: {
       type: String,
     },
+    isBluetooth: {
+      type: [Boolean, String],
+    },
   },
   emits: ['selectWallet'],
   setup(props, { emit }) {
@@ -124,6 +127,7 @@ export default {
         const wallet = await store.dispatch('crypto/createLedgerWallet', {
           derivationPath: templatePath.replace('N', currentPath),
           net: props.net,
+          transportType: props.isBluetooth ? 'bt' : 'usb',
         });
         wallets.value.push(wallet);
         const isLastIteration = currentPath === numberOfPaths.value - 1;
@@ -145,6 +149,7 @@ export default {
         const wallet = await store.dispatch('crypto/createLedgerWallet', {
           pathIndex: currentPath,
           net: props.net,
+          transportType: props.isBluetooth ? 'bt' : 'usb',
         });
         wallets.value.push(wallet);
         const isLastIteration = currentPath === numberOfPaths.value - 1;
@@ -179,6 +184,7 @@ export default {
       const wallet = await store.dispatch('crypto/createLedgerWallet', {
         derivationPath: customPath,
         net: props.net,
+        transportType: props.isBluetooth ? 'bt' : 'usb',
       });
 
       if (wallet.walletInstance) {
@@ -228,6 +234,7 @@ export default {
             numberOfPaths.value - 1
           ),
           net: props.net,
+          transportType: props.isBluetooth ? 'bt' : 'usb',
         });
         wallets.value.push(wallet);
         generateNewWalletLoader.value = false;

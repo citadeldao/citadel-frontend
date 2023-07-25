@@ -12,6 +12,7 @@
       <ChooseDerivationPath
         v-if="currentStep === 4"
         :net="net"
+        :is-bluetooth="isBluetooth"
         @selectWallet="addWallet"
       />
     </div>

@@ -56,15 +56,11 @@ export default {
     const { ledgerError, ledgerErrorHandler } = useLedger();
 
     const checkLedger = async () => {
-      if (props.isBluetooth) {
-        //
-        return;
-      }
-
       isLoading.value = true;
 
       const { error } = await store.dispatch('crypto/createLedgerWallet', {
         net: props.net,
+        transportType: props.isBluetooth ? 'bt' : 'usb',
       });
       error && ledgerErrorHandler(error);
 
