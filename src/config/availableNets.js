@@ -158,3 +158,7 @@ export const keplrNetworks = [
 ];
 
 export const showAssetsExep = ['secret', 'bsc'];
+export const frozenCanBeStakedNets = ['icon'];
+export const hasAccountsNets = ['iost'];
+export const hasNoAdvancedSettingsNets = ['polkadot'];
+export const hasCustomClaimInfoNets = ['polkadot'];

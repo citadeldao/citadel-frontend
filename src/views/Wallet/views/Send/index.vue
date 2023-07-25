@@ -862,7 +862,7 @@ export default {
         return balance.value?.mainBalance;
       }
 
-      return !props.currentWallet.hasFee
+      return props.currentWallet.hasNoFee
         ? resMaxAmount.value
         : balance.value?.mainBalance > fee.value.fee
         ? BigNumber(balance.value?.mainBalance).minus(fee.value.fee).toNumber()
@@ -876,7 +876,7 @@ export default {
     const feeType = ref('medium');
     const fee = computed(() =>
       // fee is object to keep fee-appropriate key (eg gasPrice)
-      !props.currentWallet.hasFee
+      props.currentWallet.hasNoFee
         ? { fee: feeInfo.value }
         : feeType.value === 'custom'
         ? { fee: customFee.value }

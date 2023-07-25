@@ -1,15 +1,20 @@
-import CryptoCoin from '../CryptoCoin';
+import CryptoCoin from './CryptoCoin';
 import citadel from '@citadeldao/lib-citadel';
 import notify from '@/plugins/notify';
 import { i18n } from '@/plugins/i18n';
 import customErrors from '@/helpers/customErrors';
 import { getErrorText, getErrorTextByCode } from '@/config/errors';
+import { OUR_TOKEN } from '@/config/walletType';
 
 const { t } = i18n.global;
 
 export default class CryptoToken extends CryptoCoin {
   constructor(opts, tokenBalance) {
     super(opts);
+    this.net = opts.net;
+    this.name = opts.name;
+    this.code = opts.code;
+    this.decimals = opts.decimals;
     this.tokenBalance = tokenBalance;
     this.parentCoin = opts.parentCoin;
     this.linked = opts.linked || false;
@@ -19,13 +24,13 @@ export default class CryptoToken extends CryptoCoin {
     this.fee_key = opts.fee_key;
     this.hasXCT = opts.hasXCT || false;
     this.savedViewingKey = opts.savedViewingKey || null;
-    this.hasTransactionComment = opts?.config?.hasTransactionComment;
+    this.hasTransactionComment = opts?./* config?. */ hasTransactionComment;
     this.messages = {
       frozenBalance: opts?.actions?.stake
         ? 'balanceTooltipInfo.frozenBalanceBalanceInfo2'
         : '',
     };
-    this.isFavorite = opts.config.favorite || false;
+    this.isFavorite = opts./* config. */ favorite || false;
   }
 
   getCustomErrorMessage(error) {
@@ -126,7 +131,7 @@ export default class CryptoToken extends CryptoCoin {
   async prepareXctClaimOrRestake({ walletId, action, type }) {
     const { error, data } = await citadel.prepareTokenAction(
       walletId,
-      'bsc_xct',
+      OUR_TOKEN,
       action,
       { type }
     );

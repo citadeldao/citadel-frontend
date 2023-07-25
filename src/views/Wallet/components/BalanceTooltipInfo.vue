@@ -13,13 +13,18 @@
       - {{ $t('balanceTooltipInfo.stakedBalanceBalanceInfo') }}
     </span>
     <span
-      v-if="currentWallet.unstakePerioud"
+      v-if="currentWallet.unstakeingPerioud"
       class="balance-tooltip-info__line"
     >
       <span class="balance-tooltip-info__line-label">
         {{ $t('balanceTooltipInfo.frozenBalance') }}
       </span>
-      - {{ $t(`${currentWallet.messages.frozenBalance}`) }}
+      -
+      {{
+        frozenCanBeStakedNets.includes(currentWallet.net)
+          ? $t('balanceTooltipInfo.frozenBalanceBalanceInfo1')
+          : $t('balanceTooltipInfo.frozenBalanceBalanceInfo2')
+      }}
     </span>
     <span
       v-if="currentWallet.unstakePerioudFrom"
@@ -100,6 +105,7 @@
   </div>
 </template>
 <script>
+import { frozenCanBeStakedNets } from '@/config/availableNets';
 import { computed } from '@vue/runtime-core';
 export default {
   name: 'BalanceTooltipInfo',
@@ -116,7 +122,7 @@ export default {
       );
     });
 
-    return { resources };
+    return { resources, frozenCanBeStakedNets };
   },
 };
 </script>

@@ -142,6 +142,7 @@ import AddressAssigningInfoModal from './AddressAssigningInfoModal';
 import UnassignedAddressesModal from './UnassignedAddressesModal';
 import NewAssignedAddressesModal from './NewAssignedAddressesModal';
 import HardwareAddressModal from './HardwareAddressModal';
+import { OUR_TOKEN } from '@/config/walletType';
 
 export default {
   name: 'WalletRewards',
@@ -212,7 +213,7 @@ export default {
     });
 
     const loadData = async () => {
-      if (props.currentWallet.hasXCT) {
+      if (props.currentWallet.hasXCT && props.currentToken.net === OUR_TOKEN) {
         isDataLoading.value = true;
         await store.dispatch('dao/getActivity');
         await store.dispatch('dao/getHolderInfo', props.currentWallet.id);

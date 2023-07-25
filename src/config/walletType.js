@@ -56,7 +56,7 @@ export const types = {
 };
 
 export const XCT_GOVERNANCE_APP = 'xct-governance';
-export const OUR_TOKEN = 'bsc_xct';
+export const OUR_TOKEN = '0xe8670901e86818745b28c8b30b17986958fce8cc';
 export const OUR_NODE = 'Citadel.one';
 export const SNIP20_PARENT_NET = 'secret';
 export const OSMOSIS_PARENT_NET = 'osmosis';

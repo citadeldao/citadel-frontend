@@ -2,7 +2,7 @@
   <div
     class="stake"
     :class="{
-      'stake-view-only': isViewOnly && currentToken?.config?.net !== 'bsc_xct',
+      'stake-view-only': isViewOnly && currentToken?.config?.net !== OUR_TOKEN,
     }"
   >
     <div v-if="isLoading" class="stake__loader">
@@ -59,6 +59,7 @@
 </template>
 
 <script>
+import { OUR_TOKEN } from '@/config/walletType';
 import XCTStaking from './components/XCTStaking.vue';
 import Info from './components/Info.vue';
 import Modal from '@/components/Modal';
@@ -207,6 +208,7 @@ export default {
       stakeNodes,
       totalStake,
       isViewOnly,
+      OUR_TOKEN,
     };
   },
 };

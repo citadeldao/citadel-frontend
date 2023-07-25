@@ -2,7 +2,8 @@ import useWallets from '@/compositions/useWallets';
 import notify from '@/plugins/notify';
 import BigNumber from 'bignumber.js';
 import citadel from '@citadeldao/lib-citadel';
-import CryptoToken from '@/models/CryptoCoins/CryptoToken';
+import CryptoToken from '@/models/CryptoToken';
+import { OUR_TOKEN } from '@/config/walletType';
 
 const types = {
   SET_INFLATIONI_INFO_XCT: 'SET_INFLATIONI_INFO_XCT',
@@ -63,9 +64,9 @@ export default {
             calculatedBalance: 0,
             claimableRewards: 0,
           };
-
           const walletOpts = {
-            viewingKey: item.viewingKey,
+            ...item,
+            // viewingKey: item.viewingKey,
             address: currentWallet.address,
             type: currentWallet.type,
             derivationPath: currentWallet.derivationPath,
@@ -80,7 +81,7 @@ export default {
             },
             fee_key: currentWallet.fee_key,
             id: currentWallet.id,
-            savedViewingKey: item.savedViewingKey,
+            // savedViewingKey: item.savedViewingKey,
             config,
             actions,
             hasXCT: currentWallet.hasXCT,
@@ -95,6 +96,7 @@ export default {
         let returnableValue = formattedSubtokens.sort((a) =>
           a.linked ? -1 : 1
         );
+
         return returnableValue;
       },
 
@@ -123,7 +125,7 @@ export default {
     async getInflationInfoXCT({ commit }, walletId) {
       const { error, data } = await citadel.callTokenInfo(
         walletId,
-        'bsc_xct',
+        OUR_TOKEN,
         'inflation'
       );
 
