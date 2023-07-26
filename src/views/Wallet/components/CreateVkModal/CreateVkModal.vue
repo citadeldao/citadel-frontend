@@ -145,6 +145,10 @@ export default {
       () => props.currentWallet.type === WALLET_TYPES.KEPLR
     );
 
+    const connectionType = computed(
+      () => store.getters['ledger/connectionType']
+    );
+
     const { inputError } = useCheckPassword();
     provide('inputError', inputError);
 
@@ -265,12 +269,14 @@ export default {
           });
         }
 
+        console.log('connectionType', connectionType.value);
         const { error: resError, data } = await citadel.setViewingKey(
           props.currentWallet.id,
           props.token.net,
           'random',
           {
             derivationPath: props.currentWallet.derivationPath,
+            transportType: connectionType.value,
             fee: props.tokenFee,
           }
         );
