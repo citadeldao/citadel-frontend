@@ -33,7 +33,7 @@ export default class CryptoCoin {
     this.subtokenBalanceUSD = opts?.subtokenBalanceUSD || 0;
     this.balanceUSD = opts?.balanceUSD;
     this.hasTransactionComment = true;
-    this.hasSubtoken = !!opts?.config?.tokens;
+    this.hasSubtoken = !!opts?.config?.totalTokens;
     this.hasBuy = opts?.config?.methods?.buy || false;
     this.hasExchange = opts?.config?.methods?.exchange || false;
     this.hasStake = opts?.config?.methods?.stake || false;
