@@ -3,9 +3,9 @@
     <div class="ledger-protocol__type">Select connection type</div>
     <div class="ledger-protocol__wrap">
       <div
-        :class="{ selected: connectionType === 'bluetooth' }"
+        :class="{ selected: connectionType === 'bt' }"
         class="ledger-protocol__item"
-        @click="setConnectionType('bluetooth')"
+        @click="setConnectionType('bt')"
       >
         <bluetoothIcon class="scaled" />
       </div>

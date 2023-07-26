@@ -5,6 +5,7 @@ import { i18n } from '@/plugins/i18n';
 import customErrors from '@/helpers/customErrors';
 import { getErrorText, getErrorTextByCode } from '@/config/errors';
 import { OUR_TOKEN } from '@/config/walletType';
+import store from '@/store';
 
 const { t } = i18n.global;
 
@@ -77,9 +78,11 @@ export default class CryptoToken extends CryptoCoin {
     privateKey,
     derivationPath,
   }) {
+    const connectionType = store.getters['ledger/connectionType'];
     const res = await citadel.signAndSend(walletId, rawTransaction, {
       privateKey,
       derivationPath,
+      transportType: connectionType,
     });
 
     if (!res.error) {

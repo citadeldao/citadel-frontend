@@ -143,10 +143,14 @@ export default class CryptoCoin {
   }
 
   async signAndSendMulti({ walletId, rawTransactions, ...options }) {
+    const connectionType = store.getters['ledger/connectionType'];
     const { data, error } = await citadel.signAndSend(
       walletId,
       rawTransactions,
-      options
+      {
+        ...options,
+        transportType: connectionType,
+      }
     );
 
     if (!error) {
@@ -174,7 +178,11 @@ export default class CryptoCoin {
   }
 
   async signAndSendTransfer({ walletId, rawTransaction, ...options }) {
-    const res = await citadel.signAndSend(walletId, rawTransaction, options);
+    const connectionType = store.getters['ledger/connectionType'];
+    const res = await citadel.signAndSend(walletId, rawTransaction, {
+      ...options,
+      transportType: connectionType,
+    });
 
     if (!res.error) {
       return res;
