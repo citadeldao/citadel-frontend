@@ -96,7 +96,7 @@ export default {
         let returnableValue = formattedSubtokens.sort((a) =>
           a.linked ? -1 : 1
         );
-        console.log('test111', returnableValue);
+
         return returnableValue;
       },
 
