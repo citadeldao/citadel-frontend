@@ -105,7 +105,10 @@
     </div>
     <span class="balance__balance">
       <span
-        v-pretty-number="{ value: mainBalance, currency: currentTab }"
+        v-pretty-number="{
+          value: !showBalance ? HIDE_BALANCE_MASK : mainBalance,
+          currency: currentTab,
+        }"
         data-qa="available-balance-value"
       />
       <span class="balance__currency"> {{ currentTab }}</span>
@@ -116,7 +119,10 @@
         <div class="balance__info-white-space" />
         <span class="balance__info-value">
           <span
-            v-pretty-number="{ value: balance.stake, currency: currentTab }"
+            v-pretty-number="{
+              value: !showBalance ? HIDE_BALANCE_MASK : balance.stake,
+              currency: currentTab,
+            }"
           />
           <span class="balance__info-currency">
             {{ currentTab }}
@@ -129,7 +135,7 @@
         <span class="balance__info-value">
           <span
             v-pretty-number="{
-              value: balance.mainBalance,
+              value: !showBalance ? HIDE_BALANCE_MASK : balance.mainBalance,
               currency: currentTab,
             }"
             data-qa="available-balance-value"
@@ -152,7 +158,11 @@
                   :key="`${index}_${item.date}`"
                 >
                   <span class="frozen-tooltip__amount">
-                    <span v-pretty-number="item.amount" />
+                    <span
+                      v-pretty-number="
+                        !showBalance ? HIDE_BALANCE_MASK : item.amount
+                      "
+                    />
                   </span>
                   {{ currentWallet.code }}
                   <span> - </span>
@@ -169,7 +179,7 @@
         <span class="balance__info-value">
           <span
             v-pretty-number="{
-              value: balance.frozenBalance,
+              value: !showBalance ? HIDE_BALANCE_MASK : balance.frozenBalance,
               currency: currentTab,
             }"
           />
@@ -210,7 +220,7 @@
       <span class="balance__info-value">
         <span
           v-pretty-number="{
-            value: pledgedBalance,
+            value: !showBalance ? HIDE_BALANCE_MASK : pledgedBalance,
             currency: currentWallet.code,
           }"
         />
@@ -226,6 +236,7 @@
 
 <script>
 import { ref, computed, watch, inject } from 'vue';
+import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 import BigNumber from 'bignumber.js';
 import BalanceTooltipInfo from './BalanceTooltipInfo';
@@ -241,6 +252,7 @@ import ArrowDown from '@/assets/icons/arrow-down.svg';
 import SettingsUsdIcon from '@/assets/icons/settingsusd.svg';
 import RateModal from './RateModal';
 import Modal from '@/components/Modal';
+import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
 
 export default {
   name: 'Balance',
@@ -275,6 +287,7 @@ export default {
   },
   setup(props) {
     const { t } = useI18n();
+    const store = useStore();
     const walletCurrentRate = ref('USD');
     const openPledgeModal = inject('openPledgeModal');
     const currentTab = ref(props.currentWallet.code);
@@ -288,6 +301,7 @@ export default {
       return props.currency[currentTab.value];
     });
     const currentKtAddress = inject('currentKtAddress');
+    const showBalance = computed(() => store.getters['balance/showBalance']);
     const balance = computed(() => {
       const { stake, mainBalance, frozenBalance, frozen } = props.isCurrentToken
         ? props.currentWallet?.tokenBalance
@@ -486,6 +500,8 @@ export default {
       walletCurrentRate,
       onChangeCurrentRate,
       toggleRateModal,
+      showBalance,
+      HIDE_BALANCE_MASK,
     };
   },
 };

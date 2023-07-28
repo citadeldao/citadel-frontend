@@ -1,5 +1,9 @@
 <template>
   <div :class="{ active: route.path.includes('overall') }" class="overall-card">
+    <div class="hide-balance">
+      <showIcon v-if="!showBalance" @click.stop="toggleShowBalance(true)" />
+      <hideIcon v-else @click.stop="toggleShowBalance(false)" />
+    </div>
     <span class="overall-card__title">
       {{ title === 'all' ? $t('layouts.addAddressLayout.overall') : title }}
     </span>
@@ -7,7 +11,8 @@
       <span class="overall-card__currency-md">
         {{ balanceValue[currentTab].currency }}
       </span>
-      <span v-pretty-number="{ ...balanceValue[currentTab] }" />
+      <span v-if="!showBalance">{{ HIDE_BALANCE_MASK }}</span>
+      <span v-else v-pretty-number="{ ...balanceValue[currentTab] }" />
       <span
         v-pretty-number="{ ...balanceValue['BTC'] }"
         class="overall-card__balance-laptop"
@@ -15,13 +20,16 @@
     </span>
     <span class="overall-card__balance">
       <span class="overall-card__currency">$</span>
+      <span v-if="!showBalance">&nbsp;{{ HIDE_BALANCE_MASK }}</span>
       <span
+        v-else
         v-pretty-number="{ ...balanceValue['USD'] }"
         class="overall-card__balance-value"
       />
     </span>
     <span class="overall-card__cryptobalance">
-      <span v-pretty-number="{ ...balanceValue['BTC'] }" />
+      <span v-if="!showBalance">{{ HIDE_BALANCE_MASK }}</span>
+      <span v-else v-pretty-number="{ ...balanceValue['BTC'] }" />
       <span class="overall-card__cryptocurrency"> BTC </span>
     </span>
     <div class="overall-card__tabs">
@@ -47,14 +55,17 @@
 
 <script>
 import NetworkTab from '@/components/UI/NetworkTab';
-import { ref } from '@vue/reactivity';
+import { ref, computed } from 'vue';
 import { prettyNumber } from '@/helpers/prettyNumber';
 import { useRoute } from 'vue-router';
-import { computed } from '@vue/runtime-core';
+import showIcon from '@/assets/icons/overall/show.svg';
+import hideIcon from '@/assets/icons/overall/hide.svg';
+import { useStore } from 'vuex';
+import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
 
 export default {
   name: 'OverallCard',
-  components: { NetworkTab },
+  components: { NetworkTab, showIcon, hideIcon },
   props: {
     balance: {
       type: [String, Number],
@@ -67,6 +78,7 @@ export default {
     },
   },
   setup(props) {
+    const store = useStore();
     const route = useRoute();
     const currentTab = ref('USD');
     const balanceValue = computed(() => ({
@@ -80,13 +92,28 @@ export default {
       },
     }));
 
-    return { prettyNumber, route, balanceValue, currentTab };
+    const showBalance = computed(() => store.getters['balance/showBalance']);
+
+    const toggleShowBalance = (val) => {
+      store.dispatch('balance/toggleShowBalance', val);
+    };
+
+    return {
+      prettyNumber,
+      route,
+      balanceValue,
+      currentTab,
+      showBalance,
+      HIDE_BALANCE_MASK,
+      toggleShowBalance,
+    };
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .overall-card {
+  position: relative;
   max-width: calc(#{$sidebar-max-width} - 50px);
   width: 100%;
   display: flex;
@@ -109,6 +136,19 @@ export default {
     .overall-card__balance,
     .overall-card__balance-md {
       color: $white;
+    }
+  }
+
+  .hide-balance {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+
+    @include md {
+      display: none;
+    }
+    @include laptop {
+      display: none;
     }
   }
 

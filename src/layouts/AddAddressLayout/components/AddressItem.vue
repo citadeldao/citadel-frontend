@@ -37,7 +37,9 @@
       <span class="address-item__balance">
         <span
           v-pretty-number="{
-            value: wallet.balance.calculatedBalance,
+            value: !showBalance
+              ? HIDE_BALANCE_MASK
+              : wallet.balance.calculatedBalance,
             currency: wallet.code,
           }"
         />
@@ -55,6 +57,7 @@ import { screenWidths } from '@/config/sreenWidthThresholds';
 import { useRoute } from 'vue-router';
 import { WALLET_TYPES } from '@/config/walletType';
 import { useStore } from 'vuex';
+import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
 import Tooltip from '@/components/UI/Tooltip';
 
 export default {
@@ -78,6 +81,8 @@ export default {
     const metamaskConnector = computed(
       () => store.getters['metamask/metamaskConnector']
     );
+
+    const showBalance = computed(() => store.getters['balance/showBalance']);
 
     const currentWalletType = computed(() => {
       const metamaskNet = metamaskConnector.value.network;
@@ -159,11 +164,13 @@ export default {
     });
 
     return {
+      showBalance,
       icon,
       type,
       // to,
       walletName,
       isActive,
+      HIDE_BALANCE_MASK,
     };
   },
 };

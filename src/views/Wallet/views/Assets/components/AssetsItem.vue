@@ -31,7 +31,7 @@
       <div class="assets-item__cell">
         <span
           v-pretty-number="{
-            value: balance?.calculatedBalance,
+            value: showBalance ? balance?.calculatedBalance : HIDE_BALANCE_MASK,
             currency: item.code,
           }"
           class="assets-item__value"
@@ -45,7 +45,10 @@
           >$</span
         >
         <span
-          v-pretty-number="{ value: item.balanceUSD, currency: 'USD' }"
+          v-pretty-number="{
+            value: showBalance ? item.balanceUSD : HIDE_BALANCE_MASK,
+            currency: 'USD',
+          }"
           class="assets-item__value"
         />
       </div>
@@ -70,6 +73,8 @@ import { ref, computed } from 'vue';
 import { tokenIconPlaceholder } from '@/helpers';
 import AssetIcon from '@/components/UI/AssetIcon.vue';
 import { useStore } from 'vuex';
+import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
+
 export default {
   name: 'AssetsItem',
   components: { AssetIcon },
@@ -101,13 +106,20 @@ export default {
       tokenIconPlaceholder(props.item.name)
     );
     const store = useStore();
+    const showBalance = computed(() => store.getters['balance/showBalance']);
     const price = computed(() => {
       if (props.isNativeToken) {
         return store.getters['profile/rates'][props.item.net].USD;
       }
       return props.item.tokenBalance.price.USD;
     });
-    return { showIconPlaceholder, iconPlaceholder, price };
+    return {
+      showIconPlaceholder,
+      iconPlaceholder,
+      price,
+      showBalance,
+      HIDE_BALANCE_MASK,
+    };
   },
 };
 </script>

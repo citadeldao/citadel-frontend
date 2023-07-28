@@ -74,3 +74,5 @@ export const prettyNumberTooltip = (value) => {
     maximumFractionDigits: maxDecimals,
   });
 };
+
+export const HIDE_BALANCE_MASK = '*****';
