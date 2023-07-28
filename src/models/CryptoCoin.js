@@ -348,7 +348,11 @@ export default class CryptoCoin {
   }
 
   async assignToDao({ walletId, holderAddress, ...options }) {
-    const res = await citadel.assignToDao(walletId, holderAddress, options);
+    const connectionType = store.getters['ledger/connectionType'];
+    const res = await citadel.assignToDao(walletId, holderAddress, {
+      ...options,
+      transportType: connectionType,
+    });
 
     if (res.error) {
       const errorMessage = getErrorTextByCode(res.error);
