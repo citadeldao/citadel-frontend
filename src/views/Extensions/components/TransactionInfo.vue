@@ -53,6 +53,7 @@
         </keep-alive>
       </div>
     </div>
+    <LedgerProtocol />
     <div class="item-tx">
       <!--eslint-disable-next-line-->
       <pre v-if="showTx && extensionTransactionForSign?.transaction">{{
@@ -88,6 +89,7 @@ import Input from '@/components/UI/Input';
 
 import linkIcon from '@/assets/icons/link.svg';
 import linkIconHovered from '@/assets/icons/link_hovered.svg';
+import LedgerProtocol from '@/components/LedgerProtocol';
 
 import { PRIVATE_PASSWORD_TYPES } from '@/config/walletType';
 
@@ -96,6 +98,7 @@ import { ref, markRaw } from 'vue';
 export default {
   name: 'TransactionInfo',
   components: {
+    LedgerProtocol,
     linkIcon,
     linkIconHovered,
     Input,
