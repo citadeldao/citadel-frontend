@@ -1,6 +1,7 @@
 <template>
   <div class="ledger-protocol">
-    <div class="ledger-protocol__type">Select connection type</div>
+    <div v-if="inApp">Select connection type</div>
+    <div v-else class="ledger-protocol__type">Select connection type</div>
     <div class="ledger-protocol__wrap">
       <div
         :class="{ selected: connectionType === 'bt' }"
@@ -30,6 +31,12 @@ export default {
   components: {
     bluetoothIcon,
     usbIcon,
+  },
+  props: {
+    inApp: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup() {
     const store = useStore();

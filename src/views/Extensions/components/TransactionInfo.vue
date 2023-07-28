@@ -53,7 +53,7 @@
         </keep-alive>
       </div>
     </div>
-    <LedgerProtocol />
+    <LedgerProtocol in-app />
     <div class="item-tx">
       <!--eslint-disable-next-line-->
       <pre v-if="showTx && extensionTransactionForSign?.transaction">{{
