@@ -180,6 +180,7 @@ export default {
     const { wallets } = useWallets();
 
     const currency = computed(() => store.getters['profile/rates']);
+    console.log('currency', currency.value);
 
     const activeTab = computed(() => store.getters['wallets/activeList']);
     const customWalletsList = computed(
