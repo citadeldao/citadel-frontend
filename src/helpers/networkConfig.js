@@ -3,9 +3,11 @@ export const getNetworkDataByKey = ({
   network = 'Others',
   key = {},
 }) => {
+  console.log('LOG..', config, network, key);
   if (!config) return null;
 
   const [net, token] = network.split('_');
+  console.log('LOG2..', net, token);
 
   if (net === 'Others') return null;
 
