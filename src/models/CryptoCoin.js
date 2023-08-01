@@ -47,7 +47,7 @@ export default class CryptoCoin {
       .toFixed(opts?.config?.decimals);
     this.unstakeingPerioud = opts?.config?.unstakeingPerioud;
     this.hasRedelegation = opts?.config?.methods?.redelegate;
-    this.hideMemo = opts?.config?.methods?.hideMemo;
+    this.hideMemo = !opts?.config?.methods?.memo;
     this.hasXCT = opts?.config?.methods?.hasXCT;
     this.shortName = opts?.config?.methods?.shortName;
     this.unstakePerioudLink = opts?.config?.methods?.unstakePerioudLink;
