@@ -11,7 +11,10 @@
       <div class="title__rigth-section">
         <div class="title__value">
           <span
-            v-pretty-number="{ value: total, currency: data.code }"
+            v-pretty-number="{
+              value: showBalance ? total : HIDE_BALANCE_MASK,
+              currency: data.code,
+            }"
             class="title__value-amount"
           />
           <span class="title__value-currency">{{ data.code }}</span>
@@ -43,6 +46,9 @@ import arrowDown from '@/assets/icons/arrow-down.svg';
 import DropdownItem from './DropdownItem';
 import BigNumber from 'bignumber.js';
 import { ref, markRaw, computed } from 'vue';
+import { useStore } from 'vuex';
+import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
+
 export default {
   name: 'Dropdown',
   components: { DropdownItem, arrowUp, arrowDown },
@@ -57,6 +63,8 @@ export default {
     },
   },
   setup(props) {
+    const store = useStore();
+    const showBalance = computed(() => store.getters['balance/showBalance']);
     const isOpen = ref(props.opened);
     const currentIcon = ref();
 
@@ -81,7 +89,14 @@ export default {
       )
     );
 
-    return { currentIcon, isOpen, clickHandler, total };
+    return {
+      currentIcon,
+      isOpen,
+      clickHandler,
+      total,
+      showBalance,
+      HIDE_BALANCE_MASK,
+    };
   },
 };
 </script>

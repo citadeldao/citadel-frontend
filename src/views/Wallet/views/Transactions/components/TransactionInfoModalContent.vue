@@ -54,7 +54,9 @@
                 class="line"
               />
               <div v-if="component.type === 'amount'" class="value">
-                <div class="value-amount">{{ component.value.text }}</div>
+                <div class="value-amount">
+                  {{ showBalance ? component.value.text : HIDE_BALANCE_MASK }}
+                </div>
                 <div class="value-symbol">{{ component.value.symbol }}</div>
               </div>
               <div v-if="component.type === 'text'" class="value">
@@ -142,7 +144,9 @@
                       >
                         <span
                           v-pretty-number="{
-                            value: includedItem.value.text,
+                            value: showBalance
+                              ? includedItem.value.text
+                              : HIDE_BALANCE_MASK,
                             currency: includedItem.value.symbol,
                           }"
                           class="value-amount"
@@ -170,11 +174,13 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import InfoBlock from './InfoBlock.vue';
 import TxStatuses from './TxStatuses';
 import { format } from 'date-fns';
 import { getMiddleCutText } from '@/helpers';
+import { useStore } from 'vuex';
+import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
 
 export default {
   namae: 'TransactionInfoModalContent',
@@ -196,9 +202,12 @@ export default {
     },
   },
   setup(props) {
+    const store = useStore();
     const showPlaceholder = ref(!props.info.note);
     const innerTxs = ref([]);
     const innerTxsTypes = ['included_tx'];
+
+    const showBalance = computed(() => store.getters['balance/showBalance']);
 
     const togleShowPlaceholder = () => {
       showPlaceholder.value = false;
@@ -226,6 +235,8 @@ export default {
       format,
       innerTxs,
       getMiddleCutText,
+      showBalance,
+      HIDE_BALANCE_MASK,
     };
   },
 };

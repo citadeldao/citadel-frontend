@@ -6,7 +6,10 @@
     <div class="dropdown-item__line" />
     <div class="dropdown-item__value">
       <span
-        v-pretty-number="{ value: reward.value, currency }"
+        v-pretty-number="{
+          value: showBalance ? reward.value : HIDE_BALANCE_MASK,
+          currency,
+        }"
         class="dropdown-item__value-amount"
       />
       <span class="dropdown-item__value-currency">{{ currency }}</span>
@@ -15,6 +18,10 @@
 </template>
 
 <script>
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
+
 export default {
   name: 'DropdownItem',
   props: {
@@ -32,7 +39,10 @@ export default {
     },
   },
   setup() {
-    return {};
+    const store = useStore();
+    const showBalance = computed(() => store.getters['balance/showBalance']);
+
+    return { showBalance, HIDE_BALANCE_MASK };
   },
 };
 </script>
