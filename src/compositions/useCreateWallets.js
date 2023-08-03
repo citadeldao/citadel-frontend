@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router';
 import CryptoCoin from '@/models/CryptoCoin';
 import { WALLET_TYPES } from '@/config/walletType';
 import citadel from '@citadeldao/lib-citadel';
-import models from '@/models';
+// import models from '@/models';
 import notify from '@/plugins/notify';
 import redirectToWallet from '@/router/helpers/redirectToWallet';
 import { findWalletInArray } from '@/helpers';
@@ -101,7 +101,7 @@ export default function useCreateWallets() {
           privateKey: walletOpts.privateKey || null,
           derivationPath:
             walletOpts.derivationPath ||
-            `${models[net.toUpperCase()].getDerivationPath(
+            `${/* models[net.toUpperCase()] */CryptoCoin.getDerivationPath(
               net,
               store.getters['wallets/freePathIndex']({ net })
             )}` ||

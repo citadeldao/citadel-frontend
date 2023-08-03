@@ -356,6 +356,11 @@
         "delegateTo": "Déléguer à"
     },
     "ledger": {
+        "title": "",
+        "btTitle1": "",
+        "usbTitle1": "",
+        "btDesc": "",
+        "usbDesc": "",
         "connect": {
             "title": "Connectez votre Ledger",
             "desc": "Veuillez connecter votre portefeuille matériel à l'ordinateur"

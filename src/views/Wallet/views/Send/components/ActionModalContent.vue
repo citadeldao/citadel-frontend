@@ -29,7 +29,7 @@
         @select-fee="$emit('select-fee')"
       />
     </div>
-
+    <LedgerProtocol v-if="currentWallet.type === WALLET_TYPES.LEDGER" />
     <div class="action-modal-content__total-amount">
       <span class="action-modal-content__total-amount-title">
         {{ $t('totalAmount') }}:
@@ -122,10 +122,12 @@ import Fees from '@/components/Fees';
 import Input from '@/components/UI/Input';
 import { computed, inject } from '@vue/runtime-core';
 import { useStore } from 'vuex';
+import LedgerProtocol from '@/components/LedgerProtocol';
+import { WALLET_TYPES } from '@/config/walletType';
 
 export default {
   name: 'ActionModalContent',
-  components: { Input, Fees, SendDirection },
+  components: { Input, Fees, SendDirection, LedgerProtocol },
   props: {
     confirmClicked: {
       type: Boolean,
@@ -195,7 +197,7 @@ export default {
       () => store.getters['wallets/currentWallet']
     );
 
-    return { inputError, currentWallet };
+    return { inputError, currentWallet, WALLET_TYPES };
   },
 };
 </script>

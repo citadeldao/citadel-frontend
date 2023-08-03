@@ -1,3 +1,5 @@
+import { OUR_TOKEN } from '@/config/walletType';
+
 export default {
   band: {
     web: {
@@ -495,7 +497,7 @@ export default {
       href: 'https://www.coingecko.com/en/coins/e-money',
     },
   },
-  bsc_xct: {
+  [OUR_TOKEN]: {
     web: {
       title: 'citadel.one',
       href: process.env.VUE_APP_LANDING_URL,

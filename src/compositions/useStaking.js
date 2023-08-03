@@ -407,14 +407,14 @@ export default function useStaking(stakeNodes, list) {
       return {
         title: t('unstaking.chooseNodeForUnstaking'),
         desc: currentWallet.value.unstakePerioudFrom ?
-          `${t(currentWallet.value.messages.unstakeingPrefix ? currentWallet.value.messages.unstakeingPrefix : 'unstaking.defaultPrefix')} ${t('unstaking.chooseNodeModalDescWithFrom', {
+          `${t(/* currentWallet.value.messages.unstakeingPrefix ? currentWallet.value.messages.unstakeingPrefix : */ 'unstaking.defaultPrefix')} ${t('unstaking.chooseNodeModalDescWithFrom', {
             net: currentWallet.value.name,
             perioudFrom: currentWallet.value.unstakePerioudFrom,
             perioudTo: currentWallet.value.unstakePerioudTo,
             link: currentWallet.value.unstakePerioudLink,
           })}`/* : currentWallet.value.hasMultiUnstake ?
           `${t('singleStake.claimUnstakeNote',{code: currentWallet.value.code})}` */
-          : `${t(currentWallet.value.messages.unstakeingPrefix ? currentWallet.value.messages.unstakeingPrefix : 'unstaking.defaultPrefix')} ${t('unstaking.chooseNodeModalDesc', {
+          : `${t(/* currentWallet.value.messages.unstakeingPrefix ? currentWallet.value.messages.unstakeingPrefix : */ 'unstaking.defaultPrefix')} ${t('unstaking.chooseNodeModalDesc', {
             net: currentWallet.value.name,
             perioud: currentWallet.value.unstakeingPerioud,
           })}`,
@@ -453,7 +453,7 @@ export default function useStaking(stakeNodes, list) {
           : mode.value === 'unstake' || activeTab.value === 'unstake' ? 'unstaking.unstake'
             : 'staking.Stake',
         desc: activeTab.value === 'redelegate' ?
-          `${t(currentWallet.value.messages.unstakeingPrefix ? currentWallet.value.messages.unstakeingPrefix : 'unstaking.defaultPrefix')} ${t('unstaking.chooseNodeModalDesc', {
+          `${t(/* currentWallet.value.messages.unstakeingPrefix ? currentWallet.value.messages.unstakeingPrefix : */ 'unstaking.defaultPrefix')} ${t('unstaking.chooseNodeModalDesc', {
             net: currentWallet.value.name,
             perioud: currentWallet.value.unstakeingPerioud,
           })}`
@@ -475,13 +475,13 @@ export default function useStaking(stakeNodes, list) {
         title: 'unstaking.unstake',
         button: 'unstaking.unstake',
         desc: currentWallet.value.unstakePerioudFrom ?
-          `${t(currentWallet.value.messages.unstakeingPrefix ? currentWallet.value.messages.unstakeingPrefix : 'unstaking.defaultPrefix')} ${t('unstaking.chooseNodeModalDescWithFrom', {
+          `${t(/* currentWallet.value.messages.unstakeingPrefix ? currentWallet.value.messages.unstakeingPrefix : */ 'unstaking.defaultPrefix')} ${t('unstaking.chooseNodeModalDescWithFrom', {
             net: currentWallet.value.name,
             perioudFrom: currentWallet.value.unstakePerioudFrom,
             perioudTo: currentWallet.value.unstakePerioudTo,
             link: currentWallet.value.unstakePerioudLink,
           })}`
-          : `${t(currentWallet.value.messages.unstakeingPrefix ? currentWallet.value.messages.unstakeingPrefix : 'unstaking.defaultPrefix')} ${t('unstaking.chooseNodeModalDesc', {
+          : `${t(/* currentWallet.value.messages.unstakeingPrefix ? currentWallet.value.messages.unstakeingPrefix : */ 'unstaking.defaultPrefix')} ${t('unstaking.chooseNodeModalDesc', {
             net: currentWallet.value.name,
             perioud: currentWallet.value.unstakeingPerioud,
           })}`,

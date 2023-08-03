@@ -1,4 +1,5 @@
-import models from '@/models';
+// import models from '@/models';
+import CryptoCoin from '@/models/CryptoCoin';
 import { useStore } from 'vuex';
 import { computed, ref } from 'vue';
 import FileSaver from 'file-saver';
@@ -80,7 +81,7 @@ export default function useOldBackup() {
             return false;
           }
 
-          const WalletConstructor = models[coin.coin.toUpperCase()];
+          //const WalletConstructor = models[coin.coin.toUpperCase()];
           const walletOpts = {
             address: coin.address,
             privateKeyEncoded: coin.keys?.privateKeyEncoded,
@@ -91,7 +92,7 @@ export default function useOldBackup() {
             config: store.getters['networks/configByNet'](coin.coin),
           };
 
-          return new WalletConstructor(walletOpts);
+          return new CryptoCoin(walletOpts);
         });
 
       oldWallets.value = oldWallets.value.concat(

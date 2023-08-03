@@ -1,6 +1,7 @@
 import { sortByAlphabet } from '@/helpers';
 import notify from '@/plugins/notify';
 import citadel from '@citadeldao/lib-citadel';
+import { OUR_TOKEN } from '@/config/walletType';
 
 const types = {
   SET_ACTIVITY: 'SET_ACTIVITY',
@@ -87,7 +88,7 @@ export default {
 
       const { error, data } = await citadel.callTokenInfo(
         walletId,
-        'bsc_xct',
+        OUR_TOKEN,
         'assignedAddresses'
       );
 
@@ -154,7 +155,7 @@ export default {
 
       const { error, data } = await citadel.callTokenInfo(
         walletId,
-        'bsc_xct',
+        OUR_TOKEN,
         'totalClaimedRewards'
       );
 
@@ -175,7 +176,7 @@ export default {
 
       const { error, data } = await citadel.callTokenInfo(
         walletId,
-        'bsc_xct',
+        OUR_TOKEN,
         'xctRewards'
       );
 

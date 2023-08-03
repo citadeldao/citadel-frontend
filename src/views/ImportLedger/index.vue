@@ -4,10 +4,15 @@
     <div class="import-ledger__section">
       <!-- <Stepper :steps="steps" /> -->
       <ImportHardwareWallet v-if="currentStep === 2" @setNet="setNet" />
-      <ConnectDevice v-if="currentStep === 3" :net="net" />
+      <ConnectDevice
+        v-if="currentStep === 3"
+        :net="net"
+        :is-bluetooth="isBluetooth"
+      />
       <ChooseDerivationPath
         v-if="currentStep === 4"
         :net="net"
+        :is-bluetooth="isBluetooth"
         @selectWallet="addWallet"
       />
     </div>
@@ -24,7 +29,7 @@ import ChooseDerivationPath from './components/ChooseDerivationPath';
 import useCurrentStep from '@/compositions/useCurrentStep';
 import { steps as ledgerSteps } from '@/static/importLedger';
 import useCreateWallets from '@/compositions/useCreateWallets';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { INPUT_TYPE_ICON } from '@/config/newWallets';
 
@@ -40,10 +45,13 @@ export default {
     const store = useStore();
     const { t } = useI18n();
     const { currentStep, steps } = useCurrentStep(2, ledgerSteps);
+    const isBluetooth = ref(false);
     const net = ref('');
     const router = useRouter();
+    const route = useRoute();
     const setNet = (netName) => {
       net.value = netName;
+      isBluetooth.value = route.params.isBluetooth;
     };
     const { newWallets, redirectToNewWallet } = useCreateWallets();
     onMounted(() => {
@@ -84,6 +92,7 @@ export default {
       newWallets,
       net,
       addWallet,
+      isBluetooth,
     };
   },
 };

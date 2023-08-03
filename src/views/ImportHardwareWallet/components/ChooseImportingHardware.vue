@@ -36,7 +36,7 @@ const methods = [
     info: t('importHardwareWallet.card1Info'),
     icon: 'hardware',
     hoveredIcon: 'hardware-hovered',
-    routeName: 'ImportLedger',
+    routeName: 'ImportLedgerType',
   },
   {
     name: 'trezor',

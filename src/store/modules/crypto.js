@@ -1,6 +1,6 @@
 import { sha3_256 } from 'js-sha3';
 import CryptoCoin from '@/models/CryptoCoin';
-import models from '@/models';
+// import models from '@/models';
 import { WALLET_TYPES } from '@/config/walletType';
 import notify from '@/plugins/notify';
 import citadel from '@citadeldao/lib-citadel';
@@ -106,11 +106,11 @@ export default {
 
     async createNewWalletInstance({ rootGetters }, { walletOpts, password }) {
       try {
-        const WalletConstructor = models[walletOpts.net.toUpperCase()];
+        // const WalletConstructor = models[walletOpts.net.toUpperCase()];
         walletOpts.privateKeyEncoded = walletOpts.privateKeyEncoded
           ? walletOpts.privateKeyEncoded
           : walletOpts.privateKey
-          ? await WalletConstructor.encodePrivateKeyByPassword(
+          ? await /* WalletConstructor */ CryptoCoin.encodePrivateKeyByPassword(
               walletOpts.net,
               walletOpts.privateKey,
               password
@@ -121,7 +121,7 @@ export default {
           walletOpts.mnemonicEncoded = walletOpts.mnemonicEncoded
             ? walletOpts.mnemonicEncoded
             : walletOpts.mnemonic
-            ? await WalletConstructor.encodePrivateKeyByPassword(
+            ? await /* WalletConstructor */ CryptoCoin.encodePrivateKeyByPassword(
                 walletOpts.net,
                 walletOpts.mnemonic,
                 password
@@ -135,7 +135,10 @@ export default {
         )
           .times(currency.value?.USD)
           .toNumber();
-        const walletInstance = new WalletConstructor(walletOpts, password);
+        const walletInstance = new /* WalletConstructor */ CryptoCoin(
+          walletOpts,
+          password
+        );
         delete walletInstance.privateKey;
         return walletInstance;
       } catch (error) {
@@ -154,7 +157,7 @@ export default {
     ) {
       try {
         const derivationPath = walletOpts.pathIndex
-          ? models[walletOpts.net.toUpperCase()].getDerivationPath(
+          ? /* models[walletOpts.net.toUpperCase()] */ CryptoCoin.getDerivationPath(
               walletOpts.net,
               walletOpts.pathIndex
             )
@@ -258,7 +261,7 @@ export default {
     async createLedgerWallet({ rootGetters, dispatch }, walletOpts) {
       try {
         const derivationPath = walletOpts.pathIndex
-          ? models[walletOpts.net.toUpperCase()].getDerivationPath(
+          ? /* models[walletOpts.net.toUpperCase()] */ CryptoCoin.getDerivationPath(
               walletOpts.net,
               walletOpts.pathIndex,
               WALLET_TYPES.LEDGER

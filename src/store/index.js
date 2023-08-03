@@ -22,6 +22,7 @@ import newWallets from './modules/newWallets';
 import metamask from './modules/metamask';
 import keplr from './modules/keplr';
 import salary from './modules/salary';
+import ledger from './modules/ledger';
 
 import subscriptions from './modules/subscriptions';
 
@@ -51,5 +52,6 @@ export default createStore({
     subscriptions,
     newWallets,
     salary,
+    ledger,
   },
 });

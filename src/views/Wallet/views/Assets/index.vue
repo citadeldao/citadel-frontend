@@ -270,6 +270,7 @@ export default {
       const byAlphabet = sortByAlphabet(data, 'name').sort(
         (a, b) => isNotLinkedSnip20(b) - isNotLinkedSnip20(a)
       );
+
       const byValue = data
         .sort((a, b) => a.balanceUSD - b.balanceUSD)
         .sort((a, b) => isNotLinkedSnip20(b) - isNotLinkedSnip20(a));

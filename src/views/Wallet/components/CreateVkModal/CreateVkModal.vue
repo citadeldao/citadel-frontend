@@ -145,6 +145,10 @@ export default {
       () => props.currentWallet.type === WALLET_TYPES.KEPLR
     );
 
+    const connectionType = computed(
+      () => store.getters['ledger/connectionType']
+    );
+
     const { inputError } = useCheckPassword();
     provide('inputError', inputError);
 
@@ -271,6 +275,7 @@ export default {
           'random',
           {
             derivationPath: props.currentWallet.derivationPath,
+            transportType: connectionType.value,
             fee: props.tokenFee,
           }
         );
