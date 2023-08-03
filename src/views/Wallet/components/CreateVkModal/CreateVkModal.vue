@@ -269,7 +269,6 @@ export default {
           });
         }
 
-        console.log('connectionType', connectionType.value);
         const { error: resError, data } = await citadel.setViewingKey(
           props.currentWallet.id,
           props.token.net,

@@ -52,7 +52,6 @@ export default {
     const setNet = (netName) => {
       net.value = netName;
       isBluetooth.value = route.params.isBluetooth;
-      console.log('isBluetooth', isBluetooth.value);
     };
     const { newWallets, redirectToNewWallet } = useCreateWallets();
     onMounted(() => {
