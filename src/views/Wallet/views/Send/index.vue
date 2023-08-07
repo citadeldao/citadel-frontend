@@ -814,8 +814,20 @@ export default {
     );
 
     watch(
+      () => props.currentToken,
+      async (newVal, oldVal) => {
+        if (newVal?.balanceUSD !== oldVal?.balanceUSD) {
+          await loadData();
+        }
+      }
+    );
+
+    watch(
       () => props.currentWallet,
-      (newVal, oldVal) => {
+      async (newVal, oldVal) => {
+        if (newVal?.balance?.mainBalance !== oldVal?.balance?.mainBalance) {
+          await loadData();
+        }
         if (
           newVal.net !== oldVal.net ||
           newVal.address.toLowerCase() !== oldVal.address.toLowerCase()
