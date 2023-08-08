@@ -68,7 +68,9 @@
         >
           <span
             v-pretty-number="{
-              value: currentWallet?.tokenBalance?.stake,
+              value: showBalance
+                ? currentWallet?.tokenBalance?.stake
+                : HIDE_BALANCE_MASK,
               currency: 'XCT',
             }"
             class="rewards-block-expand__table-cell-total-staked-amount"
@@ -82,7 +84,9 @@
         >
           <span
             v-pretty-number="{
-              value: tableData.stakedCitadel.xct,
+              value: showBalance
+                ? tableData.stakedCitadel.xct
+                : HIDE_BALANCE_MASK,
               currency: 'XCT',
             }"
             class="rewards-block-expand__table-cell-citadel-staked-amount"
@@ -97,7 +101,10 @@
           class="rewards-block-expand__table-cell-total-rewards rewards-block-expand__table-title--xct"
         >
           <span
-            v-pretty-number="{ value: tableData.total.xct, currency: 'XCT' }"
+            v-pretty-number="{
+              value: showBalance ? tableData.total.xct : HIDE_BALANCE_MASK,
+              currency: 'XCT',
+            }"
             class="rewards-block-expand__table-cell-total-rewards-amount"
           />
           <span class="rewards-block-expand__table-cell-total-rewards-currency">
@@ -119,7 +126,9 @@
           </span>
           <span
             v-pretty-number="{
-              value: tableData.stakedOnOtherAssets,
+              value: showBalance
+                ? tableData.stakedOnOtherAssets
+                : HIDE_BALANCE_MASK,
               currency: '$',
             }"
             class="rewards-block-expand__table-cell-total-staked-amount"
@@ -135,7 +144,9 @@
           </span>
           <span
             v-pretty-number="{
-              value: tableData.stakedCitadel.other,
+              value: showBalance
+                ? tableData.stakedCitadel.other
+                : HIDE_BALANCE_MASK,
               currency: '$',
             }"
             class="rewards-block-expand__table-cell-citadel-staked-amount"
@@ -145,7 +156,10 @@
           class="rewards-block-expand__table-cell-total-rewards rewards-block-expand__table-title--other"
         >
           <span
-            v-pretty-number="{ value: tableData.total.other, currency: 'XCT' }"
+            v-pretty-number="{
+              value: showBalance ? tableData.total.other : HIDE_BALANCE_MASK,
+              currency: 'XCT',
+            }"
             class="rewards-block-expand__table-cell-total-rewards-amount"
           />
           <span class="rewards-block-expand__table-cell-total-rewards-currency">
@@ -179,6 +193,8 @@ import notify from '@/plugins/notify';
 import { useWindowSize } from 'vue-window-size';
 import { screenWidths } from '@/config/sreenWidthThresholds';
 import { useStore } from 'vuex';
+import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
+
 export default {
   name: 'RewardsBlockExpand',
   components: {
@@ -209,12 +225,12 @@ export default {
     const tabs = computed(() =>
       width.value < screenWidths.lg ? tabsListmd : tabsList
     );
+    const showBalance = computed(() => store.getters['balance/showBalance']);
     const rewards = computed(() => store.getters['dao/rewards']);
     const networks = computed(() => store.getters['networks/networksList']);
     const rewardsList = computed(() =>
       rewards.value
         .reduce((accum, item) => {
-          console.log(item.net);
           const netIndex = accum.findIndex(({ net }) => net === item.net);
           const rewards = { address: item.address, value: item.rewards };
           let newAccum = accum;
@@ -287,6 +303,8 @@ export default {
       dateChangeHandler,
       rewardsList,
       isLoading,
+      showBalance,
+      HIDE_BALANCE_MASK,
     };
   },
 };

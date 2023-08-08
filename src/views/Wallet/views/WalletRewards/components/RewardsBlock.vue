@@ -36,7 +36,9 @@
         <td class="rewards-block__table-cell-other">
           <span
             v-pretty-number="{
-              value: tableData.stakedCitadel.xct,
+              value: showBalance
+                ? tableData.stakedCitadel.xct
+                : HIDE_BALANCE_MASK,
               currency: 'XCT',
             }"
             class="rewards-block__table-cell-other-amount"
@@ -47,7 +49,9 @@
           <span class="rewards-block__table-cell-xct-currency">$</span>
           <span
             v-pretty-number="{
-              value: tableData.stakedCitadel.other,
+              value: showBalance
+                ? tableData.stakedCitadel.other
+                : HIDE_BALANCE_MASK,
               currency: '$',
             }"
             class="rewards-block__table-cell-xct-amount"
@@ -60,14 +64,20 @@
         </td>
         <td class="rewards-block__table-cell-other">
           <span
-            v-pretty-number="{ value: tableData.total.xct, currency: 'XCT' }"
+            v-pretty-number="{
+              value: showBalance ? tableData.total.xct : HIDE_BALANCE_MASK,
+              currency: 'XCT',
+            }"
             class="rewards-block__table-cell-other-amount"
           />
           <span class="rewards-block__table-cell-other-currency">XCT</span>
         </td>
         <td class="rewards-block__table-cell-xct">
           <span
-            v-pretty-number="{ value: tableData.total.other, currency: 'XCT' }"
+            v-pretty-number="{
+              value: showBalance ? tableData.total.other : HIDE_BALANCE_MASK,
+              currency: 'XCT',
+            }"
             class="rewards-block__table-cell-xct-amount"
           />
           <span class="rewards-block__table-cell-xct-currency">XCT</span>
@@ -95,6 +105,9 @@ import Tooltip from '@/components/UI/Tooltip';
 import toogleInfo from '@/assets/icons/toggle-info.svg';
 import { computed, ref } from '@vue/reactivity';
 import BigNumber from 'bignumber.js';
+import { useStore } from 'vuex';
+import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
+
 export default {
   name: 'RewardsBlock',
   components: { toogleInfo, Tooltip, info, Modal, RewardsBlockExpand },
@@ -117,10 +130,12 @@ export default {
     },
   },
   setup(props) {
+    const store = useStore();
     const showModal = ref(false);
     const modalCloseHandler = () => {
       showModal.value = false;
     };
+    const showBalance = computed(() => store.getters['balance/showBalance']);
     const tableData = computed(() => {
       const stakedOnOtherAssets = props.holderInfo.wallets.reduce(
         (accum, item) => {
@@ -154,7 +169,13 @@ export default {
       };
     });
 
-    return { tableData, showModal, modalCloseHandler };
+    return {
+      tableData,
+      showModal,
+      HIDE_BALANCE_MASK,
+      showBalance,
+      modalCloseHandler,
+    };
   },
 };
 </script>

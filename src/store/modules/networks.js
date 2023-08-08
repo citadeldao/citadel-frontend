@@ -1,4 +1,4 @@
-import models from '@/models';
+//import models from '@/models';
 import notify from '@/plugins/notify';
 import citadel from '@citadeldao/lib-citadel';
 
@@ -19,7 +19,7 @@ export default {
     configByNet: (state) => (net) => state.config[net],
     networksList: (state) =>
       Object.values(state.config)
-        .filter((network) => models[network.net.toUpperCase()])
+        // .filter((network) => models[network.net.toUpperCase()])
         .sort((a, b) => (a.name > b.name ? 1 : -1)),
     getSubtokensByNet: (state) => (net) => {
       const data = [];

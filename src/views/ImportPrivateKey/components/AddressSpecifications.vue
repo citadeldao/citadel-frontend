@@ -55,8 +55,9 @@ import Autocomplete from '@/components/UI/Autocomplete';
 import useSelectNetwork from '@/compositions/useSelectNetwork';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import useIostProps from '@/compositions/useIostProps';
-import models from '@/models';
+//import models from '@/models';
 import { netsWithoutPrivateKeys } from '@/config/netsWithoutPrivateKeys';
+import { hasAccountsNets } from '@/config/availableNets';
 
 export default {
   name: 'AddressSpecifications',
@@ -99,14 +100,14 @@ export default {
       async (newVal) => {
         await loadAccounts(
           newVal,
-          models[netByTitle[search.value]?.toUpperCase()]?.hasAccount
+          hasAccountsNets.includes(netByTitle[search.value]?.toLowerCase()) // models[netByTitle[search.value]?.toUpperCase()]?.hasAccount
         );
       }
     );
     const networkChangeHandler = async (value) => {
       await loadAccounts(
         privateKey.value,
-        models[netByTitle[value]?.toUpperCase()]?.hasAccount
+        hasAccountsNets.includes(netByTitle[value]?.toLowerCase()) //models[netByTitle[value]?.toUpperCase()]?.hasAccount
       );
     };
 

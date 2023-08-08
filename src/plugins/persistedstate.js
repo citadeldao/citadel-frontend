@@ -14,6 +14,7 @@ export default function initPersistedstate(store) {
       'extensions.extensionsList',
       'profile.rememberPassword',
       'balance.showBalance',
+      'ledger.connectionType',
     ],
     storage: {
       getItem: (key) => {

@@ -47,7 +47,7 @@
         <div class="table-row__amount-value">
           <span
             v-pretty-number="{
-              value: formatedValue,
+              value: showBalance ? formatedValue : HIDE_BALANCE_MASK,
               currency: formatedValueSymbol || currentWallet.code,
             }"
             class="table-row__amount-value-value"
@@ -64,7 +64,7 @@
           <div class="table-row__amount-value">
             <span
               v-pretty-number="{
-                value: formatedValue,
+                value: showBalance ? formatedValue : HIDE_BALANCE_MASK,
                 currency: formatedValueSymbol || currentWallet.code,
               }"
               class="table-row__amount-value-value"
@@ -126,6 +126,8 @@ import defaultDate from '@/helpers/date.js';
 import linkIcon from '@/assets/icons/link.svg';
 import Tooltip from '@/components/UI/Tooltip';
 import { useI18n } from 'vue-i18n';
+import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
+import { useStore } from 'vuex';
 
 export default {
   name: 'TableRow',
@@ -159,6 +161,9 @@ export default {
       title: '???',
       icon: 'unknown',
     });
+
+    const store = useStore();
+    const showBalance = computed(() => store.getters['balance/showBalance']);
 
     const global = computed(() => window);
 
@@ -307,6 +312,8 @@ export default {
       formatedValue,
       formatedValueSymbol,
       direction,
+      showBalance,
+      HIDE_BALANCE_MASK,
     };
   },
 };

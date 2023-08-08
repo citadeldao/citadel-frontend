@@ -44,6 +44,9 @@ export default {
     net: {
       type: String,
     },
+    isBluetooth: {
+      type: [Boolean, String],
+    },
   },
   setup(props) {
     const store = useStore();
@@ -57,6 +60,7 @@ export default {
 
       const { error } = await store.dispatch('crypto/createLedgerWallet', {
         net: props.net,
+        transportType: props.isBluetooth ? 'bt' : 'usb',
       });
       error && ledgerErrorHandler(error);
 

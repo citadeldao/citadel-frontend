@@ -225,7 +225,19 @@ export default [
     },
   },
   {
-    path: '/add-address/import-hardware-wallet/import-ledger',
+    path: '/add-address/import-ledger-type',
+    name: 'ImportLedgerType',
+    component: () =>
+      import(
+        /* webpackChunkName: 'ImportHardwareWallet' */ '@/views/ImportLedgerType'
+      ),
+    meta: {
+      layout: 'AddressFlowLayout',
+      guard: 'private',
+    },
+  },
+  {
+    path: '/add-address/import-hardware-wallet/import-ledger/:isBluetooth?',
     name: 'ImportLedger',
     component: () =>
       import(/* webpackChunkName: 'ImportLedger' */ '@/views/ImportLedger'),

@@ -8,6 +8,7 @@
     @close="successClickHandler"
     @buttonClick="hardwareAdressesModalClick"
   >
+    <LedgerProtocol class="mt-10" />
     <HardwareAddressesModal
       :list="hardwareAddresses"
       @signHardwareAddress="signHardwareAddress"
@@ -17,12 +18,14 @@
 <script>
 import ModalContent from '@/components/ModalContent';
 import HardwareAddressesModal from './components/HardwareAddressesModal';
+import LedgerProtocol from '@/components/LedgerProtocol';
 
 export default {
   name: 'HardwareAddressModal',
   components: {
     ModalContent,
     HardwareAddressesModal,
+    LedgerProtocol,
   },
   props: {
     successClickHandler: {
@@ -40,4 +43,8 @@ export default {
   },
 };
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.mt-10 {
+  margin-top: 10px;
+}
+</style>

@@ -358,6 +358,7 @@ export default {
     watch(
       () => route.params,
       async (params, oldParams) => {
+        await loadXCTInfo();
         if (
           params.net !== oldParams.net ||
           params.address.toLowerCase() !== oldParams.address.toLowerCase()
@@ -366,7 +367,6 @@ export default {
 
           if (params.net && params.address) {
             await loadKtAddresses(currentWallet?.value?.id);
-            await loadXCTInfo();
             await checkKeplrAddress();
             await getWalletRewards();
             await store.dispatch('charts/resetData', 'rateHistory');
@@ -380,7 +380,10 @@ export default {
       () => store.getters['subtokens/inflationInfoXCT']
     );
     const loadXCTInfo = async () => {
-      if (currentWallet.value?.hasXCT) {
+      if (
+        currentWallet.value?.hasXCT &&
+        currentToken?.value?.net === OUR_TOKEN
+      ) {
         xctInflationIsLoading.value = true;
         await store.dispatch(
           'subtokens/getInflationInfoXCT',

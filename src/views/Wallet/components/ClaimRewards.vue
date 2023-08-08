@@ -18,11 +18,11 @@
           {{ $t(title) }}
         </span>
         <div class="claim-rewards__tooltip">
-          <Tooltip v-if="currentWallet.claimRewardsMessage">
+          <Tooltip v-if="hasCustomClaimInfoNets.includes(currentWallet.net)">
             <info />
             <template #content>
               <span class="claim-rewards__tooltip-info">
-                {{ $t(currentWallet.claimRewardsMessage) }}
+                {{ $t(`${currentWallet.net}.claimTooltip`) }}
               </span>
             </template>
           </Tooltip>
@@ -122,6 +122,7 @@ import RoundArrowButton from '@/components/UI/RoundArrowButton';
 import Modal from '@/components/Modal';
 import InfoModal from './InfoModal';
 import { WALLET_TYPES, OUR_TOKEN } from '@/config/walletType';
+import { hasCustomClaimInfoNets } from '@/config/availableNets';
 import { ref, computed, inject } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useStore } from 'vuex';
@@ -277,6 +278,7 @@ export default {
       currentWalletInfo,
       apy,
       currentWalletType,
+      hasCustomClaimInfoNets,
       showBalance,
       HIDE_BALANCE_MASK,
     };

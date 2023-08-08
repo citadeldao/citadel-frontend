@@ -34,6 +34,7 @@
       :delegation="delegation"
       :adding="adding"
     />
+    <LedgerProtocol v-if="wallet.type === WALLET_TYPES.LEDGER" class="mt-10" />
     <div class="action-modal-content__total">
       <span class="action-modal-content__total-title">
         {{ $t('totalAmount') }}:
@@ -112,10 +113,18 @@ import SendDirection from './SendDirection.vue';
 import NominatedNodes from './NominatedNodes.vue';
 import Input from '@/components/UI/Input';
 import { computed, inject, watch } from 'vue';
+import LedgerProtocol from '@/components/LedgerProtocol';
+import { WALLET_TYPES } from '@/config/walletType';
 
 export default {
   name: 'ActionModalContent',
-  components: { Input, SendDirection, exclamation, NominatedNodes },
+  components: {
+    Input,
+    SendDirection,
+    exclamation,
+    NominatedNodes,
+    LedgerProtocol,
+  },
   props: {
     to: {
       type: String,
@@ -178,6 +187,7 @@ export default {
       mode,
       finalNodesList,
       isMultiple,
+      WALLET_TYPES,
     };
   },
 };
@@ -189,6 +199,11 @@ export default {
   display: flex;
   width: 100%;
   flex-direction: column;
+
+  .mt-10 {
+    margin-top: 10px;
+  }
+
   &__info {
     background: $ligth-red;
     border-radius: 10px;

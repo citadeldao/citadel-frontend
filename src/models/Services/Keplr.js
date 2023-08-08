@@ -41,7 +41,7 @@ export default class keplrConnector {
     const defaultTx = {
       ...keplrResult.signedTx,
       signType: this.getSignType(rawTx),
-      publicKey: await signer.getPublicKeyDecoded(),
+      publicKey: await signer.publicKey /* getPublicKeyDecoded() */,
       signature: keplrResult.signature,
     };
 

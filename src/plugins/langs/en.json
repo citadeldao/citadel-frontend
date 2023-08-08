@@ -356,6 +356,11 @@
         "delegateTo": "Delegate to"
     },
     "ledger": {
+        "title": "Connect via ",
+        "btTitle1": "Bluetooth",
+        "usbTitle1": "USB",
+        "btDesc": "Ledger Nano X Only",
+        "usbDesc": "All ledgers",
         "connect": {
             "title": "Connect your Ledger",
             "desc": "Please connect your hardware wallet to the computer"

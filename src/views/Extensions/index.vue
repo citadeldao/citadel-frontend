@@ -387,8 +387,8 @@ export default {
               net: w.net,
               type: w.type,
               publicKey:
-                (w.getPublicKeyDecoded && (await w.getPublicKeyDecoded())) ||
-                null,
+                w.publicKey ||
+                /* (w.getPublicKeyDecoded && (await w.getPublicKeyDecoded())) */ null,
             }))
         );
 

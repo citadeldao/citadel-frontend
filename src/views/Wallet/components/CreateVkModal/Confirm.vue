@@ -39,6 +39,10 @@
           <span class="feeSign">SCRT</span>
         </div>
       </div>
+      <LedgerProtocol
+        v-if="currentWallet.type === WALLET_TYPES.LEDGER"
+        class="mt-10"
+      />
     </div>
     <form
       v-if="PRIVATE_PASSWORD_TYPES.includes(currentWallet.type)"
@@ -80,6 +84,8 @@ import Loading from '@/components/Loading';
 import useCheckPassword from '@/compositions/useCheckPassword';
 import { WALLET_TYPES, PRIVATE_PASSWORD_TYPES } from '@/config/walletType';
 import PrimaryButton from '@/components/UI/PrimaryButton';
+import LedgerProtocol from '@/components/LedgerProtocol';
+
 export default {
   name: 'CreateVkModal',
   components: {
@@ -87,6 +93,7 @@ export default {
     ModalContent,
     Input,
     Loading,
+    LedgerProtocol,
   },
   props: {
     address: {
@@ -169,6 +176,7 @@ export default {
       goToImportVk,
       PRIVATE_PASSWORD_TYPES,
       props,
+      WALLET_TYPES,
     };
   },
 };
@@ -180,6 +188,10 @@ export default {
   width: 24px;
   height: 24px;
   margin-right: 10px;
+}
+
+.mt-10 {
+  margin-top: 10px;
 }
 
 .app-name {

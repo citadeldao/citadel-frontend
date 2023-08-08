@@ -63,7 +63,7 @@
       <div class="amount">
         <span
           v-pretty-number="{
-            value: info.value,
+            value: showBalance ? info.value : HIDE_BALANCE_MASK,
             currency: formatedValueSymbol || currentWallet?.code,
           }"
           class="info-block__line-amount"
@@ -80,6 +80,7 @@
 import linkIcon from '@/assets/icons/link.svg';
 import { computed, ref, nextTick } from 'vue';
 import { useStore } from 'vuex';
+import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
 
 export default {
   name: 'InfoBlock',
@@ -100,6 +101,7 @@ export default {
     const activateEdit = ref(false);
     const savedCommentFlag = ref(false);
     const customNote = ref(props.info.note);
+    const showBalance = computed(() => store.getters['balance/showBalance']);
     const txUrl = computed(() =>
       props.currentWallet?.getTxUrl(props.currentWallet.id, props.info.hash)
     );
@@ -149,7 +151,7 @@ export default {
       nextTick(() => document.getElementById('editComment').focus());
     };
 
-    return { txUrl, customNote, activateEdit, savedCommentFlag, setComment, onCommentLeave, formatedValueSymbol };
+    return { txUrl, customNote, activateEdit, savedCommentFlag, setComment, onCommentLeave, formatedValueSymbol, showBalance, HIDE_BALANCE_MASK };
   },
 };
 </script>

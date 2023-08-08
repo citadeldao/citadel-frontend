@@ -110,6 +110,13 @@
             </div>
           </transition>
         </div>
+        <!--
+          :disabled="
+              (isSendToAnotherNetwork && !bridgeTargetNet) ||
+              maxAmount === 0 ||
+              maxAmountParent === 0
+            "
+        -->
         <div class="send__section-input">
           <Input
             id="amount"
@@ -119,21 +126,18 @@
             :currency="currentWallet.code"
             :label="$t('amount')"
             :max="maxAmount"
-            :disabled="
-              (isSendToAnotherNetwork && !bridgeTargetNet) ||
-              maxAmount === 0 ||
-              maxAmountParent === 0
-            "
             placeholder="0.0"
             icon="coins"
+            @focus="onFocusInput"
+            @blur="onBlurInput"
             :show-error-text="showErrorText"
-            :error="!showBridgeModal && insufficientFunds"
+            :error="!showBridgeModal && insufficientFunds && isFocusAmountInput"
             data-qa="send__amount-field"
             :show-set-max="maxAmountParent !== 0"
           />
           <transition name="fade">
             <div
-              v-if="!showBridgeModal && insufficientFunds"
+              v-if="!showBridgeModal && insufficientFunds && isFocusAmountInput"
               class="send__section-error"
               :class="{
                 doNotHaveEnoughFunds: maxAmountParent === 0 || maxAmount === 0,
@@ -810,8 +814,20 @@ export default {
     );
 
     watch(
+      () => props.currentToken,
+      async (newVal, oldVal) => {
+        if (newVal?.balanceUSD !== oldVal?.balanceUSD) {
+          await loadData();
+        }
+      }
+    );
+
+    watch(
       () => props.currentWallet,
-      (newVal, oldVal) => {
+      async (newVal, oldVal) => {
+        if (newVal?.balance?.mainBalance !== oldVal?.balance?.mainBalance) {
+          await loadData();
+        }
         if (
           newVal.net !== oldVal.net ||
           newVal.address.toLowerCase() !== oldVal.address.toLowerCase()
@@ -862,7 +878,7 @@ export default {
         return balance.value?.mainBalance;
       }
 
-      return !props.currentWallet.hasFee
+      return props.currentWallet.hasNoFee
         ? resMaxAmount.value
         : balance.value?.mainBalance > fee.value.fee
         ? BigNumber(balance.value?.mainBalance).minus(fee.value.fee).toNumber()
@@ -876,7 +892,7 @@ export default {
     const feeType = ref('medium');
     const fee = computed(() =>
       // fee is object to keep fee-appropriate key (eg gasPrice)
-      !props.currentWallet.hasFee
+      props.currentWallet.hasNoFee
         ? { fee: feeInfo.value }
         : feeType.value === 'custom'
         ? { fee: customFee.value }
@@ -1431,7 +1447,20 @@ export default {
       txComment.value = comm;
     };
 
+    const isFocusAmountInput = ref(false);
+
+    const onFocusInput = () => {
+      isFocusAmountInput.value = true;
+    };
+
+    const onBlurInput = () => {
+      isFocusAmountInput.value = false;
+    };
+
     return {
+      onFocusInput,
+      onBlurInput,
+      isFocusAmountInput,
       onChangeComment,
       switchChangeHandler,
       WALLET_TYPES,

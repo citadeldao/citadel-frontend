@@ -356,6 +356,11 @@
         "delegateTo": ""
     },
     "ledger": {
+        "title": "",
+        "btTitle1": "",
+        "usbTitle1": "",
+        "btDesc": "",
+        "usbDesc": "",
         "connect": {
             "title": "",
             "desc": ""

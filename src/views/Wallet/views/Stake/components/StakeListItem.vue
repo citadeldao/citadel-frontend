@@ -102,7 +102,10 @@
       <div class="stake-list-item__right-section-info">
         <div v-if="showAmount" class="stake-list-item__right-section-line">
           <span
-            v-pretty-number="{ value: amount, currency: currentWallet.code }"
+            v-pretty-number="{
+              value: showBalance ? amount : HIDE_BALANCE_MASK,
+              currency: currentWallet.code,
+            }"
             class="stake-list-item__right-section-amount"
           />
           <span class="stake-list-item__right-section-amount-currency">
@@ -112,7 +115,7 @@
         <div v-if="item.stakeShare" class="stake-list-item__right-section-line">
           <span class="stake-list-item__right-section-share">Stake share</span>
           <span
-            v-pretty-number="item.stakeShare"
+            v-pretty-number="showBalance ? item.stakeShare : HIDE_BALANCE_MASK"
             class="stake-list-item__right-section-share-value"
           />
           <span class="stake-list-item__right-section-share-currency">% </span>
@@ -140,6 +143,8 @@ import EditButton from '@/components/UI/EditButton.vue';
 import Label from '@/components/UI/Label.vue';
 import Tooltip from '@/components/UI/Tooltip.vue';
 import { colors } from './config';
+import { useStore } from 'vuex';
+import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
 
 export default {
   name: 'StakeListItem',
@@ -194,6 +199,7 @@ export default {
     const nodeIconRef = ref(null);
     const currentIcon = ref();
     const hasLogo = ref(false);
+    const store = useStore();
 
     if (props.icon) {
       import(`@/assets/icons/networks/${props.icon}.svg`).then((val) => {
@@ -210,6 +216,8 @@ export default {
     };
 
     const fee = computed(() => props.item.fee || 0);
+
+    const showBalance = computed(() => store.getters['balance/showBalance']);
 
     const { t } = useI18n();
     const title = computed(() =>
@@ -307,6 +315,8 @@ export default {
       showAmount,
       showEditButton,
       toValidatorPage,
+      showBalance,
+      HIDE_BALANCE_MASK,
     };
   },
 };
