@@ -250,6 +250,7 @@ import { keplrNetworks } from '@/config/availableNets';
 import ClaimModal from './views/components/ClaimModal';
 import ClaimModalXCT from './views/components/ClaimModalXCT';
 import ClaimSuccess from './views/components/ClaimSuccess';
+import useCurrentWalletRequests from '@/compositions/useCurrentWalletRequests';
 
 export default {
   name: 'Wallet',
@@ -277,6 +278,7 @@ export default {
     ClaimSuccess,
   },
   setup() {
+    const { getDelegationBalance } = useCurrentWalletRequests();
     const { t } = useI18n();
     const store = useStore();
     const route = useRoute();
@@ -346,6 +348,7 @@ export default {
       await loadXCTInfo();
       await checkKeplrAddress();
       await getWalletRewards();
+      await getDelegationBalance();
     });
 
     const getWalletRewards = async () => {
@@ -359,6 +362,7 @@ export default {
       () => route.params,
       async (params, oldParams) => {
         await loadXCTInfo();
+        await getDelegationBalance();
         if (
           params.net !== oldParams.net ||
           params.address.toLowerCase() !== oldParams.address.toLowerCase()
