@@ -193,7 +193,7 @@ export default {
     const totalUSDBalance = computed(() => {
       const value = walletsList.value.reduce((total, currentValue) => {
         const balanceUSD = BigNumber(currentValue.balance.calculatedBalance)
-          .times(currency.value[currentValue.net].USD)
+          .times(currency.value[currentValue.net]?.USD || 0)
           .toNumber();
         return BigNumber(total).plus(balanceUSD).toNumber();
       }, 0);
