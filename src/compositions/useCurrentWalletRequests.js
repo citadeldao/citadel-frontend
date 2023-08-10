@@ -64,7 +64,7 @@ export default function useCurrentWalletRequests() {
   const balanceError = ref(null);
   const getDelegationBalance = async () => {
     const { data, error } = await CryptoCoin.getBalance({
-      walletId: wallet.value.id,
+      walletId: wallet.value?.id,
       token: currentToken?.value?.net,
     });
     balance.value = data;
