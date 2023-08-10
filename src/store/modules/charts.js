@@ -147,7 +147,7 @@ export default {
         dateFrom: from,
         dateTo: dateTo,
         listId,
-        net,
+        net: net || '',
         fiat,
       };
 
