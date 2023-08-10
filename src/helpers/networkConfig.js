@@ -15,9 +15,9 @@ export const getNetworkDataByKey = ({
 
   if (token && result) {
     console.log('TOKENS LOG', config, net, token);
-    result = config[net].tokens[`${net}_${token}`];
+    result = config[net]?.tokens[`${net}_${token}`];
   }
 
-  if (key === 'allKeys') return result;
-  else return result[key];
+  if (key === 'allKeys') return result || {};
+  else return result[key] || {};
 };
