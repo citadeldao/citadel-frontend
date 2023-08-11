@@ -308,7 +308,10 @@ export default class CryptoCoin {
       //   await store.dispatch('wallets/getNewWallets','lazy');
       // }
     } else {
-      res = await citadel.getBalanceByAddress(net || '', address);
+      if (!net && !address) {
+        return {};
+      }
+      res = await citadel.getBalanceByAddress(net, address);
     }
 
     if (!res.error) {
