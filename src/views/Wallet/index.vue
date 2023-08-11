@@ -36,6 +36,14 @@
           <KtAddresses :current-wallet="currentWallet" />
         </div>
       </div>
+      <BtcAddresses
+        v-if="
+          currentWallet.net === 'btc' &&
+          currentWallet.segwitAddress &&
+          currentWallet.nativeAddress
+        "
+        :current-wallet="currentWallet"
+      />
       <div class="wallet__main">
         <template v-if="!currentWallet.isStub">
           <MainHeader
@@ -251,6 +259,7 @@ import ClaimModal from './views/components/ClaimModal';
 import ClaimModalXCT from './views/components/ClaimModalXCT';
 import ClaimSuccess from './views/components/ClaimSuccess';
 import useCurrentWalletRequests from '@/compositions/useCurrentWalletRequests';
+import BtcAddresses from './components/BtcAddresses';
 
 export default {
   name: 'Wallet',
@@ -276,6 +285,7 @@ export default {
     ClaimModal,
     ClaimModalXCT,
     ClaimSuccess,
+    BtcAddresses,
   },
   setup() {
     const { getDelegationBalance } = useCurrentWalletRequests();

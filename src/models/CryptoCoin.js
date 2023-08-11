@@ -21,7 +21,9 @@ export default class CryptoCoin {
     this.name = opts?.config?.name;
     this.code = opts?.config?.code;
     this.address = opts?.address;
-    this.mnemonicEncoded = opts?.mnemonicEncoded || null;
+    (this.segwitAddress = opts?.segwitAddress || null),
+      (this.nativeAddress = opts?.nativeAddress || null),
+      (this.mnemonicEncoded = opts?.mnemonicEncoded || null);
     this.privateKeyEncoded = opts?.privateKeyEncoded || null;
     this.privateKeyHash = opts?.privateKeyHash || null;
     this.savedViewingKeys = opts?.savedViewingKeys || null;
@@ -306,7 +308,7 @@ export default class CryptoCoin {
       //   await store.dispatch('wallets/getNewWallets','lazy');
       // }
     } else {
-      res = await citadel.getBalanceByAddress(net, address);
+      res = await citadel.getBalanceByAddress(net || '', address);
     }
 
     if (!res.error) {
