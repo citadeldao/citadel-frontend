@@ -1,3 +1,7 @@
+const emptyTokens = {
+  xct: 'XCT',
+};
+
 export const getNetworkDataByKey = ({
   config = {},
   network = 'Others',
@@ -14,9 +18,10 @@ export const getNetworkDataByKey = ({
   if (config[net]) result = config[net];
 
   if (token && result) {
-    result = config[net].tokens[`${net}_${token}`];
+    result = config[net]?.tokens?.[`${net}_${token}`];
   }
+  // console.log(net, token);
 
-  if (key === 'allKeys') return result;
-  else return result[key];
+  if (key === 'allKeys') return result || emptyTokens[token] || '';
+  else return result?.[key] || emptyTokens[token] || '';
 };
