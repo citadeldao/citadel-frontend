@@ -1096,6 +1096,10 @@ export default {
       disableBtn.value = false;
     };
 
+    const selectedBtcAddressType = computed(
+      () => store.getters['btcAddresses/selectedBtcAddressType']
+    );
+
     const currentKtAddress = inject('currentKtAddress');
     // Prepare and Send tx
     const transferParams = computed(() => {
@@ -1111,6 +1115,10 @@ export default {
       };
       //for crossnetwork transfer
       if (isSendToAnotherNetwork.value) data.token = props.currentWallet.net;
+
+      if (props.currentWallet.net === 'btc' && selectedBtcAddressType.value) {
+        data.btcAddressType = selectedBtcAddressType.value;
+      }
 
       return data;
     });
