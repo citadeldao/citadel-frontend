@@ -3,7 +3,7 @@
     <div v-if="showFrom" class="send-direction__line">
       <span class="send-direction__line-title">{{ $t('sendFrom') }}: </span>
       <span class="send-direction__line-from">
-        {{ getMiddleCutText(address) }}
+        {{ getMiddleCutText(dynamicAddress) }}
       </span>
     </div>
     <div v-if="to" class="send-direction__line">
@@ -117,6 +117,7 @@ import hide from '@/assets/icons/networks/hide.svg';
 import copyIcon from '@/assets/icons/copyIcon.svg';
 import copyToClipboard from '@/helpers/copyToClipboard';
 import { computed, inject, ref } from 'vue';
+import { useStore } from 'vuex';
 
 export default {
   name: 'SendDirection',
@@ -176,6 +177,7 @@ export default {
   },
 
   setup(props) {
+    const store = useStore();
     const isMultiple = inject('isMultiple');
     const currentKtAddress = inject('currentKtAddress');
     const txUrl = computed(() => {
@@ -191,6 +193,11 @@ export default {
 
       return data;
     });
+
+    const selectedBtcAddressType = computed(
+      () => store.getters['btcAddresses/selectedBtcAddressType']
+    );
+
     const isVkHidden = ref(true);
     const handleClick = () => {
       isVkHidden.value = !isVkHidden.value;
@@ -219,6 +226,16 @@ export default {
         : props.wallet?.address
     );
 
+    const dynamicAddress = computed(() => {
+      if (props.wallet.net === 'btc' && selectedBtcAddressType.value) {
+        if (selectedBtcAddressType.value === 'segwit')
+          return props.wallet.segwitAddress;
+        if (selectedBtcAddressType.value === 'native')
+          return props.wallet.nativeAddress;
+      }
+      return address.value;
+    });
+
     return {
       txUrl,
       isVkHidden,
@@ -228,6 +245,7 @@ export default {
       isCopied,
       address,
       getMiddleCutText,
+      dynamicAddress,
     };
   },
 };
