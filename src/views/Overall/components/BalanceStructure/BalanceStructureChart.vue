@@ -106,6 +106,7 @@ export default {
     const isToggleHovered = ref(false);
     const isEmpty = computed(() => !Object.keys(balanceStructure.value).length);
     const showBalance = computed(() => store.getters['balance/showBalance']);
+    const loadAfterGetBalanceStructure = ref(false);
 
     const refreshChart = async () => {
       if (!isEmpty.value) {
@@ -126,7 +127,12 @@ export default {
 
     watch(
       () => balanceStructure.value,
-      async () => await refreshChart()
+      async () => {
+        if (!loadAfterGetBalanceStructure.value) {
+          await refreshChart();
+          loadAfterGetBalanceStructure.value = true;
+        }
+      }
     );
 
     watch(
