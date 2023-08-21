@@ -71,8 +71,7 @@ export default {
       required: true,
     },
   },
-  setup(props) {
-    console.log('WTTTTTT', props.currentWallet);
+  setup() {
     const isCopied = ref(false);
     const isCopiedSecond = ref(false);
 

@@ -409,18 +409,19 @@ export default class CryptoCoin {
     });
 
     if (!error) {
-      // if (!data.enough && options.transactionType !== 'transfer') {
-      //   const availableBalance =
-      //     this?.tokenBalance?.mainBalance || this?.balance?.mainBalance;
-      //   console.log('availableBalance', availableBalance, data.fee);
-      //   notify({
-      //     type: 'warning',
-      //     text:
-      //       availableBalance < +data.fee
-      //         ? t('dontHaveEnoughFoundsForFee')
-      //         : t('dontHaveEnoughFounds', { type: options.transactionType }),
-      //   });
-      // }
+      if (!data.enough && options.transactionType !== 'transfer') {
+        const availableBalance =
+          this?.tokenBalance?.mainBalance || this?.balance?.mainBalance;
+
+        notify({
+          type: 'warning',
+          text:
+            availableBalance < +data.fee
+              ? t('dontHaveEnoughFoundsForFee') +
+                ` Max amount ${data.maxAmount}`
+              : t('dontHaveEnoughFounds', { type: options.transactionType }),
+        });
+      }
 
       return {
         ok: true,

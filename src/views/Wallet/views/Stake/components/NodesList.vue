@@ -192,7 +192,7 @@ export default {
       if (redelegationDirection.value === 'to') {
         await updateSelectedNodeForRedelegation(item);
       } else {
-        await updateSelectedNode(item);
+        await updateSelectedNode(item); //
       }
     };
 

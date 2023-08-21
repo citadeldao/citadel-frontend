@@ -175,8 +175,9 @@ export default {
           isWithoutDelegation.value ? '' : selectedNode.value
         ));
     };
-    updateAmount('1');
+
     const maxAmount = inject('maxAmount');
+    // updateAmount(maxAmount.value);
     const insufficientFunds = inject('insufficientFunds');
 
     const checkActiveTab = (targetTab) => {

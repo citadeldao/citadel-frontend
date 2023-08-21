@@ -31,8 +31,12 @@ export default class keplrConnector {
     }
   }
 
-  getSignType(rawTx) {
-    return rawTx.directSignKeplrRequired ? 'direct' : 'json';
+  async getSignType(rawTx, chainId) {
+    const walletInfo = await window.keplr?.getKey(chainId);
+
+    return rawTx.directSignKeplrRequired && !walletInfo.isNanoLedger
+      ? 'direct'
+      : 'json';
   }
 
   async getOutputHash(signer, rawTx, keplrResult) {
@@ -40,7 +44,10 @@ export default class keplrConnector {
 
     const defaultTx = {
       ...keplrResult.signedTx,
-      signType: this.getSignType(rawTx),
+      signType: await this.getSignType(
+        rawTx,
+        rawTx.transaction?.json?.chain_id
+      ),
       publicKey: await signer.publicKey /* getPublicKeyDecoded() */,
       signature: keplrResult.signature,
     };
@@ -52,7 +59,10 @@ export default class keplrConnector {
     const defaultSendTx = rawTx.transaction;
 
     const protobufTx = {
-      signType: this.getSignType(rawTx),
+      signType: await this.getSignType(
+        rawTx,
+        rawTx.transaction?.json?.chain_id
+      ),
       mode: 'sync',
       tx: {
         memo: defaultSendTx.json.memo || '',
@@ -87,7 +97,11 @@ export default class keplrConnector {
         window.keplr.defaultOptions = {};
       }
 
-      if (this.getSignType(rawTx) === 'direct') {
+      const walletInfo = await window.keplr?.getKey(
+        data.chain_id || data.json.chain_id
+      );
+
+      if (this.getSignType(rawTx) === 'direct' && !walletInfo.isNanoLedger) {
         const res = await window.keplr.signDirect(
           data.chain_id || data.json.chain_id,
           signer,
