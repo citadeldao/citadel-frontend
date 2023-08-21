@@ -127,9 +127,14 @@ export default {
 
     watch(
       () => balanceStructure.value,
-      async () => {
-        if (!loadAfterGetBalanceStructure.value) {
+      async (newV, oldV) => {
+        console.log(111111111111);
+        if (JSON.stringify(newV) !== JSON.stringify(oldV)) {
+          console.log('NewV', newV);
+          console.log('OldV', oldV);
           await refreshChart();
+        }
+        if (!loadAfterGetBalanceStructure.value) {
           loadAfterGetBalanceStructure.value = true;
         }
       }
