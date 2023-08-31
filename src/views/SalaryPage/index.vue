@@ -401,12 +401,14 @@ export default {
     );
 
     const networksList = computed(() => {
-      const tokens = store.getters['networks/networksList']?.find(
-        (item) => item.net === 'bsc'
-      )?.tokens;
-      return Object.keys(tokens || {}).map((key) => {
-        return tokens[key];
-      });
+      if (!signerWallet.value) return [];
+      return signerWallet.value.subtokensList;
+      // const tokens = store.getters['networks/networksList']?.find(
+      //   (item) => item.net === 'bsc'
+      // )?.tokens;
+      // return Object.keys(tokens || {}).map((key) => {
+      //   return tokens[key];
+      // });
     });
 
     const tokens = computed(() => {
@@ -462,6 +464,7 @@ export default {
           (w) =>
             w.address.toLowerCase() === address.toLowerCase() && w.net === 'bsc'
         );
+        console.log('signerWallet.value', signerWallet.value);
 
         if (!signerWallet.value || !tokenContract.value) return;
         const { data } = await citadel.getBalanceById(
@@ -469,6 +472,7 @@ export default {
           tokenContract.value.net
         );
         mainBalance.value = data.mainBalance;
+        console.log('mmm', mainBalance.value);
       }
     };
 
