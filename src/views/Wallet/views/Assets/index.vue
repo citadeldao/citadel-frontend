@@ -8,7 +8,8 @@
         stateCurrentWallet.balance.calculatedBalance ||
         stateCurrentWallet.subtokenBalanceUSD ||
         showAssetsExep.includes(stateCurrentWallet.net) ||
-        currentToken
+        currentToken ||
+        tokenList.length
       "
     >
       <div class="assets__header">
