@@ -314,9 +314,22 @@ export default {
       );
     });
 
+    const subTokensBalanceUSD = computed(() => {
+      return stateCurrentWallet.value.subtokensList.reduce(
+        (innerTotal, currentItem) => {
+          const balance = currentItem.tokenBalance.calculatedBalance;
+          const rate = currentItem.tokenBalance.price?.USD || 0;
+          const valUSD = BigNumber(balance).times(rate).toNumber();
+
+          return BigNumber(innerTotal).plus(valUSD).toNumber();
+        },
+        0
+      );
+    });
+
     const balanceUSD = computed(() => {
       return BigNumber(stateCurrentWallet.value.balanceUSD)
-        .plus(stateCurrentWallet.value.subtokenBalanceUSD)
+        .plus(subTokensBalanceUSD.value)
         .toNumber();
     });
 
