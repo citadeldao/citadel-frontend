@@ -290,7 +290,7 @@ export default function useStaking(stakeNodes, list) {
     let max = resMaxAmount.value || currentWallet.value.balance.mainBalance;
 
     if (max > 0) {
-      return max;
+      return BigNumber(max).toFixed();
     } else {
       return 0;
     }

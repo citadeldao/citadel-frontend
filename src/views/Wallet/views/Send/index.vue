@@ -131,7 +131,7 @@
             @focus="onFocusInput"
             @blur="onBlurInput"
             :show-error-text="showErrorText"
-            :error="!showBridgeModal && insufficientFunds && isFocusAmountInput"
+            :error="!showBridgeModal && isFocusAmountInput && insufficientFunds"
             data-qa="send__amount-field"
             :show-set-max="maxAmountParent !== 0"
           />

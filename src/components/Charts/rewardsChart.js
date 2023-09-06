@@ -89,6 +89,12 @@ export const renderRewardsChart = (
     }
   }
 
+  Object.keys(datasets).filter((key) => {
+    if (!datasets[key].label) {
+      delete datasets[key];
+    }
+  });
+
   const nets = Object.values(datasets).sort((a, b) => {
     return (
       b.data.reduce((acc, curr) => BigNumber(acc).plus(curr).toString(), 0) -
@@ -144,7 +150,7 @@ export const renderRewardsChart = (
 
   const PLUGINS = {
     legend: {
-      position: 'left',
+      position: Object.keys(datasets).length > 36 ? 'bottom' : 'left',
       align: 'start',
       labels: {
         usePointStyle: true,

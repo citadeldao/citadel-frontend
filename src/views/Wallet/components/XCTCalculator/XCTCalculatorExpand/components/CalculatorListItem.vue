@@ -5,7 +5,7 @@
     </keep-alive>
     <div class="calculator-list-item__main">
       <span class="calculator-list-item__main-title">
-        {{ data.name }}
+        {{ data.name || 'XCT' }}
       </span>
       <div v-if="data.net !== OUR_TOKEN" class="calculator-list-item__slider">
         <el-slider
