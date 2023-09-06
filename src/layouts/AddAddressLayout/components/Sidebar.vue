@@ -207,6 +207,7 @@ export default {
     });
 
     const subTokensBalanceUSD = computed(() => {
+      console.log('walletsList.value', walletsList.value);
       return walletsList.value.reduce((total, currentValue) => {
         return BigNumber(total)
           .plus(currentValue.subtokenBalanceUSD || 0)
