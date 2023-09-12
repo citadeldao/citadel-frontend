@@ -130,19 +130,19 @@ export default {
 
       if (!segwitRes.error) {
         segwitBalance.value = segwitRes.data.mainBalance;
-      }
-      if (!nativeRes.error) {
-        nativeBalance.value = nativeRes.data.mainBalance;
+        store.dispatch('btcAddresses/setBtcBalanceType', {
+          type: 'segwit',
+          balance: segwitBalance.value,
+        });
       }
 
-      // const res = await citadel.prepareTransfer({
-      //   net: 'btc',
-      //   from: props.currentWallet.segwitAddress,
-      //   options: {
-      //     fee: 0.000001,
-      //     amount: 0.000001
-      //   }
-      // })
+      if (!nativeRes.error) {
+        nativeBalance.value = nativeRes.data.mainBalance;
+        store.dispatch('btcAddresses/setBtcBalanceType', {
+          type: 'native',
+          balance: nativeBalance.value,
+        });
+      }
     };
 
     const cutAddress = (address) => {
@@ -217,6 +217,7 @@ export default {
       padding: 0 17px;
       box-sizing: border-box;
       border: 1px solid transparent;
+      position: relative;
 
       &:hover {
         cursor: pointer;
