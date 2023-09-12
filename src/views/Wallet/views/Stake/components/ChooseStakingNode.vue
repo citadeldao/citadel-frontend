@@ -161,6 +161,7 @@ export default {
     const selectedNodeForRedelegation = inject('selectedNodeForRedelegation');
     const mode = inject('mode');
     const showNodesList = (direction = '') => {
+      if (insufficientFunds.value) return;
       updateRedelegationDirection(direction);
       updateShowChooseNode(false);
       updateShowNodesList(true);
@@ -174,7 +175,9 @@ export default {
           isWithoutDelegation.value ? '' : selectedNode.value
         ));
     };
+
     const maxAmount = inject('maxAmount');
+    // updateAmount(maxAmount.value);
     const insufficientFunds = inject('insufficientFunds');
 
     const checkActiveTab = (targetTab) => {

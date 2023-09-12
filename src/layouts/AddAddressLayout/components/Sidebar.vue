@@ -207,9 +207,17 @@ export default {
     });
 
     const subTokensBalanceUSD = computed(() => {
-      return walletsList.value.reduce((total, currentValue) => {
+      return walletsList.value.reduce((total, currentToken) => {
         return BigNumber(total)
-          .plus(currentValue.subtokenBalanceUSD || 0)
+          .plus(
+            currentToken.subtokensList.reduce((innerTotal, currentItem) => {
+              const balance = currentItem.tokenBalance.calculatedBalance;
+              const rate = currentItem.tokenBalance.price?.USD || 0;
+              const valUSD = BigNumber(balance).times(rate).toNumber();
+
+              return BigNumber(innerTotal).plus(valUSD).toNumber();
+            }, 0)
+          )
           .toNumber();
       }, 0);
     });

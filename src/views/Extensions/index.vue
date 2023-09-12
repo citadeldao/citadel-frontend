@@ -387,8 +387,11 @@ export default {
               net: w.net,
               type: w.type,
               publicKey:
-                w.publicKey ||
-                /* (w.getPublicKeyDecoded && (await w.getPublicKeyDecoded())) */ null,
+                typeof w.publicKey === 'string'
+                  ? w.publicKey
+                  : Buffer.from(w.publicKey).toString('hex'),
+              // w.publicKey ||
+              // /* (w.getPublicKeyDecoded && (await w.getPublicKeyDecoded())) */ null,
             }))
         );
 
