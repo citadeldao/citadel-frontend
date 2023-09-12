@@ -877,7 +877,6 @@ export default {
       if (props.currentToken) {
         return balance.value?.mainBalance;
       }
-      console.log('ffff', fee.value);
 
       return props.currentWallet.hasNoFee
         ? resMaxAmount.value
@@ -890,7 +889,7 @@ export default {
 
     // Select Fee
     const showFeeSelectModal = ref(false);
-    const feeType = ref(props.currentWallet.net === 'btc' ? 'low' : 'medium');
+    const feeType = ref('medium');
     const fee = computed(() =>
       // fee is object to keep fee-appropriate key (eg gasPrice)
       props.currentWallet.hasNoFee
