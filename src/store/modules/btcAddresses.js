@@ -24,11 +24,6 @@ export default {
     [types.SET_BTC_BALANCE](state, { balance, type }) {
       if (type === 'segwit') state.segwitAddressBalance = balance;
       if (type === 'native') state.nativeAddressBalance = balance;
-      console.log(
-        'balances seg/nat',
-        state.segwitAddressBalance,
-        state.nativeAddressBalance
-      );
     },
   },
 
