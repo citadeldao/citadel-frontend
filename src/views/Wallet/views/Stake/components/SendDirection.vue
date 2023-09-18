@@ -121,7 +121,7 @@
       </div>
     </transition>
 
-    <div class="send-direction__line">
+    <div v-if="fee || Object.keys(adding).length" class="send-direction__line">
       <span class="send-direction__line-title"> {{ $t('fee') }}: </span>
       <div v-if="wallet.hasResource">
         <div
