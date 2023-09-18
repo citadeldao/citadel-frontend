@@ -121,32 +121,37 @@
       </div>
     </transition>
 
-    <div v-if="fee || Object.keys(adding).length" class="send-direction__line">
-      <span class="send-direction__line-title"> {{ $t('fee') }}: </span>
-      <div v-if="wallet.hasResource">
-        <div
-          class="send-direction__resource-item"
-          v-for="item in adding"
-          :key="item.name"
-        >
+    <div class="send-direction__line">
+      <template v-if="Object.keys(adding).length">
+        <span class="send-direction__line-title"> {{ $t('fee') }}: </span>
+        <div v-if="wallet.hasResource">
+          <div
+            class="send-direction__resource-item"
+            v-for="item in adding"
+            :key="item.name"
+          >
+            <span
+              v-pretty-number="item.current || item.value"
+              class="send-direction__line-fee-amount"
+            />
+            <span class="send-direction__line-currency">
+              {{ item.nameForUser }}
+            </span>
+          </div>
+        </div>
+      </template>
+      <template v-if="fee">
+        <span class="send-direction__line-title"> {{ $t('fee') }}: </span>
+        <div>
           <span
-            v-pretty-number="item.current || item.value"
+            v-pretty-number="{ value: fee || 0, currency: wallet?.code }"
             class="send-direction__line-fee-amount"
           />
           <span class="send-direction__line-currency">
-            {{ item.nameForUser }}
+            {{ currentToken ? currentToken.parentCoin.code : wallet?.code }}
           </span>
         </div>
-      </div>
-      <div v-else>
-        <span
-          v-pretty-number="{ value: fee || 0, currency: wallet?.code }"
-          class="send-direction__line-fee-amount"
-        />
-        <span class="send-direction__line-currency">
-          {{ currentToken ? currentToken.parentCoin.code : wallet?.code }}
-        </span>
-      </div>
+      </template>
     </div>
     <span class="send-direction__line-title">
       <div v-for="item in txUrl" :key="item" class="send-direction__line">
