@@ -25,10 +25,7 @@
         <span class="send-direction__line-currency"> {{ wallet?.code }} </span>
       </div>
     </div>
-    <div
-      v-if="fee && currentWallet.hasResource && Object.keys(adding).length"
-      class="send-direction__line"
-    >
+    <div v-if="fee || currentWallet.hasResource" class="send-direction__line">
       <span class="send-direction__line-title"> {{ $t('fee') }}: </span>
       <div v-if="currentWallet.hasResource && Object.keys(adding).length">
         <div
@@ -47,7 +44,7 @@
       </div>
       <div v-else>
         <span
-          v-pretty-number="{ value: fee || 0, currency: wallet?.code }"
+          v-pretty-number="{ value: 0, currency: wallet?.code }"
           class="send-direction__line-fee-amount"
         />
         <span class="send-direction__line-currency">

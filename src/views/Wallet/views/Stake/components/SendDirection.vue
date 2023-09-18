@@ -140,7 +140,7 @@
           </div>
         </div>
       </template>
-      <template v-if="fee">
+      <template v-else>
         <span class="send-direction__line-title"> {{ $t('fee') }}: </span>
         <div>
           <span
