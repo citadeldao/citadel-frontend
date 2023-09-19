@@ -25,9 +25,9 @@
         <span class="send-direction__line-currency"> {{ wallet?.code }} </span>
       </div>
     </div>
-    <div v-if="fee || currentWallet.hasResource" class="send-direction__line">
+    <div v-if="fee || currentWallet?.hasResource" class="send-direction__line">
       <span class="send-direction__line-title"> {{ $t('fee') }}: </span>
-      <div v-if="currentWallet.hasResource && Object.keys(adding).length">
+      <div v-if="currentWallet?.hasResource && Object.keys(adding).length">
         <div
           class="send-direction__resource-item"
           v-for="item in adding"
@@ -82,7 +82,7 @@
       </div>
     </div>
     <div
-      v-if="feeInfo && currentWallet.hasResource"
+      v-if="feeInfo && currentWallet?.hasResource"
       class="send-direction__needed-resources"
     >
       <span
