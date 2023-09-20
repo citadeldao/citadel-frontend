@@ -110,7 +110,8 @@
       "
       class="claim-rewards__lock"
     >
-      <claimBlockLock />
+      <claimBlockLockAuto v-if="['oasis', 'sui'].includes(currentWallet.net)" />
+      <claimBlockLock v-else />
     </div>
     <div v-if="showClaimButton" class="claim-rewards__button">
       <hotSale class="claim-rewards__button-shadow-icon" />
@@ -134,6 +135,7 @@
 import info from '@/assets/icons/info.svg';
 import hotSale from '@/assets/icons/hot-sale.svg';
 import claimBlockLock from '@/assets/icons/claim-block-lock.svg';
+import claimBlockLockAuto from '@/assets/icons/claim-block-lock-auto.svg';
 import RoundArrowButton from '@/components/UI/RoundArrowButton';
 import Modal from '@/components/Modal';
 import InfoModal from './InfoModal';
@@ -152,6 +154,7 @@ export default {
     hotSale,
     RoundArrowButton,
     claimBlockLock,
+    claimBlockLockAuto,
     Modal,
     InfoModal,
     Tooltip,
@@ -489,6 +492,7 @@ export default {
   .claim-rewards__lock {
     svg {
       fill: #a4dbe3;
+      width: auto;
     }
   }
 }
