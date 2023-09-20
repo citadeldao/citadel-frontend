@@ -584,6 +584,8 @@
     "autoclaimNote":  "",
     "nodeObjectStatusNote": "",
     "rewardsSummary": "",
+    "claimSummary": "",
+    "claimSummaryDesc": "",
     "stakingRatio": "Ratio de staking",
     "inflation": "Inflation",
     "tokenPrice": "Prix du jeton",

@@ -593,6 +593,8 @@
     "autoclaimNote":  "Your rewards will be claimed automatically after unstaking the transaction.",
     "nodeObjectStatusNote": "Status: Pending. You will be able to unstake at the next epoch.",
     "rewardsSummary": "Rewards Summary",
+    "claimSummary": "Claim rewards",
+    "claimSummaryDesc": "Once you unstake funds, rewards will be distributed automatically",
     "stakingRatio": "Staking ratio",
     "inflation": "Inflation",
     "tokenPrice": "Token price",

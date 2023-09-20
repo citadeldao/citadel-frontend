@@ -9,13 +9,22 @@
       noAccess:
         currentWallet?.type === WALLET_TYPES.PUBLIC_KEY &&
         currentWalletType !== WALLET_TYPES.METAMASK,
+      noClaim:
+        currentWallet?.type !== WALLET_TYPES.PUBLIC_KEY &&
+        currentWalletInfo?.claimableRewards &&
+        ['oasis', 'sui'].includes(currentWallet.net),
     }"
     @click="handleBlockClick"
   >
     <div class="claim-rewards__section">
       <div>
         <span class="claim-rewards__title">
-          {{ $t(title) }}
+          {{
+            ['oasis', 'sui'].includes(currentWallet.net) &&
+            currentWalletInfo?.claimableRewards
+              ? $t('claimSummary')
+              : $t(title)
+          }}
         </span>
         <div class="claim-rewards__tooltip">
           <Tooltip v-if="hasCustomClaimInfoNets.includes(currentWallet.net)">
@@ -30,7 +39,12 @@
       </div>
 
       <span class="claim-rewards__note">
-        {{ subtitle }}
+        {{
+          ['oasis', 'sui'].includes(currentWallet.net) &&
+          currentWalletInfo?.claimableRewards
+            ? $t('claimSummaryDesc')
+            : subtitle
+        }}
       </span>
       <span
         v-if="apy || currentWalletInfo?.claimableRewards"
@@ -89,8 +103,10 @@
     </div>
     <div
       v-if="
-        currentWallet?.type === WALLET_TYPES.PUBLIC_KEY &&
-        currentWalletType !== WALLET_TYPES.METAMASK
+        (['oasis', 'sui'].includes(currentWallet.net) &&
+          currentWalletInfo?.claimableRewards) ||
+        (currentWallet?.type === WALLET_TYPES.PUBLIC_KEY &&
+          currentWalletType !== WALLET_TYPES.METAMASK)
       "
       class="claim-rewards__lock"
     >
@@ -452,6 +468,28 @@ export default {
   .claim-rewards__currency,
   .claim-rewards__apy {
     color: $black;
+  }
+}
+
+.noClaim {
+  background: #bfeaf0;
+
+  .claim-rewards__info {
+    opacity: 0;
+  }
+
+  .claim-rewards__title {
+    color: #0a2778;
+  }
+
+  .claim-rewards__note {
+    color: #313354;
+  }
+
+  .claim-rewards__lock {
+    svg {
+      fill: #a4dbe3;
+    }
   }
 }
 

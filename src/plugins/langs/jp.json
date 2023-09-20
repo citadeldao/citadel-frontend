@@ -582,6 +582,8 @@
     "autoclaimNote":  "",
     "nodeObjectStatusNote": "",
     "rewardsSummary": "",
+    "claimSummary": "",
+    "claimSummaryDesc": "",
     "stakingRatio": "ステーキング率",
     "inflation": "インフレーション",
     "tokenPrice": "トークン価格",

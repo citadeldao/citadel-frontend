@@ -581,6 +581,8 @@
     "autoclaimNote":  "",
     "nodeObjectStatusNote": "",
     "rewardsSummary": "",
+    "claimSummary": "",
+    "claimSummaryDesc": "",
     "stakingRatio": "Застейканные активы",
     "inflation": "Инфляция",
     "tokenPrice": "Цена актива",
