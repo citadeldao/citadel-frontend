@@ -11,8 +11,8 @@
         currentWalletType !== WALLET_TYPES.METAMASK,
       noClaim:
         currentWallet?.type !== WALLET_TYPES.PUBLIC_KEY &&
-        currentWalletInfo?.claimableRewards &&
-        ['oasis', 'sui'].includes(currentWallet.net),
+        (currentWalletInfo?.claimableRewards || currentWalletInfo?.stake) &&
+        notRewardsCoins.includes(currentWallet.net),
     }"
     @click="handleBlockClick"
   >
@@ -20,8 +20,8 @@
       <div>
         <span class="claim-rewards__title">
           {{
-            ['oasis', 'sui'].includes(currentWallet.net) &&
-            currentWalletInfo?.claimableRewards
+            notRewardsCoins.includes(currentWallet.net) &&
+            (currentWalletInfo?.claimableRewards || currentWalletInfo?.stake)
               ? $t('claimSummary')
               : $t(title)
           }}
@@ -40,8 +40,8 @@
 
       <span class="claim-rewards__note">
         {{
-          ['oasis', 'sui'].includes(currentWallet.net) &&
-          currentWalletInfo?.claimableRewards
+          notRewardsCoins.includes(currentWallet.net) &&
+          (currentWalletInfo?.claimableRewards || currentWalletInfo?.stake)
             ? $t('claimSummaryDesc')
             : subtitle
         }}
@@ -103,15 +103,23 @@
     </div>
     <div
       v-if="
-        (['oasis', 'sui'].includes(currentWallet.net) &&
-          currentWalletInfo?.claimableRewards) ||
-        (currentWallet?.type === WALLET_TYPES.PUBLIC_KEY &&
-          currentWalletType !== WALLET_TYPES.METAMASK)
+        notRewardsCoins.includes(currentWallet.net) &&
+        currentWallet?.type !== WALLET_TYPES.PUBLIC_KEY &&
+        (currentWalletInfo?.claimableRewards || currentWalletInfo?.stake)
       "
       class="claim-rewards__lock"
     >
-      <claimBlockLockAuto v-if="['oasis', 'sui'].includes(currentWallet.net)" />
-      <claimBlockLock v-else />
+      <claimBlockLockAuto v-if="notRewardsCoins.includes(currentWallet.net)" />
+    </div>
+    <div
+      v-if="
+        currentWallet?.type === WALLET_TYPES.PUBLIC_KEY &&
+        currentWalletType !== WALLET_TYPES.METAMASK
+      "
+      class="claim-rewards__lock"
+    >
+      <!-- <claimBlockLockAuto v-if="notRewardsCoins.includes(currentWallet.net)" /> -->
+      <claimBlockLock />
     </div>
     <div v-if="showClaimButton" class="claim-rewards__button">
       <hotSale class="claim-rewards__button-shadow-icon" />
@@ -175,6 +183,7 @@ export default {
   },
   emits: ['prepareClaim', 'prepareXctClaim'],
   setup(props, { emit }) {
+    const notRewardsCoins = ref(['oasis', 'sui']);
     const store = useStore();
     const { t } = useI18n();
     const rewardsList = inject('rewardsList');
@@ -187,11 +196,11 @@ export default {
       }
       return '326px';
     });
-    const currentWalletInfo = computed(() =>
-      props.isCurrentToken
+    const currentWalletInfo = computed(() => {
+      return props.isCurrentToken
         ? props.currentWallet.tokenBalance
-        : props.currentWallet.balance
-    );
+        : props.currentWallet.balance;
+    });
     const apy = computed(() =>
       props.isCurrentToken && props.currentWallet?.net === OUR_TOKEN
         ? +store.getters['subtokens/inflationInfoXCT'].yieldPct
@@ -212,6 +221,7 @@ export default {
     );
 
     const showClaimButton = computed(() => {
+      if (notRewardsCoins.value.includes(props.currentWallet.net)) return false;
       if (currentWalletType.value === WALLET_TYPES.PUBLIC_KEY) return false;
       if (
         currentWalletInfo.value?.claimableRewards &&
@@ -300,6 +310,7 @@ export default {
       hasCustomClaimInfoNets,
       showBalance,
       HIDE_BALANCE_MASK,
+      notRewardsCoins,
     };
   },
 };
