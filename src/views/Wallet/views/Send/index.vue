@@ -1119,7 +1119,11 @@ export default {
     const showConfirmModal = ref(false);
 
     const selectBridgeNetwork = async (key) => {
-      await getFees(key);
+      try {
+        await getFees(key);
+      } catch (err) {
+        console.error(err);
+      }
 
       bridgeTargetNet.value = key;
       toAddress.value = '';
