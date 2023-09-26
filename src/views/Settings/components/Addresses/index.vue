@@ -238,4 +238,14 @@ export default {
     }
   }
 }
+body.dark {
+  .addresses {
+    background: $dark-panel-bg;
+    box-shadow: none;
+
+    &__title {
+      color: $white;
+    }
+  }
+}
 </style>

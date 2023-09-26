@@ -467,4 +467,12 @@ export default {
     }
   }
 }
+
+body.dark {
+  .header {
+    &__menu-button {
+      background: #26273b; // $dark-layout-bg;
+    }
+  }
+}
 </style>

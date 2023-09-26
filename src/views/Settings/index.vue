@@ -474,4 +474,20 @@ export default {
     width: 63%;
   }
 }
+
+body.dark {
+  .settings {
+    &__right-side {
+      .two_in_one {
+        background: $dark-panel-bg;
+        box-shadow: none;
+
+        .language,
+        .subscriptions {
+          background: $dark-panel-bg;
+        }
+      }
+    }
+  }
+}
 </style>

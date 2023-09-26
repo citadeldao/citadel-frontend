@@ -225,4 +225,10 @@ export default {
     }
   }
 }
+
+body.dark {
+  .breadcrumbs-item {
+    color: $white;
+  }
+}
 </style>
