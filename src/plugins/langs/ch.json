@@ -584,6 +584,8 @@
     "autoclaimNote":  "",
     "nodeObjectStatusNote": "",
     "rewardsSummary": "",
+    "claimSummary": "",
+    "claimSummaryDesc": "",
     "stakingRatio": "质押比例",
     "inflation": "通胀",
     "tokenPrice": "代币价格",

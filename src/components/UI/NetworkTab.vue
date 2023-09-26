@@ -153,6 +153,12 @@ export default {
   }
   &__abbr {
     font-family: 'Panton_SemiBold';
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 80%;
+    text-align: center;
+
     @include md {
       display: none;
     }

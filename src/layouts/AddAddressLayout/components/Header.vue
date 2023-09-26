@@ -168,7 +168,7 @@ export default {
     const citadel = inject('citadel');
     const showPrivacy = ref(false);
     const showTerms = ref(false);
-    const { isUserMnemonic, isPasswordHash } = useCreateWallets();
+    const { isPasswordHash } = useCreateWallets();
 
     const metamaskConnector = computed(
       () => store.getters['metamask/metamaskConnector']
@@ -190,9 +190,7 @@ export default {
     const hasWallets = computed(
       () =>
         !!wallets.value.filter((w) => w.type !== WALLET_TYPES.PUBLIC_KEY)
-          .length &&
-        !!isUserMnemonic.value &&
-        !!isPasswordHash.value
+          .length && !!isPasswordHash.value
     );
 
     const logoutOptions = reactive({

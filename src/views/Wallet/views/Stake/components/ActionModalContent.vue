@@ -71,10 +71,7 @@
           </template>
         </div>
         <!-- hide when fee receive 0 -->
-        <div
-          v-if="!wallet.hasResource && stakingFee"
-          class="action-modal-content__total-wrapper"
-        >
+        <div v-if="stakingFee" class="action-modal-content__total-wrapper">
           <span
             v-pretty-number="{
               value: stakingFee || 0,

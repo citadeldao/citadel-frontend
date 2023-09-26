@@ -589,6 +589,8 @@
     "autoclaimNote":  "",
     "nodeObjectStatusNote": "",
     "rewardsSummary": "",
+    "claimSummary": "",
+    "claimSummaryDesc": "",
     "stakingRatio": "",
     "inflation": "",
     "tokenPrice": "",

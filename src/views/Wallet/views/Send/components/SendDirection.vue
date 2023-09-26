@@ -25,9 +25,9 @@
         <span class="send-direction__line-currency"> {{ wallet?.code }} </span>
       </div>
     </div>
-    <div v-if="fee" class="send-direction__line">
+    <div v-if="fee || currentWallet?.hasResource" class="send-direction__line">
       <span class="send-direction__line-title"> {{ $t('fee') }}: </span>
-      <div v-if="currentWallet.hasResource">
+      <div v-if="currentWallet?.hasResource && Object.keys(adding).length">
         <div
           class="send-direction__resource-item"
           v-for="item in adding"
@@ -44,7 +44,7 @@
       </div>
       <div v-else>
         <span
-          v-pretty-number="{ value: fee || 0, currency: wallet?.code }"
+          v-pretty-number="{ value: 0, currency: wallet?.code }"
           class="send-direction__line-fee-amount"
         />
         <span class="send-direction__line-currency">
@@ -82,7 +82,7 @@
       </div>
     </div>
     <div
-      v-if="feeInfo && currentWallet.hasResource"
+      v-if="feeInfo && currentWallet?.hasResource"
       class="send-direction__needed-resources"
     >
       <span
@@ -178,6 +178,7 @@ export default {
   setup(props) {
     const isMultiple = inject('isMultiple');
     const currentKtAddress = inject('currentKtAddress');
+
     const txUrl = computed(() => {
       const data = [];
 

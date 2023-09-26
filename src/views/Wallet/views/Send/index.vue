@@ -879,7 +879,7 @@ export default {
       }
 
       return props.currentWallet.hasNoFee
-        ? resMaxAmount.value
+        ? resMaxAmount.value || balance.value?.mainBalance
         : balance.value?.mainBalance > fee.value.fee
         ? BigNumber(balance.value?.mainBalance).minus(fee.value.fee).toNumber()
         : 0;
