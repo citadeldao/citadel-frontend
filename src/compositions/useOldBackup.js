@@ -86,6 +86,8 @@ export default function useOldBackup() {
             address: coin.address,
             nativeAddress: coin.nativeAddress,
             segwitAddress: coin.segwitAddress,
+            publicKeySegwit: coin.publicKeySegwit,
+            publicKeyNative: coin.publicKeyNative,
             privateKeyEncoded: coin.keys?.privateKeyEncoded,
             mnemonicEncoded: coin.keys?.mnemonicEncoded,
             publicKey: coin.keys?.publicKey,

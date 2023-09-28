@@ -23,6 +23,8 @@ export default class CryptoCoin {
     this.address = opts?.address;
     this.segwitAddress = opts?.segwitAddress || null;
     this.nativeAddress = opts?.nativeAddress || null;
+    this.publicKeySegwit = opts?.publicKeySegwit || null;
+    this.publicKeyNative = opts?.publicKeyNative || null;
     this.mnemonicEncoded = opts?.mnemonicEncoded || null;
     this.privateKeyEncoded = opts?.privateKeyEncoded || null;
     this.privateKeyHash = opts?.privateKeyHash || null;
