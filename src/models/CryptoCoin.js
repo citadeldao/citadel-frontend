@@ -183,9 +183,13 @@ export default class CryptoCoin {
 
   async signAndSendTransfer({ walletId, rawTransaction, ...options }) {
     const connectionType = store.getters['ledger/connectionType'];
+    const selectedBtcAddressType =
+      store.getters['btcAddresses/selectedBtcAddressType'];
+
     const res = await citadel.signAndSend(walletId, rawTransaction, {
       ...options,
       transportType: connectionType,
+      btcAddress: selectedBtcAddressType,
     });
 
     if (!res.error) {
