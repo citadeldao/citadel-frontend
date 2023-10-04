@@ -234,4 +234,26 @@ export default {
     }
   }
 }
+
+body.dark {
+  .dropdown {
+    &__title {
+      background: rgb(53, 55, 74);
+
+      .title__icon {
+        border: 1px solid #6b758e;
+        background: #6b758e;
+      }
+
+      .title__text {
+        background-color: rgb(53, 55, 74);
+        color: $white;
+
+        &:after {
+          background-color: #1b1c31;
+        }
+      }
+    }
+  }
+}
 </style>

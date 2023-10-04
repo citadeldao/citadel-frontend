@@ -219,4 +219,12 @@ body.dark {
     }
   }
 }
+
+body.dark {
+  .transfer-data {
+    &.true::after {
+      background: #313354;
+    }
+  }
+}
 </style>

@@ -332,4 +332,21 @@ export default {
   //   }
   // }
 }
+
+body.dark {
+  .address-item {
+    &__name,
+    &__currency {
+      color: #8496c0;
+    }
+
+    &__currency {
+      font-family: 'Panton_Light';
+    }
+
+    &__icon {
+      background: #393b53;
+    }
+  }
+}
 </style>

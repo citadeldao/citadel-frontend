@@ -902,4 +902,25 @@ export default {
     }
   }
 }
+
+body.dark {
+  .sidebar {
+    &__addresses-header-title {
+      color: $white;
+    }
+
+    &__add-address-button {
+      background: #2d2e42;
+    }
+
+    &__add-address-button-text {
+      color: $white;
+    }
+  }
+
+  .scroll-shadow--top,
+  .scroll-shadow--bottom {
+    background: transparent;
+  }
+}
 </style>

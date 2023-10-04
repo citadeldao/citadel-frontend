@@ -295,3 +295,9 @@ body.dark {
     box-shadow: none;
   }
 }
+
+body.dark {
+  .sidebar__logo {
+    fill: $white;
+  }
+}

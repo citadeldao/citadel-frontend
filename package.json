@@ -28,7 +28,7 @@
         "lodash.debounce": "^4.0.8",
         "long": "^4.0.0",
         "mobile-device-detect": "^0.4.3",
-        "moment": "^2.29.1",
+        "moment": "^2.29.4",
         "node-polyfill-webpack-plugin": "^1.1.4",
         "npm": "^8.3.0",
         "qrcode": "^1.4.4",

@@ -221,6 +221,7 @@ export default {
     font-family: 'Panton_SemiBold';
     line-height: 36px;
     padding-left: 21px; // future: area for icons
+    color: $too-ligth-blue;
 
     &:not(.select__option--selected):hover {
       color: $blue;
@@ -228,6 +229,34 @@ export default {
 
     &--selected {
       color: $ligth-blue;
+    }
+  }
+}
+
+body.dark {
+  .select {
+    &__value-text {
+      color: $white;
+    }
+
+    &__body {
+      border: 1px solid #393b53;
+      background-color: #35374a;
+    }
+
+    &__options {
+      background: #35374a;
+      border: 1px solid #393b53;
+    }
+
+    &__option {
+      &:not(.select__option--selected):hover {
+        color: $white;
+      }
+    }
+
+    &__label {
+      color: $white;
     }
   }
 }
