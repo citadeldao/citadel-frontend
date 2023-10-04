@@ -21,9 +21,11 @@ export default class CryptoCoin {
     this.name = opts?.config?.name;
     this.code = opts?.config?.code;
     this.address = opts?.address;
-    (this.segwitAddress = opts?.segwitAddress || null),
-      (this.nativeAddress = opts?.nativeAddress || null),
-      (this.mnemonicEncoded = opts?.mnemonicEncoded || null);
+    this.segwitAddress = opts?.segwitAddress || null;
+    this.nativeAddress = opts?.nativeAddress || null;
+    this.publicKeySegwit = opts?.publicKeySegwit || null;
+    this.publicKeyNative = opts?.publicKeyNative || null;
+    this.mnemonicEncoded = opts?.mnemonicEncoded || null;
     this.privateKeyEncoded = opts?.privateKeyEncoded || null;
     this.privateKeyHash = opts?.privateKeyHash || null;
     this.savedViewingKeys = opts?.savedViewingKeys || null;
@@ -181,9 +183,13 @@ export default class CryptoCoin {
 
   async signAndSendTransfer({ walletId, rawTransaction, ...options }) {
     const connectionType = store.getters['ledger/connectionType'];
+    const selectedBtcAddressType =
+      store.getters['btcAddresses/selectedBtcAddressType'];
+
     const res = await citadel.signAndSend(walletId, rawTransaction, {
       ...options,
       transportType: connectionType,
+      btcAddress: selectedBtcAddressType,
     });
 
     if (!res.error) {
