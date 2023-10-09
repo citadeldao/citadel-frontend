@@ -1015,7 +1015,7 @@ export default {
         wallet: props.currentWallet,
         maxAmount: maxValue,
         type: 'send',
-        maxAmountParent: +maxAmountParent.value,
+        maxAmountParent: +maxAmountParent.value || maxValue,
       });
     });
 
