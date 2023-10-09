@@ -133,7 +133,7 @@
             :show-error-text="showErrorText"
             :error="!showBridgeModal && isFocusAmountInput && insufficientFunds"
             data-qa="send__amount-field"
-            :show-set-max="maxAmountParent !== 0"
+            :show-set-max="maxAmountParent !== 0 || maxAmount !== 0"
           />
           <transition name="fade">
             <div
