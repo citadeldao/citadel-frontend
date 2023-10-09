@@ -1386,7 +1386,7 @@
         "termsOfService": "Terms of service",
         "guide": "Guide"
     },
-    "dontHaveEnoughFounds": "You do not have enough funds to pay the transaction fee.",
+    "dontHaveEnoughFounds": "You do not have enough funds.",
     "transactionsSocket": {
         "failed": "Transaction failed",
         "completed": "Transaction completed",
