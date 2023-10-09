@@ -711,4 +711,10 @@ export default {
     }
   }
 }
+
+body.dark {
+  .assets {
+    background: $dark-panel-bg;
+  }
+}
 </style>

@@ -1462,4 +1462,13 @@ export default {
     height: 300px;
   }
 }
+
+body.dark {
+  .wallet {
+    &__main {
+      box-shadow: none;
+      background: $dark-panel-bg;
+    }
+  }
+}
 </style>

@@ -10,7 +10,7 @@
           <div class="address">
             {{ cutAddress(currentWallet.nativeAddress) }}
           </div>
-          <div class="balance">
+          <div class="btc-balance">
             0 <span>{{ currentWallet.code }}</span>
           </div>
         </div>
@@ -34,7 +34,7 @@
           <div class="address">
             {{ cutAddress(currentWallet.segwitAddress) }}
           </div>
-          <div class="balance">
+          <div class="btc-balance">
             0 <span>{{ currentWallet.code }}</span>
           </div>
         </div>
@@ -151,7 +151,7 @@ export default {
           color: $dark-blue;
         }
 
-        .balance {
+        .btc-balance {
           font-family: 'Panton_SemiBold';
           font-size: 14px;
           color: #0a2778;
@@ -221,6 +221,34 @@ export default {
             border-radius: 2px;
             border-style: solid;
             border-color: transparent transparent $too-ligth-gray transparent;
+          }
+        }
+      }
+    }
+  }
+}
+
+body.dark {
+  .btc-addresses {
+    &__head {
+      .title {
+        color: $white;
+      }
+    }
+
+    &__items {
+      .item {
+        .left {
+          .address {
+            color: #6b93c0;
+          }
+
+          .btc-balance {
+            color: $white;
+
+            span {
+              color: #6b93c0;
+            }
           }
         }
       }

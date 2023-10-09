@@ -51,4 +51,12 @@ button {
     color: $mid-gray;
   }
 }
+
+body.dark {
+  .edit-button {
+    background: transparent;
+    color: $dark-orange;
+    border: 1px solid $dark-orange;
+  }
+}
 </style>

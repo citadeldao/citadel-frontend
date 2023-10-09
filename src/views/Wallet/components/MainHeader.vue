@@ -132,4 +132,19 @@ export default {
     color: $too-dark-blue;
   }
 }
+
+body.dark {
+  .main-header {
+    border-bottom: 2px solid #4b4c63;
+
+    &__tabs-item {
+      color: #8496c0;
+    }
+
+    &__active {
+      border-color: $white;
+      color: $white;
+    }
+  }
+}
 </style>

@@ -352,3 +352,11 @@ background-color: #F0F3FD;
 .notAllowed{
   cursor: not-allowed !important;
 }
+
+body.dark {
+  .expand__icon {
+    circle {
+      fill: #313354;
+    }
+  }
+}

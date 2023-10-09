@@ -575,4 +575,19 @@ export default {
     }
   }
 }
+
+body.dark {
+  .alias {
+    background: $dark-panel-bg;
+
+    &__wallet-name {
+      color: $white;
+    }
+
+    &__qr {
+      background: transparent;
+      border: 1px solid #6a4bff;
+    }
+  }
+}
 </style>

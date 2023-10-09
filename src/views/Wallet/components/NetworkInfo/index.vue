@@ -742,4 +742,47 @@ export default {
     }
   }
 }
+
+body.dark {
+  .network-info {
+    background: $dark-panel-bg;
+
+    &__note {
+      p {
+        color: #6b93c0;
+      }
+    }
+
+    &__header {
+      border-bottom: 1px solid #393b53;
+    }
+
+    &__additional-info-white-space {
+      border-bottom: 1px dashed #393b53;
+    }
+
+    &__title {
+      color: $white;
+    }
+
+    &__usd-prise {
+      color: $white;
+    }
+
+    &__info-title {
+      color: $white;
+    }
+
+    &__additional-info-title {
+      color: $white;
+    }
+
+    &__usd-currency,
+    &__btc-currency,
+    &__additional-info-percent,
+    &__info-price-change-percent {
+      color: #8b9bc7;
+    }
+  }
+}
 </style>
