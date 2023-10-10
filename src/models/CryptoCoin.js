@@ -439,10 +439,12 @@ export default class CryptoCoin {
       };
     }
 
-    notify({
-      type: 'warning',
-      text: error,
-    });
+    if (this.net !== 'tron') {
+      notify({
+        type: 'warning',
+        text: error,
+      });
+    }
 
     return {
       ok: false,
