@@ -377,6 +377,7 @@ export default class CryptoCoin {
   }
 
   async getFees(walletId, token) {
+    console.log('????!!!');
     const { error, data } = await citadel.getFees(walletId, token);
 
     if (!error) {
@@ -439,10 +440,12 @@ export default class CryptoCoin {
       };
     }
 
-    notify({
-      type: 'warning',
-      text: error,
-    });
+    if (this.net !== 'tron') {
+      notify({
+        type: 'warning',
+        text: error,
+      });
+    }
 
     return {
       ok: false,
