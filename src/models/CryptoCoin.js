@@ -377,7 +377,6 @@ export default class CryptoCoin {
   }
 
   async getFees(walletId, token) {
-    console.log('????!!!');
     const { error, data } = await citadel.getFees(walletId, token);
 
     if (!error) {
