@@ -133,7 +133,7 @@
             :show-error-text="showErrorText"
             :error="!showBridgeModal && isFocusAmountInput && insufficientFunds"
             data-qa="send__amount-field"
-            :show-set-max="maxAmountParent !== 0"
+            :show-set-max="maxAmountParent !== 0 || maxAmount !== 0"
           />
           <transition name="fade">
             <div
@@ -874,6 +874,18 @@ export default {
 
     // Calc Max Amount
     const maxAmount = computed(() => {
+      if (props.currentWallet.net === 'btc' && selectedBtcAddressType.value) {
+        if (selectedBtcAddressType.value === 'native') {
+          return nativeAddressBalance.value > fee.value.fee
+            ? nativeAddressBalance.value - fee.value.fee
+            : 0;
+        }
+        if (selectedBtcAddressType.value === 'segwit')
+          return segwitAddressBalance.value > fee.value.fee
+            ? segwitAddressBalance.value - fee.value.fee
+            : 0;
+      }
+
       if (props.currentToken) {
         return balance.value?.mainBalance;
       }
@@ -995,15 +1007,17 @@ export default {
     );
 
     // Error Handlers
-    const insufficientFunds = computed(() =>
-      amountInputValidation({
+    const insufficientFunds = computed(() => {
+      const maxValue = +maxAmount.value;
+
+      return amountInputValidation({
         amount: amount.value,
         wallet: props.currentWallet,
-        maxAmount: +maxAmount.value,
+        maxAmount: maxValue,
         type: 'send',
-        maxAmountParent: +maxAmountParent.value,
-      })
-    );
+        maxAmountParent: +maxAmountParent.value || maxValue,
+      });
+    });
 
     const networksConfig = computed(() => store.getters['networks/config']);
     // const parseNetwork =
@@ -1096,6 +1110,18 @@ export default {
       disableBtn.value = false;
     };
 
+    const selectedBtcAddressType = computed(
+      () => store.getters['btcAddresses/selectedBtcAddressType']
+    );
+
+    const segwitAddressBalance = computed(
+      () => store.getters['btcAddresses/segwitAddressBalance']
+    );
+
+    const nativeAddressBalance = computed(
+      () => store.getters['btcAddresses/nativeAddressBalance']
+    );
+
     const currentKtAddress = inject('currentKtAddress');
     // Prepare and Send tx
     const transferParams = computed(() => {
@@ -1111,6 +1137,10 @@ export default {
       };
       //for crossnetwork transfer
       if (isSendToAnotherNetwork.value) data.token = props.currentWallet.net;
+
+      if (props.currentWallet.net === 'btc' && selectedBtcAddressType.value) {
+        data.btcAddressType = selectedBtcAddressType.value;
+      }
 
       return data;
     });

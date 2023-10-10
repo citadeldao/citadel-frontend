@@ -84,6 +84,10 @@ export default function useOldBackup() {
           //const WalletConstructor = models[coin.coin.toUpperCase()];
           const walletOpts = {
             address: coin.address,
+            nativeAddress: coin.nativeAddress,
+            segwitAddress: coin.segwitAddress,
+            publicKeySegwit: coin.publicKeySegwit,
+            publicKeyNative: coin.publicKeyNative,
             privateKeyEncoded: coin.keys?.privateKeyEncoded,
             mnemonicEncoded: coin.keys?.mnemonicEncoded,
             publicKey: coin.keys?.publicKey,

@@ -5,20 +5,30 @@
       <div class="line" />
     </div>
     <div class="btc-addresses__items">
-      <div class="item">
+      <div
+        :class="{ active: selectedBtcAddressType === 'native' }"
+        class="item"
+        @click="setBtcAddressType('native')"
+      >
         <div class="left">
           <div class="address">
             {{ cutAddress(currentWallet.nativeAddress) }}
           </div>
           <div class="balance">
-            0 <span>{{ currentWallet.code }}</span>
+            <span
+              v-pretty-number="{
+                value: !showBalance ? HIDE_BALANCE_MASK : nativeBalance,
+                currency: currentWallet.code,
+              }"
+            />
+            <span class="code">{{ currentWallet.code }}</span>
           </div>
         </div>
         <div class="right">
           <div class="line"></div>
           <div
             class="copy-icon"
-            @click="copyAddress(currentWallet.nativeAddress)"
+            @click.stop="copyAddress(currentWallet.nativeAddress)"
           >
             <transition name="fade1">
               <span v-if="isCopied" class="tooltip">
@@ -29,20 +39,30 @@
           </div>
         </div>
       </div>
-      <div class="item colored">
+      <div
+        :class="{ active: selectedBtcAddressType === 'segwit' }"
+        class="item colored"
+        @click="setBtcAddressType('segwit')"
+      >
         <div class="left">
           <div class="address">
             {{ cutAddress(currentWallet.segwitAddress) }}
           </div>
           <div class="balance">
-            0 <span>{{ currentWallet.code }}</span>
+            <span
+              v-pretty-number="{
+                value: !showBalance ? HIDE_BALANCE_MASK : segwitBalance,
+                currency: currentWallet.code,
+              }"
+            />
+            <span class="code">{{ currentWallet.code }}</span>
           </div>
         </div>
         <div class="right">
           <div class="line"></div>
           <div
             class="copy-icon"
-            @click="copyAddress(currentWallet.segwitAddress, true)"
+            @click.stop="copyAddress(currentWallet.segwitAddress, true)"
           >
             <transition name="fade1">
               <span v-if="isCopiedSecond" class="tooltip">
@@ -59,7 +79,10 @@
 <script>
 import copy from '@/assets/icons/copy.svg';
 import copyToClipboard from '@/helpers/copyToClipboard';
-import { ref } from 'vue';
+import { onMounted, ref, watch, computed } from 'vue';
+import citadel from '@citadeldao/lib-citadel';
+import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
+import { useStore } from 'vuex';
 
 export default {
   name: 'BtcAddresses',
@@ -71,9 +94,21 @@ export default {
       required: true,
     },
   },
-  setup() {
+  setup(props) {
+    const store = useStore();
     const isCopied = ref(false);
     const isCopiedSecond = ref(false);
+    const segwitBalance = ref(0);
+    const nativeBalance = ref(0);
+
+    const showBalance = computed(() => store.getters['balance/showBalance']);
+    const selectedBtcAddressType = computed(
+      () => store.getters['btcAddresses/selectedBtcAddressType']
+    );
+
+    const setBtcAddressType = (value) => {
+      store.dispatch('btcAddresses/setBtcAddressType', value);
+    };
 
     const copyAddress = (address, isSecond) => {
       isSecond ? (isCopiedSecond.value = true) : (isCopied.value = true);
@@ -83,15 +118,60 @@ export default {
       }, 1500);
     };
 
+    const fetchBalance = async () => {
+      const segwitRes = await citadel.getBalanceByAddress(
+        'btc',
+        props.currentWallet.segwitAddress
+      );
+      const nativeRes = await citadel.getBalanceByAddress(
+        'btc',
+        props.currentWallet.nativeAddress
+      );
+
+      if (!segwitRes.error) {
+        segwitBalance.value = segwitRes.data.mainBalance;
+        store.dispatch('btcAddresses/setBtcBalanceType', {
+          type: 'segwit',
+          balance: segwitBalance.value,
+        });
+      }
+
+      if (!nativeRes.error) {
+        nativeBalance.value = nativeRes.data.mainBalance;
+        store.dispatch('btcAddresses/setBtcBalanceType', {
+          type: 'native',
+          balance: nativeBalance.value,
+        });
+      }
+    };
+
     const cutAddress = (address) => {
       return `${address.slice(0, 7)}...${address.slice(-6)}`;
     };
 
+    watch(
+      () => props.currentWallet.nativeAddress,
+      async () => {
+        setBtcAddressType('');
+        await fetchBalance();
+      }
+    );
+
+    onMounted(async () => {
+      await fetchBalance();
+    });
+
     return {
       isCopied,
       isCopiedSecond,
+      segwitBalance,
+      nativeBalance,
+      showBalance,
+      selectedBtcAddressType,
+      HIDE_BALANCE_MASK,
       copyAddress,
       cutAddress,
+      setBtcAddressType,
     };
   },
 };
@@ -136,6 +216,17 @@ export default {
       align-items: center;
       padding: 0 17px;
       box-sizing: border-box;
+      border: 1px solid transparent;
+      position: relative;
+
+      &:hover {
+        cursor: pointer;
+        opacity: 0.8;
+      }
+
+      &.active {
+        border: 1px dashed #6a4bff;
+      }
 
       &.colored {
         background: rgba(0, 163, 255, 0.2);
@@ -157,7 +248,7 @@ export default {
           color: #0a2778;
           margin-top: 5px;
 
-          span {
+          span.code {
             color: $dark-blue;
           }
         }

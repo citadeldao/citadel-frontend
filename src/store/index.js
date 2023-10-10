@@ -23,6 +23,7 @@ import metamask from './modules/metamask';
 import keplr from './modules/keplr';
 import salary from './modules/salary';
 import ledger from './modules/ledger';
+import btcAddresses from './modules/btcAddresses';
 
 import subscriptions from './modules/subscriptions';
 
@@ -53,5 +54,6 @@ export default createStore({
     newWallets,
     salary,
     ledger,
+    btcAddresses,
   },
 });

@@ -90,6 +90,10 @@ export default {
           return {
             net: item.net,
             address: item.address,
+            segwitAddress: item.address,
+            nativeAddress: item.nativeAddress,
+            publicKeyNative: item.publicKeyNative,
+            publicKeySegwit: item.publicKeySegwit,
             type: item.type,
             publicKey: item.publicKey,
             privateKeyHash: item?.privateKeyHash,

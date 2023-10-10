@@ -1375,7 +1375,7 @@
         "termsOfService": "Conditions d'utilisation",
         "guide": "Guide"
     },
-    "dontHaveEnoughFounds": "Vous n'avez pas assez de fonds pour payer les frais de transaction.",
+    "dontHaveEnoughFounds": "",
     "transactionsSocket": {
         "failed": "Echec de la transaction",
         "completed": "Transaction terminée",

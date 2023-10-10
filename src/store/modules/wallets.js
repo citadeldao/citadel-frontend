@@ -225,6 +225,7 @@ export default {
                   (network) => network.net === net
                 )
               );
+
             await dispatch('initWalletsInstances', formatedList);
           }
         }
