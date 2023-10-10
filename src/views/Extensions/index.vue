@@ -883,6 +883,14 @@ export default {
           keplrResult
         );
 
+        // selectedApp.value autorestake id 15
+        if (
+          selectedApp.value.id == '15' &&
+          signerWallet.value.type === WALLET_TYPES.KEPLR
+        ) {
+          hash.signType = 'json';
+        }
+
         // const data = await useApi('wallet').sendSignedTransaction({
         //   hash,
         //   deviceType: WALLET_TYPES.KEPLR,
