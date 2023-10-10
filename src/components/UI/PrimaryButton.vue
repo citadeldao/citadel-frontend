@@ -202,6 +202,8 @@ export default {
 
 body.dark {
   .primary-button {
+    box-shadow: none;
+
     &:disabled,
     & [disabled] {
       background: #393b53;
