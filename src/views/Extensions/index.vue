@@ -885,8 +885,9 @@ export default {
 
         // selectedApp.value autorestake id 15
         if (
-          selectedApp.value.id == '15' &&
-          signerWallet.value.type === WALLET_TYPES.KEPLR
+          // selectedApp.value.id == '15' &&
+          signerWallet.value.type === WALLET_TYPES.KEPLR &&
+          keplrResult.isNanoLedger
         ) {
           hash.signType = 'json';
         }
