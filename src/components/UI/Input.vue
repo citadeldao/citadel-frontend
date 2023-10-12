@@ -724,5 +724,9 @@ body.dark {
     border: 1px solid #4b4c63;
     color: $white;
   }
+
+  .input__max {
+    color: $white;
+  }
 }
 </style>

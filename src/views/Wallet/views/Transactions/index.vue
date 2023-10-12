@@ -549,4 +549,13 @@ export default {
     }
   }
 }
+
+body.dark {
+  .transactions {
+    th.header {
+      background: #2d2e42;
+      color: #8496c0;
+    }
+  }
+}
 </style>

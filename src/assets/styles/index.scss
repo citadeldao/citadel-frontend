@@ -118,7 +118,7 @@ textarea{
     height: 24px !important;
     background: linear-gradient(282.38deg, #FFFFFF 0.64%, #FCF8F8 75.95%);
     border: 0.5px solid $too-ligth-blue;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.191761), -16px -7px 24px rgba(255, 255, 255, 0.595908), 1px 4px 13px rgba(126, 126, 126, 0.124208);
+    // box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.191761), -16px -7px 24px rgba(255, 255, 255, 0.595908), 1px 4px 13px rgba(126, 126, 126, 0.124208);
 }
 .el-switch__core{
   width: 48px !important;
@@ -358,5 +358,36 @@ body.dark {
     circle {
       fill: #313354;
     }
+  }
+
+  .el-switch__core {
+    background: #393C5F !important;
+  }
+
+  .el-pager li {
+    background: none;
+  }
+
+  .el-select__popper.el-popper[role=tooltip][data-popper-placement^=top] .el-popper__arrow::before {
+    border-color: #8496c0;
+    background: #8496c0;
+  }
+
+  .el-input__inner {
+    background: #1B1C31;
+    border: 1px solid $dark-panel-bg !important;
+  }
+
+  .el-select__popper {
+    border-radius: 0;
+    border: 1px solid #8496c0 !important ;
+  }
+
+  .el-select-dropdown__list {
+    background: #1B1C31;
+  }
+
+  .el-select-dropdown__item.selected {
+    background: $dark-panel-bg;
   }
 }
