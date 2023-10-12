@@ -34,7 +34,6 @@ export default class keplrConnector {
   async getSignType(rawTx) {
     // ,chainId
     // const walletInfo = await window.keplr?.getKey(chainId);
-
     return rawTx.directSignKeplrRequired // && !walletInfo.isNanoLedger
       ? 'direct'
       : 'json';
@@ -98,12 +97,14 @@ export default class keplrConnector {
         window.keplr.defaultOptions = {};
       }
 
-      // const walletInfo = await window.keplr?.getKey(
-      //   data.chain_id || data.json.chain_id
-      // );
+      const walletInfo = await window.keplr?.getKey(
+        data.chain_id || data.json.chain_id
+      );
 
-      if (this.getSignType(rawTx) === 'direct') {
-        //  && !walletInfo.isNanoLedger) {
+      if (
+        (await this.getSignType(rawTx)) === 'direct' &&
+        !walletInfo.isNanoLedger
+      ) {
         const res = await window.keplr.signDirect(
           data.chain_id || data.json.chain_id,
           signer,
@@ -115,7 +116,12 @@ export default class keplrConnector {
           'base64'
         ).toString('hex');
 
-        return { signature, signedTx: data.json, fullResponse: res };
+        return {
+          signature,
+          signedTx: data.json,
+          fullResponse: res,
+          isNanoLedger: walletInfo.isNanoLedger,
+        };
       }
 
       const copiedData = JSON.parse(JSON.stringify(data));
@@ -139,7 +145,12 @@ export default class keplrConnector {
         'hex'
       );
 
-      return { signature, signedTx: res.signed, fullResponse: res };
+      return {
+        signature,
+        signedTx: res.signed,
+        fullResponse: res,
+        isNanoLedger: walletInfo.isNanoLedger,
+      };
     } catch (err) {
       // const accs = await this.connect(data.json.chain_id);
       // ${accs && accs[0] && accs[0].address}

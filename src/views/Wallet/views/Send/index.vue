@@ -1079,14 +1079,17 @@ export default {
         rawTxError.value ||
         txError.value
     );
+    console.log(requestsError.value);
     const disabledSend = computed(
       () =>
         !!(
-          requestsError.value ||
-          insufficientFunds.value ||
-          incorrectAddress.value ||
-          !+amount.value ||
-          !toAddress.value
+          // requestsError.value ||
+          (
+            insufficientFunds.value ||
+            incorrectAddress.value ||
+            !+amount.value ||
+            !toAddress.value
+          )
         )
     );
     const confirmClicked = ref(false);
