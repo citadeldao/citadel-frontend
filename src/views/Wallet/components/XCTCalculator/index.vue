@@ -487,4 +487,42 @@ export default {
     }
   }
 }
+
+body.dark {
+  .xct-calculator {
+    background-image: none;
+
+    &__toggle-info-icon {
+      background: #313354;
+    }
+
+    &:before {
+      background: linear-gradient(90deg, #6a11cb 0%, #5125fc33 100%);
+    }
+
+    &__header {
+      .xct-calculator__header-header-title,
+      .xct-calculator__header-yield-title {
+        color: $white;
+      }
+
+      .xct-calculator__header-header-subtitle,
+      .xct-calculator__header-yield-currency {
+        color: #8b9bc7;
+      }
+    }
+
+    &__footer {
+      .xct-calculator__footer-you-have-title,
+      .xct-calculator__footer-yearly-reward-title {
+        color: $white;
+      }
+
+      .xct-calculator__footer-you-have-currency,
+      .xct-calculator__footer-yearly-reward-currency {
+        color: #8b9bc7;
+      }
+    }
+  }
+}
 </style>

@@ -313,7 +313,7 @@
         "chooseNodeForStaking": "ステーキングするノードを選択",
         "chooseNodeModalDesc": "リストのノードをクリックして、ステークするノードを選択します。",
         "chooseNodeModalDesc1": "資産をステークするには、ノードを選択し、委任の金額を設定します。  {net} のステーク解除期間が <span style='color: #0A2778; であることを考慮してください。  font-weight: bold;'>{perioud} 日</span>。",
-        "chooseNodeModalDescWithFrom": "資産をステークするには、ノードを選択し、委任の金額を設定します。  {net} のステーキング解除期間は変動することを考慮に入れてください <span style='color: #0A2778;  font-weight: bold;'>{perioudFrom} から {perioudTo} 日まで</span>。  <a href='{link}' style='color: #0A2778; で現在のステーク解除期間を確認してください。  font-weight: bold;text-decoration:none'>link</a>.",
+        "chooseNodeModalDescWithFrom": "資産をステークするには、ノードを選択し、委任の金額を設定します。  {net} のステーキング解除期間は変動することを考慮に入れてください <span style='color: #0A2778;  font-weight: bold;'>{perioudFrom} から {perioudTo} 日まで</span>。  <a href='{link}' style='color: #00A3FF; で現在のステーク解除期間を確認してください。  font-weight: bold;text-decoration:none'>link</a>.",
         "Stake": "ステーク",
         "staking": "ステーキング",
         "searchNode": "検索ノード",
@@ -326,7 +326,7 @@
         "amountToStake": "賭ける金額",
         "inputNote": "手数料トークンの購入のために予約された資金を含む",
         "editModeDesc": "資産をステークまたはアンステークするには、下のフィールドで委任の金額を設定します。  {net} のステーク解除期間が <span style='color: #0A2778; であることを考慮してください。  font-weight: bold;'>{perioud} 日</span>",
-        "editModeDescWithFrom": "資産をステークまたはアンステークするには、下のフィールドで委任の金額を設定します。  {net} のステーキング解除期間は変動することを考慮に入れてください <span style='color: #0A2778;  font-weight: bold;'>{perioudFrom} から {perioudTo} 日まで</span>。  <a href='{link}' style='color: #0A2778; で現在のステーク解除期間を確認してください。  font-weight: bold;text-decoration:none'>link</a>.",
+        "editModeDescWithFrom": "資産をステークまたはアンステークするには、下のフィールドで委任の金額を設定します。  {net} のステーキング解除期間は変動することを考慮に入れてください <span style='color: #0A2778;  font-weight: bold;'>{perioudFrom} から {perioudTo} 日まで</span>。  <a href='{link}' style='color: #00A3FF; で現在のステーク解除期間を確認してください。  font-weight: bold;text-decoration:none'>link</a>.",
         "nodeIsNotActive": "ノードは非アクティブで、報酬は発行されていません",
         "nodeIsJailed": "このノードは現在非アクティブです。ステーキングしても報酬は得られません。 アセットを別のノードに委任する"
     },

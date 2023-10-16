@@ -314,8 +314,8 @@
     "staking": {
         "chooseNodeForStaking": "Выбрать ноду для стейкинга",
         "chooseNodeModalDesc": "Кликните на список валидаторов чтобы выбрать на кого заделегировать",
-        "chooseNodeModalDesc1": "Чтобы застейкать свои активы, выберите ноды и укажите нужную сумму делегации. Обратите внимание, что период анстейкинга {net} составляет <span style='color: #0A2778; font-weight: bold;'>{perioud} days</span>.",
-        "chooseNodeModalDescWithFrom": "Чтобы застейкать свои активы, выберите ноды и укажите нужную сумму делегации. Обратите внимание, что период анстейкинга {net} длится от <span style='color: #0A2778; font-weight: bold;'>from {perioudFrom} до {perioudTo} дней</span>. Чтобы проверить длительность анстейкинга на текущий момент, перейдите по ссылке:  <a href='{link}' style='color: #0A2778; font-weight: bold;text-decoration:none'>link</a>.",
+        "chooseNodeModalDesc1": "Чтобы застейкать свои активы, выберите ноды и укажите нужную сумму делегации. Обратите внимание, что период анстейкинга {net} составляет <span style='color: #00A3FF; font-weight: bold;'>{perioud} days</span>.",
+        "chooseNodeModalDescWithFrom": "Чтобы застейкать свои активы, выберите ноды и укажите нужную сумму делегации. Обратите внимание, что период анстейкинга {net} длится от <span style='color: #00A3FF; font-weight: bold;'>from {perioudFrom} до {perioudTo} дней</span>. Чтобы проверить длительность анстейкинга на текущий момент, перейдите по ссылке:  <a href='{link}' style='color: #0A2778; font-weight: bold;text-decoration:none'>link</a>.",
         "Stake": "Стейкать",
         "staking": "Стейкинг\n",
         "searchNode": "Поиск ноды",

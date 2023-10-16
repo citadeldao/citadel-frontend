@@ -419,6 +419,12 @@ body.dark {
     &__close-icon {
       fill: #fff;
     }
+
+    &__block-header-desc {
+      span {
+        color: $white !important;
+      }
+    }
   }
 }
 </style>

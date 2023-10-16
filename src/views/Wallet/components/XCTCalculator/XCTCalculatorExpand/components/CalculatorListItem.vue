@@ -409,4 +409,19 @@ export default {
     }
   }
 }
+
+body.dark {
+  .calculator-list-item {
+    background: #2d2e42;
+
+    &__main-title,
+    &__info-line-block-value--total {
+      color: $white;
+    }
+
+    &__right-section-icon {
+      fill: none;
+    }
+  }
+}
 </style>

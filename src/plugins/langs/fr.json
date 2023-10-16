@@ -314,8 +314,8 @@
     "staking": {
         "chooseNodeForStaking": "Choisir le nœud pour le staking",
         "chooseNodeModalDesc": "Cliquez sur le nœud dans la liste pour en sélectionner un avec lequel vous voulez staker.",
-        "chooseNodeModalDesc1": "Pour mettre en staking vos actifs, choisissez les nœuds et définissez le montant de la délégation. Prenez en compte que la période d’unstaking pour {net} est de <span style='color: #0A2778; font-weight: bold;'>{perioud} jours</span>.",
-        "chooseNodeModalDescWithFrom": "Pour mettre en staking vos actifs, choisissez les nœuds et définissez le montant de la délégation. Prenez en compte que la période d'unstaking pour {net} fluctue <span style='color: #0A2778; font-weight: bold;'> de {perioudFrom} à {perioudTo} jours</span>. Vérifiez la période d'unstaking actuelle via le <a href='{link}' style='color: #0A2778; font-weight: bold;text-decoration:none'>lien</a>.",
+        "chooseNodeModalDesc1": "Pour mettre en staking vos actifs, choisissez les nœuds et définissez le montant de la délégation. Prenez en compte que la période d’unstaking pour {net} est de <span style='color: #00A3FF; font-weight: bold;'>{perioud} jours</span>.",
+        "chooseNodeModalDescWithFrom": "Pour mettre en staking vos actifs, choisissez les nœuds et définissez le montant de la délégation. Prenez en compte que la période d'unstaking pour {net} fluctue <span style='color: #00A3FF; font-weight: bold;'> de {perioudFrom} à {perioudTo} jours</span>. Vérifiez la période d'unstaking actuelle via le <a href='{link}' style='color: #0A2778; font-weight: bold;text-decoration:none'>lien</a>.",
         "Stake": "Stake",
         "staking": "staking",
         "searchNode": "Recherche de nœuds",
@@ -327,8 +327,8 @@
         "stakeOn": "Stake sur",
         "amountToStake": "Montant à staker",
         "inputNote": "Y compris les fonds réservés à l'achat de jetons de commission",
-        "editModeDesc": "Pour staker ou unstaker vos avoirs, définissez le montant de la délégation dans le champ ci-dessous. Tenez compte du fait que la période de déstockage pour {net} est de <span style='color: #0A2778; font-weight: bold;'>{perioud} jours</span>",
-        "editModeDescWithFrom": "Pour staker ou unstaker vos avoirs, définissez le montant de la délégation dans le champ ci-dessous. Tenez compte du fait que la période d'unstaking pour {net} fluctue <span style='color: #0A2778; font-weight: bold;'>de {perioudFrom} à {perioudTo} jours</span>. Vérifiez la période d'unstaking actuelle via le <a href='{link}' style='color: #0A2778; font-weight: bold;text-decoration:none'>lien</a>.",
+        "editModeDesc": "Pour staker ou unstaker vos avoirs, définissez le montant de la délégation dans le champ ci-dessous. Tenez compte du fait que la période de déstockage pour {net} est de <span style='color: #00A3FF; font-weight: bold;'>{perioud} jours</span>",
+        "editModeDescWithFrom": "Pour staker ou unstaker vos avoirs, définissez le montant de la délégation dans le champ ci-dessous. Tenez compte du fait que la période d'unstaking pour {net} fluctue <span style='color: #00A3FF; font-weight: bold;'>de {perioudFrom} à {perioudTo} jours</span>. Vérifiez la période d'unstaking actuelle via le <a href='{link}' style='color: #0A2778; font-weight: bold;text-decoration:none'>lien</a>.",
         "nodeIsNotActive": "Le nœud est inactif, les récompenses ne sont pas émises.",
         "nodeIsJailed": " Ce nœud est actuellement inactif, vous n'obtenez pas de récompenses pour le staking avec lui. Déléguer vos actifs à un autre nœud"
     },

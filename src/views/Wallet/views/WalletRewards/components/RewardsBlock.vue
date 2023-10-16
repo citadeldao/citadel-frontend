@@ -328,4 +328,47 @@ export default {
     color: $midnightblue;
   }
 }
+
+body.dark {
+  .rewards-block {
+    background: linear-gradient(90deg, #6a11cb 0%, #5125fc33 100%);
+    // background-image: url('~@/assets/images/xctDarkRewards.jpg');
+
+    &__header-title {
+      color: $white;
+    }
+
+    &__header-subtitle {
+      color: #8b9bc7;
+    }
+
+    &__table-title {
+      color: $white;
+    }
+
+    &__table-header {
+      color: $white;
+    }
+
+    &__table-cell-other-amount {
+      color: $white;
+    }
+
+    &__table-cell-other-currency {
+      color: #c3ceeb;
+    }
+
+    &__table-cell-xct-currency {
+      color: #c3ceeb;
+    }
+
+    &__table-cell-xct-amount {
+      color: #00a3ff;
+    }
+
+    &__toggle-info-icon {
+      background: #313354;
+    }
+  }
+}
 </style>

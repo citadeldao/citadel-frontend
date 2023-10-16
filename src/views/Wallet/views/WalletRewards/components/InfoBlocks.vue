@@ -271,4 +271,12 @@ export default {
     }
   }
 }
+
+body.dark {
+  .info-block {
+    &__block-title {
+      color: $white;
+    }
+  }
+}
 </style>

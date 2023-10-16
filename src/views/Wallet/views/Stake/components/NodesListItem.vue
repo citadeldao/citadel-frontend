@@ -377,4 +377,17 @@ export default {
   font-size: 12px;
   line-height: 16px;
 }
+
+body.dark {
+  .nodes-list-item {
+    &:hover {
+      background: none;
+      opacity: 0.8;
+    }
+    &__info-fee-currency,
+    &__info-uptime-currency {
+      color: #8b9bc7;
+    }
+  }
+}
 </style>
