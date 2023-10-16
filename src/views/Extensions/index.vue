@@ -449,7 +449,9 @@ export default {
       if (!selectedApp.value.id) {
         router.push({ name: 'Extensions' });
       } else {
-        selectApp();
+        setTimeout(() => {
+          selectApp();
+        }, 1000);
       }
     } else {
       closeApp(true);
@@ -644,7 +646,9 @@ export default {
         );
 
         if (selectedApp.value.id) {
-          selectApp();
+          setTimeout(() => {
+            selectApp();
+          }, 1000);
         }
         startKeplrSecretChecker();
       }
