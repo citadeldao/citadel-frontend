@@ -354,18 +354,18 @@ export default {
         return net.toLowerCase();
       });
 
-      console.log('check mm nets', nets);
-      console.log('check mm info net', metamaskConnector.value.network);
-
       let mergeWallet = null; // metamask
 
       if (nets.includes(metamaskConnector.value.network)) {
-        const metamaskNet = metamaskConnector.value.network;
-        const metamaskAddress =
-          metamaskConnector.value.accounts[0] &&
-          metamaskConnector.value.accounts[0].toLowerCase();
+        let ethAddress = '';
+        if (window.ethereum?.selectedAddress) {
+          ethAddress = window.ethereum?.selectedAddress.toLowerCase();
+        }
 
-        console.log('check mm info addr', metamaskAddress);
+        const metamaskNet = metamaskConnector.value.network;
+        const metamaskAddress = metamaskConnector.value.accounts[0]
+          ? metamaskConnector.value.accounts[0].toLowerCase()
+          : ethAddress;
 
         mergeWallet = walletsList.value.find(
           (w) =>
@@ -373,8 +373,6 @@ export default {
             metamaskNet === w.net &&
             metamaskAddress === w.address.toLowerCase()
         );
-        console.log('check mm info wallets', walletsList.value);
-        console.log('check mm info wallet', mergeWallet);
       }
 
       if (selectedApp.value.id) {
