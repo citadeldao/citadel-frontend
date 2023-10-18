@@ -103,4 +103,12 @@ export default {
     margin: 10px 0;
   }
 }
+
+body.dark {
+  .container {
+    &__title {
+      color: $white;
+    }
+  }
+}
 </style>

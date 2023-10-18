@@ -171,4 +171,24 @@ input[type='checkbox'] {
     height: 100%;
   }
 }
+
+body.dark {
+  input[type='checkbox'] {
+    &:checked + label {
+      .checkbox {
+        &__checkmark {
+          background: #6b93c0;
+          &:hover,
+          &__label {
+            background: $white;
+          }
+        }
+
+        &__label {
+          color: $white;
+        }
+      }
+    }
+  }
+}
 </style>

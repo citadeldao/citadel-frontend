@@ -110,4 +110,23 @@ export default {
     }
   }
 }
+
+body.dark {
+  .login-web3-menu {
+    &__item {
+      border-color: #4b4c63;
+
+      &.web3 {
+        background-image: url('~@/assets/icons/newLogin/newLoginWeb3Dark.png');
+        border: none;
+      }
+    }
+
+    .info {
+      .description {
+        color: $white;
+      }
+    }
+  }
+}
 </style>

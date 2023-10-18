@@ -146,4 +146,22 @@ export default {
     }
   }
 }
+
+body.dark {
+  .disclaimer-with-email {
+    &__title {
+      color: $white;
+    }
+
+    &__description {
+      .bold {
+        color: $white;
+      }
+    }
+
+    &__without {
+      color: $white;
+    }
+  }
+}
 </style>

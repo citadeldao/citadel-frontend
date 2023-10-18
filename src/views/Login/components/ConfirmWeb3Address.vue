@@ -245,4 +245,26 @@ export default {
     transform: rotate(360deg);
   }
 }
+
+body.dark {
+  .confirm-web3-address {
+    &__notify {
+      background: rgb(28, 42, 68);
+    }
+
+    &__cancel {
+      color: $white;
+    }
+
+    &__address {
+      background: #101120;
+
+      .info {
+        .network {
+          color: $white;
+        }
+      }
+    }
+  }
+}
 </style>

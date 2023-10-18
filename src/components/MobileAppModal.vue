@@ -108,4 +108,20 @@ export default {
     margin-bottom: 16px;
   }
 }
+
+body.dark {
+  .mobile-app-modal {
+    &__main {
+      background: $dark-panel-bg;
+    }
+
+    &__title {
+      color: $white;
+    }
+
+    &__close-icon {
+      fill: $white;
+    }
+  }
+}
 </style>
