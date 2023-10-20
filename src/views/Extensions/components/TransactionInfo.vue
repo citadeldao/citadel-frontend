@@ -258,4 +258,26 @@ export default {
     margin-top: 30px;
   }
 }
+
+body.dark {
+  .transaction-info {
+    .item {
+      .label {
+        color: #6b758e;
+      }
+
+      div {
+        color: #6b758e;
+      }
+
+      span {
+        color: $white;
+      }
+    }
+
+    pre {
+      color: $white;
+    }
+  }
+}
 </style>

@@ -442,4 +442,14 @@ export default {
     }
   }
 }
+
+body.dark {
+  .extensions__head-logo {
+    .descriptions {
+      .label {
+        color: $white;
+      }
+    }
+  }
+}
 </style>
