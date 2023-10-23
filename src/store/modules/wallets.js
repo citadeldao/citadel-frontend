@@ -144,8 +144,8 @@ export default {
           if (
             state.walletsStructure.some(
               (item) =>
-                item.net.toLowerCase() === wallet.net.toLowerCase() &&
-                item.address.toLowerCase() === wallet.address.toLowerCase()
+                item.net?.toLowerCase() === wallet.net?.toLowerCase() &&
+                item.address?.toLowerCase() === wallet.address?.toLowerCase()
             )
           ) {
             filteredData.push(wallet);
@@ -241,10 +241,13 @@ export default {
       for (const walletOpts of list) {
         const { currency } = useWallets(walletOpts);
         console.log('currency', currency.value);
-        // const WalletConstructor = models[walletOpts.net.toUpperCase()];
-        walletOpts.config = rootGetters['networks/configByNet'](walletOpts.net);
+        if (!currency.value)
+          // const WalletConstructor = models[walletOpts.net.toUpperCase()];
+          walletOpts.config = rootGetters['networks/configByNet'](
+            walletOpts.net
+          );
         walletOpts.balanceUSD = BigNumber(walletOpts.balance.calculatedBalance)
-          .times(currency.value.USD)
+          .times(currency.value?.USD || 0)
           .toNumber();
         wallets.push(new /* WalletConstructor */ CryptoCoin(walletOpts));
       }
