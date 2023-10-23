@@ -1357,6 +1357,11 @@
             "title": "Nolus",
             "description": "Nolus Protocol is a Web3 financial suite that offers an innovative approach to money markets with a novel Lease solution to develop the DeFi space further",
             "shortDescription": "Nolus Protocol is a Web3 financial suite that offers a Lease solution to develop the DeFi space further"
+        },
+        "archway":{
+            "title": "Archway",
+            "description": "",
+            "shortDescription": "The multi-chain launchpad for your dapp | Archway Network"
         }
     },
     "uptime": "Uptime",

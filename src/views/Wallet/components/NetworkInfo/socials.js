@@ -805,4 +805,14 @@ export default {
     //   href: 'https://www.coingecko.com/en/coins/sui',
     // },
   },
+  archway: {
+    web: {
+      title: 'archway.io',
+      href: 'https://archway.io/',
+    },
+    twitter: {
+      title: '@archwayHQ',
+      href: 'archwayHQ',
+    },
+  },
 };
