@@ -470,6 +470,8 @@ export default {
 
 body.dark {
   .header {
+    border-bottom: 1px solid #4b4c63;
+
     &__menu-button {
       background: #26273b; // $dark-layout-bg;
     }

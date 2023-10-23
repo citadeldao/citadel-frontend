@@ -415,4 +415,52 @@ export default {
     }
   }
 }
+
+body.dark {
+  .network-card {
+    background: #393c5f;
+
+    &__title {
+      color: $white;
+    }
+
+    &__percent {
+      color: $dark-blue;
+    }
+  }
+
+  .network-card.isNew,
+  .network-card.emptyMnemonic {
+    background: linear-gradient(90deg, #3d4964 0%, #532d8e 100%);
+  }
+
+  .network-card.emptyMnemonic:not(.network-card--checked)
+    .network-card__icon
+    svg {
+    fill: $white;
+  }
+
+  .network-card.emptyMnemonic:not(.network-card--checked) .network-card__icon {
+    background: #26273b;
+  }
+
+  .network-card.emptyMnemonic:not(.network-card--checked) .network-card__title {
+    color: $white;
+  }
+
+  .network-card.emptyMnemonic[data-v-b4613d44]:not(.network-card--checked) {
+    background: #393c5f;
+  }
+
+  // add networks (no keplr)
+  .network-card--checked,
+  .network-card--checked:hover {
+    background: linear-gradient(90deg, #3d4964 0%, #532d8e 100%);
+  }
+
+  .network-card--checked .network-card__title,
+  .network-card--checked:hover .network-card__title {
+    color: $white;
+  }
+}
 </style>

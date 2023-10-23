@@ -136,4 +136,25 @@ export default {
     }
   }
 }
+
+body.dark {
+  .address-layout {
+    background: rgb(27, 28, 48); // $dark-panel-bg;
+
+    &__header {
+      svg {
+        fill: $white;
+      }
+    }
+
+    &__close {
+      background: transparent;
+      border: 3px solid #59779a;
+
+      svg {
+        fill: #59779a;
+      }
+    }
+  }
+}
 </style>

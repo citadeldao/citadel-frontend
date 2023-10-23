@@ -95,4 +95,20 @@ export default {
     height: auto;
   }
 }
+
+body.dark {
+  .address-menu-item {
+    background: #26273b;
+
+    &__info {
+      .title {
+        color: $white;
+      }
+    }
+
+    &:hover {
+      background: #393c5f;
+    }
+  }
+}
 </style>

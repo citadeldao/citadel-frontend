@@ -252,4 +252,14 @@ export default {
     }
   }
 }
+
+body.dark {
+  .select-card {
+    &:hover {
+      .select-card__title {
+        color: $white;
+      }
+    }
+  }
+}
 </style>

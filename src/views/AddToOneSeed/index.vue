@@ -164,4 +164,10 @@ export default {
     justify-content: center;
   }
 }
+
+body.dark {
+  .add-to-one-seed {
+    background: $dark-panel-bg;
+  }
+}
 </style>

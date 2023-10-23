@@ -85,4 +85,10 @@ export default {
     }
   }
 }
+
+body.dark {
+  .metamask-keplr {
+    background: $dark-panel-bg;
+  }
+}
 </style>

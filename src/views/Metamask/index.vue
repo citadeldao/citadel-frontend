@@ -318,4 +318,20 @@ export default {
     }
   }
 }
+
+body.dark {
+  .import-container {
+    background: #1b1c31;
+
+    &__address {
+      p {
+        color: $white;
+      }
+    }
+  }
+
+  .metamask {
+    background: $dark-panel-bg;
+  }
+}
 </style>

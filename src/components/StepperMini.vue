@@ -93,4 +93,29 @@ export default {
     }
   }
 }
+
+body.dark {
+  .stepper-mini {
+    &__step {
+      background: #59779a;
+
+      &.finished {
+        background: #0fb774;
+        border: 2px solid #59779a;
+
+        .num {
+          color: #0fb774;
+        }
+      }
+
+      &.active {
+        background: $white;
+
+        .num {
+          color: $white;
+        }
+      }
+    }
+  }
+}
 </style>

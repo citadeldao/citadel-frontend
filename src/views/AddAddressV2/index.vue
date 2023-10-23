@@ -121,6 +121,14 @@ export default {
   }
 }
 
+body.dark {
+  .add-address {
+    &__title {
+      color: $white;
+    }
+  }
+}
+
 // @media (max-width: 1400px) {
 //   .add-address {
 //     height: auto;

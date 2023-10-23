@@ -126,4 +126,17 @@ export default {
     }
   }
 }
+
+body.dark {
+  .menu-type-item {
+    background: transparent;
+    border: 1px dashed #4b4c63;
+
+    &__info {
+      .title {
+        color: $white;
+      }
+    }
+  }
+}
 </style>
