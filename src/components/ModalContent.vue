@@ -404,6 +404,8 @@ export default {
 
 body.dark {
   .modal_content {
+    box-shadow: none;
+
     &__content {
       background-color: $dark-panel-bg;
     }

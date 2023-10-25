@@ -45,4 +45,10 @@ export default {
     flex-grow: 1;
   }
 }
+
+body.dark {
+  .import-hardware-wallet {
+    background: $dark-panel-bg;
+  }
+}
 </style>

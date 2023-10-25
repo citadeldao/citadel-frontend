@@ -45,4 +45,10 @@ export default {
     flex-grow: 1;
   }
 }
+
+body.dark {
+  .import-hardware-ledger-type {
+    background: $dark-panel-bg;
+  }
+}
 </style>

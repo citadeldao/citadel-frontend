@@ -254,6 +254,33 @@ export default {
 }
 
 body.dark {
+  .select-card-special {
+    border: 1px dashed #4b4c63;
+
+    &__info {
+      color: $white;
+    }
+
+    &__title {
+      color: #6b758e;
+    }
+
+    &:hover {
+      background: #4b4c63;
+      .select-card-special__icon svg {
+        fill: $white;
+      }
+
+      .select-card-special__info {
+        color: $white;
+      }
+
+      .select-card-special__title {
+        color: #6b758e;
+      }
+    }
+  }
+
   .select-card {
     &:hover {
       .select-card__title {

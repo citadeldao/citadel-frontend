@@ -111,4 +111,14 @@ export default {
     }
   }
 }
+
+body.dark {
+  .import-hardware-wallet {
+    background: $dark-panel-bg;
+
+    &__title {
+      color: $white;
+    }
+  }
+}
 </style>

@@ -129,4 +129,26 @@ export default {
     }
   }
 }
+
+body.dark {
+  .choose-importing-hardware {
+    &__card-wrapper {
+      .choose-type {
+        border: 1px dashed #4b4c63;
+
+        .title {
+          color: #6b758e;
+        }
+
+        .description {
+          color: $white;
+        }
+
+        &:hover {
+          background: #4b4c63;
+        }
+      }
+    }
+  }
+}
 </style>
