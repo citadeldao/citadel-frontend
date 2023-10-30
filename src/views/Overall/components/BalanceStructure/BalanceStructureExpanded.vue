@@ -129,4 +129,14 @@ export default {
     }
   }
 }
+
+body.dark {
+  .balance-structure-expanded {
+    background: $dark-panel-bg;
+
+    &__title {
+      color: $white;
+    }
+  }
+}
 </style>

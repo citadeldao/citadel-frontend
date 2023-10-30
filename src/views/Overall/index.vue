@@ -155,4 +155,17 @@ export default {
     }
   }
 }
+
+body.dark {
+  .overall {
+    &__chart-block {
+      &:first-child::after {
+        background: #1b1c31;
+      }
+    }
+    &__central-section {
+      background: $dark-panel-bg;
+    }
+  }
+}
 </style>

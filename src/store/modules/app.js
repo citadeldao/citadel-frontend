@@ -8,6 +8,7 @@ import { setStorage } from '@/utils/storage';
 const types = {
   SET_LOADER: 'SET_LOADER',
   SET_ROUTE_LOADER: 'SET_ROUTE_LOADER',
+  SET_THEME: 'SET_THEME',
 };
 
 export default {
@@ -15,8 +16,10 @@ export default {
   state: {
     showLoader: false,
     routeLoader: false,
+    theme: 'dark',
   },
   getters: {
+    theme: (state) => state.theme,
     showLoader: (state) => state.showLoader,
     showRouteLoader: (state) => state.routeLoader,
   },
@@ -24,11 +27,17 @@ export default {
     [types.SET_LOADER](state, loadingState) {
       state.showLoader = loadingState;
     },
+    [types.SET_THEME](state, theme) {
+      state.theme = theme;
+    },
     [types.SET_ROUTE_LOADER](state, loadingState) {
       state.routeLoader = loadingState;
     },
   },
   actions: {
+    setTheme({ commit }, theme) {
+      commit(types.SET_THEME, theme);
+    },
     setLoader({ commit }, loadingState) {
       commit(types.SET_LOADER, loadingState);
     },

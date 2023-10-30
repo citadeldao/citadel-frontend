@@ -66,4 +66,10 @@ export default {
     min-height: 380px;
   }
 }
+
+body.dark {
+  .chart-placeholder {
+    border: 1px solid #4b4c63;
+  }
+}
 </style>

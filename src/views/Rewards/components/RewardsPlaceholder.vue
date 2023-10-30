@@ -52,4 +52,14 @@ export default {
     }
   }
 }
+
+body.dark {
+  .rewards-placeholder {
+    background: $dark-panel-bg;
+
+    .rewards-placeholder__icon {
+      border: 1px solid #4b4c63;
+    }
+  }
+}
 </style>

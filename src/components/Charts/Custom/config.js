@@ -1,16 +1,17 @@
 import { convertToLocalDate } from '@/helpers/date';
 import BigNumber from 'bignumber.js';
 import { prettyNumber } from '@/helpers/prettyNumber';
+import store from '@/store';
 
 const BTC_USDT_AMOUNT = 0.000001;
 
 export const MAX_TICKS_LIMIT = 12;
 
 export const COLORS = {
-  CURRENCY: '#BCC2D8',
-  MONTH: '#AFBCCB',
+  CURRENCY: store.getters['app/theme'] === 'dark' ? '#4B4C63' : '#BCC2D8',
+  MONTH: store.getters['app/theme'] === 'dark' ? '#6B93C0' : '#AFBCCB',
   ACTIVE_MONTH: '#B7A8FF',
-  DAY: '#000000',
+  DAY: store.getters['app/theme'] === 'dark' ? '#fff' : '#000000',
   CHART_POINT: '#FFFFFF',
   LINE_BG: 'rgba(255, 87, 34, 0.2)',
   LINE_BORDER: '#FF5722',

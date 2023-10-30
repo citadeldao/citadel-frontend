@@ -347,6 +347,20 @@ body.dark {
     &__icon {
       background: #393b53;
     }
+
+    &:hover {
+      .address-item__icon {
+        background: $blue;
+      }
+      .address-item__name,
+      .address-item__currency {
+        color: $white;
+      }
+      .address-item__balance {
+        color: #6b93c0;
+        display: flex;
+      }
+    }
   }
 }
 </style>

@@ -923,4 +923,12 @@ body.dark {
     background: transparent;
   }
 }
+
+body.dark {
+  .sidebar__addresses-search-input {
+    input {
+      background: none !important;
+    }
+  }
+}
 </style>

@@ -720,7 +720,7 @@ export default {
 
 body.dark {
   .input input {
-    background: none;
+    background: none !important;
     border: 1px solid #4b4c63;
     color: $white;
   }

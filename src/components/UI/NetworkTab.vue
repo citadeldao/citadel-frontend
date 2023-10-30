@@ -208,4 +208,14 @@ export default {
     }
   }
 }
+
+body.dark {
+  .network-tab {
+    background: #313354;
+
+    &.network-tab-active {
+      background: $dark-blue;
+    }
+  }
+}
 </style>
