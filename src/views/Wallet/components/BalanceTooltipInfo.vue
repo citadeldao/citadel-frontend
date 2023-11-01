@@ -174,4 +174,23 @@ export default {
     color: $ligth-blue;
   }
 }
+
+body.dark {
+  .balance-tooltip-info {
+    &__line-label {
+      color: $white;
+    }
+
+    &__period-days {
+      color: #8496c0;
+    }
+
+    &__period {
+      color: $dark-blue;
+    }
+
+    background: #313354;
+    color: $white;
+  }
+}
 </style>

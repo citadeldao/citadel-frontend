@@ -116,4 +116,15 @@ export default {
     }
   }
 }
+
+body.dark {
+  .tooltip {
+    background: #313354;
+    color: $white;
+
+    &::after {
+      background: #313354;
+    }
+  }
+}
 </style>

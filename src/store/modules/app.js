@@ -16,7 +16,7 @@ export default {
   state: {
     showLoader: false,
     routeLoader: false,
-    theme: 'dark',
+    theme: localStorage.getItem('appTheme') || '',
   },
   getters: {
     theme: (state) => state.theme,
@@ -35,8 +35,16 @@ export default {
     },
   },
   actions: {
-    setTheme({ commit }, theme) {
-      commit(types.SET_THEME, theme);
+    toggleTheme({ state, commit }) {
+      if (!state.theme) {
+        localStorage.setItem('appTheme', 'dark');
+        commit(types.SET_THEME, 'dark');
+        document.body.classList.add('dark');
+      } else {
+        localStorage.setItem('appTheme', '');
+        commit(types.SET_THEME, '');
+        document.body.classList.remove('dark');
+      }
     },
     setLoader({ commit }, loadingState) {
       commit(types.SET_LOADER, loadingState);

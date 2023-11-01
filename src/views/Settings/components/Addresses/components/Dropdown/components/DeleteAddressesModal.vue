@@ -248,4 +248,12 @@ export default {
     max-height: 86vh;
   }
 }
+
+body.dark {
+  .delete-address-modal {
+    &__title {
+      color: $white;
+    }
+  }
+}
 </style>

@@ -683,4 +683,16 @@ export default {
     }
   }
 }
+
+body.dark {
+  .extensions-settings {
+    .block {
+      background: $dark-panel-bg;
+    }
+
+    .head__title {
+      color: $white;
+    }
+  }
+}
 </style>

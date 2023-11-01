@@ -236,6 +236,22 @@ export default {
 }
 
 body.dark {
+  .dropdown__title--selectable {
+    background-color: transparent !important;
+
+    .title__text {
+      background-color: transparent !important;
+      color: $white !important;
+
+      &::after {
+        background-color: transparent !important;
+      }
+    }
+
+    .title__arrow {
+      opacity: 0;
+    }
+  }
   .dropdown {
     &__title {
       background: rgb(53, 55, 74);

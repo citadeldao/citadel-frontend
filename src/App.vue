@@ -87,6 +87,13 @@ export default {
       isClosed.value = true;
     };
 
+    onMounted(() => {
+      const theme = localStorage.getItem('appTheme');
+      if (theme) {
+        document.body.classList.add(theme);
+      }
+    });
+
     return {
       showModal,
       newWalletsModalShow,

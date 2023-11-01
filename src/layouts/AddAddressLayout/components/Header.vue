@@ -82,6 +82,10 @@
           <Badge :content="extensionsList?.length" background-color="#FF5722" />
           <app />
         </router-link>
+        <button class="header__menu-button" @click="toggleTheme">
+          <themeLight v-if="$store.getters['app/theme'] === 'dark'" />
+          <themeDark v-else />
+        </button>
 
         <div class="header__menu-button-wrapper">
           <button
@@ -127,6 +131,8 @@ import Breadcrumbs from './Breadcrumbs.vue';
 import Badge from '@/components/Badge';
 import customer from '@/assets/icons/customer.svg';
 import help from '@/assets/icons/help.svg';
+import themeLight from '@/assets/icons/theme_light.svg';
+import themeDark from '@/assets/icons/theme_dark.svg';
 import hotSale from '@/assets/icons/hot-sale.svg';
 import app from '@/assets/icons/app.svg';
 import user from '@/assets/icons/user.svg';
@@ -158,6 +164,8 @@ export default {
     Breadcrumbs,
     PrivacyModal,
     TermsModal,
+    themeDark,
+    themeLight,
   },
   setup() {
     const store = useStore();
@@ -169,6 +177,16 @@ export default {
     const showPrivacy = ref(false);
     const showTerms = ref(false);
     const { isPasswordHash } = useCreateWallets();
+
+    const toggleTheme = () => {
+      store.dispatch('app/toggleTheme');
+
+      // if (route.name === 'Overall') {
+      //   setTimeout(() => {
+      //     window.location.reload();
+      //   }, 1500);
+      // }
+    };
 
     const metamaskConnector = computed(
       () => store.getters['metamask/metamaskConnector']
@@ -283,6 +301,7 @@ export default {
       showPrivacy,
       showTerms,
       XCT_GOVERNANCE_APP,
+      toggleTheme,
     };
   },
 };
@@ -474,6 +493,23 @@ body.dark {
 
     &__menu-button {
       background: #26273b; // $dark-layout-bg;
+
+      &.faq {
+        .faq-items {
+          background: #313354;
+          color: $white;
+
+          .faq-item {
+            &:not(&:last-child) {
+              border-bottom: 1px solid #4b4c63;
+            }
+
+            &:last-child {
+              border-bottom: 1px solid transparent;
+            }
+          }
+        }
+      }
     }
   }
 }
