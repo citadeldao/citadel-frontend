@@ -341,6 +341,10 @@ body.dark {
       color: #8496c0;
     }
 
+    &__badge {
+      border: 1px solid $white;
+    }
+
     &__currency {
       font-family: 'Panton_Light';
     }
