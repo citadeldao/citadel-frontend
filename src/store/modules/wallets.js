@@ -240,7 +240,7 @@ export default {
 
       for (const walletOpts of list) {
         const { currency } = useWallets(walletOpts);
-        console.log('currency', currency.value);
+
         // const WalletConstructor = models[walletOpts.net.toUpperCase()];
         walletOpts.config = rootGetters['networks/configByNet'](walletOpts.net);
         walletOpts.balanceUSD = BigNumber(walletOpts.balance.calculatedBalance)
