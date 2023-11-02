@@ -254,4 +254,14 @@ export default {
     color: $red;
   }
 }
+
+body.dark {
+  .verification-input {
+    input {
+      background: transparent;
+
+      color: $white;
+    }
+  }
+}
 </style>

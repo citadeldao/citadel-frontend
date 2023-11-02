@@ -229,6 +229,7 @@ export default {
 body.dark {
   .breadcrumbs-item {
     color: $white;
+    border-bottom: 1px dashed $white;
   }
 }
 </style>

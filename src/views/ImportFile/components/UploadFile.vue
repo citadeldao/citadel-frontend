@@ -355,6 +355,10 @@ export default {
 }
 
 body.dark {
+  .drag-input__file span {
+    color: $white;
+  }
+
   .upload-file {
     &__title {
       color: $white;

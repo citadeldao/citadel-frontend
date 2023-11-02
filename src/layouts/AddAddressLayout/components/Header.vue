@@ -180,12 +180,9 @@ export default {
 
     const toggleTheme = () => {
       store.dispatch('app/toggleTheme');
-
-      // if (route.name === 'Overall') {
-      //   setTimeout(() => {
-      //     window.location.reload();
-      //   }, 1500);
-      // }
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
     };
 
     const metamaskConnector = computed(
@@ -490,6 +487,9 @@ export default {
 body.dark {
   .header {
     // border-bottom: 1px solid #4b4c63;
+    &__title {
+      color: $white;
+    }
 
     &__menu-button {
       background: #26273b; // $dark-layout-bg;

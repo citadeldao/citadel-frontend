@@ -83,4 +83,12 @@ export default {
     }
   }
 }
+
+body.dark {
+  .addresses {
+    &__title {
+      color: $white;
+    }
+  }
+}
 </style>
