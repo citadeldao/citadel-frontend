@@ -303,11 +303,11 @@ export default {
     const marketInfo = computed(() => {
       const info = [];
       if (marketcap.value['yield']) {
-        let currencyYield = marketcap.value['yield'];
+        const currencyYield = marketcap.value['yield'];
 
-        if (typeof currencyYield === 'number') {
-          currencyYield = +currencyYield.toFixed(0);
-        }
+        // if (typeof currencyYield === 'number') {
+        //   currencyYield = +currencyYield.toFixed(0);
+        // }
 
         info.push({
           key: 'apy',
