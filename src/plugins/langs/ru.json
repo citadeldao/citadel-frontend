@@ -1341,6 +1341,11 @@
             "title": "Nolus",
             "description": "",
             "shortDescription": ""
+        },
+        "archway":{
+            "title": "Archway",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "Подтверждено блоков",
@@ -1370,7 +1375,7 @@
         "termsOfService": "Условия обслуживания",
         "guide": "Руководство"
     },
-    "dontHaveEnoughFounds": "У вас недостаточно средств для оплаты комиссии за транзакцию.",
+    "dontHaveEnoughFounds": "",
     "transactionsSocket": {
         "failed": "Транзакция не выполнена",
         "completed": "Транзакция выполнена",

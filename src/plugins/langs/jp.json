@@ -1339,6 +1339,11 @@
             "title": "Nolus",
             "description": "",
             "shortDescription": ""
+        },
+        "archway":{
+            "title": "Archway",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "アップタイム",
@@ -1368,7 +1373,7 @@
         "termsOfService": "利用規約",
         "guide": "ガイド"
     },
-    "dontHaveEnoughFounds": "取引手数料を支払うのに十分な資金がありません。",
+    "dontHaveEnoughFounds": "",
     "transactionsSocket": {
         "failed": "処理に失敗しました",
         "completed": "取引完了",

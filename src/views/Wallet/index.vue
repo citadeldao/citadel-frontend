@@ -1,7 +1,12 @@
 <template>
   <div v-if="currentWallet" class="wallet">
     <div class="wallet__central-section">
-      <div class="wallet__section-wrapper">
+      <div
+        :class="{
+          inactive: currentWallet.net === 'btc' && selectedBtcAddressType,
+        }"
+        class="wallet__section-wrapper"
+      >
         <Alias
           :current-wallet="currentWallet"
           @qrClick="qrClick"
@@ -310,6 +315,10 @@ export default {
         showRejectedLedgerModal.value ||
         showConfirmUnstakedClaim.value
       );
+    });
+
+    const selectedBtcAddressType = computed(() => {
+      return store.getters['btcAddresses/selectedBtcAddressType'];
     });
 
     const keplrConnector = computed(
@@ -1198,6 +1207,7 @@ export default {
       ktAddresses,
       mode,
       onChangeComment,
+      selectedBtcAddressType,
     };
   },
 };
@@ -1234,6 +1244,11 @@ export default {
     flex-grow: 1;
     margin-right: 29px;
     min-width: 1190px;
+
+    &.inactive {
+      opacity: 0.5;
+    }
+
     @include lg {
       margin-right: 19px;
       min-width: 631px;

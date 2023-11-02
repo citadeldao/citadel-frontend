@@ -357,10 +357,15 @@ export default {
       let mergeWallet = null; // metamask
 
       if (nets.includes(metamaskConnector.value.network)) {
+        let ethAddress = '';
+        if (window.ethereum?.selectedAddress) {
+          ethAddress = window.ethereum?.selectedAddress.toLowerCase();
+        }
+
         const metamaskNet = metamaskConnector.value.network;
-        const metamaskAddress =
-          metamaskConnector.value.accounts[0] &&
-          metamaskConnector.value.accounts[0].toLowerCase();
+        const metamaskAddress = metamaskConnector.value.accounts[0]
+          ? metamaskConnector.value.accounts[0].toLowerCase()
+          : ethAddress;
 
         mergeWallet = walletsList.value.find(
           (w) =>
@@ -444,7 +449,9 @@ export default {
       if (!selectedApp.value.id) {
         router.push({ name: 'Extensions' });
       } else {
-        selectApp();
+        setTimeout(() => {
+          selectApp();
+        }, 1000);
       }
     } else {
       closeApp(true);
@@ -639,7 +646,9 @@ export default {
         );
 
         if (selectedApp.value.id) {
-          selectApp();
+          setTimeout(() => {
+            selectApp();
+          }, 1000);
         }
         startKeplrSecretChecker();
       }
@@ -882,6 +891,15 @@ export default {
           extensionTransactionForSign.value,
           keplrResult
         );
+
+        // selectedApp.value autorestake id 15
+        if (
+          // selectedApp.value.id == '15' &&
+          signerWallet.value.type === WALLET_TYPES.KEPLR &&
+          keplrResult.isNanoLedger
+        ) {
+          hash.signType = 'json';
+        }
 
         // const data = await useApi('wallet').sendSignedTransaction({
         //   hash,

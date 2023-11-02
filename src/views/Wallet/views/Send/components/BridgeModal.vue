@@ -86,8 +86,6 @@
           "
           placeholder="0.0"
           icon="coins"
-          :show-error-text="showErrorText"
-          :error="insufficientFunds"
           data-qa="send__amount-field"
           :show-set-max="maxAmountParent !== 0"
         />
