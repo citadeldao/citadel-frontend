@@ -119,13 +119,14 @@ export default {
     });
     const walletName = computed(() => {
       if (wSize.value === 'md') {
-        return props.wallet.getShortAddress(
+        return props.wallet?.getShortAddress(
           13,
           props.wallet.title || props.wallet.address
         );
       }
 
-      return props.wallet.getShortAddress(
+      if (!props.wallet?.getShortAddress) return props.wallet.address;
+      return props.wallet?.getShortAddress(
         19,
         props.wallet.title || props.wallet.address
       );

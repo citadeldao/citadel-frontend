@@ -1346,6 +1346,11 @@
             "title": "Nolus",
             "description": "",
             "shortDescription": ""
+        },
+        "archway":{
+            "title": "Archway",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "Disponibilité",

@@ -35,7 +35,9 @@ export default function useCurrentWalletRequests() {
       if (isSendToAnotherNetwork.value) {
         const { data, error } = await wallet.value.getCrossNetFees(
           wallet.value.id,
-          netTo
+          currentToken?.value?.net
+            ? encodeURIComponent(currentToken?.value?.net)
+            : netTo
         );
         fees.value = pickKeys(data, ['low', 'medium', 'high']);
         feesError.value = error;
