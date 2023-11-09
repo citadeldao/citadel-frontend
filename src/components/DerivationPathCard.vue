@@ -622,4 +622,37 @@ export default {
     color: $ligth-blue;
   }
 }
+
+body.dark {
+  .derivation-path-card {
+    background: #393c5f;
+
+    &:hover {
+      background: #484b69;
+    }
+
+    &:hover {
+      .derivation-path-card__address {
+        color: $white;
+      }
+    }
+
+    &__coin {
+      color: $darkgray;
+    }
+
+    &__title {
+      color: $white;
+    }
+
+    .derivation-path-card__section {
+      border-color: #c3ceeb;
+    }
+
+    &.checked {
+      background: #484b69;
+      border-color: #c3ceeb;
+    }
+  }
+}
 </style>

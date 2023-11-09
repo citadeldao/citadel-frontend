@@ -402,3 +402,17 @@ body.dark {
     background: #313354;
   }
 }
+
+body.dark {
+  .el-date-editor.el-date-editor--daterange {
+    background: transparent;
+  }
+
+  .el-date-editor .el-range-input {
+    background: transparent;
+  }
+
+  .date-picker {
+    border: 1px solid #4b4c63;
+  }
+}

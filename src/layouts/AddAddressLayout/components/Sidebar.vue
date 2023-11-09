@@ -579,6 +579,7 @@ export default {
 
   &__compact-logo-citadel {
     display: none;
+    fill: #000;
   }
 
   &.compact &__logo-citadel {
@@ -905,6 +906,10 @@ export default {
 
 body.dark {
   .sidebar {
+    @include laptop {
+      filter: $sidebar-shadow;
+      background-color: #1c1d2e;
+    }
     &__addresses-header-title {
       color: $white;
     }
@@ -925,6 +930,9 @@ body.dark {
 }
 
 body.dark {
+  .sidebar__compact-logo-citadel {
+    fill: $white;
+  }
   .sidebar__addresses-search-input {
     input {
       background: none !important;

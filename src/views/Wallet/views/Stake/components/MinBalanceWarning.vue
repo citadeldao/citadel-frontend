@@ -94,4 +94,16 @@ export default {
     }
   }
 }
+
+body.dark {
+  .min-balance-warning {
+    &__content {
+      color: $white;
+    }
+
+    &._info {
+      background: #1b1c31;
+    }
+  }
+}
 </style>

@@ -283,6 +283,12 @@ body.dark {
 
   .select-card {
     &:hover {
+      border: 1px dashed #6b93c0;
+
+      .select-card__info {
+        color: #6b93c0;
+      }
+
       .select-card__title {
         color: $white;
       }

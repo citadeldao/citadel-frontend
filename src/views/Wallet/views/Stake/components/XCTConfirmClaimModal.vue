@@ -279,4 +279,16 @@ export default {
     margin-top: 19px;
   }
 }
+
+body.dark {
+  .xct-confirm-claim-modal {
+    &__claim-to-address {
+      color: $white;
+    }
+
+    &__total-title {
+      color: $white;
+    }
+  }
+}
 </style>

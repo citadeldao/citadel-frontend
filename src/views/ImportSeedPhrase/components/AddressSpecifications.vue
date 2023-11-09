@@ -306,6 +306,10 @@ textarea:focus + .textarea__error {
 
 body.dark {
   .address-specifications {
+    textarea {
+      color: $white;
+    }
+
     &__mnemonic-phrase {
       background: transparent;
       border: 1px solid #4b4c63;

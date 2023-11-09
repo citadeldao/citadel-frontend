@@ -8,7 +8,7 @@ const BTC_USDT_AMOUNT = 0.000001;
 export const MAX_TICKS_LIMIT = 12;
 
 export const COLORS = {
-  CURRENCY: store.getters['app/theme'] === 'dark' ? '#4B4C63' : '#BCC2D8',
+  CURRENCY: store.getters['app/theme'] === 'dark' ? '#4f6b8a' : '#BCC2D8',
   MONTH: store.getters['app/theme'] === 'dark' ? '#6B93C0' : '#AFBCCB',
   ACTIVE_MONTH: '#B7A8FF',
   DAY: store.getters['app/theme'] === 'dark' ? '#fff' : '#000000',

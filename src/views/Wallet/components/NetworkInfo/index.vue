@@ -106,8 +106,8 @@
       </a>
     </div>
     <!-- Информация по сетке(цены на бирже) -->
-    <el-skeleton :rows="6" animated :loading="loading" v-if="loading" />
-    <div v-else>
+    <!-- <el-skeleton :rows="6" animated :loading="loading" v-if="loading" /> -->
+    <div v-if="!loading">
       <div class="network-info__info">
         <span class="network-info__info-title"> {{ $t('tokenPrice') }} </span>
         <div class="network-info__info-price">

@@ -381,4 +381,27 @@ export default {
     }
   }
 }
+
+body.dark {
+  .stake-placeholder {
+    &__title {
+      color: $white;
+    }
+
+    .card-special-title,
+    .card-special-title-staking {
+      color: $white;
+    }
+
+    .card-special {
+      background-image: none;
+      box-shadow: none;
+      background-color: rgb(57, 59, 81);
+    }
+
+    &__card-special {
+      background-image: none;
+    }
+  }
+}
 </style>

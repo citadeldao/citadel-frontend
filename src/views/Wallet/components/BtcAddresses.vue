@@ -334,6 +334,11 @@ body.dark {
             color: #6b93c0;
           }
 
+          .balance {
+            background: transparent;
+            color: $white;
+          }
+
           .btc-balance {
             color: $white;
 

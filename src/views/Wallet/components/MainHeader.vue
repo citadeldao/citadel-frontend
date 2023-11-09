@@ -142,7 +142,7 @@ body.dark {
     }
 
     &__active {
-      border-color: $white;
+      border-color: #876dff;
       color: $white;
     }
   }

@@ -158,4 +158,16 @@ export default {
     margin-top: 6px;
   }
 }
+
+body.dark {
+  .xct-set-staking-amount {
+    &__stake-balance-title {
+      color: $white;
+    }
+
+    &__stake-balance-currency {
+      color: #6b93c0;
+    }
+  }
+}
 </style>

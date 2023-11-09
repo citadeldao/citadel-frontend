@@ -330,4 +330,23 @@ export default {
     }
   }
 }
+
+body.dark {
+  .pledged-balance {
+    &__title-title {
+      color: $white;
+    }
+
+    &__balance-value {
+      color: $white;
+    }
+
+    &__balance-currency {
+      color: #8b9bc7;
+    }
+
+    background-image: url('~@/assets/images/unpladgedBalanceBackgroundDark.jpg');
+    background-size: 100%;
+  }
+}
 </style>

@@ -663,8 +663,17 @@ export default {
 }
 
 body.dark {
+  .rewards-list-tooltip__content {
+    span {
+      color: $white;
+    }
+  }
   .stake-list-item {
     border: 1px solid #4b4c63;
+
+    &--withoutDelegation {
+      background: #1b1c31;
+    }
 
     &--avaliable,
     &--frozen {

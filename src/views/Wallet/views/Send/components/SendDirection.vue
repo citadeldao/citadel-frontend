@@ -456,6 +456,16 @@ export default {
 }
 
 body.dark {
+  .send-direction__vk {
+    .vk__title {
+      color: $white;
+    }
+  }
+  .vk {
+    &__copy-btn {
+      background: #30468e5c;
+    }
+  }
   .send-direction {
     &__line-title {
       color: #6b758e;

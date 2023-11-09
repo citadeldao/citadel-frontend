@@ -155,4 +155,29 @@ export default {
     margin: 0 24px;
   }
 }
+
+body.dark {
+  .info-modal {
+    background: $dark-panel-bg;
+    box-shadow: none;
+
+    .side__title {
+      color: $white;
+    }
+
+    .side__secondary-title {
+      color: #6b93c0;
+    }
+
+    .info-modal__upper-right {
+      svg {
+        fill: $white;
+      }
+    }
+
+    &__title {
+      color: $white;
+    }
+  }
+}
 </style>

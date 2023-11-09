@@ -340,4 +340,18 @@ export default {
   color: $lavender;
   pointer-events: none;
 }
+
+body.dark {
+  .confirm-one-seed__word {
+    background: #313354;
+    color: $white;
+  }
+
+  .confirm-one-seed__confirms {
+    .field {
+      background: #313354;
+      color: $white;
+    }
+  }
+}
 </style>

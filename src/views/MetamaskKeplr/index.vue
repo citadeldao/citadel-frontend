@@ -23,32 +23,42 @@ import SelectCard from '@/components/SelectCard';
 import Header from '../AddAddress/components/Header';
 import { useRouter } from 'vue-router';
 import { i18n } from '@/plugins/i18n';
+import { useStore } from 'vuex';
 const { t } = i18n.global;
-const methods = [
-  {
-    title: 'Metamask',
-    info: t('metamaskKeplr.card1Info'),
-    icon: 'metamask',
-    hoveredIcon: 'metamask-hovered',
-    routeName: 'Metamask',
-  },
-  {
-    title: 'Keplr',
-    info: t('metamaskKeplr.card2Info'),
-    icon: 'keplr',
-    hoveredIcon: 'keplr-hovered',
-    routeName: 'Keplr',
-  },
-];
 
 export default {
   name: 'MetamaskKeplr',
   components: { SelectCard, Header },
   setup() {
+    const store = useStore();
     const router = useRouter();
     const clickHandler = (name) => {
       router.push({ name: `${name}` });
     };
+
+    const methods = [
+      {
+        title: 'Metamask',
+        info: t('metamaskKeplr.card1Info'),
+        icon:
+          store.getters['app/theme'] === 'dark' ? 'metamask-dark' : 'metamask',
+        hoveredIcon:
+          store.getters['app/theme'] === 'dark'
+            ? 'metamask-dark-hover'
+            : 'metamask-hovered',
+        routeName: 'Metamask',
+      },
+      {
+        title: 'Keplr',
+        info: t('metamaskKeplr.card2Info'),
+        icon: store.getters['app/theme'] === 'dark' ? 'keplr-dark' : 'keplr',
+        hoveredIcon:
+          store.getters['app/theme'] === 'dark'
+            ? 'keplr-dark-hover'
+            : 'keplr-hovered',
+        routeName: 'Keplr',
+      },
+    ];
 
     return { clickHandler, methods };
   },

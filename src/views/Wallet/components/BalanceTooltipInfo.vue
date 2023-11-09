@@ -177,6 +177,9 @@ export default {
 
 body.dark {
   .balance-tooltip-info {
+    &__balance-line {
+      color: $white;
+    }
     &__line-label {
       color: $white;
     }

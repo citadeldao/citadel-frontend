@@ -562,10 +562,35 @@ export default {
 }
 
 body.dark {
+  .rewards-list-tooltip {
+    &__content {
+      color: $white;
+    }
+  }
   .nodes-list-item {
     &:hover {
       background: none;
       opacity: 0.8;
+    }
+
+    &__value {
+      color: $white;
+    }
+
+    &__list-item-id {
+      color: #afbccb;
+    }
+
+    &__list-item-amount,
+    &__list-item-currency,
+    &__share-currency {
+      color: #6b93c0;
+    }
+
+    &__wrapper {
+      &:hover {
+        background: transparent;
+      }
     }
     &__info-fee-currency,
     &__info-uptime-currency {

@@ -516,6 +516,10 @@ body.dark {
   .claim-rewards {
     background: #393c5f;
 
+    &__apy {
+      color: $darkgray;
+    }
+
     &__title {
       color: $white;
     }
@@ -530,6 +534,10 @@ body.dark {
 
     &__button-shadow-icon {
       fill: rgb(46, 56, 85);
+    }
+
+    &__note {
+      color: #6b93c0;
     }
   }
 }
