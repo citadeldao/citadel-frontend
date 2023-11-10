@@ -208,7 +208,8 @@ export default {
 .pledged-balance {
   width: 100%;
   height: 150px;
-  border-radius: 16px;
+  border-radius: 19px;
+  background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
   padding: 24px 27px 31px 24px;
@@ -346,7 +347,7 @@ body.dark {
     }
 
     background-image: url('~@/assets/images/unpladgedBalanceBackgroundDark.jpg');
-    background-size: 100%;
+    background-size: cover;
   }
 }
 </style>
