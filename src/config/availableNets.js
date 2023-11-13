@@ -28,6 +28,7 @@ export const networksFilterCategory = {
   hot: ['btc', 'eth', 'bsc', 'sui', 'arbitrum', 'polkadot', 'tron'],
   cosmos: [
     'archway',
+    'quasar',
     'akash',
     'axelar',
     'band',
@@ -115,6 +116,7 @@ export const keplrNetworks = [
   { label: 'Kava', key: 'kava_2222-10', net: 'kava' },
   { label: 'Osmosis', key: 'osmosis-1', net: 'osmosis' },
   { label: 'Archway', key: 'archway-1', net: 'archway' },
+  { label: 'Quasar', key: 'quasar-1', net: 'quasar' },
   { label: 'Persistence', key: 'core-1', net: 'persistence' },
   { label: 'Sentinel', key: 'sentinelhub-2', net: 'sentinel' },
   { label: 'Stargaze', key: 'stargaze-1', net: 'stargaze' },

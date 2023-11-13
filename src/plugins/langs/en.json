@@ -1362,6 +1362,11 @@
             "title": "Archway",
             "description": "",
             "shortDescription": "The multi-chain launchpad for your dapp | Archway Network"
+        },
+        "quasar":{
+            "title": "Quasar",
+            "description": "",
+            "shortDescription": "Instantly make your crypto productive by adding Quasar vaults to your portfolio."
         }
     },
     "uptime": "Uptime",

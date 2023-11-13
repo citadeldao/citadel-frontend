@@ -815,4 +815,14 @@ export default {
       href: 'archwayHQ',
     },
   },
+  quasar: {
+    web: {
+      title: 'quasar.fi',
+      href: 'https://www.quasar.fi/',
+    },
+    twitter: {
+      title: '@QuasarFi',
+      href: 'https://twitter.com/QuasarFi',
+    },
+  },
 };

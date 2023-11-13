@@ -1346,6 +1346,11 @@
             "title": "Archway",
             "description": "",
             "shortDescription": ""
+        },
+        "quasar":{
+            "title": "Quasar",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "Подтверждено блоков",
