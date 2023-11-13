@@ -498,4 +498,21 @@ export default {
     top: 70px;
   }
 }
+
+body.dark {
+  .bridge {
+    &__memo-title {
+      color: $white;
+    }
+
+    .network-target-wallets {
+      background: #35374a;
+      border: 1px solid #4b4c63;
+
+      .address-item {
+        border-bottom: 1px solid #4b4c63;
+      }
+    }
+  }
+}
 </style>

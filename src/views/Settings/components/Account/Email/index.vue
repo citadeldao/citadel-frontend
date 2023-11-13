@@ -163,4 +163,15 @@ export default {
   @include settings-card-default;
   margin-bottom: $card-margin;
 }
+
+body.dark {
+  .change-email {
+    background: $dark-panel-bg;
+    box-shadow: none;
+
+    &__title {
+      color: $white;
+    }
+  }
+}
 </style>

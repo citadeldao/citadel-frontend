@@ -1287,4 +1287,12 @@ export default {
     z-index: 10;
   }
 }
+
+body.dark {
+  .extensions {
+    &__apps {
+      background: $dark-panel-bg;
+    }
+  }
+}
 </style>

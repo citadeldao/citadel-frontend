@@ -503,4 +503,12 @@ export default {
     }
   }
 }
+
+body.dark {
+  .select-networks__controls {
+    .more {
+      color: $white;
+    }
+  }
+}
 </style>

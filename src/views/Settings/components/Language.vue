@@ -63,4 +63,12 @@ export default {
     margin: 0;
   }
 }
+
+body.dark {
+  .language {
+    &__title {
+      color: $white;
+    }
+  }
+}
 </style>

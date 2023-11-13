@@ -365,4 +365,21 @@ export default {
     }
   }
 }
+
+body.dark {
+  .chart-container .chart-background .chart:after {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .chart-top {
+    &__title {
+      color: $white;
+    }
+
+    &__toggle-info {
+      background: #313354;
+    }
+  }
+}
 </style>

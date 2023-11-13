@@ -269,4 +269,14 @@ export default {
     margin-top: 21px;
   }
 }
+
+body.dark {
+  .verification {
+    background: $dark-panel-bg;
+
+    &__title {
+      color: $white;
+    }
+  }
+}
 </style>

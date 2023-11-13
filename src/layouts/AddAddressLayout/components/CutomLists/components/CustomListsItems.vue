@@ -273,4 +273,28 @@ export default {
     }
   }
 }
+
+body.dark {
+  .custom-lists {
+    background: #101120;
+    color: $white;
+
+    &__add-list-button,
+    &__list {
+      background: #101120;
+    }
+
+    &__add-list-button {
+      color: $white;
+    }
+
+    .custom-list-item--important .custom-list-item__title {
+      color: #8b9bc7;
+    }
+
+    .custom-list-item--active .custom-list-item__title {
+      color: $white;
+    }
+  }
+}
 </style>

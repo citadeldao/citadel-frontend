@@ -72,4 +72,15 @@ export default {
     }
   }
 }
+
+body.dark {
+  .active-list-item {
+    .list-item__icon {
+      fill: $white;
+      &:hover {
+        fill: $too-dark-blue;
+      }
+    }
+  }
+}
 </style>

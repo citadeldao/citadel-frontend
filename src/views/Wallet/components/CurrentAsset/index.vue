@@ -6,6 +6,12 @@
     @mouseleave="isHovered = false"
   >
     <img
+      v-if="$store.getters['app/theme'] === 'dark'"
+      :src="require('@/assets/images/waves/dark.png')"
+      class="current-asset__wave"
+    />
+    <img
+      v-else
       :src="require('@/assets/images/waves/red.png')"
       class="current-asset__wave"
     />
@@ -251,6 +257,43 @@ export default {
       font-size: $small-lg;
       min-width: 115px;
       max-width: 200px;
+    }
+  }
+}
+
+body.dark {
+  .current-asset {
+    background: linear-gradient(
+      90deg,
+      rgb(42, 37, 99) 0%,
+      rgb(45, 48, 120) 1%,
+      rgb(39, 43, 94) 100%
+    );
+
+    &:hover {
+      background: linear-gradient(
+        90deg,
+        rgb(42, 37, 99) 0%,
+        rgb(45, 48, 120) 1%,
+        rgb(42, 47, 112) 100%
+      );
+    }
+
+    &__wave {
+      opacity: 1;
+    }
+
+    &__text {
+      color: $white;
+    }
+
+    &__arrow {
+      background: linear-gradient(
+        90deg,
+        rgb(42, 37, 99) 0%,
+        rgb(45, 48, 120) 1%,
+        rgb(39, 43, 94) 100%
+      );
     }
   }
 }

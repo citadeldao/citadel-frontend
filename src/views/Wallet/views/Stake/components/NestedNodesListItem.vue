@@ -560,4 +560,42 @@ export default {
   font-size: 12px;
   line-height: 16px;
 }
+
+body.dark {
+  .rewards-list-tooltip {
+    &__content {
+      color: $white;
+    }
+  }
+  .nodes-list-item {
+    &:hover {
+      background: none;
+      opacity: 0.8;
+    }
+
+    &__value {
+      color: $white;
+    }
+
+    &__list-item-id {
+      color: #afbccb;
+    }
+
+    &__list-item-amount,
+    &__list-item-currency,
+    &__share-currency {
+      color: #6b93c0;
+    }
+
+    &__wrapper {
+      &:hover {
+        background: transparent;
+      }
+    }
+    &__info-fee-currency,
+    &__info-uptime-currency {
+      color: #8b9bc7;
+    }
+  }
+}
 </style>

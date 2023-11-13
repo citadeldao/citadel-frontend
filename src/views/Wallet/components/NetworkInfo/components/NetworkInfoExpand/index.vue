@@ -713,4 +713,31 @@ export default {
   margin-bottom: 1px;
   height: 300px;
 }
+
+body.dark {
+  .expand {
+    &__wrap {
+      background: $dark-panel-bg;
+
+      .header__title {
+        color: $white;
+      }
+    }
+  }
+}
+
+body.dark {
+  .chart__title {
+    color: $white;
+  }
+  .marketcaps__item {
+    .item__text {
+      color: #6b758e;
+    }
+
+    .item__number {
+      color: #c3ceeb;
+    }
+  }
+}
 </style>

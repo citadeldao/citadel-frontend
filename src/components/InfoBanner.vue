@@ -132,4 +132,10 @@ export default {
     }
   }
 }
+
+body.dark {
+  .info-banner {
+    background: #1b1c31;
+  }
+}
 </style>

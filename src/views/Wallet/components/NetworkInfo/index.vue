@@ -106,8 +106,8 @@
       </a>
     </div>
     <!-- Информация по сетке(цены на бирже) -->
-    <el-skeleton :rows="6" animated :loading="loading" v-if="loading" />
-    <div v-else>
+    <!-- <el-skeleton :rows="6" animated :loading="loading" v-if="loading" /> -->
+    <div v-if="!loading">
       <div class="network-info__info">
         <span class="network-info__info-title"> {{ $t('tokenPrice') }} </span>
         <div class="network-info__info-price">
@@ -739,6 +739,49 @@ export default {
     & svg {
       width: 17px;
       height: 15px;
+    }
+  }
+}
+
+body.dark {
+  .network-info {
+    background: $dark-panel-bg;
+
+    &__note {
+      p {
+        color: #6b93c0;
+      }
+    }
+
+    &__header {
+      border-bottom: 1px solid #393b53;
+    }
+
+    &__additional-info-white-space {
+      border-bottom: 1px dashed #393b53;
+    }
+
+    &__title {
+      color: $white;
+    }
+
+    &__usd-prise {
+      color: $white;
+    }
+
+    &__info-title {
+      color: $white;
+    }
+
+    &__additional-info-title {
+      color: $white;
+    }
+
+    &__usd-currency,
+    &__btc-currency,
+    &__additional-info-percent,
+    &__info-price-change-percent {
+      color: #8b9bc7;
     }
   }
 }

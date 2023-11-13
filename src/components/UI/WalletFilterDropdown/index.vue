@@ -237,4 +237,18 @@ export default {
     }
   }
 }
+
+body.dark {
+  .wallet-filter-dropdown {
+    &__list {
+      background: $dark-panel-bg;
+      box-shadow: none;
+      border: 1px solid #4b4c63;
+    }
+
+    &--input {
+      border: 1px solid #4b4c63;
+    }
+  }
+}
 </style>

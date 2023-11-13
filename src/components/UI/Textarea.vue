@@ -119,4 +119,12 @@ export default {
     max-height: 16px;
   }
 }
+
+body.dark {
+  .textarea textarea {
+    background: transparent;
+    color: $white;
+    border: 1px solid #4b4c63;
+  }
+}
 </style>

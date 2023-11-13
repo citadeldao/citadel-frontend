@@ -255,4 +255,18 @@ export default {
     color: $dark-blue;
   }
 }
+
+body.dark {
+  .xct-calculator-expand {
+    background: $dark-panel-bg;
+
+    &__header-title {
+      color: $white;
+    }
+
+    &__total-title {
+      color: #fff;
+    }
+  }
+}
 </style>

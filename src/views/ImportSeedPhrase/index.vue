@@ -200,4 +200,10 @@ export default {
     flex-grow: 1;
   }
 }
+
+body.dark {
+  .import-seed-phrase {
+    background: #26273b;
+  }
+}
 </style>

@@ -299,4 +299,10 @@ export default {
 .select-fee-input {
   height: 68px;
 }
+
+body.dark {
+  .fee-radio > input[type='radio'] + label {
+    background: #393c5f;
+  }
+}
 </style>

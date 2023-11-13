@@ -341,4 +341,11 @@ form {
     margin-bottom: 32px;
   }
 }
+
+body.dark {
+  .drag-input {
+    border: 2px dashed #393b53;
+    background: $dark-panel-bg;
+  }
+}
 </style>

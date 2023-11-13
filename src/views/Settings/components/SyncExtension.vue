@@ -74,4 +74,11 @@ export default {
     margin-top: 10px !important;
   }
 }
+
+body.dark {
+  .sync-data {
+    background: $dark-panel-bg;
+    box-shadow: none;
+  }
+}
 </style>

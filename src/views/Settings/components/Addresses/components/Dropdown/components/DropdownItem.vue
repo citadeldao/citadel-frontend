@@ -507,4 +507,26 @@ export default {
     border-color: transparent transparent $too-ligth-gray transparent;
   }
 }
+
+body.dark {
+  .dropdown-item {
+    border: 1px solid #4b4c63;
+
+    &__title {
+      color: $dark-blue;
+    }
+
+    &__address {
+      color: $white;
+    }
+
+    &__btn {
+      background: #393c5f;
+    }
+
+    &__icon {
+      background: #1b1c31;
+    }
+  }
+}
 </style>

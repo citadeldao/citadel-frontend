@@ -270,4 +270,12 @@ export default {
     margin-bottom: 12px;
   }
 }
+
+body.dark {
+  .action-modal-content {
+    &__total-title {
+      color: $white;
+    }
+  }
+}
 </style>

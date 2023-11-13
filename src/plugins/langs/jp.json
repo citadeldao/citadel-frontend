@@ -312,8 +312,8 @@
     "staking": {
         "chooseNodeForStaking": "ステーキングするノードを選択",
         "chooseNodeModalDesc": "リストのノードをクリックして、ステークするノードを選択します。",
-        "chooseNodeModalDesc1": "資産をステークするには、ノードを選択し、委任の金額を設定します。  {net} のステーク解除期間が <span style='color: #0A2778; であることを考慮してください。  font-weight: bold;'>{perioud} 日</span>。",
-        "chooseNodeModalDescWithFrom": "資産をステークするには、ノードを選択し、委任の金額を設定します。  {net} のステーキング解除期間は変動することを考慮に入れてください <span style='color: #0A2778;  font-weight: bold;'>{perioudFrom} から {perioudTo} 日まで</span>。  <a href='{link}' style='color: #0A2778; で現在のステーク解除期間を確認してください。  font-weight: bold;text-decoration:none'>link</a>.",
+        "chooseNodeModalDesc1": "資産をステークするには、ノードを選択し、委任の金額を設定します。  {net} のステーク解除期間が <span style='color: #00A3FF; であることを考慮してください。  font-weight: bold;'>{perioud} 日</span>。",
+        "chooseNodeModalDescWithFrom": "資産をステークするには、ノードを選択し、委任の金額を設定します。  {net} のステーキング解除期間は変動することを考慮に入れてください <span style='color: #00A3FF;  font-weight: bold;'>{perioudFrom} から {perioudTo} 日まで</span>。  <a href='{link}' style='color: #00A3FF; で現在のステーク解除期間を確認してください。  font-weight: bold;text-decoration:none'>link</a>.",
         "Stake": "ステーク",
         "staking": "ステーキング",
         "searchNode": "検索ノード",
@@ -325,8 +325,8 @@
         "stakeOn": "賭ける",
         "amountToStake": "賭ける金額",
         "inputNote": "手数料トークンの購入のために予約された資金を含む",
-        "editModeDesc": "資産をステークまたはアンステークするには、下のフィールドで委任の金額を設定します。  {net} のステーク解除期間が <span style='color: #0A2778; であることを考慮してください。  font-weight: bold;'>{perioud} 日</span>",
-        "editModeDescWithFrom": "資産をステークまたはアンステークするには、下のフィールドで委任の金額を設定します。  {net} のステーキング解除期間は変動することを考慮に入れてください <span style='color: #0A2778;  font-weight: bold;'>{perioudFrom} から {perioudTo} 日まで</span>。  <a href='{link}' style='color: #0A2778; で現在のステーク解除期間を確認してください。  font-weight: bold;text-decoration:none'>link</a>.",
+        "editModeDesc": "資産をステークまたはアンステークするには、下のフィールドで委任の金額を設定します。  {net} のステーク解除期間が <span style='color: #00A3FF; であることを考慮してください。  font-weight: bold;'>{perioud} 日</span>",
+        "editModeDescWithFrom": "資産をステークまたはアンステークするには、下のフィールドで委任の金額を設定します。  {net} のステーキング解除期間は変動することを考慮に入れてください <span style='color: #00A3FF;  font-weight: bold;'>{perioudFrom} から {perioudTo} 日まで</span>。  <a href='{link}' style='color: #00A3FF; で現在のステーク解除期間を確認してください。  font-weight: bold;text-decoration:none'>link</a>.",
         "nodeIsNotActive": "ノードは非アクティブで、報酬は発行されていません",
         "nodeIsJailed": "このノードは現在非アクティブです。ステーキングしても報酬は得られません。 アセットを別のノードに委任する"
     },
@@ -335,8 +335,8 @@
         "defaultPrefix": "ノードを選択し、アンステークする金額を設定します。",
         "customPrefix": "アンステークする金額を設定します。",
         "chooseNodeForUnstaking": "ステーキングを解除するノードを選択",
-        "chooseNodeModalDesc": "{net} のステーク解除期間が <span style='color: #0A2778; であることを考慮してください。  font-weight: bold;'>{perioud} 日</span>。",
-        "chooseNodeModalDescWithFrom": "{net} のステーキング解除期間は変動することを考慮に入れてください <span style='color: #0A2778;  font-weight: bold;'>{perioudFrom} から {perioudTo} 日まで</span>。  <a href='{link}' style='color: #0A2778; で現在のステーク解除期間を確認してください。  font-weight: bold;text-decoration:none'>link</a>.\n\n chooseNodeModalDescWithFrom",
+        "chooseNodeModalDesc": "{net} のステーク解除期間が <span style='color: #00A3FF; であることを考慮してください。  font-weight: bold;'>{perioud} 日</span>。",
+        "chooseNodeModalDescWithFrom": "{net} のステーキング解除期間は変動することを考慮に入れてください <span style='color: #00A3FF;  font-weight: bold;'>{perioudFrom} から {perioudTo} 日まで</span>。  <a href='{link}' style='color: #00A3FF; で現在のステーク解除期間を確認してください。  font-weight: bold;text-decoration:none'>link</a>.\n\n chooseNodeModalDescWithFrom",
         "actionModalTitle": "アンステーキング取引を確認する",
         "actionModalDesc": "トークンはステーク解除され、しばらくの間凍結されます",
         "unstakeTo": "ステーク解除",
@@ -347,7 +347,7 @@
     "singleStake": {
         "claimUnstakeNote": "",
         "chooseNodeModalDescUnstake": "",
-        "chooseNodeModalDesc": "資産を賭けるには、ノードを選択し、委任の金額を設定します。  <strong style='color:#0a2778;'>ステーク解除期間がない</strong>ことに注意してください。",
+        "chooseNodeModalDesc": "資産を賭けるには、ノードを選択し、委任の金額を設定します。  <strong style='color:#00A3FF;'>ステーク解除期間がない</strong>ことに注意してください。",
         "actionModalTitle": "再委任の確認",
         "actionModalDesc": "あなたの資産は現在のバリデーターからステーク解除され、新しく選択されたバリデーターに一度ステークされます",
         "undelegateFrom": "委任を取り消す",
@@ -967,7 +967,7 @@
         "googlePlay": "グーグルプレイ"
     },
     "redelegation": {
-        "redelegationDesc": "ノードを選択し、再委任する量を設定します。 同じウォレットアドレスでは、アセットを再委任できるのは <span style='color: #0A2778; までです。  font-weight: bold;'>7 回</span> <span style='color: #0A2778;  font-weight: bold;'>21 日間</span>。 ステーキング解除期間は適用されません。",
+        "redelegationDesc": "ノードを選択し、再委任する量を設定します。 同じウォレットアドレスでは、アセットを再委任できるのは <span style='color: #00A3FF; までです。  font-weight: bold;'>7 回</span> <span style='color: #00A3FF;  font-weight: bold;'>21 日間</span>。 ステーキング解除期間は適用されません。",
         "redelegate": "再委任",
         "chooseNodeTitle": "再委任するノードを選択",
         "choseNodePlaceholderNote": "クリックして再委任するノードを選択"
@@ -1012,7 +1012,7 @@
     "withoutDelegation": "委任なしのステーク",
     "pledge": {
         "chooseModeModalTitle1": "iGas生成のためにIOSTをロックする",
-        "chooseModeModalSubtitle": "<span style='color: #0A2778;  font-weight: bold;'>1</span> 誓約した IOST は <span style='color: #0A2778; を生成します。  font-weight: bold;'>100 000</span> iGas/日",
+        "chooseModeModalSubtitle": "<span style='color: #00A3FF;  font-weight: bold;'>1</span> 誓約した IOST は <span style='color: #00A3FF; を生成します。  font-weight: bold;'>100 000</span> iGas/日",
         "chooseModeModalTitle2": "iGas生成に使用されるIOSTのロックを解除",
         "pledge": "誓約",
         "unpledge": "解約する",
@@ -1389,7 +1389,7 @@
     "claimUnstakedText": "あなたの資産は賭けられていません。 トランザクションを確認して、今すぐ請求してください。",
     "stakingAmount": "ステーキング量",
     "polkadot": {
-        "chooseNodeModalDesc": "賭けたいトークンの量を設定します。 次に、委任するノードを選択します。 あなたの資金は <span style='color: #0A2778; に分配できます。  font-weight: 700;'>{maxNodes} ノード以下</span>。 また、${net} のステーク解除期間が <span style='color: #0A2778' font-weight: 700;>{perioud} 日</span>であることも考慮してください。 この間、ステーキングされていないトークンは凍結されます。  <span style='color: #FF5722;  font-weight: 700;'>最小ステーキング残高: {minStakingAmount} {code}</span>",
+        "chooseNodeModalDesc": "賭けたいトークンの量を設定します。 次に、委任するノードを選択します。 あなたの資金は <span style='color: #00A3FF; に分配できます。  font-weight: 700;'>{maxNodes} ノード以下</span>。 また、${net} のステーク解除期間が <span style='color: #00A3FF' font-weight: 700;>{perioud} 日</span>であることも考慮してください。 この間、ステーキングされていないトークンは凍結されます。  <span style='color: #FF5722;  font-weight: 700;'>最小ステーキング残高: {minStakingAmount} {code}</span>",
         "nominatedNodesTitle": "指名されたノード:",
         "error": {
             "chooseNotMoreThan16Nodes": "16 個以下のノードを選択してください"

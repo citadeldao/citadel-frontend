@@ -30,3 +30,12 @@
     text-transform: uppercase;
   }
 }
+
+body.dark {
+  .pretty-number {
+    &__tooltip {
+      background: #313354;
+      color: #c3ceeb;
+    }
+  }
+}

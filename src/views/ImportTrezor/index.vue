@@ -119,4 +119,10 @@ export default {
     flex-grow: 1;
   }
 }
+
+body.dark {
+  .import-trezor {
+    background: $dark-panel-bg;
+  }
+}
 </style>

@@ -717,4 +717,16 @@ export default {
 // .input input:focus + .input__error {
 //   display: none;
 // }
+
+body.dark {
+  .input input {
+    background: none !important;
+    border: 1px solid #4b4c63;
+    color: $white;
+  }
+
+  .input__max {
+    color: $white;
+  }
+}
 </style>

@@ -50,4 +50,11 @@ export default {
     border-color: $mid-gray;
   }
 }
+
+body.dark {
+  .text-button {
+    border-bottom: 2px solid $white;
+    color: $white;
+  }
+}
 </style>

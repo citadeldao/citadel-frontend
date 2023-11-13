@@ -498,4 +498,44 @@ $blue-dark: #262b61;
     height: 120px;
   }
 }
+
+body.dark {
+  .transaction-info-modal-content {
+    .inner-tx__view-item-component {
+      .line {
+        border: 0.01rem dashed #393b53;
+      }
+
+      .value a {
+        color: $white;
+      }
+    }
+
+    .inner-tx__view-item {
+      background: #2d2e42;
+
+      .value .value-amount {
+        color: #c3ceeb;
+      }
+
+      .value .value-symbol {
+        color: $white;
+      }
+
+      .info-block__line-title {
+        color: #6b758e;
+      }
+
+      .icon {
+        svg {
+          fill: #313354;
+        }
+      }
+
+      .icon-type {
+        color: $white;
+      }
+    }
+  }
+}
 </style>

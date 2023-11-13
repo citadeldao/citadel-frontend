@@ -332,4 +332,26 @@ export default {
     }
   }
 }
+
+body.dark {
+  .cat-page {
+    box-shadow: none;
+
+    &__title {
+      color: $white;
+    }
+
+    &__address-line {
+      color: $white;
+    }
+
+    &__content {
+      background: $dark-panel-bg;
+
+      svg {
+        fill: $white;
+      }
+    }
+  }
+}
 </style>

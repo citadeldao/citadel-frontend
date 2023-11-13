@@ -207,4 +207,30 @@ export default {
     }
   }
 }
+
+body.dark {
+  .login-form {
+    &__title {
+      color: $white;
+    }
+
+    &__info {
+      color: #c3ceeb;
+    }
+
+    .login-form-social__description {
+      span {
+        background: none;
+
+        &:after {
+          border-top: 1px solid #4b4c63;
+        }
+
+        &:before {
+          border-top: 1px solid #4b4c63;
+        }
+      }
+    }
+  }
+}
 </style>

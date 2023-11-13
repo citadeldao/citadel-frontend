@@ -238,4 +238,10 @@ export default {
     }
   }
 }
+
+body.dark {
+  .top__toggle-wrapper {
+    background: #313354;
+  }
+}
 </style>

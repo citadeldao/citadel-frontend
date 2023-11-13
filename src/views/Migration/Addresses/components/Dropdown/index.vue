@@ -149,4 +149,30 @@ export default {
     }
   }
 }
+
+body.dark {
+  .dropdown {
+    &__title {
+      background: #2d2e42;
+
+      .title__line {
+        background: #2d2e42;
+      }
+    }
+
+    .title__text {
+      color: $white;
+    }
+
+    .title__value {
+      .title__value-amount {
+        color: $white;
+      }
+
+      .title__value-currency {
+        color: #8b9bc7;
+      }
+    }
+  }
+}
 </style>

@@ -303,4 +303,12 @@ export default {
     }
   }
 }
+
+body.dark {
+  .choose-derivation-path {
+    &__custom {
+      color: $white;
+    }
+  }
+}
 </style>

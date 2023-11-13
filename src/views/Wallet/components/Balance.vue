@@ -935,4 +935,48 @@ export default {
     }
   }
 }
+
+body.dark {
+  .balance {
+    background: $dark-panel-bg;
+
+    &__tab {
+      &.settings {
+        background: #313354;
+      }
+    }
+
+    .network-tab {
+      background: #313354;
+
+      &.network-tab-active {
+        background: $dark-blue;
+      }
+    }
+
+    &__balance {
+      color: $dark-blue;
+    }
+
+    &__currency {
+      color: $white;
+    }
+
+    &__title {
+      color: $white;
+    }
+
+    &__info-title {
+      color: $white;
+    }
+
+    &__info-currency {
+      color: $white;
+    }
+
+    &__info-white-space {
+      border-bottom: 1px dashed #393b53;
+    }
+  }
+}
 </style>

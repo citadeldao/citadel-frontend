@@ -5,7 +5,9 @@
         icon="chrome"
         :content="$t('importHardwareWallet.note')"
         color="#00A3FF"
-        background="#E8F7FF"
+        :background="
+          $store.getters['app/theme'] === 'dark' ? '#1B1C31' : '#E8F7FF'
+        "
         guide
       />
     </div>

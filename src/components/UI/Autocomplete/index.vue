@@ -258,4 +258,21 @@ export default {
 input:focus + .autocomplete__error {
   display: none;
 }
+
+body.dark {
+  .autocomplete {
+    input {
+      color: $white;
+    }
+
+    &__results {
+      background: #26273b;
+      border: 1px solid #4b4c63;
+    }
+  }
+  .autocomplete input {
+    background: transparent;
+    border: 1px solid #4b4c63;
+  }
+}
 </style>

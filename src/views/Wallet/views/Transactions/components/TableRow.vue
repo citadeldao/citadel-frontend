@@ -655,4 +655,31 @@ export default {
     }
   }
 }
+
+body.dark {
+  .table-row td {
+    background: #1b1c31;
+  }
+
+  .table-row__note {
+    background: #1b1c31;
+  }
+
+  .table-row__type-block-inner-amount {
+    color: #00a3ff;
+    background: #000;
+  }
+
+  .table-row__type-block-type {
+    color: $white;
+  }
+
+  .table-row__amount-value-currency {
+    color: #c3ceeb;
+  }
+
+  &__type {
+    color: $white;
+  }
+}
 </style>

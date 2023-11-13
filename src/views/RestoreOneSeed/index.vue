@@ -150,4 +150,10 @@ export default {
     flex-grow: 1;
   }
 }
+
+body.dark {
+  .restore-one-seed {
+    background: $dark-panel-bg;
+  }
+}
 </style>

@@ -333,4 +333,39 @@ export default {
   //   }
   // }
 }
+
+body.dark {
+  .address-item {
+    &__name,
+    &__currency {
+      color: #8496c0;
+    }
+
+    &__badge {
+      border: 1px solid $white;
+    }
+
+    &__currency {
+      font-family: 'Panton_Light';
+    }
+
+    &__icon {
+      background: #393b53;
+    }
+
+    &:hover {
+      .address-item__icon {
+        background: $blue;
+      }
+      .address-item__name,
+      .address-item__currency {
+        color: $white;
+      }
+      .address-item__balance {
+        color: #6b93c0;
+        display: flex;
+      }
+    }
+  }
+}
 </style>

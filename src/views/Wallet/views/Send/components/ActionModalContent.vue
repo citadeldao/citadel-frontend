@@ -280,4 +280,26 @@ export default {
     margin: 0 9px 0 9px;
   }
 }
+
+body.dark {
+  .action-modal-content {
+    &__total-amount-title {
+      color: $white;
+    }
+
+    &__total-amount-currency {
+      color: #6b758e;
+    }
+
+    &__fees {
+      .fees {
+        color: #6b758e;
+      }
+
+      .fees__currency {
+        color: #6b758e;
+      }
+    }
+  }
+}
 </style>

@@ -353,4 +353,21 @@ export default {
     position: relative;
   }
 }
+
+body.dark {
+  .drag-input__file span {
+    color: $white;
+  }
+
+  .upload-file {
+    &__title {
+      color: $white;
+    }
+
+    .drag-input {
+      background: #1b1c31;
+      border: 1px dashed #4b4c63;
+    }
+  }
+}
 </style>

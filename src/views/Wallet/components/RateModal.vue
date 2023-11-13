@@ -181,4 +181,11 @@ export default {
     }
   }
 }
+
+body.dark {
+  .rate-item {
+    background: #313354;
+    color: $white;
+  }
+}
 </style>

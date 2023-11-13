@@ -199,4 +199,15 @@ export default {
   -o-animation: rotating 2s linear infinite;
   animation: rotating 2s linear infinite;
 }
+
+body.dark {
+  .primary-button {
+    box-shadow: none;
+
+    &:disabled,
+    & [disabled] {
+      background: #393b53;
+    }
+  }
+}
 </style>

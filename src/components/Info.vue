@@ -277,4 +277,20 @@ export default {
     }
   }
 }
+
+body.dark {
+  .info {
+    &__title {
+      color: $white;
+    }
+
+    &__block-title {
+      color: $white;
+    }
+
+    &__block-info {
+      color: #8b9bc7;
+    }
+  }
+}
 </style>

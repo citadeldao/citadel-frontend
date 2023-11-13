@@ -201,4 +201,21 @@ export default {
     word-wrap: break-word;
   }
 }
+
+body.dark {
+  .export-modal {
+    &__copy-icon {
+      background: #30468e5c;
+    }
+
+    &__mnemonick-phrase-list-item {
+      background: #313354;
+      color: $white;
+    }
+
+    &__mnemonick-derivation {
+      color: $white;
+    }
+  }
+}
 </style>

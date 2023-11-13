@@ -107,4 +107,14 @@ export default {
     }
   }
 }
+
+body.dark {
+  .lock-banner {
+    background: none;
+
+    &__info {
+      color: #afbccb;
+    }
+  }
+}
 </style>

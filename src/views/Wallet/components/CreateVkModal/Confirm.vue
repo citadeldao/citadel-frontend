@@ -263,4 +263,18 @@ export default {
     cursor: pointer;
   }
 }
+
+body.dark {
+  .loader {
+    background: transparent;
+  }
+  .goToImportVk {
+    color: $white;
+  }
+  .fields {
+    .field {
+      color: $white;
+    }
+  }
+}
 </style>

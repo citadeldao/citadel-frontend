@@ -158,4 +158,25 @@ export default {
     );
   }
 }
+
+body.dark {
+  .balance-card {
+    &__description,
+    &__currency {
+      color: #c3ceeb;
+    }
+
+    &__amount {
+      color: $white;
+    }
+
+    &--red {
+      background: none;
+    }
+
+    &--blue {
+      background: none;
+    }
+  }
+}
 </style>

@@ -31,6 +31,10 @@
 }
 
 // ** Card ** //
+@mixin card-default-dark {
+  box-shadow: none;
+}
+
 @mixin card-default {
   filter: $card-shadow;
   box-shadow: $card-shadow;
@@ -283,5 +287,20 @@
     //     border-color: transparent;
     //   }
     // }
+  }
+}
+
+body.dark {
+  @mixin card-default {
+    box-shadow: none;
+  }
+}
+
+body.dark {
+  .sidebar__logo {
+    fill: $white;
+  }
+  .compact.sidebar {
+    background: #1c1d2e;
   }
 }

@@ -325,4 +325,14 @@ export default {
     height: 350px;
   }
 }
+
+body.dark {
+  .chart-expanded {
+    background: $dark-panel-bg;
+
+    &__title {
+      color: $white;
+    }
+  }
+}
 </style>

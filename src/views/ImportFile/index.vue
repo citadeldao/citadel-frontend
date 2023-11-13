@@ -199,4 +199,10 @@ export default {
     flex-grow: 1;
   }
 }
+
+body.dark {
+  .import-file {
+    background: $dark-panel-bg;
+  }
+}
 </style>

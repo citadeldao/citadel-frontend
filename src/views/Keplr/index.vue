@@ -469,4 +469,10 @@ export default {
     fill: $red;
   }
 }
+
+body.dark {
+  .keplr {
+    background: $dark-panel-bg;
+  }
+}
 </style>

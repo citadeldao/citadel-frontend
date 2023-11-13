@@ -174,4 +174,31 @@ export default {
     }
   }
 }
+
+body.dark {
+  .dropdown-item {
+    background: transparent;
+    border: 1px solid #4b4c63;
+
+    &.exists {
+      opacity: 0.8;
+    }
+
+    &__title {
+      color: $dark-blue;
+    }
+
+    &__address {
+      color: $white;
+    }
+
+    &__btn {
+      background: #393c5f;
+    }
+
+    &__icon {
+      background: #1b1c31;
+    }
+  }
+}
 </style>

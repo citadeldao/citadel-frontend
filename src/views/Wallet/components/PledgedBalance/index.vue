@@ -208,7 +208,8 @@ export default {
 .pledged-balance {
   width: 100%;
   height: 150px;
-  border-radius: 16px;
+  border-radius: 19px;
+  background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
   padding: 24px 27px 31px 24px;
@@ -328,6 +329,25 @@ export default {
       fill: $turquoise;
       opacity: 0.3;
     }
+  }
+}
+
+body.dark {
+  .pledged-balance {
+    &__title-title {
+      color: $white;
+    }
+
+    &__balance-value {
+      color: $white;
+    }
+
+    &__balance-currency {
+      color: #8b9bc7;
+    }
+
+    background-image: url('~@/assets/images/unpladgedBalanceBackgroundDark.jpg');
+    background-size: cover;
   }
 }
 </style>

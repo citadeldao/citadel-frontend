@@ -248,6 +248,7 @@ export default {
     svg {
       transition: 0.3s;
       margin-left: 10px;
+      fill: #000;
       path {
         fill: $mid-blue;
       }
@@ -264,6 +265,27 @@ export default {
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     z-index: 100;
+  }
+}
+
+body.dark {
+  .app-block {
+    box-shadow: none;
+    background: #303456;
+
+    &__readmore {
+      color: $white;
+
+      svg {
+        fill: $white;
+      }
+    }
+
+    .titles {
+      .title {
+        color: $white;
+      }
+    }
   }
 }
 </style>

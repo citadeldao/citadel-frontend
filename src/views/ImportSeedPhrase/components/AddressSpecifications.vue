@@ -303,4 +303,17 @@ export default {
 textarea:focus + .textarea__error {
   display: none;
 }
+
+body.dark {
+  .address-specifications {
+    textarea {
+      color: $white;
+    }
+
+    &__mnemonic-phrase {
+      background: transparent;
+      border: 1px solid #4b4c63;
+    }
+  }
+}
 </style>
