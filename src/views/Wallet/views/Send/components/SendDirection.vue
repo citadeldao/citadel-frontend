@@ -471,6 +471,10 @@ body.dark {
       color: #6b758e;
     }
 
+    &__line-memo {
+      color: $white;
+    }
+
     &__line-from {
       color: $white;
     }

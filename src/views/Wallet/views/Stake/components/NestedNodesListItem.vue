@@ -567,6 +567,13 @@ body.dark {
       color: $white;
     }
   }
+  .nodes-list-item__info {
+    .nodes-list-item-tooltip {
+      .nodes-list-item-tooltip__status {
+        color: $white;
+      }
+    }
+  }
   .nodes-list-item {
     &:hover {
       background: none;

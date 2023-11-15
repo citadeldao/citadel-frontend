@@ -379,6 +379,15 @@ export default {
 }
 
 body.dark {
+  .rewards-list-tooltip {
+    &__content {
+      color: $white;
+    }
+  }
+  .nodes-list-item-tooltip__status {
+    color: $white;
+  }
+
   .nodes-list-item {
     &:hover {
       background: none;

@@ -78,6 +78,20 @@ export default {
     const firstRandomIndexCofirmWord = ref(Math.round(Math.random() * 11));
     const secondRandomIndexCofirmWord = ref(Math.round(Math.random() * 11));
 
+    if (
+      firstRandomIndexCofirmWord.value === secondRandomIndexCofirmWord.value
+    ) {
+      if (secondRandomIndexCofirmWord.value === 0) {
+        secondRandomIndexCofirmWord.value === 1;
+      }
+      if (secondRandomIndexCofirmWord.value === 11) {
+        secondRandomIndexCofirmWord.value === 10;
+      }
+      if (![0, 11].includes(secondRandomIndexCofirmWord.value)) {
+        secondRandomIndexCofirmWord.value++;
+      }
+    }
+
     const initialMnemonicArray = ref(props.mnemonic.split(' '));
 
     const setConfirmWord = (word) => {
