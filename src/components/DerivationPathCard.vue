@@ -625,10 +625,10 @@ export default {
 
 body.dark {
   .derivation-path-card {
-    background: #393c5f;
+    background-color: #393c5f;
 
     &:hover {
-      background: #484b69;
+      background-color: #484b69;
     }
 
     &:hover {
@@ -650,7 +650,7 @@ body.dark {
     }
 
     &.checked {
-      background: #484b69;
+      background-color: #171730bd;
       border-color: #c3ceeb;
     }
   }
