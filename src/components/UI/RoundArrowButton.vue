@@ -180,6 +180,10 @@ body.dark {
   }
   .round-arrow-button__icon {
     background: $dark-blue;
+
+    svg {
+      fill: $white;
+    }
   }
 }
 </style>
