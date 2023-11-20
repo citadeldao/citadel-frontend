@@ -212,4 +212,11 @@ export default {
     margin-bottom: 24px;
   }
 }
+
+body.dark {
+  .delete {
+    background: $dark-panel-bg;
+    box-shadow: none;
+  }
+}
 </style>

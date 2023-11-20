@@ -575,4 +575,36 @@ export default {
     }
   }
 }
+
+body.dark {
+  .alias {
+    background: $dark-panel-bg;
+
+    &__edit {
+      .alias__input {
+        background: transparent;
+        border: 1px solid #4b4c63;
+        color: $white;
+      }
+    }
+
+    &__wallet-name {
+      color: $white;
+    }
+
+    &__address-tooltip {
+      background: #313354;
+      color: $white;
+
+      &::after {
+        border-color: transparent transparent #313354 transparent;
+      }
+    }
+
+    &__qr {
+      background: transparent;
+      border: 1px solid #6a4bff;
+    }
+  }
+}
 </style>

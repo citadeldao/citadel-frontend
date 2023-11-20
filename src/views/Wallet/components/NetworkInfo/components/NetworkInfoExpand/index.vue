@@ -111,6 +111,33 @@
                 />
               </div>
             </div>
+            <div v-if="marketcap.yield" class="marketcaps__item">
+              <div class="item__text">
+                {{ $t('netInfoGeneral.apy') }}
+              </div>
+              <div class="item__info">
+                <Tooltip>
+                  <template #content>
+                    <span :style="{ maxWidth: '200px', display: 'flex' }">
+                      {{ $t('netInfoGeneral.apyTooltip') }}
+                    </span>
+                  </template>
+                  <template #default>
+                    <info />
+                  </template>
+                </Tooltip>
+              </div>
+              <div class="item__line" />
+              <div class="item__number">
+                <span
+                  v-pretty-number="{
+                    value: marketcap.yield,
+                    currency: '%',
+                  }"
+                />
+                %
+              </div>
+            </div>
             <div v-if="marketcap.stakingRate" class="marketcaps__item">
               <div class="item__text">
                 {{ $t('netInfoGeneral.staked') }}
@@ -685,5 +712,32 @@ export default {
   min-height: 300px;
   margin-bottom: 1px;
   height: 300px;
+}
+
+body.dark {
+  .expand {
+    &__wrap {
+      background: $dark-panel-bg;
+
+      .header__title {
+        color: $white;
+      }
+    }
+  }
+}
+
+body.dark {
+  .chart__title {
+    color: $white;
+  }
+  .marketcaps__item {
+    .item__text {
+      color: #6b758e;
+    }
+
+    .item__number {
+      color: #c3ceeb;
+    }
+  }
 }
 </style>

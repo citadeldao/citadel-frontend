@@ -454,4 +454,42 @@ export default {
     }
   }
 }
+
+body.dark {
+  .send-direction__vk {
+    .vk__title {
+      color: $white;
+    }
+  }
+  .vk {
+    &__copy-btn {
+      background: #30468e5c;
+    }
+  }
+  .send-direction {
+    &__line-title {
+      color: #6b758e;
+    }
+
+    &__line-memo {
+      color: $white;
+    }
+
+    &__line-from {
+      color: $white;
+    }
+
+    &__line-to {
+      color: #00a3ff;
+    }
+
+    &__line-amount {
+      color: #00a3ff;
+    }
+
+    &__line-currency {
+      color: #6b758e;
+    }
+  }
+}
 </style>

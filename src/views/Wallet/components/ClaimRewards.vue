@@ -511,4 +511,34 @@ export default {
 .info-modal {
   background: $white;
 }
+
+body.dark {
+  .claim-rewards {
+    background: #393c5f;
+
+    &__apy {
+      color: $darkgray;
+    }
+
+    &__title {
+      color: $white;
+    }
+
+    &__info {
+      color: $white;
+    }
+
+    &__currency {
+      color: #6b93c0;
+    }
+
+    &__button-shadow-icon {
+      fill: rgb(46, 56, 85);
+    }
+
+    &__note {
+      color: #6b93c0;
+    }
+  }
+}
 </style>

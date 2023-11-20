@@ -330,4 +330,19 @@ export default {
     color: $darkgray;
   }
 }
+
+body.dark {
+  .wallet-buttons-panel {
+    background: #353649;
+  }
+
+  .wallet-buttons-panel__button2:disabled {
+    background: #353649;
+  }
+
+  .wallet-buttons-panel__button {
+    background: #353649;
+    color: $white;
+  }
+}
 </style>

@@ -989,4 +989,17 @@ export default {
     border-bottom: 1px dashed #c3ceeb;
   }
 }
+
+body.dark {
+  .login {
+    .right {
+      background: $dark-panel-bg;
+    }
+
+    &__question-info {
+      color: #00a3ff;
+      border-bottom: 1px dashed #00a3ff;
+    }
+  }
+}
 </style>

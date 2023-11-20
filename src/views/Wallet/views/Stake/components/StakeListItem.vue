@@ -661,4 +661,36 @@ export default {
   font-size: 12px;
   line-height: 16px;
 }
+
+body.dark {
+  .rewards-list-tooltip__content {
+    span {
+      color: $white;
+    }
+  }
+  .stake-list-item {
+    border: 1px solid #4b4c63;
+
+    &--withoutDelegation {
+      background: #1b1c31;
+    }
+
+    &--avaliable,
+    &--frozen {
+      background: #1b1c31;
+      border: 1px solid #4b4c63;
+    }
+
+    &__title-title {
+      color: $white;
+    }
+
+    &__right-section-amount-currency,
+    &__right-section-share-currency,
+    &__right-section-share-currency,
+    &__title-line-currency {
+      color: #8b9bc7;
+    }
+  }
+}
 </style>

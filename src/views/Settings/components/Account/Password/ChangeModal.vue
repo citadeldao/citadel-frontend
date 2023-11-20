@@ -274,4 +274,11 @@ form {
     }
   }
 }
+
+body.dark {
+  .change-password-card {
+    background: $dark-panel-bg;
+    box-shadow: none;
+  }
+}
 </style>

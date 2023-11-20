@@ -206,4 +206,25 @@ export default {
     }
   }
 }
+
+body.dark {
+  .transfer-data {
+    background: $dark-panel-bg;
+    box-shadow: none;
+
+    &__content {
+      .title {
+        color: $white;
+      }
+    }
+  }
+}
+
+body.dark {
+  .transfer-data {
+    &.true::after {
+      background: #313354;
+    }
+  }
+}
 </style>

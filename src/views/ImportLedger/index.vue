@@ -121,4 +121,11 @@ export default {
     flex-grow: 1;
   }
 }
+
+body.dark {
+  .import-ledger {
+    box-shadow: none;
+    background: $dark-panel-bg;
+  }
+}
 </style>

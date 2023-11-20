@@ -242,7 +242,7 @@ export default {
           color: $dark-blue;
         }
 
-        .balance {
+        .btc-balance {
           font-family: 'Panton_SemiBold';
           font-size: 14px;
           color: #0a2778;
@@ -312,6 +312,39 @@ export default {
             border-radius: 2px;
             border-style: solid;
             border-color: transparent transparent $too-ligth-gray transparent;
+          }
+        }
+      }
+    }
+  }
+}
+
+body.dark {
+  .btc-addresses {
+    &__head {
+      .title {
+        color: $white;
+      }
+    }
+
+    &__items {
+      .item {
+        .left {
+          .address {
+            color: #6b93c0;
+          }
+
+          .balance {
+            background: transparent;
+            color: $white;
+          }
+
+          .btc-balance {
+            color: $white;
+
+            span {
+              color: #6b93c0;
+            }
           }
         }
       }

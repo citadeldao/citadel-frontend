@@ -146,4 +146,20 @@ export default {
     }
   }
 }
+
+body.dark {
+  .transactions-placeholder {
+    &__citadel {
+      color: #6b93c0;
+    }
+
+    &__block-title {
+      color: #8b9bc7;
+    }
+
+    &__info {
+      color: $white;
+    }
+  }
+}
 </style>

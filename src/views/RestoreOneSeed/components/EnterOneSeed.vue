@@ -279,4 +279,22 @@ export default {
 textarea:focus + .textarea__error {
   display: none;
 }
+
+body.dark {
+  .enter-one-seed {
+    &__message {
+      color: $white;
+    }
+  }
+  .enter-one-seed__textarea {
+    textarea {
+      color: $white;
+      background: transparent;
+
+      &:focus {
+        background: transparent;
+      }
+    }
+  }
+}
 </style>

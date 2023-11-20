@@ -711,4 +711,33 @@ export default {
     }
   }
 }
+
+body.dark {
+  .assets {
+    background: $dark-panel-bg;
+
+    .empty__balance {
+      color: $white;
+    }
+
+    .cards__container .card:hover {
+      background: none;
+      box-shadow: none;
+    }
+
+    .card-special {
+      background-color: #101120;
+
+      &:hover {
+        background-color: #101120;
+        opacity: 0.9;
+      }
+
+      .card-special-title,
+      .card-special-title-staking {
+        color: $white;
+      }
+    }
+  }
+}
 </style>

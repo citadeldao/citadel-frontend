@@ -442,4 +442,30 @@ export default {
     }
   }
 }
+
+body.dark {
+  .extensions__head-logo {
+    .descriptions {
+      .label {
+        color: $white;
+      }
+    }
+  }
+
+  .extensions__head-filter {
+    .filter-wrap {
+      background: $dark-panel-bg;
+
+      .filter-wrap__item {
+        .icon {
+          background: $white;
+        }
+
+        .title {
+          color: $white;
+        }
+      }
+    }
+  }
+}
 </style>

@@ -61,7 +61,7 @@
       class="xct-staking__buttons"
     >
       <PrimaryButton
-        bg-color="white"
+        :bg-color="$store.getters['app/theme'] === 'dark' ? '#29294d' : 'white'"
         color="#6B93C0"
         box-shadow="none"
         border="1px solid #6B93C0"

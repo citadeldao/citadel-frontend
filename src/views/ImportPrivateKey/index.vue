@@ -150,4 +150,10 @@ export default {
     flex-grow: 1;
   }
 }
+
+body.dark {
+  .import-private-key {
+    background: $dark-panel-bg;
+  }
+}
 </style>

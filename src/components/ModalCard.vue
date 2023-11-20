@@ -96,4 +96,10 @@ export default {
     margin-bottom: 25px;
   }
 }
+
+body.dark {
+  .modal-card {
+    box-shadow: none;
+  }
+}
 </style>

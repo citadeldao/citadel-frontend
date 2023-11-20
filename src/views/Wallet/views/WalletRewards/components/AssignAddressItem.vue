@@ -281,4 +281,12 @@ export default {
     cursor: initial;
   }
 }
+
+body.dark {
+  .assign-address-item {
+    &__title {
+      color: $white;
+    }
+  }
+}
 </style>

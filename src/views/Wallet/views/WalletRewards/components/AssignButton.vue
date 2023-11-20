@@ -117,4 +117,13 @@ export default {
     }
   }
 }
+
+body.dark {
+  .assign-button {
+    &.unassigned,
+    &.assigned {
+      background: transparent;
+    }
+  }
+}
 </style>

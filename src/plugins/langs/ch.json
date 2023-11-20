@@ -314,8 +314,8 @@
     "staking": {
         "chooseNodeForStaking": "选择质押节点",
         "chooseNodeModalDesc": "点击列表中的节点，选择一个节点进行质押",
-        "chooseNodeModalDesc1": "如需质押您的资产，请选择节点并设置质押金额。请注意 {net} 的解锁周期为 <span style='color: #0A2778; font-weight: bold;'>{perioud} days</span>.",
-        "chooseNodeModalDescWithFrom": "如需质押您的资产，请选择节点并设置质押金额。请注意 {net} 的解锁周期为 <span style='color: #0A2778; font-weight: bold;'>从 {perioudFrom} 至 {perioudTo} 天</span> 。点击 <a href='{link}' style='color: #0A2778; font-weight: bold;text-decoration:none'>link</a> 查看当前解锁时间。",
+        "chooseNodeModalDesc1": "如需质押您的资产，请选择节点并设置质押金额。请注意 {net} 的解锁周期为 <span style='color: #00A3FF; font-weight: bold;'>{perioud} days</span>.",
+        "chooseNodeModalDescWithFrom": "如需质押您的资产，请选择节点并设置质押金额。请注意 {net} 的解锁周期为 <span style='color: #00A3FF; font-weight: bold;'>从 {perioudFrom} 至 {perioudTo} 天</span> 。点击 <a href='{link}' style='color: #00A3FF; font-weight: bold;text-decoration:none'>link</a> 查看当前解锁时间。",
         "Stake": "质押",
         "staking": "质押",
         "searchNode": "搜索节点",
@@ -327,8 +327,8 @@
         "stakeOn": "质押于",
         "amountToStake": "可质押金额",
         "inputNote": "包括回购代币的储备资金",
-        "editModeDesc": "如需进行或解除质押，请在下方设置授权金额。请注意 {net} 的解锁周期 <span style='color: #0A2778; font-weight: bold;'>{perioud} 天 </span>",
-        "editModeDescWithFrom": "如需进行或解除质押，请在下方设置授权金额。请注意 {net} 的解锁周期 <span style='color: #0A2778; font-weight: bold;'>从 {perioudFrom} 至 {perioudTo} 天</span>。点击查看当前解锁时间 <a href='{link}' style='color: #0A2778; font-weight: bold;text-decoration:none'>link</a>.",
+        "editModeDesc": "如需进行或解除质押，请在下方设置授权金额。请注意 {net} 的解锁周期 <span style='color: #00A3FF; font-weight: bold;'>{perioud} 天 </span>",
+        "editModeDescWithFrom": "如需进行或解除质押，请在下方设置授权金额。请注意 {net} 的解锁周期 <span style='color: #00A3FF; font-weight: bold;'>从 {perioudFrom} 至 {perioudTo} 天</span>。点击查看当前解锁时间 <a href='{link}' style='color: #00A3FF; font-weight: bold;text-decoration:none'>link</a>.",
         "nodeIsNotActive": "节点非活跃运行状态，将无法保证奖励",
         "nodeIsJailed": "此节点当前处于非活跃状态，质押该节点无法获得奖励。请将资产质押至另外的节点。"
     },
@@ -337,8 +337,8 @@
         "defaultPrefix": "选择节点并设置您想要解除质押的金额",
         "customPrefix": "设置您想要解除质押的金额",
         "chooseNodeForUnstaking": "选择解除质押的节点",
-        "chooseNodeModalDesc": "请注意 {net} 的解锁周期为 <span style='color: #0A2778; font-weight: bold;'>{perioud} 天</span>.\n",
-        "chooseNodeModalDescWithFrom": "请注意 {net} 的 解锁周期<span style='color: #0A2778; font-weight: bold;'>从 {perioudFrom} 至 {perioudTo} 天</span>. 点击查看当前解锁时间 <a href='{link}' style='color: #0A2778; font-weight: bold;text-decoration:none'>link</a>.\n",
+        "chooseNodeModalDesc": "请注意 {net} 的解锁周期为 <span style='color: #00A3FF; font-weight: bold;'>{perioud} 天</span>.\n",
+        "chooseNodeModalDescWithFrom": "请注意 {net} 的 解锁周期<span style='color: #00A3FF; font-weight: bold;'>从 {perioudFrom} 至 {perioudTo} 天</span>. 点击查看当前解锁时间 <a href='{link}' style='color: #00A3FF; font-weight: bold;text-decoration:none'>link</a>.\n",
         "actionModalTitle": "确认解除质押交易",
         "actionModalDesc": "您的代币将解除质押并锁定一段时间",
         "unstakeTo": "解锁至",
@@ -349,7 +349,7 @@
     "singleStake": {
         "claimUnstakeNote": "",
         "chooseNodeModalDescUnstake": "",
-        "chooseNodeModalDesc": "如需质押您的资产，选择节点并设置质押金额。请注意此处 <strong style='color:#0a2778;'> 可立即解锁 </strong> ",
+        "chooseNodeModalDesc": "如需质押您的资产，选择节点并设置质押金额。请注意此处 <strong style='color:#00A3FF;'> 可立即解锁 </strong> ",
         "actionModalTitle": "确认质押",
         "actionModalDesc": "您的资产将从当前的验证节点取消质押，并质押至新选择的节点",
         "undelegateFrom": "质押自",
@@ -969,7 +969,7 @@
         "googlePlay": "Google play"
     },
     "redelegation": {
-        "redelegationDesc": "选择节点并设置重新质押的代币数量。请注意，同一个钱包地址最多只能在 <span style='color: #0A2778; font-weight: bold;'> 21 天 </span> 内重新质押  <span style='color: #0A2778; font-weight: bold;'> 7 次 </span>。质押无锁定期，可随时解除。",
+        "redelegationDesc": "选择节点并设置重新质押的代币数量。请注意，同一个钱包地址最多只能在 <span style='color: #00A3FF; font-weight: bold;'> 21 天 </span> 内重新质押  <span style='color: #00A3FF; font-weight: bold;'> 7 次 </span>。质押无锁定期，可随时解除。",
         "redelegate": "重新质押",
         "chooseNodeTitle": "选择节点质押",
         "choseNodePlaceholderNote": "点击选择质押节点"
@@ -1014,7 +1014,7 @@
     "withoutDelegation": "无抵押质押",
     "pledge": {
         "chooseModeModalTitle1": "锁仓 IOST 以生成 iGas",
-        "chooseModeModalSubtitle": "<span style='color: #0A2778; font-weight: bold;'> 1 </span> 个质押的 IOST 每天可生成 <span style='color: #0A2778; font-weight: bold;'> 100 000 </span> iGas ",
+        "chooseModeModalSubtitle": "<span style='color: #00A3FF; font-weight: bold;'> 1 </span> 个质押的 IOST 每天可生成 <span style='color: #00A3FF; font-weight: bold;'> 100 000 </span> iGas ",
         "chooseModeModalTitle2": "解锁生成 iGas 的 IOST",
         "pledge": "质押",
         "unpledge": "取消质押",
@@ -1351,6 +1351,11 @@
             "title": "Archway",
             "description": "",
             "shortDescription": ""
+        },
+        "quasar":{
+            "title": "Quasar",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "运行时间",
@@ -1396,7 +1401,7 @@
     "claimUnstakedText": "您的资产已解除质押，确认交易以立即提取资产。",
     "stakingAmount": "质押金额",
     "polkadot": {
-        "chooseNodeModalDesc": "设置需要质押的代币数量。然后，选择委托节点。您的资金可以分配到 <span style='color: #0A2778; font-weight: 700;'> 不超过  {maxNodes}  个节点 </span>。此外，考虑到 ${net} 的解除冻结期为 <span style='color: #0A2778' font-weight: 700;>{perioud} 天 </span>。在此期间，您的解除质押代币将被冻结<span style='color: #FF5722; font-weight: 700;'> 最低质押余额：{minStakingAmount} {code}</span>",
+        "chooseNodeModalDesc": "设置需要质押的代币数量。然后，选择委托节点。您的资金可以分配到 <span style='color: #00A3FF; font-weight: 700;'> 不超过  {maxNodes}  个节点 </span>。此外，考虑到 ${net} 的解除冻结期为 <span style='color: #00A3FF' font-weight: 700;>{perioud} 天 </span>。在此期间，您的解除质押代币将被冻结<span style='color: #FF5722; font-weight: 700;'> 最低质押余额：{minStakingAmount} {code}</span>",
         "nominatedNodesTitle": "指定节点：",
         "error": {
             "chooseNotMoreThan16Nodes": "选择最多16个节点"

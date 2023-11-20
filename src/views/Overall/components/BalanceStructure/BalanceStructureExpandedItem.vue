@@ -167,4 +167,19 @@ export default {
     margin-left: 5px;
   }
 }
+
+body.dark {
+  .balance-struct {
+    border: 1px dashed #4b4c63;
+
+    &__title {
+      color: #8b9bc7;
+    }
+
+    &__percent-sign,
+    &__code {
+      color: #8b9bc7;
+    }
+  }
+}
 </style>

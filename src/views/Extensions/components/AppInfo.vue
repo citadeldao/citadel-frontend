@@ -228,4 +228,14 @@ export default {
     }
   }
 }
+
+body.dark {
+  .app-info {
+    .main-info {
+      .column .title .label {
+        color: $white;
+      }
+    }
+  }
+}
 </style>

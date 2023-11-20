@@ -125,7 +125,9 @@
       >
         <PrimaryButton
           v-if="currentWallet.hasRedelegation"
-          bg-color="white"
+          :bg-color="
+            $store.getters['app/theme'] === 'dark' ? '#29294d' : 'white'
+          "
           color="#00A3FF"
           box-shadow="none"
           border="1px solid #00A3FF"
@@ -143,7 +145,9 @@
         >
           <div class="multi__buttons-section-unstake-button">
             <PrimaryButton
-              bg-color="white"
+              :bg-color="
+                $store.getters['app/theme'] === 'dark' ? '#29294d' : 'white'
+              "
               color="#6B93C0"
               box-shadow="none"
               border="1px solid #6B93C0"

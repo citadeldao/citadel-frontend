@@ -111,4 +111,26 @@ export default {
     margin-bottom: 27px;
   }
 }
+
+body.dark {
+  .alias-qr-card {
+    background: $dark-panel-bg;
+    box-shadow: none;
+
+    &__close-icon {
+      fill: $white;
+    }
+
+    &__content {
+      h4 {
+        color: $white;
+      }
+    }
+
+    &__qr {
+      background: transparent;
+      border: 1px solid $dark-blue;
+    }
+  }
+}
 </style>

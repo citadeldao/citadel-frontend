@@ -173,4 +173,13 @@ export default {
 .up {
   transform: rotate(270deg);
 }
+
+body.dark {
+  .round-arrow-button:disabled .round-arrow-button__icon {
+    background: $dark-blue;
+  }
+  .round-arrow-button__icon {
+    background: $dark-blue;
+  }
+}
 </style>

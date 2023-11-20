@@ -122,4 +122,30 @@ export default {
     }
   }
 }
+
+body.dark {
+  .login-menu-web3 {
+    &__title {
+      color: $white;
+    }
+
+    &__cancel {
+      color: $white;
+    }
+
+    &__item {
+      border: 1px solid #4b4c63;
+
+      &:hover {
+        box-shadow: none;
+      }
+    }
+
+    .info {
+      .description {
+        color: $white;
+      }
+    }
+  }
+}
 </style>

@@ -90,4 +90,10 @@ export default {
     }
   }
 }
+
+body.dark {
+  .add-address-layout {
+    background: $dark-layout-bg;
+  }
+}
 </style>

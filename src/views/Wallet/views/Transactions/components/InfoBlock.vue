@@ -302,4 +302,30 @@ export default {
     color: $mid-gray;
   }
 }
+
+body.dark {
+  .info-block {
+    &__line-title {
+      color: #6B758E;
+    }
+
+    &__line-to {
+      color: $white;
+    }
+
+    .comment-label {
+      color: $white;
+    }
+
+    .comment-value {
+      color: $green;
+    }
+
+    .comment-field {
+      background: transparent;
+      border: 1px solid #6B758E; 
+      color: $white;
+    }
+  }
+}
 </style>

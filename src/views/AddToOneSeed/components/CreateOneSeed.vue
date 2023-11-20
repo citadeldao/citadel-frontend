@@ -304,4 +304,13 @@ export default {
     width: 100%;
   }
 }
+
+body.dark {
+  .create-one-seed {
+    &__seed-phrase-item {
+      background: #313354;
+      color: $white;
+    }
+  }
+}
 </style>

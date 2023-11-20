@@ -99,6 +99,12 @@ export default {
   margin-bottom: 20px;
   border-bottom: 1px dashed #bcc2d8;
 
+  .icon {
+    svg {
+      fill: #f0f3fd;
+    }
+  }
+
   &__item {
     display: flex;
     align-items: center;
@@ -147,6 +153,18 @@ export default {
           font-weight: 400;
           color: #6b93c0;
         }
+      }
+    }
+  }
+}
+
+body.dark {
+  .tx-statuses {
+    border-bottom: 1px dashed #4b4c63;
+
+    .icon {
+      svg {
+        fill: #313354;
       }
     }
   }

@@ -77,4 +77,14 @@ export default {
     }
   }
 }
+
+body.dark {
+  .back-button {
+    color: #4f70cf;
+
+    &__icon {
+      box-shadow: none;
+    }
+  }
+}
 </style>

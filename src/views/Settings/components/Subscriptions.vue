@@ -129,4 +129,12 @@ export default {
     }
   }
 }
+
+body.dark {
+  .subscriptions {
+    &__title {
+      color: $white;
+    }
+  }
+}
 </style>

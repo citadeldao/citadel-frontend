@@ -339,4 +339,49 @@ export default {
     }
   }
 }
+
+body.dark {
+  .assets-item {
+    background: rgb(28, 29, 46);
+
+    .assets-item__value {
+      color: #c3ceeb;
+    }
+
+    .assets-item__currency.assets-item__currency--left,
+    .assets-item__currency.assets-item__currency--right,
+    .item__currency {
+      color: #6b758e;
+    }
+
+    &__name {
+      color: #c3ceeb;
+    }
+
+    &:hover {
+      background: #101120;
+
+      .assets-item__name {
+        color: $white;
+      }
+
+      .assets-item__currency {
+        color: $dark-blue;
+      }
+
+      .item__currency {
+        color: $white;
+      }
+
+      .assets-item__value {
+        color: $dark-blue;
+      }
+
+      .assets-item__currency.assets-item__currency--left,
+      .assets-item__currency.assets-item__currency--right {
+        color: $white;
+      }
+    }
+  }
+}
 </style>

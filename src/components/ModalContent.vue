@@ -401,4 +401,32 @@ export default {
     }
   }
 }
+
+body.dark {
+  .modal_content {
+    box-shadow: none;
+
+    &__content {
+      background-color: $dark-panel-bg;
+    }
+
+    &__block-header {
+      border-bottom: 1px dashed #393b53;
+    }
+
+    &__block-header-title {
+      color: $white;
+    }
+
+    &__close-icon {
+      fill: #fff;
+    }
+
+    &__block-header-desc {
+      span {
+        color: $white !important;
+      }
+    }
+  }
+}
 </style>

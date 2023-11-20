@@ -111,4 +111,24 @@ export default {
     margin-right: 0px;
   }
 }
+
+body.dark {
+  .dropdown-item {
+    &__address {
+      color: $white;
+    }
+
+    &__line {
+      border-bottom: 1px dashed #4b4c63;
+    }
+
+    &__value-amount {
+      color: $white;
+    }
+
+    &__value-currency {
+      color: #8b9bc7;
+    }
+  }
+}
 </style>

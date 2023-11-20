@@ -95,4 +95,19 @@ export default {
     }
   }
 }
+
+body.dark {
+  .header-tooltip {
+    background: #313354;
+    color: $white;
+
+    &__line {
+      border-top: 1px solid #4b4c63;
+
+      &:first-child {
+        border-top: 1px solid transparent;
+      }
+    }
+  }
+}
 </style>

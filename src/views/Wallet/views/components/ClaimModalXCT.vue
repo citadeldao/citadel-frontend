@@ -111,4 +111,10 @@ export default {
     align-self: flex-end;
   }
 }
+
+body.dark {
+  .wallet__modal-claim-button {
+    color: $white;
+  }
+}
 </style>

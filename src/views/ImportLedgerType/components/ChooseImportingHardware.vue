@@ -5,7 +5,9 @@
         icon="chrome"
         :content="$t('importHardwareWallet.note')"
         color="#00A3FF"
-        background="#E8F7FF"
+        :background="
+          $store.getters['app/theme'] === 'dark' ? '#1B1C31' : '#E8F7FF'
+        "
         guide
       />
     </div>
@@ -125,6 +127,28 @@ export default {
         color: #1a53f0;
         font-family: 'Panton_Regular';
         font-size: 14px;
+      }
+    }
+  }
+}
+
+body.dark {
+  .choose-importing-hardware {
+    &__card-wrapper {
+      .choose-type {
+        border: 1px dashed #4b4c63;
+
+        .title {
+          color: #6b758e;
+        }
+
+        .description {
+          color: $white;
+        }
+
+        &:hover {
+          background: #4b4c63;
+        }
       }
     }
   }

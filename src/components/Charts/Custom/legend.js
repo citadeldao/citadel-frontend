@@ -62,7 +62,8 @@ export const htmlLegendPlugin = {
       li.style.width = '100%';
       li.style.padding = '10px 0';
       li.style.border = '1px solid transparent';
-      li.style.borderBottomColor = '#d1d8e0';
+      li.style.borderBottomColor =
+        store.getters['app/theme'] === 'dark' ? '#313354' : '#d1d8e0';
       li.style.marginBottom = '10px';
       li.style.opacity = item.hidden ? 0.5 : 1;
 
@@ -101,7 +102,8 @@ export const htmlLegendPlugin = {
       const displayPrice = document.createElement('p');
       const displayPercent = document.createElement('p');
 
-      displayText.style.color = item.fontColor;
+      displayText.style.color =
+        store.getters['app/theme'] === 'dark' ? '#C3CEEB' : item.fontColor;
 
       displayText.style.margin = 0;
       displayText.style.padding = 0;
@@ -111,14 +113,17 @@ export const htmlLegendPlugin = {
 
       displayPrice.style.margin = '5px 0 0';
       displayPrice.style.padding = 0;
-      displayPrice.style.color = '#59779A';
+      displayPrice.style.color =
+        store.getters['app/theme'] === 'dark' ? '#fff' : '#59779A';
       displayPrice.style.fontSize = '14px';
       displayPrice.style.fontFamily = 'Panton_SemiBold';
       displayPrice.style.textDecoration = item.hidden ? 'line-through' : '';
 
       displayPercent.style.margin = 0;
       displayPercent.style.padding = 0;
-      displayPercent.style.color = '#6A4BFF';
+
+      displayPercent.style.color =
+        store.getters['app/theme'] === 'dark' ? '#876DFF' : '#6A4BFF';
       displayPercent.style.fontFamily = 'Panton_Bold';
       displayPercent.style.textDecoration = item.hidden ? 'line-through' : '';
 
@@ -146,7 +151,9 @@ export const htmlLegendPlugin = {
       };
 
       li.onmouseout = () => {
-        displayText.style.color = '#000';
+        displayText.style.color =
+          store.getters['app/theme'] === 'dark' ? '#C3CEEB' : item.fontColor;
+        // displayText.style.color = '#000';
       };
 
       ul.appendChild(li);

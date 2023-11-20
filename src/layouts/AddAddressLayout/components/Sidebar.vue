@@ -579,6 +579,7 @@ export default {
 
   &__compact-logo-citadel {
     display: none;
+    fill: #000;
   }
 
   &.compact &__logo-citadel {
@@ -899,6 +900,42 @@ export default {
     transform: matrix(1, 0, 0, -1, 0, 0);
     &.active {
       opacity: 1;
+    }
+  }
+}
+
+body.dark {
+  .sidebar {
+    @include laptop {
+      filter: $sidebar-shadow;
+      background-color: #1c1d2e;
+    }
+    &__addresses-header-title {
+      color: $white;
+    }
+
+    &__add-address-button {
+      background: #2d2e42;
+    }
+
+    &__add-address-button-text {
+      color: $white;
+    }
+  }
+
+  .scroll-shadow--top,
+  .scroll-shadow--bottom {
+    background: transparent;
+  }
+}
+
+body.dark {
+  .sidebar__compact-logo-citadel {
+    fill: $white;
+  }
+  .sidebar__addresses-search-input {
+    input {
+      background: none !important;
     }
   }
 }

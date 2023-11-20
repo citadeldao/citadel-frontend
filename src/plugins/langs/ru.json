@@ -314,8 +314,8 @@
     "staking": {
         "chooseNodeForStaking": "Выбрать ноду для стейкинга",
         "chooseNodeModalDesc": "Кликните на список валидаторов чтобы выбрать на кого заделегировать",
-        "chooseNodeModalDesc1": "Чтобы застейкать свои активы, выберите ноды и укажите нужную сумму делегации. Обратите внимание, что период анстейкинга {net} составляет <span style='color: #0A2778; font-weight: bold;'>{perioud} days</span>.",
-        "chooseNodeModalDescWithFrom": "Чтобы застейкать свои активы, выберите ноды и укажите нужную сумму делегации. Обратите внимание, что период анстейкинга {net} длится от <span style='color: #0A2778; font-weight: bold;'>from {perioudFrom} до {perioudTo} дней</span>. Чтобы проверить длительность анстейкинга на текущий момент, перейдите по ссылке:  <a href='{link}' style='color: #0A2778; font-weight: bold;text-decoration:none'>link</a>.",
+        "chooseNodeModalDesc1": "Чтобы застейкать свои активы, выберите ноды и укажите нужную сумму делегации. Обратите внимание, что период анстейкинга {net} составляет <span style='color: #00A3FF; font-weight: bold;'>{perioud} days</span>.",
+        "chooseNodeModalDescWithFrom": "Чтобы застейкать свои активы, выберите ноды и укажите нужную сумму делегации. Обратите внимание, что период анстейкинга {net} длится от <span style='color: #00A3FF; font-weight: bold;'>from {perioudFrom} до {perioudTo} дней</span>. Чтобы проверить длительность анстейкинга на текущий момент, перейдите по ссылке:  <a href='{link}' style='color: #00A3FF; font-weight: bold;text-decoration:none'>link</a>.",
         "Stake": "Стейкать",
         "staking": "Стейкинг\n",
         "searchNode": "Поиск ноды",
@@ -327,8 +327,8 @@
         "stakeOn": "Застейкать на",
         "amountToStake": "Сумма стейкинга",
         "inputNote": "Включая активы удержанные для покупки дополнительных токенов комиссии",
-        "editModeDesc": "Чтобы застейкать или произвести анстейк активов, укажите сумму в поле ниже. Примите во внимание, что при анстейкинге период заморозки активов в {net} составляет <span style='color: #0A2778; font-weight: bold;'>{perioud} days</span>",
-        "editModeDescWithFrom": "Чтобы застейкать или произвести анстейк активов, укажите сумму в поле ниже. Примите во внимание, что при анстейкинге период заморозки активов в {net} варьируется <span style='color: #0A2778; font-weight: bold;'>от {perioudFrom} до {perioudTo} days</span>. Проверьте текущий период анстейкинга по ссылке <a href='{link}' style='color: #0A2778; font-weight: bold;text-decoration:none'>link</a>.",
+        "editModeDesc": "Чтобы застейкать или произвести анстейк активов, укажите сумму в поле ниже. Примите во внимание, что при анстейкинге период заморозки активов в {net} составляет <span style='color: #00A3FF; font-weight: bold;'>{perioud} days</span>",
+        "editModeDescWithFrom": "Чтобы застейкать или произвести анстейк активов, укажите сумму в поле ниже. Примите во внимание, что при анстейкинге период заморозки активов в {net} варьируется <span style='color: #00A3FF; font-weight: bold;'>от {perioudFrom} до {perioudTo} days</span>. Проверьте текущий период анстейкинга по ссылке <a href='{link}' style='color: #00A3FF; font-weight: bold;text-decoration:none'>link</a>.",
         "nodeIsNotActive": "Нода неактивна, реворды не начисляются",
         "nodeIsJailed": "Этот валидатор в настоящее время неактивен, вы не получаете вознаграждение за стейкинг с ним. Делегируйте свои активы другому валидатору."
     },
@@ -337,8 +337,8 @@
         "defaultPrefix": "Выберите ноду и укажите сумму, которую вы хотите анстейкнуть.",
         "customPrefix": "Укажите сумму которую вы хотите анстейкнуть.",
         "chooseNodeForUnstaking": "Выберите ноду для анстейкинга",
-        "chooseNodeModalDesc": "Примите во внимание, что период заморозки активов при анстейкинге в {net} составляет <span style='color: #0A2778; font-weight: bold;'>{perioud} days</span>.",
-        "chooseNodeModalDescWithFrom": "Примите во внимание, что период заморозки активов при анстейкинге в {net} варьируется <span style='color: #0A2778; font-weight: bold;'>от {perioudFrom} до {perioudTo} days</span>. Проверьте текущий период по ссылке <a href='{link}' style='color: #0A2778; font-weight: bold;text-decoration:none'>link</a>.",
+        "chooseNodeModalDesc": "Примите во внимание, что период заморозки активов при анстейкинге в {net} составляет <span style='color: #00A3FF; font-weight: bold;'>{perioud} days</span>.",
+        "chooseNodeModalDescWithFrom": "Примите во внимание, что период заморозки активов при анстейкинге в {net} варьируется <span style='color: #00A3FF; font-weight: bold;'>от {perioudFrom} до {perioudTo} days</span>. Проверьте текущий период по ссылке <a href='{link}' style='color: #00A3FF; font-weight: bold;text-decoration:none'>link</a>.",
         "actionModalTitle": "Подтвердите транзакцию анстейкинга",
         "actionModalDesc": "Ваши токены будут анстейканы и заморожены на определенное время",
         "unstakeTo": "Анстейкать на",
@@ -349,7 +349,7 @@
     "singleStake": {
         "claimUnstakeNote": "",
         "chooseNodeModalDescUnstake": "",
-        "chooseNodeModalDesc": "Чтобы застейкать активы, выберите валидатора и укажите сумму. Примите во внимание, что <strong style='color:#0a2778;'>no unstaking period</strong> периода заморозки токенов при анстейкинге нет. ",
+        "chooseNodeModalDesc": "Чтобы застейкать активы, выберите валидатора и укажите сумму. Примите во внимание, что <strong style='color:#00A3FF;'>no unstaking period</strong> периода заморозки токенов при анстейкинге нет. ",
         "actionModalTitle": "Подтвердите ределегацию",
         "actionModalDesc": "Ваши активы будут анстейкнуты с текущих валидаторов и застейканы на выбранных",
         "undelegateFrom": "Анстейкнуть с",
@@ -964,7 +964,7 @@
         "googlePlay": "Google play"
     },
     "redelegation": {
-        "redelegationDesc": "Выберите валидаторов и сумму, которую вы хотите ределегировать. Обратите внимание, что с одного адреса вы можете ределегировать до <span style='color: #0A2778; font-weight: bold;'>7 раз в течение  <span style='color: #0A2778; font-weight: bold;'>21 дня. В этом случае активы не замораживаются.",
+        "redelegationDesc": "Выберите валидаторов и сумму, которую вы хотите ределегировать. Обратите внимание, что с одного адреса вы можете ределегировать до <span style='color: #00A3FF; font-weight: bold;'>7 раз в течение  <span style='color: #00A3FF; font-weight: bold;'>21 дня. В этом случае активы не замораживаются.",
         "redelegate": "Переделегировать",
         "chooseNodeTitle": "Выберите ноду для ределегации",
         "choseNodePlaceholderNote": "Нажмите чтобы выбрать ноду для ределегации"
@@ -1009,7 +1009,7 @@
     "withoutDelegation": "Застейкать без делегации",
     "pledge": {
         "chooseModeModalTitle1": "Использовать IOST для генерации iGas",
-        "chooseModeModalSubtitle": "<span style='color: #0A2778; font-weight: bold;'>1</span> заложенный IOST генерирует <span style='color: #0A2778; font-weight: bold;'>100 000</span> iGas в день",
+        "chooseModeModalSubtitle": "<span style='color: #00A3FF; font-weight: bold;'>1</span> заложенный IOST генерирует <span style='color: #00A3FF; font-weight: bold;'>100 000</span> iGas в день",
         "chooseModeModalTitle2": "Вернуть IOST использованный для генерации iGas",
         "pledge": "Заложить",
         "unpledge": "Вернуть",
@@ -1346,6 +1346,11 @@
             "title": "Archway",
             "description": "",
             "shortDescription": ""
+        },
+        "quasar":{
+            "title": "Quasar",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "Подтверждено блоков",
@@ -1391,13 +1396,13 @@
     "claimUnstakedText": "\nВаши активы разблокированы. Подтвердите транзакцию, чтобы получить их.",
     "stakingAmount": "Сумма застейканного",
     "polkadot": {
-        "chooseNodeModalDesc": "Установите количество токенов, которое вы хотите застейкать. Затем выберите ноды для делегирования. Ваши средства могут быть распределены между<span style='color: #0A2778; font-weight: 700;'>не более {maxNodes} нод</span>.Также следует учитывать, что период снятия со стейкинга для ${net} это <span style='color: #0A2778' font-weight: 700;>{perioud} дней</span>. В течение этого времени токены снятые со стейкинга будут заморожены.<span style='color: #FF5722; font-weight: 700;'>Минимальный баланс для стейкинга : {minStakingAmount} {code}</span>",
+        "chooseNodeModalDesc": "Установите количество токенов, которое вы хотите застейкать. Затем выберите ноды для делегирования. Ваши средства могут быть распределены между<span style='color: #00A3FF; font-weight: 700;'>не более {maxNodes} нод</span>.Также следует учитывать, что период снятия со стейкинга для ${net} это <span style='color: #00A3FF' font-weight: 700;>{perioud} дней</span>. В течение этого времени токены снятые со стейкинга будут заморожены.<span style='color: #FF5722; font-weight: 700;'>Минимальный баланс для стейкинга : {minStakingAmount} {code}</span>",
         "nominatedNodesTitle": "Назначенные ноды",
         "error": {
             "chooseNotMoreThan16Nodes": "Выберите не более 16 нод"
         },
         "claimTooltip": "Получение вознаграждений происходит автоматически. Вознаграждения начисляются автоматически, когда валидатор или номинатор с тем же валидатором претендует на вознаграждение",
-        "chooseNodeModalDesc1": "Чтобы застейкать свои активы, выберите ноды и установите сумму для делегирования. Не все ноды имеют конкретное имя. Нода в основном имеет то же имя, что и адрес валидатора. Примите во внимание, что период разблокировки для {net} составляет<span style='color: #0A2778; font-weight: bold;'> {perioud} дней</span>."
+        "chooseNodeModalDesc1": "Чтобы застейкать свои активы, выберите ноды и установите сумму для делегирования. Не все ноды имеют конкретное имя. Нода в основном имеет то же имя, что и адрес валидатора. Примите во внимание, что период разблокировки для {net} составляет<span style='color: #00A3FF; font-weight: bold;'> {perioud} дней</span>."
     },
     "minSendAmountError": "Минимальный размер транзакции составляет {minAmount} {code}",
     "changeValidators": "Изменить валидатора",

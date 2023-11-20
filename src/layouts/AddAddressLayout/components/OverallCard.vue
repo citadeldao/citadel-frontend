@@ -308,4 +308,44 @@ export default {
     margin: 0 auto 3px;
   }
 }
+
+body.dark {
+  .overall-card {
+    background: #313354;
+    border: none;
+
+    &:hover {
+      opacity: 0.7;
+      background: #313354;
+    }
+
+    &__title {
+      color: $white;
+    }
+
+    &__currency-md {
+      color: #c3ceeb;
+    }
+
+    &__currency-md {
+      color: $white;
+    }
+
+    &__currency {
+      color: #c3ceeb;
+    }
+
+    &__cryptocurrency {
+      color: #c3ceeb;
+    }
+
+    &__balance {
+      color: $white;
+    }
+
+    &__cryptobalance {
+      color: $white;
+    }
+  }
+}
 </style>

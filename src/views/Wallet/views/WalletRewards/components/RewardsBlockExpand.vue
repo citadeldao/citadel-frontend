@@ -57,7 +57,7 @@
           {{ $t('rewardsPage.totalRewards') }}
         </th>
       </tr>
-      <tr :style="{ borderBottom: '1px dashed #00A3FF' }">
+      <tr class="tr-last">
         <th
           class="rewards-block-expand__table-title rewards-block-expand__table-title--xct"
         >
@@ -511,6 +511,41 @@ export default {
     }
     @include md {
       padding: 0 10px 0 24px;
+    }
+  }
+
+  tr.tr-last {
+    border-bottom: 1px dashed #00a3ff;
+  }
+}
+
+body.dark {
+  .rewards-block-expand {
+    box-shadow: none;
+    background: $dark-panel-bg;
+
+    &__table-title {
+      color: $white;
+    }
+
+    &__table-cell-total-staked-amount {
+      color: $white;
+    }
+
+    &__table-cell-total-rewards-amount {
+      color: $white;
+    }
+
+    &__table-header--main {
+      color: #6b93c0;
+    }
+
+    &__header-title {
+      color: $white;
+    }
+
+    tr.tr-last {
+      border-bottom: 1px dashed #6b758e;
     }
   }
 }

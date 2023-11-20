@@ -198,4 +198,17 @@ export default {
 .disabled {
   cursor: not-allowed;
 }
+
+body.dark {
+  .choose-mode {
+    &__title {
+      color: $white;
+    }
+
+    &__active-tab {
+      border-color: $dark-blue;
+      color: $white;
+    }
+  }
+}
 </style>

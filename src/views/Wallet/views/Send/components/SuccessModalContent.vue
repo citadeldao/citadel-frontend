@@ -297,4 +297,12 @@ export default {
     margin-top: 15px;
   }
 }
+
+body.dark {
+  .success-modal-content {
+    &__status-title {
+      color: #6b758e;
+    }
+  }
+}
 </style>

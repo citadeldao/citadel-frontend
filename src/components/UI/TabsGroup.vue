@@ -146,4 +146,20 @@ export default {
     }
   }
 }
+
+body.dark {
+  .tabs-group {
+    background: #000;
+
+    &__item {
+      background: #2d2e42;
+      color: #6b93c0;
+
+      &.active {
+        background: #54478f;
+        color: $white;
+      }
+    }
+  }
+}
 </style>

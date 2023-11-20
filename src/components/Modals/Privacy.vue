@@ -925,4 +925,12 @@ ul li::marker {
   font-size: 24px;
   line-height: 1;
 }
+
+body.dark {
+  .policy {
+    h1 {
+      color: $white;
+    }
+  }
+}
 </style>

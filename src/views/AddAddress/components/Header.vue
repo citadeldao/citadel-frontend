@@ -110,4 +110,14 @@ export default {
     }
   }
 }
+
+body.dark {
+  .header {
+    border-bottom: 1px solid #4b4c63;
+
+    &__title {
+      color: $white;
+    }
+  }
+}
 </style>

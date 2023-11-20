@@ -120,4 +120,12 @@ export default {
     margin-bottom: 16px;
   }
 }
+
+body.dark {
+  .logout-modal {
+    &__header {
+      color: $white;
+    }
+  }
+}
 </style>

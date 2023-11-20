@@ -118,4 +118,12 @@ export default {
     margin-bottom: 20px;
   }
 }
+
+body.dark {
+  .login-menu-changelang {
+    &__title {
+      color: $white;
+    }
+  }
+}
 </style>

@@ -110,4 +110,12 @@ export default {
     }
   }
 }
+
+body.dark {
+  .fees {
+    &__value {
+      color: #6b758e;
+    }
+  }
+}
 </style>

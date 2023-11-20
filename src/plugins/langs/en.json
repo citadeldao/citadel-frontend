@@ -314,8 +314,8 @@
     "staking": {
         "chooseNodeForStaking": "Choose node for staking",
         "chooseNodeModalDesc": "Click on the node at the list to select one to stake with.",
-        "chooseNodeModalDesc1": "To stake your assets, choose nodes and set the amount for delegation. Take into account that unstaking period for {net} is <span style='color: #0A2778; font-weight: bold;'>{perioud} days</span>.",
-        "chooseNodeModalDescWithFrom": "To stake your assets, choose nodes and set the amount for delegation. Take into account that unstaking period for {net} fluctuates <span style='color: #0A2778; font-weight: bold;'>from {perioudFrom} to {perioudTo} days</span>. Check the current unstaking period via the <a href='{link}' style='color: #0A2778; font-weight: bold;text-decoration:none'>link</a>.",
+        "chooseNodeModalDesc1": "To stake your assets, choose nodes and set the amount for delegation. Take into account that unstaking period for {net} is <span style='color: #00A3FF; font-weight: bold;'>{perioud} days</span>.",
+        "chooseNodeModalDescWithFrom": "To stake your assets, choose nodes and set the amount for delegation. Take into account that unstaking period for {net} fluctuates <span style='color: #00A3FF; font-weight: bold;'>from {perioudFrom} to {perioudTo} days</span>. Check the current unstaking period via the <a href='{link}' style='color: #00A3FF; font-weight: bold;text-decoration:none'>link</a>.",
         "Stake": "Stake",
         "staking": "staking",
         "searchNode": "Search node",
@@ -327,8 +327,8 @@
         "stakeOn": "Stake on",
         "amountToStake": "Amount to stake",
         "inputNote": "Including funds reserved for commission token purchase",
-        "editModeDesc": "To stake or unstake your assets, set the amount for delegation in the field below. Take into account that unstaking period for {net} is <span style='color: #0A2778; font-weight: bold;'>{perioud} days</span>",
-        "editModeDescWithFrom": "To stake or unstake your assets, set the amount for delegation in the field below. Take into account that unstaking period for {net} fluctuates <span style='color: #0A2778; font-weight: bold;'>from {perioudFrom} to {perioudTo} days</span>. Check the current unstaking period via the <a href='{link}' style='color: #0A2778; font-weight: bold;text-decoration:none'>link</a>.",
+        "editModeDesc": "To stake or unstake your assets, set the amount for delegation in the field below. Take into account that unstaking period for {net} is <span style='color: #00A3FF; font-weight: bold;'>{perioud} days</span>",
+        "editModeDescWithFrom": "To stake or unstake your assets, set the amount for delegation in the field below. Take into account that unstaking period for {net} fluctuates <span style='color: #00A3FF; font-weight: bold;'>from {perioudFrom} to {perioudTo} days</span>. Check the current unstaking period via the <a href='{link}' style='color: #00A3FF; font-weight: bold;text-decoration:none'>link</a>.",
         "nodeIsNotActive": "Node is inactive, rewards are not being issued",
         "nodeIsJailed": " This node is currently inactive, you don't get rewards for staking with it. Delegate your assets to another node"
     },
@@ -337,8 +337,8 @@
         "defaultPrefix": "Choose node and set the amount you want to unstake.",
         "customPrefix": "Set the amount you want to unstake.",
         "chooseNodeForUnstaking": "Choose node for unstaking",
-        "chooseNodeModalDesc": "Take into account that unstaking period for {net} is <span style='color: #0A2778; font-weight: bold;'>{perioud} days</span>.",
-        "chooseNodeModalDescWithFrom": "Take into account that unstaking period for {net} fluctuates <span style='color: #0A2778; font-weight: bold;'>from {perioudFrom} to {perioudTo} days</span>. Check the current unstaking period via the <a href='{link}' style='color: #0A2778; font-weight: bold;text-decoration:none'>link</a>.",
+        "chooseNodeModalDesc": "Take into account that unstaking period for {net} is <span style='color: #00A3FF; font-weight: bold;'>{perioud} days</span>.",
+        "chooseNodeModalDescWithFrom": "Take into account that unstaking period for {net} fluctuates <span style='color: #00A3FF; font-weight: bold;'>from {perioudFrom} to {perioudTo} days</span>. Check the current unstaking period via the <a href='{link}' style='color: #00A3FF; font-weight: bold;text-decoration:none'>link</a>.",
         "actionModalTitle": "Confirm the unstaking transaction",
         "actionModalDesc": "Your tokens will be unstaked and frozen for some time",
         "unstakeTo": "Unstake to",
@@ -347,9 +347,9 @@
         "unstakeNote": "After the confirmation of unstaking transaction, your assets will be locked for {unstakeingPerioud} days.Unstaked assets will be depicted in the frozen balance section."
     },
     "singleStake": {
-        "claimUnstakeNote": "Here is <strong style='color:#0a2778;'>no unstaking period</strong> for {code}. You will receive all accrued rewards when unstaking.",
-        "chooseNodeModalDescUnstake": "Choose a node and set the amount you want to unstake. Take into account that there is <strong style='color:#0a2778;'>no unstaking period</strong> for {code}. Your assets will be unstaked instantly.",
-        "chooseNodeModalDesc": "To stake your assets, choose node and set the amount for delegation. Take into account that there is <strong style='color:#0a2778;'>no unstaking period</strong> for",
+        "claimUnstakeNote": "Here is <strong style='color:#00A3FF;'>no unstaking period</strong> for {code}. You will receive all accrued rewards when unstaking.",
+        "chooseNodeModalDescUnstake": "Choose a node and set the amount you want to unstake. Take into account that there is <strong style='color:#00A3FF;'>no unstaking period</strong> for {code}. Your assets will be unstaked instantly.",
+        "chooseNodeModalDesc": "To stake your assets, choose node and set the amount for delegation. Take into account that there is <strong style='color:#00A3FF;'>no unstaking period</strong> for",
         "actionModalTitle": "Confirm redelegation",
         "actionModalDesc": "Your assets will be unstaked from the current validators and staked to the newly chosen once",
         "undelegateFrom": "Undelegate from",
@@ -980,7 +980,7 @@
         "googlePlay": "Google play"
     },
     "redelegation": {
-        "redelegationDesc": "Choose nodes and set the amount you want to redelegate. Please note that with the same wallet address, you are only able to redelegate your assets up to <span style='color: #0A2778; font-weight: bold;'>7 times</span> in a <span style='color: #0A2778; font-weight: bold;'>21 day period</span>. No unstaking period applies.",
+        "redelegationDesc": "Choose nodes and set the amount you want to redelegate. Please note that with the same wallet address, you are only able to redelegate your assets up to <span style='color: #00A3FF; font-weight: bold;'>7 times</span> in a <span style='color: #00A3FF; font-weight: bold;'>21 day period</span>. No unstaking period applies.",
         "redelegate": "Redelegate",
         "chooseNodeTitle": "Choose node for redelegate",
         "choseNodePlaceholderNote": "Click to select node for redelegate"
@@ -1025,7 +1025,7 @@
     "withoutDelegation": "Stake without delegation",
     "pledge": {
         "chooseModeModalTitle1": "Lock the IOST for iGas generation",
-        "chooseModeModalSubtitle": "<span style='color: #0A2778; font-weight: bold;'>1</span> pledged IOST generates <span style='color: #0A2778; font-weight: bold;'>100 000</span> iGas per day",
+        "chooseModeModalSubtitle": "<span style='color: #00A3FF; font-weight: bold;'>1</span> pledged IOST generates <span style='color: #00A3FF; font-weight: bold;'>100 000</span> iGas per day",
         "chooseModeModalTitle2": "Unlock the IOST used for iGas generation",
         "pledge": "pledge",
         "unpledge": "unpledge",
@@ -1362,6 +1362,11 @@
             "title": "Archway",
             "description": "",
             "shortDescription": "The multi-chain launchpad for your dapp | Archway Network"
+        },
+        "quasar":{
+            "title": "Quasar",
+            "description": "",
+            "shortDescription": "Instantly make your crypto productive by adding Quasar vaults to your portfolio."
         }
     },
     "uptime": "Uptime",
@@ -1407,13 +1412,13 @@
     "claimUnstakedText": "Your assets are unstaked. Confirm the transaction to claim it now.",
     "stakingAmount": "Staking amount",
     "polkadot": {
-        "chooseNodeModalDesc": "Set the amount of tokens you want to stake. Then, choose nodes for delegation. Your funds can be distributed to <span style='color: #0A2778; font-weight: 700;'>not more than {maxNodes} nodes</span>. Also, take into account that the unstaking period for ${net} is <span style='color: #0A2778' font-weight: 700;>{perioud} days</span>. Over this time, your unstaked tokens will be frozen. <span style='color: #FF5722; font-weight: 700;'>Minimal staking balance: {minStakingAmount} {code}</span>",
+        "chooseNodeModalDesc": "Set the amount of tokens you want to stake. Then, choose nodes for delegation. Your funds can be distributed to <span style='color: #00A3FF; font-weight: 700;'>not more than {maxNodes} nodes</span>. Also, take into account that the unstaking period for ${net} is <span style='color: #00A3FF' font-weight: 700;>{perioud} days</span>. Over this time, your unstaked tokens will be frozen. <span style='color: #FF5722; font-weight: 700;'>Minimal staking balance: {minStakingAmount} {code}</span>",
         "nominatedNodesTitle": "Nominated nodes:",
         "error": {
             "chooseNotMoreThan16Nodes": "Choose not more than 16 nodes"
         },
         "claimTooltip": "Earning rewards is automatic. Rewards are claimed automatically when validator or a nominator with the same validator claims rewards",
-        "chooseNodeModalDesc1": "To stake your assets, choose nodes and set the amount for delegation.Not all nodes have a particular name. A node mainly shares the same name as a validator address.Take into account that unstaking period for {net} is <span style='color: #0A2778; font-weight: bold;'>{perioud} days</span>."
+        "chooseNodeModalDesc1": "To stake your assets, choose nodes and set the amount for delegation.Not all nodes have a particular name. A node mainly shares the same name as a validator address.Take into account that unstaking period for {net} is <span style='color: #00A3FF; font-weight: bold;'>{perioud} days</span>."
     },
     "minSendAmountError": "The minimum transaction amount is {minAmount} {code}.",
     "changeValidators": "Change validators",

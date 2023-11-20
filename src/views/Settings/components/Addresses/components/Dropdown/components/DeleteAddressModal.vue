@@ -124,4 +124,17 @@ h3 {
     border-color: $mid-gray;
   }
 }
+
+body.dark {
+  .delete-address-modal {
+    &__title {
+      color: $white;
+    }
+  }
+
+  .text-button {
+    color: $white;
+    border-bottom: 2px solid $white;
+  }
+}
 </style>

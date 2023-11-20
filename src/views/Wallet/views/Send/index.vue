@@ -2026,4 +2026,22 @@ export default {
   // border-top: none;
   top: 70px;
 }
+
+body.dark {
+  .send {
+    .bridge-section {
+      background: #393c5f;
+      color: $white;
+    }
+
+    &__memo-title {
+      color: $white;
+    }
+
+    .network-target-wallets {
+      background: #393c55;
+      border: 1px solid #4b4c63;
+    }
+  }
+}
 </style>

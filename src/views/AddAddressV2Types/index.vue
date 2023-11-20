@@ -219,6 +219,24 @@ export default {
   }
 }
 
+body.dark {
+  .add-address {
+    &__title {
+      color: $white;
+    }
+
+    &__card-type {
+      background: #26273b;
+
+      .head {
+        .description {
+          color: $white;
+        }
+      }
+    }
+  }
+}
+
 // @media (max-width: 1200px) {
 //   .add-address {
 //     .add-address__card-wrapper {

@@ -185,4 +185,17 @@ export default {
     }
   }
 }
+
+body.dark {
+  .cross-chain-card {
+    background: $dark-panel-bg;
+    box-shadow: none;
+
+    &__content {
+      .title {
+        color: $white;
+      }
+    }
+  }
+}
 </style>
