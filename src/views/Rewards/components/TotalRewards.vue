@@ -137,4 +137,22 @@ export default {
     margin-right: 0;
   }
 }
+
+body.dark {
+  .total-rewards {
+    &__title {
+      color: $white;
+    }
+
+    &__btc-rewards-amount,
+    &__usd-rewards-amount {
+      color: $white;
+    }
+
+    &__usd-rewards-currency,
+    &__btc-rewards-currency {
+      color: #6b93c0;
+    }
+  }
+}
 </style>

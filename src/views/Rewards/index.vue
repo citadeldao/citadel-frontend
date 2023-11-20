@@ -410,6 +410,10 @@ body.dark {
       color: $white;
     }
 
+    .total-rewards {
+      background: $dark-panel-bg;
+    }
+
     &__main {
       background: $dark-panel-bg;
     }
