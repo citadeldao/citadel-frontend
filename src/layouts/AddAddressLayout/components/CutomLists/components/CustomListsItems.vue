@@ -275,6 +275,13 @@ export default {
 }
 
 body.dark {
+  .custom-list-item {
+    &__edit-button {
+      &__wrapper {
+        background-color: transparent;
+      }
+    }
+  }
   .custom-lists {
     background: #101120;
     color: $white;
