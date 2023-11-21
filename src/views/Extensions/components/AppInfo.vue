@@ -180,7 +180,7 @@ export default {
           display: flex;
           flex-wrap: wrap;
           min-height: 135px;
-          max-height: 320px;
+          max-height: 350px;
           padding: 10px;
           box-sizing: border-box;
 
@@ -234,6 +234,19 @@ body.dark {
     .main-info {
       .column .title .label {
         color: $white;
+      }
+
+      .column .title .networks-wrap {
+        background: #313354;
+        box-shadow: none;
+
+        .network-item {
+          color: $white;
+
+          &:before {
+            background: $white;
+          }
+        }
       }
     }
   }
