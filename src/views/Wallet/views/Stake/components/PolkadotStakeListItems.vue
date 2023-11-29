@@ -115,4 +115,10 @@ export default {
     margin-left: 16px;
   }
 }
+
+body.dark {
+  .staking-amount {
+    color: $white;
+  }
+}
 </style>
