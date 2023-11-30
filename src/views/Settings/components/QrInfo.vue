@@ -281,4 +281,28 @@ export default {
     line-height: 19px;
   }
 }
+
+body.dark {
+  .qr-info {
+    background-color: $dark-panel-bg;
+    box-shadow: none;
+
+    svg {
+      fill: $white;
+    }
+
+    &__title,
+    &__left-section-info {
+      color: $white;
+    }
+
+    &__step-step {
+      color: $white;
+    }
+
+    &__step-info {
+      color: $dark-blue;
+    }
+  }
+}
 </style>

@@ -105,6 +105,30 @@ export default {
   }
 }
 
+@mixin set-type-style-dark($type, $color) {
+  &--#{$type} {
+    .toast {
+      &__icon {
+        background-color: $color;
+      }
+
+      &__title {
+        color: $color;
+
+        &.hash {
+          color: none;
+        }
+      }
+
+      &__close {
+        svg {
+          fill: $color;
+        }
+      }
+    }
+  }
+}
+
 .toast {
   position: absolute;
   display: flex;
@@ -189,6 +213,20 @@ export default {
       width: 16px;
       height: 18px;
     }
+  }
+}
+
+body.dark {
+  .toast {
+    background: #101120;
+
+    &__content {
+      color: $white;
+    }
+
+    @include set-type-style-dark('info', $ligth-blue);
+    @include set-type-style-dark('success', $green);
+    @include set-type-style-dark('warning', $red);
   }
 }
 </style>

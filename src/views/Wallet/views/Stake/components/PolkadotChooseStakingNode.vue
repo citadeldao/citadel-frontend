@@ -503,4 +503,13 @@ export default {
     }
   }
 }
+
+body.dark {
+  .choose-staking-node__tabs-item {
+    &.choose-staking-node__active-tab {
+      color: $white;
+      border-bottom: 6px solid $dark-blue;
+    }
+  }
+}
 </style>

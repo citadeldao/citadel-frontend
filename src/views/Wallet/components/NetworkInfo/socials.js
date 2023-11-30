@@ -824,5 +824,9 @@ export default {
       title: '@QuasarFi',
       href: 'https://twitter.com/QuasarFi',
     },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/quasar-fi',
+    },
   },
 };

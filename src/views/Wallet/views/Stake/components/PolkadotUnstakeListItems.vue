@@ -116,4 +116,10 @@ export default {
     font-weight: 400;
   }
 }
+
+body.dark {
+  .staking-amount {
+    color: $white;
+  }
+}
 </style>
