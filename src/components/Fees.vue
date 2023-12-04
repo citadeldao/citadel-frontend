@@ -18,7 +18,7 @@
         currentToken ? currentToken.parentCoin.code : wallet?.code
       }}</span>
       <IconButton
-        v-if="!hideCustomFee"
+        v-if="false && !hideCustomFee"
         icon="arrow-rigth"
         data-qa="fee-button"
         @click="$emit('select-fee')"
@@ -103,7 +103,7 @@ export default {
   }
 
   &__currency {
-    padding-right: 10px;
+    // padding-right: 10px;
 
     &.hideCustomFee {
       padding-right: 0;

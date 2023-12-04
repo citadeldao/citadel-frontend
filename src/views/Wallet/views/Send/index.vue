@@ -187,6 +187,41 @@
           </span>
         </div>
       </div>
+      <!-- FEE -->
+      <div class="send__memo">
+        <div class="send__memo-toggle">
+          <span class="send__memo-title">
+            {{ $t('feeLabel') }}
+          </span>
+          <el-tooltip
+            placement="bottom"
+            effect="rewards-list-tooltip"
+            class="send__memo-tooltip"
+          >
+            <info />
+            <template #content>
+              <span class="send__memo-tooltip-text">{{
+                $t('feeTooltip')
+              }}</span>
+            </template>
+          </el-tooltip>
+          <el-switch
+            v-model="showFee"
+            active-color="#6a4bff"
+            inactive-color="#dfe9f5"
+            data-qa="send__memo-checkbox"
+          />
+        </div>
+        <transition name="fade">
+          <div v-if="showFee" class="send__send-fee">
+            <SelectSendFee
+              :fee-info="fees"
+              :wallet="currentWallet"
+              @changeFee="onChangeFeeSend"
+            />
+          </div>
+        </transition>
+      </div>
       <div
         v-if="
           !currentWallet.hideMemo &&
@@ -505,6 +540,7 @@ import MinBalanceWarning from '@/views/Wallet/views/Stake/components/MinBalanceW
 import BridgeModal from './components/BridgeModal';
 import ModalError from './ModalError.vue';
 import ModalSuccess from './ModalSuccess.vue';
+import SelectSendFee from './components/Fee';
 
 export default {
   name: 'Send',
@@ -530,6 +566,7 @@ export default {
     BridgeModal,
     ModalError,
     ModalSuccess,
+    SelectSendFee,
   },
   props: {
     currentWallet: {
@@ -558,6 +595,7 @@ export default {
     // const isSendToAnotherNetwork = ref(false);
     const showAdvanced = ref(false);
     const showMemo = ref(false);
+    const showFee = ref(false);
     const store = useStore();
     const route = useRoute();
     const toAddress = ref('');
@@ -931,6 +969,10 @@ export default {
     const closeFeeModal = () => {
       showDecreaseAmountModal.value = false;
       showIncreaseAmountModal.value = false;
+    };
+
+    const onChangeFeeSend = (feeData) => {
+      feeType.value = feeData;
     };
 
     const onChangeFee = () => {
@@ -1414,7 +1456,7 @@ export default {
       passwordError.value = '';
       confirmClicked.value = false;
       disableBtn.value = false;
-      feeType.value = 'medium';
+      // feeType.value = 'medium';
       customFee.value = 0;
       showSuccessModal.value = false;
 
@@ -1504,6 +1546,7 @@ export default {
       isHardwareWallet,
       isSendToAnotherNetwork,
       showMemo,
+      showFee,
       toAddress,
       amount,
       maxAmount,
@@ -1583,6 +1626,7 @@ export default {
       hideBridge,
       onPrepareBridge,
       prepareBridgeData,
+      onChangeFeeSend,
     };
   },
 };
@@ -1921,6 +1965,14 @@ export default {
         transform: rotate(270deg);
         fill: $blue;
       }
+    }
+  }
+
+  &__send-fee {
+    width: 100%;
+    height: 68px;
+
+    @include lg {
     }
   }
 
