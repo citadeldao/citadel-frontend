@@ -415,4 +415,50 @@ body.dark {
   .date-picker {
     border: 1px solid #4b4c63;
   }
+
+  .el-picker-panel__body,
+  .el-picker-panel__sidebar {
+    background: #26273B;
+    border: 1px solid #4b4c63;
+  }
+
+  .el-date-table td {
+    color: #fff;
+  }
+
+  .el-picker-panel [slot=sidebar], .el-picker-panel__sidebar {
+    background-color: #26273B;
+    border: 1px solid #4b4c63;
+  }
+
+  .el-picker-panel__shortcut,
+  .el-date-range-picker__header div {
+    color: #AFBCCB;
+  }
+
+  .el-date-table td.disabled div {
+    background-color: #4b4c63;
+  }
+
+  .el-date-range-picker__content.is-left {
+    border-color: #4b4c63;
+  }
+
+  .el-picker__popper.el-popper[role=tooltip][data-popper-placement^=bottom] .el-popper__arrow::before {
+    border-color: #4b4c63;
+  }
+
+  .el-icon-d-arrow-left:before,
+  .el-icon-arrow-left:before {
+    color: #AFBCCB;
+  }
+
+  .date-picker .el-date-editor .el-range-input {
+    color: #AFBCCB;
+  }
+
+  .el-icon-d-arrow-right:before,
+  .el-icon-arrow-right:before {
+    color: #AFBCCB;
+  }
 }
