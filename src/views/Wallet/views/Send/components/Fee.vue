@@ -102,4 +102,19 @@ export default {
     }
   }
 }
+
+body.dark {
+  .send-fee-change {
+    &__item {
+      .indicator {
+        border-color: #6b93c0;
+      }
+    }
+    .info {
+      .label {
+        color: $white;
+      }
+    }
+  }
+}
 </style>
