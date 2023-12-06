@@ -404,6 +404,14 @@ body.dark {
 }
 
 body.dark {
+  .el-switch__core .el-switch__action {
+    background: #3a5293;
+    border-color: #3a5293;
+  }
+  .el-switch.is-checked .el-switch__core .el-switch__action {
+    background: #6b93c0;
+    border-color: #6b93c0;
+  }
   .el-date-editor.el-date-editor--daterange {
     background: transparent;
   }
