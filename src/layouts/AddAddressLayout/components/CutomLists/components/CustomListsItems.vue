@@ -288,7 +288,7 @@ body.dark {
 
     .custom-list-item__title.home {
       svg {
-        fill: $white;
+        fill: #6b93c0;
       }
 
       &:hover {
