@@ -996,4 +996,23 @@ export default {
     }
   }
 }
+
+body.dark {
+  .salary-page {
+    &__main {
+      background: $dark-panel-bg;
+    }
+
+    &__controls-counter {
+      color: $white;
+    }
+
+    .salary-members {
+      .member-item.active {
+        background: #171a24;
+        border-color: #6b93c0;
+      }
+    }
+  }
+}
 </style>
