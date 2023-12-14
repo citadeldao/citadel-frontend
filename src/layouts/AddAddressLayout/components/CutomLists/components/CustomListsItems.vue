@@ -9,7 +9,7 @@
         data-qa="All"
         @click="$emit('set-active-list', LIST_ALL)"
       >
-        <div class="custom-list-item__title">
+        <div class="custom-list-item__title home">
           <house-icon />
           {{ $t('overallTitle') }}
         </div>
@@ -285,6 +285,18 @@ body.dark {
   .custom-lists {
     background: #101120;
     color: $white;
+
+    .custom-list-item__title.home {
+      svg {
+        fill: #6b93c0;
+      }
+
+      &:hover {
+        svg {
+          fill: $blue;
+        }
+      }
+    }
 
     &__add-list-button,
     &__list {

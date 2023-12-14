@@ -811,4 +811,28 @@ export default {
     height: 66px;
   }
 }
+
+body.dark {
+  .multisig-balance {
+    &__main {
+      background: $dark-panel-bg;
+    }
+
+    &__line {
+      background: #4b4c63;
+    }
+
+    &__title {
+      color: $white;
+    }
+
+    &__info-title {
+      color: #afbccb;
+    }
+
+    &__info-currency {
+      color: $white;
+    }
+  }
+}
 </style>
