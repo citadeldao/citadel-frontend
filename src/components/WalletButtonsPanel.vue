@@ -336,6 +336,10 @@ body.dark {
     background: #353649;
   }
 
+  .wallet-buttons-panel__button-rewards-currency {
+    color: $white;
+  }
+
   .wallet-buttons-panel__button2:disabled {
     background: #353649;
   }

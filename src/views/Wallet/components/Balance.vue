@@ -937,8 +937,20 @@ export default {
 }
 
 body.dark {
+  .balance__pledged-balance-title-title {
+    color: $white;
+  }
+
   .balance {
     background: $dark-panel-bg;
+
+    &__pledged-balance-tooltip-info-day {
+      color: $white;
+    }
+
+    &__tabs {
+      background-color: #313354;
+    }
 
     &__tab {
       &.settings {
