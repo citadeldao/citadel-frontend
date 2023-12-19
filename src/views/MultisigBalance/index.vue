@@ -813,6 +813,20 @@ export default {
 }
 
 body.dark {
+  .claim-container {
+    .total {
+      .label {
+        color: $white;
+      }
+    }
+    .rows {
+      .claim-item {
+        .value {
+          color: $white;
+        }
+      }
+    }
+  }
   .multisig-balance {
     &__main {
       background: $dark-panel-bg;
