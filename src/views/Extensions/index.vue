@@ -414,8 +414,8 @@ export default {
         });
         tokenAuth.value = res?.data?.token;
 
-        selectedApp.value.url += `?token=${
-          tokenAuth.value
+        selectedApp.value.url += `?token=${tokenAuth.value}&lang=${
+          store.getters['i18n/locale']
         }&wallets=${JSON.stringify(wallets)}`;
         currentApp.value = selectedApp.value;
       }
