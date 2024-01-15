@@ -155,7 +155,7 @@ export default class MetamaskConnector {
     };
 
     try {
-      const txHash = await this.ethereum.request({
+      const txHash = await window.ethereum.request({
         method: 'eth_sendTransaction',
         params: [tx],
       });

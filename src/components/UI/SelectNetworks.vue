@@ -510,5 +510,11 @@ body.dark {
       color: $white;
     }
   }
+
+  .select-networks__controls {
+    .title {
+      color: $white;
+    }
+  }
 }
 </style>

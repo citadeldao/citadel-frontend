@@ -210,11 +210,20 @@ export default {
 }
 
 body.dark {
+  .balance {
+    .network-tab {
+      background: #313354;
+
+      &.network-tab-active {
+        background: none; // $dark-blue;
+      }
+    }
+  }
   .network-tab {
     background: #313354;
 
     &.network-tab-active {
-      background: $dark-blue;
+      background: none; // $dark-blue;
     }
   }
 }

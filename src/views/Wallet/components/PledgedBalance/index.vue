@@ -338,6 +338,10 @@ body.dark {
       color: $white;
     }
 
+    &__tooltip-info-day {
+      color: $white;
+    }
+
     &__balance-value {
       color: $white;
     }
