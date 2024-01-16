@@ -7,7 +7,7 @@
       <div :class="{ hash: !!hash }" class="toast__title">
         {{ txTitle }}
       </div>
-      <div v-if="!hash" class="toast__text" v-html="text" />
+      <div v-if="!hash" class="toast__text">{{ text }}</div>
       <div v-else class="hash-wrap">
         <a :href="hash" target="_blank">
           {{ $t('transactionsSocket.viewTitle') }}
