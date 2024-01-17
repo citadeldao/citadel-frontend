@@ -408,11 +408,15 @@ export default {
     margin-bottom: 24px;
   }
   &__tabs {
+    width: 100%;
     display: flex;
     position: absolute;
     top: 8px;
   }
   &__tabs-item {
+    width: 100%;
+    display: flex;
+    justify-content: center;
     cursor: pointer;
     font-size: 20px;
     line-height: 30px;
