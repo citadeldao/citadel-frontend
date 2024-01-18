@@ -95,29 +95,38 @@ export default class MetamaskConnector {
   }
 
   async sendMetamaskTransaction(rawTx, memTxId) {
+    const parseTx = (tx) => {
+      return {
+        data: tx.data,
+        from: tx.from,
+        to: tx.to,
+        nonce: `0x${tx.nonce.toString(16)}`,
+        chainId: `0x${tx.chainId.toString(16)}`,
+        gas: `0x${tx.gas.toString(16)}`,
+        gasPrice: `0x${parseInt(tx.gasPrice).toString(16)}`,
+        value: tx.value ? `0x${parseInt(tx.value).toString(16)}` : '',
+      };
+    };
+
+    const signTx = async (tx) => {
+      return await window.ethereum.request({
+        method: 'eth_sendTransaction',
+        params: [tx],
+      });
+    };
+
     const transaction = rawTx.transaction || rawTx;
 
     if (Array.isArray(transaction)) {
       const txs = transaction.map((tx) => {
-        return {
-          data: tx.data,
-          from: tx.from,
-          to: tx.to,
-          nonce: `0x${tx.nonce.toString(16)}`,
-          chainId: `0x${tx.chainId.toString(16)}`,
-          gas: `0x${tx.gas.toString(16)}`,
-          gasPrice: `0x${parseInt(tx.gasPrice).toString(16)}`,
-          value: tx.value ? `0x${parseInt(tx.value).toString(16)}` : '',
-        };
+        return parseTx(tx);
       });
 
       try {
         return await Promise.all(
           txs.map(async (tx) => {
-            const txHash = await window.ethereum.request({
-              method: 'eth_sendTransaction',
-              params: [tx],
-            });
+            const txHash = await signTx(tx);
+
             if (txHash?.length > 0 && memTxId) {
               store.dispatch('extensions/putMempoolChangeStatus', {
                 hash: txHash,
@@ -131,34 +140,12 @@ export default class MetamaskConnector {
       } catch (err) {
         return { error: 'Metamask sign txs error' };
       }
-
-      /* try {
-        const txHash = await window.ethereum.request({ method: 'eth_sendTransaction', params: txs });
-
-        return { txHash };
-      } catch(err) {
-        return { error: 'Metamask sign txs error' };
-      } */
     }
 
-    const tx = {
-      data: transaction.data,
-      from: transaction.from,
-      to: transaction.to,
-      nonce: `0x${transaction.nonce.toString(16)}`,
-      chainId: `0x${transaction.chainId.toString(16)}`,
-      gas: `0x${transaction.gas.toString(16)}`,
-      gasPrice: `0x${parseInt(transaction.gasPrice).toString(16)}`,
-      value: transaction.value
-        ? `0x${parseInt(transaction.value).toString(16)}`
-        : '',
-    };
+    const tx = parseTx(transaction);
 
     try {
-      const txHash = await window.ethereum.request({
-        method: 'eth_sendTransaction',
-        params: [tx],
-      });
+      const txHash = await signTx(tx);
 
       if (memTxId) {
         store.dispatch('extensions/putMempoolChangeStatus', {
