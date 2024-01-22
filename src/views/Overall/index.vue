@@ -165,6 +165,7 @@ body.dark {
     }
     &__central-section {
       background: $dark-panel-bg;
+      box-shadow: none;
     }
   }
 }
