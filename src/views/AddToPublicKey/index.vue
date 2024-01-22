@@ -187,4 +187,10 @@ export default {
     }
   }
 }
+
+body.dark {
+  .add-to-public-key {
+    background: $dark-panel-bg;
+  }
+}
 </style>
