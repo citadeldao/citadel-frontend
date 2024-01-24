@@ -470,3 +470,12 @@ body.dark {
     color: #AFBCCB;
   }
 }
+
+body.dark {
+  .constrict__icon,
+  .expand__icon {
+    circle {
+      fill: #313354
+    }
+  }
+}

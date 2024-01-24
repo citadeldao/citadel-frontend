@@ -160,4 +160,12 @@ export default {
     color: $dark-blue;
   }
 }
+
+body.dark {
+  .checked {
+    .qr-address-item__title {
+      color: #afbccb;
+    }
+  }
+}
 </style>

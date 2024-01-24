@@ -300,11 +300,15 @@ export default {
     }
   }
   &__tabs {
+    width: 100%;
     display: flex;
     position: absolute;
     top: 8px;
   }
   &__tabs-item {
+    width: 100%;
+    display: flex;
+    justify-content: center;
     cursor: pointer;
     font-size: $h5-size;
     line-height: 30px;

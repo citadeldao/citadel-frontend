@@ -134,6 +134,10 @@ body.dark {
   .balance-structure-expanded {
     background: $dark-panel-bg;
 
+    &__toggle-info {
+      background: #313354;
+    }
+
     &__title {
       color: $white;
     }
