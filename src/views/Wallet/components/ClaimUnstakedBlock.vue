@@ -129,6 +129,8 @@ export default {
     justify-content: flex-end;
     align-items: center;
     width: 48px;
+    margin-right: 9px;
+    margin-bottom: 3px;
   }
   &__title {
     font-weight: bold;
