@@ -720,6 +720,10 @@ body.dark {
       color: $white;
     }
 
+    .cards__container .card {
+      background: linear-gradient(90deg, #343051 0%, #3b4055 100%);
+    }
+
     .cards__container .card:hover {
       background: none;
       box-shadow: none;

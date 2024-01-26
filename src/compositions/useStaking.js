@@ -226,6 +226,8 @@ export default function useStaking(stakeNodes, list) {
     activeTab.value = 'unstake';
     mode.value = 'unstake';
     updateShowModal(true);
+    updateShowConfirmTransaction(false);
+    // showConfirmTransaction(false);
 
     if (currentWallet.value.net === 'polkadot') {
       await updateSelectedNode(list())
