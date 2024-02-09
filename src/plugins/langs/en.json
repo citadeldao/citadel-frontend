@@ -1360,6 +1360,11 @@
             "description": "Nolus Protocol is a Web3 financial suite that offers an innovative approach to money markets with a novel Lease solution to develop the DeFi space further",
             "shortDescription": "Nolus Protocol is a Web3 financial suite that offers a Lease solution to develop the DeFi space further"
         },
+        "celestia":{
+            "title": "Celestia",
+            "description": "The first modular blockchain network",
+            "shortDescription": "Celestia is a modular data availability network that securely scales with the number of users, making it easy for anyone to launch their own blockchain."
+        },
         "archway":{
             "title": "Archway",
             "description": "",

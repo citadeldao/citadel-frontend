@@ -805,6 +805,20 @@ export default {
     //   href: 'https://www.coingecko.com/en/coins/sui',
     // },
   },
+  celestia: {
+    web: {
+      title: 'celestia.org',
+      href: 'https://celestia.org/',
+    },
+    twitter: {
+      title: '@CelestiaOrg',
+      href: 'CelestiaOrg',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/celestia',
+    },
+  },
   archway: {
     web: {
       title: 'archway.io',
