@@ -51,7 +51,10 @@
         </div>
         <!-- hide separator when fee receive 0 -->
         <span
-          v-if="wallet.hasResource || (!wallet.hasResource && stakingFee)"
+          v-if="
+            (wallet.hasResource && stakingFee) ||
+            (!wallet.hasResource && stakingFee)
+          "
           class="action-modal-content__total-amount-line"
           >/</span
         >
