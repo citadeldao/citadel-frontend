@@ -51,7 +51,8 @@
         <span
           v-if="
             (currentWallet.hasResource && fee.fee) ||
-            (!currentWallet.hasResource && fee.fee)
+            (!currentWallet.hasResource && fee.fee) ||
+            currentWallet.net === 'tron'
           "
           class="action-modal-content__total-amount-line"
           >/</span
