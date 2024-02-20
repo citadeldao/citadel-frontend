@@ -410,6 +410,10 @@ body.dark {
       color: #6b758e;
     }
 
+    &__rewards-list {
+      background: transparent;
+    }
+
     &__line-from {
       color: $white;
     }

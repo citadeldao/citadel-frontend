@@ -516,6 +516,14 @@ body.dark {
   .claim-rewards {
     background: #393c5f;
 
+    &__rewrd-item_value {
+      color: $white;
+    }
+
+    &__rewrd-item_currency {
+      color: #00a3ff;
+    }
+
     &__apy {
       color: $darkgray;
     }
