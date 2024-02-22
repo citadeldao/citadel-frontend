@@ -1,9 +1,16 @@
 <template>
   <li class="autocomplete-result" @click="clickHandler">
-    <keep-alive v-if="result.icon">
+    <keep-alive v-if="result.icon && !result.iconLink">
       <component :is="currentIcon" />
     </keep-alive>
-    <span v-else class="no-icon" />
+    <span v-if="!result.icon && !result.iconLink" class="no-icon" />
+    <img
+      v-if="result.iconLink"
+      :src="result.iconLink"
+      width="18"
+      height="18"
+      :style="{ marginRight: '7px' }"
+    />
     <span class="title">{{ result.title }}</span>
   </li>
 </template>

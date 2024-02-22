@@ -1547,5 +1547,17 @@
     "rateModal": {
         "title": "Select display currency",
         "description": "Your balance will be converted to the selected currency"
+    },
+
+    "swapView": {
+        "swapFromNetwork": "From ChainId",
+        "swapToNetwork": "To ChainId",
+        "selectChain": "Select chain",
+        "fromToken": "From token",
+        "toToken": "To token",
+        "selectContract": "Select contract",
+        "fromAddressLabel": "From address",
+        "toAddressLabel": "To address",
+        "addressPlaceholder": "Input address"
     }
 }
