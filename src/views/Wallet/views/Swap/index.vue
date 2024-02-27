@@ -93,18 +93,22 @@
         />
       </div>
     </div>
-    <PrimaryButton class="swap__submit-swap">{{ $t('swap') }}</PrimaryButton>
+    <PrimaryButton
+      class="swap__submit-swap"
+      :loading="isLoading"
+      @click="getRoute"
+      >{{ $t('swap') }}</PrimaryButton
+    >
   </div>
 </template>
 <script>
 import { computed, onMounted, ref } from 'vue';
-// import { useStore } from 'vuex';
+import { useStore } from 'vuex';
 import Autocomplete from '@/components/UI/Autocomplete';
 import PrimaryButton from '@/components/UI/PrimaryButton';
-import { squidChains } from './config';
-import { allTokens } from './configTokens';
 import Input from '@/components/UI/Input';
 import useWallets from '@/compositions/useWallets';
+import notify from '@/plugins/notify';
 
 export default {
   components: {
@@ -113,7 +117,8 @@ export default {
     Input,
   },
   setup() {
-    // const store = useStore();
+    const isLoading = ref(false);
+    const store = useStore();
     const { currentWallet } = useWallets();
     const amount = ref('');
 
@@ -132,14 +137,19 @@ export default {
     const addressFrom = ref('');
     const addressTo = ref('');
 
+    const squidChains = computed(() => store.getters['squid/chains']);
+    const allTokens = computed(() => store.getters['squid/tokens']);
     console.log('squidChains', squidChains);
 
-    onMounted(() => {
+    onMounted(async () => {
       addressFrom.value = currentWallet.value.address;
+
+      await store.dispatch('squid/fetchChains');
+      await store.dispatch('squid/fetchTokens');
     });
 
     const allNetworks = computed(() =>
-      squidChains.chains.map((w) => ({
+      [].concat(squidChains.value).map((w) => ({
         id: w.chainName,
         title: `${w.chainName}:${w.chainId}`,
         key: w.chainName,
@@ -159,11 +169,11 @@ export default {
       }
 
       searchNetworkFrom.value = selectChain;
-      const currentChain = squidChains.chains.find(
+      const currentChain = squidChains.value.find(
         (n) =>
           n.chainName.toLocaleLowerCase() === selectChain.toLocaleLowerCase()
       );
-      const tokens = allTokens.tokens.filter(
+      const tokens = allTokens.value.filter(
         (t) => t.chainId === currentChain?.chainId
       );
 
@@ -182,11 +192,11 @@ export default {
       }
 
       searchNetworkTo.value = selectChain;
-      const currentChain = squidChains.chains.find(
+      const currentChain = squidChains.value.find(
         (n) =>
           n.chainName.toLocaleLowerCase() === selectChain.toLocaleLowerCase()
       );
-      const tokens = allTokens.tokens.filter(
+      const tokens = allTokens.value.filter(
         (t) => t.chainId === currentChain?.chainId
       );
 
@@ -196,11 +206,13 @@ export default {
     };
 
     const searchTokenFromComputed = computed(() => {
-      return allTokens.tokens.find((t) => t.name === searchFromToken.value);
+      return chainTokensFrom.value.find(
+        (t) => t.name === searchFromToken.value
+      );
     });
 
     const searchTokenToComputed = computed(() => {
-      return allTokens.tokens.find((t) => t.name === searchToToken.value);
+      return chainTokensTo.value.find((t) => t.name === searchToToken.value);
     });
 
     const selectFromToken = (token) => {
@@ -215,10 +227,46 @@ export default {
       console.log('token to obj', searchTokenToComputed.value);
     };
 
+    const getRoute = async () => {
+      const fromChain = allNetworks.value.find(
+        (item) => item.key === searchNetworkFrom.value
+      )?.chainId;
+      const toChain = allNetworks.value.find(
+        (item) => item.key === searchNetworkTo.value
+      )?.chainId;
+      const fromToken = searchTokenFromComputed.value.address;
+      const toToken = searchTokenToComputed.value.address;
+      const fromAmount = 100000000;
+      const fromAddress = addressFrom.value;
+      const toAddress = addressTo.value;
+
+      isLoading.value = true;
+      try {
+        await store.dispatch('squid/getRoute', {
+          fromChain,
+          toChain,
+          fromToken,
+          toToken,
+          fromAmount,
+          fromAddress,
+          toAddress,
+        });
+      } catch (err) {
+        notify({
+          type: 'warning',
+          text: err?.response?.data?.errors[0]?.message,
+        });
+        isLoading.value = false;
+      }
+      isLoading.value = false;
+    };
+
     return {
+      isLoading,
       amount,
       currentWallet,
       allNetworks,
+
       searchNetworkFrom,
       searchNetworkTo,
 
@@ -242,6 +290,8 @@ export default {
 
       selectFromToken,
       selectToToken,
+
+      getRoute,
     };
   },
 };
