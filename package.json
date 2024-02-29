@@ -13,6 +13,7 @@
     "dependencies": {
         "@citadeldao/lib-citadel": "1.43.12",
         "@open-wc/webpack-import-meta-loader": "^0.4.7",
+        "@pgrabovets/json-view": "^2.7.5",
         "@sentry/tracing": "^6.16.1",
         "@sentry/vue": "^6.16.1",
         "axios": "^0.21.1",

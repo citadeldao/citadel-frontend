@@ -1,104 +1,142 @@
 <template>
   <div class="swap">
-    <div class="swap__select-chain z1000">
-      <div class="autocomplete">
-        <Autocomplete
-          id="chains"
-          v-model:value="searchNetworkFrom"
-          :items="allNetworks"
-          initial-icon="curve-arrow"
-          :label="$t('swapView.swapFromNetwork')"
-          :placeholder="$t('swapView.selectChain')"
-          @update:value="selectNetworkFrom"
+    <teleport to="body">
+      <Modal v-if="showInfoModal">
+        <InfoModal
+          :tx-route="txRoute"
+          :signer-wallet="currentWallet"
+          :on-close="closeAppInfoModal"
+          @onSuccess="onSuccess"
         />
-      </div>
-      <div class="autocomplete ml10">
-        <Autocomplete
-          id="chains"
-          v-model:value="searchNetworkTo"
-          :items="allNetworks"
-          initial-icon="curve-arrow"
-          :label="$t('swapView.swapToNetwork')"
-          :placeholder="$t('swapView.selectChain')"
-          @update:value="selectNetworkTo"
+      </Modal>
+      <Modal v-if="showSuccessModal">
+        <SuccessModal
+          :close-success-modal="closeSuccessModal"
+          :success-click-handler="successClickHandler"
+          :wallet="currentWallet"
+          :success-tx="successHash"
+          @changeComment="onChangeComment"
         />
+      </Modal>
+    </teleport>
+    <Info
+      v-if="
+        currentWallet.type === WALLET_TYPES.PUBLIC_KEY &&
+        currentWalletType !== WALLET_TYPES.METAMASK
+      "
+      title="wallet.info.title"
+      data-qa="send__info"
+    />
+    <template v-else>
+      <div v-if="isLoadingData" class="load">
+        <Loading />
       </div>
-    </div>
-    <!-- contracts -->
-    <div class="swap__select-chain mt10">
-      <div class="autocomplete">
-        <Autocomplete
-          id="chainTokenFrom"
-          v-model:value="searchFromToken"
-          :items="chainTokensFrom"
-          initial-icon="curve-arrow"
-          :label="$t('swapView.fromToken')"
-          :placeholder="$t('swapView.selectContract')"
-          @update:value="selectFromToken"
-        />
-      </div>
-      <div class="autocomplete ml10">
-        <Autocomplete
-          id="chainTokenTo"
-          v-model:value="searchToToken"
-          :items="chainTokensTo"
-          initial-icon="curve-arrow"
-          :label="$t('swapView.toToken')"
-          :placeholder="$t('swapView.selectContract')"
-          @update:value="selectToToken"
-        />
-      </div>
-    </div>
-    <div class="swap__contracts">
-      <div v-if="searchTokenFromComputed?.address">
-        {{ searchTokenFromComputed.address }}
-      </div>
-      <div v-if="searchTokenToComputed?.address" class="ml10">
-        {{ searchTokenToComputed.address }}
-      </div>
-    </div>
-    <div
-      class="swap__addresses"
-      v-if="searchTokenFromComputed && searchTokenToComputed"
-    >
-      <div class="swap__input">
-        <Input
-          id="fromTokenAddr"
-          v-model="addressFrom"
-          disabled
-          :label="$t('swapView.fromAddressLabel')"
-          :placeholder="$t('swapView.addressPlaceholder')"
-          type="text"
-        />
-      </div>
-      <div class="swap__input mt10">
-        <Input
-          id="toTokenAddr"
-          v-model="addressTo"
-          :label="$t('swapView.toAddressLabel')"
-          :placeholder="$t('swapView.addressPlaceholder')"
-          type="text"
-        />
-      </div>
-      <div class="swap__input mt10">
-        <Input
-          id="amount"
-          v-model="amount"
-          :decimals="currentWallet?.config?.decimals"
-          type="currency"
-          :currency="searchTokenFromComputed?.symbol"
-          :label="$t('amount')"
-          placeholder="0.0"
-          icon="coins"
-        />
-      </div>
-    </div>
-    <PrimaryButton
-      class="swap__submit-swap"
-      :loading="isLoading"
-      @click="getRoute"
-      >{{ $t('swap') }}</PrimaryButton
-    >
+      <template v-else>
+        <EmptyList v-if="!hasSwap" title="Swap for this address not found" />
+        <template v-else>
+          <div class="swap__select-chain z1000">
+            <div class="autocomplete">
+              <Autocomplete
+                id="chains"
+                v-model:value="searchNetworkFrom"
+                :items="allNetworks"
+                initial-icon="curve-arrow"
+                :label="$t('swapView.swapFromNetwork')"
+                :placeholder="$t('swapView.selectChain')"
+                @update:value="selectNetworkFrom"
+              />
+            </div>
+            <div class="autocomplete ml10">
+              <Autocomplete
+                id="chains"
+                v-model:value="searchNetworkTo"
+                :items="allNetworks"
+                initial-icon="curve-arrow"
+                :label="$t('swapView.swapToNetwork')"
+                :placeholder="$t('swapView.selectChain')"
+                @update:value="selectNetworkTo"
+              />
+            </div>
+          </div>
+          <!-- contracts -->
+          <div class="swap__select-chain mt10">
+            <div class="autocomplete">
+              <Autocomplete
+                id="chainTokenFrom"
+                v-model:value="searchFromToken"
+                :items="chainTokensFrom"
+                initial-icon="curve-arrow"
+                :label="$t('swapView.fromToken')"
+                :placeholder="$t('swapView.selectContract')"
+                @update:value="selectFromToken"
+              />
+            </div>
+            <div class="autocomplete ml10">
+              <Autocomplete
+                id="chainTokenTo"
+                v-model:value="searchToToken"
+                :items="chainTokensTo"
+                initial-icon="curve-arrow"
+                :label="$t('swapView.toToken')"
+                :placeholder="$t('swapView.selectContract')"
+                @update:value="selectToToken"
+              />
+            </div>
+          </div>
+          <div class="swap__contracts">
+            <div v-if="searchTokenFromComputed?.address">
+              {{ searchTokenFromComputed.address }}
+            </div>
+            <div v-if="searchTokenToComputed?.address" class="ml10">
+              {{ searchTokenToComputed.address }}
+            </div>
+          </div>
+          <div
+            class="swap__addresses"
+            v-if="searchTokenFromComputed && searchTokenToComputed"
+          >
+            <div class="swap__input">
+              <Input
+                id="fromTokenAddr"
+                v-model="addressFrom"
+                disabled
+                :label="$t('swapView.fromAddressLabel')"
+                :placeholder="$t('swapView.addressPlaceholder')"
+                type="text"
+              />
+            </div>
+            <div class="swap__input mt10">
+              <Input
+                id="toTokenAddr"
+                v-model="addressTo"
+                :label="$t('swapView.toAddressLabel')"
+                :placeholder="$t('swapView.addressPlaceholder')"
+                type="text"
+              />
+            </div>
+            <div class="swap__input mt10">
+              <Input
+                id="amount"
+                v-model="amount"
+                :decimals="currentWallet?.config?.decimals"
+                type="currency"
+                :currency="searchTokenFromComputed?.symbol"
+                :label="$t('amount')"
+                placeholder="0.0"
+                icon="coins"
+              />
+            </div>
+          </div>
+          <PrimaryButton
+            class="swap__submit-swap"
+            :loading="isLoading"
+            @click="getRoute"
+          >
+            {{ $t('swap') }}
+          </PrimaryButton>
+        </template>
+      </template>
+    </template>
   </div>
 </template>
 <script>
@@ -109,18 +147,37 @@ import PrimaryButton from '@/components/UI/PrimaryButton';
 import Input from '@/components/UI/Input';
 import useWallets from '@/compositions/useWallets';
 import notify from '@/plugins/notify';
+import Info from '@/components/Info';
+import { WALLET_TYPES } from '@/config/walletType';
+import Loading from '@/components/Loading';
+import EmptyList from '@/components/EmptyList';
+import BigNumber from 'bignumber.js';
+import Modal from '@/components/Modal';
+import InfoModal from './InfoModal.vue';
+import SuccessModal from '@/views/Extensions/SuccessModal.vue';
 
 export default {
   components: {
     PrimaryButton,
     Autocomplete,
     Input,
+    Info,
+    Loading,
+    EmptyList,
+    Modal,
+    InfoModal,
+    SuccessModal,
   },
   setup() {
+    const showInfoModal = ref(false);
+    const showSuccessModal = ref(false);
+    const txComment = ref('');
     const isLoading = ref(false);
+    const isLoadingData = ref(false);
     const store = useStore();
     const { currentWallet } = useWallets();
     const amount = ref('');
+    const successHash = ref([]);
 
     const fromTokenAddrInput = ref('');
     const toTokenAddrInput = ref('');
@@ -137,15 +194,56 @@ export default {
     const addressFrom = ref('');
     const addressTo = ref('');
 
+    const hasSwap = ref(null);
+
     const squidChains = computed(() => store.getters['squid/chains']);
     const allTokens = computed(() => store.getters['squid/tokens']);
-    console.log('squidChains', squidChains);
+    const txRoute = computed(() => store.getters['squid/route']);
+
+    const metamaskConnector = computed(
+      () => store.getters['metamask/metamaskConnector']
+    );
+
+    const currentWalletType = computed(() => {
+      const metamaskNet = metamaskConnector.value.network;
+      const metamaskAddress =
+        metamaskConnector.value.accounts[0] &&
+        metamaskConnector.value.accounts[0].toLowerCase();
+      const { address, net, type } = currentWallet.value;
+
+      if (
+        address.toLowerCase() === metamaskAddress &&
+        net.includes(metamaskNet) &&
+        type === WALLET_TYPES.PUBLIC_KEY
+      ) {
+        return WALLET_TYPES.METAMASK;
+      }
+
+      return currentWallet.value.type;
+    });
 
     onMounted(async () => {
+      isLoadingData.value = true;
       addressFrom.value = currentWallet.value.address;
 
       await store.dispatch('squid/fetchChains');
       await store.dispatch('squid/fetchTokens');
+
+      hasSwap.value = squidChains.value.find(
+        (ch) =>
+          ch.nativeCurrency.symbol.toLowerCase() ===
+          currentWallet.value.code.toLowerCase()
+      );
+      if (hasSwap.value) {
+        selectNetworkFrom(
+          `${hasSwap.value.chainName}:${hasSwap.value.chainId}`
+        );
+        console.log(
+          'hasSwap.value',
+          `${hasSwap.value.chainName}:${hasSwap.value.chainId}`
+        );
+      }
+      isLoadingData.value = false;
     });
 
     const allNetworks = computed(() =>
@@ -236,7 +334,11 @@ export default {
       )?.chainId;
       const fromToken = searchTokenFromComputed.value.address;
       const toToken = searchTokenToComputed.value.address;
-      const fromAmount = 100000000;
+
+      const valueMantissa = BigNumber(+amount.value)
+        .times(BigNumber(10).pow(searchTokenFromComputed.value.decimals))
+        .toFixed();
+      const fromAmount = valueMantissa;
       const fromAddress = addressFrom.value;
       const toAddress = addressTo.value;
 
@@ -252,17 +354,63 @@ export default {
           toAddress,
         });
       } catch (err) {
-        notify({
-          type: 'warning',
-          text: err?.response?.data?.errors[0]?.message,
-        });
+        if (err.response) {
+          notify({
+            type: 'warning',
+            text: err?.response?.data?.errors[0]?.message,
+          });
+        }
         isLoading.value = false;
       }
       isLoading.value = false;
+      console.log('txRoute', txRoute.value);
+      if (txRoute.value?.estimate) {
+        showInfoModal.value = true;
+      }
+    };
+
+    const closeAppInfoModal = () => {
+      showInfoModal.value = false;
+      store.dispatch('squid/resetRoute');
+    };
+
+    const onSuccess = (hash) => {
+      successHash.value = hash;
+      showSuccessModal.value = true;
+    };
+
+    const onChangeComment = (comm) => {
+      txComment.value = comm;
+    };
+
+    const successClickHandler = async () => {
+      txComment.value &&
+        (await store.dispatch('transactions/postTransactionNote', {
+          network: currentWallet.value.net,
+          hash: successHash.value[0],
+          text: txComment.value,
+        }));
+      txComment.value = '';
+      showSuccessModal.value = false;
+    };
+
+    const closeSuccessModal = () => {
+      txComment.value = '';
+      successHash.value = [];
+      showSuccessModal.value = false;
+      isLoading.value = false;
+      showInfoModal.value = false;
+      store.dispatch('squid/resetRoute');
     };
 
     return {
+      showInfoModal,
+      showSuccessModal,
+      txRoute,
+
       isLoading,
+      isLoadingData,
+      WALLET_TYPES,
       amount,
       currentWallet,
       allNetworks,
@@ -292,6 +440,17 @@ export default {
       selectToToken,
 
       getRoute,
+
+      hasSwap,
+
+      currentWalletType,
+      successHash,
+      txComment,
+      closeAppInfoModal,
+      onSuccess,
+      onChangeComment,
+      successClickHandler,
+      closeSuccessModal,
     };
   },
 };
@@ -363,5 +522,13 @@ export default {
 
 .mt10 {
   margin-top: 10px;
+}
+
+.load {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 272px;
 }
 </style>

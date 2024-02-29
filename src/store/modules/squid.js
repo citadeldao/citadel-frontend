@@ -4,6 +4,7 @@ import axios from 'axios';
 const types = {
   SET_TOKENS: 'SET_TOKENS',
   SET_CHAINS: 'SET_CHAINS',
+  SET_ROUTE: 'SET_ROUTE',
 };
 
 export default {
@@ -11,11 +12,13 @@ export default {
   state: () => ({
     tokens: [],
     chains: [],
+    route: null,
   }),
 
   getters: {
     tokens: (state) => state.tokens,
     chains: (state) => state.chains,
+    route: (state) => state.route,
   },
 
   mutations: {
@@ -24,6 +27,9 @@ export default {
     },
     [types.SET_CHAINS](state, value) {
       state.chains = value;
+    },
+    [types.SET_ROUTE](state, value) {
+      state.route = value;
     },
   },
 
@@ -75,7 +81,7 @@ export default {
     },
 
     async getRoute(
-      _,
+      { commit },
       {
         fromChain,
         toChain,
@@ -84,11 +90,25 @@ export default {
         fromAmount, // mantissa
         fromAddress,
         toAddress,
-        slippage = 2,
+        // slippage = 2,
       }
     ) {
-      const result = await axios.get(
-        `https://api.0xsquid.com/v1/route?fromChain=${fromChain}&toChain=${toChain}&fromToken=${fromToken}&toToken=${toToken}&fromAmount=${fromAmount}&fromAddress=${fromAddress}&toAddress=${toAddress}&slippage=${slippage}`,
+      const result = await axios.post(
+        // https://v2.api.squidrouter.com/v2/
+        // https://api.0xsquid.com/v1/
+        `https://v2.api.squidrouter.com/v2/route`, // ?fromChain=${fromChain}&toChain=${toChain}&fromToken=${fromToken}&toToken=${toToken}&fromAmount=${fromAmount}&fromAddress=${fromAddress}&toAddress=${toAddress}&slippage=${slippage}`,
+        {
+          fromChain,
+          toChain,
+          fromToken,
+          toToken,
+          fromAmount, // mantissa
+          fromAddress,
+          toAddress,
+          slippageConfig: {
+            autoMode: 1, // 1 is "normal" slippage. Always set to 1
+          },
+        },
         {
           headers: {
             accept: 'application/json',
@@ -97,6 +117,12 @@ export default {
         }
       );
       console.log('GET ROUTE', result.data);
+      if (result?.data?.route) {
+        commit(types.SET_ROUTE, result.data.route);
+      }
+    },
+    resetRoute({ commit }) {
+      commit(types.SET_ROUTE, null);
     },
   },
 };
