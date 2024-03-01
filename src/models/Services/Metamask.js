@@ -102,8 +102,11 @@ export default class MetamaskConnector {
         to: tx.to || tx.target, // for swap squid (target)
         nonce: tx.nonce ? `0x${tx.nonce.toString(16)}` : '',
         chainId: tx.chainId ? `0x${tx.chainId.toString(16)}` : '',
-        gasLimit: tx.gasLimit ? `0x${tx.gasLimit.toString(16)}` : '', // for swap squid
-        gas: tx.gas ? `0x${tx.gas.toString(16)}` : '',
+        // gasLimit: tx.gasLimit ? `0x${tx.gasLimit.toString(16)}` : '', // for swap squid
+        gas:
+          tx.gas || tx.gasLimit
+            ? `0x${(tx.gas || tx.gasLimit).toString(16)}`
+            : '',
         gasPrice: `0x${parseInt(tx.gasPrice).toString(16)}`,
         value: tx.value ? `0x${parseInt(tx.value).toString(16)}` : '',
         routeType: tx.routeType || '', // for swap squid
