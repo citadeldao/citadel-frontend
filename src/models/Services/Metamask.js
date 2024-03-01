@@ -105,7 +105,7 @@ export default class MetamaskConnector {
         // gasLimit: tx.gasLimit ? `0x${tx.gasLimit.toString(16)}` : '', // for swap squid
         gas:
           tx.gas || tx.gasLimit
-            ? `0x${(tx.gas || tx.gasLimit).toString(16)}`
+            ? `0x${(tx.gas || +tx.gasLimit).toString(16)}`
             : '',
         gasPrice: `0x${parseInt(tx.gasPrice).toString(16)}`,
         value: tx.value ? `0x${parseInt(tx.value).toString(16)}` : '',
