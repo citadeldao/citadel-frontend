@@ -94,9 +94,7 @@ export default {
       }
     ) {
       const result = await axios.post(
-        // https://v2.api.squidrouter.com/v2/
-        // https://api.0xsquid.com/v1/
-        `https://v2.api.squidrouter.com/v2/route`, // ?fromChain=${fromChain}&toChain=${toChain}&fromToken=${fromToken}&toToken=${toToken}&fromAmount=${fromAmount}&fromAddress=${fromAddress}&toAddress=${toAddress}&slippage=${slippage}`,
+        `https://v2.api.squidrouter.com/v2/route`,
         {
           fromChain,
           toChain,
