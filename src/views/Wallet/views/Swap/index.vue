@@ -4,9 +4,23 @@
       <Modal v-if="showInfoModal">
         <InfoModal
           :tx-route="txRoute"
+          :nonce="txNonce"
+          :chain-id-from="hasSwap.chainId"
           :signer-wallet="currentWallet"
           :on-close="closeAppInfoModal"
+          @onCancel="onCancel"
           @onSuccess="onSuccess"
+          @showLedger="
+            () => {
+              showLedgerConnect = true;
+            }
+          "
+        />
+      </Modal>
+      <Modal v-if="showLedgerConnect">
+        <ConfirmLedgerModal
+          v-click-away="connectLedgerCloseHandler"
+          @close="connectLedgerCloseHandler"
         />
       </Modal>
       <Modal v-if="showSuccessModal">
@@ -155,9 +169,12 @@ import BigNumber from 'bignumber.js';
 import Modal from '@/components/Modal';
 import InfoModal from './InfoModal.vue';
 import SuccessModal from '@/views/Extensions/SuccessModal.vue';
+import ConfirmLedgerModal from '@/components/Modals/Ledger/ConfirmLedgerModal';
+import useCurrentWalletRequests from '@/compositions/useCurrentWalletRequests';
 
 export default {
   components: {
+    ConfirmLedgerModal,
     PrimaryButton,
     Autocomplete,
     Input,
@@ -178,6 +195,7 @@ export default {
     const { currentWallet } = useWallets();
     const amount = ref('');
     const successHash = ref([]);
+    const txNonce = ref(null);
 
     const fromTokenAddrInput = ref('');
     const toTokenAddrInput = ref('');
@@ -195,6 +213,7 @@ export default {
     const addressTo = ref('');
 
     const hasSwap = ref(null);
+    const showLedgerConnect = ref(false);
 
     const squidChains = computed(() => store.getters['squid/chains']);
     const allTokens = computed(() => store.getters['squid/tokens']);
@@ -221,6 +240,18 @@ export default {
 
       return currentWallet.value.type;
     });
+
+    const { rawTx, rawTxError, prepareTransfer } = useCurrentWalletRequests();
+
+    const connectLedgerCloseHandler = () => {
+      showLedgerConnect.value = false;
+    };
+
+    const onCancel = () => {
+      console.log('cancel');
+      showLedgerConnect.value = false;
+      isLoading.value = false;
+    };
 
     onMounted(async () => {
       isLoadingData.value = true;
@@ -366,6 +397,23 @@ export default {
       console.log('txRoute', txRoute.value);
       if (txRoute.value?.estimate) {
         showInfoModal.value = true;
+
+        try {
+          await prepareTransfer({
+            amount: 0.00001,
+            toAddress: currentWallet.value.address,
+            publicKey: currentWallet.value.publicKey,
+          });
+          if (rawTx.value.transaction) {
+            txNonce.value = rawTx.value.transaction.nonce;
+          }
+        } catch (err) {
+          notify({
+            type: 'warning',
+            text: rawTxError.value,
+          });
+          return;
+        }
       }
     };
 
@@ -404,6 +452,11 @@ export default {
     };
 
     return {
+      showLedgerConnect,
+      connectLedgerCloseHandler,
+      txNonce,
+      onCancel,
+
       showInfoModal,
       showSuccessModal,
       txRoute,

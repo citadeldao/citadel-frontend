@@ -69,6 +69,12 @@ export default {
     txRoute: {
       required: true,
     },
+    nonce: {
+      required: true,
+    },
+    chainIdFrom: {
+      required: true,
+    },
   },
   setup(props, { emit }) {
     const store = useStore();
@@ -115,6 +121,60 @@ export default {
         }
 
         return;
+      }
+
+      if (props.signerWallet.type === WALLET_TYPES.LEDGER) {
+        emit('showLedger');
+      }
+
+      if (
+        PRIVATE_PASSWORD_TYPES.includes(props.signerWallet.type) &&
+        incorrectPassword.value
+      ) {
+        isLoading.value = false;
+        return;
+      }
+
+      const txParse = {
+        ...props.txRoute.transactionRequest,
+        gas: +props.txRoute.transactionRequest.gasLimit,
+        from: props.signerWallet.address,
+        to: props.txRoute.transactionRequest.target,
+        routeType: props.txRoute.transactionRequest.routeType,
+        chainId: props.chainIdFrom,
+        nonce: props.nonce,
+      };
+
+      delete txParse.gasLimit;
+      delete txParse.maxFeePerGas;
+      delete txParse.maxPriorityFeePerGas;
+      delete txParse.target;
+
+      console.log('txParse', txParse);
+      let result;
+
+      try {
+        result = await props.signerWallet.signAndSendTransfer({
+          walletId: props.signerWallet.id,
+          rawTransaction: txParse,
+          privateKey:
+            password.value &&
+            (await props.signerWallet.getPrivateKeyDecoded(password.value)),
+          derivationPath: props.signerWallet.derivationPath,
+          proxy: false,
+        });
+      } catch (err) {
+        emit('onCancel');
+        props.onClose();
+        return;
+      }
+
+      if (
+        typeof result.data[0] === 'string' &&
+        [64, 66].includes(result.data[0].length)
+      ) {
+        emit('onSuccess', [result.data]);
+        props.onClose();
       }
     };
 
