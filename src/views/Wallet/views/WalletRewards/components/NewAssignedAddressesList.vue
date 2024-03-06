@@ -75,4 +75,12 @@ export default {
     overflow-x: hidden;
   }
 }
+
+body.dark {
+  .new-assigned-addresses-modal {
+    &__bcs-address-address {
+      color: $white;
+    }
+  }
+}
 </style>

@@ -50,7 +50,9 @@
         <!-- hide separator when fee receive 0 -->
         <span
           v-if="
-            currentWallet.hasResource || (!currentWallet.hasResource && fee.fee)
+            (currentWallet.hasResource && fee.fee) ||
+            (!currentWallet.hasResource && fee.fee) ||
+            currentWallet.net === 'tron'
           "
           class="action-modal-content__total-amount-line"
           >/</span
@@ -216,7 +218,7 @@ export default {
     align-items: center;
   }
   &__fees {
-    margin-top: 4px;
+    margin-top: 12px;
     margin-bottom: 24px;
   }
   &__total-amount-title {

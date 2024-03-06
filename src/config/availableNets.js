@@ -159,6 +159,7 @@ export const keplrNetworks = [
   { label: 'Orai', key: 'Oraichain', net: 'orai' },
   { label: 'Provenance', key: 'pio-mainnet-1', net: 'provenance' },
   { label: 'Nolus', key: 'pirin-1', net: 'nolus' },
+  { label: 'Celestia', key: 'celestia', net: 'celestia' },
 ];
 
 export const showAssetsExep = ['secret', 'bsc'];

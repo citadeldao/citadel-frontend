@@ -616,4 +616,12 @@ export default {
     }
   }
 }
+
+body.dark {
+  .wallet-rewards {
+    &__modal-back-button {
+      color: $white;
+    }
+  }
+}
 </style>

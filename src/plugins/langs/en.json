@@ -1360,6 +1360,11 @@
             "description": "Nolus Protocol is a Web3 financial suite that offers an innovative approach to money markets with a novel Lease solution to develop the DeFi space further",
             "shortDescription": "Nolus Protocol is a Web3 financial suite that offers a Lease solution to develop the DeFi space further"
         },
+        "celestia":{
+            "title": "Celestia",
+            "description": "The first modular blockchain network",
+            "shortDescription": "Celestia is a modular data availability network that securely scales with the number of users, making it easy for anyone to launch their own blockchain."
+        },
         "archway":{
             "title": "Archway",
             "description": "",
@@ -1414,7 +1419,7 @@
     "claimUnstakedText": "Your assets are unstaked. Confirm the transaction to claim it now.",
     "stakingAmount": "Staking amount",
     "polkadot": {
-        "chooseNodeModalDesc": "Set the amount of tokens you want to stake. Then, choose nodes for delegation. Your funds can be distributed to <span style='color: #00A3FF; font-weight: 700;'>not more than {maxNodes} nodes</span>. Also, take into account that the unstaking period for ${net} is <span style='color: #00A3FF' font-weight: 700;>{perioud} days</span>. Over this time, your unstaked tokens will be frozen. <span style='color: #FF5722; font-weight: 700;'>Minimal staking balance: {minStakingAmount} {code}</span>",
+        "chooseNodeModalDesc": "Set the amount of tokens you want to stake. Then, choose nodes for delegation. Your funds can be distributed to <span style='color: #00A3FF; font-weight: 700;'>not more than {maxNodes} nodes</span>. Also, take into account that the unstaking period for {net} is <span style='color: #00A3FF' font-weight: 700;>{perioud} days</span>. Over this time, your unstaked tokens will be frozen. <span style='color: #FF5722; font-weight: 700;'>Minimal staking balance: {minStakingAmount} {code}</span>",
         "nominatedNodesTitle": "Nominated nodes:",
         "error": {
             "chooseNotMoreThan16Nodes": "Choose not more than 16 nodes"
