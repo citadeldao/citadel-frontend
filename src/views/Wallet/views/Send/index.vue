@@ -372,7 +372,6 @@
             :custom-fee="customFee"
             :current-token="currentToken"
             :fee="fee"
-            :iost-fee="iostFee"
             :adding="adding"
             @select-fee="openFeeSelectModal"
             @submitSend="confirmClickHandler"
