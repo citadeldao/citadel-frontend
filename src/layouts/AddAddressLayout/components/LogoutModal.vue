@@ -29,6 +29,14 @@
                 @input="updateOptions($event, 'backup')"
               />
             </div>
+            <div class="logout-modal__checkbox">
+              <Checkbox
+                id="write"
+                :value="options.write"
+                :label="$t('logout.modal.write')"
+                @input="updateOptions($event, 'write')"
+              />
+            </div>
           </div>
 
           <div class="logout-modal__footer">
@@ -70,12 +78,16 @@ export default {
     hasWallets: {
       type: Boolean,
     },
+    hasMnemonic: {
+      type: Boolean,
+    },
   },
   emits: ['close', 'confirm', 'update:options', 'resetLogoutOptions'],
   setup(props, { emit }) {
     const close = () => {
       emit('close');
     };
+    console.log('hasMnemonic', props.hasMnemonic);
     const updateOptions = (event, option) => {
       emit('update:options', {
         ...props.options,
@@ -117,6 +129,7 @@ export default {
   }
 
   &__checkbox {
+    min-height: 28px;
     margin-bottom: 16px;
   }
 }

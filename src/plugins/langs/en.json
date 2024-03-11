@@ -108,7 +108,9 @@
         "modal": {
             "title": "Are you sure you want to quit?",
             "eraseBtn": "Erase locally stored user data including private keys",
-            "downloadBackup": "Download backup file"
+            "downloadBackup": "Download backup file",
+            "write": "I wrote down my seed phrase and other private data",
+            "confirm": "Have you saved your seed phrase and private data?"
         }
     },
     "messages": {
