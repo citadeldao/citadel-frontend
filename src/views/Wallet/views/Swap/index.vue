@@ -248,7 +248,6 @@ export default {
     };
 
     const onCancel = () => {
-      console.log('cancel');
       showLedgerConnect.value = false;
       isLoading.value = false;
     };

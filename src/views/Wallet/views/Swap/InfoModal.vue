@@ -94,13 +94,26 @@ export default {
       confirmPassword.value = true;
       isLoading.value = true;
 
-      console.log('WALLET SIGNER', props.signerWallet);
+      const txParse = {
+        ...props.txRoute.transactionRequest,
+        gas: +props.txRoute.transactionRequest.gasLimit,
+        from: props.signerWallet.address,
+        to: props.txRoute.transactionRequest.target,
+        routeType: props.txRoute.transactionRequest.routeType,
+        chainId: props.chainIdFrom,
+        nonce: props.nonce,
+      };
+
+      delete txParse.gasLimit;
+      delete txParse.maxFeePerGas;
+      delete txParse.maxPriorityFeePerGas;
+      delete txParse.target;
 
       // metamask, ...
       if (props.signerWallet.type === WALLET_TYPES.PUBLIC_KEY) {
         const metamaskResult =
           await metamaskConnector.value.sendMetamaskTransaction(
-            props.txRoute.transactionRequest,
+            txParse,
             '',
             props.signerWallet.address
           );
@@ -123,6 +136,8 @@ export default {
         return;
       }
 
+      txParse.value = `0x${parseInt(txParse.value).toString(16)}`;
+
       if (props.signerWallet.type === WALLET_TYPES.LEDGER) {
         emit('showLedger');
       }
@@ -135,22 +150,6 @@ export default {
         return;
       }
 
-      const txParse = {
-        ...props.txRoute.transactionRequest,
-        gas: +props.txRoute.transactionRequest.gasLimit,
-        from: props.signerWallet.address,
-        to: props.txRoute.transactionRequest.target,
-        routeType: props.txRoute.transactionRequest.routeType,
-        chainId: props.chainIdFrom,
-        nonce: props.nonce,
-      };
-
-      delete txParse.gasLimit;
-      delete txParse.maxFeePerGas;
-      delete txParse.maxPriorityFeePerGas;
-      delete txParse.target;
-
-      console.log('txParse', txParse);
       let result;
 
       try {
