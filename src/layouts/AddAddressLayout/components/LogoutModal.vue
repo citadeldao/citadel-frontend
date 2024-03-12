@@ -87,7 +87,6 @@ export default {
     const close = () => {
       emit('close');
     };
-    console.log('hasMnemonic', props.hasMnemonic);
     const updateOptions = (event, option) => {
       emit('update:options', {
         ...props.options,
