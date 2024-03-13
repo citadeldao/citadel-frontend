@@ -85,7 +85,6 @@ export default {
   emits: ['close', 'confirm', 'update:options', 'resetLogoutOptions'],
   setup(props, { emit }) {
     const close = () => {
-      console.log('close');
       emit('close');
     };
     const updateOptions = (event, option) => {
