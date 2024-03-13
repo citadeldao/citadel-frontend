@@ -392,14 +392,14 @@ export default {
         ? currentKtAddress?.value?.balance.calculatedBalance
         : props.currentWallet.balance.calculatedBalance;
 
-      if (balance === 0) {
-        return balance;
-      }
-
       if (props.currentWallet.net === 'btc') {
         balance +=
           (+segwitAddressBalance.value || 0) +
           (+nativeAddressBalance.value || 0);
+      }
+
+      if (balance === 0) {
+        return balance;
       }
 
       let usdRateWalletRate;
