@@ -105,7 +105,7 @@
     </div>
     <span class="balance__balance">
       <div v-if="currentWallet.net === 'btc'" class="segwit-block">
-        <span class="label-balance">Segwit </span>
+        <span class="label-balance">Legacy </span>
         <span
           v-pretty-number="{
             value: !showBalance ? HIDE_BALANCE_MASK : balance.mainBalance,
