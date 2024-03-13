@@ -49,6 +49,7 @@ export default {
       const { error, data } = await citadel.getAllNetworksConfig();
 
       if (!error) {
+        console.log('MAX DATA', data);
         commit(types.SET_CONFIG, data);
       } else {
         notify({
