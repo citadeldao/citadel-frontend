@@ -104,6 +104,20 @@
       </div>
     </div>
     <span class="balance__balance">
+      <div v-if="currentWallet.net === 'btc'" class="segwit-block">
+        <span class="label-balance">Segwit </span>
+        <span
+          v-pretty-number="{
+            value: !showBalance ? HIDE_BALANCE_MASK : balance.mainBalance,
+            currency: currentTab,
+          }"
+          data-qa="available-balance-value"
+        />
+        <span class="balance__currency"> {{ currentTab }}</span>
+      </div>
+      <span v-if="currentWallet.net === 'btc'" class="label-balance"
+        >Total
+      </span>
       <span
         v-pretty-number="{
           value: !showBalance ? HIDE_BALANCE_MASK : mainBalance,
@@ -364,8 +378,15 @@ export default {
       };
     });
 
+    const segwitAddressBalance = computed(
+      () => store.getters['btcAddresses/segwitAddressBalance']
+    );
+    const nativeAddressBalance = computed(
+      () => store.getters['btcAddresses/nativeAddressBalance']
+    );
+
     const mainBalance = computed(() => {
-      const balance = props.isCurrentToken
+      let balance = props.isCurrentToken
         ? props.currentWallet?.tokenBalance.calculatedBalance
         : currentKtAddress.value
         ? currentKtAddress?.value?.balance.calculatedBalance
@@ -373,6 +394,12 @@ export default {
 
       if (balance === 0) {
         return balance;
+      }
+
+      if (props.currentWallet.net === 'btc') {
+        balance +=
+          (+segwitAddressBalance.value || 0) +
+          (+nativeAddressBalance.value || 0);
       }
 
       let usdRateWalletRate;
@@ -651,6 +678,17 @@ export default {
       font-size: 22px;
       line-height: 26px;
       margin-bottom: 10px;
+    }
+
+    .segwit-block {
+      margin-bottom: 5px;
+    }
+
+    span.label-balance {
+      font-size: 18px;
+      color: #6b93c0;
+      display: inline-block;
+      min-width: 72px;
     }
   }
 

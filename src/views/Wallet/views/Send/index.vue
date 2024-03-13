@@ -372,7 +372,6 @@
             :custom-fee="customFee"
             :current-token="currentToken"
             :fee="fee"
-            :iost-fee="iostFee"
             :adding="adding"
             @select-fee="openFeeSelectModal"
             @submitSend="confirmClickHandler"
@@ -927,11 +926,17 @@ export default {
       if (props.currentToken) {
         return balance.value?.mainBalance;
       }
+      const minLowBalance =
+        +store.getters['networks/configByNet'](props.currentWallet.net)
+          ?.connectorProps?.minLowBalance || 0;
 
       return props.currentWallet.hasNoFee
         ? resMaxAmount.value || balance.value?.mainBalance
         : balance.value?.mainBalance > fee.value.fee
-        ? BigNumber(balance.value?.mainBalance).minus(fee.value.fee).toNumber()
+        ? BigNumber(balance.value?.mainBalance)
+            .minus(minLowBalance)
+            .minus(fee.value.fee)
+            .toNumber()
         : 0;
     });
 

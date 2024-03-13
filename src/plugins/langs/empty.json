@@ -108,7 +108,9 @@
         "modal": {
             "title": "",
             "eraseBtn": "",
-            "downloadBackup": ""
+            "downloadBackup": "",
+            "write": "",
+            "confirm": ""
         }
     },
     "messages": {
