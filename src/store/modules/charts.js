@@ -1,4 +1,4 @@
-// import moment from 'moment';
+import moment from 'moment';
 import notify from '@/plugins/notify';
 import citadel from '@citadeldao/lib-citadel';
 
@@ -150,6 +150,13 @@ export default {
         net: net || '',
         fiat,
       };
+
+      if (params.dateFrom) {
+        params.dateFrom = moment(params.dateFrom).format('YYYY-MM-DD');
+      }
+      if (params.dateTo) {
+        params.dateTo = moment(params.dateTo).format('YYYY-MM-DD');
+      }
 
       const { data, error } = await sendCitadelGraphRequest(METHOD, params);
 
