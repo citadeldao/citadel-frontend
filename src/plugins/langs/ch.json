@@ -1365,7 +1365,13 @@
             "title": "Quasar",
             "description": "",
             "shortDescription": ""
+        },
+        "dydx":{
+            "title": "DYDX",
+            "description": "",
+            "shortDescription": ""
         }
+
     },
     "uptime": "运行时间",
     "active": "活跃",

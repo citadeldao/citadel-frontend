@@ -1360,6 +1360,11 @@
             "title": "Quasar",
             "description": "",
             "shortDescription": ""
+        },
+        "dydx":{
+            "title": "DYDX",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "Disponibilité",

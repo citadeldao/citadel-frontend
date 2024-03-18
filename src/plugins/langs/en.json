@@ -1376,6 +1376,11 @@
             "title": "Quasar",
             "description": "",
             "shortDescription": "Instantly make your crypto productive by adding Quasar vaults to your portfolio."
+        },
+        "dydx":{
+            "title": "DYDX",
+            "description": "Trade Perpetuals on the most powerful trading platform",
+            "shortDescription": "Trade Perpetuals on the most powerful trading platform"
         }
     },
     "uptime": "Uptime",
