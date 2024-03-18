@@ -49,7 +49,7 @@
         <EmptyList v-if="!hasSwap" title="Swap for this address not found" />
         <template v-else>
           <div class="swap__select-chain z1000">
-            <div class="autocomplete">
+            <div v-if="false" class="autocomplete">
               <Autocomplete
                 id="chains"
                 v-model:value="searchNetworkFrom"
@@ -60,7 +60,7 @@
                 @update:value="selectNetworkFrom"
               />
             </div>
-            <div class="autocomplete ml10">
+            <div class="autocomplete">
               <Autocomplete
                 id="chains"
                 v-model:value="searchNetworkTo"
@@ -109,7 +109,7 @@
             class="swap__addresses"
             v-if="searchTokenFromComputed && searchTokenToComputed"
           >
-            <div class="swap__input">
+            <div v-if="false" class="swap__input">
               <Input
                 id="fromTokenAddr"
                 v-model="addressFrom"
@@ -128,22 +128,41 @@
                 type="text"
               />
             </div>
-            <div class="swap__input mt10">
-              <Input
-                id="amount"
-                v-model="amount"
-                :decimals="currentWallet?.config?.decimals"
-                type="currency"
-                :currency="searchTokenFromComputed?.symbol"
-                :label="$t('amount')"
-                placeholder="0.0"
-                icon="coins"
-              />
+            <div class="wrap-row mt10">
+              <div class="swap__input">
+                <Input
+                  id="amount"
+                  v-model="amount"
+                  :decimals="currentWallet?.config?.decimals"
+                  type="currency"
+                  :currency="searchTokenFromComputed?.symbol"
+                  :label="$t('swapView.amountSlippage')"
+                  :max="maxAmount"
+                  :show-set-max="maxAmount !== 0"
+                  :show-error-text="maxAmount < amount"
+                  :error="errorAmount"
+                  placeholder="0.0"
+                  icon="coins"
+                />
+              </div>
+              <div class="slippage">
+                <!-- <div class="slippage__label">Slippage tolerance</div> -->
+                <div
+                  v-for="(slipp, ndx) in 5"
+                  :key="ndx"
+                  :class="{ active: slippage === ndx }"
+                  class="slippage__item"
+                  @click="setSlippage(ndx)"
+                >
+                  {{ slipp }}%
+                </div>
+              </div>
             </div>
           </div>
           <PrimaryButton
             class="swap__submit-swap"
             :loading="isLoading"
+            :disabled="!!errorAmount || !+amount || !addressTo"
             @click="getRoute"
           >
             {{ $t('swap') }}
@@ -196,6 +215,7 @@ export default {
     const amount = ref('');
     const successHash = ref([]);
     const txNonce = ref(null);
+    const slippage = ref(0);
 
     const fromTokenAddrInput = ref('');
     const toTokenAddrInput = ref('');
@@ -222,6 +242,12 @@ export default {
     const metamaskConnector = computed(
       () => store.getters['metamask/metamaskConnector']
     );
+
+    const subtokensWallet = computed(() =>
+      store.getters['subtokens/formatedSubtokens']()
+    );
+
+    console.log('subtokens', subtokensWallet.value);
 
     const currentWalletType = computed(() => {
       const metamaskNet = metamaskConnector.value.network;
@@ -307,7 +333,22 @@ export default {
 
       console.log('chain from', searchNetworkFrom.value);
       console.log('chain from tokens', tokens);
-      chainTokensFrom.value = tokens;
+      chainTokensFrom.value = tokens.filter((token) => {
+        // filter citadel assets with balance in all tokens squid
+        return !!subtokensWallet.value.find((subToken) => {
+          const isNative =
+            token.address?.toLowerCase() ===
+            '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'.toLowerCase();
+
+          return (
+            isNative ||
+            (+subToken?.tokenBalance?.mainBalance &&
+              subToken?.net
+                .toLowerCase()
+                .includes(token?.address.toLowerCase()))
+          );
+        });
+      });
     };
 
     const selectNetworkTo = (network) => {
@@ -356,6 +397,7 @@ export default {
     };
 
     const getRoute = async () => {
+      const slipp = slippage.value + 1;
       const fromChain = allNetworks.value.find(
         (item) => item.key === searchNetworkFrom.value
       )?.chainId;
@@ -382,6 +424,7 @@ export default {
           fromAmount,
           fromAddress,
           toAddress,
+          slippage: slipp,
         });
       } catch (err) {
         if (err.response) {
@@ -449,8 +492,45 @@ export default {
       showInfoModal.value = false;
       store.dispatch('squid/resetRoute');
     };
+    console.log('currentWallet', currentWallet.value);
+    console.log(
+      'currentWallet.value?.balance?.mainBalance - 0.05',
+      currentWallet.value?.balance?.mainBalance - 0.05
+    );
+
+    const setSlippage = (ndx) => {
+      slippage.value = ndx;
+    };
+
+    const maxAmount = computed(() => {
+      const token = subtokensWallet.value.find((token) => {
+        return token.net
+          .toLowerCase()
+          .includes(searchTokenFromComputed.value?.address.toLowerCase());
+      });
+
+      if (
+        searchTokenFromComputed.value?.address?.toLowerCase() ===
+        '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'.toLowerCase()
+      ) {
+        return currentWallet.value?.balance?.mainBalance - 0.05;
+      }
+
+      if (!token) return 0;
+
+      return token?.tokenBalance?.mainBalance;
+    });
+
+    const errorAmount = computed(() => {
+      if (amount.value > maxAmount.value) {
+        return `Max amount for swap ${maxAmount.value}`;
+      }
+      return '';
+    });
 
     return {
+      errorAmount,
+      maxAmount,
       showLedgerConnect,
       connectLedgerCloseHandler,
       txNonce,
@@ -503,6 +583,8 @@ export default {
       onChangeComment,
       successClickHandler,
       closeSuccessModal,
+      slippage,
+      setSlippage,
     };
   },
 };
@@ -516,6 +598,13 @@ export default {
   align-items: center;
   width: 100%;
 
+  .wrap-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   &__select-chain {
     width: 100%;
     display: flex;
@@ -527,7 +616,7 @@ export default {
   }
 
   &__submit-swap {
-    margin-top: 20px;
+    margin-top: 30px;
   }
 
   &__contracts {
@@ -557,6 +646,50 @@ export default {
     width: 100%;
     height: 68px;
   }
+
+  .slippage {
+    display: flex;
+    align-items: center;
+    // justify-content: space-between;
+
+    &__wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &__label {
+      margin: 0 10px;
+      font-family: 'Panton_Regular';
+    }
+
+    &__item {
+      font-family: 'Panton_Bold';
+      cursor: pointer;
+      width: 55px;
+      margin: 0 2px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      border-radius: 8px;
+      background: #dae1f2;
+      border: 1px solid #dae1f2;
+
+      &.active {
+        border: 1px solid $dark-blue;
+      }
+
+      &:first-child {
+        margin-left: 10px;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
 }
 
 .autocomplete {
@@ -582,5 +715,21 @@ export default {
   justify-content: center;
   width: 100%;
   height: 272px;
+}
+
+body.dark {
+  .swap {
+    .slippage {
+      &__item {
+        background: #313354;
+        color: #fff;
+        border: 1px solid #4b4c63;
+
+        &.active {
+          border: 1px solid #00a3ff;
+        }
+      }
+    }
+  }
 }
 </style>

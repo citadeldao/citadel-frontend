@@ -1550,8 +1550,8 @@
     },
 
     "swapView": {
-        "swapFromNetwork": "From ChainId",
-        "swapToNetwork": "To ChainId",
+        "swapFromNetwork": "From Chain",
+        "swapToNetwork": "To Chain",
         "selectChain": "Select chain",
         "fromToken": "From token",
         "toToken": "To token",
@@ -1560,6 +1560,7 @@
         "toAddressLabel": "To address",
         "addressPlaceholder": "Input address",
         "modalInfoTitle": "Swap/Bridge information",
-        "modalInfoDesc": "Check info and sign transaction"
+        "modalInfoDesc": "Check info and sign transaction",
+        "amountSlippage": "Amount & Slippage Tolerance"
     }
 }

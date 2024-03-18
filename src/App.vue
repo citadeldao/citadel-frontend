@@ -103,3 +103,15 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+body.dark {
+  .json-container {
+    background-color: #26273b;
+    color: #fff;
+
+    .json-key {
+      color: #6b93c0;
+    }
+  }
+}
+</style>

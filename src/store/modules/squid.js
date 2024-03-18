@@ -71,7 +71,10 @@ export default {
         },
       });
       if (result?.data?.chains) {
-        commit(types.SET_CHAINS, result.data.chains);
+        commit(
+          types.SET_CHAINS,
+          result.data.chains.filter((ch) => ch.chainType === 'evm')
+        );
       } else {
         notify({
           type: 'warning',
@@ -90,7 +93,7 @@ export default {
         fromAmount, // mantissa
         fromAddress,
         toAddress,
-        // slippage = 2,
+        slippage = 1,
       }
     ) {
       const result = await axios.post(
@@ -103,8 +106,10 @@ export default {
           fromAmount, // mantissa
           fromAddress,
           toAddress,
+          slippage,
           slippageConfig: {
-            autoMode: 1, // 1 is "normal" slippage. Always set to 1
+            slippage,
+            autoMode: 1,
           },
         },
         {
