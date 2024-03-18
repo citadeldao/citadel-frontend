@@ -1,4 +1,4 @@
-import moment from 'moment';
+import { format } from 'date-fns';
 import notify from '@/plugins/notify';
 import citadel from '@citadeldao/lib-citadel';
 
@@ -152,10 +152,10 @@ export default {
       };
 
       if (params.dateFrom) {
-        params.dateFrom = moment(params.dateFrom).format('YYYY-MM-DD');
+        params.dateFrom = format(new Date(params.dateFrom), 'yyyy-MM-dd');
       }
       if (params.dateTo) {
-        params.dateTo = moment(params.dateTo).format('YYYY-MM-DD');
+        params.dateTo = format(new Date(params.dateTo), 'yyyy-MM-dd');
       }
       console.log('chart params', params);
 
