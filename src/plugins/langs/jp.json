@@ -108,7 +108,9 @@
         "modal": {
             "title": "本当にやめる気？",
             "eraseBtn": "秘密鍵を含むローカルに保存されたユーザー データを消去する",
-            "downloadBackup": "バックアップファイルをダウンロード"
+            "downloadBackup": "バックアップファイルをダウンロード",
+            "write": "",
+            "confirm": ""
         }
     },
     "messages": {

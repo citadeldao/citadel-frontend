@@ -108,7 +108,9 @@
         "modal": {
             "title": "",
             "eraseBtn": "",
-            "downloadBackup": ""
+            "downloadBackup": "",
+            "write": "",
+            "confirm": ""
         }
     },
     "messages": {
@@ -1361,6 +1363,11 @@
         },
         "quasar":{
             "title": "Quasar",
+            "description": "",
+            "shortDescription": ""
+        },
+        "dydx":{
+            "title": "DYDX",
             "description": "",
             "shortDescription": ""
         }

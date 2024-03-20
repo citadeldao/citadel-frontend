@@ -108,7 +108,9 @@
         "modal": {
             "title": "Vous êtes sûr de vouloir quitter ?",
             "eraseBtn": "Effacer les données utilisateur stockées localement, y compris les clés privées",
-            "downloadBackup": "Télécharger le fichier de sauvegarde"
+            "downloadBackup": "Télécharger le fichier de sauvegarde",
+            "write": "",
+            "confirm": ""
         }
     },
     "messages": {
@@ -1356,6 +1358,11 @@
         },
         "quasar":{
             "title": "Quasar",
+            "description": "",
+            "shortDescription": ""
+        },
+        "dydx":{
+            "title": "DYDX",
             "description": "",
             "shortDescription": ""
         }

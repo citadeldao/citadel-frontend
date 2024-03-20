@@ -87,4 +87,10 @@ export default {
     font-family: 'Panton_SemiBold';
   }
 }
+
+body.dark {
+  .address-assigning-info__note {
+    color: $white;
+  }
+}
 </style>

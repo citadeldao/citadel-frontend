@@ -108,7 +108,9 @@
         "modal": {
             "title": "Вы уверены что хотите выйти?",
             "eraseBtn": "Удалить данные хранящиеся на вашем устройстве (включая приватные ключи)",
-            "downloadBackup": "Скачать файл резервной копии"
+            "downloadBackup": "Скачать файл резервной копии",
+            "write": "",
+            "confirm": ""
         }
     },
     "messages": {
@@ -1356,6 +1358,11 @@
         },
         "quasar":{
             "title": "Quasar",
+            "description": "",
+            "shortDescription": ""
+        },
+        "dydx":{
+            "title": "DYDX",
             "description": "",
             "shortDescription": ""
         }

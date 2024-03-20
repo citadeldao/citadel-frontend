@@ -11,7 +11,7 @@
         "lint:style": "stylelint 'src/**/*.vue' --fix"
     },
     "dependencies": {
-        "@citadeldao/lib-citadel": "1.43.12",
+        "@citadeldao/lib-citadel": "1.43.19",
         "@open-wc/webpack-import-meta-loader": "^0.4.7",
         "@pgrabovets/json-view": "^2.7.5",
         "@sentry/tracing": "^6.16.1",

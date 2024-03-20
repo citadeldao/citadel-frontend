@@ -20,7 +20,9 @@ export default {
     networksList: (state) =>
       Object.values(state.config)
         // .filter((network) => models[network.net.toUpperCase()])
-        .sort((a, b) => (a.name > b.name ? 1 : -1)),
+        .sort((a, b) =>
+          a.name?.toUpperCase() > b.name?.toUpperCase() ? 1 : -1
+        ),
     getSubtokensByNet: (state) => (net) => {
       const data = [];
 

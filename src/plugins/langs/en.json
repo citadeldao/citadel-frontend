@@ -108,7 +108,9 @@
         "modal": {
             "title": "Are you sure you want to quit?",
             "eraseBtn": "Erase locally stored user data including private keys",
-            "downloadBackup": "Download backup file"
+            "downloadBackup": "Download backup file",
+            "write": "I wrote down my seed phrase and other private data",
+            "confirm": "Have you saved your seed phrase and private data?"
         }
     },
     "messages": {
@@ -1374,6 +1376,11 @@
             "title": "Quasar",
             "description": "",
             "shortDescription": "Instantly make your crypto productive by adding Quasar vaults to your portfolio."
+        },
+        "dydx":{
+            "title": "DYDX",
+            "description": "Trade Perpetuals on the most powerful trading platform",
+            "shortDescription": "Trade Perpetuals on the most powerful trading platform"
         }
     },
     "uptime": "Uptime",
@@ -1419,7 +1426,7 @@
     "claimUnstakedText": "Your assets are unstaked. Confirm the transaction to claim it now.",
     "stakingAmount": "Staking amount",
     "polkadot": {
-        "chooseNodeModalDesc": "Set the amount of tokens you want to stake. Then, choose nodes for delegation. Your funds can be distributed to <span style='color: #00A3FF; font-weight: 700;'>not more than {maxNodes} nodes</span>. Also, take into account that the unstaking period for ${net} is <span style='color: #00A3FF' font-weight: 700;>{perioud} days</span>. Over this time, your unstaked tokens will be frozen. <span style='color: #FF5722; font-weight: 700;'>Minimal staking balance: {minStakingAmount} {code}</span>",
+        "chooseNodeModalDesc": "Set the amount of tokens you want to stake. Then, choose nodes for delegation. Your funds can be distributed to <span style='color: #00A3FF; font-weight: 700;'>not more than {maxNodes} nodes</span>. Also, take into account that the unstaking period for {net} is <span style='color: #00A3FF' font-weight: 700;>{perioud} days</span>. Over this time, your unstaked tokens will be frozen. <span style='color: #FF5722; font-weight: 700;'>Minimal staking balance: {minStakingAmount} {code}</span>",
         "nominatedNodesTitle": "Nominated nodes:",
         "error": {
             "chooseNotMoreThan16Nodes": "Choose not more than 16 nodes"

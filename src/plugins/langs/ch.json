@@ -108,7 +108,9 @@
         "modal": {
             "title": "您确定退出吗？",
             "eraseBtn": "清除本地存储用户数据，包括私钥",
-            "downloadBackup": "下载备份文件"
+            "downloadBackup": "下载备份文件",
+            "write": "",
+            "confirm": ""
         }
     },
     "messages": {
@@ -1363,7 +1365,13 @@
             "title": "Quasar",
             "description": "",
             "shortDescription": ""
+        },
+        "dydx":{
+            "title": "DYDX",
+            "description": "",
+            "shortDescription": ""
         }
+
     },
     "uptime": "运行时间",
     "active": "活跃",

@@ -372,7 +372,6 @@
             :custom-fee="customFee"
             :current-token="currentToken"
             :fee="fee"
-            :iost-fee="iostFee"
             :adding="adding"
             @select-fee="openFeeSelectModal"
             @submitSend="confirmClickHandler"
@@ -521,7 +520,15 @@ import WalletButtonsPanel from '@/components/WalletButtonsPanel';
 import BigNumber from 'bignumber.js';
 import useCurrentWalletRequests from '@/compositions/useCurrentWalletRequests';
 import useLedger from '@/compositions/useLedger';
-import { ref, computed, watch, provide, inject } from 'vue';
+import {
+  ref,
+  computed,
+  watch,
+  provide,
+  inject,
+  onMounted,
+  onUnmounted,
+} from 'vue';
 import { useRoute } from 'vue-router';
 import { useStore } from 'vuex';
 import useCheckPassword from '@/compositions/useCheckPassword';
@@ -656,6 +663,24 @@ export default {
       ledgerErrorHandler,
       isLedgerWallet,
     } = useLedger();
+
+    const timerFee = ref(null);
+
+    onMounted(async () => {
+      if (
+        props.currentWallet.net === 'eth' ||
+        props.currentWallet.parentCoin?.net === 'eth'
+      ) {
+        timerFee.value = setInterval(async () => {
+          await getFees();
+        }, 15000);
+      }
+    });
+
+    onUnmounted(() => {
+      clearInterval(timerFee.value);
+      timerFee.value = null;
+    });
 
     const showBridgeModal = ref(false);
 
@@ -927,11 +952,17 @@ export default {
       if (props.currentToken) {
         return balance.value?.mainBalance;
       }
+      const minLowBalance =
+        +store.getters['networks/configByNet'](props.currentWallet.net)
+          ?.connectorProps?.minLowBalance || 0;
 
       return props.currentWallet.hasNoFee
         ? resMaxAmount.value || balance.value?.mainBalance
         : balance.value?.mainBalance > fee.value.fee
-        ? BigNumber(balance.value?.mainBalance).minus(fee.value.fee).toNumber()
+        ? BigNumber(balance.value?.mainBalance)
+            .minus(minLowBalance)
+            .minus(fee.value.fee)
+            .toNumber()
         : 0;
     });
 

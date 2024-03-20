@@ -109,6 +109,7 @@
       v-if="!!isLogoutModalOpened"
       :options="logoutOptions"
       :has-wallets="hasWallets"
+      :has-mnemonic="hasMnemonic"
       @update:options="updateOptions"
       @close="closeLogoutModal"
       @confirm="logout"
@@ -145,6 +146,7 @@ import PrivacyModal from '@/components/Modals/Privacy';
 import TermsModal from '@/components/Modals/Terms';
 import { XCT_GOVERNANCE_APP, WALLET_TYPES } from '@/config/walletType';
 import useCreateWallets from '@/compositions/useCreateWallets';
+import notify from '@/plugins/notify';
 
 export default {
   name: 'Header',
@@ -208,9 +210,14 @@ export default {
           .length && !!isPasswordHash.value
     );
 
+    const hasMnemonic = computed(
+      () => !!store.getters['crypto/encodeUserMnemonic']
+    );
+
     const logoutOptions = reactive({
       erase: false,
       backup: false,
+      write: false,
     });
     const isLogoutModalOpened = ref(false);
     const userSubMenu = ref([
@@ -233,6 +240,7 @@ export default {
     const onResetLogoutOptions = () => {
       logoutOptions.erase = false;
       logoutOptions.backup = hasWallets.value;
+      logoutOptions.write = false;
     };
 
     const settingsHandler = () => {
@@ -248,6 +256,14 @@ export default {
       Object.assign(logoutOptions, options);
     };
     const logout = async () => {
+      if (hasWallets.value && !logoutOptions.write) {
+        notify({
+          type: 'warning',
+          text: t('logout.modal.confirm'),
+        });
+        return;
+      }
+
       store.dispatch('app/setLoader', true);
       await store.dispatch('profile/getInfo');
       const { data } = await store.dispatch('auth/logout');
@@ -295,6 +311,7 @@ export default {
       updateOptions,
       onResetLogoutOptions,
       hasWallets,
+      hasMnemonic,
       showPrivacy,
       showTerms,
       XCT_GOVERNANCE_APP,

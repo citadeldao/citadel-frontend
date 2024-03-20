@@ -287,6 +287,10 @@ body.dark {
     &__title {
       color: $white;
     }
+
+    &__tooltip-content-title {
+      color: $white;
+    }
   }
 }
 </style>

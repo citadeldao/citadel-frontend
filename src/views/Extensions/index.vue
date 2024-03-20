@@ -426,13 +426,13 @@ export default {
       if ([17, 22, 26].includes(+selectedApp.value?.id)) {
         keplrTimer = setInterval(async () => {
           if (firstAddressChecked.value && !scrtAddress.value) {
+            clearInterval(keplrTimer);
             return;
           }
-
+          firstAddressChecked.value = true;
           await store.dispatch('keplr/connectToKeplr', { chainId: 'secret-4' });
           const secretAddress = keplrConnector.value.accounts[0];
           scrtAddress.value = secretAddress;
-          firstAddressChecked.value = true;
         }, 5000);
       }
     };

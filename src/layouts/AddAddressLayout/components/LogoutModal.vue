@@ -29,6 +29,14 @@
                 @input="updateOptions($event, 'backup')"
               />
             </div>
+            <div class="logout-modal__checkbox">
+              <Checkbox
+                id="write"
+                :value="options.write"
+                :label="$t('logout.modal.write')"
+                @input="updateOptions($event, 'write')"
+              />
+            </div>
           </div>
 
           <div class="logout-modal__footer">
@@ -68,6 +76,9 @@ export default {
       default: () => {},
     },
     hasWallets: {
+      type: Boolean,
+    },
+    hasMnemonic: {
       type: Boolean,
     },
   },
@@ -117,6 +128,7 @@ export default {
   }
 
   &__checkbox {
+    min-height: 28px;
     margin-bottom: 16px;
   }
 }

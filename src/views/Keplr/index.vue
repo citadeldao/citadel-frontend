@@ -79,7 +79,7 @@ import notify from '@/plugins/notify';
 import useCreateWallets from '@/compositions/useCreateWallets';
 import { WALLET_TYPES } from '@/config/walletType';
 import { i18n } from '@/plugins/i18n';
-import { keplrNetworks } from '@/config/availableNets';
+import { getKeplrNetworks } from '@/config/availableNets';
 import Header from '../AddAddress/components/Header';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import KeplrConnector from '@/models/Services/Keplr';
@@ -109,7 +109,7 @@ export default {
     const walletLoading = ref(false);
     const keplrChains = ref([]);
 
-    const chains = ref(keplrNetworks);
+    const chains = ref(getKeplrNetworks());
 
     chains.value.sort((a, b) => {
       if (a.label > b.label) {
