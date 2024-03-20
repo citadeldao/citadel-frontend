@@ -119,15 +119,34 @@
                 type="text"
               />
             </div>
-            <div class="swap__input mt10">
+            <!-- SELECT TO ADDR -->
+            <div
+              class="swap__input mt10"
+              v-click-away="() => (showNetworkTargetWallets = false)"
+            >
               <Input
                 id="toTokenAddr"
                 v-model="addressTo"
                 :label="$t('swapView.toAddressLabel')"
                 :placeholder="$t('swapView.addressPlaceholder')"
                 type="text"
+                @focus="showNetworkTargetWallets = true"
               />
+              <div
+                v-if="showNetworkTargetWallets && networkTargetWallets.length"
+                class="network-target-wallets"
+              >
+                <AddressItem
+                  v-for="(item, index) in networkTargetWallets"
+                  :key="`${item.address}${item.net}${index}`"
+                  :address="item"
+                  :last-child="index === networkTargetWallets.length - 1"
+                  :checked="false"
+                  @click="setAddress(item)"
+                />
+              </div>
             </div>
+            <!--  -->
             <div class="wrap-row mt10">
               <div class="swap__input">
                 <Input
@@ -190,6 +209,7 @@ import InfoModal from './InfoModal.vue';
 import SuccessModal from '@/views/Extensions/SuccessModal.vue';
 import ConfirmLedgerModal from '@/components/Modals/Ledger/ConfirmLedgerModal';
 import useCurrentWalletRequests from '@/compositions/useCurrentWalletRequests';
+import AddressItem from '@/layouts/AddAddressLayout/components/CutomLists/components/AddressItem';
 
 export default {
   components: {
@@ -203,6 +223,7 @@ export default {
     Modal,
     InfoModal,
     SuccessModal,
+    AddressItem,
   },
   setup() {
     const showInfoModal = ref(false);
@@ -211,11 +232,12 @@ export default {
     const isLoading = ref(false);
     const isLoadingData = ref(false);
     const store = useStore();
-    const { currentWallet } = useWallets();
+    const { currentWallet, wallets } = useWallets();
     const amount = ref('');
     const successHash = ref([]);
     const txNonce = ref(null);
     const slippage = ref(0);
+    const showNetworkTargetWallets = ref(false);
 
     const fromTokenAddrInput = ref('');
     const toTokenAddrInput = ref('');
@@ -312,6 +334,38 @@ export default {
         icon: 'curve-arrow',
       }))
     );
+
+    const networkTargetWallets = computed(() => {
+      const parseNetwork =
+        currentWallet.value.parentCoin?.net || currentWallet.value?.net;
+
+      return wallets.value.filter((w) => {
+        const findFromAlias =
+          w.net === parseNetwork &&
+          w.title.toLowerCase().includes(addressTo.value.toLowerCase());
+
+        if (!addressTo.value) {
+          return w.net === parseNetwork || findFromAlias;
+        }
+
+        if (w.address === addressTo.value) {
+          return (
+            (w.net === parseNetwork || findFromAlias) &&
+            w.address !== addressTo.value
+          );
+        }
+
+        return (
+          (w.net === parseNetwork && w.address.includes(addressTo.value)) ||
+          findFromAlias
+        );
+      });
+    });
+
+    const setAddress = (item) => {
+      addressTo.value = item.address;
+      showNetworkTargetWallets.value = false;
+    };
 
     const selectNetworkFrom = (network) => {
       searchFromToken.value = '';
@@ -529,6 +583,8 @@ export default {
     });
 
     return {
+      showNetworkTargetWallets,
+      networkTargetWallets,
       errorAmount,
       maxAmount,
       showLedgerConnect,
@@ -585,6 +641,7 @@ export default {
       closeSuccessModal,
       slippage,
       setSlippage,
+      setAddress,
     };
   },
 };
@@ -597,6 +654,19 @@ export default {
   flex-direction: column;
   align-items: center;
   width: 100%;
+
+  .network-target-wallets {
+    width: calc(100% - 58px);
+    z-index: 10;
+    background: $white;
+    padding: 10px 10px 0 10px;
+    box-sizing: border-box;
+    position: absolute;
+    border-radius: 12px;
+    border: 1px solid #c3ceeb;
+    // border-top: none;
+    // top: 70px;
+  }
 
   .wrap-row {
     width: 100%;
@@ -719,6 +789,11 @@ export default {
 
 body.dark {
   .swap {
+    .network-target-wallets {
+      background: #393c55;
+      border: 1px solid #4b4c63;
+    }
+
     .slippage {
       &__item {
         background: #313354;
