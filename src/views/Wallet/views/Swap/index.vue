@@ -46,7 +46,7 @@
         <Loading />
       </div>
       <template v-else>
-        <EmptyList v-if="!hasSwap" title="Swap for this address not found" />
+        <EmptyList v-if="!hasSwap" :title="appError" />
         <template v-else>
           <div class="swap__select-chain z1000">
             <div v-if="false" class="autocomplete">
@@ -146,32 +146,44 @@
                 />
               </div>
             </div>
+            <div
+              :class="{ withError: +maxAmount < +amount }"
+              class="swap__input mt10"
+            >
+              <Input
+                id="amount"
+                v-model="amount"
+                :decimals="currentWallet?.config?.decimals"
+                type="currency"
+                :currency="searchTokenFromComputed?.symbol"
+                :label="$t('swapView.amount')"
+                :max="maxAmount"
+                :show-set-max="+maxAmount !== 0"
+                :show-error-text="+maxAmount < +amount"
+                :error="errorAmount"
+                placeholder="0.0"
+                icon="coins"
+              />
+            </div>
             <!--  -->
             <div class="wrap-row mt10">
               <div class="swap__input">
                 <Input
-                  id="amount"
-                  v-model="amount"
-                  :decimals="currentWallet?.config?.decimals"
-                  type="currency"
-                  :currency="searchTokenFromComputed?.symbol"
-                  :label="$t('swapView.amountSlippage')"
-                  :max="maxAmount"
-                  :show-set-max="maxAmount !== 0"
-                  :show-error-text="maxAmount < amount"
-                  :error="errorAmount"
-                  placeholder="0.0"
-                  icon="coins"
+                  id="slippage"
+                  v-model="slippage"
+                  :label="$t('swapView.slippage')"
+                  :placeholder="$t('swapView.slippagePlaceholder')"
+                  type="text"
                 />
               </div>
               <div class="slippage">
                 <!-- <div class="slippage__label">Slippage tolerance</div> -->
                 <div
-                  v-for="(slipp, ndx) in 5"
+                  v-for="(slipp, ndx) in [0.1, 0.3, 0.5, 1, 2, 3]"
                   :key="ndx"
-                  :class="{ active: slippage === ndx }"
+                  :class="{ active: slippage === slipp }"
                   class="slippage__item"
-                  @click="setSlippage(ndx)"
+                  @click="setSlippage(slipp)"
                 >
                   {{ slipp }}%
                 </div>
@@ -184,7 +196,7 @@
             :disabled="!!errorAmount || !+amount || !addressTo"
             @click="getRoute"
           >
-            {{ $t('swap') }}
+            {{ $t('NEXT') }}
           </PrimaryButton>
         </template>
       </template>
@@ -229,6 +241,7 @@ export default {
     const showInfoModal = ref(false);
     const showSuccessModal = ref(false);
     const txComment = ref('');
+    const appError = ref('Swap for this address not found');
     const isLoading = ref(false);
     const isLoadingData = ref(false);
     const store = useStore();
@@ -236,7 +249,7 @@ export default {
     const amount = ref('');
     const successHash = ref([]);
     const txNonce = ref(null);
-    const slippage = ref(0);
+    const slippage = ref(0.1);
     const showNetworkTargetWallets = ref(false);
 
     const fromTokenAddrInput = ref('');
@@ -304,8 +317,13 @@ export default {
       isLoadingData.value = true;
       addressFrom.value = currentWallet.value.address;
 
-      await store.dispatch('squid/fetchChains');
-      await store.dispatch('squid/fetchTokens');
+      try {
+        await store.dispatch('squid/fetchChains');
+        await store.dispatch('squid/fetchTokens');
+      } catch (err) {
+        isLoadingData.value = false;
+        appError.value = 'Not available in your region';
+      }
 
       hasSwap.value = squidChains.value.find(
         (ch) =>
@@ -387,22 +405,30 @@ export default {
 
       console.log('chain from', searchNetworkFrom.value);
       console.log('chain from tokens', tokens);
-      chainTokensFrom.value = tokens.filter((token) => {
-        // filter citadel assets with balance in all tokens squid
-        return !!subtokensWallet.value.find((subToken) => {
-          const isNative =
-            token.address?.toLowerCase() ===
-            '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'.toLowerCase();
-
-          return (
-            isNative ||
-            (+subToken?.tokenBalance?.mainBalance &&
+      const native = tokens.find(
+        (token) =>
+          token?.address?.toLowerCase() ===
+          '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'.toLowerCase()
+      );
+      chainTokensFrom.value = [native].concat(
+        tokens.filter((token) => {
+          // filter citadel assets with balance in all tokens squid
+          console.log(
+            'subtokensWallet.value',
+            token.address,
+            subtokensWallet.value
+          );
+          return subtokensWallet.value.find((subToken) => {
+            return (
+              +subToken?.tokenBalance?.mainBalance &&
               subToken?.net
                 .toLowerCase()
-                .includes(token?.address.toLowerCase()))
-          );
-        });
-      });
+                .includes(token?.address?.toLowerCase())
+            );
+          });
+        })
+      );
+      console.log('chainTokensFrom.value', chainTokensFrom.value);
     };
 
     const selectNetworkTo = (network) => {
@@ -438,7 +464,7 @@ export default {
       return chainTokensTo.value.find((t) => t.name === searchToToken.value);
     });
 
-    const selectFromToken = (token) => {
+    const selectFromToken = async (token) => {
       searchFromToken.value = token;
       console.log('token from', token);
       console.log('token from obj', searchTokenFromComputed.value);
@@ -451,7 +477,7 @@ export default {
     };
 
     const getRoute = async () => {
-      const slipp = slippage.value + 1;
+      const slipp = slippage.value;
       const fromChain = allNetworks.value.find(
         (item) => item.key === searchNetworkFrom.value
       )?.chainId;
@@ -484,7 +510,7 @@ export default {
         if (err.response) {
           notify({
             type: 'warning',
-            text: err?.response?.data?.errors[0]?.message,
+            text: `${err?.response?.data?.errors[0]?.errorType}: ${err?.response?.data?.errors[0]?.message}`,
           });
         }
         isLoading.value = false;
@@ -536,6 +562,7 @@ export default {
         }));
       txComment.value = '';
       showSuccessModal.value = false;
+      connectLedgerCloseHandler();
     };
 
     const closeSuccessModal = () => {
@@ -545,15 +572,12 @@ export default {
       isLoading.value = false;
       showInfoModal.value = false;
       store.dispatch('squid/resetRoute');
+      connectLedgerCloseHandler();
     };
     console.log('currentWallet', currentWallet.value);
-    console.log(
-      'currentWallet.value?.balance?.mainBalance - 0.05',
-      currentWallet.value?.balance?.mainBalance - 0.05
-    );
 
-    const setSlippage = (ndx) => {
-      slippage.value = ndx;
+    const setSlippage = (val) => {
+      slippage.value = val;
     };
 
     const maxAmount = computed(() => {
@@ -567,7 +591,7 @@ export default {
         searchTokenFromComputed.value?.address?.toLowerCase() ===
         '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'.toLowerCase()
       ) {
-        return currentWallet.value?.balance?.mainBalance - 0.05;
+        return currentWallet.value?.balance?.mainBalance - 0.0005;
       }
 
       if (!token) return 0;
@@ -576,7 +600,7 @@ export default {
     });
 
     const errorAmount = computed(() => {
-      if (amount.value > maxAmount.value) {
+      if (+amount.value > +maxAmount.value) {
         return `Max amount for swap ${maxAmount.value}`;
       }
       return '';
@@ -591,6 +615,7 @@ export default {
       connectLedgerCloseHandler,
       txNonce,
       onCancel,
+      appError,
 
       showInfoModal,
       showSuccessModal,
@@ -715,6 +740,10 @@ export default {
   &__input {
     width: 100%;
     height: 68px;
+
+    &.withError {
+      margin-bottom: 25px;
+    }
   }
 
   .slippage {

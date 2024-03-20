@@ -93,7 +93,7 @@ export default {
         fromAmount, // mantissa
         fromAddress,
         toAddress,
-        slippage = 1,
+        slippage,
       }
     ) {
       const result = await axios.post(
@@ -106,7 +106,7 @@ export default {
           fromAmount, // mantissa
           fromAddress,
           toAddress,
-          slippage,
+          // slippage,
           slippageConfig: {
             slippage,
             autoMode: 1,

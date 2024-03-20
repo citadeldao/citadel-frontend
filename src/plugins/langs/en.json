@@ -1568,6 +1568,8 @@
         "addressPlaceholder": "Input address",
         "modalInfoTitle": "Swap/Bridge information",
         "modalInfoDesc": "Check info and sign transaction",
-        "amountSlippage": "Amount & Slippage Tolerance"
+        "amount": "Amount",
+        "slippage": "Slippage Tolerance",
+        "slippagePlaceholder": "Enter optional slippage"
     }
 }
