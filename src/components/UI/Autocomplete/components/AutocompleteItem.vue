@@ -11,7 +11,7 @@
       height="18"
       :style="{ marginRight: '7px' }"
     />
-    <span class="title">{{ result.title }}</span>
+    <span class="title">{{ split(result.title) }}</span>
   </li>
 </template>
 
@@ -22,10 +22,19 @@ export default {
     result: {
       type: Object,
     },
+    splitValue: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ['setResult', 'updateCurrentIcon'],
   setup(props, { emit }) {
     const currentIcon = ref();
+
+    const split = (title) => {
+      if (!props.splitValue) return title;
+      return title.split(':')[0];
+    };
 
     if (props.result.icon) {
       import(`@/assets/icons/networks/${props.result.icon}.svg`).then((val) => {
@@ -38,7 +47,7 @@ export default {
       emit('updateCurrentIcon', props.result.icon);
     };
 
-    return { currentIcon, clickHandler };
+    return { currentIcon, clickHandler, split };
   },
 };
 </script>
@@ -55,6 +64,11 @@ export default {
   font-size: 14px;
   line-height: 36px;
   color: $mid-gray;
+
+  img {
+    border-radius: 50%;
+  }
+
   & .title {
     display: inline-block;
   }

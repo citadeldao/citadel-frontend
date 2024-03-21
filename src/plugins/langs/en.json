@@ -1566,7 +1566,7 @@
         "fromAddressLabel": "From address",
         "toAddressLabel": "To address",
         "addressPlaceholder": "Input address",
-        "modalInfoTitle": "Swap/Bridge information",
+        "modalInfoTitle": "Confirmation",
         "modalInfoDesc": "Check info and sign transaction",
         "amount": "Amount",
         "slippage": "Slippage Tolerance",

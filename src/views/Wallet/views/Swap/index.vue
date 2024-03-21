@@ -8,6 +8,7 @@
           :chain-id-from="hasSwap.chainId"
           :signer-wallet="currentWallet"
           :on-close="closeAppInfoModal"
+          :to-token="searchTokenToComputed"
           @onCancel="onCancel"
           @onSuccess="onSuccess"
           @showLedger="
@@ -54,6 +55,7 @@
                 id="chains"
                 v-model:value="searchNetworkFrom"
                 :items="allNetworks"
+                split-value
                 initial-icon="curve-arrow"
                 :label="$t('swapView.swapFromNetwork')"
                 :placeholder="$t('swapView.selectChain')"
@@ -65,6 +67,7 @@
                 id="chains"
                 v-model:value="searchNetworkTo"
                 :items="allNetworks"
+                split-value
                 initial-icon="curve-arrow"
                 :label="$t('swapView.swapToNetwork')"
                 :placeholder="$t('swapView.selectChain')"
@@ -196,7 +199,7 @@
             :disabled="!!errorAmount || !+amount || !addressTo"
             @click="getRoute"
           >
-            {{ $t('NEXT') }}
+            {{ $t('SWAP') }}
           </PrimaryButton>
         </template>
       </template>
@@ -249,7 +252,7 @@ export default {
     const amount = ref('');
     const successHash = ref([]);
     const txNonce = ref(null);
-    const slippage = ref(0.1);
+    const slippage = ref(0.5);
     const showNetworkTargetWallets = ref(false);
 
     const fromTokenAddrInput = ref('');
@@ -281,8 +284,6 @@ export default {
     const subtokensWallet = computed(() =>
       store.getters['subtokens/formatedSubtokens']()
     );
-
-    console.log('subtokens', subtokensWallet.value);
 
     const currentWalletType = computed(() => {
       const metamaskNet = metamaskConnector.value.network;
@@ -332,10 +333,6 @@ export default {
       );
       if (hasSwap.value) {
         selectNetworkFrom(
-          `${hasSwap.value.chainName}:${hasSwap.value.chainId}`
-        );
-        console.log(
-          'hasSwap.value',
           `${hasSwap.value.chainName}:${hasSwap.value.chainId}`
         );
       }
@@ -403,8 +400,6 @@ export default {
         (t) => t.chainId === currentChain?.chainId
       );
 
-      console.log('chain from', searchNetworkFrom.value);
-      console.log('chain from tokens', tokens);
       const native = tokens.find(
         (token) =>
           token?.address?.toLowerCase() ===
@@ -413,11 +408,6 @@ export default {
       chainTokensFrom.value = [native].concat(
         tokens.filter((token) => {
           // filter citadel assets with balance in all tokens squid
-          console.log(
-            'subtokensWallet.value',
-            token.address,
-            subtokensWallet.value
-          );
           return subtokensWallet.value.find((subToken) => {
             return (
               +subToken?.tokenBalance?.mainBalance &&
@@ -428,7 +418,6 @@ export default {
           });
         })
       );
-      console.log('chainTokensFrom.value', chainTokensFrom.value);
     };
 
     const selectNetworkTo = (network) => {
@@ -449,8 +438,6 @@ export default {
         (t) => t.chainId === currentChain?.chainId
       );
 
-      console.log('chain to', searchNetworkFrom.value);
-      console.log('chain to tokens', tokens);
       chainTokensTo.value = tokens;
     };
 
@@ -466,14 +453,10 @@ export default {
 
     const selectFromToken = async (token) => {
       searchFromToken.value = token;
-      console.log('token from', token);
-      console.log('token from obj', searchTokenFromComputed.value);
     };
 
     const selectToToken = (token) => {
       searchToToken.value = token;
-      console.log('token to', token);
-      console.log('token to obj', searchTokenToComputed.value);
     };
 
     const getRoute = async () => {
@@ -574,7 +557,6 @@ export default {
       store.dispatch('squid/resetRoute');
       connectLedgerCloseHandler();
     };
-    console.log('currentWallet', currentWallet.value);
 
     const setSlippage = (val) => {
       slippage.value = val;

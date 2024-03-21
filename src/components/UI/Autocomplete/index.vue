@@ -28,6 +28,7 @@
         <AutocompleteItem
           v-for="result in results"
           :key="result.id"
+          :split-value="splitValue"
           :result="result"
           @setResult="setResult"
           @updateCurrentIcon="updateCurrentIcon"
@@ -76,6 +77,10 @@ export default {
     dataQa: {
       type: [String, null],
       default: null,
+    },
+    splitValue: {
+      type: Boolean,
+      default: false,
     },
   },
   emits: ['update:value'],

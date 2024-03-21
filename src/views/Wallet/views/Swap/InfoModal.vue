@@ -1,7 +1,6 @@
 <template>
   <ModalContent
     show-success-icon
-    v-click-away="onClose"
     width="650px"
     :title="$t('swapView.modalInfoTitle')"
     :desc="$t('swapView.modalInfoDesc')"
@@ -20,7 +19,7 @@
             :key="ndx"
             class="tx-info-item"
           >
-            <div class="label">{{ param }}</div>
+            <div class="label">{{ labelsDynamic[param] }}</div>
             <div
               :class="{
                 isAddress: txRoute.params[param]?.toString().length >= 25,
@@ -31,7 +30,21 @@
               }"
               class="value"
             >
-              {{ txRoute.params[param] }}
+              <span v-if="param === 'fromToken'">{{
+                (txRoute.params[param] + '').toLowerCase() ===
+                '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'.toLowerCase()
+                  ? signerWallet?.code
+                  : txRoute.params[param]
+              }}</span>
+              <span v-if="param === 'toToken'">{{
+                (txRoute.params[param] + '').toLowerCase() ===
+                '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'.toLowerCase()
+                  ? toToken?.symbol
+                  : txRoute.params[param]
+              }}</span>
+              <span v-if="!['fromToken', 'toToken'].includes(param)">{{
+                txRoute.params[param]
+              }}</span>
             </div>
           </div>
           <!-- esmitame -->
@@ -42,7 +55,7 @@
             :key="ndx"
             class="tx-info-item"
           >
-            <div class="label">{{ param }}</div>
+            <div class="label">{{ labelsDynamic[param] }}</div>
             <div
               :class="{
                 isAddress: txRoute.estimate[param]?.toString().length >= 25,
@@ -79,8 +92,21 @@
           @keyup.enter="$emit('confirmInput')"
         />
       </div>
-      <PrimaryButton class="swap-tx__submit" :loading="isLoading" @click="swap">
-        {{ needApprove ? 'APPROVE' : $t('SWAP') }}
+      <PrimaryButton
+        v-if="needApprove"
+        class="swap-tx__submit"
+        :loading="isLoading"
+        @click="swap"
+      >
+        {{ $t('APPROVE') }}
+      </PrimaryButton>
+      <PrimaryButton
+        v-else
+        class="swap-tx__submit"
+        :loading="needApprove ? false : isLoading"
+        @click="swap"
+      >
+        {{ $t('SWAP') }}
       </PrimaryButton>
     </div>
   </ModalContent>
@@ -121,6 +147,9 @@ export default {
     chainIdFrom: {
       required: true,
     },
+    toToken: {
+      required: true,
+    },
   },
   setup(props, { emit }) {
     const store = useStore();
@@ -129,6 +158,7 @@ export default {
     const confirmPassword = ref(false);
     const needApprove = ref(false);
     const approveTx = ref(null);
+    const nonceAfterApprove = ref(1);
     const paramsKeysToView = ref([
       'fromAddress',
       'toAddress',
@@ -137,17 +167,25 @@ export default {
       'fromChain',
       'toChain',
     ]);
-    const estimateKeysToView = ref([
-      'exchangeRate',
-      'aggregatePriceImpact',
-      'estimatedRouteDuration',
-      'aggregateSlippage',
-      'fromAmountUSD',
-      'toAmountUSD',
-      'toAmountMinUSD',
-    ]);
+    const estimateKeysToView = ref(['fromAmountUSD', 'toAmountMinUSD']);
+
+    const labelsDynamic = ref({
+      fromAddress: 'From address',
+      toAddress: 'To address',
+      fromToken: 'From token',
+      toToken: 'To token',
+      fromChain: 'From chain',
+      toChain: 'To chain',
+      exchangeRate: 'Exchange rate',
+      aggregatePriceImpact: 'Aggregate price impact',
+      estimatedRouteDuration: 'Estimated route duration',
+      aggregateSlippage: 'Aggregate slippage',
+      fromAmountUSD: 'Amount to swap, USD',
+      toAmountMinUSD: 'Minimum received, USD',
+    });
 
     onMounted(async () => {
+      console.log('hh', props.toToken);
       if (
         props.txRoute?.params?.fromToken?.toLowerCase() ===
         '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'.toLowerCase()
@@ -228,7 +266,11 @@ export default {
           isLoading.value = false;
 
           emit('onSuccess', [metamaskResult.txHash], true);
-          props.onClose();
+          needApprove.value = false;
+          approveTx.value = null;
+          isLoading.value = false;
+          confirmPassword.value = false;
+          nonceAfterApprove.value += +props.nonce;
         }
 
         return;
@@ -269,7 +311,11 @@ export default {
         [64, 66].includes(result.data[0].length)
       ) {
         emit('onSuccess', [result.data], true);
-        props.onClose();
+        needApprove.value = false;
+        approveTx.value = null;
+        isLoading.value = false;
+        confirmPassword.value = false;
+        nonceAfterApprove.value += +props.nonce;
       }
     };
 
@@ -288,7 +334,8 @@ export default {
         to: props.txRoute.transactionRequest.target,
         routeType: props.txRoute.transactionRequest.routeType,
         chainId: props.chainIdFrom,
-        nonce: props.nonce,
+        nonce:
+          nonceAfterApprove.value > 1 ? nonceAfterApprove.value : props.nonce,
       };
 
       delete txParse.gasLimit;
@@ -385,6 +432,7 @@ export default {
       needApprove,
       paramsKeysToView,
       estimateKeysToView,
+      labelsDynamic,
     };
   },
 };
@@ -420,6 +468,7 @@ export default {
 
         &.isAddress {
           color: #6b93c0;
+          font-size: 13px;
         }
 
         &.longNum {
