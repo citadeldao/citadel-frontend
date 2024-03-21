@@ -1557,12 +1557,12 @@
     },
 
     "swapView": {
-        "swapFromNetwork": "From Chain",
-        "swapToNetwork": "To Chain",
+        "swapFromNetwork": "From chain",
+        "swapToNetwork": "To chain",
         "selectChain": "Select chain",
         "fromToken": "From token",
         "toToken": "To token",
-        "selectContract": "Select contract",
+        "selectContract": "Select token",
         "fromAddressLabel": "From address",
         "toAddressLabel": "To address",
         "addressPlaceholder": "Input address",
