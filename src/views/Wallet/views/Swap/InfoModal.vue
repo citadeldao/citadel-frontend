@@ -440,11 +440,6 @@ export default {
       return sha3_256(password.value) !== store.getters['crypto/passwordHash'];
     });
 
-    // onMounted(() => {
-    //   const tree = jsonview.create(props.txRoute);
-    //   jsonview.render(tree, document.querySelector('.swap-tx__info .tx'));
-    //   jsonview.expand(tree);
-    // });
     return {
       isLoading,
       confirmPassword,
