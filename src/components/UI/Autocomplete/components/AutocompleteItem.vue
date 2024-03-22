@@ -12,6 +12,9 @@
       :style="{ marginRight: '7px' }"
     />
     <span class="title">{{ split(result.title) }}</span>
+    <div v-if="showBalance" class="balance">
+      {{ result.balance }} {{ result.symbol }}
+    </div>
   </li>
 </template>
 
@@ -23,6 +26,10 @@ export default {
       type: Object,
     },
     splitValue: {
+      type: Boolean,
+      default: false,
+    },
+    showBalance: {
       type: Boolean,
       default: false,
     },
@@ -54,6 +61,7 @@ export default {
 
 <style lang="scss" scoped>
 .autocomplete-result {
+  position: relative;
   display: flex;
   align-items: center;
   list-style: none;
@@ -64,6 +72,12 @@ export default {
   font-size: 14px;
   line-height: 36px;
   color: $mid-gray;
+
+  .balance {
+    position: absolute;
+    right: 15px;
+    top: 5px;
+  }
 
   img {
     border-radius: 50%;

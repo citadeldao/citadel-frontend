@@ -66,7 +66,8 @@
               }"
               class="value"
             >
-              {{ txRoute.estimate[param] }}
+              {{ txRoute.estimate[param]
+              }}{{ param === 'aggregateSlippage' ? '%' : '' }}
             </div>
           </div>
         </div>
@@ -167,7 +168,11 @@ export default {
       'fromChain',
       'toChain',
     ]);
-    const estimateKeysToView = ref(['fromAmountUSD', 'toAmountMinUSD']);
+    const estimateKeysToView = ref([
+      'fromAmountUSD',
+      'toAmountMinUSD',
+      'aggregateSlippage',
+    ]);
 
     const labelsDynamic = ref({
       fromAddress: 'From address',

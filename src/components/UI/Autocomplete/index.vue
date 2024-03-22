@@ -29,6 +29,7 @@
           v-for="result in results"
           :key="result.id"
           :split-value="splitValue"
+          :show-balance="showBalance"
           :result="result"
           @setResult="setResult"
           @updateCurrentIcon="updateCurrentIcon"
@@ -79,6 +80,10 @@ export default {
       default: null,
     },
     splitValue: {
+      type: Boolean,
+      default: false,
+    },
+    showBalance: {
       type: Boolean,
       default: false,
     },

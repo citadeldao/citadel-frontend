@@ -82,6 +82,7 @@
                 id="chainTokenFrom"
                 v-model:value="searchFromToken"
                 :items="chainTokensFrom"
+                show-balance
                 initial-icon="curve-arrow"
                 :label="$t('swapView.fromToken')"
                 :placeholder="$t('swapView.selectContract')"
@@ -101,10 +102,25 @@
             </div>
           </div>
           <div class="swap__contracts">
-            <div v-if="searchTokenFromComputed?.address">
+            <div
+              :class="{
+                hide:
+                  nativeContract.toLowerCase() ===
+                  searchTokenFromComputed?.address?.toLowerCase(),
+              }"
+              v-if="searchTokenFromComputed?.address"
+            >
               {{ searchTokenFromComputed.address }}
             </div>
-            <div v-if="searchTokenToComputed?.address" class="ml10">
+            <div
+              :class="{
+                hide:
+                  nativeContract.toLowerCase() ===
+                  searchTokenToComputed?.address?.toLowerCase(),
+              }"
+              v-if="searchTokenToComputed?.address"
+              class="ml10"
+            >
               {{ searchTokenToComputed.address }}
             </div>
           </div>
@@ -254,6 +270,7 @@ export default {
     const txNonce = ref(null);
     const slippage = ref(0.5);
     const showNetworkTargetWallets = ref(false);
+    const nativeContract = ref('0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE');
 
     const fromTokenAddrInput = ref('');
     const toTokenAddrInput = ref('');
@@ -418,6 +435,26 @@ export default {
           });
         })
       );
+
+      chainTokensFrom.value = chainTokensFrom.value.map((token) => {
+        const subToken = subtokensWallet.value.find((subToken) =>
+          subToken?.net.toLowerCase().includes(token?.address?.toLowerCase())
+        );
+        let balance;
+
+        if (!subToken) {
+          balance =
+            BigNumber(currentWallet.value.balance.mainBalance).toFixed(2) || 0;
+        } else {
+          balance =
+            BigNumber(subToken?.tokenBalance?.mainBalance).toFixed(2) || 0;
+        }
+
+        return {
+          ...token,
+          balance,
+        };
+      });
     };
 
     const selectNetworkTo = (network) => {
@@ -589,6 +626,7 @@ export default {
     });
 
     return {
+      nativeContract,
       showNetworkTargetWallets,
       networkTargetWallets,
       errorAmount,
@@ -708,6 +746,10 @@ export default {
       text-align: left;
       color: #00a3ff;
       word-wrap: break-word;
+
+      &.hide {
+        opacity: 0;
+      }
     }
   }
 
