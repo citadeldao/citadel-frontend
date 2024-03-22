@@ -476,7 +476,15 @@ export default {
         (t) => t.chainId === currentChain?.chainId
       );
 
-      chainTokensTo.value = tokens;
+      const nativeCoin = tokens.find(
+        (t) => t.address?.toLowerCase() === nativeContract.value.toLowerCase()
+      );
+
+      chainTokensTo.value = [nativeCoin].concat(
+        tokens.filter(
+          (t) => t.address?.toLowerCase() !== nativeContract.value.toLowerCase()
+        )
+      );
     };
 
     const searchTokenFromComputed = computed(() => {
@@ -726,6 +734,10 @@ export default {
     display: flex;
     align-items: center;
 
+    @include md {
+      flex-direction: column;
+    }
+
     &.z1000 {
       z-index: 1000;
     }
@@ -821,7 +833,12 @@ export default {
   height: 68px;
   position: relative;
   @include md {
-    width: 483px;
+    // width: 483px;
+
+    &.ml10 {
+      margin-left: 0;
+      margin-top: 10px;
+    }
   }
 }
 

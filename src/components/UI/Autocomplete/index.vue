@@ -232,7 +232,7 @@ export default {
     border-top: none;
     padding-left: 0;
     padding-top: 24px;
-    z-index: 2;
+    z-index: 10; // 2;
     background: $white;
     max-height: 300px;
     overflow-y: auto;
