@@ -9,6 +9,7 @@
           :signer-wallet="currentWallet"
           :on-close="closeAppInfoModal"
           :to-token="searchTokenToComputed"
+          :from-token="searchTokenFromComputed"
           @onCancel="onCancel"
           @onSuccess="onSuccess"
           @showLedger="

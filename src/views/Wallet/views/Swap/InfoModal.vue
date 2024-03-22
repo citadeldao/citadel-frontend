@@ -30,6 +30,9 @@
               }"
               class="value"
             >
+              <span v-if="['fromChain', 'toChain'].includes(param)">{{
+                chainNetworks[txRoute.params[param]] || txRoute.params[param]
+              }}</span>
               <span v-if="param === 'fromToken'">{{
                 (txRoute.params[param] + '').toLowerCase() ===
                 '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'.toLowerCase()
@@ -42,9 +45,14 @@
                   ? toToken?.symbol
                   : txRoute.params[param]
               }}</span>
-              <span v-if="!['fromToken', 'toToken'].includes(param)">{{
-                txRoute.params[param]
-              }}</span>
+              <span
+                v-if="
+                  !['fromToken', 'toToken', 'fromChain', 'toChain'].includes(
+                    param
+                  )
+                "
+                >{{ txRoute.params[param] }}</span
+              >
             </div>
           </div>
           <!-- esmitame -->
@@ -151,6 +159,9 @@ export default {
     toToken: {
       required: true,
     },
+    fromToken: {
+      required: true,
+    },
   },
   setup(props, { emit }) {
     const store = useStore();
@@ -174,6 +185,16 @@ export default {
       'aggregateSlippage',
     ]);
 
+    const chainNetworks = ref({
+      1: 'Ethereum Mainnet',
+      56: 'BNB chain',
+      137: 'Polygon',
+      10: 'OP Mainnet',
+      42161: 'Arbitrum One',
+      9001: 'evmoseth',
+      43114: 'Avalanche Network',
+    });
+
     const labelsDynamic = ref({
       fromAddress: 'From address',
       toAddress: 'To address',
@@ -190,7 +211,6 @@ export default {
     });
 
     onMounted(async () => {
-      console.log('hh', props.toToken);
       if (
         props.txRoute?.params?.fromToken?.toLowerCase() ===
         '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'.toLowerCase()
@@ -203,7 +223,7 @@ export default {
         tokenAddress: props.txRoute?.params?.fromToken,
         spenderAddress: props.txRoute?.transactionRequest?.target,
       });
-      console.log('ALLOWANCE', error, data);
+
       if (error) {
         notify({
           type: 'warning',
@@ -438,6 +458,7 @@ export default {
       paramsKeysToView,
       estimateKeysToView,
       labelsDynamic,
+      chainNetworks,
     };
   },
 };
