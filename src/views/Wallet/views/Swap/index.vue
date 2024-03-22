@@ -349,6 +349,17 @@ export default {
           ch.nativeCurrency.symbol.toLowerCase() ===
           currentWallet.value.code.toLowerCase()
       );
+
+      if (currentWallet.value.net === 'arbitrum') {
+        hasSwap.value = squidChains.value.find(
+          (ch) => ch.chainName === 'Arbitrum'
+        );
+      }
+      if (currentWallet.value.net === 'optimism') {
+        hasSwap.value = squidChains.value.find(
+          (ch) => ch.chainName === 'optimism'
+        );
+      }
       if (hasSwap.value) {
         selectNetworkFrom(
           `${hasSwap.value.chainName}:${hasSwap.value.chainId}`
@@ -423,6 +434,7 @@ export default {
           token?.address?.toLowerCase() ===
           '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'.toLowerCase()
       );
+
       chainTokensFrom.value = [native].concat(
         tokens.filter((token) => {
           // filter citadel assets with balance in all tokens squid
@@ -437,25 +449,28 @@ export default {
         })
       );
 
-      chainTokensFrom.value = chainTokensFrom.value.map((token) => {
-        const subToken = subtokensWallet.value.find((subToken) =>
-          subToken?.net.toLowerCase().includes(token?.address?.toLowerCase())
-        );
-        let balance;
+      chainTokensFrom.value = chainTokensFrom.value
+        .map((token) => {
+          const subToken = subtokensWallet.value.find((subToken) =>
+            subToken?.net.toLowerCase().includes(token?.address?.toLowerCase())
+          );
+          let balance;
 
-        if (!subToken) {
-          balance =
-            BigNumber(currentWallet.value.balance.mainBalance).toFixed(2) || 0;
-        } else {
-          balance =
-            BigNumber(subToken?.tokenBalance?.mainBalance).toFixed(2) || 0;
-        }
+          if (!subToken) {
+            balance =
+              BigNumber(currentWallet.value.balance.mainBalance).toFixed(4) ||
+              0;
+          } else {
+            balance =
+              BigNumber(subToken?.tokenBalance?.mainBalance).toFixed(4) || 0;
+          }
 
-        return {
-          ...token,
-          balance,
-        };
-      });
+          return {
+            ...token,
+            balance,
+          };
+        })
+        .sort((a, b) => b.balance - a.balance);
     };
 
     const selectNetworkTo = (network) => {
@@ -619,6 +634,7 @@ export default {
         searchTokenFromComputed.value?.address?.toLowerCase() ===
         '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'.toLowerCase()
       ) {
+        if (currentWallet.value?.balance?.mainBalance - 0.0005 < 0) return 0;
         return currentWallet.value?.balance?.mainBalance - 0.0005;
       }
 
