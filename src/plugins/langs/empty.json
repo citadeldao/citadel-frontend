@@ -1542,5 +1542,19 @@
     "rateModal": {
         "title": "",
         "description": ""
+    },
+    "swapView": {
+        "swapFromNetwork": "",
+        "swapToNetwork": "",
+        "selectChain": "",
+        "fromToken": "",
+        "toToken": "",
+        "selectContract": "",
+        "fromAddressLabel": "",
+        "toAddressLabel": "",
+        "addressPlaceholder": "",
+        "modalInfoTitle": "",
+        "modalInfoDesc": "",
+        "amountSlippage": ""
     }
 }

@@ -28,6 +28,8 @@
         <AutocompleteItem
           v-for="result in results"
           :key="result.id"
+          :split-value="splitValue"
+          :show-balance="showBalance"
           :result="result"
           @setResult="setResult"
           @updateCurrentIcon="updateCurrentIcon"
@@ -76,6 +78,14 @@ export default {
     dataQa: {
       type: [String, null],
       default: null,
+    },
+    splitValue: {
+      type: Boolean,
+      default: false,
+    },
+    showBalance: {
+      type: Boolean,
+      default: false,
     },
   },
   emits: ['update:value'],
@@ -222,7 +232,7 @@ export default {
     border-top: none;
     padding-left: 0;
     padding-top: 24px;
-    z-index: 2;
+    z-index: 10; // 2;
     background: $white;
     max-height: 300px;
     overflow-y: auto;
