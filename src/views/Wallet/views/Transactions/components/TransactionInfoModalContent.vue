@@ -514,6 +514,12 @@ body.dark {
     .inner-tx__view-item {
       background: #2d2e42;
 
+      .icon-type-included {
+        div {
+          color: #fff;
+        }
+      }
+
       .value .value-amount {
         color: #c3ceeb;
       }
