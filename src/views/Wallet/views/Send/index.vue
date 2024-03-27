@@ -520,7 +520,15 @@ import WalletButtonsPanel from '@/components/WalletButtonsPanel';
 import BigNumber from 'bignumber.js';
 import useCurrentWalletRequests from '@/compositions/useCurrentWalletRequests';
 import useLedger from '@/compositions/useLedger';
-import { ref, computed, watch, provide, inject } from 'vue';
+import {
+  ref,
+  computed,
+  watch,
+  provide,
+  inject,
+  onMounted,
+  onUnmounted,
+} from 'vue';
 import { useRoute } from 'vue-router';
 import { useStore } from 'vuex';
 import useCheckPassword from '@/compositions/useCheckPassword';
@@ -655,6 +663,24 @@ export default {
       ledgerErrorHandler,
       isLedgerWallet,
     } = useLedger();
+
+    const timerFee = ref(null);
+
+    onMounted(async () => {
+      if (
+        props.currentWallet.net === 'eth' ||
+        props.currentWallet.parentCoin?.net === 'eth'
+      ) {
+        timerFee.value = setInterval(async () => {
+          await getFees();
+        }, 15000);
+      }
+    });
+
+    onUnmounted(() => {
+      clearInterval(timerFee.value);
+      timerFee.value = null;
+    });
 
     const showBridgeModal = ref(false);
 

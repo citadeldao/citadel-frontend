@@ -51,6 +51,17 @@
         active-class="main-header__active"
         class="main-header__tabs-item"
         :to="{
+          name: 'WalletSwap',
+          params: { ...$route.params },
+        }"
+        data-qa="wallet__assets-tab-button"
+      >
+        {{ $t('swap') }}
+      </router-link>
+      <router-link
+        active-class="main-header__active"
+        class="main-header__tabs-item"
+        :to="{
           name: 'WalletTransactions',
           params: { ...$route.params },
         }"

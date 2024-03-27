@@ -24,6 +24,7 @@ import keplr from './modules/keplr';
 import salary from './modules/salary';
 import ledger from './modules/ledger';
 import btcAddresses from './modules/btcAddresses';
+import squid from './modules/squid';
 
 import subscriptions from './modules/subscriptions';
 
@@ -55,5 +56,6 @@ export default createStore({
     salary,
     ledger,
     btcAddresses,
+    squid,
   },
 });

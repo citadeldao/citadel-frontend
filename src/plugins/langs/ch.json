@@ -1365,7 +1365,13 @@
             "title": "Quasar",
             "description": "",
             "shortDescription": ""
+        },
+        "dydx":{
+            "title": "DYDX",
+            "description": "",
+            "shortDescription": ""
         }
+
     },
     "uptime": "运行时间",
     "active": "活跃",
@@ -1547,5 +1553,19 @@
     "rateModal": {
         "title": "",
         "description": ""
+    },
+    "swapView": {
+        "swapFromNetwork": "",
+        "swapToNetwork": "",
+        "selectChain": "",
+        "fromToken": "",
+        "toToken": "",
+        "selectContract": "",
+        "fromAddressLabel": "",
+        "toAddressLabel": "",
+        "addressPlaceholder": "",
+        "modalInfoTitle": "",
+        "modalInfoDesc": "",
+        "amountSlippage": ""
     }
 }

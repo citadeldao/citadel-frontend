@@ -1360,6 +1360,11 @@
             "title": "Quasar",
             "description": "",
             "shortDescription": ""
+        },
+        "dydx":{
+            "title": "DYDX",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "Подтверждено блоков",
@@ -1538,5 +1543,19 @@
     "rateModal": {
         "title": "",
         "description": ""
+    },
+    "swapView": {
+        "swapFromNetwork": "",
+        "swapToNetwork": "",
+        "selectChain": "",
+        "fromToken": "",
+        "toToken": "",
+        "selectContract": "",
+        "fromAddressLabel": "",
+        "toAddressLabel": "",
+        "addressPlaceholder": "",
+        "modalInfoTitle": "",
+        "modalInfoDesc": "",
+        "amountSlippage": ""
     }
 }

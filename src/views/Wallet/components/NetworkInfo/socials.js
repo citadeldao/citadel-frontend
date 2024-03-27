@@ -843,4 +843,18 @@ export default {
       href: 'https://www.coingecko.com/en/coins/quasar-fi',
     },
   },
+  dydx: {
+    web: {
+      title: 'dydx.exchange',
+      href: 'https://dydx.exchange/',
+    },
+    twitter: {
+      title: '@dYdX',
+      href: 'https://twitter.com/dYdX',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/dydx-chain',
+    },
+  },
 };

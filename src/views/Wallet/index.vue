@@ -259,7 +259,7 @@ import BigNumber from 'bignumber.js';
 import notify from '@/plugins/notify';
 import { useI18n } from 'vue-i18n';
 // import useApi from '@/api/useApi';
-import { keplrNetworks } from '@/config/availableNets';
+import { getKeplrNetworks } from '@/config/availableNets';
 import ClaimModal from './views/components/ClaimModal';
 import ClaimModalXCT from './views/components/ClaimModalXCT';
 import ClaimSuccess from './views/components/ClaimSuccess';
@@ -334,7 +334,7 @@ export default {
         currentWallet.value.type === WALLET_TYPES.KEPLR
       ) {
         try {
-          const chain = keplrNetworks.find(
+          const chain = getKeplrNetworks().find(
             (conf) => conf.net === currentWallet.value.net
           ).key;
           await window.keplr.enable(chain);

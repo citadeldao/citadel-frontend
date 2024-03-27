@@ -1376,6 +1376,11 @@
             "title": "Quasar",
             "description": "",
             "shortDescription": "Instantly make your crypto productive by adding Quasar vaults to your portfolio."
+        },
+        "dydx":{
+            "title": "DYDX",
+            "description": "Trade Perpetuals on the most powerful trading platform",
+            "shortDescription": "Trade Perpetuals on the most powerful trading platform"
         }
     },
     "uptime": "Uptime",
@@ -1549,5 +1554,22 @@
     "rateModal": {
         "title": "Select display currency",
         "description": "Your balance will be converted to the selected currency"
+    },
+
+    "swapView": {
+        "swapFromNetwork": "From chain",
+        "swapToNetwork": "To chain",
+        "selectChain": "Select chain",
+        "fromToken": "From token",
+        "toToken": "To token",
+        "selectContract": "Select token",
+        "fromAddressLabel": "From address",
+        "toAddressLabel": "To address",
+        "addressPlaceholder": "Input address",
+        "modalInfoTitle": "Confirmation",
+        "modalInfoDesc": "Check info and sign transaction",
+        "amount": "Amount",
+        "slippage": "Slippage Tolerance",
+        "slippagePlaceholder": "Enter optional slippage"
     }
 }
