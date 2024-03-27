@@ -979,6 +979,10 @@ body.dark {
     color: $white;
   }
 
+  .frozen-tooltip {
+    color: #6b93c0;
+  }
+
   .balance {
     background: $dark-panel-bg;
 

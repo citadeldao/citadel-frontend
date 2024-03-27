@@ -132,6 +132,7 @@ import { PRIVATE_PASSWORD_TYPES, WALLET_TYPES } from '@/config/walletType';
 import { sha3_256 } from 'js-sha3';
 import notify from '@/plugins/notify';
 import citadel from '@citadeldao/lib-citadel';
+import BigNumber from 'bignumber.js';
 
 export default {
   name: 'InfoModal',
@@ -232,7 +233,11 @@ export default {
         return;
       }
 
-      if (props.txRoute?.estimate?.fromAmount > data) {
+      if (
+        BigNumber(props.txRoute?.estimate?.fromAmount).comparedTo(
+          BigNumber(data)
+        ) === 1
+      ) {
         needApprove.value = true;
 
         const { data, error } = await citadel.getEvmApprove({
