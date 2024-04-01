@@ -217,7 +217,6 @@ export default {
     const hasSwap = computed(() => {
       return metamaskNets.includes(stateCurrentWallet.value.net.toLowerCase());
     });
-    console.log('SWAPPP', hasSwap.value);
 
     const filterList = ref([
       { icon: 'byAlphabet', value: 'byAlphabet' },

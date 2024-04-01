@@ -128,10 +128,6 @@ export default {
     });
 
     const swap = () => {
-      console.log(
-        props.item.net.split('_')[1] || props.item.net,
-        props.isNativeToken
-      );
       localStorage.setItem(
         'swapContract',
         props.item.net.split('_')[1] || props.item.net
