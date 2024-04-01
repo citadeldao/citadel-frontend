@@ -63,6 +63,9 @@
           }"
           class="assets-item__value"
         />
+        <div v-if="hasSwap" class="assets-item__swap" @click.stop="swap">
+          SWAP
+        </div>
       </div>
     </template>
   </div>
@@ -74,6 +77,7 @@ import { tokenIconPlaceholder } from '@/helpers';
 import AssetIcon from '@/components/UI/AssetIcon.vue';
 import { useStore } from 'vuex';
 import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
+import { useRouter } from 'vue-router';
 
 export default {
   name: 'AssetsItem',
@@ -99,12 +103,21 @@ export default {
       type: Boolean,
       default: false,
     },
+    hasSwap: {
+      type: Boolean,
+      default: false,
+    },
+    stateCurrentWallet: {
+      type: Object,
+      required: false,
+    },
   },
   setup(props) {
     const showIconPlaceholder = ref(false);
     const iconPlaceholder = computed(() =>
       tokenIconPlaceholder(props.item.name)
     );
+    const router = useRouter();
     const store = useStore();
     const showBalance = computed(() => store.getters['balance/showBalance']);
     const price = computed(() => {
@@ -113,7 +126,21 @@ export default {
       }
       return props.item.tokenBalance.price.USD;
     });
+
+    const swap = () => {
+      console.log(
+        props.item.net.split('_')[1] || props.item.net,
+        props.isNativeToken
+      );
+      localStorage.setItem(
+        'swapContract',
+        props.item.net.split('_')[1] || props.item.net
+      );
+      router.push({ name: 'WalletSwap' });
+    };
+
     return {
+      swap,
       showIconPlaceholder,
       iconPlaceholder,
       price,
@@ -168,11 +195,30 @@ export default {
     }
   }
 
+  &__swap {
+    position: absolute;
+    right: 10px;
+    width: 45px;
+    height: 26px;
+    line-height: 26px;
+    color: #756aa8;
+    background: transparent;
+    border: 1px solid #ff900d;
+    text-align: center;
+    border-radius: 6px;
+    font-size: 12px;
+
+    &:hover {
+      border: 1px solid #c66f08;
+    }
+  }
+
   &__cell {
     display: flex;
     align-items: center;
     padding: 16px 5px 16px 0;
     font-size: 18px;
+    position: relative;
 
     @include lg {
       padding: 10px 5px 10px 0;
@@ -194,7 +240,7 @@ export default {
       width: 20%;
 
       @include lg {
-        width: 21%;
+        width: 22%;
       }
 
       @include md {
@@ -346,6 +392,24 @@ body.dark {
 
     .assets-item__value {
       color: #c3ceeb;
+    }
+
+    &__swap {
+      position: absolute;
+      right: 10px;
+      width: 45px;
+      height: 26px;
+      line-height: 26px;
+      color: #fff;
+      background: transparent;
+      border: 1px solid #ff900d;
+      text-align: center;
+      border-radius: 6px;
+      font-size: 12px;
+
+      &:hover {
+        border: 1px solid #c66f08;
+      }
     }
 
     .assets-item__currency.assets-item__currency--left,
