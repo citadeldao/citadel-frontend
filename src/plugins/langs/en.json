@@ -1558,7 +1558,7 @@
 
     "swapView": {
         "swapFromNetwork": "From chain",
-        "swapToNetwork": "To chain",
+        "swapToNetwork": "Select chain",
         "selectChain": "Select chain",
         "fromToken": "From token",
         "toToken": "To token",

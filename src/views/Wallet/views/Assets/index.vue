@@ -59,6 +59,8 @@
           :item="stateCurrentWallet"
           :balance="stateCurrentWallet.balance"
           is-native-token
+          :has-swap="hasSwap"
+          :state-current-wallet="stateCurrentWallet"
           :is-active="currentWallet.net === stateCurrentWallet.net"
           @click="setCurrentToken(stateCurrentWallet)"
           :class="{ 'assets-single__item': !displayData.length }"
@@ -67,6 +69,8 @@
           v-for="(item, index) in displayData"
           :key="`${item.name}-${index}`"
           :balance="item.tokenBalance"
+          :state-current-wallet="stateCurrentWallet"
+          :has-swap="hasSwap"
           :item="item"
           :is-not-linked="isNotLinkedSnip20(item)"
           :is-active="item.net === currentWallet.net"
@@ -163,6 +167,7 @@ import useWallets from '@/compositions/useWallets';
 import { OUR_TOKEN, WALLET_TYPES } from '@/config/walletType';
 import { showAssetsExep } from '@/config/availableNets';
 import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
+import { metamaskNets } from '@/config/availableNets';
 
 export default {
   name: 'AssetsBlock',
@@ -208,6 +213,10 @@ export default {
     const mainIsLoading = inject('isLoading');
 
     const showBalance = computed(() => store.getters['balance/showBalance']);
+
+    const hasSwap = computed(() => {
+      return metamaskNets.includes(stateCurrentWallet.value.net.toLowerCase());
+    });
 
     const filterList = ref([
       { icon: 'byAlphabet', value: 'byAlphabet' },
@@ -422,6 +431,7 @@ export default {
       showAssetsExep,
       showBalance,
       HIDE_BALANCE_MASK,
+      hasSwap,
     };
   },
 };

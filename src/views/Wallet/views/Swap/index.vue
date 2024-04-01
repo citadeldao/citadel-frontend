@@ -50,34 +50,11 @@
       <template v-else>
         <EmptyList v-if="!hasSwap" :title="appError" />
         <template v-else>
-          <div class="swap__select-chain z1000">
-            <div v-if="false" class="autocomplete">
-              <Autocomplete
-                id="chains"
-                v-model:value="searchNetworkFrom"
-                :items="allNetworks"
-                split-value
-                initial-icon="curve-arrow"
-                :label="$t('swapView.swapFromNetwork')"
-                :placeholder="$t('swapView.selectChain')"
-                @update:value="selectNetworkFrom"
-              />
-            </div>
-            <div class="autocomplete">
-              <Autocomplete
-                id="chains"
-                v-model:value="searchNetworkTo"
-                :items="allNetworks"
-                split-value
-                initial-icon="curve-arrow"
-                :label="$t('swapView.swapToNetwork')"
-                :placeholder="$t('swapView.selectChain')"
-                @update:value="selectNetworkTo"
-              />
-            </div>
-          </div>
-          <!-- contracts -->
-          <div class="swap__select-chain mt10">
+          <!-- <div class="section">
+            <div class="section__title">FROM <span>{{ currentWallet.config.name }}</span></div>
+            <div class="section__sep" />
+          </div> -->
+          <div class="swap__select-chain z1001">
             <div class="autocomplete">
               <Autocomplete
                 id="chainTokenFrom"
@@ -90,20 +67,68 @@
                 @update:value="selectFromToken"
               />
             </div>
-            <div class="autocomplete ml10">
-              <Autocomplete
-                id="chainTokenTo"
-                v-model:value="searchToToken"
-                :items="chainTokensTo"
-                initial-icon="curve-arrow"
-                :label="$t('swapView.toToken')"
-                :placeholder="$t('swapView.selectContract')"
-                @update:value="selectToToken"
-              />
-            </div>
           </div>
-          <div class="swap__contracts">
-            <div
+          <div class="towrap">
+            <div class="section">
+              <div class="section__title">
+                TO CHAIN <span>{{ searchNetworkTo }}</span>
+              </div>
+              <!-- <div class="section__sep" /> -->
+            </div>
+            <div class="swap__select-chain z1000">
+              <div v-if="false" class="autocomplete">
+                <Autocomplete
+                  id="chains"
+                  v-model:value="searchNetworkFrom"
+                  :items="allNetworks"
+                  split-value
+                  initial-icon="curve-arrow"
+                  :label="$t('swapView.swapFromNetwork')"
+                  :placeholder="$t('swapView.selectChain')"
+                  @update:value="selectNetworkFrom"
+                />
+              </div>
+              <div class="autocomplete">
+                <Autocomplete
+                  id="chains"
+                  v-model:value="searchNetworkTo"
+                  :items="allNetworks"
+                  split-value
+                  initial-icon="curve-arrow"
+                  :label="$t('swapView.swapToNetwork')"
+                  :placeholder="$t('swapView.selectChain')"
+                  @update:value="selectNetworkTo"
+                />
+              </div>
+            </div>
+            <!-- contracts -->
+            <div class="swap__select-chain mt10">
+              <!-- <div class="autocomplete">
+              <Autocomplete
+                id="chainTokenFrom"
+                v-model:value="searchFromToken"
+                :items="chainTokensFrom"
+                show-balance
+                initial-icon="curve-arrow"
+                :label="$t('swapView.fromToken')"
+                :placeholder="$t('swapView.selectContract')"
+                @update:value="selectFromToken"
+              />
+            </div> -->
+              <div class="autocomplete">
+                <Autocomplete
+                  id="chainTokenTo"
+                  v-model:value="searchToToken"
+                  :items="chainTokensTo"
+                  initial-icon="curve-arrow"
+                  :label="$t('swapView.toToken')"
+                  :placeholder="$t('swapView.selectContract')"
+                  @update:value="selectToToken"
+                />
+              </div>
+            </div>
+            <div class="swap__contracts">
+              <!-- <div
               :class="{
                 hide:
                   nativeContract.toLowerCase() ===
@@ -112,17 +137,18 @@
               v-if="searchTokenFromComputed?.address"
             >
               {{ searchTokenFromComputed.address }}
-            </div>
-            <div
-              :class="{
-                hide:
-                  nativeContract.toLowerCase() ===
-                  searchTokenToComputed?.address?.toLowerCase(),
-              }"
-              v-if="searchTokenToComputed?.address"
-              class="ml10"
-            >
-              {{ searchTokenToComputed.address }}
+            </div> -->
+              <div
+                :class="{
+                  hide:
+                    nativeContract.toLowerCase() ===
+                    searchTokenToComputed?.address?.toLowerCase(),
+                }"
+                v-if="searchTokenToComputed?.address"
+                class="ml10"
+              >
+                {{ searchTokenToComputed.address }}
+              </div>
             </div>
           </div>
           <div
@@ -321,6 +347,8 @@ export default {
       return currentWallet.value.type;
     });
 
+    console.log('currentWallet', currentWallet.value);
+
     const { rawTx, rawTxError, prepareTransfer } = useCurrentWalletRequests();
 
     const connectLedgerCloseHandler = () => {
@@ -471,6 +499,23 @@ export default {
           };
         })
         .sort((a, b) => b.balance - a.balance);
+
+      if (localStorage.getItem('swapContract')) {
+        let swapFrom = localStorage.getItem('swapContract');
+        localStorage.removeItem('swapContract');
+        const isNative = swapFrom.length < 40;
+
+        if (isNative) {
+          swapFrom = nativeContract.value;
+        }
+
+        const findTokenFrom = chainTokensFrom.value.find(
+          (t) => t?.address?.toLowerCase() === swapFrom?.toLowerCase()
+        );
+        if (findTokenFrom) {
+          selectFromToken(findTokenFrom.name);
+        }
+      }
     };
 
     const selectNetworkTo = (network) => {
@@ -483,6 +528,7 @@ export default {
       }
 
       searchNetworkTo.value = selectChain;
+
       const currentChain = squidChains.value.find(
         (n) =>
           n.chainName.toLocaleLowerCase() === selectChain.toLocaleLowerCase()
@@ -725,6 +771,39 @@ export default {
   align-items: center;
   width: 100%;
 
+  .towrap {
+    margin-top: 20px;
+    background: #eaeef7;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-radius: 20px;
+    box-sizing: border-box;
+    padding: 20px;
+  }
+
+  .section {
+    display: flex;
+    width: 100%;
+    align-items: baseline;
+    margin-bottom: 20px;
+
+    &__title {
+      font-size: 22px;
+      color: #000;
+
+      span {
+        text-transform: capitalize;
+        color: #ff900d;
+      }
+    }
+
+    &__sep {
+      flex-grow: 1;
+      border-bottom: 1px dashed #fff;
+    }
+  }
+
   .network-target-wallets {
     width: calc(100% - 58px);
     z-index: 10;
@@ -755,6 +834,10 @@ export default {
     }
 
     &.z1000 {
+      z-index: 999;
+    }
+
+    &.z1001 {
       z-index: 1000;
     }
   }
@@ -876,6 +959,23 @@ export default {
 
 body.dark {
   .swap {
+    .towrap {
+      margin-top: 20px;
+      background: #313354;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      border-radius: 20px;
+      box-sizing: border-box;
+      padding: 20px;
+
+      .section {
+        .section__title {
+          color: #fff;
+        }
+      }
+    }
+
     .network-target-wallets {
       background: #393c55;
       border: 1px solid #4b4c63;
