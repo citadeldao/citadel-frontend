@@ -63,7 +63,11 @@
           }"
           class="assets-item__value"
         />
-        <div v-if="hasSwap" @click.stop="send" class="assets-item__send">
+        <div
+          @click.stop="send"
+          :class="{ noSwap: !hasSwap }"
+          class="assets-item__send"
+        >
           <SendAssetIcon />
         </div>
         <div v-if="hasSwap" @click.stop="swap" class="assets-item__send swap">
@@ -279,6 +283,10 @@ export default {
     }
 
     &.swap {
+      right: 10px;
+    }
+
+    &.noSwap {
       right: 10px;
     }
   }
