@@ -63,9 +63,19 @@
           }"
           class="assets-item__value"
         />
-        <div v-if="hasSwap" class="assets-item__swap" @click.stop="swap">
-          SWAP
+        <div v-if="hasSwap" @click.stop="send" class="assets-item__send">
+          <SendAssetIcon />
         </div>
+        <div v-if="hasSwap" @click.stop="swap" class="assets-item__send swap">
+          <SwapAssetIcon />
+        </div>
+        <!-- <div v-if="hasSwap" class="assets-item__swap" @click.stop="showAction">
+          Action
+        </div>
+        <div v-if="showActionMenu" class="assets-item__action">
+          <div class="assets-item__action-item" @click.stop="send">Send</div>
+          <div class="assets-item__action-item" @click.stop="swap">Swap</div>
+        </div> -->
       </div>
     </template>
   </div>
@@ -78,10 +88,12 @@ import AssetIcon from '@/components/UI/AssetIcon.vue';
 import { useStore } from 'vuex';
 import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
 import { useRouter } from 'vue-router';
+import SendAssetIcon from '@/assets/icons/sendasset.svg';
+import SwapAssetIcon from '@/assets/icons/swapasset.svg';
 
 export default {
   name: 'AssetsItem',
-  components: { AssetIcon },
+  components: { AssetIcon, SendAssetIcon, SwapAssetIcon },
   props: {
     item: {
       type: Object,
@@ -111,8 +123,15 @@ export default {
       type: Object,
       required: false,
     },
+    showActionMenu: {
+      type: Boolean,
+      default: false,
+    },
+    index: {
+      type: [String, Number],
+    },
   },
-  setup(props) {
+  setup(props, { emit }) {
     const showIconPlaceholder = ref(false);
     const iconPlaceholder = computed(() =>
       tokenIconPlaceholder(props.item.name)
@@ -127,6 +146,28 @@ export default {
       return props.item.tokenBalance.price.USD;
     });
 
+    const showAction = () => {
+      emit('showAction', props.index);
+    };
+
+    const send = () => {
+      emit('click');
+      setTimeout(() => {
+        if (props.item.parentCoin) {
+          router.push({
+            name: 'WalletSend',
+            params: {
+              token: props.item.net,
+              net: props.item.parentCoin.net,
+              address: props.item.address,
+            },
+          });
+          return;
+        }
+        router.push({ name: 'WalletSend' });
+      }, 100);
+    };
+
     const swap = () => {
       localStorage.setItem(
         'swapContract',
@@ -137,11 +178,13 @@ export default {
 
     return {
       swap,
+      send,
       showIconPlaceholder,
       iconPlaceholder,
       price,
       showBalance,
       HIDE_BALANCE_MASK,
+      showAction,
     };
   },
 };
@@ -191,21 +234,70 @@ export default {
     }
   }
 
+  &__action {
+    border: 1px solid #6b93c0;
+    position: absolute;
+    right: -5px;
+    bottom: -10px;
+    display: flex;
+    flex-direction: column;
+    width: 75px;
+    background: #f1f4ff;
+    border-radius: 8px;
+    box-sizing: border-box;
+  }
+
+  &__action-item {
+    padding: 10px;
+    font-size: 13px;
+    text-align: left;
+    color: #756aa8;
+
+    &:hover {
+      color: #6b93c0;
+      cursor: pointer;
+    }
+
+    &:first-child {
+      border-bottom: 1px dashed #6b93c0;
+    }
+  }
+
+  &__send {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 50px;
+    border-radius: 4px;
+
+    &:hover {
+      opacity: 0.6;
+    }
+
+    &.swap {
+      right: 10px;
+    }
+  }
+
   &__swap {
     position: absolute;
     right: 10px;
     width: 45px;
     height: 26px;
     line-height: 26px;
-    color: #756aa8;
+    color: #6b93c0;
     background: transparent;
-    border: 1px solid #ff900d;
+    border: 1px solid #756aa8;
     text-align: center;
     border-radius: 6px;
     font-size: 12px;
 
     &:hover {
-      border: 1px solid #c66f08;
+      border: 1px solid $dark-blue;
     }
   }
 
@@ -390,6 +482,27 @@ body.dark {
       color: #c3ceeb;
     }
 
+    &__send {
+      background: #2d2e42;
+    }
+
+    &__action {
+      border: 1px solid #6b93c0;
+      background: #313354;
+    }
+
+    &__action-item {
+      color: #756aa8;
+
+      &:hover {
+        color: #6b93c0;
+      }
+
+      &:first-child {
+        border-bottom: 1px dashed #6b93c0;
+      }
+    }
+
     &__swap {
       position: absolute;
       right: 10px;
@@ -398,13 +511,13 @@ body.dark {
       line-height: 26px;
       color: #fff;
       background: transparent;
-      border: 1px solid #ff900d;
+      border: 1px solid $dark-blue;
       text-align: center;
       border-radius: 6px;
       font-size: 12px;
 
       &:hover {
-        border: 1px solid #c66f08;
+        border: 1px solid $blue;
       }
     }
 

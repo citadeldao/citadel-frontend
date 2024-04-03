@@ -455,7 +455,7 @@ export default {
   }
 
   .claim-rewards__apy {
-    margin-left: 15px;
+    margin-left: 5px;
   }
 
   .claim-rewards__info {
