@@ -82,10 +82,22 @@
       </span>
       <div>
         <span
-          v-pretty-number="{ value: amount, currency: wallet?.code }"
+          v-pretty-number="{
+            value: amount,
+            currency:
+              activeTab === 'claim' && wallet.net === 'dydx'
+                ? 'USDC (dYdX)'
+                : wallet?.code,
+          }"
           class="send-direction__line-amount"
         />
-        <span class="send-direction__line-currency"> {{ wallet?.code }} </span>
+        <span class="send-direction__line-currency">
+          {{
+            activeTab === 'claim' && wallet.net === 'dydx'
+              ? 'USDC (dYdX)'
+              : wallet?.code
+          }}
+        </span>
         <div
           v-if="showRewardsListToggler"
           class="send-direction__line-show-rewards-list"
@@ -254,7 +266,7 @@ export default {
           amountTitle: 'amount',
         };
       }
-
+      console.log('activeTab.value', activeTab.value);
       return {
         title2: 'claim.claimTo',
         amountTitle: 'claim.amountToClaim',
