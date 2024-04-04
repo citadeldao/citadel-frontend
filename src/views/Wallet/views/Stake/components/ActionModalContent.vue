@@ -42,11 +42,21 @@
       <div class="action-modal-content__total-amount">
         <div class="action-modal-content__total-wrapper">
           <span
-            v-pretty-number="{ value: stakingAmount, currency: wallet?.code }"
+            v-pretty-number="{
+              value:
+                activeTab === 'claim' && dydxClaimBalance
+                  ? dydxClaimBalance.amount
+                  : stakingAmount,
+              currency: wallet?.code,
+            }"
             class="action-modal-content__total-amount-value"
           />
           <span class="action-modal-content__total-amount-currency">
-            {{ wallet.net === 'dydx' ? 'USDC (dYdX)' : wallet?.code }}
+            {{
+              activeTab === 'claim' && dydxClaimBalance
+                ? dydxClaimBalance.code
+                : wallet?.code
+            }}
           </span>
         </div>
         <!-- hide separator when fee receive 0 -->
@@ -174,6 +184,15 @@ export default {
       }
     );
 
+    const dydxClaimBalance = computed(() => {
+      if (props.wallet.net === 'dydx') {
+        return props.wallet?.balance?.rewardsList?.find(
+          (item) => item.net === 'dydx_f58fba735feb499792dab1da9e59c02e'
+        );
+      }
+      return null;
+    });
+
     const activeTab = inject('activeTab');
     const mode = inject('mode');
     const finalNodesList = computed(
@@ -181,6 +200,7 @@ export default {
     );
 
     return {
+      dydxClaimBalance,
       password,
       inputError,
       activeTab,

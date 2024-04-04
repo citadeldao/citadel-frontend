@@ -83,18 +83,21 @@
       <div>
         <span
           v-pretty-number="{
-            value: amount,
+            value:
+              activeTab === 'claim' && dydxClaimBalance
+                ? dydxClaimBalance.amount
+                : amount,
             currency:
-              activeTab === 'claim' && wallet.net === 'dydx'
-                ? 'USDC (dYdX)'
+              activeTab === 'claim' && dydxClaimBalance
+                ? dydxClaimBalance.code
                 : wallet?.code,
           }"
           class="send-direction__line-amount"
         />
         <span class="send-direction__line-currency">
           {{
-            activeTab === 'claim' && wallet.net === 'dydx'
-              ? 'USDC (dYdX)'
+            activeTab === 'claim' && dydxClaimBalance
+              ? dydxClaimBalance.code
               : wallet?.code
           }}
         </span>
@@ -234,6 +237,16 @@ export default {
 
       return data;
     });
+
+    const dydxClaimBalance = computed(() => {
+      if (props.wallet.net === 'dydx') {
+        return props.wallet?.balance?.rewardsList?.find(
+          (item) => item.net === 'dydx_f58fba735feb499792dab1da9e59c02e'
+        );
+      }
+      return null;
+    });
+
     const activeTab = inject('activeTab');
     const mode = inject('mode');
 
@@ -280,6 +293,7 @@ export default {
     );
 
     return {
+      dydxClaimBalance,
       getMiddleCutText,
       txUrl,
       titles,
