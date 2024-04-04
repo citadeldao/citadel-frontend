@@ -266,7 +266,7 @@ export default {
           amountTitle: 'amount',
         };
       }
-      console.log('activeTab.value', activeTab.value);
+
       return {
         title2: 'claim.claimTo',
         amountTitle: 'claim.amountToClaim',
