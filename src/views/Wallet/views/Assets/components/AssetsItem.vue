@@ -69,9 +69,21 @@
           class="assets-item__send"
         >
           <SendAssetIcon />
+          <div
+            style="position: absolute; color: transparent"
+            v-pretty-number="{
+              value: 'Send',
+            }"
+          />
         </div>
         <div v-if="hasSwap" @click.stop="swap" class="assets-item__send swap">
           <SwapAssetIcon />
+          <div
+            style="position: absolute; color: transparent"
+            v-pretty-number="{
+              value: 'Swap',
+            }"
+          />
         </div>
         <!-- <div v-if="hasSwap" class="assets-item__swap" @click.stop="showAction">
           Action
@@ -277,10 +289,6 @@ export default {
     justify-content: center;
     right: 50px;
     border-radius: 4px;
-
-    &:hover {
-      opacity: 0.6;
-    }
 
     &.swap {
       right: 10px;
