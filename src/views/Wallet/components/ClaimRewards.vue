@@ -57,7 +57,7 @@
           }"
         />
         <span class="claim-rewards__currency">
-          {{ currency }}
+          {{ currentWallet.net === 'dydx' ? 'USDC (dYdX)' : currency }}
         </span>
         <span
           v-if="!currentWalletInfo?.claimableRewards"
