@@ -64,6 +64,10 @@
           :is-active="currentWallet.net === stateCurrentWallet.net"
           @click="setCurrentToken(stateCurrentWallet)"
           :class="{ 'assets-single__item': !displayData.length }"
+          :show-action-menu="actionsState['native']"
+          :index="'native'"
+          @showAction="onShowAction"
+          v-click-away="onShowAction"
         />
         <AssetsItem
           v-for="(item, index) in displayData"
@@ -75,6 +79,10 @@
           :is-not-linked="isNotLinkedSnip20(item)"
           :is-active="item.net === currentWallet.net"
           @click="setCurrentToken(item)"
+          :index="index"
+          :show-action-menu="actionsState[index]"
+          @showAction="onShowAction"
+          v-click-away="onShowAction"
         />
 
         <Pagination
@@ -211,6 +219,14 @@ export default {
     const snip20TokenFee = ref(null);
     const snip20Token = ref(null);
     const mainIsLoading = inject('isLoading');
+    const actionsState = ref({});
+
+    const onShowAction = (ndx) => {
+      Object.keys(actionsState.value).forEach((key) => {
+        actionsState.value[key] = false;
+      });
+      actionsState.value[ndx] = !actionsState.value[ndx];
+    };
 
     const showBalance = computed(() => store.getters['balance/showBalance']);
 
@@ -403,6 +419,8 @@ export default {
       }
     );
     return {
+      onShowAction,
+      actionsState,
       TOKEN_STANDARDS,
       filteredTokensList,
       OUR_TOKEN,
