@@ -46,7 +46,7 @@
             class="action-modal-content__total-amount-value"
           />
           <span class="action-modal-content__total-amount-currency">
-            {{ wallet?.code }}
+            {{ wallet.net === 'dydx' ? 'USDC (dYdX)' : wallet?.code }}
           </span>
         </div>
         <!-- hide separator when fee receive 0 -->
