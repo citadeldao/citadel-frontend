@@ -560,9 +560,16 @@ export default {
       );
 
       chainTokensTo.value = [nativeCoin].concat(
-        tokens.filter(
-          (t) => t.address?.toLowerCase() !== nativeContract.value.toLowerCase()
-        )
+        tokens
+          .filter(
+            (t) =>
+              t.address?.toLowerCase() !== nativeContract.value.toLowerCase()
+          )
+          .sort((a, b) => {
+            if (a.name > b.name) return 1;
+            if (a.name < b.name) return -1;
+            return 0;
+          })
       );
     };
 
