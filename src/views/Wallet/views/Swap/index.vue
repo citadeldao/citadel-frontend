@@ -398,19 +398,34 @@ export default {
     });
 
     const allNetworks = computed(() =>
-      [].concat(squidChains.value).map((w) => ({
-        id: w.chainName,
-        title: `${w.chainName}:${w.chainId}`,
-        key: w.chainName,
-        chainId: w.chainId,
-        iconLink: w.chainIconURI,
-        icon: 'curve-arrow',
-      }))
+      []
+        .concat(squidChains.value)
+        .map((w) => ({
+          id: w.chainName,
+          title: `${w.chainName.slice(0, 1).toUpperCase()}${w.chainName.slice(
+            1
+          )}:${w.chainId}`,
+          key: w.chainName,
+          chainId: w.chainId,
+          iconLink: w.chainIconURI,
+          icon: 'curve-arrow',
+        }))
+        .sort((a, b) => {
+          if (a.title > b.title) return 1;
+          if (a.title < b.title) return -1;
+          return 0;
+        })
     );
 
     const networkTargetWallets = computed(() => {
-      const parseNetwork =
-        currentWallet.value.parentCoin?.net || currentWallet.value?.net;
+      let parseNetwork = ''; // currentWallet.value.parentCoin?.net || currentWallet.value?.net;
+
+      if (searchNetworkTo.value === 'Arbitrum') parseNetwork = 'arbitrum';
+      if (searchNetworkTo.value === 'Optimism') parseNetwork = 'optimism';
+      if (searchNetworkTo.value === 'Avalanche') parseNetwork = 'avalanche';
+      if (searchNetworkTo.value === 'Ethereum') parseNetwork = 'eth';
+      if (searchNetworkTo.value === 'Binance') parseNetwork = 'bsc';
+      if (searchNetworkTo.value === 'Polygon') parseNetwork = 'polygon';
 
       return wallets.value.filter((w) => {
         const findFromAlias =
@@ -532,10 +547,13 @@ export default {
 
       searchNetworkTo.value = selectChain;
 
-      const currentChain = squidChains.value.find(
+      let currentChain = squidChains.value.find(
         (n) =>
           n.chainName.toLocaleLowerCase() === selectChain.toLocaleLowerCase()
       );
+
+      if (!currentChain) currentChain = squidChains.value[0];
+
       const tokens = allTokens.value.filter(
         (t) => t.chainId === currentChain?.chainId
       );
@@ -545,9 +563,16 @@ export default {
       );
 
       chainTokensTo.value = [nativeCoin].concat(
-        tokens.filter(
-          (t) => t.address?.toLowerCase() !== nativeContract.value.toLowerCase()
-        )
+        tokens
+          .filter(
+            (t) =>
+              t.address?.toLowerCase() !== nativeContract.value.toLowerCase()
+          )
+          .sort((a, b) => {
+            if (a.name > b.name) return 1;
+            if (a.name < b.name) return -1;
+            return 0;
+          })
       );
     };
 
@@ -558,7 +583,7 @@ export default {
     });
 
     const searchTokenToComputed = computed(() => {
-      return chainTokensTo.value.find((t) => t.name === searchToToken.value);
+      return chainTokensTo.value.find((t) => t?.name === searchToToken.value);
     });
 
     const selectFromToken = async (token) => {

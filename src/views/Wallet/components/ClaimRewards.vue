@@ -13,6 +13,7 @@
         currentWallet?.type !== WALLET_TYPES.PUBLIC_KEY &&
         (currentWalletInfo?.claimableRewards || currentWalletInfo?.stake) &&
         notRewardsCoins.includes(currentWallet.net),
+      dydx: currentWallet.net === 'dydx',
     }"
     @click="handleBlockClick"
   >
@@ -50,15 +51,37 @@
         v-if="apy || currentWalletInfo?.claimableRewards"
         class="claim-rewards__info"
       >
-        <span
-          v-pretty-number="{
-            value: !showBalance ? HIDE_BALANCE_MASK : reward,
-            currency,
-          }"
-        />
-        <span class="claim-rewards__currency">
-          {{ currentWallet.net === 'dydx' ? 'USDC (dYdX)' : currency }}
-        </span>
+        <template v-if="currentWallet.net === 'dydx'">
+          <div
+            v-for="(rw, ndx) in currentWalletInfo.rewardsList.filter(
+              (item) => item.net === 'dydx_f58fba735feb499792dab1da9e59c02e'
+            )"
+            :key="ndx"
+          >
+            <span
+              v-pretty-number="{
+                value: !showBalance ? HIDE_BALANCE_MASK : rw.amount,
+                currency: rw.code,
+              }"
+            />
+
+            <span class="claim-rewards__currency">
+              {{ rw.code }}
+            </span>
+          </div>
+        </template>
+        <template v-else>
+          <span
+            v-pretty-number="{
+              value: !showBalance ? HIDE_BALANCE_MASK : reward,
+              currency,
+            }"
+          />
+
+          <span class="claim-rewards__currency">
+            {{ currentWallet.net === 'dydx' ? 'USDC' : currency }}
+          </span>
+        </template>
         <span
           v-if="!currentWalletInfo?.claimableRewards"
           class="claim-rewards__apy"
@@ -335,6 +358,12 @@ export default {
   }
   &__rewards-list-tooltip {
     display: inline-block;
+  }
+
+  &.dydx {
+    @include lg {
+      padding: 40px 20px 15px 24px;
+    }
   }
 
   &__section {
