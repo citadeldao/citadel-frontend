@@ -393,6 +393,7 @@ export default {
           `${hasSwap.value.chainName}:${hasSwap.value.chainId}`
         );
       }
+      console.log('hasSwap.value', hasSwap.value);
       isLoadingData.value = false;
     });
 
@@ -462,6 +463,8 @@ export default {
           token?.address?.toLowerCase() ===
           '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'.toLowerCase()
       );
+      console.log('tokens', tokens);
+      console.log('native', native);
 
       chainTokensFrom.value = [native].concat(
         tokens.filter((token) => {
@@ -584,6 +587,8 @@ export default {
       const fromAddress = addressFrom.value;
       const toAddress = addressTo.value;
 
+      console.log('cccc', currentWallet.value);
+
       isLoading.value = true;
       try {
         await store.dispatch('squid/getRoute', {
@@ -595,6 +600,7 @@ export default {
           fromAddress,
           toAddress,
           slippage: slipp,
+          isEvm: currentWallet.value.fee_key === 'gasPrice',
         });
       } catch (err) {
         if (err.response) {

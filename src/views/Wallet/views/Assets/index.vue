@@ -175,7 +175,7 @@ import useWallets from '@/compositions/useWallets';
 import { OUR_TOKEN, WALLET_TYPES } from '@/config/walletType';
 import { showAssetsExep } from '@/config/availableNets';
 import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
-import { metamaskNets } from '@/config/availableNets';
+// import { metamaskNets } from '@/config/availableNets';
 
 export default {
   name: 'AssetsBlock',
@@ -231,7 +231,7 @@ export default {
     const showBalance = computed(() => store.getters['balance/showBalance']);
 
     const hasSwap = computed(() => {
-      return metamaskNets.includes(stateCurrentWallet.value.net.toLowerCase());
+      return true; // metamaskNets.includes(stateCurrentWallet.value.net.toLowerCase());
     });
 
     const filterList = ref([

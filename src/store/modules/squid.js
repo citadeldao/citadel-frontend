@@ -71,10 +71,8 @@ export default {
         },
       });
       if (result?.data?.chains) {
-        commit(
-          types.SET_CHAINS,
-          result.data.chains.filter((ch) => ch.chainType === 'evm')
-        );
+        commit(types.SET_CHAINS, result.data.chains);
+        // .filter((ch) => ch.chainType === 'evm')
       } else {
         notify({
           type: 'warning',
@@ -94,31 +92,57 @@ export default {
         fromAddress,
         toAddress,
         slippage,
+        isEvm, // choose route type
       }
     ) {
-      const result = await axios.post(
-        `https://v2.api.squidrouter.com/v2/route`,
-        {
-          fromChain,
-          toChain,
-          fromToken,
-          toToken,
-          fromAmount, // mantissa
-          fromAddress,
-          toAddress,
-          // slippage,
-          slippageConfig: {
+      let result;
+
+      if (!isEvm) {
+        result = await axios.get(`https://api.0xsquid.com/v1/route`, {
+          params: {
+            fromChain,
+            toChain,
+            fromToken,
+            toToken,
+            fromAmount, // mantissa
+            fromAddress,
+            toAddress,
             slippage,
-            autoMode: 1,
+            // slippageConfig: {
+            //   slippage,
+            //   autoMode: 1,
+            // },
           },
-        },
-        {
           headers: {
             accept: 'application/json',
             'x-integrator-id': process.env.VUE_APP_SQUID_KEY,
           },
-        }
-      );
+        });
+      } else {
+        result = await axios.post(
+          `https://v2.api.squidrouter.com/v2/route`,
+          {
+            fromChain,
+            toChain,
+            fromToken,
+            toToken,
+            fromAmount, // mantissa
+            fromAddress,
+            toAddress,
+            // slippage,
+            slippageConfig: {
+              slippage,
+              autoMode: 1,
+            },
+          },
+          {
+            headers: {
+              accept: 'application/json',
+              'x-integrator-id': process.env.VUE_APP_SQUID_KEY,
+            },
+          }
+        );
+      }
       console.log('GET ROUTE', result.data);
       if (result?.data?.route) {
         commit(types.SET_ROUTE, result.data.route);

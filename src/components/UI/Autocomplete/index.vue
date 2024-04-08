@@ -137,7 +137,7 @@ export default {
       }
 
       return props.items.filter((item) =>
-        item.title.toLowerCase().includes(props.value.toLowerCase())
+        item.title?.toLowerCase().includes(props.value?.toLowerCase())
       );
     });
 
