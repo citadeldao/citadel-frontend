@@ -600,7 +600,7 @@ export default {
         (item) => item.key === searchNetworkFrom.value
       )?.chainId;
       const toChain = allNetworks.value.find(
-        (item) => item.key === searchNetworkTo.value
+        (item) => item.key.toLowerCase() === searchNetworkTo.value.toLowerCase()
       )?.chainId;
       const fromToken = searchTokenFromComputed.value.address;
       const toToken = searchTokenToComputed.value.address;
@@ -611,8 +611,6 @@ export default {
       const fromAmount = valueMantissa;
       const fromAddress = addressFrom.value;
       const toAddress = addressTo.value;
-
-      console.log('cccc', currentWallet.value);
 
       isLoading.value = true;
       try {
