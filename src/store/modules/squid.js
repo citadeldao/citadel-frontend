@@ -110,14 +110,15 @@ export default {
         fromAddress,
         toAddress,
         slippage,
-        isEvm, // choose route type
+        // isEvm, // choose route type
       }
     ) {
       let result;
 
-      if (!isEvm) {
-        result = await axios.get(`https://api.0xsquid.com/v1/route`, {
-          params: {
+      try {
+        result = await axios.post(
+          `https://v2.api.squidrouter.com/v2/route`,
+          {
             fromChain,
             toChain,
             fromToken,
@@ -125,39 +126,21 @@ export default {
             fromAmount, // mantissa
             fromAddress,
             toAddress,
-            slippage,
-          },
-          headers: {
-            accept: 'application/json',
-            'x-integrator-id': process.env.VUE_APP_SQUID_KEY,
-          },
-        });
-      } else {
-        try {
-          result = await axios.post(
-            `https://v2.api.squidrouter.com/v2/route`,
-            {
-              fromChain,
-              toChain,
-              fromToken,
-              toToken,
-              fromAmount, // mantissa
-              fromAddress,
-              toAddress,
-              // slippage,
-              slippageConfig: {
-                slippage,
-                autoMode: 1,
-              },
+            // slippage,
+            slippageConfig: {
+              slippage,
+              autoMode: 1,
             },
-            {
-              headers: {
-                accept: 'application/json',
-                'x-integrator-id': process.env.VUE_APP_SQUID_KEY,
-              },
-            }
-          );
-        } catch (err) {
+          },
+          {
+            headers: {
+              accept: 'application/json',
+              'x-integrator-id': process.env.VUE_APP_SQUID_KEY,
+            },
+          }
+        );
+      } catch (err) {
+        try {
           result = await axios.get(`https://api.0xsquid.com/v1/route`, {
             params: {
               fromChain,
@@ -174,6 +157,15 @@ export default {
               'x-integrator-id': process.env.VUE_APP_SQUID_KEY,
             },
           });
+        } catch (err) {
+          console.log(err);
+          if (err.response) {
+            notify({
+              type: 'warning',
+              text: `${err?.response?.data?.errors[0]?.errorType}: ${err?.response?.data?.errors[0]?.message}`,
+            });
+          }
+          return;
         }
       }
       console.log('GET ROUTE', result.data);

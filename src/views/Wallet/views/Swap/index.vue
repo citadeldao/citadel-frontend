@@ -624,6 +624,8 @@ export default {
       const toAddress = addressTo.value;
 
       isLoading.value = true;
+      store.dispatch('squid/resetRoute');
+
       try {
         await store.dispatch('squid/getRoute', {
           fromChain,
@@ -634,9 +636,10 @@ export default {
           fromAddress,
           toAddress,
           slippage: slipp,
-          isEvm: currentWallet.value.fee_key === 'gasPrice',
+          // isEvm: currentWallet.value.fee_key === 'gasPrice',
         });
       } catch (err) {
+        console.log('EEEEEEEEEE', err);
         isLoading.value = false;
         if (err.response) {
           notify({
@@ -671,7 +674,8 @@ export default {
           });
           return;
         }
-      } else {
+      }
+      if (txRoute.value?.estimate) {
         showInfoModal.value = true;
       }
     };
