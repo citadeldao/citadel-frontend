@@ -476,7 +476,8 @@ export default {
       const native = tokens.find(
         (token) =>
           token?.address?.toLowerCase() ===
-          '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'.toLowerCase()
+            '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'.toLowerCase() ||
+          token?.address?.length < 15
       );
       console.log('tokens', tokens);
       console.log('native', native);
@@ -494,6 +495,12 @@ export default {
           });
         })
       );
+
+      if (!native) {
+        chainTokensFrom.value = chainTokensFrom.value.slice(1);
+      }
+      console.log('chainTokensFrom.value', chainTokensFrom.value);
+      console.log('subtokensWallet.value', subtokensWallet.value);
 
       chainTokensFrom.value = chainTokensFrom.value
         .map((token) => {
@@ -574,6 +581,10 @@ export default {
             return 0;
           })
       );
+
+      if (!nativeCoin) {
+        chainTokensTo.value = chainTokensTo.value.slice(1);
+      }
     };
 
     const searchTokenFromComputed = computed(() => {
@@ -635,8 +646,13 @@ export default {
         isLoading.value = false;
       }
       isLoading.value = false;
-      console.log('txRoute', txRoute.value);
-      if (txRoute.value?.estimate) {
+      console.log('txRoute', txRoute.value, currentWallet.value);
+
+      const isCosmosNet =
+        currentWallet.value?.config?.frontConfiguration?.data?.codebase ===
+        'cosmos-sdk';
+
+      if (txRoute.value?.estimate && !isCosmosNet) {
         showInfoModal.value = true;
 
         try {
@@ -655,6 +671,8 @@ export default {
           });
           return;
         }
+      } else {
+        showInfoModal.value = true;
       }
     };
 

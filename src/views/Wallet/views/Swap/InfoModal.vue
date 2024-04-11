@@ -34,15 +34,19 @@
                 chainNetworks[txRoute.params[param]] || txRoute.params[param]
               }}</span>
               <span v-if="param === 'fromToken'">{{
-                (txRoute.params[param] + '').toLowerCase() ===
+                fromTokenComputed.toLowerCase() ===
                 '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'.toLowerCase()
                   ? signerWallet?.code
+                  : typeof txRoute.params[param] === 'object'
+                  ? txRoute.params[param]?.name
                   : txRoute.params[param]
               }}</span>
               <span v-if="param === 'toToken'">{{
-                (txRoute.params[param] + '').toLowerCase() ===
+                toTokenComputed.toLowerCase() ===
                 '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'.toLowerCase()
                   ? toToken?.symbol
+                  : typeof txRoute.params[param] === 'object'
+                  ? txRoute.params[param]?.name
                   : txRoute.params[param]
               }}</span>
               <span
@@ -211,9 +215,39 @@ export default {
       toAmountMinUSD: 'Minimum received, USD',
     });
 
+    const isCosmosTx = ref(false);
+
+    const fromTokenComputed = computed(() => {
+      if (typeof props.txRoute?.params?.fromToken === 'string')
+        return props.txRoute?.params?.fromToken;
+      return props.txRoute?.params?.fromToken.address;
+    });
+
+    const toTokenComputed = computed(() => {
+      if (typeof props.txRoute?.params?.toToken === 'string')
+        return props.txRoute?.params?.toToken;
+      return props.txRoute?.params?.toToken.address;
+    });
+
     onMounted(async () => {
+      if (!props.signerWallet.address.startsWith('0x')) {
+        isCosmosTx.value = true;
+        const msgObj = JSON.parse(props.txRoute.transactionRequest.data);
+        await store.dispatch('squid/convertToCosmosTx', {
+          net: props.signerWallet.net,
+          address: props.signerWallet.address,
+          data: [
+            {
+              type: msgObj.msgTypeUrl,
+              value: msgObj.msg,
+            },
+          ],
+        });
+        return; // cosmos
+      }
+
       if (
-        props.txRoute?.params?.fromToken?.toLowerCase() ===
+        fromTokenComputed.value.toLowerCase() ===
         '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'.toLowerCase()
       ) {
         return;
@@ -221,7 +255,7 @@ export default {
       const { data, error } = await citadel.getEvmAllowance({
         address: props.signerWallet.address,
         net: props.signerWallet.net,
-        tokenAddress: props.txRoute?.params?.fromToken,
+        tokenAddress: fromTokenComputed.value, // props.txRoute?.params?.fromToken,
         spenderAddress: props.txRoute?.transactionRequest?.target,
       });
 
@@ -243,7 +277,7 @@ export default {
         const { data, error } = await citadel.getEvmApprove({
           address: props.signerWallet.address,
           net: props.signerWallet.net,
-          tokenAddress: props.txRoute?.params?.fromToken,
+          tokenAddress: fromTokenComputed.value,
           spenderAddress: props.txRoute?.transactionRequest?.target,
           amount: props.txRoute?.estimate?.fromAmount,
         });
@@ -266,6 +300,14 @@ export default {
     const metamaskConnector = computed(
       () => store.getters['metamask/metamaskConnector']
     );
+
+    const keplrConnector = computed(
+      () => store.getters['keplr/keplrConnector']
+    );
+
+    const cosmosTx = computed(() => {
+      return store.getters['squid/cosmosTx'];
+    });
 
     const onChange = (val) => {
       password.value = val;
@@ -357,6 +399,94 @@ export default {
       confirmPassword.value = true;
       isLoading.value = true;
 
+      if (isCosmosTx.value) {
+        console.log('cosmosTx', cosmosTx.value);
+
+        if (props.signerWallet.type === WALLET_TYPES.KEPLR) {
+          const keplrResult = await keplrConnector.value.sendKeplrTransaction(
+            cosmosTx.value,
+            props.signerWallet.address,
+            {
+              preferNoSetFee: true,
+              preferNoSetMemo: true,
+            }
+          );
+
+          if (keplrResult.error) {
+            notify({
+              type: 'warning',
+              text: keplrResult.error,
+            });
+
+            isLoading.value = false;
+            return;
+          }
+
+          if (keplrResult.signature) {
+            const hash = await keplrConnector.value.getOutputHash(
+              props.signerWallet,
+              cosmosTx.value,
+              keplrResult
+            );
+
+            const data = await citadel.sendSignedTransaction(
+              props.signerWallet.id,
+              {
+                signedTransaction: hash,
+                proxy: false,
+              }
+            );
+
+            if (!data.error) {
+              emit('onSuccess', [data.data.txhash]);
+              props.onClose();
+              return;
+            } else {
+              isLoading.value = false;
+              notify({
+                type: 'warning',
+                text: data.error,
+              });
+              return;
+            }
+          }
+          return;
+        }
+
+        if (props.signerWallet.type === WALLET_TYPES.LEDGER) {
+          emit('showLedger');
+        }
+
+        if (
+          PRIVATE_PASSWORD_TYPES.includes(props.signerWallet.type) &&
+          incorrectPassword.value
+        ) {
+          isLoading.value = false;
+          return;
+        }
+
+        try {
+          const result = await props.signerWallet.signAndSendTransfer({
+            walletId: props.signerWallet.id,
+            rawTransaction: cosmosTx.value,
+            privateKey:
+              password.value &&
+              (await props.signerWallet.getPrivateKeyDecoded(password.value)),
+            derivationPath: props.signerWallet.derivationPath,
+            proxy: false,
+          });
+
+          if (result.data[0]) {
+            emit('onSuccess', [result.data[0]]);
+            props.onClose();
+          }
+        } catch (err) {
+          emit('onCancel');
+          props.onClose();
+        }
+        return;
+      }
+
       const txParse = {
         ...props.txRoute.transactionRequest,
         gas: +props.txRoute.transactionRequest.gasLimit,
@@ -446,6 +576,8 @@ export default {
     });
 
     return {
+      fromTokenComputed,
+      toTokenComputed,
       isLoading,
       confirmPassword,
       incorrectPassword,
