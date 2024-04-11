@@ -637,13 +637,13 @@ export default {
           isEvm: currentWallet.value.fee_key === 'gasPrice',
         });
       } catch (err) {
+        isLoading.value = false;
         if (err.response) {
           notify({
             type: 'warning',
             text: `${err?.response?.data?.errors[0]?.errorType}: ${err?.response?.data?.errors[0]?.message}`,
           });
         }
-        isLoading.value = false;
       }
       isLoading.value = false;
       console.log('txRoute', txRoute.value, currentWallet.value);

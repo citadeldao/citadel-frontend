@@ -252,11 +252,14 @@ export default {
       ) {
         return;
       }
+
       const { data, error } = await citadel.getEvmAllowance({
         address: props.signerWallet.address,
         net: props.signerWallet.net,
         tokenAddress: fromTokenComputed.value, // props.txRoute?.params?.fromToken,
-        spenderAddress: props.txRoute?.transactionRequest?.target,
+        spenderAddress:
+          props.txRoute?.transactionRequest?.target ||
+          props.txRoute?.transactionRequest?.targetAddress,
       });
 
       if (error) {
@@ -278,7 +281,9 @@ export default {
           address: props.signerWallet.address,
           net: props.signerWallet.net,
           tokenAddress: fromTokenComputed.value,
-          spenderAddress: props.txRoute?.transactionRequest?.target,
+          spenderAddress:
+            props.txRoute?.transactionRequest?.target ||
+            props.txRoute?.transactionRequest?.targetAddress,
           amount: props.txRoute?.estimate?.fromAmount,
         });
 
@@ -491,7 +496,9 @@ export default {
         ...props.txRoute.transactionRequest,
         gas: +props.txRoute.transactionRequest.gasLimit,
         from: props.signerWallet.address,
-        to: props.txRoute.transactionRequest.target,
+        to:
+          props.txRoute.transactionRequest?.target ||
+          props.txRoute.transactionRequest?.targetAddress,
         routeType: props.txRoute.transactionRequest.routeType,
         chainId: props.chainIdFrom,
         nonce:
@@ -502,6 +509,7 @@ export default {
       delete txParse.maxFeePerGas;
       delete txParse.maxPriorityFeePerGas;
       delete txParse.target;
+      delete txParse.targetAddress;
 
       // metamask, ...
       if (props.signerWallet.type === WALLET_TYPES.PUBLIC_KEY) {
@@ -557,6 +565,7 @@ export default {
           proxy: false,
         });
       } catch (err) {
+        isLoading.value = false;
         emit('onCancel');
         props.onClose();
         return;
