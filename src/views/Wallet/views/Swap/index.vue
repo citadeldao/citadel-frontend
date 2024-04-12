@@ -347,8 +347,6 @@ export default {
       return currentWallet.value.type;
     });
 
-    console.log('currentWallet', currentWallet.value);
-
     const { rawTx, rawTxError, prepareTransfer } = useCurrentWalletRequests();
 
     const connectLedgerCloseHandler = () => {
@@ -377,6 +375,7 @@ export default {
           ch.nativeCurrency.symbol.toLowerCase() ===
           currentWallet.value.code.toLowerCase()
       );
+      console.log('hasSwap.value', hasSwap.value);
 
       if (currentWallet.value.net === 'arbitrum') {
         hasSwap.value = squidChains.value.find(
@@ -393,7 +392,7 @@ export default {
           `${hasSwap.value.chainName}:${hasSwap.value.chainId}`
         );
       }
-      console.log('hasSwap.value', hasSwap.value);
+
       isLoadingData.value = false;
     });
 
@@ -418,8 +417,10 @@ export default {
     );
 
     const networkTargetWallets = computed(() => {
-      let parseNetwork = ''; // currentWallet.value.parentCoin?.net || currentWallet.value?.net;
+      let parseNetwork = searchNetworkTo.value.toLowerCase(); // currentWallet.value.parentCoin?.net || currentWallet.value?.net;
+      console.log('searchNetworkTo.value', parseNetwork);
 
+      if (parseNetwork === 'cosmoshub') parseNetwork = 'cosmos';
       if (searchNetworkTo.value === 'Arbitrum') parseNetwork = 'arbitrum';
       if (searchNetworkTo.value === 'Optimism') parseNetwork = 'optimism';
       if (searchNetworkTo.value === 'Avalanche') parseNetwork = 'avalanche';
@@ -526,16 +527,25 @@ export default {
         .sort((a, b) => b.balance - a.balance);
 
       if (localStorage.getItem('swapContract')) {
-        let swapFrom = localStorage.getItem('swapContract');
+        let swapFrom = localStorage.getItem('swapContract').split(':')[0];
+        const symbolFrom = localStorage.getItem('swapContract').split(':')[1];
         localStorage.removeItem('swapContract');
-        const isNative = swapFrom.length < 40;
-
-        if (isNative) {
-          swapFrom = nativeContract.value;
-        }
 
         const findTokenFrom = chainTokensFrom.value.find(
-          (t) => t?.address?.toLowerCase() === swapFrom?.toLowerCase()
+          (t) =>
+            t?.address?.toLowerCase() === swapFrom?.toLowerCase() ||
+            t?.address?.toLowerCase().includes(swapFrom?.toLowerCase()) ||
+            t?.address
+              ?.toLowerCase()
+              .includes(nativeContract.value.toLowerCase()) ||
+            t?.name?.toLowerCase().includes(swapFrom?.toLowerCase()) ||
+            t?.symbol.toLowerCase() === symbolFrom.toLowerCase()
+        );
+        console.log(
+          'findTokenFrom',
+          findTokenFrom,
+          swapFrom?.toLowerCase(),
+          chainTokensFrom.value
         );
         if (findTokenFrom) {
           selectFromToken(findTokenFrom.name);
@@ -639,7 +649,6 @@ export default {
           // isEvm: currentWallet.value.fee_key === 'gasPrice',
         });
       } catch (err) {
-        console.log('EEEEEEEEEE', err);
         isLoading.value = false;
         if (err.response) {
           notify({
@@ -735,7 +744,7 @@ export default {
         return currentWallet.value?.balance?.mainBalance - 0.0005;
       }
 
-      if (!token) return 0;
+      if (!token) return searchTokenFromComputed.value?.balance || 0;
 
       return token?.tokenBalance?.mainBalance;
     });

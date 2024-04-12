@@ -187,7 +187,7 @@ export default {
     const swap = () => {
       localStorage.setItem(
         'swapContract',
-        props.item.net.split('_')[1] || props.item.net
+        `${props.item.net.split('_')[1] || props.item.net}:${props.item.code}`
       );
       router.push({ name: 'WalletSwap' });
     };
