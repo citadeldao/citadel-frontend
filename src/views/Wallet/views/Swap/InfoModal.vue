@@ -405,8 +405,6 @@ export default {
       isLoading.value = true;
 
       if (isCosmosTx.value) {
-        console.log('cosmosTx', cosmosTx.value);
-
         if (props.signerWallet.type === WALLET_TYPES.KEPLR) {
           const keplrResult = await keplrConnector.value.sendKeplrTransaction(
             cosmosTx.value,

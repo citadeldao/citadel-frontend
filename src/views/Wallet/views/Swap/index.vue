@@ -349,7 +349,6 @@ export default {
           ch.nativeCurrency.symbol.toLowerCase() ===
           currentWallet.value.code.toLowerCase()
       );
-      console.log('hasSwap.value', hasSwap.value);
 
       if (currentWallet.value.net === 'arbitrum') {
         hasSwap.value = squidChains.value.find(
@@ -457,8 +456,6 @@ export default {
             '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'.toLowerCase() ||
           token?.address?.length < 15
       );
-      console.log('tokens', tokens);
-      console.log('native', native);
 
       chainTokensFrom.value = [native].concat(
         tokens.filter((token) => {
@@ -477,8 +474,6 @@ export default {
       if (!native) {
         chainTokensFrom.value = chainTokensFrom.value.slice(1);
       }
-      console.log('chainTokensFrom.value', chainTokensFrom.value);
-      console.log('subtokensWallet.value', subtokensWallet.value);
 
       chainTokensFrom.value = chainTokensFrom.value
         .map((token) => {
@@ -641,7 +636,6 @@ export default {
         }
       }
       isLoading.value = false;
-      console.log('txRoute', txRoute.value, currentWallet.value);
 
       const isCosmosNet =
         currentWallet.value?.config?.frontConfiguration?.data?.codebase ===

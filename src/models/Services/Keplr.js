@@ -105,7 +105,6 @@ export default class keplrConnector {
         (await this.getSignType(rawTx)) === 'direct' &&
         !walletInfo.isNanoLedger
       ) {
-        console.log('DIRECT');
         const res = await window.keplr.signDirect(
           data.chain_id || data.json.chain_id,
           signer,
@@ -134,7 +133,7 @@ export default class keplrConnector {
       if (copiedData?.fee?.granter) {
         delete copiedData.fee.granter;
       }
-      console.log('JSON');
+
       const res = await window.keplr.signAmino(
         copiedData.chain_id || copiedData.json.chain_id,
         signer,
