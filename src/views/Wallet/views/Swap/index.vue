@@ -50,10 +50,6 @@
       <template v-else>
         <EmptyList v-if="!hasSwap" :title="appError" />
         <template v-else>
-          <!-- <div class="section">
-            <div class="section__title">FROM <span>{{ currentWallet.config.name }}</span></div>
-            <div class="section__sep" />
-          </div> -->
           <div class="swap__select-chain z1001">
             <div class="autocomplete">
               <Autocomplete
@@ -73,7 +69,6 @@
               <div class="section__title">
                 TO CHAIN <span>{{ searchNetworkTo }}</span>
               </div>
-              <!-- <div class="section__sep" /> -->
             </div>
             <div class="swap__select-chain z1000">
               <div v-if="false" class="autocomplete">
@@ -103,23 +98,12 @@
             </div>
             <!-- contracts -->
             <div class="swap__select-chain mt10">
-              <!-- <div class="autocomplete">
-              <Autocomplete
-                id="chainTokenFrom"
-                v-model:value="searchFromToken"
-                :items="chainTokensFrom"
-                show-balance
-                initial-icon="curve-arrow"
-                :label="$t('swapView.fromToken')"
-                :placeholder="$t('swapView.selectContract')"
-                @update:value="selectFromToken"
-              />
-            </div> -->
               <div class="autocomplete">
                 <Autocomplete
                   id="chainTokenTo"
                   v-model:value="searchToToken"
                   :items="chainTokensTo"
+                  split-value
                   initial-icon="curve-arrow"
                   :label="$t('swapView.toToken')"
                   :placeholder="$t('swapView.selectContract')"
@@ -128,16 +112,6 @@
               </div>
             </div>
             <div class="swap__contracts">
-              <!-- <div
-              :class="{
-                hide:
-                  nativeContract.toLowerCase() ===
-                  searchTokenFromComputed?.address?.toLowerCase(),
-              }"
-              v-if="searchTokenFromComputed?.address"
-            >
-              {{ searchTokenFromComputed.address }}
-            </div> -->
               <div
                 :class="{
                   hide:
@@ -223,7 +197,6 @@
                 />
               </div>
               <div class="slippage">
-                <!-- <div class="slippage__label">Slippage tolerance</div> -->
                 <div
                   v-for="(slipp, ndx) in [0.1, 0.3, 0.5, 1, 2, 3]"
                   :key="ndx"
@@ -307,6 +280,7 @@ export default {
 
     const searchFromToken = ref('');
     const searchToToken = ref('');
+    const searchToTokenFullStr = ref('');
 
     const chainTokensFrom = ref([]);
     const chainTokensTo = ref([]);
@@ -416,17 +390,20 @@ export default {
         })
     );
 
+    const citadelNetworks = computed(
+      () => store.getters['networks/networksList']
+    );
+
     const networkTargetWallets = computed(() => {
       let parseNetwork = searchNetworkTo.value.toLowerCase(); // currentWallet.value.parentCoin?.net || currentWallet.value?.net;
-      console.log('searchNetworkTo.value', parseNetwork);
+      const networkSquid = allNetworks.value.find((item) =>
+        item.title.includes(searchNetworkTo.value)
+      );
+      const networkChainId = networkSquid?.chainId;
 
-      if (parseNetwork === 'cosmoshub') parseNetwork = 'cosmos';
-      if (searchNetworkTo.value === 'Arbitrum') parseNetwork = 'arbitrum';
-      if (searchNetworkTo.value === 'Optimism') parseNetwork = 'optimism';
-      if (searchNetworkTo.value === 'Avalanche') parseNetwork = 'avalanche';
-      if (searchNetworkTo.value === 'Ethereum') parseNetwork = 'eth';
-      if (searchNetworkTo.value === 'Binance') parseNetwork = 'bsc';
-      if (searchNetworkTo.value === 'Polygon') parseNetwork = 'polygon';
+      parseNetwork = citadelNetworks.value.find(
+        (network) => network.chainId == networkChainId
+      )?.net;
 
       return wallets.value.filter((w) => {
         const findFromAlias =
@@ -541,12 +518,7 @@ export default {
             t?.name?.toLowerCase().includes(swapFrom?.toLowerCase()) ||
             t?.symbol.toLowerCase() === symbolFrom.toLowerCase()
         );
-        console.log(
-          'findTokenFrom',
-          findTokenFrom,
-          swapFrom?.toLowerCase(),
-          chainTokensFrom.value
-        );
+
         if (findTokenFrom) {
           selectFromToken(findTokenFrom.name);
         }
@@ -555,6 +527,7 @@ export default {
 
     const selectNetworkTo = (network) => {
       searchToToken.value = '';
+      searchToTokenFullStr.value = '';
       const selectChain = network.split(':')[0];
 
       if (!selectChain) {
@@ -595,6 +568,13 @@ export default {
       if (!nativeCoin) {
         chainTokensTo.value = chainTokensTo.value.slice(1);
       }
+
+      chainTokensTo.value = chainTokensTo.value.map((item) => {
+        return {
+          ...item,
+          title: `${item.title}:${item.address}`,
+        };
+      });
     };
 
     const searchTokenFromComputed = computed(() => {
@@ -604,7 +584,9 @@ export default {
     });
 
     const searchTokenToComputed = computed(() => {
-      return chainTokensTo.value.find((t) => t?.name === searchToToken.value);
+      return chainTokensTo.value.find(
+        (t) => t?.title === searchToTokenFullStr.value
+      );
     });
 
     const selectFromToken = async (token) => {
@@ -612,7 +594,8 @@ export default {
     };
 
     const selectToToken = (token) => {
-      searchToToken.value = token;
+      searchToTokenFullStr.value = token;
+      searchToToken.value = token.split(':')[0];
     };
 
     const getRoute = async () => {
