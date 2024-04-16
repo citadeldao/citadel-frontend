@@ -180,7 +180,6 @@ export default {
   },
   emits: ['update:txComment'],
   setup(props) {
-    console.log('send direction 1', props.customСode, props.amount);
     const { t } = useI18n();
     const instance = getCurrentInstance();
     const txDuration = ref('');

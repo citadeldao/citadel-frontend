@@ -223,7 +223,7 @@ export default {
       }
       return '326px';
     });
-    console.log('props.currentWallet', props.currentWallet);
+
     const currentWalletInfo = computed(() => {
       return props.isCurrentToken
         ? props.currentWallet.tokenBalance

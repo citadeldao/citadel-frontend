@@ -188,7 +188,6 @@ export default {
     const store = useStore();
     const isMultiple = inject('isMultiple');
     const currentKtAddress = inject('currentKtAddress');
-    console.log('send direction 2', props.customCode, props.amount);
 
     const txUrl = computed(() => {
       const data = [];
