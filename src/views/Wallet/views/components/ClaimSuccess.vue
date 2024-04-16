@@ -13,13 +13,13 @@
       v-model:txComment="comment"
       :to="currentToken ? '' : currentWallet.address"
       :wallet="currentToken || currentWallet"
-      :custom-code="claimCustom ? claimCustom.code : ''"
+      :custom-code="claimCustom.code ? claimCustom.code : ''"
       :amount="
         currentToken
           ? totalAmount
-          : claimCustom
+          : claimCustom.amount
           ? claimCustom.amount
-          : currentWallet.balance.claimableRewards
+          : claimableRewards
       "
       :tx-hash="txHash"
       :show-from="false"
@@ -80,6 +80,8 @@ export default {
       );
     });
 
+    const claimableRewards = ref(props.currentWallet.balance.claimableRewards);
+
     const claimCustom = ref(null);
     claimCustom.value = { ...customClaimBalance.value };
 
@@ -92,6 +94,7 @@ export default {
 
     return {
       claimCustom,
+      claimableRewards,
       comment,
     };
   },
