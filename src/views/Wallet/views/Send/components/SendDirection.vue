@@ -19,10 +19,15 @@
       <span class="send-direction__line-title"> {{ $t('amount') }}: </span>
       <div>
         <span
-          v-pretty-number="{ value: amount, currency: wallet?.code }"
+          v-pretty-number="{
+            value: amount,
+            currency: customCode || wallet?.code,
+          }"
           class="send-direction__line-amount"
         />
-        <span class="send-direction__line-currency"> {{ wallet?.code }} </span>
+        <span class="send-direction__line-currency">
+          {{ customCode || wallet?.code }}
+        </span>
       </div>
     </div>
     <div v-if="fee || currentWallet?.hasResource" class="send-direction__line">
@@ -129,6 +134,9 @@ export default {
     amount: {
       type: [String, Number],
     },
+    customCode: {
+      type: [String, Number],
+    },
     memo: {
       type: String,
       default: '',
@@ -180,6 +188,7 @@ export default {
     const store = useStore();
     const isMultiple = inject('isMultiple');
     const currentKtAddress = inject('currentKtAddress');
+    console.log('send direction 2', props.customCode, props.amount);
 
     const txUrl = computed(() => {
       const data = [];

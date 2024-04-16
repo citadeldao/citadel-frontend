@@ -43,6 +43,7 @@
     <SendDirection
       :to="to"
       :amount="amount"
+      :custom-code="customCode"
       :wallet="wallet"
       :viewing-key="viewingKey"
       :tx-hash="txHash"
@@ -116,6 +117,10 @@ export default {
       type: Object,
       default: () => {},
     },
+    customCode: {
+      type: [Number, String],
+      default: '',
+    },
     amount: {
       type: [Number, String],
       default: 0,
@@ -175,6 +180,7 @@ export default {
   },
   emits: ['update:txComment'],
   setup(props) {
+    console.log('send direction 1', props.customСode, props.amount);
     const { t } = useI18n();
     const instance = getCurrentInstance();
     const txDuration = ref('');
