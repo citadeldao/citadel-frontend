@@ -857,4 +857,18 @@ export default {
       href: 'https://www.coingecko.com/en/coins/dydx-chain',
     },
   },
+  nibiru: {
+    web: {
+      title: 'nibiru.fi',
+      href: 'https://nibiru.fi/',
+    },
+    twitter: {
+      title: '@NibiruChain',
+      href: 'https://twitter.com/NibiruChain',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/nibiru',
+    },
+  },
 };

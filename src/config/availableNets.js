@@ -56,6 +56,7 @@ export const networksFilterCategory = {
     'kujira',
     'lum',
     'mantle',
+    'nibiru',
     'nolus',
     'omniflix',
     'osmosis',
