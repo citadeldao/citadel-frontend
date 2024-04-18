@@ -476,8 +476,9 @@ export default {
       }
 
       if (
-        chainTokensFrom.value[0].chainId === chainTokensFrom.value[1].chainId &&
-        chainTokensFrom.value[0].address === chainTokensFrom.value[1].address
+        chainTokensFrom.value[0]?.chainId ===
+          chainTokensFrom.value[1]?.chainId &&
+        chainTokensFrom.value[0]?.address === chainTokensFrom.value[1]?.address
       ) {
         chainTokensFrom.value = chainTokensFrom.value.slice(1);
       }
