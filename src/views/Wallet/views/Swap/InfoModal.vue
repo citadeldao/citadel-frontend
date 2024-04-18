@@ -233,13 +233,24 @@ export default {
       if (!props.signerWallet.address.startsWith('0x')) {
         isCosmosTx.value = true;
         const msgObj = JSON.parse(props.txRoute.transactionRequest.data);
+        let wasmStructure;
+        if (msgObj.msg.wasm) {
+          wasmStructure = { ...msgObj.msg.wasm };
+          wasmStructure.sender = props.signerWallet.address;
+          wasmStructure.funds = [
+            {
+              amount: props.txRoute.params.fromAmount,
+              denom: props.txRoute.params.fromToken.address,
+            },
+          ];
+        }
         await store.dispatch('squid/convertToCosmosTx', {
           net: props.signerWallet.net,
           address: props.signerWallet.address,
           data: [
             {
               type: msgObj.msgTypeUrl,
-              value: msgObj.msg,
+              value: wasmStructure || msgObj.msg,
             },
           ],
         });
