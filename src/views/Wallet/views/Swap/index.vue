@@ -475,6 +475,13 @@ export default {
         chainTokensFrom.value = chainTokensFrom.value.slice(1);
       }
 
+      if (
+        chainTokensFrom.value[0].chainId === chainTokensFrom.value[1].chainId &&
+        chainTokensFrom.value[0].address === chainTokensFrom.value[1].address
+      ) {
+        chainTokensFrom.value = chainTokensFrom.value.slice(1);
+      }
+
       chainTokensFrom.value = chainTokensFrom.value
         .map((token) => {
           const subToken = subtokensWallet.value.find((subToken) =>
