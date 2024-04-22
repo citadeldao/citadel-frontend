@@ -487,9 +487,14 @@ export default {
 
       chainTokensFrom.value = chainTokensFrom.value
         .map((token) => {
-          const subToken = subtokensWallet.value.find((subToken) =>
-            subToken?.net.toLowerCase().includes(token?.address?.toLowerCase())
-          );
+          const subToken = subtokensWallet.value.find((subToken) => {
+            return (
+              subToken?.net
+                .toLowerCase()
+                .includes(token?.address?.toLowerCase()) &&
+              token?.address?.length > 20
+            );
+          });
           let balance;
 
           if (!subToken) {
@@ -652,8 +657,6 @@ export default {
         'cosmos-sdk';
 
       if (txRoute.value?.estimate && !isCosmosNet) {
-        showInfoModal.value = true;
-
         try {
           await prepareTransfer({
             amount: 0.00001,
@@ -663,7 +666,9 @@ export default {
           if (rawTx.value.transaction) {
             txNonce.value = rawTx.value.transaction.nonce;
           }
+          showInfoModal.value = true;
         } catch (err) {
+          isLoadingData.value = false;
           notify({
             type: 'warning',
             text: rawTxError.value,
