@@ -30,6 +30,8 @@
           :close-success-modal="closeSuccessModal"
           :success-click-handler="successClickHandler"
           :wallet="currentWallet"
+          :custom-code="searchTokenFromComputed?.symbol || ''"
+          :amount="amount"
           :success-tx="successHash"
           @changeComment="onChangeComment"
         />
