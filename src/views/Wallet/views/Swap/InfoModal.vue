@@ -395,7 +395,7 @@ export default {
       }
 
       if (
-        typeof result.data[0] === 'string' &&
+        typeof result?.data[0] === 'string' &&
         [64, 66].includes(result.data[0].length)
       ) {
         emit('onSuccess', [result.data], true);
@@ -504,6 +504,7 @@ export default {
       const txParse = {
         ...props.txRoute.transactionRequest,
         gas: +props.txRoute.transactionRequest.gasLimit,
+        gasPrice: props.txRoute.transactionRequest.maxFeePerGas,
         from: props.signerWallet.address,
         to:
           props.txRoute.transactionRequest?.target ||
@@ -581,7 +582,7 @@ export default {
       }
 
       if (
-        typeof result.data[0] === 'string' &&
+        typeof result?.data[0] === 'string' &&
         [64, 66].includes(result.data[0].length)
       ) {
         emit('onSuccess', [result.data]);

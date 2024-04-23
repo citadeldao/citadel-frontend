@@ -80,12 +80,13 @@
                 <div
                   v-for="(componentInner, key) in component.value"
                   :key="key"
-                  class="inner-tx__view-item-component-flex"
+                  class="inner-tx__view-item-component"
                 >
                   <div class="value">
                     <div class="value-symbol">
                       {{ componentInner.symbol }}
                     </div>
+                    &nbsp;
                     <div class="title">{{ componentInner.text }}</div>
                   </div>
                 </div>
