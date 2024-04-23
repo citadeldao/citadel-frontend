@@ -725,7 +725,10 @@ export default {
       const token = subtokensWallet.value.find((token) => {
         return token.net
           .toLowerCase()
-          .includes(searchTokenFromComputed.value?.address.toLowerCase());
+          .includes(
+            searchTokenFromComputed.value?.address.toLowerCase() &&
+              searchTokenFromComputed.value?.address?.length > 20
+          );
       });
 
       if (
