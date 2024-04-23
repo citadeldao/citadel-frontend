@@ -13,8 +13,13 @@
       v-model:txComment="comment"
       :to="currentToken ? '' : currentWallet.address"
       :wallet="currentToken || currentWallet"
+      :custom-code="claimCustom.code ? claimCustom.code : ''"
       :amount="
-        currentToken ? totalAmount : currentWallet.balance.claimableRewards
+        currentToken
+          ? totalAmount
+          : claimCustom.amount
+          ? claimCustom.amount
+          : claimableRewards
       "
       :tx-hash="txHash"
       :show-from="false"
@@ -26,7 +31,7 @@
 <script>
 import ModalContent from '@/components/ModalContent';
 import SuccessModalContent from '../../views/Send/components/SuccessModalContent';
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 export default {
   components: {
@@ -61,8 +66,24 @@ export default {
       required: true,
     },
   },
-  setup(_, { emit }) {
+  setup(props, { emit }) {
     const comment = ref('');
+
+    const customClaimBalance = computed(() => {
+      if (!props.currentWallet) return null;
+      const defaultRewards =
+        props.currentWallet.config?.frontConfiguration?.data?.default_rewards;
+      if (!defaultRewards) return null;
+
+      return props.currentWallet?.balance?.rewardsList?.find(
+        (item) => item.net === defaultRewards
+      );
+    });
+
+    const claimableRewards = ref(props.currentWallet.balance.claimableRewards);
+
+    const claimCustom = ref(null);
+    claimCustom.value = { ...customClaimBalance.value };
 
     watch(
       () => comment.value,
@@ -72,6 +93,8 @@ export default {
     );
 
     return {
+      claimCustom,
+      claimableRewards,
       comment,
     };
   },

@@ -1370,6 +1370,11 @@
             "title": "DYDX",
             "description": "",
             "shortDescription": ""
+        },
+        "nibiru":{
+            "title": "",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "",

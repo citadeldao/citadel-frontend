@@ -51,10 +51,14 @@
         v-if="apy || currentWalletInfo?.claimableRewards"
         class="claim-rewards__info"
       >
-        <template v-if="currentWallet.net === 'dydx'">
+        <template
+          v-if="currentWallet?.config?.frontConfiguration?.data.default_rewards"
+        >
           <div
             v-for="(rw, ndx) in currentWalletInfo.rewardsList.filter(
-              (item) => item.net === 'dydx_f58fba735feb499792dab1da9e59c02e'
+              (item) =>
+                item.net ===
+                currentWallet?.config?.frontConfiguration?.data.default_rewards
             )"
             :key="ndx"
           >
@@ -219,6 +223,7 @@ export default {
       }
       return '326px';
     });
+
     const currentWalletInfo = computed(() => {
       return props.isCurrentToken
         ? props.currentWallet.tokenBalance

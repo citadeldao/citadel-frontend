@@ -13,6 +13,8 @@
       v-model:txComment="txComment"
       :show-from="false"
       :wallet="wallet"
+      :amount="amount"
+      :custom-code="customCode"
       :tx-hash="successTx"
       :fee="extensionTransactionForSign?.fee"
       :type="extensionTransactionForSign?.type"
@@ -34,10 +36,17 @@ export default {
     closeSuccessModal: {
       required: true,
     },
+    customCode: {
+      type: String,
+      default: '',
+    },
     successClickHandler: {
       required: true,
     },
     wallet: {
+      required: true,
+    },
+    amount: {
       required: true,
     },
     successTx: {

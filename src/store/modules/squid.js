@@ -5,6 +5,7 @@ const types = {
   SET_TOKENS: 'SET_TOKENS',
   SET_CHAINS: 'SET_CHAINS',
   SET_ROUTE: 'SET_ROUTE',
+  SET_COSMOS_TX: 'SET_COSMOS_TX',
 };
 
 export default {
@@ -13,12 +14,14 @@ export default {
     tokens: [],
     chains: [],
     route: null,
+    cosmosTx: null,
   }),
 
   getters: {
     tokens: (state) => state.tokens,
     chains: (state) => state.chains,
     route: (state) => state.route,
+    cosmosTx: (state) => state.cosmosTx,
   },
 
   mutations: {
@@ -31,9 +34,24 @@ export default {
     [types.SET_ROUTE](state, value) {
       state.route = value;
     },
+    [types.SET_COSMOS_TX](state, value) {
+      state.cosmosTx = value;
+    },
   },
 
   actions: {
+    async convertToCosmosTx({ commit }, { net, address, data }) {
+      const result = await axios.post(
+        `https://api.3ahtim54r.ru/blockchain/${net}/${address}/builder/customTx`,
+        {
+          data,
+        }
+      );
+
+      if (result?.data?.data?.transaction) {
+        commit(types.SET_COSMOS_TX, result?.data?.data);
+      }
+    },
     async fetchTokens({ commit }) {
       const result = await axios.get('https://api.0xsquid.com/v1/tokens', {
         headers: {
@@ -71,10 +89,8 @@ export default {
         },
       });
       if (result?.data?.chains) {
-        commit(
-          types.SET_CHAINS,
-          result.data.chains.filter((ch) => ch.chainType === 'evm')
-        );
+        commit(types.SET_CHAINS, result.data.chains);
+        // .filter((ch) => ch.chainType === 'evm')
       } else {
         notify({
           type: 'warning',
@@ -94,31 +110,64 @@ export default {
         fromAddress,
         toAddress,
         slippage,
+        // isEvm, // choose route type
       }
     ) {
-      const result = await axios.post(
-        `https://v2.api.squidrouter.com/v2/route`,
-        {
-          fromChain,
-          toChain,
-          fromToken,
-          toToken,
-          fromAmount, // mantissa
-          fromAddress,
-          toAddress,
-          // slippage,
-          slippageConfig: {
-            slippage,
-            autoMode: 1,
+      let result;
+
+      try {
+        result = await axios.post(
+          `https://v2.api.squidrouter.com/v2/route`,
+          {
+            fromChain,
+            toChain,
+            fromToken,
+            toToken,
+            fromAmount, // mantissa
+            fromAddress,
+            toAddress,
+            // slippage,
+            slippageConfig: {
+              slippage,
+              autoMode: 1,
+            },
           },
-        },
-        {
-          headers: {
-            accept: 'application/json',
-            'x-integrator-id': process.env.VUE_APP_SQUID_KEY,
-          },
+          {
+            headers: {
+              accept: 'application/json',
+              'x-integrator-id': process.env.VUE_APP_SQUID_KEY,
+            },
+          }
+        );
+      } catch (err) {
+        try {
+          result = await axios.get(`https://api.0xsquid.com/v1/route`, {
+            params: {
+              fromChain,
+              toChain,
+              fromToken,
+              toToken,
+              fromAmount, // mantissa
+              fromAddress,
+              toAddress,
+              slippage,
+            },
+            headers: {
+              accept: 'application/json',
+              'x-integrator-id': process.env.VUE_APP_SQUID_KEY,
+            },
+          });
+        } catch (err) {
+          console.log(err);
+          if (err.response) {
+            notify({
+              type: 'warning',
+              text: `${err?.response?.data?.errors[0]?.errorType}: ${err?.response?.data?.errors[0]?.message}`,
+            });
+          }
+          return;
         }
-      );
+      }
       console.log('GET ROUTE', result.data);
       if (result?.data?.route) {
         commit(types.SET_ROUTE, result.data.route);

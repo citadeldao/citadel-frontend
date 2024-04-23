@@ -30,6 +30,8 @@
           :close-success-modal="closeSuccessModal"
           :success-click-handler="successClickHandler"
           :wallet="currentWallet"
+          :custom-code="searchTokenFromComputed?.symbol || ''"
+          :amount="amount"
           :success-tx="successHash"
           @changeComment="onChangeComment"
         />
@@ -50,10 +52,6 @@
       <template v-else>
         <EmptyList v-if="!hasSwap" :title="appError" />
         <template v-else>
-          <!-- <div class="section">
-            <div class="section__title">FROM <span>{{ currentWallet.config.name }}</span></div>
-            <div class="section__sep" />
-          </div> -->
           <div class="swap__select-chain z1001">
             <div class="autocomplete">
               <Autocomplete
@@ -73,7 +71,6 @@
               <div class="section__title">
                 TO CHAIN <span>{{ searchNetworkTo }}</span>
               </div>
-              <!-- <div class="section__sep" /> -->
             </div>
             <div class="swap__select-chain z1000">
               <div v-if="false" class="autocomplete">
@@ -103,23 +100,12 @@
             </div>
             <!-- contracts -->
             <div class="swap__select-chain mt10">
-              <!-- <div class="autocomplete">
-              <Autocomplete
-                id="chainTokenFrom"
-                v-model:value="searchFromToken"
-                :items="chainTokensFrom"
-                show-balance
-                initial-icon="curve-arrow"
-                :label="$t('swapView.fromToken')"
-                :placeholder="$t('swapView.selectContract')"
-                @update:value="selectFromToken"
-              />
-            </div> -->
               <div class="autocomplete">
                 <Autocomplete
                   id="chainTokenTo"
                   v-model:value="searchToToken"
                   :items="chainTokensTo"
+                  split-value
                   initial-icon="curve-arrow"
                   :label="$t('swapView.toToken')"
                   :placeholder="$t('swapView.selectContract')"
@@ -128,16 +114,6 @@
               </div>
             </div>
             <div class="swap__contracts">
-              <!-- <div
-              :class="{
-                hide:
-                  nativeContract.toLowerCase() ===
-                  searchTokenFromComputed?.address?.toLowerCase(),
-              }"
-              v-if="searchTokenFromComputed?.address"
-            >
-              {{ searchTokenFromComputed.address }}
-            </div> -->
               <div
                 :class="{
                   hide:
@@ -223,7 +199,6 @@
                 />
               </div>
               <div class="slippage">
-                <!-- <div class="slippage__label">Slippage tolerance</div> -->
                 <div
                   v-for="(slipp, ndx) in [0.1, 0.3, 0.5, 1, 2, 3]"
                   :key="ndx"
@@ -307,6 +282,7 @@ export default {
 
     const searchFromToken = ref('');
     const searchToToken = ref('');
+    const searchToTokenFullStr = ref('');
 
     const chainTokensFrom = ref([]);
     const chainTokensTo = ref([]);
@@ -346,8 +322,6 @@ export default {
 
       return currentWallet.value.type;
     });
-
-    console.log('currentWallet', currentWallet.value);
 
     const { rawTx, rawTxError, prepareTransfer } = useCurrentWalletRequests();
 
@@ -393,6 +367,7 @@ export default {
           `${hasSwap.value.chainName}:${hasSwap.value.chainId}`
         );
       }
+
       isLoadingData.value = false;
     });
 
@@ -416,15 +391,20 @@ export default {
         })
     );
 
-    const networkTargetWallets = computed(() => {
-      let parseNetwork = ''; // currentWallet.value.parentCoin?.net || currentWallet.value?.net;
+    const citadelNetworks = computed(
+      () => store.getters['networks/networksList']
+    );
 
-      if (searchNetworkTo.value === 'Arbitrum') parseNetwork = 'arbitrum';
-      if (searchNetworkTo.value === 'Optimism') parseNetwork = 'optimism';
-      if (searchNetworkTo.value === 'Avalanche') parseNetwork = 'avalanche';
-      if (searchNetworkTo.value === 'Ethereum') parseNetwork = 'eth';
-      if (searchNetworkTo.value === 'Binance') parseNetwork = 'bsc';
-      if (searchNetworkTo.value === 'Polygon') parseNetwork = 'polygon';
+    const networkTargetWallets = computed(() => {
+      let parseNetwork = searchNetworkTo.value.toLowerCase(); // currentWallet.value.parentCoin?.net || currentWallet.value?.net;
+      const networkSquid = allNetworks.value.find((item) =>
+        item.title.includes(searchNetworkTo.value)
+      );
+      const networkChainId = networkSquid?.chainId;
+
+      parseNetwork = citadelNetworks.value.find(
+        (network) => network.chainId == networkChainId
+      )?.net;
 
       return wallets.value.filter((w) => {
         const findFromAlias =
@@ -475,7 +455,8 @@ export default {
       const native = tokens.find(
         (token) =>
           token?.address?.toLowerCase() ===
-          '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'.toLowerCase()
+            '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'.toLowerCase() ||
+          token?.address?.length < 15
       );
 
       chainTokensFrom.value = [native].concat(
@@ -492,11 +473,28 @@ export default {
         })
       );
 
+      if (!native) {
+        chainTokensFrom.value = chainTokensFrom.value.slice(1);
+      }
+
+      if (
+        chainTokensFrom.value[0]?.chainId ===
+          chainTokensFrom.value[1]?.chainId &&
+        chainTokensFrom.value[0]?.address === chainTokensFrom.value[1]?.address
+      ) {
+        chainTokensFrom.value = chainTokensFrom.value.slice(1);
+      }
+
       chainTokensFrom.value = chainTokensFrom.value
         .map((token) => {
-          const subToken = subtokensWallet.value.find((subToken) =>
-            subToken?.net.toLowerCase().includes(token?.address?.toLowerCase())
-          );
+          const subToken = subtokensWallet.value.find((subToken) => {
+            return (
+              subToken?.net
+                .toLowerCase()
+                .includes(token?.address?.toLowerCase()) &&
+              token?.address?.length > 20
+            );
+          });
           let balance;
 
           if (!subToken) {
@@ -516,17 +514,21 @@ export default {
         .sort((a, b) => b.balance - a.balance);
 
       if (localStorage.getItem('swapContract')) {
-        let swapFrom = localStorage.getItem('swapContract');
+        let swapFrom = localStorage.getItem('swapContract').split(':')[0];
+        const symbolFrom = localStorage.getItem('swapContract').split(':')[1];
         localStorage.removeItem('swapContract');
-        const isNative = swapFrom.length < 40;
-
-        if (isNative) {
-          swapFrom = nativeContract.value;
-        }
 
         const findTokenFrom = chainTokensFrom.value.find(
-          (t) => t?.address?.toLowerCase() === swapFrom?.toLowerCase()
+          (t) =>
+            t?.address?.toLowerCase() === swapFrom?.toLowerCase() ||
+            t?.address?.toLowerCase().includes(swapFrom?.toLowerCase()) ||
+            t?.address
+              ?.toLowerCase()
+              .includes(nativeContract.value.toLowerCase()) ||
+            t?.name?.toLowerCase().includes(swapFrom?.toLowerCase()) ||
+            t?.symbol.toLowerCase() === symbolFrom.toLowerCase()
         );
+
         if (findTokenFrom) {
           selectFromToken(findTokenFrom.name);
         }
@@ -535,6 +537,7 @@ export default {
 
     const selectNetworkTo = (network) => {
       searchToToken.value = '';
+      searchToTokenFullStr.value = '';
       const selectChain = network.split(':')[0];
 
       if (!selectChain) {
@@ -571,6 +574,17 @@ export default {
             return 0;
           })
       );
+
+      if (!nativeCoin) {
+        chainTokensTo.value = chainTokensTo.value.slice(1);
+      }
+
+      chainTokensTo.value = chainTokensTo.value.map((item) => {
+        return {
+          ...item,
+          title: `${item.title}:${item.address}`,
+        };
+      });
     };
 
     const searchTokenFromComputed = computed(() => {
@@ -580,7 +594,9 @@ export default {
     });
 
     const searchTokenToComputed = computed(() => {
-      return chainTokensTo.value.find((t) => t?.name === searchToToken.value);
+      return chainTokensTo.value.find(
+        (t) => t?.title === searchToTokenFullStr.value
+      );
     });
 
     const selectFromToken = async (token) => {
@@ -588,7 +604,8 @@ export default {
     };
 
     const selectToToken = (token) => {
-      searchToToken.value = token;
+      searchToTokenFullStr.value = token;
+      searchToToken.value = token.split(':')[0];
     };
 
     const getRoute = async () => {
@@ -597,7 +614,7 @@ export default {
         (item) => item.key === searchNetworkFrom.value
       )?.chainId;
       const toChain = allNetworks.value.find(
-        (item) => item.key === searchNetworkTo.value
+        (item) => item.key.toLowerCase() === searchNetworkTo.value.toLowerCase()
       )?.chainId;
       const fromToken = searchTokenFromComputed.value.address;
       const toToken = searchTokenToComputed.value.address;
@@ -610,6 +627,8 @@ export default {
       const toAddress = addressTo.value;
 
       isLoading.value = true;
+      store.dispatch('squid/resetRoute');
+
       try {
         await store.dispatch('squid/getRoute', {
           fromChain,
@@ -620,21 +639,24 @@ export default {
           fromAddress,
           toAddress,
           slippage: slipp,
+          // isEvm: currentWallet.value.fee_key === 'gasPrice',
         });
       } catch (err) {
+        isLoading.value = false;
         if (err.response) {
           notify({
             type: 'warning',
             text: `${err?.response?.data?.errors[0]?.errorType}: ${err?.response?.data?.errors[0]?.message}`,
           });
         }
-        isLoading.value = false;
       }
       isLoading.value = false;
-      console.log('txRoute', txRoute.value);
-      if (txRoute.value?.estimate) {
-        showInfoModal.value = true;
 
+      const isCosmosNet =
+        currentWallet.value?.config?.frontConfiguration?.data?.codebase ===
+        'cosmos-sdk';
+
+      if (txRoute.value?.estimate && !isCosmosNet) {
         try {
           await prepareTransfer({
             amount: 0.00001,
@@ -644,13 +666,18 @@ export default {
           if (rawTx.value.transaction) {
             txNonce.value = rawTx.value.transaction.nonce;
           }
+          showInfoModal.value = true;
         } catch (err) {
+          isLoadingData.value = false;
           notify({
             type: 'warning',
             text: rawTxError.value,
           });
           return;
         }
+      }
+      if (txRoute.value?.estimate) {
+        showInfoModal.value = true;
       }
     };
 
@@ -698,7 +725,10 @@ export default {
       const token = subtokensWallet.value.find((token) => {
         return token.net
           .toLowerCase()
-          .includes(searchTokenFromComputed.value?.address.toLowerCase());
+          .includes(
+            searchTokenFromComputed.value?.address.toLowerCase() &&
+              searchTokenFromComputed.value?.address?.length > 20
+          );
       });
 
       if (
@@ -709,7 +739,7 @@ export default {
         return currentWallet.value?.balance?.mainBalance - 0.0005;
       }
 
-      if (!token) return 0;
+      if (!token) return searchTokenFromComputed.value?.balance || 0;
 
       return token?.tokenBalance?.mainBalance;
     });

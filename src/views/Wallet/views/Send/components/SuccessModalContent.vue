@@ -43,6 +43,7 @@
     <SendDirection
       :to="to"
       :amount="amount"
+      :custom-code="customCode"
       :wallet="wallet"
       :viewing-key="viewingKey"
       :tx-hash="txHash"
@@ -115,6 +116,10 @@ export default {
     wallet: {
       type: Object,
       default: () => {},
+    },
+    customCode: {
+      type: [Number, String],
+      default: '',
     },
     amount: {
       type: [Number, String],

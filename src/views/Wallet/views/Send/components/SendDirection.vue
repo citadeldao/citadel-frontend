@@ -19,10 +19,15 @@
       <span class="send-direction__line-title"> {{ $t('amount') }}: </span>
       <div>
         <span
-          v-pretty-number="{ value: amount, currency: wallet?.code }"
+          v-pretty-number="{
+            value: amount,
+            currency: customCode || wallet?.code,
+          }"
           class="send-direction__line-amount"
         />
-        <span class="send-direction__line-currency"> {{ wallet?.code }} </span>
+        <span class="send-direction__line-currency">
+          {{ customCode || wallet?.code }}
+        </span>
       </div>
     </div>
     <div v-if="fee || currentWallet?.hasResource" class="send-direction__line">
@@ -127,6 +132,9 @@ export default {
       type: String,
     },
     amount: {
+      type: [String, Number],
+    },
+    customCode: {
       type: [String, Number],
     },
     memo: {

@@ -1381,7 +1381,13 @@
             "title": "DYDX",
             "description": "Trade Perpetuals on the most powerful trading platform",
             "shortDescription": "Trade Perpetuals on the most powerful trading platform"
+        },
+        "nibiru":{
+            "title": "Nibiru",
+            "description": "Nibiru Chain is a breakthrough L1 blockchain and smart contract",
+            "shortDescription": "Nibiru Chain is a breakthrough L1 blockchain and smart contract ecosystem providing superior throughput and unparalleled security. Nibiru aims to be the most developer-friendly and user-friendly smart contract platform in Web3."
         }
+
     },
     "uptime": "Uptime",
     "active": "Active",
