@@ -66,6 +66,7 @@ export const networksFilterCategory = {
     'quicksilver',
     'regen',
     'rizon',
+    'saga',
     'secret',
     'sentinel',
     'sifchain',

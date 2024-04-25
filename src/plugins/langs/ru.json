@@ -1370,6 +1370,11 @@
             "title": "",
             "description": "",
             "shortDescription": ""
+        },
+        "saga":{
+            "title": "",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "Подтверждено блоков",
