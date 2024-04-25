@@ -859,8 +859,8 @@ export default {
   },
   nibiru: {
     web: {
-      title: 'saga.xyz',
-      href: 'https://www.saga.xyz/',
+      title: 'nibiru.fi',
+      href: 'https://nibiru.fi/',
     },
     twitter: {
       title: '@NibiruChain',
@@ -873,8 +873,8 @@ export default {
   },
   saga: {
     web: {
-      title: 'nibiru.fi',
-      href: 'https://nibiru.fi/',
+      title: 'saga.xyz',
+      href: 'https://www.saga.xyz/',
     },
     landing: {
       title: 'Coingecko',
