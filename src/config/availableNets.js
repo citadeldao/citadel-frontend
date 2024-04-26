@@ -68,6 +68,7 @@ export const networksFilterCategory = {
     'rizon',
     'saga',
     'secret',
+    'sei',
     'sentinel',
     'sifchain',
     'stafi',

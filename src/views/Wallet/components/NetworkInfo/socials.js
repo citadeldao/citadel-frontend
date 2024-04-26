@@ -881,4 +881,18 @@ export default {
       href: 'https://www.coingecko.com/en/coins/saga',
     },
   },
+  sei: {
+    twitter: {
+      title: '@SeiNetwork',
+      href: 'https://twitter.com/SeiNetwork',
+    },
+    web: {
+      title: 'sei.io',
+      href: 'https://www.sei.io/',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/sei',
+    },
+  },
 };
