@@ -872,6 +872,10 @@ export default {
     },
   },
   saga: {
+    twitter: {
+      title: '@Sagaxyz__',
+      href: 'Sagaxyz__',
+    },
     web: {
       title: 'saga.xyz',
       href: 'https://www.saga.xyz/',
@@ -884,7 +888,7 @@ export default {
   sei: {
     twitter: {
       title: '@SeiNetwork',
-      href: 'https://twitter.com/SeiNetwork',
+      href: 'SeiNetwork',
     },
     web: {
       title: 'sei.io',
