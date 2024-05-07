@@ -871,4 +871,32 @@ export default {
       href: 'https://www.coingecko.com/en/coins/nibiru',
     },
   },
+  saga: {
+    twitter: {
+      title: '@Sagaxyz__',
+      href: 'Sagaxyz__',
+    },
+    web: {
+      title: 'saga.xyz',
+      href: 'https://www.saga.xyz/',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/saga',
+    },
+  },
+  sei: {
+    twitter: {
+      title: '@SeiNetwork',
+      href: 'SeiNetwork',
+    },
+    web: {
+      title: 'sei.io',
+      href: 'https://www.sei.io/',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/sei',
+    },
+  },
 };

@@ -1386,6 +1386,16 @@
             "title": "Nibiru",
             "description": "Nibiru Chain is a breakthrough L1 blockchain and smart contract",
             "shortDescription": "Nibiru Chain is a breakthrough L1 blockchain and smart contract ecosystem providing superior throughput and unparalleled security. Nibiru aims to be the most developer-friendly and user-friendly smart contract platform in Web3."
+        },
+        "saga":{
+            "title": "SAGA",
+            "description": "THE COMPLETE WEB3 PLATFORM, MADE FOR DEVELOPERS.",
+            "shortDescription": "Saga gives visionaries an Integrated Stack of high-end tools and support they need to turn their Web3 dreams into reality. Saga is a Layer-1 protocol that allows developers to automatically spin up parallelized, VM-agnostic, and interoperable dedicated chains, or “Chainlets,” that provide applications with infinite horizontal scalability."
+        },
+        "sei":{
+            "title": "Sei",
+            "description": "Pushing the boundaries of blockchain technology through open source development, Sei stands to unlock a brand new design space for consumer facing applications.",
+            "shortDescription": "Accelerating the Future The Fastest Parallel Blockchain"
         }
 
     },
