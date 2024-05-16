@@ -25,6 +25,7 @@ import salary from './modules/salary';
 import ledger from './modules/ledger';
 import btcAddresses from './modules/btcAddresses';
 import squid from './modules/squid';
+import skip from './modules/skip';
 
 import subscriptions from './modules/subscriptions';
 
@@ -57,5 +58,6 @@ export default createStore({
     ledger,
     btcAddresses,
     squid,
+    skip,
   },
 });

@@ -40,11 +40,12 @@ export default {
   },
 
   actions: {
-    async convertToCosmosTx({ commit }, { net, address, data }) {
+    async convertToCosmosTx({ commit }, { net, address, data, publicKey }) {
       const result = await axios.post(
         `https://api.3ahtim54r.ru/blockchain/${net}/${address}/builder/customTx`,
         {
           data,
+          publicKey,
         }
       );
 

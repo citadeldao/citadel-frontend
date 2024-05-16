@@ -56,7 +56,20 @@
         }"
         data-qa="wallet__assets-tab-button"
       >
-        {{ $t('swap') }}
+        SQUID
+        <div class="label">{{ $t('swap') }}</div>
+      </router-link>
+      <router-link
+        active-class="main-header__active"
+        class="main-header__tabs-item"
+        :to="{
+          name: 'WalletSwapSkip',
+          params: { ...$route.params },
+        }"
+        data-qa="wallet__assets-tab-button"
+      >
+        SKIP
+        <div class="label">{{ $t('swap') }}</div>
       </router-link>
       <router-link
         active-class="main-header__active"
@@ -128,6 +141,14 @@ export default {
     margin: 0 5px;
     font-family: 'Panton_Bold';
     text-align: center;
+    position: relative;
+
+    .label {
+      top: -16px;
+      position: absolute;
+      font-size: 10px;
+      right: 5px;
+    }
     @include lg {
       font-size: 17px;
       padding-bottom: 10px;

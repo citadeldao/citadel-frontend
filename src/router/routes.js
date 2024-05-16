@@ -67,9 +67,17 @@ export default [
       },
       {
         name: 'WalletSwap',
-        path: 'swap',
+        path: 'swap-squid',
         component: () =>
           import(/* webpackChunkName: 'Send' */ '@/views/Wallet/views/Swap'),
+      },
+      {
+        name: 'WalletSwapSkip',
+        path: 'swap-skip',
+        component: () =>
+          import(
+            /* webpackChunkName: 'Send' */ '@/views/Wallet/views/SwapSkip'
+          ),
       },
       {
         name: 'WalletTransactions',

@@ -247,6 +247,7 @@ export default {
         await store.dispatch('squid/convertToCosmosTx', {
           net: props.signerWallet.net,
           address: props.signerWallet.address,
+          publicKey: props.signerWallet.publicKey,
           data: [
             {
               type: msgObj.msgTypeUrl,
