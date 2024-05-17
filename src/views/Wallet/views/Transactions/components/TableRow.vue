@@ -78,12 +78,15 @@
       </div>
     </td>
     <td class="table-row__date-time">
+      <div class="time">
+        {{ moment(transaction.date).format('DD.MM.YYYY') }}
+      </div>
       <Tooltip>
         <template #content>
           <span> {{ defaultDate(transaction.date) }} </span>
         </template>
         <template #default>
-          <div class="time">
+          <div class="time small">
             {{ transaction.date ? moment(transaction.date).fromNow() : '' }}
           </div>
         </template>
@@ -478,11 +481,18 @@ export default {
     // display: none;
     // padding-right: 20px !important;
     .time {
-      font-size: 16px;
+      font-size: 15px;
       line-height: 19px;
       letter-spacing: -0.02em;
       color: $mid-blue;
       margin-left: -5px;
+      margin-top: 3px;
+
+      &.small {
+        margin-top: 0;
+        font-size: 13px;
+        line-height: 14px;
+      }
     }
 
     @include xl {
