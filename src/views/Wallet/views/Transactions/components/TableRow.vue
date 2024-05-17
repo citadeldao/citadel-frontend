@@ -78,19 +78,19 @@
       </div>
     </td>
     <td class="table-row__date-time">
-      <div class="time">
-        {{ moment(transaction.date).format('DD.MM.YYYY') }}
-      </div>
       <Tooltip>
         <template #content>
           <span> {{ defaultDate(transaction.date) }} </span>
         </template>
         <template #default>
-          <div class="time small">
+          <div class="time">
             {{ transaction.date ? moment(transaction.date).fromNow() : '' }}
           </div>
         </template>
       </Tooltip>
+      <div class="time small">
+        {{ moment(transaction.date).format('DD.MM.YYYY') }}
+      </div>
     </td>
     <td class="table-row__link">
       <linkIcon
@@ -485,11 +485,11 @@ export default {
       line-height: 19px;
       letter-spacing: -0.02em;
       color: $mid-blue;
-      margin-left: -5px;
-      margin-top: 3px;
+      margin-left: 0px;
+      // margin-top: 3px;
 
       &.small {
-        margin-top: 0;
+        margin-top: 3px;
         font-size: 13px;
         line-height: 14px;
       }
