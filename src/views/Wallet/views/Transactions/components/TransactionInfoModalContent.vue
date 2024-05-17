@@ -384,7 +384,7 @@ $blue-dark: #262b61;
         .value-symbol {
           font-size: 13px;
           color: $blue-dark;
-          text-align: right;
+          // text-align: right;
           max-width: 95%;
           word-break: break-word;
         }

@@ -580,6 +580,12 @@ body.dark {
       opacity: 0.8;
     }
 
+    &--chosen {
+      .nodes-list-item__info-title {
+        color: #fff;
+      }
+    }
+
     &__value {
       color: $white;
     }

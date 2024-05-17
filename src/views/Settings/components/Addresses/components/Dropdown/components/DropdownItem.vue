@@ -37,12 +37,23 @@
           :style="{ maxWidth: `${maxWidth}px` }"
           id="address"
           ref="addressRef"
+          @click="onClick(wallet)"
         >
           {{
             hidden
               ? Array(wallet.address.length).fill('*').join('')
               : formattedAddress
           }}
+          <div class="balance-wrap">
+            <div
+              v-pretty-number="{
+                value: wallet?.balance?.mainBalance || 0,
+                currency: wallet?.code,
+              }"
+              class="balance"
+            />
+            <span>{{ wallet.code }}</span>
+          </div>
         </span>
       </div>
     </div>
@@ -283,7 +294,12 @@ export default {
         });
       }
     );
+
+    const onClick = (w) => {
+      console.log(w);
+    };
     return {
+      onClick,
       addressRef,
       formattedAddress,
       maxWidth,
@@ -383,6 +399,22 @@ export default {
     margin-right: auto;
     color: $fieldName;
     font-size: 12px;
+
+    .balance-wrap {
+      position: absolute;
+      left: 350px;
+      top: -17px;
+    }
+
+    .balance {
+      font-size: 12px;
+      color: $dark-blue;
+      min-width: 100px;
+
+      span {
+        color: #6b758e;
+      }
+    }
   }
 
   &__btn_group {

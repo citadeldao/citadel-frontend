@@ -211,7 +211,15 @@
         <PrimaryButton
           class="swap-skip__submit-swap"
           :loading="isLoading"
-          :disabled="!!errorAmount || !+amount || !addressTo"
+          :disabled="
+            (currentWallet.net !== 'osmosis' &&
+            searchNetworkToData?.chain_id !== 'osmosis-1'
+              ? !osmosisAddress
+              : false) ||
+            !!errorAmount ||
+            !+amount ||
+            !addressTo
+          "
           @click="getRoute"
         >
           {{ $t('SWAP') }}
