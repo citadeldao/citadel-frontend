@@ -57,7 +57,7 @@
         data-qa="wallet__assets-tab-button"
       >
         SQUID
-        <div class="label">{{ $t('swap') }}</div>
+        <span class="label">{{ $t('swap') }}</span>
       </router-link>
       <router-link
         active-class="main-header__active"
@@ -69,7 +69,7 @@
         data-qa="wallet__assets-tab-button"
       >
         SKIP
-        <div class="label">{{ $t('swap') }}</div>
+        <span class="label">{{ $t('swap') }}</span>
       </router-link>
       <router-link
         active-class="main-header__active"
@@ -144,10 +144,8 @@ export default {
     position: relative;
 
     .label {
-      top: -16px;
-      position: absolute;
       font-size: 10px;
-      right: 5px;
+      display: inline-block;
     }
     @include lg {
       font-size: 17px;

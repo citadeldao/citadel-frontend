@@ -306,6 +306,10 @@ export default {
       return currentWallet.value?.balance?.mainBalance - 0.0005;
     });
 
+    const currentToken = computed(
+      () => store.getters['subtokens/currentToken']
+    );
+
     const errorAmount = computed(() => {
       if (+amount.value > +maxAmount.value) {
         return `Max amount for swap ${maxAmount.value}`;
@@ -615,8 +619,8 @@ export default {
         chainFrom.value = skipChains.value.find((ch) => {
           return ch.chain_id === currentWallet.value.config.chainId;
         });
-        console.log('hasSwap', chainFrom.value);
-        hasSwap.value = !!chainFrom.value;
+
+        hasSwap.value = !!chainFrom.value && !currentToken.value;
       } catch (err) {
         isLoadingData.value = false;
       }

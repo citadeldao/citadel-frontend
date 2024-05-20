@@ -440,7 +440,8 @@ $blue-dark: #262b61;
           }
 
           box-sizing: border-box;
-          padding-left: 25px;
+          margin-top: 5px;
+          // padding-left: 25px;
 
           .line {
             flex-grow: 1;
