@@ -503,6 +503,14 @@ $blue-dark: #262b61;
 
 body.dark {
   .transaction-info-modal-content {
+    .included_tx a {
+      color: $dark-blue;
+    }
+
+    .included_tx .value-symbol {
+      color: $white;
+    }
+
     .inner-tx__view-item-component {
       .line {
         border: 0.01rem dashed #393b53;

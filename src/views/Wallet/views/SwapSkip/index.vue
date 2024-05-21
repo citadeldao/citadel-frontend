@@ -162,8 +162,9 @@
           >
             <Input
               id="toTokenOsmo"
+              warning-label
               v-model="osmosisAddress"
-              label="Osmosis address for SWAP"
+              label="Input address for transaction between them"
               placeholder="Osmosis address"
               type="text"
               @focus="showNetworkTargetWalletsOsmo = true"
