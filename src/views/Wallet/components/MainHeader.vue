@@ -56,8 +56,8 @@
         }"
         data-qa="wallet__assets-tab-button"
       >
-        SQUID
-        <span class="label">{{ $t('swap') }}</span>
+        {{ $t('swap') }}
+        <span class="label">SQUID</span>
       </router-link>
       <router-link
         active-class="main-header__active"
@@ -68,8 +68,8 @@
         }"
         data-qa="wallet__assets-tab-button"
       >
-        SKIP
-        <span class="label">{{ $t('swap') }}</span>
+        {{ $t('swap') }}
+        <span class="label">SKIP</span>
       </router-link>
       <router-link
         active-class="main-header__active"
