@@ -111,7 +111,6 @@ export default {
     });
 
     const route = computed(() => store.getters['skip/route']);
-    console.log('route', route.value, props.toToken);
 
     const onChange = (val) => {
       password.value = val;

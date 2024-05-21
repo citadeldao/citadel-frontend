@@ -52,7 +52,7 @@ export default {
     },
     async convertToCosmosTx({ commit }, { net, address, data, publicKey }) {
       const result = await axios.post(
-        `https://api.3ahtim54r.ru/blockchain/${net}/${address}/builder/customTx`,
+        `${process.env.VUE_APP_PUBLIC_BACKEND_URL}/blockchain/${net}/${address}/builder/customTx`,
         {
           data,
           publicKey,
@@ -84,7 +84,6 @@ export default {
           }
         );
 
-        console.log(result.data);
         if (result && result.data && result.data.operations) {
           commit(types.SET_ROUTE, result.data);
           let resultMSG;
@@ -186,7 +185,7 @@ export default {
           commit(types.SET_TOKENS, result.data.assets_between_chains);
         }
       } catch (err) {
-        console.log('TOKENSS ERR', err);
+        console.log(err);
       }
     },
   },

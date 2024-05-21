@@ -269,7 +269,7 @@ export default {
     const txComment = ref('');
     const showSuccessModal = ref(false);
     const appError = ref('Swap for this address not found');
-    console.log('currentWallet', currentWallet.value);
+
     const hasSwap = ref(false);
 
     const isLoadingData = ref(false);
@@ -346,8 +346,6 @@ export default {
       const parseNetwork = citadelNetworks.value.find(
         (network) => network.chainId == searchNetworkToData.value.chain_id
       )?.net;
-
-      console.log('networkChainId', parseNetwork);
 
       return wallets.value.filter((w) => {
         const findFromAlias =
@@ -450,7 +448,7 @@ export default {
       searchNetworkToData.value = skipChains.value.find((ch) => {
         return ch.chain_id === network.split(':')[1];
       });
-      console.log(network, searchNetworkToData.value);
+
       addressTo.value = '';
       // if (searchNetworkToData.value) {
       //   await loadTokensTo();
@@ -538,7 +536,7 @@ export default {
       const toNetwork = citadelNetworks.value.find(
         (network) => network.chainId == searchNetworkToData.value.chain_id
       );
-      console.log('toNetwork', toNetwork);
+
       if (!toNetwork) {
         alert('no network');
         return;

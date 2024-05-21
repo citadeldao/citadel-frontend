@@ -42,7 +42,7 @@ export default {
   actions: {
     async convertToCosmosTx({ commit }, { net, address, data, publicKey }) {
       const result = await axios.post(
-        `https://api.3ahtim54r.ru/blockchain/${net}/${address}/builder/customTx`,
+        `${process.env.VUE_APP_PUBLIC_BACKEND_URL}/blockchain/${net}/${address}/builder/customTx`,
         {
           data,
           publicKey,
@@ -169,7 +169,7 @@ export default {
           return;
         }
       }
-      console.log('GET ROUTE', result.data);
+
       if (result?.data?.route) {
         commit(types.SET_ROUTE, result.data.route);
       }
