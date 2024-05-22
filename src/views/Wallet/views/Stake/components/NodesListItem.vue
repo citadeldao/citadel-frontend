@@ -397,6 +397,12 @@ body.dark {
     &__info-uptime-currency {
       color: #8b9bc7;
     }
+
+    &--chosen {
+      .nodes-list-item__info-title {
+        color: #fff;
+      }
+    }
   }
 }
 </style>

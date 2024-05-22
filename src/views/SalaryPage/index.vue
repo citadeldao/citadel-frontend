@@ -464,7 +464,6 @@ export default {
           (w) =>
             w.address.toLowerCase() === address.toLowerCase() && w.net === 'bsc'
         );
-        console.log('signerWallet.value', signerWallet.value);
 
         if (!signerWallet.value || !tokenContract.value) return;
         const { data } = await citadel.getBalanceById(
@@ -472,7 +471,6 @@ export default {
           tokenContract.value.net
         );
         mainBalance.value = data.mainBalance;
-        console.log('mmm', mainBalance.value);
       }
     };
 

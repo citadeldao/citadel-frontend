@@ -384,7 +384,7 @@ $blue-dark: #262b61;
         .value-symbol {
           font-size: 13px;
           color: $blue-dark;
-          text-align: right;
+          // text-align: right;
           max-width: 95%;
           word-break: break-word;
         }
@@ -440,7 +440,8 @@ $blue-dark: #262b61;
           }
 
           box-sizing: border-box;
-          padding-left: 25px;
+          margin-top: 5px;
+          // padding-left: 25px;
 
           .line {
             flex-grow: 1;
@@ -502,6 +503,14 @@ $blue-dark: #262b61;
 
 body.dark {
   .transaction-info-modal-content {
+    .included_tx a {
+      color: $dark-blue;
+    }
+
+    .included_tx .value-symbol {
+      color: $white;
+    }
+
     .inner-tx__view-item-component {
       .line {
         border: 0.01rem dashed #393b53;

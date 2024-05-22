@@ -26,8 +26,8 @@
     <transition name="fade">
       <ul v-show="isOpen && results.length > 0" class="autocomplete__results">
         <AutocompleteItem
-          v-for="result in results"
-          :key="result.id"
+          v-for="(result, ndx) in results"
+          :key="ndx"
           :split-value="splitValue"
           :show-balance="showBalance"
           :result="result"
@@ -134,6 +134,16 @@ export default {
     const results = computed(() => {
       if (!props.value) {
         return props.items;
+      }
+      if (props.splitValue) {
+        const res = props.items.filter((item) =>
+          item.title
+            ?.split(':')[0]
+            ?.toLowerCase()
+            .includes(props.value?.toLowerCase())
+        );
+
+        return res;
       }
 
       return props.items.filter((item) =>

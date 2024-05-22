@@ -8,7 +8,7 @@
       'input--type--currency': isTypeCurrency,
     }"
   >
-    <label :for="id">
+    <label :for="id" :class="{ warn: warningLabel }">
       {{ label }}
       <info v-if="labelInfo" class="input__label-info" />
     </label>
@@ -115,6 +115,10 @@ export default {
   name: 'Input',
   components: { vision, hide, copy, info, mail, error, closeIcon },
   props: {
+    warningLabel: {
+      type: Boolean,
+      default: false,
+    },
     autofocus: {
       type: Boolean,
       default: false,
@@ -482,6 +486,10 @@ export default {
     @include laptop {
       font-size: 12px;
       top: 8px;
+    }
+
+    &.warn {
+      color: #ca4508;
     }
   }
 
