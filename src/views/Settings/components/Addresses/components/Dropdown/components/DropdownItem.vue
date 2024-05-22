@@ -404,12 +404,21 @@ export default {
       position: absolute;
       left: 350px;
       top: -17px;
+
+      @media (max-width: 1515px) {
+        left: 310px;
+      }
+
+      @media (max-width: 1400px) {
+        display: none;
+        left: 330px;
+      }
     }
 
     .balance {
       font-size: 12px;
       color: $dark-blue;
-      min-width: 100px;
+      // min-width: 100px;
 
       span {
         color: #6b758e;
