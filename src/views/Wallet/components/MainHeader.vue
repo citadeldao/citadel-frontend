@@ -146,6 +146,8 @@ export default {
     .label {
       font-size: 10px;
       display: inline-block;
+      position: absolute;
+      top: -15px;
     }
     @include lg {
       font-size: 17px;
