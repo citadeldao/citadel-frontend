@@ -383,7 +383,7 @@ export default {
     color: $too-dark-blue;
     font-family: 'Panton_Bold';
     @include lg {
-      font-size: 18px;
+      font-size: 16px;
       line-height: 22px;
     }
   }
