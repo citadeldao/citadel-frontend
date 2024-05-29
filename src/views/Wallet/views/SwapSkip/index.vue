@@ -35,10 +35,7 @@
       </Modal>
     </teleport>
     <Info
-      v-if="
-        currentWallet.type === WALLET_TYPES.PUBLIC_KEY &&
-        currentWalletType !== WALLET_TYPES.METAMASK
-      "
+      v-if="currentWallet.type === WALLET_TYPES.PUBLIC_KEY"
       title="wallet.info.title"
       data-qa="send__info"
     />

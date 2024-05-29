@@ -48,28 +48,16 @@
         {{ $t('send') }}
       </router-link>
       <router-link
+        v-if="!swapNoAccess.includes(currentWallet?.net)"
         active-class="main-header__active"
         class="main-header__tabs-item"
         :to="{
-          name: 'WalletSwap',
+          name: 'WalletSwapMenu',
           params: { ...$route.params },
         }"
-        data-qa="wallet__assets-tab-button"
+        data-qa="wallet__send-tab-button"
       >
         {{ $t('swap') }}
-        <span class="label">SQUID</span>
-      </router-link>
-      <router-link
-        active-class="main-header__active"
-        class="main-header__tabs-item"
-        :to="{
-          name: 'WalletSwapSkip',
-          params: { ...$route.params },
-        }"
-        data-qa="wallet__assets-tab-button"
-      >
-        {{ $t('swap') }}
-        <span class="label">SKIP</span>
       </router-link>
       <router-link
         active-class="main-header__active"
@@ -88,6 +76,8 @@
 
 <script>
 import { OUR_TOKEN } from '@/config/walletType';
+import { swapNoAccess } from '@/config/availableNets';
+
 export default {
   name: 'MainHeader',
   props: {
@@ -101,7 +91,7 @@ export default {
     },
   },
   setup() {
-    return { OUR_TOKEN };
+    return { OUR_TOKEN, swapNoAccess };
   },
 };
 </script>
@@ -117,6 +107,7 @@ export default {
   @include md {
     height: 64px;
   }
+
   &__tabs {
     display: flex;
     position: absolute;
@@ -143,12 +134,6 @@ export default {
     text-align: center;
     position: relative;
 
-    .label {
-      font-size: 10px;
-      display: inline-block;
-      position: absolute;
-      top: -15px;
-    }
     @include lg {
       font-size: 17px;
       padding-bottom: 10px;

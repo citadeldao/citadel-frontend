@@ -66,6 +66,14 @@ export default [
           import(/* webpackChunkName: 'Send' */ '@/views/Wallet/views/Send'),
       },
       {
+        name: 'WalletSwapMenu',
+        path: 'swap',
+        component: () =>
+          import(
+            /* webpackChunkName: 'Send' */ '@/views/Wallet/views/SwapMenu'
+          ),
+      },
+      {
         name: 'WalletSwap',
         path: 'swap-squid',
         component: () =>
