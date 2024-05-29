@@ -142,4 +142,13 @@ export const hasAccountsNets = ['iost'];
 export const hasNoAdvancedSettingsNets = ['polkadot'];
 export const hasCustomClaimInfoNets = ['polkadot'];
 
-export const swapNoAccess = ['btc', 'polkadot', 'icon', 'iost', 'sui', 'tron'];
+export const swapNoAccess = [
+  'btc',
+  'polkadot',
+  'icon',
+  'iost',
+  'sui',
+  'tron',
+  'oasis',
+  'band',
+];
