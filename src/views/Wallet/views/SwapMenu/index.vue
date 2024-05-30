@@ -85,7 +85,7 @@ export default {
 
     const squidData = {
       title: 'SQUID',
-      info: 'Unlock cross-chain activity with speed',
+      info: 'Swap or transfer anything for anything',
       icon: store.getters['app/theme'] === 'dark' ? 'squid-dark' : 'squid',
       hoveredIcon:
         store.getters['app/theme'] === 'dark'
@@ -96,7 +96,7 @@ export default {
 
     const skipData = {
       title: 'SKIP',
-      info: 'Swap tokens between chains, across any bridge.',
+      info: 'Interchain transfers and swaps on any Cosmos chain',
       icon: store.getters['app/theme'] === 'dark' ? 'skip-dark' : 'skip',
       hoveredIcon:
         store.getters['app/theme'] === 'dark'
