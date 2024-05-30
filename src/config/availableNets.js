@@ -157,4 +157,5 @@ export const swapNoAccess = [
   'rizon',
   'stafi',
   'starname',
+  'lava',
 ];
