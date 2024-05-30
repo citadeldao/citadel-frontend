@@ -151,4 +151,9 @@ export const swapNoAccess = [
   'tron',
   'oasis',
   'band',
+  'emoney',
+  'kichain',
+  'rizon',
+  'stafi',
+  'starname',
 ];
