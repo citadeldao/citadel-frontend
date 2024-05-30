@@ -54,6 +54,7 @@ export const networksFilterCategory = {
     'kichain',
     'konstellation',
     'kujira',
+    'lava',
     'lum',
     'mantle',
     'nibiru',
