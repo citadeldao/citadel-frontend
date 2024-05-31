@@ -27,7 +27,7 @@
       <ul v-show="isOpen && results.length > 0" class="autocomplete__results">
         <AutocompleteItem
           v-for="(result, ndx) in results"
-          :key="ndx"
+          :key="`${ndx}${result.id}`"
           :split-value="splitValue"
           :show-balance="showBalance"
           :result="result"
