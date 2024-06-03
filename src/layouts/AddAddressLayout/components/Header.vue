@@ -446,8 +446,8 @@ export default {
       height: 20px;
       transition: none;
       @include md {
-        width: 16px;
-        height: 16px;
+        // width: 16px;
+        // height: 16px;
       }
     }
 

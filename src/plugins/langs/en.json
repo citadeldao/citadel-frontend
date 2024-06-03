@@ -1396,6 +1396,11 @@
             "title": "Sei",
             "description": "Pushing the boundaries of blockchain technology through open source development, Sei stands to unlock a brand new design space for consumer facing applications.",
             "shortDescription": "Accelerating the Future The Fastest Parallel Blockchain"
+        },
+        "lava":{
+            "title": "Lava",
+            "description": "Lava is a modular network which rollups use to bootstrap a performant network of infrastructure providers. RPC requests are routed to the best available provider, giving developers and users optimal service.",
+            "shortDescription": "Lava is a modular network which rollups use to bootstrap a performant network of infrastructure providers."
         }
 
     },

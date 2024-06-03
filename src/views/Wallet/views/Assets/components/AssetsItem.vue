@@ -64,6 +64,19 @@
           class="assets-item__value"
         />
         <div
+          v-if="hasSwap && !swapNoAccess.includes(stateCurrentWallet.net)"
+          @click.stop="swap"
+          class="assets-item__send swap"
+        >
+          <SwapAssetIcon />
+          <div
+            style="position: absolute; color: transparent"
+            v-pretty-number="{
+              value: 'Swap',
+            }"
+          />
+        </div>
+        <div
           @click.stop="send"
           :class="{ noSwap: !hasSwap }"
           class="assets-item__send"
@@ -73,15 +86,6 @@
             style="position: absolute; color: transparent"
             v-pretty-number="{
               value: 'Send',
-            }"
-          />
-        </div>
-        <div v-if="hasSwap" @click.stop="swap" class="assets-item__send swap">
-          <SwapAssetIcon />
-          <div
-            style="position: absolute; color: transparent"
-            v-pretty-number="{
-              value: 'Swap',
             }"
           />
         </div>
@@ -106,6 +110,7 @@ import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
 import { useRouter } from 'vue-router';
 import SendAssetIcon from '@/assets/icons/sendasset.svg';
 import SwapAssetIcon from '@/assets/icons/swapasset.svg';
+import { swapNoAccess } from '@/config/availableNets';
 
 export default {
   name: 'AssetsItem',
@@ -185,11 +190,11 @@ export default {
     };
 
     const swap = () => {
-      localStorage.setItem(
-        'swapContract',
-        `${props.item.net.split('_')[1] || props.item.net}:${props.item.code}`
-      );
-      router.push({ name: 'WalletSwap' });
+      // localStorage.setItem(
+      //   'swapContract',
+      //   `${props.item.net.split('_')[1] || props.item.net}:${props.item.code}`
+      // );
+      router.push({ name: 'WalletSwapMenu' });
     };
 
     return {
@@ -201,6 +206,7 @@ export default {
       showBalance,
       HIDE_BALANCE_MASK,
       showAction,
+      swapNoAccess,
     };
   },
 };
@@ -287,15 +293,15 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    right: 50px;
+    right: 10px;
     border-radius: 4px;
 
     &.swap {
-      right: 10px;
+      right: 50px;
     }
 
     &.noSwap {
-      right: 10px;
+      right: 50px;
     }
   }
 

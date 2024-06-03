@@ -899,4 +899,18 @@ export default {
       href: 'https://www.coingecko.com/en/coins/sei',
     },
   },
+  lava: {
+    twitter: {
+      title: '@VulcanForged',
+      href: 'VulcanForged',
+    },
+    web: {
+      title: 'lavanet.xyz',
+      href: 'https://www.lavanet.xyz/',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/lava',
+    },
+  },
 };

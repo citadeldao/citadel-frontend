@@ -12,6 +12,7 @@
       :class="{
         'select-card__icon': type === 'simple',
         'select-card-special__icon': type === 'special',
+        autoHeight,
       }"
     >
       <keep-alive>
@@ -48,9 +49,14 @@
 
 <script>
 import { ref, markRaw } from 'vue';
+
 export default {
   name: 'SelectCard',
   props: {
+    autoHeight: {
+      type: Boolean,
+      default: false,
+    },
     method: {
       type: Object,
     },
@@ -139,6 +145,17 @@ export default {
       width: 120px;
       height: 54px;
     }
+
+    &.autoHeight {
+      @include lg {
+        width: 100%;
+        height: auto;
+      }
+      @include md {
+        width: 120px;
+        height: auto;
+      }
+    }
   }
   &__info {
     font-size: 14px;
@@ -222,6 +239,17 @@ export default {
     @include md {
       width: 120px;
       height: 54px;
+    }
+
+    &.autoHeight {
+      @include lg {
+        width: 100%;
+        height: auto;
+      }
+      @include md {
+        width: 120px;
+        height: auto;
+      }
     }
   }
   &__info {

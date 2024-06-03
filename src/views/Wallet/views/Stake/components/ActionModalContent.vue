@@ -69,7 +69,7 @@
           >/</span
         >
         <div
-          v-if="wallet.hasResource"
+          v-if="!stakingFee && wallet.hasResource"
           class="action-modal-content__total-wrapper"
         >
           <template v-for="item in adding" :key="item.name">
