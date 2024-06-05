@@ -406,6 +406,12 @@ body.dark {
   .modal_content {
     box-shadow: none;
 
+    .modal__btn-second {
+      button {
+        color: #fff;
+      }
+    }
+
     &__content {
       background-color: $dark-panel-bg;
     }

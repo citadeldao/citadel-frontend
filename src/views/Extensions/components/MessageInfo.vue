@@ -1,11 +1,11 @@
 <template>
   <div class="message-info">
-    <template v-if="messageForSign.meta_info">
+    <template v-if="messageForSign?.meta_info">
       <div class="label description mt-20">
         {{ $t('extensions.signMessage') }}
       </div>
       <div class="meta-info">
-        {{ messageForSign.meta_info }}
+        {{ messageForSign?.meta_info }}
       </div>
     </template>
     <div class="flex-row">
@@ -196,6 +196,18 @@ export default {
 
   &.mt30 {
     margin-top: 15px;
+  }
+}
+
+body.dark {
+  .message-info {
+    .meta-info {
+      color: #fff;
+    }
+
+    .description {
+      color: #fff;
+    }
   }
 }
 </style>
