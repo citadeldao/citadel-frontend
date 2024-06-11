@@ -358,10 +358,11 @@ export default class CryptoCoin {
     return { data: {} };
   }
 
-  async removeToDao({ walletId, holderAddress, ...options }) {
+  async removeToDao({ derivationPath, walletId, holderAddress, ...options }) {
     const connectionType = store.getters['ledger/connectionType'];
     const res = await citadel.removeToDao(walletId, holderAddress, {
       ...options,
+      derivationPath,
       transportType: connectionType,
     });
 

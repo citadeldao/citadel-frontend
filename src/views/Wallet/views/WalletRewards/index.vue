@@ -589,10 +589,11 @@ export default {
 
         const { error } = await addressDao.value.removeToDao({
           walletId: addressDao.value.id,
+          derivationPath: addressDao.value.derivationPath,
           holderAddress: props.currentWallet.address,
-          privateKey: await addressDao.value.getPrivateKeyDecoded(
-            password.value
-          ),
+          privateKey:
+            password.value &&
+            (await addressDao.value.getPrivateKeyDecoded(password.value)),
         });
         if (error) {
           notify({
