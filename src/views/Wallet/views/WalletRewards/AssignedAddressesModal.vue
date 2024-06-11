@@ -7,7 +7,10 @@
     type="action"
     @close="modalCloseHandler"
   >
-    <AssignedAddressesModalContent :list="assignedAddresses" />
+    <AssignedAddressesModalContent
+      :list="assignedAddresses"
+      @removeDao="onRemoveDao"
+    />
   </ModalContent>
 </template>
 <script>
@@ -27,6 +30,15 @@ export default {
     modalCloseHandler: {
       required: true,
     },
+  },
+  setup(_, { emit }) {
+    const onRemoveDao = (item) => {
+      emit('removeDao', item);
+    };
+
+    return {
+      onRemoveDao,
+    };
   },
 };
 </script>

@@ -51,6 +51,7 @@
         v-if="showAssignedAddressesModal"
         :modal-close-handler="modalCloseHandler"
         :assigned-addresses="assignedAddresses"
+        @removeDao="onRemoveDao"
       />
 
       <AddressAssigningInfoModal
@@ -68,26 +69,36 @@
       />
 
       <ModalContent
-        v-if="showApproveAsignWithPasswordModal"
+        v-if="showApproveAsignWithPasswordModal || showModalPassword"
         v-click-away="modalCloseHandler"
         :title="$t('enterPaymentPassword')"
         :desc="$t('xct.approveAssignWithPasswordModalDesc')"
         type="action"
+        :loading="loadingUnasign"
         button-text="finish"
         :disabled="!!inputError"
         :has-slot="true"
         @close="modalCloseHandler"
-        @buttonClick="approveAssign"
+        @buttonClick="
+          () => {
+            showModalPassword ? onRemoveDaoUnassign() : approveAssign();
+          }
+        "
       >
         <template #default>
           <ApproveAssignWithPassword
             v-if="showPasswordForAssign"
             :has-seeds="
+              PRIVATE_PASSWORD_TYPES.includes(addressDao?.type) ||
               seedAddresses.some(({ type }) =>
                 PRIVATE_PASSWORD_TYPES.includes(type)
               )
             "
-            @approveAssign="approveAssign"
+            @approveAssign="
+              () => {
+                showModalPassword ? onRemoveDaoUnassign() : approveAssign();
+              }
+            "
           />
         </template>
 
@@ -189,6 +200,7 @@ export default {
     const isDataLoading = ref(false);
     const store = useStore();
     const xctMarketCap = ref({});
+    const loadingUnasign = ref(false);
 
     const metamaskConnector = computed(
       () => store.getters['metamask/metamaskConnector']
@@ -250,6 +262,7 @@ export default {
 
     const showPasswordForAssign = computed(
       () =>
+        PRIVATE_PASSWORD_TYPES.includes(addressDao?.value?.type) ||
         !!unassignedAddresses.value.find((w) =>
           PRIVATE_PASSWORD_TYPES.includes(w.type)
         )
@@ -271,7 +284,7 @@ export default {
     provide('checkedAddresses', checkedAddresses);
 
     const { password, passwordError, inputError } = useCheckPassword();
-    const { isHardwareWallet } = useWallets();
+    const { isHardwareWallet, wallets } = useWallets();
     const updatePassword = (value) => {
       password.value = value;
     };
@@ -282,6 +295,8 @@ export default {
     const modalCloseHandler = () => {
       isLoading.value = false;
       showModal.value = false;
+      showModalPassword.value = false;
+      addressDao.value = null;
       showAssignedAddressesModal.value = false;
       showAddressAssigningInfo.value = false;
       showUnassignedAddressesModal.value = false;
@@ -360,7 +375,12 @@ export default {
     const backToUnassignedList = () => {
       updatePassword('');
       showApproveAsignWithPasswordModal.value = false;
-      showUnassignedAddressesModal.value = true;
+      if (!addressDao.value) {
+        showUnassignedAddressesModal.value = true;
+      } else {
+        showAssignedAddressesModal.value = true;
+      }
+      showModalPassword.value = false;
     };
 
     const newAssignedAddresses = ref([]);
@@ -490,6 +510,104 @@ export default {
       router.push({ name: 'AddAddress' });
     };
 
+    const addressDao = ref(null);
+    const showModalPassword = ref(false);
+
+    const onRemoveDao = async (item) => {
+      showModalPassword.value = true;
+      showAssignedAddressesModal.value = false;
+      addressDao.value = wallets.value.find(
+        (w) => w.address.toLowerCase() === item.address.toLowerCase()
+      );
+    };
+
+    const onRemoveDaoUnassign = async () => {
+      if (addressDao.value) {
+        loadingUnasign.value = true;
+        if (addressDao.value.type === WALLET_TYPES.KEPLR) {
+          const { data } = await addressDao.value.prepareAssignToDaoMessage(
+            addressDao.value.id
+          );
+          const { id } = data;
+
+          const keplrResult = await keplrConnector.value.sendKeplrTransaction(
+            data.message.originalCosmosMsg || data.message,
+            addressDao.value.address,
+            {
+              preferNoSetFee: true,
+              preferNoSetMemo: true,
+            }
+          );
+
+          if (keplrResult.error) {
+            notify({
+              type: 'warning',
+              text: keplrResult.error,
+            });
+            modalCloseHandler();
+            loadingUnasign.value = false;
+            return;
+          }
+          const { error: err } =
+            await addressDao.value.removeAssignToDaoMessage(
+              props.currentWallet.address,
+              id,
+              keplrResult.signature
+            );
+          if (err) {
+            notify({
+              type: 'warning',
+              text: err,
+            });
+            loadingUnasign.value = false;
+            return;
+          } else {
+            notify({
+              type: 'success',
+              text: 'The address was successfully unassigned',
+            });
+            loadingUnasign.value = false;
+            modalCloseHandler();
+            showApproveAsignWithPasswordModal.value = false;
+            showPasswordForAssign.value = false;
+            addressDao.value = null;
+            showModalPassword.value = false;
+            await loadData();
+            return;
+          }
+        }
+
+        const { error } = await addressDao.value.removeToDao({
+          walletId: addressDao.value.id,
+          holderAddress: props.currentWallet.address,
+          privateKey: await addressDao.value.getPrivateKeyDecoded(
+            password.value
+          ),
+        });
+        if (error) {
+          notify({
+            type: 'warning',
+            text: error,
+          });
+          loadingUnasign.value = false;
+          return;
+        } else {
+          notify({
+            type: 'success',
+            text: 'The address was successfully unassigned',
+          });
+          loadingUnasign.value = false;
+        }
+        loadingUnasign.value = false;
+        modalCloseHandler();
+        showApproveAsignWithPasswordModal.value = false;
+        showPasswordForAssign.value = false;
+        addressDao.value = null;
+        showModalPassword.value = false;
+        await loadData();
+      }
+    };
+
     const showRewardesBlock =
       computed(
         () =>
@@ -500,6 +618,11 @@ export default {
       ) || +props.currentWallet.tokenBalance.rewards;
 
     return {
+      loadingUnasign,
+      onRemoveDao,
+      onRemoveDaoUnassign,
+      showModalPassword,
+      addressDao,
       isHardwareWallet,
       toAddAddresses,
       isLoading,

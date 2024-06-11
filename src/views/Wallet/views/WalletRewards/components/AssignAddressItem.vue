@@ -10,6 +10,13 @@
         <component :is="icon" />
       </keep-alive>
     </div>
+    <div
+      v-if="isAssigned"
+      @click.stop="$emit('removeDao', address)"
+      class="assign-address-item__unassign"
+    >
+      Unassign
+    </div>
     <div class="assign-address-item__info">
       <div class="assign-address-item__info-line">
         <span class="assign-address-item__title" :style="{ maxWidth }">
@@ -102,6 +109,10 @@ export default {
       type: String,
       default: '',
     },
+    isAssigned: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ['uncheck', 'check', 'signHardwareAddress'],
   setup(props, { emit }) {
@@ -149,6 +160,8 @@ export default {
   align-items: center;
   height: 72px;
   border-bottom: 1px solid $too-ligth-blue;
+  position: relative;
+
   cursor: pointer;
   &__icon {
     width: 40px;
@@ -166,6 +179,15 @@ export default {
       max-width: 18px;
       max-height: 20px;
     }
+  }
+  &__unassign {
+    color: $red;
+    font-size: 13px;
+    position: absolute;
+    right: 0;
+    text-decoration: underline;
+    cursor: pointer;
+    top: 10px;
   }
   &__done {
     width: 20px;

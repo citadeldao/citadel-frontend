@@ -11,7 +11,9 @@
         v-for="(item, index) in list"
         :key="`${item.address}${item.net}${index}`"
         :address="item"
+        is-assigned
         type="assigned"
+        @removeDao="onRemoveDao"
       />
     </div>
   </div>
@@ -29,10 +31,14 @@ export default {
       default: () => ({}),
     },
   },
-  setup(props) {
+  setup(props, { emit }) {
     const counterValue = computed(() => props.list.length);
 
-    return { counterValue };
+    const onRemoveDao = (item) => {
+      emit('removeDao', item);
+    };
+
+    return { counterValue, onRemoveDao };
   },
 };
 </script>
