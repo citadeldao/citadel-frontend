@@ -114,7 +114,7 @@ export default {
       default: false,
     },
   },
-  emits: ['uncheck', 'check', 'signHardwareAddress'],
+  emits: ['uncheck', 'check', 'signHardwareAddress', 'removeDao'],
   setup(props, { emit }) {
     const icon = ref();
     import(`@/assets/icons/networks/${props.address.net}.svg`).then((val) => {

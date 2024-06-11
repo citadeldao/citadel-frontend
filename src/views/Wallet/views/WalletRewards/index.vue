@@ -514,11 +514,21 @@ export default {
     const showModalPassword = ref(false);
 
     const onRemoveDao = async (item) => {
-      showModalPassword.value = true;
-      showAssignedAddressesModal.value = false;
       addressDao.value = wallets.value.find(
         (w) => w.address.toLowerCase() === item.address.toLowerCase()
       );
+      if (
+        addressDao.value &&
+        addressDao.value.type === WALLET_TYPES.PUBLIC_KEY
+      ) {
+        notify({
+          type: 'warning',
+          text: 'You do not have access to the address',
+        });
+        return;
+      }
+      showModalPassword.value = true;
+      showAssignedAddressesModal.value = false;
     };
 
     const onRemoveDaoUnassign = async () => {
