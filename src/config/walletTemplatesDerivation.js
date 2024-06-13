@@ -29,6 +29,5 @@ export const cosmosNetworks = [
   'konstellation',
   'mantle',
   'evmos',
-  'crescent',
   'orai',
 ];

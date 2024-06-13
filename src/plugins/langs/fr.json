@@ -1251,11 +1251,6 @@
             "description": "Le réseau Axelar est une plateforme de communication inter-chaînes évolutive. Les créateurs de plateformes blockchain peuvent l'utiliser pour brancher de manière transparente leurs blockchains à tous les autres écosystèmes blockchain. Les développeurs d'applications peuvent choisir la meilleure blockchain pour héberger leurs applications et utiliser les protocoles de communication inter-chaînes d'Axelar pour verrouiller, déverrouiller et transférer des actifs, ainsi que pour communiquer avec des applications sur n'importe quelle autre chaîne. En connectant les dapps à plusieurs écosystèmes blockchain, la plateforme Axelar permet aux utilisateurs d'interagir avec toutes les applications de l'écosystème directement à partir de leurs portefeuilles.",
             "shortDescription": "Le réseau Axelar est une machine à état décentralisée chargée de faciliter les demandes inter-chaînes. Le réseau prend en charge quelques protocoles clés, tels que le protocole CGP (Cross-Chain Gateway Protocol)."
         },
-        "crescent": {
-            "title": "Crescent network",
-            "description": "Crescent est une plateforme DeFi qui invite les utilisateurs à explorer les possibilités illimitées des actifs numériques en unifiant diverses blockchains d'une manière inédite dans l'écosystème Cosmos.",
-            "shortDescription": "Crescent a pour objectif de fournir une fonctionnalité DeFi connectée à l'écosystème Cosmos afin d'améliorer l'efficacité du capital et de gérer efficacement les risques."
-        },
         "polkadot": {
             "title": "Polkadot network",
             "description": "Polkadot est un protocole de réseau qui permet de transférer des données arbitraires - pas seulement des jetons - à travers des blockchains. Cela signifie que Polkadot est un véritable environnement d'application multi-chain où des choses comme les registres et les calculs cross-chain sont possibles. Polkadot peut transférer ces données à travers des blockchains publiques, ouvertes, sans permission, ainsi que des blockchains privées, avec permission.",

@@ -40,7 +40,6 @@ export const networksFilterCategory = {
     'comdex',
     'coreum',
     'cosmos',
-    'crescent',
     'dydx',
     'emoney',
     'evmos',
