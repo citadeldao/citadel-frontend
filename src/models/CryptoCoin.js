@@ -358,6 +358,25 @@ export default class CryptoCoin {
     return { data: {} };
   }
 
+  async removeToDao({ derivationPath, walletId, holderAddress, ...options }) {
+    const connectionType = store.getters['ledger/connectionType'];
+    const res = await citadel.removeToDao(walletId, holderAddress, {
+      ...options,
+      derivationPath,
+      transportType: connectionType,
+    });
+
+    if (res.error) {
+      const errorMessage = getErrorTextByCode(res.error);
+      notify({
+        type: 'warning',
+        text: errorMessage,
+      });
+      return { error: errorMessage };
+    }
+    return res;
+  }
+
   async assignToDao({ walletId, holderAddress, ...options }) {
     const connectionType = store.getters['ledger/connectionType'];
     const res = await citadel.assignToDao(walletId, holderAddress, {
@@ -488,6 +507,23 @@ export default class CryptoCoin {
 
   async sendAssignToDaoMessage(holderAddress, messageId, messageSignature) {
     const { error } = await citadel.sendAssignToDaoMessage(
+      holderAddress,
+      messageId,
+      messageSignature
+    );
+
+    if (error) {
+      notify({
+        type: 'warning',
+        text: error,
+      });
+    }
+
+    return { error };
+  }
+
+  async removeAssignToDaoMessage(holderAddress, messageId, messageSignature) {
+    const { error } = await citadel.removeAssignToDaoMessage(
       holderAddress,
       messageId,
       messageSignature
