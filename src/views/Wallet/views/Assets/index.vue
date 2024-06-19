@@ -612,6 +612,21 @@ export default {
 
       &:nth-child(1) {
         flex: 1;
+
+        @media (max-width: 1400px) {
+          flex: 0.72;
+          margin-left: 60px;
+        }
+
+        @media (max-width: 1600px) {
+          flex: 0.76;
+          margin-left: 60px;
+        }
+
+        @media (max-width: 1800px) {
+          flex: 0.8;
+          margin-left: 40px;
+        }
       }
 
       &:nth-child(2),

@@ -1586,6 +1586,10 @@
         "modalInfoDesc": "Check info and sign transaction",
         "amount": "Amount",
         "slippage": "Slippage Tolerance",
-        "slippagePlaceholder": "Enter optional slippage"
+        "slippagePlaceholder": "Enter optional slippage",
+        "notAvailableRegion": "Not available in your region",
+        "squidDescription": "Swap or transfer anything for anything",
+        "skipDescription": "Interchain transfers and swaps on any Cosmos chain",
+        "swapNotFound": "Swap for this address not found"
     }
 }

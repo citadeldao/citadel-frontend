@@ -293,15 +293,15 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    right: 10px;
+    right: -20px;
     border-radius: 4px;
 
     &.swap {
-      right: 50px;
+      right: 20px;
     }
 
     &.noSwap {
-      right: 50px;
+      right: 20px;
     }
   }
 
@@ -342,6 +342,10 @@ export default {
 
     &:nth-child(1) {
       flex: 1;
+
+      @media (max-width: 1800px) {
+        flex: 0.85;
+      }
     }
 
     &:nth-child(2),

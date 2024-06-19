@@ -1571,6 +1571,10 @@
         "addressPlaceholder": "",
         "modalInfoTitle": "",
         "modalInfoDesc": "",
-        "amountSlippage": ""
+        "amountSlippage": "",
+        "notAvailableRegion": "",
+        "squidDescription": "",
+        "skipDescription": "",
+        "swapNotFound": ""
     }
 }
