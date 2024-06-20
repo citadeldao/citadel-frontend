@@ -44,10 +44,12 @@
               ? Array(wallet.address.length).fill('*').join('')
               : formattedAddress
           }}
-          <div class="balance-wrap">
+          <div :class="{ showRightBalance }" class="balance-wrap">
             <div
               v-pretty-number="{
-                value: wallet?.balance?.mainBalance || 0,
+                value: !showBalance
+                  ? HIDE_BALANCE_MASK
+                  : wallet?.balance?.mainBalance || 0,
                 currency: wallet?.code,
               }"
               class="balance"
@@ -121,6 +123,8 @@ import visionIcon from '@/assets/icons/networks/vision.svg';
 import { addressTextWidth, formattedWalletAddress } from '@/helpers';
 import { useWindowSize } from 'vue-window-size';
 import { screenWidths } from '@/config/sreenWidthThresholds';
+import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
+
 export default {
   name: 'DropdownItem',
   components: {
@@ -134,6 +138,10 @@ export default {
     visionIcon,
   },
   props: {
+    showRightBalance: {
+      type: Boolean,
+      required: false,
+    },
     isOpen: {
       type: Boolean,
       required: false,
@@ -295,10 +303,14 @@ export default {
       }
     );
 
+    const showBalance = computed(() => store.getters['balance/showBalance']);
+
     const onClick = (w) => {
       console.log(w);
     };
     return {
+      HIDE_BALANCE_MASK,
+      showBalance,
       onClick,
       addressRef,
       formattedAddress,
@@ -405,13 +417,26 @@ export default {
       left: 350px;
       top: -17px;
 
+      &.showRightBalance {
+        left: 350px;
+      }
+
       @media (max-width: 1515px) {
         left: 310px;
+
+        &.showRightBalance {
+          left: 350px;
+        }
       }
 
       @media (max-width: 1400px) {
         display: none;
         left: 330px;
+
+        &.showRightBalance {
+          left: 350px;
+          display: initial;
+        }
       }
     }
 

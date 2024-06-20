@@ -38,7 +38,10 @@
             @click.stop="toggleShowInput"
           >
             <span
-              v-pretty-number="{ value: value, currency: data.code }"
+              v-pretty-number="{
+                value: !showBalance ? HIDE_BALANCE_MASK : value,
+                currency: data.code,
+              }"
               class="calculator-list-item__info-line-block-value"
             />
             <span class="calculator-list-item__info-line-block-title-currency">
@@ -55,7 +58,7 @@
           <div class="calculator-list-item__info-line-block-amount">
             <span
               v-pretty-number="{
-                value: +data.totalTokens,
+                value: !showBalance ? HIDE_BALANCE_MASK : +data.totalTokens,
                 currency: data.code,
               }"
               class="calculator-list-item__info-line-block-value calculator-list-item__info-line-block-value--total"
@@ -77,7 +80,10 @@
         </span>
         <div class="calculator-list-item__right-section-info-amount">
           <span
-            v-pretty-number="{ value: reward, currency: 'XCT' }"
+            v-pretty-number="{
+              value: !showBalance ? HIDE_BALANCE_MASK : reward,
+              currency: 'XCT',
+            }"
             class="calculator-list-item__right-section-info-value calculator-list-item__right-section-info-value--rewards"
           />
           <span class="calculator-list-item__right-section-info-currency">
@@ -95,6 +101,8 @@ import { computed, markRaw, ref } from '@vue/reactivity';
 import BigNumber from 'bignumber.js';
 import { nextTick } from '@vue/runtime-core';
 import { OUR_TOKEN } from '@/config/walletType';
+import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
+import { useStore } from 'vuex';
 
 export default {
   name: 'CalculatorListItem',
@@ -111,7 +119,9 @@ export default {
   },
   emits: ['change'],
   setup(props, { emit }) {
+    const store = useStore();
     const showInput = ref(false);
+    const showBalance = computed(() => store.getters['balance/showBalance']);
     const currentIcon = ref();
     import(`@/assets/icons/networks/${props.data.icon}.svg`).then((val) => {
       currentIcon.value = markRaw(val.default);
@@ -198,6 +208,8 @@ export default {
       valueInput,
       OUR_TOKEN,
       keypressHandler,
+      HIDE_BALANCE_MASK,
+      showBalance,
     };
   },
 };

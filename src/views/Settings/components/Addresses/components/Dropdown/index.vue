@@ -27,6 +27,7 @@
           ref="dropdownItem"
           :selectable="selectable"
           :wallet="wallet"
+          :show-right-balance="showRightBalance"
           :hidden="isWalletHidden(wallet)"
           @toggle-hidden="$emit('toggle-hidden', wallet)"
           @deleteSeedModal="$emit('deleteSeedModal')"
@@ -60,6 +61,10 @@ export default {
       default: false,
     },
     preopened: {
+      type: Boolean,
+      default: false,
+    },
+    showRightBalance: {
       type: Boolean,
       default: false,
     },
