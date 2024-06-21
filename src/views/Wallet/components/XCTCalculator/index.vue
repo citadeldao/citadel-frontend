@@ -272,7 +272,7 @@ export default {
       margin-bottom: 15px;
     }
     @media (min-width: 1920px) and (max-width: 1944px) {
-      margin-right: 20px !important;
+      margin-right: 10px !important;
     }
   }
   &__header-header-title {
