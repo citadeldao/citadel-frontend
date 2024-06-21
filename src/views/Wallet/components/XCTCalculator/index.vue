@@ -265,7 +265,7 @@ export default {
     flex-direction: column;
     margin-right: 45px;
     @include lg {
-      margin-right: 20px;
+      margin-right: 10px;
     }
     @include md {
       margin-right: 0;
