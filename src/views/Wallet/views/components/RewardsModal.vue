@@ -27,7 +27,13 @@
                 />
                 <span class="code">{{ wallet.code }}</span>
               </div>
-              <div class="address">{{ wallet.address }}</div>
+              <div class="address">
+                {{
+                  `${wallet.address.slice(0, 15)}...${wallet.address.slice(
+                    -15
+                  )}`
+                }}
+              </div>
             </div>
           </div>
           <div class="buttons">
