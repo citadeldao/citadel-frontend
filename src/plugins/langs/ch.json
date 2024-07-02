@@ -404,6 +404,7 @@
         "claimTo": "提取至",
         "amountToClaim": "可提取金额",
         "confirmModalTitle": "确认提取奖励",
+        "confirmModalTitleRestake": "Confirm the rewards claim & stake",
         "confirmModalDesc": "您将在可用余额中查看应计奖励",
         "claimSuccessfuly": "已成功提取"
     },

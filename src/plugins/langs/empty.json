@@ -404,6 +404,7 @@
         "claimTo": "",
         "amountToClaim": "",
         "confirmModalTitle": "",
+        "confirmModalTitleRestake": "",
         "confirmModalDesc": "",
         "claimSuccessfuly": ""
     },

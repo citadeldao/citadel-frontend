@@ -404,6 +404,7 @@
         "claimTo": "Claim à",
         "amountToClaim": "Montant à claim",
         "confirmModalTitle": "Confirmer la demande de claim des récompenses",
+        "confirmModalTitleRestake": "Confirm the rewards claim & stake",
         "confirmModalDesc": "Vous verrez les récompenses accumulées dans le solde disponible",
         "claimSuccessfuly": "Claim avec succès"
     },

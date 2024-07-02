@@ -1,7 +1,11 @@
 <template>
   <ModalContent
     v-click-away="claimModalCloseHandler"
-    :title="$t('claim.confirmModalTitle')"
+    :title="
+      isRestake
+        ? $t('claim.confirmModalTitleRestake')
+        : $t('claim.confirmModalTitle')
+    "
     :desc="$t('claim.confirmModalDesc')"
     button-text="confirm"
     type="action"
@@ -11,12 +15,21 @@
     @buttonClick="$emit('claim')"
   >
     <ActionModalContent
-      :to="currentWallet.address"
-      :wallet="currentWallet"
-      :staking-amount="currentWallet.balance.claimableRewards"
+      :to="
+        customClaimWallet ? customClaimWallet.address : currentWallet.address
+      "
+      :wallet="customClaimWallet || currentWallet"
+      :staking-amount="
+        customClaimWallet
+          ? customClaimWallet.balance.claimableRewards
+          : currentWallet.balance.claimableRewards
+      "
       :staking-fee="fee"
       :hide-password="
-        isHardwareWallet || [WALLET_TYPES.KEPLR].includes(currentWallet.type)
+        isHardwareWallet ||
+        [WALLET_TYPES.KEPLR].includes(
+          customClaimWallet ? customClaimWallet.type : currentWallet.type
+        )
       "
       :adding="adding"
       @submitSend="$emit('claim')"
@@ -42,8 +55,16 @@ export default {
       type: Boolean,
       default: false,
     },
+    isRestake: {
+      type: Boolean,
+      default: false,
+    },
     currentWallet: {
       required: true,
+    },
+    customClaimWallet: {
+      type: Object,
+      default: () => {},
     },
     fee: {
       type: [String, Number],

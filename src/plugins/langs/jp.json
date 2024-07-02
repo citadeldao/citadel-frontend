@@ -958,6 +958,7 @@
         "statsFrozenDescription": "権利が確定したトークン",
         "youHave": "請求可能な XCT",
         "confirmModalTitle": "報酬の請求を確認する",
+        "confirmModalTitleRestake": "Confirm the rewards claim & stake",
         "confirmModalDescription": "利用可能な残高に発生した報酬が表示されます",
         "claimTo": "主張する",
         "amountToClaim": "請求する金額",

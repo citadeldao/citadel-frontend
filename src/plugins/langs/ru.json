@@ -404,6 +404,7 @@
         "claimTo": "Получить на",
         "amountToClaim": "Количество для получения",
         "confirmModalTitle": "Подтвердите получение вознаграждений",
+        "confirmModalTitleRestake": "Confirm the rewards claim & stake",
         "confirmModalDesc": "Вы увидите начисленные вознаграждения в разделе доступного баланса",
         "claimSuccessfuly": "Заклеймели успешно"
     },

@@ -1,9 +1,11 @@
 //import models from '@/models';
 import notify from '@/plugins/notify';
 import citadel from '@citadeldao/lib-citadel';
+import axios from 'axios';
 
 const types = {
   SET_CONFIG: 'SET_CONFIG',
+  SET_RESTAKE_TX: 'SET_RESTAKE_TX',
 };
 
 const IGNORE_ERROR = 'Request failed with status code 404';
@@ -12,9 +14,11 @@ export default {
   namespaced: true,
   state: () => ({
     config: {},
+    restakeTx: null,
   }),
 
   getters: {
+    restakeTx: (state) => state.restakeTx,
     config: (state) => state.config,
     configByNet: (state) => (net) => state.config[net],
     networksList: (state) =>
@@ -35,6 +39,9 @@ export default {
   },
 
   mutations: {
+    [types.SET_RESTAKE_TX](state, data) {
+      state.restakeTx = data;
+    },
     [types.SET_CONFIG](state, config) {
       for (const item in config) {
         config[item] = {
@@ -47,6 +54,33 @@ export default {
   },
 
   actions: {
+    async getRestakeTx({ commit }, { net, address }) {
+      let result = {};
+
+      try {
+        result = await axios.post(
+          `${process.env.VUE_APP_PUBLIC_BACKEND_URL}/blockchain/${net}/${address}/builder/restake`
+        );
+      } catch (err) {
+        if (err?.response?.data?.error) {
+          notify({
+            type: 'warning',
+            text: err?.response?.data?.error,
+          });
+          return;
+        }
+      }
+
+      if (result.data.error) {
+        notify({
+          type: 'warning',
+          text: result.data.error,
+        });
+        return;
+      } else {
+        commit(types.SET_RESTAKE_TX, result.data.data);
+      }
+    },
     async loadConfig({ commit }) {
       const { error, data } = await citadel.getAllNetworksConfig();
 
