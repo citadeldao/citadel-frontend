@@ -11,7 +11,7 @@
       <div v-else class="rewards-modal-content__list">
         <div
           v-for="(wallet, ndx) in rewardsList"
-          :key="ndx"
+          :key="`${wallet.id}${ndx}`"
           class="rewards-modal-content__list-item"
         >
           <div class="row">
