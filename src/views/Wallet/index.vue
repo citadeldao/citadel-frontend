@@ -647,7 +647,6 @@ export default {
     };
 
     const claim = async () => {
-      console.log('GGGG');
       // showConfirmClaim.value = false;
       // KEPLR
       if (currentWallet.value.type === WALLET_TYPES.KEPLR) {
@@ -1630,6 +1629,11 @@ export default {
 
 body.dark {
   .wallet {
+    &__all {
+      background: #313354;
+      color: #fff;
+    }
+
     &__main {
       box-shadow: none;
       background: $dark-panel-bg;
