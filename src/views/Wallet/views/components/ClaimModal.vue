@@ -9,7 +9,7 @@
     :desc="$t('claim.confirmModalDesc')"
     button-text="confirm"
     type="action"
-    :loading="isLoading"
+    :loading="loading"
     :disabled="inputError"
     @close="claimModalCloseHandler"
     @buttonClick="$emit('claim')"
