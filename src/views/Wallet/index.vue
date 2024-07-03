@@ -341,12 +341,8 @@ export default {
     const showRewardsModal = ref(false);
     const citadel = inject('citadel');
     provide('rewardsList', rewardsList);
-    const {
-      currency,
-      currentWallet,
-      isHardwareWallet: hardwareWallet,
-      currentToken,
-    } = useWallets();
+    const { currency, currentWallet, isHardwareWallet, currentToken } =
+      useWallets();
     const subtokensIsLoading = ref(false);
     const { loadKtAddresses, ktAddresses } = useKtAddresses();
     const showClaimModal = computed(() => {
@@ -360,12 +356,6 @@ export default {
         showRejectedLedgerModal.value ||
         showConfirmUnstakedClaim.value
       );
-    });
-
-    const isHardwareWallet = computed(() => {
-      return customClaimWallet.value
-        ? customClaimWallet.value.type === WALLET_TYPES.LEDGER
-        : hardwareWallet.value;
     });
 
     const selectedBtcAddressType = computed(() => {
@@ -529,6 +519,10 @@ export default {
       store.commit('networks/SET_RESTAKE_TX', null);
       customClaimWallet.value = customWallet || null;
 
+      if (customWallet) {
+        store.dispatch('wallets/setCurrentWallet', customWallet);
+      }
+
       try {
         await store.dispatch('networks/getRestakeTx', {
           net: customClaimWallet.value.net,
@@ -538,8 +532,6 @@ export default {
         isLoading.value = false;
         return;
       }
-
-      customClaimWallet.value = customWallet || null;
 
       const {
         resAdding,
@@ -583,6 +575,10 @@ export default {
     const prepareClaim = async (customWallet) => {
       store.commit('networks/SET_RESTAKE_TX', null);
       customClaimWallet.value = customWallet || null;
+
+      if (customWallet) {
+        store.dispatch('wallets/setCurrentWallet', customWallet);
+      }
 
       if (isLoading.value) {
         return;
