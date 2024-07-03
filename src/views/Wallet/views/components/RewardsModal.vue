@@ -77,7 +77,7 @@ export default {
   },
   setup() {
     const { wallets } = useWallets();
-    const ignoreNets = ['iost', 'icon', 'polkadot'];
+    const ignoreNets = ['iost', 'icon', 'polkadot', 'sui'];
 
     const rewardsList = computed(() => {
       return wallets.value.filter(
