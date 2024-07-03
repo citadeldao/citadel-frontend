@@ -303,6 +303,18 @@ export default {
     &.noSwap {
       right: 20px;
     }
+
+    @media (min-width: 1900px) {
+      right: 20px;
+
+      &.swap {
+        right: 60px;
+      }
+
+      &.noSwap {
+        right: 60px;
+      }
+    }
   }
 
   &__swap {

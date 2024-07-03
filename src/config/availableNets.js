@@ -157,4 +157,5 @@ export const swapNoAccess = [
   'stafi',
   'starname',
   'lava',
+  'konstellation',
 ];
