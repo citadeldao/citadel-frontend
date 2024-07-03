@@ -3,7 +3,7 @@
     :title="'Rewards detail list'"
     :desc="$t('claim.confirmModalDesc')"
     type="action"
-    width="650px"
+    width="663px"
     @close="rewardsModalHandler"
   >
     <div class="rewards-modal-content">

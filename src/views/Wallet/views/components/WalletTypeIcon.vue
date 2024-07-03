@@ -1,10 +1,12 @@
 <template>
   <div class="wallet-type">
     <component :is="icon" width="16" height="16" />
+    <div :style="{ backgroundColor: types[walletType].color }" class="badge" />
   </div>
 </template>
 <script>
 import { markRaw, ref, onMounted } from 'vue';
+import { types } from '@/config/walletType';
 
 export default {
   props: {
@@ -22,6 +24,7 @@ export default {
     });
 
     return {
+      types,
       icon,
     };
   },
@@ -29,6 +32,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .wallet-type {
+  position: relative;
   width: 32px;
   height: 32px;
   display: flex;
@@ -36,6 +40,17 @@ export default {
   justify-content: center;
   border-radius: 4px;
   background: #afbccb;
+
+  .badge {
+    width: 11px;
+    height: 11px;
+    border-radius: $round;
+    border: 1px solid $white;
+    position: absolute;
+    right: -4px;
+    bottom: -3px;
+    background-color: red;
+  }
 
   svg {
     fill: #fff;
