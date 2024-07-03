@@ -341,8 +341,12 @@ export default {
     const showRewardsModal = ref(false);
     const citadel = inject('citadel');
     provide('rewardsList', rewardsList);
-    const { currency, currentWallet, isHardwareWallet, currentToken } =
-      useWallets();
+    const {
+      currency,
+      currentWallet,
+      isHardwareWallet: hardwareWallet,
+      currentToken,
+    } = useWallets();
     const subtokensIsLoading = ref(false);
     const { loadKtAddresses, ktAddresses } = useKtAddresses();
     const showClaimModal = computed(() => {
@@ -356,6 +360,12 @@ export default {
         showRejectedLedgerModal.value ||
         showConfirmUnstakedClaim.value
       );
+    });
+
+    const isHardwareWallet = computed(() => {
+      return customClaimWallet.value
+        ? customClaimWallet.value.type === WALLET_TYPES.LEDGER
+        : hardwareWallet.value;
     });
 
     const selectedBtcAddressType = computed(() => {
