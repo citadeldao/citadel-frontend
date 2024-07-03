@@ -77,10 +77,12 @@ export default {
   },
   setup() {
     const { wallets } = useWallets();
+    const ignoreNets = ['iost', 'icon', 'polkadot'];
 
     const rewardsList = computed(() => {
       return wallets.value.filter(
         (item) =>
+          !ignoreNets.includes(item.net) &&
           WALLET_TYPES.PUBLIC_KEY !== item.type &&
           item.balance?.claimableRewards
       );
