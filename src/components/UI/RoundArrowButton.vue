@@ -8,7 +8,7 @@
     <span v-if="text" class="round-arrow-button__text">
       {{ $t(text) }}
     </span>
-    <div class="round-arrow-button__icon">
+    <div :class="{ small }" class="round-arrow-button__icon">
       <arrowRigth
         :class="{
           down: arrow === 'down',
@@ -58,6 +58,10 @@ export default {
     hoverTextColor: {
       type: String,
       default: '#1A53F0',
+    },
+    small: {
+      type: Boolean,
+      default: false,
     },
     text: {
       type: String,
@@ -124,6 +128,11 @@ export default {
     border-radius: $round;
     background: var(--backgroundColor);
     box-shadow: 0px 4px 20px rgba(105, 95, 225, 0.7);
+
+    &.small {
+      width: 40px;
+      height: 40px;
+    }
 
     & svg {
       width: 9px;

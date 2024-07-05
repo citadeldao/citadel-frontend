@@ -243,6 +243,7 @@ import SuccessModal from '@/views/Extensions/SuccessModal.vue';
 import ConfirmLedgerModal from '@/components/Modals/Ledger/ConfirmLedgerModal';
 import useCurrentWalletRequests from '@/compositions/useCurrentWalletRequests';
 import AddressItem from '@/layouts/AddAddressLayout/components/CutomLists/components/AddressItem';
+import { useI18n } from 'vue-i18n';
 
 export default {
   components: {
@@ -259,10 +260,11 @@ export default {
     AddressItem,
   },
   setup() {
+    const { t } = useI18n();
     const showInfoModal = ref(false);
     const showSuccessModal = ref(false);
     const txComment = ref('');
-    const appError = ref('Swap for this address not found');
+    const appError = ref(t('swapView.swapNotFound'));
     const isLoading = ref(false);
     const isLoadingData = ref(false);
     const store = useStore();
@@ -343,7 +345,7 @@ export default {
         await store.dispatch('squid/fetchTokens');
       } catch (err) {
         isLoadingData.value = false;
-        appError.value = 'Not available in your region';
+        appError.value = t('swapView.notAvailableRegion');
       }
 
       hasSwap.value = squidChains.value.find(

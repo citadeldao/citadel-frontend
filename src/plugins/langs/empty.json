@@ -404,6 +404,7 @@
         "claimTo": "",
         "amountToClaim": "",
         "confirmModalTitle": "",
+        "confirmModalTitleRestake": "",
         "confirmModalDesc": "",
         "claimSuccessfuly": ""
     },
@@ -1251,11 +1252,6 @@
             "description": "",
             "shortDescription": ""
         },
-        "crescent": {
-            "title": "",
-            "description": "",
-            "shortDescription": ""
-        },
         "polkadot": {
             "title": "",
             "description": "",
@@ -1575,6 +1571,10 @@
         "addressPlaceholder": "",
         "modalInfoTitle": "",
         "modalInfoDesc": "",
-        "amountSlippage": ""
+        "amountSlippage": "",
+        "notAvailableRegion": "",
+        "squidDescription": "",
+        "skipDescription": "",
+        "swapNotFound": ""
     }
 }

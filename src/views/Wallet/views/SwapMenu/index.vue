@@ -13,7 +13,8 @@
         <Loading />
       </div>
       <div v-else class="swap-menu__section">
-        <div class="swap-menu__choose-method">
+        <EmptyList v-if="!methods.length" :title="appError" />
+        <div v-else class="swap-menu__choose-method">
           <SelectCard
             v-for="method in methods"
             :key="method.title"
@@ -38,17 +39,21 @@ import Loading from '@/components/Loading';
 import Info from '@/components/Info';
 import { WALLET_TYPES } from '@/config/walletType';
 import { swapNoAccess } from '@/config/availableNets';
+import EmptyList from '@/components/EmptyList';
+import { useI18n } from 'vue-i18n';
 
 export default {
   name: 'MetamaskKeplr',
-  components: { SelectCard, Loading, Info },
+  components: { SelectCard, Loading, Info, EmptyList },
   setup() {
+    const { t } = useI18n();
     const store = useStore();
     const router = useRouter();
     const { currentWallet } = useWallets();
     const hasSwapSquid = ref(null);
     const hasSwapSkip = ref(null);
     const isLoadingData = ref(false);
+    const appError = ref(t('swapView.notAvailableRegion'));
 
     const clickHandler = (name) => {
       router.push({ name: `${name}` });
@@ -85,7 +90,7 @@ export default {
 
     const squidData = {
       title: 'SQUID',
-      info: 'Swap or transfer anything for anything',
+      info: t('swapView.squidDescription'),
       icon: store.getters['app/theme'] === 'dark' ? 'squid-dark' : 'squid',
       hoveredIcon:
         store.getters['app/theme'] === 'dark'
@@ -96,7 +101,7 @@ export default {
 
     const skipData = {
       title: 'SKIP',
-      info: 'Interchain transfers and swaps on any Cosmos chain',
+      info: t('swapView.skipDescription'),
       icon: store.getters['app/theme'] === 'dark' ? 'skip-dark' : 'skip',
       hoveredIcon:
         store.getters['app/theme'] === 'dark'
@@ -169,6 +174,7 @@ export default {
       currentWallet,
       currentWalletType,
       isLoadingData,
+      appError,
     };
   },
 };
@@ -194,6 +200,7 @@ export default {
 
   &__section {
     display: flex;
+    justify-content: center;
     flex-grow: 1;
   }
   &__choose-method {

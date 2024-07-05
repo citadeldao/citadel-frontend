@@ -651,20 +651,6 @@ export default {
       href: 'https://www.coingecko.com/en/coins/stride',
     },
   },
-  crescent: {
-    web: {
-      title: 'crescent.network',
-      href: 'https://crescent.network/',
-    },
-    twitter: {
-      title: '@CrescentHub',
-      href: 'CrescentHub',
-    },
-    landing: {
-      title: 'Coingecko',
-      href: 'https://www.coingecko.com/en/coins/crescent-network',
-    },
-  },
   jackal: {
     web: {
       title: 'jackaldao',
@@ -688,10 +674,6 @@ export default {
       title: '@OmniFlixNetwork',
       href: 'OmniFlixNetwork',
     },
-    // landing: {
-    //   title: 'Coingecko',
-    //   href: 'https://www.coingecko.com/en/coins/crescent-network',
-    // },
   },
   teritori: {
     web: {

@@ -517,9 +517,10 @@ export default {
       addressDao.value = wallets.value.find(
         (w) => w.address.toLowerCase() === item.address.toLowerCase()
       );
+
       if (
-        addressDao.value &&
-        addressDao.value.type === WALLET_TYPES.PUBLIC_KEY
+        !addressDao.value ||
+        (addressDao.value && addressDao.value.type === WALLET_TYPES.PUBLIC_KEY)
       ) {
         notify({
           type: 'warning',

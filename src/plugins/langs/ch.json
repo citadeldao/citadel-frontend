@@ -404,6 +404,7 @@
         "claimTo": "提取至",
         "amountToClaim": "可提取金额",
         "confirmModalTitle": "确认提取奖励",
+        "confirmModalTitleRestake": "Confirm the rewards claim & stake",
         "confirmModalDesc": "您将在可用余额中查看应计奖励",
         "claimSuccessfuly": "已成功提取"
     },
@@ -1251,11 +1252,6 @@
             "description": "Axelar 网络是一个可扩展的跨链通信平台。区块链平台开发者可以通过它将无缝接入其他所有区块链生态系统。应用程序开发人员可以选择最好的区块链来支持其应用程序，并使用 Axelar 的跨链通信协议锁定、解锁和传输资产，并与其他链上的应用程序通信。Axelar 将 DAPP 与多个区块链生态系统连接起来，允许用户直接从其钱包与生态系统中的所有应用程序进行交互。",
             "shortDescription": "Axelar 网络是一个去中心化的、协助完成跨链请求的状态机。该网络支持如跨链网关协议（CGP）等关键协议。"
         },
-        "crescent": {
-            "title": "Crescent 网络\n",
-            "description": "Crescent 是一个 DeFi Hub，通过以 Cosmos 生态系统中不可见的方式统一各区块链，邀请用户探索数字资产的无限可能性。",
-            "shortDescription": "Crescent 为 Cosmos 生态系统连接 DeFi 功能，以提高资本效率并有效管理风险。"
-        },
         "polkadot": {
             "title": "波卡网络 Polkadot",
             "description": "波卡是一种允许跨链传输任意数据——而不仅仅是代币——的区块链网络协议。这意味着波卡是一个真正的多链应用程序环境，支持实现跨链注册和计算。波卡支持跨链传输数据，无论是公共、开源、无许可的区块链，还是私有、需许可的区块链。",
@@ -1586,6 +1582,10 @@
         "addressPlaceholder": "",
         "modalInfoTitle": "",
         "modalInfoDesc": "",
-        "amountSlippage": ""
+        "amountSlippage": "",
+        "notAvailableRegion": "",
+        "squidDescription": "",
+        "skipDescription": "",
+        "swapNotFound": ""
     }
 }

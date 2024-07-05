@@ -6,7 +6,10 @@
     <div class="total-for-range__line" />
     <div class="total-for-range__value">
       <span
-        v-pretty-number="{ value: total, currency }"
+        v-pretty-number="{
+          value: !showBalance ? HIDE_BALANCE_MASK : total,
+          currency,
+        }"
         class="total-for-range__value-value"
       />
       <span class="total-for-range__value-currency">{{ currency }}</span>
@@ -15,6 +18,10 @@
 </template>
 
 <script>
+import { useStore } from 'vuex';
+import { computed } from 'vue';
+import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
+
 export default {
   name: 'TotalForRange',
   props: {
@@ -27,7 +34,15 @@ export default {
       default: '$',
     },
   },
-  setup() {},
+  setup() {
+    const store = useStore();
+    const showBalance = computed(() => store.getters['balance/showBalance']);
+
+    return {
+      showBalance,
+      HIDE_BALANCE_MASK,
+    };
+  },
 };
 </script>
 

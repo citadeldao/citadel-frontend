@@ -5,7 +5,7 @@ import citadel from '@citadeldao/lib-citadel';
 import { i18n } from '@/plugins/i18n';
 import store from '@/store';
 import router from '@/router';
-import { getErrorText, getErrorTextByCode } from '@/config/errors';
+import { getErrorTextByCode } from '@/config/errors';
 import BigNumber from 'bignumber.js';
 import customErrors from '@/helpers/customErrors';
 
@@ -200,13 +200,17 @@ export default class CryptoCoin {
     if (errorMessage) {
       notify({
         type: 'warning',
-        text: errorMessage,
+        text: res.error?.message,
       });
       return { error: errorMessage };
     } else {
-      const errorText = getErrorText(res.error?.message?.toLowerCase());
-      const message = this.getCustomErrorMessage(res.error || errorText);
-      notify(message);
+      // const errorText = getErrorText(res.error?.message?.toLowerCase());
+      // const message = this.getCustomErrorMessage(res.error || errorText);
+
+      notify({
+        type: 'warning',
+        text: res.error?.message,
+      });
       console.error(res.error);
       return res;
     }

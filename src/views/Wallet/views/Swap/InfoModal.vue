@@ -577,6 +577,20 @@ export default {
         });
       } catch (err) {
         isLoading.value = false;
+
+        emit('onCancel');
+        props.onClose();
+        return;
+      }
+
+      if (result.error) {
+        emit('onCancel');
+        props.onClose();
+
+        return;
+      }
+
+      if (!result || !result.data || !result.data[0]) {
         emit('onCancel');
         props.onClose();
         return;

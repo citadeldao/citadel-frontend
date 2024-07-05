@@ -265,14 +265,14 @@ export default {
     flex-direction: column;
     margin-right: 45px;
     @include lg {
-      margin-right: 20px;
+      margin-right: 10px;
     }
     @include md {
       margin-right: 0;
       margin-bottom: 15px;
     }
     @media (min-width: 1920px) and (max-width: 1944px) {
-      margin-right: 20px !important;
+      margin-right: 10px !important;
     }
   }
   &__header-header-title {

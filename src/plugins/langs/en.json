@@ -404,6 +404,7 @@
         "claimTo": "Claim to",
         "amountToClaim": "Amount to claim",
         "confirmModalTitle": "Confirm the rewards claim",
+        "confirmModalTitleRestake": "Confirm the rewards claim & stake",
         "confirmModalDesc": "You will see the accrued rewards in the available balance",
         "claimSuccessfuly": "Claimed successfully"
     },
@@ -1262,11 +1263,6 @@
             "description": "Axelar network is a scalable cross-chain communication platform. Blockchain platform builders can use it to seamlessly plug-in their blockchains to all other blockchain ecosystems. Application developers can choose the best blockchain to host their applications and use Axelar’s cross-chain communication protocols to lock, unlock, and transfer assets, as well as communicate with applications on any other chain. By connecting dapps with multiple blockchain ecosystems, the Axelar platform empowers users to interact with all applications across the ecosystem directly from their wallets.",
             "shortDescription": "Axelar network is a decentralized state machine responsible for facilitating cross-chain requests. The network supports a few key protocols, such as Cross-Chain Gateway Protocol (CGP)."
         },
-        "crescent": {
-            "title": "Crescent network",
-            "description": "Crescent is a DeFi Hub that invites users on a journey to explore limitless possibilities of digital assets by unifying various blockchains in ways unseen in the Cosmos ecosystem.",
-            "shortDescription": "Crescent is to provide a connected DeFi functionality for Cosmos Ecosystem to enhance capital efficiency and manage risk effectively."
-        },
         "polkadot": {
             "title": "Polkadot network",
             "description": "Polkadot is a network protocol that allows arbitrary data—not just tokens—to be transferred across blockchains.This means Polkadot is a true multi-chain application environment where things like cross-chain registries and cross-chain computation are possible.Polkadot can transfer this data across public, open, permissionless blockchains as well as private, permissioned blockchains.",
@@ -1591,6 +1587,10 @@
         "modalInfoDesc": "Check info and sign transaction",
         "amount": "Amount",
         "slippage": "Slippage Tolerance",
-        "slippagePlaceholder": "Enter optional slippage"
+        "slippagePlaceholder": "Enter optional slippage",
+        "notAvailableRegion": "Not available in your region",
+        "squidDescription": "Swap or transfer anything for anything",
+        "skipDescription": "Interchain transfers and swaps on any Cosmos chain",
+        "swapNotFound": "Swap for this address not found"
     }
 }

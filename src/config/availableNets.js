@@ -40,7 +40,6 @@ export const networksFilterCategory = {
     'comdex',
     'coreum',
     'cosmos',
-    'crescent',
     'dydx',
     'emoney',
     'evmos',
@@ -158,4 +157,5 @@ export const swapNoAccess = [
   'stafi',
   'starname',
   'lava',
+  'konstellation',
 ];

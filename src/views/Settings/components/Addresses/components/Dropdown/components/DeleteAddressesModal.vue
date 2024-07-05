@@ -34,6 +34,7 @@
           v-for="(group, i) in groupWalletsByNet"
           :key="i"
           :data="group"
+          :show-right-balance="true"
           :hidden-wallets="hiddenWallets"
           @toggle-hidden="toggleWalletHidden"
         />

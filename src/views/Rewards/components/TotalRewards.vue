@@ -7,7 +7,10 @@
       <div class="total-rewards__usd-rewards">
         <span class="total-rewards__usd-rewards-currency">$</span>
         <span
-          v-pretty-number="{ value: totalUsd, currency: '$' }"
+          v-pretty-number="{
+            value: !showBalance ? HIDE_BALANCE_MASK : totalUsd,
+            currency: '$',
+          }"
           class="total-rewards__usd-rewards-amount"
         />
       </div>
@@ -25,6 +28,10 @@
 
 <script>
 import hotSale from '@/assets/icons/hot-sale.svg';
+import { useStore } from 'vuex';
+import { computed } from 'vue';
+import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
+
 export default {
   name: 'TotalRewards',
   components: { hotSale },
@@ -38,7 +45,15 @@ export default {
       default: 0,
     },
   },
-  setup() {},
+  setup() {
+    const store = useStore();
+    const showBalance = computed(() => store.getters['balance/showBalance']);
+
+    return {
+      showBalance,
+      HIDE_BALANCE_MASK,
+    };
+  },
 };
 </script>
 

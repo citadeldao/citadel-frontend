@@ -34,7 +34,10 @@
       </span>
       <div class="xct-calculator-expand__total-amount">
         <span
-          v-pretty-number="{ value: total, currency: 'XCT' }"
+          v-pretty-number="{
+            value: !showBalance ? HIDE_BALANCE_MASK : total,
+            currency: 'XCT',
+          }"
           class="xct-calculator-expand__total-value"
         />
         <span class="xct-calculator-expand__total-currency"> XCT </span>
@@ -55,6 +58,8 @@ import { useStore } from 'vuex';
 import BigNumber from 'bignumber.js';
 import { onMounted } from '@vue/runtime-core';
 import { OUR_TOKEN } from '@/config/walletType';
+import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
+
 export default {
   name: 'XCTCalculatorExpand',
   components: { constrictIcon, TabsGroup, CalculatorListItem },
@@ -73,6 +78,7 @@ export default {
     const tabs = computed(() =>
       width.value < screenWidths.lg ? tabsListWithDaysMd : tabsListWithDays
     );
+    const showBalance = computed(() => store.getters['balance/showBalance']);
     onMounted(async () => {
       for (const key in totalData) {
         delete totalData[key];
@@ -125,6 +131,8 @@ export default {
     };
 
     return {
+      HIDE_BALANCE_MASK,
+      showBalance,
       currentTab,
       tabs,
       isLoading,

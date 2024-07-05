@@ -243,6 +243,7 @@ import ConfirmLedgerModal from '@/components/Modals/Ledger/ConfirmLedgerModal';
 import EmptyList from '@/components/EmptyList';
 import Info from '@/components/Info';
 import { WALLET_TYPES } from '@/config/walletType';
+import { useI18n } from 'vue-i18n';
 
 export default {
   components: {
@@ -259,13 +260,14 @@ export default {
     EmptyList,
   },
   setup() {
+    const { t } = useI18n();
     const store = useStore();
     const { currentWallet, wallets } = useWallets();
     const showInfoModal = ref(false);
     const successHash = ref([]);
     const txComment = ref('');
     const showSuccessModal = ref(false);
-    const appError = ref('Swap for this address not found');
+    const appError = ref(t('swapView.swapNotFound'));
 
     const hasSwap = ref(false);
 

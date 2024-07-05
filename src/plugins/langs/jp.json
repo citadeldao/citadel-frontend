@@ -958,6 +958,7 @@
         "statsFrozenDescription": "権利が確定したトークン",
         "youHave": "請求可能な XCT",
         "confirmModalTitle": "報酬の請求を確認する",
+        "confirmModalTitleRestake": "Confirm the rewards claim & stake",
         "confirmModalDescription": "利用可能な残高に発生した報酬が表示されます",
         "claimTo": "主張する",
         "amountToClaim": "請求する金額",
@@ -1243,11 +1244,6 @@
             "title": "アクセルネットワーク",
             "description": "Axelar ネットワークは、スケーラブルなクロスチェーン通信プラットフォームです。 ブロックチェーン プラットフォーム ビルダーは、これを使用して、ブロックチェーンを他のすべてのブロックチェーン エコシステムにシームレスにプラグインできます。 アプリケーション開発者は、アプリケーションをホストするのに最適なブロックチェーンを選択し、Axelar のクロスチェーン通信プロトコルを使用して資産をロック、ロック解除、転送し、他のチェーン上のアプリケーションと通信することができます。  dapps を複数のブロックチェーン エコシステムに接続することで、Axelar プラットフォームは、ユーザーがウォレットから直接エコシステム全体のすべてのアプリケーションとやり取りできるようにします。",
             "shortDescription": "Axelar ネットワークは、クロスチェーン リクエストを容易にする分散型ステート マシンです。 ネットワークは、Cross-Chain Gateway Protocol (CGP) などのいくつかの主要なプロトコルをサポートしています。"
-        },
-        "crescent": {
-            "title": "クレセントネットワーク",
-            "description": "Crescent は、Cosmos エコシステムでは見られない方法でさまざまなブロックチェーンを統合することにより、デジタル資産の無限の可能性を探求する旅にユーザーを招待する DeFi ハブです。",
-            "shortDescription": "Crescent は、資本効率を高め、リスクを効果的に管理するために、Cosmos Ecosystem に接続された DeFi 機能を提供します。"
         },
         "polkadot": {
             "title": "ポルカドットネットワーク",
@@ -1543,6 +1539,10 @@
         "addressPlaceholder": "",
         "modalInfoTitle": "",
         "modalInfoDesc": "",
-        "amountSlippage": ""
+        "amountSlippage": "",
+        "notAvailableRegion": "",
+        "squidDescription": "",
+        "skipDescription": "",
+        "swapNotFound": ""
     }
 }

@@ -26,6 +26,11 @@
             <ClaimRewards
               :is-current-token="!!currentToken"
               :current-wallet="currentToken || currentWallet"
+              @showRewardsList="
+                () => {
+                  showRewardsModal = true;
+                }
+              "
               @prepareClaim="prepareClaim"
               @prepareXctClaim="prepareXctClaim"
             />
@@ -86,6 +91,22 @@
           />
         </div>
       </transition>
+      <div
+        v-if="currentToken ? currentToken?.hasClaim : currentWallet.hasClaim"
+        class="wallet__all"
+      >
+        <div class="wallet__all-label">Claim & Stake all</div>
+        <RoundArrowButton
+          :bg-color="'#6A4BFF'"
+          :icon-fill="'white'"
+          small
+          @click="
+            () => {
+              showRewardsModal = true;
+            }
+          "
+        />
+      </div>
       <BalanceAndPledged
         :current-wallet="currentToken || currentWallet"
         :currency="currency"
@@ -124,6 +145,15 @@
         <img src="@/assets/gif/loader.gif" alt="" />
       </Modal>
     </teleport>
+    <teleport v-if="showRewardsModal" to="body">
+      <Modal>
+        <RewardsModal
+          @prepareClaim="prepareClaim"
+          @prepareRestake="prepareRestake"
+          :rewards-modal-handler="rewardsModalHandler"
+        />
+      </Modal>
+    </teleport>
     <teleport v-if="showClaimModal" to="body">
       <Modal>
         <ClaimModal
@@ -132,7 +162,9 @@
           :is-loading="isLoading"
           :input-error="!!inputError"
           :current-wallet="currentWallet"
+          :custom-claim-wallet="customClaimWallet"
           :fee="fee"
+          :is-restake="!!restakeTx"
           :is-hardware-wallet="isHardwareWallet"
           :adding="adding"
           @claim="claim"
@@ -182,8 +214,12 @@
           :fee="fee"
           :claim-fee="claimFee"
           :current-token="currentToken"
-          :current-wallet="currentWallet"
-          :total-amount="totalAmount"
+          :current-wallet="customClaimWallet || currentWallet"
+          :total-amount="
+            customClaimWallet
+              ? customClaimWallet.balance?.claimableRewards
+              : totalAmount
+          "
           :mode="mode"
           :tx-hash="txHash"
           @changeComment="onChangeComment"
@@ -261,16 +297,20 @@ import { useI18n } from 'vue-i18n';
 // import useApi from '@/api/useApi';
 import { getKeplrNetworks } from '@/config/availableNets';
 import ClaimModal from './views/components/ClaimModal';
+import RewardsModal from './views/components/RewardsModal';
 import ClaimModalXCT from './views/components/ClaimModalXCT';
 import ClaimSuccess from './views/components/ClaimSuccess';
 import useCurrentWalletRequests from '@/compositions/useCurrentWalletRequests';
 import BtcAddresses from './components/BtcAddresses';
+import RoundArrowButton from '@/components/UI/RoundArrowButton';
 
 export default {
   name: 'Wallet',
   components: {
+    RoundArrowButton,
     Alias,
     ClaimRewards,
+    RewardsModal,
     MainHeader,
     NetworkInfo,
     AliasQrCard,
@@ -298,6 +338,7 @@ export default {
     const store = useStore();
     const route = useRoute();
     const rewardsList = ref([]);
+    const showRewardsModal = ref(false);
     const citadel = inject('citadel');
     provide('rewardsList', rewardsList);
     const { currency, currentWallet, isHardwareWallet, currentToken } =
@@ -465,12 +506,80 @@ export default {
     const resRawTxs = ref();
     const txComment = ref('');
     const adding = ref();
+    const customClaimWallet = ref(null);
 
     const onChangeComment = (comment) => {
       txComment.value = comment;
     };
 
-    const prepareClaim = async () => {
+    const restakeTx = computed(() => store.getters['networks/restakeTx']);
+
+    const prepareRestake = async (customWallet) => {
+      isLoading.value = true;
+      store.commit('networks/SET_RESTAKE_TX', null);
+      customClaimWallet.value = customWallet || null;
+
+      if (customWallet) {
+        store.dispatch('wallets/setCurrentWallet', customWallet);
+      }
+
+      try {
+        await store.dispatch('networks/getRestakeTx', {
+          net: customClaimWallet.value.net,
+          address: customClaimWallet.value.address,
+        });
+      } catch (err) {
+        isLoading.value = false;
+        return;
+      }
+
+      const {
+        resAdding,
+        ok: feeOk,
+        resFee,
+        enough,
+        error,
+      } = await currentWallet.value.getDelegationFee({
+        walletId: customWallet ? customWallet.id : currentWallet.value.id,
+        transactionType: 'claim',
+      });
+
+      if (error) {
+        isLoading.value = false;
+        return;
+      }
+
+      if (feeOk) {
+        if (!enough) {
+          isLoading.value = false;
+
+          return;
+        }
+
+        adding.value = resAdding;
+        fee.value = resFee;
+
+        if (restakeTx.value) {
+          resRawTxs.value = restakeTx.value;
+          showConfirmClaim.value = true;
+          isLoading.value = false;
+        } else {
+          claimModalCloseHandler();
+          isLoading.value = false;
+        }
+      } else {
+        return;
+      }
+    };
+
+    const prepareClaim = async (customWallet) => {
+      store.commit('networks/SET_RESTAKE_TX', null);
+      customClaimWallet.value = customWallet || null;
+
+      if (customWallet) {
+        store.dispatch('wallets/setCurrentWallet', customWallet);
+      }
+
       if (isLoading.value) {
         return;
       }
@@ -483,7 +592,7 @@ export default {
         enough,
         error,
       } = await currentWallet.value.getDelegationFee({
-        walletId: currentWallet.value.id,
+        walletId: customWallet ? customWallet.id : currentWallet.value.id,
         transactionType: 'claim',
       });
 
@@ -502,8 +611,10 @@ export default {
         adding.value = resAdding;
         fee.value = resFee;
         const { rawTxs, ok: prepOk } = await currentWallet.value.prepareClaim(
-          currentWallet.value.id
+          customWallet ? customWallet.id : currentWallet.value.id
         );
+
+        console.log('rawTxs', rawTxs);
 
         if (prepOk) {
           resRawTxs.value = rawTxs;
@@ -551,7 +662,9 @@ export default {
         try {
           keplrResult = await keplrConnector.value.sendKeplrTransaction(
             resRawTxs.value,
-            currentWallet.value.address,
+            customClaimWallet.value
+              ? customClaimWallet.value.address
+              : currentWallet.value.address,
             { preferNoSetFee: true }
           );
         } catch (err) {
@@ -575,7 +688,9 @@ export default {
         }
 
         const hash = await keplrConnector.value.getOutputHash(
-          currentWallet.value,
+          customClaimWallet.value
+            ? customClaimWallet.value
+            : currentWallet.value,
           resRawTxs.value,
           keplrResult
         );
@@ -589,7 +704,9 @@ export default {
         //   mem_tx_id: resRawTxs.value.mem_tx_id,
         // });
         const data = await citadel.sendSignedTransaction(
-          currentWallet.value.id,
+          customClaimWallet.value
+            ? customClaimWallet.value.id
+            : currentWallet.value.id,
           {
             signedTransaction: hash,
             mem_tx_id: resRawTxs.value.mem_tx_id,
@@ -630,10 +747,16 @@ export default {
           showConfirmClaim.value = false;
           clearLedgerModals();
           showConfirmLedgerModal.value = true;
-          res = await currentWallet.value.signAndSendMulti({
-            walletId: currentWallet.value.id,
+          res = await (
+            customClaimWallet.value || currentWallet.value
+          ).signAndSendMulti({
+            walletId: customClaimWallet.value
+              ? customClaimWallet.value.id
+              : currentWallet.value.id,
             rawTransactions: resRawTxs.value,
-            derivationPath: currentWallet.value.derivationPath,
+            derivationPath: customClaimWallet.value
+              ? customClaimWallet.value.derivationPath
+              : currentWallet.value.derivationPath,
           });
           if (res.ok) {
             txHash.value = res.data;
@@ -647,12 +770,16 @@ export default {
         }
         // if not hardware
         else {
-          res = await currentWallet.value.signAndSendMulti({
-            walletId: currentWallet.value.id,
+          res = await (
+            customClaimWallet.value || currentWallet.value
+          ).signAndSendMulti({
+            walletId: customClaimWallet.value
+              ? customClaimWallet.value.id
+              : currentWallet.value.id,
             rawTransactions: resRawTxs.value,
-            privateKey: await currentWallet.value.getPrivateKeyDecoded(
-              password.value
-            ),
+            privateKey: await (
+              customClaimWallet.value || currentWallet.value
+            ).getPrivateKeyDecoded(password.value),
           });
 
           if (res.ok) {
@@ -675,6 +802,11 @@ export default {
           }
         }
       }
+    };
+
+    const rewardsModalHandler = () => {
+      showRewardsModal.value = false;
+      customClaimWallet.value = null;
     };
 
     const claimModalCloseHandler = () => {
@@ -1149,6 +1281,8 @@ export default {
     );
 
     return {
+      customClaimWallet,
+      showRewardsModal,
       rewardsList,
       WALLET_TYPES,
       currentWalletType,
@@ -1168,6 +1302,7 @@ export default {
       showClaimSuccessModal,
       txComment,
       prepareClaim,
+      prepareRestake,
       successClickHandler,
       inputError,
       xctInflationIsLoading,
@@ -1208,6 +1343,8 @@ export default {
       mode,
       onChangeComment,
       selectedBtcAddressType,
+      rewardsModalHandler,
+      restakeTx,
     };
   },
 };
@@ -1237,6 +1374,24 @@ export default {
 .wallet {
   display: flex;
   flex-grow: 1;
+
+  &__all {
+    // margin-top: 16px;
+    margin-bottom: 16px;
+    height: 72px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 16px;
+    background: #e3e0f9;
+    padding: 0 15px;
+    font-weight: 700;
+  }
+
+  &__all-label {
+    font-size: 18px;
+    font-family: Panton_SemiBold;
+  }
 
   &__central-section {
     display: flex;
@@ -1480,6 +1635,11 @@ export default {
 
 body.dark {
   .wallet {
+    &__all {
+      background: #313354;
+      color: #fff;
+    }
+
     &__main {
       box-shadow: none;
       background: $dark-panel-bg;
