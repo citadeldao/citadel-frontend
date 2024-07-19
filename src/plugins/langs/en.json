@@ -1582,6 +1582,8 @@
         "selectContract": "Select token",
         "fromAddressLabel": "From address",
         "toAddressLabel": "To address",
+        "fallbackAddressLabel": "Fallback address between EVM -> COSMOS",
+        "fallbackAddressPlaceholder": "You must provide a fallback address of a chain (cosmos, osmosis)",
         "addressPlaceholder": "Input address",
         "modalInfoTitle": "Confirmation",
         "modalInfoDesc": "Check info and sign transaction",
