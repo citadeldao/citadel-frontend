@@ -303,6 +303,7 @@ import ClaimSuccess from './views/components/ClaimSuccess';
 import useCurrentWalletRequests from '@/compositions/useCurrentWalletRequests';
 import BtcAddresses from './components/BtcAddresses';
 import RoundArrowButton from '@/components/UI/RoundArrowButton';
+import { useRouter } from 'vue-router';
 
 export default {
   name: 'Wallet',
@@ -337,6 +338,7 @@ export default {
     const { t } = useI18n();
     const store = useStore();
     const route = useRoute();
+    const router = useRouter();
     const rewardsList = ref([]);
     const showRewardsModal = ref(false);
     const citadel = inject('citadel');
@@ -521,6 +523,10 @@ export default {
 
       if (customWallet) {
         store.dispatch('wallets/setCurrentWallet', customWallet);
+        router.push({
+          name: 'WalletAssets',
+          params: { net: customWallet.net, address: customWallet.address },
+        });
       }
 
       try {
@@ -578,6 +584,10 @@ export default {
 
       if (customWallet) {
         store.dispatch('wallets/setCurrentWallet', customWallet);
+        router.push({
+          name: 'WalletAssets',
+          params: { net: customWallet.net, address: customWallet.address },
+        });
       }
 
       if (isLoading.value) {
