@@ -159,3 +159,5 @@ export const swapNoAccess = [
   'lava',
   'konstellation',
 ];
+
+export const removedNets = ['cerberus', 'crescent'];
