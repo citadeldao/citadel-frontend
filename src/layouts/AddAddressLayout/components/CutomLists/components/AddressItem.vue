@@ -172,4 +172,12 @@ export default {
     color: $dark-blue;
   }
 }
+
+body.dark {
+  .address-item {
+    &__title {
+      color: $white;
+    }
+  }
+}
 </style>

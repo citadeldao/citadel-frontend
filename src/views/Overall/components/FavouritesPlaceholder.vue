@@ -144,4 +144,12 @@ export default {
     margin-top: 30px;
   }
 }
+
+body.dark {
+  .favourite-placeholder {
+    &__title {
+      color: $white;
+    }
+  }
+}
 </style>

@@ -373,4 +373,18 @@ export default {
     color: $red;
   }
 }
+
+body.dark {
+  .create-list__delete {
+    &:hover {
+      & svg {
+        fill: $white;
+      }
+
+      & span {
+        color: $white;
+      }
+    }
+  }
+}
 </style>

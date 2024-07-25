@@ -249,6 +249,10 @@ body.dark {
     &--input {
       border: 1px solid #4b4c63;
     }
+
+    &__value-icon {
+      fill: $white;
+    }
   }
 }
 </style>
