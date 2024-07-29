@@ -11,7 +11,11 @@
       <div v-if="!data.rewards" class="rewards__controls">
         <TabsGroup
           v-model:currentValue="currentTab"
-          :tabs="tabs"
+          :tabs="
+            currentTab === 'custom'
+              ? tabs.filter((item) => item.value !== 'custom')
+              : tabs
+          "
           data-qa="rewards__period"
           @update:currentValue="currentTabChangeHandler"
         />
@@ -106,6 +110,7 @@ export default {
     const tabs = computed(() =>
       width.value < screenWidths.lg ? tabsListmd : tabsList
     );
+
     const currentTab = ref(1);
     const isLoading = ref(false);
 

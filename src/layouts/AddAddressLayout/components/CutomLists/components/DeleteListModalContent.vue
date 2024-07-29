@@ -12,7 +12,7 @@
       color="#FFFFFF"
       bg-color="#FA3B33"
       box-shadow="0px 0px 25px rgba(219, 71, 60, 0.3)"
-      hover-bg-color="#000000"
+      :hover-bg-color="isDark ? '#1A53F0' : '#000000'"
       @click="$emit('deleteClick')"
     >
       {{ $t('yes') }}
@@ -29,6 +29,7 @@
 <script>
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import Loading from '@/components/Loading';
+import { ref } from 'vue';
 
 export default {
   name: 'DeleteListModalContent',
@@ -43,6 +44,13 @@ export default {
     },
   },
   emits: ['deleteClick', 'cancelClick'],
+  setup() {
+    const isDark = ref(document.body.classList.contains('dark'));
+
+    return {
+      isDark,
+    };
+  },
 };
 </script>
 
@@ -86,6 +94,18 @@ export default {
     justify-content: center;
     align-items: center;
     background-color: rgba($black, 0.2);
+  }
+}
+
+body.dark {
+  .delete-list-modal-content {
+    &__title {
+      color: $white;
+    }
+
+    &__no-button {
+      color: $white;
+    }
   }
 }
 </style>

@@ -162,7 +162,6 @@
           :is-loading="isLoading"
           :input-error="!!inputError"
           :current-wallet="currentWallet"
-          :custom-claim-wallet="customClaimWallet"
           :fee="fee"
           :is-restake="!!restakeTx"
           :is-hardware-wallet="isHardwareWallet"
@@ -214,7 +213,7 @@
           :fee="fee"
           :claim-fee="claimFee"
           :current-token="currentToken"
-          :current-wallet="customClaimWallet || currentWallet"
+          :current-wallet="currentWallet"
           :total-amount="
             customClaimWallet
               ? customClaimWallet.balance?.claimableRewards
@@ -303,6 +302,7 @@ import ClaimSuccess from './views/components/ClaimSuccess';
 import useCurrentWalletRequests from '@/compositions/useCurrentWalletRequests';
 import BtcAddresses from './components/BtcAddresses';
 import RoundArrowButton from '@/components/UI/RoundArrowButton';
+import { useRouter } from 'vue-router';
 
 export default {
   name: 'Wallet',
@@ -337,6 +337,7 @@ export default {
     const { t } = useI18n();
     const store = useStore();
     const route = useRoute();
+    const router = useRouter();
     const rewardsList = ref([]);
     const showRewardsModal = ref(false);
     const citadel = inject('citadel');
@@ -521,16 +522,20 @@ export default {
 
       if (customWallet) {
         store.dispatch('wallets/setCurrentWallet', customWallet);
-      }
-
-      try {
-        await store.dispatch('networks/getRestakeTx', {
-          net: customClaimWallet.value.net,
-          address: customClaimWallet.value.address,
+        router.push({
+          name: 'WalletAssets',
+          params: { net: customWallet.net, address: customWallet.address },
         });
-      } catch (err) {
-        isLoading.value = false;
-        return;
+
+        try {
+          await store.dispatch('networks/getRestakeTx', {
+            net: customClaimWallet.value.net,
+            address: customClaimWallet.value.address,
+          });
+        } catch (err) {
+          isLoading.value = false;
+          return;
+        }
       }
 
       const {
@@ -540,7 +545,7 @@ export default {
         enough,
         error,
       } = await currentWallet.value.getDelegationFee({
-        walletId: customWallet ? customWallet.id : currentWallet.value.id,
+        walletId: currentWallet.value.id,
         transactionType: 'claim',
       });
 
@@ -578,6 +583,10 @@ export default {
 
       if (customWallet) {
         store.dispatch('wallets/setCurrentWallet', customWallet);
+        router.push({
+          name: 'WalletAssets',
+          params: { net: customWallet.net, address: customWallet.address },
+        });
       }
 
       if (isLoading.value) {
@@ -592,7 +601,7 @@ export default {
         enough,
         error,
       } = await currentWallet.value.getDelegationFee({
-        walletId: customWallet ? customWallet.id : currentWallet.value.id,
+        walletId: currentWallet.value.id,
         transactionType: 'claim',
       });
 
@@ -611,7 +620,7 @@ export default {
         adding.value = resAdding;
         fee.value = resFee;
         const { rawTxs, ok: prepOk } = await currentWallet.value.prepareClaim(
-          customWallet ? customWallet.id : currentWallet.value.id
+          currentWallet.value.id
         );
 
         console.log('rawTxs', rawTxs);
@@ -662,9 +671,7 @@ export default {
         try {
           keplrResult = await keplrConnector.value.sendKeplrTransaction(
             resRawTxs.value,
-            customClaimWallet.value
-              ? customClaimWallet.value.address
-              : currentWallet.value.address,
+            currentWallet.value.address,
             { preferNoSetFee: true }
           );
         } catch (err) {
@@ -688,9 +695,7 @@ export default {
         }
 
         const hash = await keplrConnector.value.getOutputHash(
-          customClaimWallet.value
-            ? customClaimWallet.value
-            : currentWallet.value,
+          currentWallet.value,
           resRawTxs.value,
           keplrResult
         );
@@ -704,9 +709,7 @@ export default {
         //   mem_tx_id: resRawTxs.value.mem_tx_id,
         // });
         const data = await citadel.sendSignedTransaction(
-          customClaimWallet.value
-            ? customClaimWallet.value.id
-            : currentWallet.value.id,
+          currentWallet.value.id,
           {
             signedTransaction: hash,
             mem_tx_id: resRawTxs.value.mem_tx_id,
@@ -747,16 +750,10 @@ export default {
           showConfirmClaim.value = false;
           clearLedgerModals();
           showConfirmLedgerModal.value = true;
-          res = await (
-            customClaimWallet.value || currentWallet.value
-          ).signAndSendMulti({
-            walletId: customClaimWallet.value
-              ? customClaimWallet.value.id
-              : currentWallet.value.id,
+          res = await currentWallet.value.signAndSendMulti({
+            walletId: currentWallet.value.id,
             rawTransactions: resRawTxs.value,
-            derivationPath: customClaimWallet.value
-              ? customClaimWallet.value.derivationPath
-              : currentWallet.value.derivationPath,
+            derivationPath: currentWallet.value.derivationPath,
           });
           if (res.ok) {
             txHash.value = res.data;
@@ -770,16 +767,12 @@ export default {
         }
         // if not hardware
         else {
-          res = await (
-            customClaimWallet.value || currentWallet.value
-          ).signAndSendMulti({
-            walletId: customClaimWallet.value
-              ? customClaimWallet.value.id
-              : currentWallet.value.id,
+          res = await currentWallet.value.signAndSendMulti({
+            walletId: currentWallet.value.id,
             rawTransactions: resRawTxs.value,
-            privateKey: await (
-              customClaimWallet.value || currentWallet.value
-            ).getPrivateKeyDecoded(password.value),
+            privateKey: await currentWallet.value.getPrivateKeyDecoded(
+              password.value
+            ),
           });
 
           if (res.ok) {

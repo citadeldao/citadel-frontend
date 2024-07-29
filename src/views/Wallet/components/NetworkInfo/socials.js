@@ -832,7 +832,7 @@ export default {
     },
     twitter: {
       title: '@dYdX',
-      href: 'https://twitter.com/dYdX',
+      href: 'dYdX',
     },
     landing: {
       title: 'Coingecko',

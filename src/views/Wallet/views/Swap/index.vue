@@ -168,6 +168,15 @@
                 />
               </div>
             </div>
+            <div class="swap__input mt10">
+              <Input
+                id="fromTokenAddr"
+                v-model="fallbackAddress"
+                :label="$t('swapView.fallbackAddressLabel')"
+                :placeholder="$t('swapView.fallbackAddressPlaceholder')"
+                type="text"
+              />
+            </div>
             <div
               :class="{ withError: +maxAmount < +amount }"
               class="swap__input mt10"
@@ -278,6 +287,7 @@ export default {
 
     const fromTokenAddrInput = ref('');
     const toTokenAddrInput = ref('');
+    const fallbackAddress = ref('');
 
     const searchNetworkFrom = ref('');
     const searchNetworkTo = ref('');
@@ -641,6 +651,9 @@ export default {
           fromAddress,
           toAddress,
           slippage: slipp,
+          fallbackAddresses: fallbackAddress.value
+            ? [{ address: fallbackAddress.value, coinType: 118 }]
+            : [],
           // isEvm: currentWallet.value.fee_key === 'gasPrice',
         });
       } catch (err) {
@@ -781,6 +794,8 @@ export default {
 
       searchFromToken,
       searchToToken,
+
+      fallbackAddress,
 
       chainTokensFrom,
       chainTokensTo,

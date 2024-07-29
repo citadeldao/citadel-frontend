@@ -146,8 +146,12 @@ export const renderBalanceHistoryChart = (
     data: CHART_DATA,
     options: OPTIONS,
   };
-  balanceHistoryChart[elementId] = new Chart(
-    document.querySelector(`#${elementId}`),
-    config
-  );
+  try {
+    balanceHistoryChart[elementId] = new Chart(
+      document.querySelector(`#${elementId}`),
+      config
+    );
+  } catch (err) {
+    console.error(err);
+  }
 };

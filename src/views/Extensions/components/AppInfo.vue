@@ -7,15 +7,13 @@
             <div class="title">
               <div v-if="showAllNetworks" class="networks-wrap">
                 <div
-                  v-for="(network, ndx) in app.networks?.slice(6)"
+                  v-for="(network, ndx) in app.networks
+                    .filter((net) => !removedNets.includes(net))
+                    .slice(6)"
                   :key="ndx"
                   class="network-item"
                 >
-                  {{
-                    $store.getters['networks/configByNet'](
-                      network.toLowerCase()
-                    ).name
-                  }}
+                  {{ getNetworkName(network) }}
                 </div>
               </div>
               <div class="label">{{ $t('extensions.networks') }}</div>
@@ -28,7 +26,9 @@
                 {{ $t('extensions.showMore') }}
               </span>
             </div>
-            <Networks :coins="app.networks" />
+            <Networks
+              :coins="app.networks.filter((net) => !removedNets.includes(net))"
+            />
           </div>
           <div class="column mt-20">
             <div class="title">
@@ -79,6 +79,8 @@ import { ref, markRaw } from 'vue';
 import Networks from './Networks';
 import YouCan from './YouCan';
 import PrimaryButton from '@/components/UI/PrimaryButton';
+import { useStore } from 'vuex';
+import { removedNets } from '@/config/availableNets';
 
 export default {
   name: 'AppInfo',
@@ -94,6 +96,7 @@ export default {
     },
   },
   setup() {
+    const store = useStore();
     const successIcon = ref();
     const showAllNetworks = ref(false);
 
@@ -109,11 +112,17 @@ export default {
       showAllNetworks.value = false;
     };
 
+    const getNetworkName = (net) => {
+      return store.getters['networks/configByNet'](net.toLowerCase())?.name;
+    };
+
     return {
+      removedNets,
       successIcon,
       showAllNetworks,
       onMouseOver,
       onMouseLeave,
+      getNetworkName,
     };
   },
 };
@@ -234,6 +243,11 @@ body.dark {
     .main-info {
       .column .title .label {
         color: $white;
+      }
+
+      .column .title .showmore {
+        color: $white;
+        border-color: $white;
       }
 
       .column .title .networks-wrap {

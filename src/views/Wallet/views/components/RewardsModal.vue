@@ -62,6 +62,7 @@ import useWallets from '@/compositions/useWallets';
 import WalletTypeIcon from './WalletTypeIcon';
 import { computed } from 'vue';
 import EmptyList from '@/components/EmptyList';
+import { sortByAlphabet } from '@/helpers';
 
 export default {
   components: {
@@ -80,11 +81,14 @@ export default {
     const ignoreNets = ['iost', 'icon', 'polkadot', 'sui'];
 
     const rewardsList = computed(() => {
-      return wallets.value.filter(
-        (item) =>
-          !ignoreNets.includes(item.net) &&
-          WALLET_TYPES.PUBLIC_KEY !== item.type &&
-          item.balance?.claimableRewards
+      return sortByAlphabet(
+        wallets.value.filter(
+          (item) =>
+            !ignoreNets.includes(item.net) &&
+            WALLET_TYPES.PUBLIC_KEY !== item.type &&
+            item.balance?.claimableRewards
+        ),
+        'code'
       );
     });
 

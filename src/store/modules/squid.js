@@ -111,6 +111,7 @@ export default {
         fromAddress,
         toAddress,
         slippage,
+        fallbackAddresses,
         // isEvm, // choose route type
       }
     ) {
@@ -152,6 +153,7 @@ export default {
               fromAddress,
               toAddress,
               slippage,
+              fallbackAddresses,
             },
             headers: {
               accept: 'application/json',
