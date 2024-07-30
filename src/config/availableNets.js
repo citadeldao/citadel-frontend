@@ -86,6 +86,7 @@ export const networksFilterCategory = {
     'avalanche',
     'evmoseth',
     'optimism',
+    'berachain',
   ],
   others: ['icon', 'iost', 'oasis'],
 };
@@ -98,6 +99,7 @@ export const metamaskNets = [
   'arbitrum',
   'evmoseth',
   'avalanche',
+  'berachain',
 ];
 
 export const metamaskNetsInfo = {
@@ -108,6 +110,7 @@ export const metamaskNetsInfo = {
   avalanche: 'Avalanche',
   evmoseth: 'Evmos EVM',
   optimism: 'Optimism',
+  berachain: 'Berachain',
 };
 
 export const trezorNets = ['btc', 'eth', 'bsc']; // 'tez'

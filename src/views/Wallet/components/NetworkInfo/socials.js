@@ -895,4 +895,18 @@ export default {
       href: 'https://www.coingecko.com/en/coins/lava',
     },
   },
+  berachain: {
+    twitter: {
+      title: '@berachain',
+      href: 'berachain',
+    },
+    web: {
+      title: 'berachain.com',
+      href: 'https://www.berachain.com/',
+    },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/berachain-bera',
+    },
+  },
 };

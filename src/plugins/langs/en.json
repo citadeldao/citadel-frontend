@@ -1397,6 +1397,11 @@
             "title": "Lava",
             "description": "Lava is a modular network which rollups use to bootstrap a performant network of infrastructure providers. RPC requests are routed to the best available provider, giving developers and users optimal service.",
             "shortDescription": "Lava is a modular network which rollups use to bootstrap a performant network of infrastructure providers."
+        },
+        "berachain":{
+            "title": "Berachain",
+            "description": "Proof of liquidity aligns network security and liquidity by validators rewarding liquidity providers on Berachain with the non-purchasable staking token of the network.",
+            "shortDescription": "An EVM-identical L1 turning liquidity into security powered by Proof Of Liquidity"
         }
 
     },
