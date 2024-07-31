@@ -146,6 +146,7 @@ export const hasNoAdvancedSettingsNets = ['polkadot'];
 export const hasCustomClaimInfoNets = ['polkadot'];
 
 export const swapNoAccess = [
+  'berachain',
   'btc',
   'polkadot',
   'icon',
