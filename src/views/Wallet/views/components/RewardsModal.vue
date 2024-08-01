@@ -20,7 +20,9 @@
               <div class="reward">
                 <span
                   v-pretty-number="{
-                    value: wallet.balance.claimableRewards,
+                    value: !showBalance
+                      ? HIDE_BALANCE_MASK
+                      : wallet.balance.claimableRewards,
                     currency: wallet.code,
                   }"
                   class="derivation-path-card__balance"
@@ -63,6 +65,8 @@ import WalletTypeIcon from './WalletTypeIcon';
 import { computed } from 'vue';
 import EmptyList from '@/components/EmptyList';
 import { sortByAlphabet } from '@/helpers';
+import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
+import { useStore } from 'vuex';
 
 export default {
   components: {
@@ -77,8 +81,11 @@ export default {
     },
   },
   setup() {
+    const store = useStore();
     const { wallets } = useWallets();
     const ignoreNets = ['iost', 'icon', 'polkadot', 'sui'];
+
+    const showBalance = store.getters['balance/showBalance'];
 
     const rewardsList = computed(() => {
       return sortByAlphabet(
@@ -92,9 +99,9 @@ export default {
       );
     });
 
-    console.log('wallets.value', rewardsList.value);
-
     return {
+      showBalance,
+      HIDE_BALANCE_MASK,
       rewardsList,
       WALLET_TYPES,
     };
