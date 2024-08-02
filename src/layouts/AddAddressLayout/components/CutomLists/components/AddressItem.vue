@@ -20,7 +20,9 @@
         <div class="address-item__address-balance">
           <span
             v-pretty-number="{
-              value: address.balance.calculatedBalance,
+              value: !showBalance
+                ? HIDE_BALANCE_MASK
+                : address.balance.calculatedBalance,
               currency: address.code,
             }"
             class="address-item__address-balance-balance"
@@ -37,6 +39,8 @@
 <script>
 import done from '@/assets/icons/step/done.svg';
 import { ref, markRaw, computed } from 'vue';
+import { useStore } from 'vuex';
+import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
 
 export default {
   name: 'AddressItem',
@@ -56,6 +60,7 @@ export default {
   },
   emits: ['uncheck', 'check'],
   setup(props, { emit }) {
+    const store = useStore();
     const icon = ref();
     import(`@/assets/icons/networks/${props.address.net}.svg`).then((val) => {
       icon.value = markRaw(val.default);
@@ -63,6 +68,9 @@ export default {
     const walletName = computed(
       () => props.address.title || props.address.address
     );
+
+    const showBalance = computed(() => store.getters['balance/showBalance']);
+
     const toggleChecked = () => {
       if (props.checked) {
         emit('uncheck', props.address);
@@ -71,7 +79,7 @@ export default {
       }
     };
 
-    return { icon, toggleChecked, walletName };
+    return { icon, toggleChecked, walletName, showBalance, HIDE_BALANCE_MASK };
   },
 };
 </script>

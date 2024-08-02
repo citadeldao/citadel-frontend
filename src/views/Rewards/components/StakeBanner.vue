@@ -21,7 +21,10 @@
 
       <div class="stake-banner__reward">
         <span
-          v-pretty-number="{ value: total, currency: '$' }"
+          v-pretty-number="{
+            value: !showBalance ? HIDE_BALANCE_MASK : total,
+            currency: '$',
+          }"
           class="stake-banner__reward-value"
         />
         <span class="stake-banner__reward-currency">$</span>
@@ -48,6 +51,9 @@
 <script>
 import moment from 'moment';
 import { computed } from '@vue/runtime-core';
+import { useStore } from 'vuex';
+import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
+
 export default {
   name: 'StakeBanner',
   props: {
@@ -61,6 +67,9 @@ export default {
     },
   },
   setup(props) {
+    const store = useStore();
+    const showBalance = computed(() => store.getters['balance/showBalance']);
+
     const data = computed(() => {
       if (props.total < 1) {
         return {
@@ -130,7 +139,7 @@ export default {
       return `You could fly <strong> Paris → Rome</strong> with your claimed tokens`;
     });
 
-    return { data, moment, text };
+    return { data, moment, text, showBalance, HIDE_BALANCE_MASK };
   },
 };
 </script>
