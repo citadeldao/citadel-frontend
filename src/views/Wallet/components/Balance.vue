@@ -986,6 +986,14 @@ body.dark {
   .balance {
     background: $dark-panel-bg;
 
+    &__title {
+      & svg {
+        &:hover {
+          fill: $white;
+        }
+      }
+    }
+
     &__pledged-balance-tooltip-info-day {
       color: $white;
     }

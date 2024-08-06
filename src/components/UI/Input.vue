@@ -748,5 +748,9 @@ body.dark {
   input:-webkit-autofill {
     -webkit-text-fill-color: #fff !important;
   }
+
+  input:-webkit-autofill {
+    caret-color: white;
+  }
 }
 </style>

@@ -727,9 +727,19 @@ body.dark {
 }
 
 body.dark {
+  .marketcaps {
+    &__item {
+      & svg {
+        &:hover {
+          fill: $white;
+        }
+      }
+    }
+  }
   .chart__title {
     color: $white;
   }
+
   .marketcaps__item {
     .item__text {
       color: #6b758e;
