@@ -111,7 +111,14 @@ export default {
 <style lang="scss" scoped>
 .rewards-modal-content {
   width: 100%;
-  margin: 20px 0;
+  margin-top: 20px;
+  overflow: scroll;
+  min-height: 250px;
+  height: 460px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0 5px 20px 0;
 
   &__list {
     width: 100%;
@@ -143,7 +150,7 @@ export default {
 
     .address {
       font-size: 14px;
-      min-width: 370px;
+      min-width: 340px;
       color: #6b93c0;
       font-family: 'Panton_Regular';
     }
