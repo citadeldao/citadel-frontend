@@ -731,7 +731,7 @@ body.dark {
     &__item {
       & svg {
         &:hover {
-          fill: $white;
+          fill: #8b9bc7;
         }
       }
     }
