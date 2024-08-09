@@ -66,6 +66,7 @@
             :placeholder="$t('inputToken')"
             background="#edf2fc"
             clearable
+            @clear="onClear"
             data-qa="sidebar__search-field"
             @blur="blurHandler(false)"
           />
@@ -348,13 +349,21 @@ export default {
       keyword.value = '';
     };
     const blurHandler = async (value) => {
+      if (keyword.value) return;
+
       setTimeout(() => {
         showSearchInput.value = value;
         keyword.value = '';
       }, 200);
     };
 
+    const onClear = () => {
+      keyword.value = '';
+      blurHandler();
+    };
+
     return {
+      onClear,
       activeTab,
       toAddAddress,
       walletsList,

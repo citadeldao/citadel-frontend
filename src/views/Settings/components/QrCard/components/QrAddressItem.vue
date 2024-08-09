@@ -19,7 +19,13 @@
           {{ address.address }}
         </span>
         <div class="qr-address-item__address-balance">
-          <span v-pretty-number="address.balance.calculatedBalance" />
+          <span
+            v-pretty-number="
+              !showBalance
+                ? HIDE_BALANCE_MASK
+                : address.balance.calculatedBalance
+            "
+          />
           <span class="qr-address-item__address-currency">{{
             address.code
           }}</span>
@@ -31,7 +37,9 @@
 
 <script>
 import done from '@/assets/icons/step/done.svg';
-import { ref, markRaw } from 'vue';
+import { ref, markRaw, computed } from 'vue';
+import { useStore } from 'vuex';
+import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
 
 export default {
   name: 'QrAddressItem',
@@ -48,9 +56,13 @@ export default {
   emits: ['uncheck', 'check'],
   setup(props, { emit }) {
     const icon = ref();
+    const store = useStore();
+
     import(`@/assets/icons/networks/${props.address.net}.svg`).then((val) => {
       icon.value = markRaw(val.default);
     });
+
+    const showBalance = computed(() => store.getters['balance/showBalance']);
 
     const toggleChecked = () => {
       const action = props.checked ? 'uncheck' : 'check';
@@ -59,7 +71,7 @@ export default {
       emit(action, { address, net });
     };
 
-    return { icon, toggleChecked };
+    return { icon, toggleChecked, showBalance, HIDE_BALANCE_MASK };
   },
 };
 </script>

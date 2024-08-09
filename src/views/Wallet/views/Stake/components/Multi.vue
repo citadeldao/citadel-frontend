@@ -143,7 +143,7 @@
           class="multi__buttons-section"
           :style="{ width: !currentWallet.hasRedelegation && '100%' }"
         >
-          <div class="multi__buttons-section-unstake-button">
+          <div class="multi__buttons-section-unstake-button left">
             <PrimaryButton
               :bg-color="
                 $store.getters['app/theme'] === 'dark' ? '#29294d' : 'white'
@@ -158,6 +158,24 @@
               @click="toUnstake"
             >
               {{ $t('unstake') }}
+            </PrimaryButton>
+          </div>
+          <div class="multi__buttons-section-unstake-button">
+            <PrimaryButton
+              v-if="hasAutorestake"
+              :bg-color="
+                $store.getters['app/theme'] === 'dark' ? '#29294d' : 'white'
+              "
+              color="#a0c6e5"
+              box-shadow="none"
+              border="1px solid #a0c6e5"
+              hover-border="1px solid #1A53F0"
+              hover-color="#1A53F0"
+              hover-bg-color=""
+              data-qa="Autorestake"
+              @click="toAutorestake"
+            >
+              Autorestake
             </PrimaryButton>
           </div>
           <PrimaryButton data-qa="Stake" :loading="isLoading" @click="toStake">
@@ -382,6 +400,7 @@ import SuccessModal from './SuccessModal';
 import useStaking from '@/compositions/useStaking';
 // import useApi from '@/api/useApi';
 import notify from '@/plugins/notify';
+import { useRouter } from 'vue-router';
 
 export default {
   name: 'Multi',
@@ -428,6 +447,7 @@ export default {
   },
   emits: ['showPlaceholder', 'prepareClaim', 'prepareXctClaim', 'stake'],
   setup(props, { emit }) {
+    const router = useRouter();
     const citadel = inject('citadel');
     const { t } = useI18n();
     const {
@@ -792,7 +812,27 @@ export default {
       txComment.value = comm;
     };
 
+    const extensionsList = computed(
+      () => store.getters['extensions/extensionsList']
+    );
+    const hasAutorestake = computed(() => {
+      const app = extensionsList.value.find(
+        (item) => item.name.toLowerCase() === 'autorestake'
+      ) || { networks: [] };
+      return app.networks.includes(props.currentWallet.net);
+    });
+
+    const toAutorestake = () => {
+      router.push({
+        name: 'Extensions',
+        params: { name: 'autorestake' },
+      });
+    };
+
     return {
+      hasAutorestake,
+      extensionsList,
+      toAutorestake,
       stakeWithoutDelegation,
       bannerContent,
       closeBanner,
@@ -964,6 +1004,10 @@ export default {
 
   &__buttons-section-unstake-button {
     margin-right: 24px;
+
+    &.left {
+      margin-left: 24px;
+    }
   }
 }
 </style>

@@ -13,13 +13,17 @@
     />
     <span class="title">{{ split(result.title) }}</span>
     <div v-if="showBalance" class="balance">
-      {{ result.balance }} {{ result.symbol }}
+      {{ !showBalanceFlag ? HIDE_BALANCE_MASK : result.balance }}
+      {{ result.symbol }}
     </div>
   </li>
 </template>
 
 <script>
-import { ref, markRaw } from 'vue';
+import { ref, computed, markRaw } from 'vue';
+import { useStore } from 'vuex';
+import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
+
 export default {
   props: {
     result: {
@@ -37,6 +41,7 @@ export default {
   emits: ['setResult', 'updateCurrentIcon'],
   setup(props, { emit }) {
     const currentIcon = ref();
+    const store = useStore();
 
     const split = (title) => {
       if (!props.splitValue) return title;
@@ -49,12 +54,22 @@ export default {
       });
     }
 
+    const showBalanceFlag = computed(
+      () => store.getters['balance/showBalance']
+    );
+
     const clickHandler = () => {
       emit('setResult', props.result.title);
       emit('updateCurrentIcon', props.result.icon);
     };
 
-    return { currentIcon, clickHandler, split };
+    return {
+      currentIcon,
+      clickHandler,
+      split,
+      showBalanceFlag,
+      HIDE_BALANCE_MASK,
+    };
   },
 };
 </script>
