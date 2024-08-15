@@ -1,0 +1,479 @@
+<template>
+  <div class="leap">
+    <Header :title="$t('leap.addTitle')" :info="$t('leap.addInfo')" />
+    <Modal v-if="loadingImport">
+      <Loading />
+    </Modal>
+    <div class="leap__section">
+      <div class="controls">
+        <Input
+          id="chainsSearch"
+          :label="$t('searchNetworks')"
+          @input="onChainsSearch"
+          type="text"
+          icon="loop"
+          clearable
+        />
+        <div class="controls__row">
+          <div
+            class="select"
+            :class="{ disabled: chainList.length === 0 }"
+            @click="
+              chainList.length !== 0
+                ? (selectedCoins = [].concat(chainList))
+                : null
+            "
+          >
+            {{ $t('keplr.selectAll') }}
+          </div>
+          <div
+            class="unselect"
+            :class="{ disabled: chainList.length === 0 }"
+            @click="unselectAll"
+          >
+            <p>{{ $t('keplr.unselectAll') }}</p>
+            <closeIcon class="close-icon" />
+          </div>
+        </div>
+      </div>
+      <div class="chains__selector">
+        <EmptyList
+          v-if="!chainList.length"
+          :title="$t('notFoundPlaceholderText')"
+          class="nodes-list__empty"
+        />
+        <NetworkCard
+          v-for="chain in chainList"
+          :key="chain.key"
+          :network="chain"
+          icon-path="networks"
+          :checked="!!selectedCoins.find((coin) => coin.label === chain.label)"
+          :empty-mnemonic="true"
+          @check="onSelectCoin"
+          @uncheck="onSelectCoin"
+        />
+      </div>
+      <PrimaryButton
+        v-if="chainList.length !== 0"
+        :disabled="!selectedCoins.length"
+        class="confirm"
+        @click="importWallets"
+      >
+        {{ $t('keplr.confirm') }}
+      </PrimaryButton>
+    </div>
+  </div>
+</template>
+
+<script>
+import Modal from '@/components/Modal';
+import Loading from '@/components/Loading';
+import NetworkCard from '@/components/NetworkCard';
+import Input from '@/components/UI/Input';
+import EmptyList from '@/components/EmptyList';
+
+import { ref, computed, onMounted } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
+import notify from '@/plugins/notify';
+import useCreateWallets from '@/compositions/useCreateWallets';
+import { WALLET_TYPES } from '@/config/walletType';
+import { i18n } from '@/plugins/i18n';
+import { getKeplrNetworks } from '@/config/availableNets';
+import Header from '../AddAddress/components/Header';
+import PrimaryButton from '@/components/UI/PrimaryButton';
+import LeapConnector from '@/models/Services/Leap';
+import closeIcon from '@/assets/icons/close.svg';
+import { INPUT_TYPE_ICON } from '@/config/newWallets';
+import axios from 'axios';
+
+const { t } = i18n.global;
+
+export default {
+  name: 'Metamask',
+  components: {
+    PrimaryButton,
+    Modal,
+    Header,
+    Loading,
+    closeIcon,
+    NetworkCard,
+    Input,
+    EmptyList,
+  },
+  setup() {
+    const router = useRouter();
+    const store = useStore();
+    const loadingImport = ref(false);
+    const showSuccess = ref(false);
+    const walletLoading = ref(false);
+    const keplrChains = ref([]);
+
+    const chains = ref(getKeplrNetworks());
+
+    chains.value.sort((a, b) => {
+      if (a.label > b.label) {
+        return 1;
+      }
+
+      if (a.label < b.label) {
+        return -1;
+      }
+
+      return 0;
+    });
+
+    const privateWallets = computed(() =>
+      store.getters['wallets/wallets'].filter(
+        (w) => w.type !== WALLET_TYPES.PUBLIC_KEY
+      )
+    );
+
+    const selectedCoins = ref([]);
+    const importedAddresses = ref([]);
+
+    const onSelectCoin = (c) => {
+      const findIndex = selectedCoins.value.findIndex(
+        (coin) => coin.label === c.label
+      );
+
+      if (findIndex === -1) {
+        selectedCoins.value.push(c);
+      } else {
+        selectedCoins.value = selectedCoins.value.filter(
+          (coin) => coin.label !== c.label
+        );
+      }
+    };
+
+    const importWallets = async () => {
+      loadingImport.value = true;
+      importedAddresses.value = [];
+
+      const addToWallet = (accs, c) => {
+        const find = privateWallets.value.find(
+          (w) => w.address === accs[0].address
+        );
+
+        if (!find) {
+          importedAddresses.value.push({
+            address: accs[0].address,
+            pubkey: Buffer.from(accs[0].pubkey).toString('hex'),
+            net: c.net,
+            key: c.key,
+          });
+        }
+      };
+
+      const chainsToAdd = selectedCoins.value.map((c) => c.key);
+
+      // can approve all at once ??
+      try {
+        await window.leap.enable(chainsToAdd);
+      } catch (err) {
+        notify({
+          type: 'warning',
+          text: err.toString(),
+        });
+
+        if (err.toString().toLowerCase().includes('rejected')) {
+          loadingImport.value = false;
+          importedAddresses.value = [];
+          return;
+        }
+      }
+      // ----
+
+      await Promise.all(
+        selectedCoins.value.map(async (c) => {
+          try {
+            const accs = await new LeapConnector().connect(c.key);
+            addToWallet(accs, c);
+
+            return true;
+          } catch (err) {
+            const chainToSuggest = keplrChains.value.find(
+              (ch) =>
+                [c.label.toLowerCase(), c.net.toLowerCase()].includes(
+                  ch.chainName.toLowerCase()
+                ) || c.key.toLowerCase() === ch.chainId.toLowerCase()
+            );
+
+            if (!chainToSuggest) {
+              notify({
+                type: 'warning',
+                text: `${c.label} - ${err}`,
+              });
+
+              return false;
+            }
+            if (selectedCoins.value.length === 1) {
+              try {
+                await window.leap.experimentalSuggestChain(chainToSuggest);
+                const accs = await new LeapConnector().connect(c.key);
+
+                addToWallet(accs, c);
+
+                return true;
+              } catch (err) {
+                return false;
+              }
+            } else {
+              notify({
+                type: 'warning',
+                text: `Select only one ${c.label} network which is not in Leap`,
+              });
+            }
+          }
+        })
+      );
+
+      if (!importedAddresses.value.length) {
+        loadingImport.value = false;
+
+        notify({
+          type: 'warning',
+          text: t('keplr.allExist'),
+        });
+
+        return;
+      }
+
+      await store.dispatch(
+        'leap/connectToLeap',
+        importedAddresses.value[0].key
+      );
+      const result = await Promise.all(
+        await importedAddresses.value.map(async (c) => {
+          setNets([c.net]);
+          setType('leap');
+          setAddress(c.address);
+          setPublicKey(c.pubkey);
+
+          try {
+            await createWallets(WALLET_TYPES.LEAP);
+            return true;
+          } catch (err) {
+            return false;
+          }
+        })
+      );
+
+      if (result.every((r) => r)) {
+        store.commit('newWallets/setNewWalletsList', newWallets.value);
+        await redirectToNewWallet();
+        store.commit('newWallets/setModal', true);
+        showSuccess.value = true;
+      }
+    };
+
+    const {
+      setNets,
+      setType,
+      createWallets,
+      setAddress,
+      setPublicKey,
+      redirectToNewWallet,
+      newWallets,
+    } = useCreateWallets();
+
+    const cancel = () => {
+      router.push('/add-address');
+    };
+
+    onMounted(async () => {
+      const res = await axios.get(
+        'https://keplr-chain-registry.vercel.app/api/chains'
+      );
+
+      if (res.data?.chains) {
+        keplrChains.value = res.data?.chains;
+      }
+
+      store.commit('newWallets/setCatPageProps', {
+        inputTypeIcon: INPUT_TYPE_ICON.LEAP,
+        walletTypePlaceholder: 'Citadel Leap',
+      });
+      if (!window.leap) {
+        notify({
+          type: 'warning',
+          text: t('keplr.notFound'),
+        });
+      }
+    });
+
+    const search = ref('');
+
+    const chainList = computed(() => {
+      if (!search.value) {
+        return chains.value;
+      }
+
+      return chains.value.filter(
+        (item) =>
+          item.label.toLowerCase().includes(search.value.toLowerCase()) ||
+          item.net.toLowerCase().includes(search.value.toLowerCase()) ||
+          item.key.toLowerCase().includes(search.value.toLowerCase())
+      );
+    });
+
+    const unselectAll = () => {
+      if (chainList.value.length) {
+        selectedCoins.value = selectedCoins.value.filter((selected) => {
+          const res = chainList.value.find((ch) => ch.net === selected.net);
+
+          return !res;
+        });
+      }
+    };
+
+    const onChainsSearch = (value) => (search.value = value);
+
+    return {
+      showSuccess,
+      chains,
+      walletLoading,
+      cancel,
+      onSelectCoin,
+      selectedCoins,
+      unselectAll,
+      importWallets,
+      loadingImport,
+      importedAddresses,
+      privateWallets,
+      chainList,
+      onChainsSearch,
+    };
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.leap {
+  display: flex;
+  flex-direction: column;
+  background: $white;
+  box-shadow: -10px 4px 50px rgba(0, 0, 0, 0.1);
+  border-radius: 25px;
+  padding: 0 40px 43px;
+  margin-bottom: 40px;
+  flex-grow: 1;
+
+  .confirm {
+    width: 200px;
+    margin: 0 auto;
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .controls {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: column;
+    margin: 50px auto 0;
+    max-width: 891px;
+
+    .input {
+      height: 68px;
+    }
+
+    &__row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin: 15px 0 25px;
+    }
+    .select {
+      color: #00a3ff;
+      border-bottom: 1px dotted #00a3ff;
+      cursor: pointer;
+    }
+
+    .unselect {
+      display: flex;
+      align-items: center;
+      color: #fa3b33;
+      p {
+        margin: 0 8px 0 0;
+        border-bottom: 1px dotted #fa3b33;
+      }
+      cursor: pointer;
+    }
+    .select,
+    .unselect {
+      transition: 0.2s;
+      &.disabled {
+        opacity: 0;
+        cursor: initial;
+      }
+    }
+  }
+}
+
+.import-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &__address {
+    margin-top: 10px;
+  }
+
+  &__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-weight: 600;
+    margin-top: 35px;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    text-align: center;
+    padding-top: 5px;
+
+    & svg {
+      fill: white;
+      height: 24px;
+    }
+
+    background: $mid-blue;
+  }
+
+  &__select {
+    width: 100%;
+    height: 68px;
+    z-index: 2;
+    margin-top: 25px;
+  }
+}
+
+.chains__selector {
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 10px;
+  margin-bottom: 30px;
+  max-width: 891px;
+}
+.close-icon {
+  svg {
+    fill: $red;
+  }
+}
+
+body.dark {
+  .leap {
+    background: $dark-panel-bg;
+  }
+}
+</style>

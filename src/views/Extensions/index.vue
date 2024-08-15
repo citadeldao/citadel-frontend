@@ -218,12 +218,14 @@ export default {
     const tokenAuth = ref(false);
 
     let keplrTimer = null;
+    let leapTimer = null;
     const firstAddressChecked = ref(false);
 
     const scrtAddress = ref('');
 
     onBeforeUnmount(() => {
       clearInterval(keplrTimer);
+      clearInterval(leapTimer);
     });
 
     const { wallets: walletsList } = useWallets();
@@ -298,6 +300,7 @@ export default {
     const launchApp = () => {};
     const closeApp = (stopRedirect) => {
       clearInterval(keplrTimer);
+      clearInterval(leapTimer);
       currentApp.value = null;
       selectedApp.value = null;
 
@@ -337,6 +340,8 @@ export default {
     const keplrConnector = computed(
       () => store.getters['keplr/keplrConnector']
     );
+
+    const leapConnector = computed(() => store.getters['leap/leapConnector']);
 
     const selectApp = async () => {
       showAppInfoModal.value = false;
@@ -437,6 +442,22 @@ export default {
       }
     };
 
+    const startLeapSecretChecker = async () => {
+      // shade
+      if ([17, 22, 26].includes(+selectedApp.value?.id)) {
+        leapTimer = setInterval(async () => {
+          if (firstAddressChecked.value && !scrtAddress.value) {
+            clearInterval(leapTimer);
+            return;
+          }
+          firstAddressChecked.value = true;
+          await store.dispatch('leap/connectToLeap', { chainId: 'secret-4' });
+          const secretAddress = leapConnector.value.accounts[0];
+          scrtAddress.value = secretAddress;
+        }, 5000);
+      }
+    };
+
     if (route.params.name) {
       selectedApp.value = Object.assign(
         {},
@@ -445,6 +466,7 @@ export default {
         )
       );
       startKeplrSecretChecker();
+      startLeapSecretChecker();
 
       if (!selectedApp.value.id) {
         router.push({ name: 'Extensions' });
@@ -651,6 +673,7 @@ export default {
           }, 1000);
         }
         startKeplrSecretChecker();
+        startLeapSecretChecker();
       }
     });
 
@@ -774,6 +797,30 @@ export default {
         return;
       }
 
+      if (signerWallet.value.type === WALLET_TYPES.LEAP) {
+        const leapResult = await leapConnector.value.sendLeapTransaction(
+          messageForSign.value.message,
+          signerWallet.value.address,
+          {
+            preferNoSetFee: true,
+            preferNoSetMemo: true,
+          }
+        );
+
+        if (leapResult.signature) {
+          msgSuccessSignature.value = leapResult.signature;
+          sendMSG(leapResult.signature, extensionsSocketTypes.types.message, {
+            base64signature: leapResult.fullResponse.signature,
+            signature: leapResult.signature,
+          });
+          showSuccessNotify();
+          store.commit('extensions/SET_MESSAGE_FOR_SIGN', null, {
+            root: true,
+          });
+        }
+        return;
+      }
+
       confirmPassword.value = true;
 
       if (
@@ -855,10 +902,6 @@ export default {
       ) {
         let keplrResult;
 
-        // const signType = keplrConnector.value.getSignType(
-        //   extensionTransactionForSign.value
-        // );
-
         try {
           keplrResult = await keplrConnector.value.sendKeplrTransaction(
             extensionTransactionForSign.value,
@@ -901,14 +944,6 @@ export default {
           hash.signType = 'json';
         }
 
-        // const data = await useApi('wallet').sendSignedTransaction({
-        //   hash,
-        //   deviceType: WALLET_TYPES.KEPLR,
-        //   proxy: false,
-        //   network: signerWallet.value.net,
-        //   from: signerWallet.value.address,
-        //   mem_tx_id: extensionTransactionForSign.value.mem_tx_id || null,
-        // });
         const data = await citadel.sendSignedTransaction(
           signerWallet.value.id,
           {
@@ -949,6 +984,98 @@ export default {
 
         return;
       }
+
+      // start leap
+      if (
+        signerWallet.value &&
+        signerWallet.value.type === WALLET_TYPES.LEAP &&
+        !extensionTransactionForSign.value.messageScrt
+      ) {
+        let leapResult;
+
+        try {
+          leapResult = await leapConnector.value.sendLeapTransaction(
+            extensionTransactionForSign.value,
+            signerWallet.value.address,
+            { preferNoSetFee: true }
+          );
+          signLoading.value = false;
+        } catch (err) {
+          notify({
+            type: 'warning',
+            text: JSON.stringify(err),
+          });
+          confirmPassword.value = false;
+          password.value = '';
+          signLoading.value = false;
+          return;
+        }
+
+        if (leapResult.error) {
+          notify({
+            type: 'warning',
+            text: leapResult.error,
+          });
+
+          return;
+        }
+
+        const hash = await leapConnector.value.getOutputHash(
+          signerWallet.value,
+          extensionTransactionForSign.value,
+          leapResult
+        );
+
+        // selectedApp.value autorestake id 15
+        if (
+          // selectedApp.value.id == '15' &&
+          signerWallet.value.type === WALLET_TYPES.LEAP &&
+          leapResult.isNanoLedger
+        ) {
+          hash.signType = 'json';
+        }
+
+        const data = await citadel.sendSignedTransaction(
+          signerWallet.value.id,
+          {
+            signedTransaction: hash,
+            mem_tx_id: extensionTransactionForSign.value.mem_tx_id || null,
+            proxy: false,
+          }
+        );
+
+        if (!data.error) {
+          confirmModalDisabled.value = false;
+          showLedgerConnect.value = false;
+          successTx.value = [data.data.txhash];
+          confirmModalDisabled.value = false;
+          confirmModalCloseHandler();
+          showSuccessModal.value = true;
+          signLoading.value = false;
+          sendMSG(
+            extensionsSocketTypes.messages.success,
+            extensionsSocketTypes.types.transaction,
+            {
+              base64signature: leapResult.fullResponse.signature,
+              signature: leapResult.signature,
+            }
+          );
+        } else {
+          signLoading.value = false;
+          confirmPassword.value = false;
+          password.value = '';
+          signLoading.value = false;
+          notify({
+            type: 'warning',
+            text: data.error,
+          });
+
+          return;
+        }
+
+        return;
+      }
+      // end leap
 
       // metamask, ...
       if (metamaskSigner.value) {

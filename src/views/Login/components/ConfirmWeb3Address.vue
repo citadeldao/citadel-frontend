@@ -13,6 +13,8 @@
             ? $t('login.confirmAddressTitleAnother')
             : isKeplr
             ? $t('login.confirmAddressTitleKeplr')
+            : isLeap
+            ? $t('login.confirmAddressTitleLeap')
             : network === 'eth'
             ? $t('login.confirmAddressTitleMetamaskEth')
             : $t('login.confirmAddressTitleMetamaskBSC')
@@ -32,7 +34,7 @@
         <div class="address">{{ address }}</div>
       </div>
       <div
-        v-if="isKeplr"
+        v-if="isKeplr || isLeap"
         class="refresh"
         :class="{ 'refresh-animation': refresh }"
         @click="$emit('refreshKeplr')"
@@ -40,7 +42,7 @@
         <refreshSvg />
       </div>
       <div
-        v-if="!isKeplr"
+        v-if="!isKeplr && !isLeap"
         class="refresh"
         :class="{ 'refresh-animation': refresh }"
         @click="$emit('refreshMetamask')"
@@ -78,6 +80,9 @@ export default {
       default: false,
     },
     isKeplr: {
+      type: Boolean,
+    },
+    isLeap: {
       type: Boolean,
     },
     name: {

@@ -210,6 +210,7 @@
     "metamaskKeplr": {
         "card1Info": "",
         "card2Info": "",
+        "card3Info": "",
         "modalCardMessage": "",
         "modalCard1Info": "",
         "modalCard2Info": ""
@@ -1398,6 +1399,14 @@
     "noactive": "",
     "jailed": "",
     "sendAssetsDestination": "",
+    "leap": {
+        "addTitle": "",
+        "addInfo": "",
+        "notFound": "",
+        "titleModal": "",
+        "descModal": "",
+        "errorSignMismatch": ""
+    },
     "keplr": {
         "notAddAtOnce": "",
         "notFound": "",

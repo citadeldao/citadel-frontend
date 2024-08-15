@@ -3,6 +3,7 @@ export const INPUT_TYPE_ICON = {
   PRIVATE: 'private-dot',
   PUBLIC: 'public-dot',
   KEPLR: 'keplr-dot',
+  LEAP: 'leap-dot',
   METAMASK: 'metamask-dot',
   SEED: 'oneseed-dot',
   SEED_PHRASE: 'seedphrase-dot',

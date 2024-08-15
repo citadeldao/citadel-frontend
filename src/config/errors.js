@@ -9,6 +9,10 @@ export const keplrErrors = {
   'Signer mismatched': 'Please change account in Keplr to sign transaction',
 };
 
+export const leapErrors = {
+  'Signer mismatched': 'Please change account in Leap to sign transaction',
+};
+
 export const getErrorText = (errorStr) => {
   if (!errorStr || typeof errorStr !== 'string') return '';
   if (errorStr.includes('unregistered interface')) {

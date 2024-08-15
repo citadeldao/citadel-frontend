@@ -210,6 +210,7 @@
     "metamaskKeplr": {
         "card1Info": "连接您的Metamask设备",
         "card2Info": "连接您的Keplr设备",
+        "card3Info": "",
         "modalCardMessage": "需确认操作",
         "modalCard1Info": "请在您的浏览器Metamask扩展程序弹窗中确认交易",
         "modalCard2Info": "请在您的浏览器Keplr扩展程序弹窗中确认交易"
@@ -1399,6 +1400,14 @@
     "noactive": "非活跃",
     "jailed": "禁止",
     "sendAssetsDestination": "目标网络",
+    "leap": {
+        "addTitle": "从 Leap 添加网络",
+        "addInfo": "选择网络导入您的 Leap 钱包",
+        "notFound": "在您的浏览器未找到 Leap ",
+        "titleModal": "导入 Leap 钱包",
+        "descModal": "选择一个网络连接 Leap",
+        "errorSignMismatch": "请在 Leap 钱包中更换账户为该交易进行签名"
+    },
     "keplr": {
         "notAddAtOnce": "",
         "notFound": "在您的浏览器未找到 Keplr ",
@@ -1489,7 +1498,7 @@
             "seedPhraseDescription": "导入您的助记词以添加新地址",
             "privateKey": "私钥",
             "privateKeyDescription": "导入您的私钥以添加新地址",
-            "metamaskKeplr": "Metamask, Keplr 钱包\n",
+            "metamaskKeplr": "Metamask, Keplr, Leap 钱包\n",
             "metamaskKeplrDescription": "连接您的 Web3 钱包以添加新地址",
             "hardware": "硬件钱包",
             "hardwareDescription": "导入 Ledger 或 Tezor 钱包地址以开启更多功能",

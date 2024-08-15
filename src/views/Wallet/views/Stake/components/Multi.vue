@@ -287,7 +287,9 @@
             :staking-fee="fee"
             :hide-password="
               isHardwareWallet ||
-              [WALLET_TYPES.KEPLR].includes(currentWallet.type)
+              [WALLET_TYPES.KEPLR, WALLET_TYPES.LEAP].includes(
+                currentWallet.type
+              )
             "
             :adding="adding"
             :place="
@@ -504,6 +506,7 @@ export default {
     const keplrConnector = computed(
       () => store.getters['keplr/keplrConnector']
     );
+    const leapConnector = computed(() => store.getters['leap/leapConnector']);
 
     const { isHardwareWallet } = useWallets();
     const disabledConfirm = computed(
@@ -732,6 +735,77 @@ export default {
           return;
         }
       }
+
+      // leap start
+      if (props.currentWallet.type === WALLET_TYPES.LEAP) {
+        isLoading.value = true;
+
+        let leapResult;
+
+        try {
+          leapResult = await leapConnector.value.sendLeapTransaction(
+            resRawTxs.value,
+            props.currentWallet.address,
+            { preferNoSetFee: true }
+          );
+        } catch (err) {
+          notify({
+            type: 'warning',
+            text: JSON.stringify(err),
+          });
+          isLoading.value = false;
+
+          return;
+        }
+
+        if (leapResult.error) {
+          notify({
+            type: 'warning',
+            text: leapResult.error,
+          });
+          isLoading.value = false;
+
+          return;
+        }
+
+        const hash = await leapConnector.value.getOutputHash(
+          props.currentWallet,
+          resRawTxs.value,
+          leapResult
+        );
+
+        const data = await citadel.sendSignedTransaction(
+          props.currentWallet.id,
+          {
+            signedTransaction: hash,
+            mem_tx_id: resRawTxs.value.mem_tx_id,
+            proxy: false,
+            // hash,
+            // deviceType: WALLET_TYPES.KEPLR,
+            // proxy: false,
+            // network: props.currentWallet.net,
+            // from: props.currentWallet.address,
+            // mem_tx_id: resRawTxs.value.mem_tx_id,
+          }
+        );
+
+        if (!data.error) {
+          txHash.value = [data.data.txhash];
+          updateShowConfirmTransaction(false);
+          updateShowSuccessModal(true);
+          isLoading.value = false;
+        } else {
+          modalCloseHandler();
+          notify({
+            type: 'warning',
+            text: data.error,
+          });
+          isLoading.value = false;
+
+          return;
+        }
+      }
+      // leap end
 
       if (passwordError.value && !isHardwareWallet.value) {
         inputError.value = passwordError.value;

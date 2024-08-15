@@ -248,6 +248,10 @@ export default {
         import(`@/assets/icons/networks/keplr-dot.svg`).then((val) => {
           currentIcon.value = markRaw(val.default);
         });
+      } else if (props.icon === WALLET_TYPES.LEAP) {
+        import(`@/assets/icons/networks/leap-dot.svg`).then((val) => {
+          currentIcon.value = markRaw(val.default);
+        });
       } else {
         import(`@/assets/icons/networks/${props.icon}.svg`).then((val) => {
           currentIcon.value = markRaw(val.default);

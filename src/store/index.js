@@ -21,6 +21,7 @@ import ktAddresses from './modules/ktAddresses';
 import newWallets from './modules/newWallets';
 import metamask from './modules/metamask';
 import keplr from './modules/keplr';
+import leap from './modules/leap';
 import salary from './modules/salary';
 import ledger from './modules/ledger';
 import btcAddresses from './modules/btcAddresses';
@@ -52,6 +53,7 @@ export default createStore({
     ktAddresses,
     metamask,
     keplr,
+    leap,
     subscriptions,
     newWallets,
     salary,

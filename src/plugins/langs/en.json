@@ -32,6 +32,7 @@
         "confirmAddressTitleMetamaskEth": "The login is proceed via the chosen Metamask account. Make sure to use it for future logins.<br>You can use only Ethereum or BSC, Arbitrum, Avalanche, Optimism, Polygon, Evmoseth network for login.",
         "confirmAddressTitleMetamaskBSC": "The login is proceed via the chosen Metamask account. Make sure to use it for future logins.<br>You can use only Ethereum or BSC, Arbitrum, Avalanche, Optimism, Polygon, Evmoseth network for login.",
         "confirmAddressTitleKeplr": "The login is proceed via the chosen Keplr account. Make sure to use it for future logins.<br>You can use only Cosmos network for login.",
+        "confirmAddressTitleLeap": "The login is proceed via the chosen Leap account. Make sure to use it for future logins.<br>You can use only Cosmos network for login.",
         "changeLangTitle": "Language selection",
         "changeLangDescription": "Choose the most convenient language for you to interact with <span style='font-weight: bold; font-family: Panton_Bold;'>Citadel.one</span> platform",
         "KeplrNotFound": "Keplr extension not found",
@@ -210,6 +211,7 @@
     "metamaskKeplr": {
         "card1Info": "Connect your Metamask device",
         "card2Info": "Connect your Keplr device",
+        "card3Info": "Connect your Leap device",
         "modalCardMessage": "Confirmation required",
         "modalCard1Info": "Please confirm the transaction in the Metamask extension pop-up in your browser.",
         "modalCard2Info": "Please confirm the transaction in the Keplr extension pop-up in your browser."
@@ -1410,6 +1412,14 @@
     "noactive": "inactive",
     "jailed": "JAILED",
     "sendAssetsDestination": "Destination network",
+    "leap": {
+        "addTitle": "Add networks from Leap",
+        "addInfo": "Choose networks to import from your Leap wallet",
+        "notFound": "Leap not found in your browser",
+        "titleModal": "Import Leap wallet",
+        "descModal": "Select chain to connect Leap",
+        "errorSignMismatch": "Please change account in Leap to sign transaction"
+    },
     "keplr": {
         "notAddAtOnce": "You cannot add selected chains at once",
         "notFound": "Keplr not found in your browser",
@@ -1501,7 +1511,7 @@
             "seedPhraseDescription": "Import your seed-phrase to add an address",
             "privateKey": "Private key",
             "privateKeyDescription": "Import your private key to add an address",
-            "metamaskKeplr": "Metamask, Keplr",
+            "metamaskKeplr": "Metamask, Keplr, Leap",
             "metamaskKeplrDescription": "Connect your Web3 Wallet to add an address",
             "hardware": "Hardware wallet",
             "hardwareDescription": "Import addresses from Ledger or Trezor device for advanced use",

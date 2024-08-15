@@ -210,6 +210,7 @@
     "metamaskKeplr": {
         "card1Info": "Connectez votre appareil Metamask",
         "card2Info": "Connectez votre appareil Keplr",
+        "card3Info": "",
         "modalCardMessage": "Confirmation requise",
         "modalCard1Info": "Veuillez confirmer la transaction dans la fenêtre pop-up de l'extension Metamask dans votre navigateur.",
         "modalCard2Info": "Veuillez confirmer la transaction dans la fenêtre pop-up de l'extension Keplr dans votre navigateur."
@@ -1393,6 +1394,14 @@
     "noactive": "inactif",
     "jailed": "EMPRISONNÉ",
     "sendAssetsDestination": "Réseau de destination",
+    "leap": {
+        "addTitle": "Ajouter des réseaux à partir de Leap",
+        "addInfo": "Choisissez les réseaux à importer depuis votre portefeuille Leap",
+        "notFound": "Leap n'a pas été trouvé dans votre navigateur",
+        "titleModal": "Importer le portefeuille de Leap",
+        "descModal": "Sélectionnez la chaîne pour connecter Leap",
+        "errorSignMismatch": "Veuillez changer de compte dans Leap pour signer la transaction."
+    },
     "keplr": {
         "notAddAtOnce": "",
         "notFound": "Keplr n'a pas été trouvé dans votre navigateur",
@@ -1483,7 +1492,7 @@
             "seedPhraseDescription": "Importez votre seed-phrase pour ajouter une adresse",
             "privateKey": "Clé privée",
             "privateKeyDescription": "Importez votre clé privée pour ajouter une adresse",
-            "metamaskKeplr": "Metamask, Keplr",
+            "metamaskKeplr": "Metamask, Keplr, Leap",
             "metamaskKeplrDescription": "Connectez votre portefeuille Web3 pour ajouter une adresse",
             "hardware": "Portefeuille matériel",
             "hardwareDescription": "Importer des adresses depuis le Ledger ou le dispositif Trezor pour une utilisation avancée",

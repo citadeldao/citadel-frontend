@@ -366,6 +366,9 @@ export default {
     const keplrConnector = computed(
       () => store.getters['keplr/keplrConnector']
     );
+
+    const leapConnector = computed(() => store.getters['leap/leapConnector']);
+
     const subtokens = computed(() =>
       store.getters['subtokens/formatedSubtokens']()
     );
@@ -404,10 +407,45 @@ export default {
       }
     };
 
+    const checkLeapAddress = async () => {
+      if (
+        currentWallet.value &&
+        currentWallet.value.type === WALLET_TYPES.LEAP
+      ) {
+        try {
+          const chain = getKeplrNetworks().find(
+            (conf) => conf.net === currentWallet.value.net
+          ).key;
+          await window.leap.enable(chain);
+          const accounts = await window.leap
+            .getOfflineSigner(chain)
+            .getAccounts();
+          const leapAddress = accounts && accounts[0].address;
+          const pubkey = Buffer.from(accounts && accounts[0].pubkey).toString(
+            'hex'
+          );
+
+          if (leapAddress === currentWallet.value.address) {
+            const walletPublicKey = currentWallet.value.publicKey;
+
+            if (walletPublicKey !== pubkey) {
+              await store.dispatch('wallets/pushWallets', {
+                wallets: [{ ...currentWallet.value, publicKey: pubkey }],
+              });
+              window.location.reload();
+            }
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    };
+
     onMounted(async () => {
       await loadKtAddresses(currentWallet?.value?.id);
       await loadXCTInfo();
       await checkKeplrAddress();
+      await checkLeapAddress();
       await getWalletRewards();
       await getDelegationBalance();
     });
@@ -700,14 +738,6 @@ export default {
           keplrResult
         );
 
-        // const data = await useApi('wallet').sendSignedTransaction({
-        //   hash,
-        //   deviceType: WALLET_TYPES.KEPLR,
-        //   proxy: false,
-        //   network: currentWallet.value.net,
-        //   from: currentWallet.value.address,
-        //   mem_tx_id: resRawTxs.value.mem_tx_id,
-        // });
         const data = await citadel.sendSignedTransaction(
           currentWallet.value.id,
           {
@@ -734,6 +764,71 @@ export default {
           return;
         }
       }
+
+      // leap start
+      if (currentWallet.value.type === WALLET_TYPES.LEAP) {
+        isLoading.value = true;
+        let leapResult;
+
+        try {
+          leapResult = await leapConnector.value.sendLeapTransaction(
+            resRawTxs.value,
+            currentWallet.value.address,
+            { preferNoSetFee: true }
+          );
+        } catch (err) {
+          notify({
+            type: 'warning',
+            text: JSON.stringify(err),
+          });
+          isLoading.value = false;
+
+          return;
+        }
+
+        if (leapResult.error) {
+          notify({
+            type: 'warning',
+            text: leapResult.error,
+          });
+          isLoading.value = false;
+
+          return;
+        }
+
+        const hash = await leapConnector.value.getOutputHash(
+          currentWallet.value,
+          resRawTxs.value,
+          leapResult
+        );
+
+        const data = await citadel.sendSignedTransaction(
+          currentWallet.value.id,
+          {
+            signedTransaction: hash,
+            mem_tx_id: resRawTxs.value.mem_tx_id,
+            proxy: false,
+          }
+        );
+
+        if (!data.error) {
+          txHash.value = [data.data.txhash];
+          showConfirmUnstakedClaim.value = false;
+          showConfirmClaim.value = false;
+          showClaimSuccessModal.value = true;
+          isLoading.value = false;
+        } else {
+          claimModalCloseHandler();
+          isLoading.value = false;
+          notify({
+            type: 'warning',
+            text: data.error,
+          });
+
+          return;
+        }
+      }
+      // leap end
 
       if (passwordError.value && !isHardwareWallet.value) {
         inputError.value = passwordError.value;

@@ -58,6 +58,16 @@ export default {
             : 'keplr-hovered',
         routeName: 'Keplr',
       },
+      {
+        title: 'Leap',
+        info: t('metamaskKeplr.card3Info'),
+        icon: store.getters['app/theme'] === 'dark' ? 'leap-dark' : 'leap',
+        hoveredIcon:
+          store.getters['app/theme'] === 'dark'
+            ? 'leap-dark-hover'
+            : 'leap-hovered',
+        routeName: 'Leap',
+      },
     ];
 
     return { clickHandler, methods };

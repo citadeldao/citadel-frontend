@@ -20,7 +20,7 @@
 </template>
 <script>
 import socialsSvg from '@/assets/icons/newLogin/socials.svg';
-import web3Svg from '@/assets/icons/newLogin/web3.svg';
+import web3Svg from '@/assets/icons/addAddressV2/metamaskkeplr-type-hover.svg';
 
 export default {
   name: 'LoginMenu',
