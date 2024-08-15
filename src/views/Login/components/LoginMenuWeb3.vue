@@ -41,7 +41,7 @@
 <script>
 import mmSvg from '@/assets/icons/newLogin/mm.svg';
 import keplrSvg from '@/assets/icons/newLogin/keplr.svg';
-import leapSvg from '@/assets/icons/types/leap.svg';
+import leapSvg from '@/assets/icons/types/leapgreen.svg';
 export default {
   components: {
     mmSvg,
