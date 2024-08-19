@@ -228,7 +228,7 @@ export default {
     const favouritesList = computed(
       () =>
         customWalletsList.value.length > 0 &&
-        customWalletsList.value.find((list) => list.name === 'Favourites')
+        customWalletsList.value.find((list) => list?.name === 'Favourites')
     );
 
     const isFavorite = computed(
