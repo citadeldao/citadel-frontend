@@ -210,6 +210,7 @@
     "metamaskKeplr": {
         "card1Info": "Metamask デバイスを接続する",
         "card2Info": "Keplr デバイスを接続する",
+        "card3Info": "",
         "modalCardMessage": "要確認",
         "modalCard1Info": "ブラウザの Metamask 拡張ポップアップでトランザクションを確認してください。",
         "modalCard2Info": "ブラウザの Keplr 拡張ポップアップでトランザクションを確認してください。"
@@ -1351,6 +1352,14 @@
     "noactive": "非活性",
     "jailed": "投獄された",
     "sendAssetsDestination": "宛先ネットワーク",
+    "leap": {
+        "addTitle": "Leap からネットワークを追加する",
+        "addInfo": "Leap ウォレットからインポートするネットワークを選択してください",
+        "notFound": "ブラウザに Leap が見つかりません",
+        "titleModal": "Leap ウォレットのインポート",
+        "descModal": "Leap を接続するチェーンを選択",
+        "errorSignMismatch": "Leap でアカウントを変更してトランザクションに署名してください"
+    },
     "keplr": {
         "notAddAtOnce": "",
         "notFound": "ブラウザに Keplr が見つかりません",

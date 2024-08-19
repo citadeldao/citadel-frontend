@@ -27,7 +27,7 @@
       :staking-fee="fee"
       :hide-password="
         isHardwareWallet ||
-        [WALLET_TYPES.KEPLR].includes(
+        [WALLET_TYPES.KEPLR, WALLET_TYPES.LEAP].includes(
           customClaimWallet ? customClaimWallet.type : currentWallet.type
         )
       "

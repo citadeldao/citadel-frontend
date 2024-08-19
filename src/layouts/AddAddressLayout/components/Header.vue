@@ -195,6 +195,8 @@ export default {
       () => store.getters['keplr/keplrConnector']
     );
 
+    const leapConnector = computed(() => store.getters['leap/leapConnector']);
+
     store.dispatch('extensions/fetchExtensionsList');
     const extensionsList = computed(
       () => store.getters['extensions/extensionsList']
@@ -282,6 +284,7 @@ export default {
 
         keplrConnector.value.disconnect();
         metamaskConnector.value.disconnect();
+        leapConnector.value.disconnect();
         window.location.reload();
 
         setTimeout(async () => {

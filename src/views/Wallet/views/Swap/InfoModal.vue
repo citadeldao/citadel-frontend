@@ -321,6 +321,7 @@ export default {
     const keplrConnector = computed(
       () => store.getters['keplr/keplrConnector']
     );
+    const leapConnector = computed(() => store.getters['leap/leapConnector']);
 
     const cosmosTx = computed(() => {
       return store.getters['squid/cosmosTx'];
@@ -467,6 +468,58 @@ export default {
           }
           return;
         }
+        // start leap
+        if (props.signerWallet.type === WALLET_TYPES.LEAP) {
+          const leapResult = await leapConnector.value.sendLeapTransaction(
+            cosmosTx.value,
+            props.signerWallet.address,
+            {
+              preferNoSetFee: true,
+              preferNoSetMemo: true,
+            }
+          );
+
+          if (leapResult.error) {
+            notify({
+              type: 'warning',
+              text: leapResult.error,
+            });
+
+            isLoading.value = false;
+            return;
+          }
+
+          if (leapResult.signature) {
+            const hash = await leapConnector.value.getOutputHash(
+              props.signerWallet,
+              cosmosTx.value,
+              leapResult
+            );
+
+            const data = await citadel.sendSignedTransaction(
+              props.signerWallet.id,
+              {
+                signedTransaction: hash,
+                proxy: false,
+              }
+            );
+
+            if (!data.error) {
+              emit('onSuccess', [data.data.txhash]);
+              props.onClose();
+              return;
+            } else {
+              isLoading.value = false;
+              notify({
+                type: 'warning',
+                text: data.error,
+              });
+              return;
+            }
+          }
+          return;
+        }
+        // end leap
 
         if (props.signerWallet.type === WALLET_TYPES.LEDGER) {
           emit('showLedger');

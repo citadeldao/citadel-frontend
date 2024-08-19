@@ -74,7 +74,8 @@
 
             <ConfirmWeb3Address
               v-show="showKepler"
-              :is-keplr="!!keplrConnector.accounts[0]?.address"
+              :is-keplr="loginWith === 'keplr'"
+              :is-leap="loginWith === 'leap'"
               :name="keplrNetworks[0]?.label"
               :network="keplrNetworks[0]?.net"
               :loading="addLoading"
@@ -82,6 +83,18 @@
               @cancel="onWeb3AddressCancel"
               @confirm="onWeb3AddressConfirm"
               @refreshKeplr="onRefreshWeb3Keplr"
+            />
+            <ConfirmWeb3Address
+              v-show="showLeap"
+              :is-keplr="loginWith === 'keplr'"
+              :is-leap="loginWith === 'leap'"
+              :name="keplrNetworks[0]?.label"
+              :network="keplrNetworks[0]?.net"
+              :loading="addLoading"
+              :address="leapConnector.accounts[0]?.address"
+              @cancel="onWeb3AddressCancel"
+              @confirm="onWeb3AddressConfirm"
+              @refreshKeplr="onRefreshWeb3Leap"
             />
             <ConfirmWeb3Address
               v-show="
@@ -224,6 +237,7 @@ export default {
     const captchaToken = ref('');
     const mmRefresh = ref(false);
     const kplrRefresh = ref(false);
+    const leapRefresh = ref(false);
     const codeFromEmail = ref('');
 
     const { setNets, setAddress, setPublicKey, createWallets } =
@@ -252,6 +266,8 @@ export default {
     const keplrConnector = computed(
       () => store.getters['keplr/keplrConnector']
     );
+
+    const leapConnector = computed(() => store.getters['leap/leapConnector']);
 
     if (syncMode.value) {
       hashInfo.value = parseHash(localHashInfo);
@@ -460,6 +476,15 @@ export default {
           }
         }
 
+        if (loginWith.value === 'leap') {
+          try {
+            await store.dispatch('leap/connectToLeap', keplrNetworks[0].key);
+          } catch (err) {
+            onApproveCancel();
+            onLoginWeb3();
+          }
+        }
+
         if (loginWith.value === 'metamask') {
           await store.dispatch('metamask/connectToMetamask');
         }
@@ -479,6 +504,7 @@ export default {
 
       connectedToWeb3.value = false;
       keplrConnector.value.disconnect();
+      leapConnector.value.disconnect();
       metamaskConnector.value.disconnect();
       addLoading.value = false;
 
@@ -507,6 +533,11 @@ export default {
 
       if (loginWith.value === 'keplr') {
         address = keplrConnector.value.accounts[0].address;
+        net = keplrNetworks[0].net;
+      }
+
+      if (loginWith.value === 'leap') {
+        address = leapConnector.value.accounts[0].address;
         net = keplrNetworks[0].net;
       }
 
@@ -561,6 +592,13 @@ export default {
           if (walletType === WALLET_TYPES.KEPLR) {
             setPublicKey(
               Buffer.from(keplrConnector.value.accounts[0].pubkey).toString(
+                'hex'
+              )
+            );
+          }
+          if (walletType === WALLET_TYPES.LEAP) {
+            setPublicKey(
+              Buffer.from(leapConnector.value.accounts[0].pubkey).toString(
                 'hex'
               )
             );
@@ -670,6 +708,44 @@ export default {
         }
       };
 
+      const authLeap = async () => {
+        const leapResult = await leapConnector.value.sendLeapTransaction(
+          res.message,
+          address,
+          {
+            preferNoSetFee: true,
+            preferNoSetMemo: true,
+          }
+        );
+
+        if (leapResult.signature) {
+          const { data, error } = await store.dispatch('auth/confirmWeb3', {
+            address,
+            net,
+            sign: leapResult.signature,
+            captchaResKey: captchaToken.value,
+            pubKey: Buffer.from(
+              leapConnector.value.accounts[0].pubkey
+            ).toString('hex'),
+          });
+
+          if (data) {
+            await initialize(WALLET_TYPES.LEAP);
+          } else {
+            notify({
+              type: 'warning',
+              text: error,
+            });
+            addLoading.value = false;
+          }
+        } else {
+          addLoading.value = false;
+          onApproveCancel();
+          onLoginWeb3();
+          return;
+        }
+      };
+
       if (loginWith.value === 'keplr') {
         let timer = null;
         if (data) {
@@ -694,6 +770,32 @@ export default {
           return;
         }
       }
+
+      if (loginWith.value === 'leap') {
+        let timer = null;
+        if (data) {
+          if (res.isNeedCaptcha) {
+            window.document.querySelector('#do-something-btn').click();
+            timer = setInterval(async () => {
+              if (captchaToken.value) {
+                clearInterval(timer);
+                await authLeap();
+                addLoading.value = false;
+              }
+            }, 1000);
+          } else {
+            await authLeap();
+            addLoading.value = false;
+          }
+        } else {
+          notify({
+            type: 'warning',
+            text: error,
+          });
+          return;
+        }
+      }
+
       // confirmedAddress.value = true;
     };
 
@@ -701,6 +803,11 @@ export default {
       kplrRefresh.value = true;
       await store.dispatch('keplr/connectToKeplr', keplrNetworks[0].key);
       kplrRefresh.value = false;
+    };
+    const onRefreshWeb3Leap = async () => {
+      leapRefresh.value = true;
+      await store.dispatch('leap/connectToLeap', keplrNetworks[0].key);
+      leapRefresh.value = false;
     };
     const whatEverShow = ref(true);
     const onRefreshWeb3Metamask = async () => {
@@ -751,13 +858,20 @@ export default {
         connectedToWeb3.value &&
         keplrConnector.value?.accounts[0]
     );
+    const showLeap = computed(
+      () =>
+        !confirmedAddress.value &&
+        loginWith.value === 'leap' &&
+        connectedToWeb3.value &&
+        leapConnector.value?.accounts[0]
+    );
     const showDisclaimerWeb3 = computed(
       () =>
         !whatEverShow.value &&
         !keplrConnector.value?.accounts[0] &&
         !metamaskConnector.value?.accounts[0] &&
         connectedToWeb3.value &&
-        ['metamask', 'keplr'].includes(loginWith.value)
+        ['metamask', 'keplr', 'leap'].includes(loginWith.value)
     );
     const isShow = computed(() => store.getters['metamask/isShow']);
     const metamaskAddress = computed(
@@ -767,10 +881,12 @@ export default {
       metamaskAddress,
       mmRefresh,
       kplrRefresh,
+      leapRefresh,
       isShow,
       showDisclaimerWeb3,
       whatEverShow,
       showKepler,
+      showLeap,
       showMetamask,
       onCloseWhyEmail,
       closePrivacy,
@@ -794,12 +910,13 @@ export default {
       onWeb3AddressCancel,
       onWeb3AddressConfirm,
       onRefreshWeb3Keplr,
+      onRefreshWeb3Leap,
       onRefreshWeb3Metamask,
       confirmedAddress,
       userName,
       onAccountCreate,
       addLoading,
-
+      leapConnector,
       syncMode,
       showSyncBlock,
       sync,

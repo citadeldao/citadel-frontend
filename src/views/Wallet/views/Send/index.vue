@@ -365,9 +365,11 @@
             :fee-type="feeType"
             :hide-password="
               isHardwareWallet ||
-              [WALLET_TYPES.METAMASK, WALLET_TYPES.KEPLR].includes(
-                currentWalletType
-              )
+              [
+                WALLET_TYPES.METAMASK,
+                WALLET_TYPES.KEPLR,
+                WALLET_TYPES.LEAP,
+              ].includes(currentWalletType)
             "
             :custom-fee="customFee"
             :current-token="currentToken"
@@ -692,6 +694,7 @@ export default {
     const keplrConnector = computed(
       () => store.getters['keplr/keplrConnector']
     );
+    const leapConnector = computed(() => store.getters['leap/leapConnector']);
 
     const txFromMempool = computed(
       () => store.getters['transactions/txFromMempool']
@@ -1322,9 +1325,6 @@ export default {
         props.currentWallet.type === WALLET_TYPES.KEPLR &&
         props.currentWallet?.config?.standard !== TOKEN_STANDARDS.SNIP_20
       ) {
-        // const tx = isSendToAnotherNetwork.value
-        //   ? prepareBuildTransaction.value.data
-        //   : rawTx.value;
         let keplrResult;
 
         try {
@@ -1401,15 +1401,100 @@ export default {
         }
       }
 
+      // leap start
+      if (
+        props.currentWallet.type === WALLET_TYPES.LEAP &&
+        props.currentWallet?.config?.standard !== TOKEN_STANDARDS.SNIP_20
+      ) {
+        let leapResult;
+
+        try {
+          loadingSign.value = true;
+          isLoading.value = true;
+          leapResult = await leapConnector.value.sendLeapTransaction(
+            rawTx.value,
+            props.currentWallet.address,
+            { preferNoSetFee: true }
+          );
+          loadingSign.value = false;
+          isLoading.value = false;
+          hideBridge();
+        } catch (err) {
+          isLoading.value = false;
+          loadingSign.value = false;
+          console.log('leapResult', err);
+          notify({
+            type: 'warning',
+            text: JSON.stringify(err),
+          });
+
+          return;
+        }
+
+        if (leapResult.error) {
+          notify({
+            type: 'warning',
+            text: leapResult.error,
+          });
+
+          return;
+        }
+
+        isLoading.value = true;
+
+        const hash = await leapConnector.value.getOutputHash(
+          parentWallet.value,
+          rawTx.value,
+          leapResult
+        );
+
+        const data = await citadel.sendSignedTransaction(
+          parentWallet.value.id,
+          {
+            signedTransaction: hash,
+            mem_tx_id: rawTx.value.mem_tx_id,
+            proxy: false,
+            // hash,
+            // deviceType: WALLET_TYPES.KEPLR,
+            // proxy: false,
+            // network: parentWallet.value.net,
+            // from: parentWallet.value.address,
+            // mem_tx_id: rawTx.value.mem_tx_id,
+          }
+        );
+
+        if (!data.error) {
+          loadingSign.value = false;
+          isLoading.value = false;
+          showConfirmModal.value = false;
+          showSuccessModal.value = true;
+          txHash.value = [data.data.txhash];
+          hideBridge();
+          return;
+        } else {
+          loadingSign.value = false;
+          notify({
+            type: 'warning',
+            text: data.error,
+          });
+          isLoading.value = false;
+
+          return;
+        }
+      }
+      // leap end
+
       confirmClicked.value = true;
 
       if (
         (!isHardwareWallet.value &&
           !password.value &&
+          props.currentWallet.type !== WALLET_TYPES.LEAP &&
           props.currentWallet.type !== WALLET_TYPES.KEPLR) ||
         (passwordError.value &&
           !isHardwareWallet.value &&
-          !props.currentWallet.type === WALLET_TYPES.KEPLR)
+          !props.currentWallet.type === WALLET_TYPES.KEPLR &&
+          !props.currentWallet.type === WALLET_TYPES.LEAP)
       ) {
         inputError.value = passwordError.value;
         disableBtn.value = true;

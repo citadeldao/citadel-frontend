@@ -24,6 +24,15 @@
         <div class="description">Keplr</div>
       </div>
     </div>
+    <div class="login-menu-web3__item" @click="$emit('loginWith', 'leap')">
+      <div class="icon">
+        <leapSvg />
+      </div>
+      <div class="info">
+        <div class="label">{{ $t('login.loginInWith') }}</div>
+        <div class="description">Leap</div>
+      </div>
+    </div>
     <div class="login-menu-web3__cancel" @click="$emit('cancel')">
       {{ $t('cancel') }}
     </div>
@@ -32,10 +41,12 @@
 <script>
 import mmSvg from '@/assets/icons/newLogin/mm.svg';
 import keplrSvg from '@/assets/icons/newLogin/keplr.svg';
+import leapSvg from '@/assets/icons/types/leapgreen.svg';
 export default {
   components: {
     mmSvg,
     keplrSvg,
+    leapSvg,
   },
 };
 </script>

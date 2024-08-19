@@ -115,5 +115,11 @@ export default {
       background: #e336e7;
     }
   }
+
+  &__leap {
+    &::after {
+      background: #32da6d;
+    }
+  }
 }
 </style>

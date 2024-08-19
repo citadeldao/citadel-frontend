@@ -137,6 +137,22 @@ export default function useCreateWallets() {
         errorMessage = error;
       }
 
+      if (newWalletType === WALLET_TYPES.LEAP) {
+        const config = store.getters['networks/configByNet'](
+          walletOpts.nets[0]
+        );
+        const { data, error } = await citadel.addCreatedWallet({
+          ...config,
+          net: walletOpts.nets[0],
+          address: walletOpts.address,
+          type: newWalletType,
+          publicKey: walletOpts.publicKey,
+          networkName: config.name
+        });
+        newWalletsList = data ? [data] : [];
+        errorMessage = error;
+      }
+
       if (newWalletType === WALLET_TYPES.PRIVATE_KEY) {
         const { data, error } = await citadel.addWalletCollectionByPrivateKey(
           newWalletsOptsList
@@ -198,7 +214,7 @@ export default function useCreateWallets() {
       if (
         !newWallets.value.length &&
         (newWalletType === WALLET_TYPES.PUBLIC_KEY ||
-          newWalletType === WALLET_TYPES.KEPLR)
+          newWalletType === WALLET_TYPES.KEPLR || newWalletType === WALLET_TYPES.LEAP)
       ) {
         newWallets.value = newWalletsOptsList.map((item) =>
           findWalletInArray(wallets.value, {

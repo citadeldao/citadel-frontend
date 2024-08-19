@@ -9,6 +9,7 @@ export const WALLET_TYPES = {
   PUBLIC_KEY: 'publicKey',
   METAMASK: 'metamask',
   KEPLR: 'keplr',
+  LEAP: 'leap',
 };
 
 export const PRIVATE_PASSWORD_TYPES = [
@@ -52,6 +53,10 @@ export const types = {
   keplr: {
     color: '#E336E7',
     text: 'Keplr',
+  },
+  leap: {
+    color: '#32da6d',
+    text: 'Leap',
   },
 };
 

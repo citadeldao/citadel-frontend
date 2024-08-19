@@ -259,6 +259,7 @@ export default {
     const keplrConnector = computed(
       () => store.getters['keplr/keplrConnector']
     );
+    const leapConnector = computed(() => store.getters['leap/leapConnector']);
 
     const showPasswordForAssign = computed(
       () =>
@@ -430,6 +431,33 @@ export default {
             keplrResult.signature
           );
           resError = error;
+        } else if (item.type === WALLET_TYPES.LEAP) {
+          const { data } = await item.prepareAssignToDaoMessage(item.id);
+          const { id } = data;
+
+          const leapResult = await leapConnector.value.sendLeapTransaction(
+            data.message.originalCosmosMsg || data.message,
+            item.address,
+            {
+              preferNoSetFee: true,
+              preferNoSetMemo: true,
+            }
+          );
+
+          if (leapResult.error) {
+            notify({
+              type: 'warning',
+              text: leapResult.error,
+            });
+            modalCloseHandler();
+            return;
+          }
+          const { error } = await item.sendAssignToDaoMessage(
+            props.currentWallet.address,
+            id,
+            leapResult.signature
+          );
+          resError = error;
         } else {
           const { error } = await item.assignToDao({
             walletId: item.id,
@@ -564,6 +592,59 @@ export default {
               props.currentWallet.address,
               id,
               keplrResult.signature
+            );
+          if (err) {
+            notify({
+              type: 'warning',
+              text: err,
+            });
+            loadingUnasign.value = false;
+            return;
+          } else {
+            notify({
+              type: 'success',
+              text: 'The address was successfully unassigned',
+            });
+            loadingUnasign.value = false;
+            modalCloseHandler();
+            showApproveAsignWithPasswordModal.value = false;
+            showPasswordForAssign.value = false;
+            addressDao.value = null;
+            showModalPassword.value = false;
+            await loadData();
+            return;
+          }
+        }
+
+        if (addressDao.value.type === WALLET_TYPES.LEAP) {
+          const { data } = await addressDao.value.prepareAssignToDaoMessage(
+            addressDao.value.id
+          );
+          const { id } = data;
+
+          const leapResult = await leapConnector.value.sendLeapTransaction(
+            data.message.originalCosmosMsg || data.message,
+            addressDao.value.address,
+            {
+              preferNoSetFee: true,
+              preferNoSetMemo: true,
+            }
+          );
+
+          if (leapResult.error) {
+            notify({
+              type: 'warning',
+              text: leapResult.error,
+            });
+            modalCloseHandler();
+            loadingUnasign.value = false;
+            return;
+          }
+          const { error: err } =
+            await addressDao.value.removeAssignToDaoMessage(
+              props.currentWallet.address,
+              id,
+              leapResult.signature
             );
           if (err) {
             notify({

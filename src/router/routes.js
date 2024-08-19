@@ -235,6 +235,15 @@ export default [
     },
   },
   {
+    path: '/add-address/import-existing-address/leap',
+    name: 'Leap',
+    component: () => import(/* webpackChunkName: 'Keplr' */ '@/views/Leap'),
+    meta: {
+      layout: 'AddressFlowLayout',
+      guard: 'private',
+    },
+  },
+  {
     path: '/add-address/import-hardware-wallet',
     name: 'ImportHardwareWallet',
     component: () =>
