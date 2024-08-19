@@ -26,7 +26,10 @@
             {{ $t('restoreOneSeed.counterMessage') }}
           </span>
           <div class="enter-one-seed__count">
-            <span class="enter-one-seed__current-count">
+            <span
+              :class="{ long: phraseArray.length > 9 }"
+              class="enter-one-seed__current-count"
+            >
               {{ phraseArray.length }}
             </span>
             <div class="enter-one-seed__line" />
@@ -240,13 +243,17 @@ export default {
     line-height: 30px;
     color: $dark-blue;
     position: absolute;
-    top: -12px;
-    left: -28px;
+    top: -1px;
+    left: -30px;
+
+    &.long {
+      left: -39px;
+    }
   }
   &__line {
     height: 27px;
     border-right: 1px solid $too-ligth-blue;
-    transform: rotate(221deg);
+    // transform: rotate(221deg);
   }
   &__total-count {
     font-family: 'Panton_Light';
@@ -255,8 +262,8 @@ export default {
     color: $mid-blue;
     position: absolute;
     width: 55px;
-    bottom: -13px;
-    right: -52px;
+    bottom: -2px;
+    right: -72px;
   }
 }
 

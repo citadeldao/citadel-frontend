@@ -440,9 +440,21 @@ export default {
       );
 
       return `
-        ${frozenDays ? `<span>${frozenDays}</span> ${t('days')}` : ''}
-        ${frozenHours ? `<span>${frozenHours}</span> ${t('hours')}` : ''}
-        ${frozenMinutes ? `<span>${frozenMinutes}</span> ${t('minutes')}` : ''}
+        ${
+          frozenDays
+            ? `<span class="timestr">${frozenDays}</span> ${t('days')}`
+            : ''
+        }
+        ${
+          frozenHours
+            ? `<span class="timestr">${frozenHours}</span> ${t('hours')}`
+            : ''
+        }
+        ${
+          frozenMinutes
+            ? `<span class="timestr">${frozenMinutes}</span> ${t('minutes')}`
+            : ''
+        }
       `;
     };
 
@@ -981,6 +993,16 @@ body.dark {
 
   .frozen-tooltip {
     color: #6b93c0;
+
+    &__amount {
+      color: $white;
+    }
+
+    &__date {
+      .timestr {
+        color: $white;
+      }
+    }
   }
 
   .balance {
