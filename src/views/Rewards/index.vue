@@ -120,12 +120,16 @@ export default {
     const date = ref([]);
 
     const loadData = async (from, to) => {
-      isLoading.value = true;
-      await store.dispatch('rewards/getRewardsByRange', {
-        from,
-        to,
-      });
-      isLoading.value = false;
+      try {
+        isLoading.value = true;
+        await store.dispatch('rewards/getRewardsByRange', {
+          from,
+          to,
+        });
+        isLoading.value = false;
+      } catch (err) {
+        console.error(err);
+      }
     };
     loadData(
       Date.now() - 1000 * 60 * 60 * 24 * 31 * currentTab.value,
@@ -235,14 +239,18 @@ export default {
     };
 
     const currentTabChangeHandler = async (val) => {
-      if (val === 'all') {
-        isLoading.value = true;
-        await store.dispatch('rewards/getAllRewards');
-        isLoading.value = false;
-      } else if (val !== 'custom') {
-        date.value = [];
-        const { from, to } = formatFromTo(val);
-        loadData(from, to);
+      try {
+        if (val === 'all') {
+          isLoading.value = true;
+          await store.dispatch('rewards/getAllRewards');
+          isLoading.value = false;
+        } else if (val !== 'custom') {
+          date.value = [];
+          const { from, to } = formatFromTo(val);
+          loadData(from, to);
+        }
+      } catch (err) {
+        console.error(err);
       }
     };
 
