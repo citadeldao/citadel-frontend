@@ -580,6 +580,14 @@ body.dark {
   .alias {
     background: $dark-panel-bg;
 
+    &__copy-icon {
+      &:hover {
+        & svg {
+          fill: $dark-blue;
+        }
+      }
+    }
+
     &__edit {
       .alias__input {
         background: transparent;
