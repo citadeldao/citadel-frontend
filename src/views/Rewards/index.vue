@@ -242,7 +242,7 @@ export default {
       } else if (val !== 'custom') {
         date.value = [];
         const { from, to } = formatFromTo(val);
-        loadData(Number(from), Number(to));
+        loadData(from, to);
       }
     };
 
