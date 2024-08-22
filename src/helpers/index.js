@@ -123,6 +123,14 @@ export const tokenIconPlaceholder = (tokenName) => {
   return nameAbbr;
 };
 
+export const shortAddress = (address) => {
+  if (!address) return '';
+
+  return address.length >= 20
+    ? `${address.slice(0, 20)}...${address.slice(-20)}`
+    : address;
+};
+
 export const shortNameCrypto = (name) => {
   if (name.toLowerCase() === 'binance smart chain') {
     return 'BNB';
