@@ -146,6 +146,13 @@ export default {
       const result = {};
 
       for (const item in data.value) {
+        const [net] = item.split('_');
+        if (!networksConfig.value[net]) {
+          delete data.value[net];
+        }
+      }
+
+      for (const item in data.value) {
         const [net, token] = item.split('_');
         let netKey = net;
 
