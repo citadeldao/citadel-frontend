@@ -1404,6 +1404,7 @@
     },
     "keplr": {
         "notAddAtOnce": "",
+        "leapNotFound": "Leap не найден в вашем браузере",
         "notFound": "Keplr не найден в вашем браузере",
         "cancel": "Отменить",
         "importWallet": "Импортировать кошелек",

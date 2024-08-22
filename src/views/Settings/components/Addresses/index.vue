@@ -209,7 +209,8 @@ export default {
   min-width: 150px;
 
   &__content {
-    overflow-y: initial;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
   &__description {
     display: flex;

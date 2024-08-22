@@ -78,7 +78,9 @@ export default {
       const { data, error } = await citadel.getAllRewards();
 
       if (!error) {
-        commit(types.SET_REWARDS_BY_RANGE, data);
+        if (data && typeof data === 'object') {
+          commit(types.SET_REWARDS_BY_RANGE, data);
+        }
       } else {
         notify({
           type: 'warning',

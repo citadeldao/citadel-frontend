@@ -1404,6 +1404,7 @@
     },
     "keplr": {
         "notAddAtOnce": "",
+        "leapNotFound": "Leap n'a pas été trouvé dans votre navigateur",
         "notFound": "Keplr n'a pas été trouvé dans votre navigateur",
         "cancel": "Annuler",
         "importWallet": "Importer un portefeuille",

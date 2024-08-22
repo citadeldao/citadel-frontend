@@ -1362,6 +1362,7 @@
     },
     "keplr": {
         "notAddAtOnce": "",
+        "leapNotFound": "ブラウザに Leap が見つかりません",
         "notFound": "ブラウザに Keplr が見つかりません",
         "cancel": "キャンセル",
         "importWallet": "ウォレットのインポート",

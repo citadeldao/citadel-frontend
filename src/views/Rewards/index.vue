@@ -310,7 +310,7 @@ export default {
     }
     @include md {
       // padding: 24px 23px 0 24px;
-      box-shadow: 0px 0px 25px rgba(106, 75, 255, 0.3);
+      // box-shadow: 0px 0px 25px rgba(106, 75, 255, 0.3);
       border-radius: 25px 25px 0px 0px;
       margin-right: 23px;
     }

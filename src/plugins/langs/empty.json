@@ -1410,6 +1410,7 @@
     "keplr": {
         "notAddAtOnce": "",
         "notFound": "",
+        "leapNotFound": "",
         "cancel": "",
         "importWallet": "",
         "allreadyAdded": "",
