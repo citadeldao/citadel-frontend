@@ -24,12 +24,9 @@
         <Tooltip :max-width="450">
           <template #content>{{ wallet.title || wallet.address }} </template>
           <template #default>
-            <span
-              class="dropdown-item__title"
-              @mouseenter="showAddressTooltip = true"
-              @mouseleave="showAddressTooltip = false"
-              >{{ wallet.title || shortAddress(wallet.address) }}</span
-            >
+            <span class="dropdown-item__title">{{
+              wallet.title || shortAddress(wallet.address)
+            }}</span>
           </template>
         </Tooltip>
         <span
