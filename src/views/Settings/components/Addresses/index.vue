@@ -211,7 +211,7 @@ export default {
   &__content {
     overflow-y: auto;
     overflow-x: hidden;
-    max-height: 955px;
+    max-height: 555px;
   }
   &__description {
     display: flex;
