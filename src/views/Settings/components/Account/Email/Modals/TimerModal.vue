@@ -194,4 +194,14 @@ export default {
     margin: 25px auto 0;
   }
 }
+
+body.dark {
+  .change-email-modal {
+    &__info {
+      p {
+        color: $white;
+      }
+    }
+  }
+}
 </style>

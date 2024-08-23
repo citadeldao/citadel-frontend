@@ -78,7 +78,7 @@ body.dark {
     .list-item__icon {
       fill: $white;
       &:hover {
-        fill: $too-dark-blue;
+        fill: $dark-blue;
       }
     }
   }

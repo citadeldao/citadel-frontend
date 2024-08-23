@@ -1410,6 +1410,7 @@
     },
     "keplr": {
         "notAddAtOnce": "",
+        "leapNotFound": "在您的浏览器未找到 Leap",
         "notFound": "在您的浏览器未找到 Keplr ",
         "cancel": "取消",
         "importWallet": "导入钱包",

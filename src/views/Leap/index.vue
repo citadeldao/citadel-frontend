@@ -297,7 +297,7 @@ export default {
       if (!window.leap) {
         notify({
           type: 'warning',
-          text: t('keplr.notFound'),
+          text: t('keplr.leapNotFound'),
         });
       }
     });

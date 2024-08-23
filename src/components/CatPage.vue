@@ -30,7 +30,14 @@
                 <component :is="icons[wallet.net]" />
               </div>
               <span class="cat-page__address-line">
-                {{ wallet?.address }}
+                {{
+                  wallet?.address?.length >= 20
+                    ? `${wallet?.address.slice(
+                        0,
+                        20
+                      )}...${wallet?.address.slice(-20)}`
+                    : wallet?.address
+                }}
               </span>
             </div>
           </div>

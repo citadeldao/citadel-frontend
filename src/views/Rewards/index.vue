@@ -120,12 +120,16 @@ export default {
     const date = ref([]);
 
     const loadData = async (from, to) => {
-      isLoading.value = true;
-      await store.dispatch('rewards/getRewardsByRange', {
-        from,
-        to,
-      });
-      isLoading.value = false;
+      try {
+        isLoading.value = true;
+        await store.dispatch('rewards/getRewardsByRange', {
+          from,
+          to,
+        });
+        isLoading.value = false;
+      } catch (err) {
+        console.error(err);
+      }
     };
     loadData(
       Date.now() - 1000 * 60 * 60 * 24 * 31 * currentTab.value,
@@ -140,6 +144,13 @@ export default {
     const listData = computed(() => {
       const mixedData = [];
       const result = {};
+
+      for (const item in data.value) {
+        const [net] = item.split('_');
+        if (!networksConfig.value[net]) {
+          delete data.value[net];
+        }
+      }
 
       for (const item in data.value) {
         const [net, token] = item.split('_');
@@ -235,14 +246,18 @@ export default {
     };
 
     const currentTabChangeHandler = async (val) => {
-      if (val === 'all') {
-        isLoading.value = true;
-        await store.dispatch('rewards/getAllRewards');
-        isLoading.value = false;
-      } else if (val !== 'custom') {
-        date.value = [];
-        const { from, to } = formatFromTo(val);
-        loadData(Number(from), Number(to));
+      try {
+        if (val === 'all') {
+          isLoading.value = true;
+          await store.dispatch('rewards/getAllRewards');
+          isLoading.value = false;
+        } else if (val !== 'custom') {
+          date.value = [];
+          const { from, to } = formatFromTo(val);
+          loadData(from, to);
+        }
+      } catch (err) {
+        console.error(err);
       }
     };
 
@@ -302,7 +317,7 @@ export default {
     }
     @include md {
       // padding: 24px 23px 0 24px;
-      box-shadow: 0px 0px 25px rgba(106, 75, 255, 0.3);
+      // box-shadow: 0px 0px 25px rgba(106, 75, 255, 0.3);
       border-radius: 25px 25px 0px 0px;
       margin-right: 23px;
     }
@@ -398,6 +413,7 @@ export default {
     overflow-x: hidden;
     overflow-y: auto;
     flex-direction: column;
+    max-height: 90%;
     flex: 1;
     padding: 24px 45px 0 45px;
     @include lg {

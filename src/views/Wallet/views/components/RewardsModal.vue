@@ -7,7 +7,11 @@
     @close="rewardsModalHandler"
   >
     <div class="rewards-modal-content">
-      <EmptyList v-if="!rewardsList.length" title="Empty List" />
+      <EmptyList
+        v-if="!rewardsList.length"
+        title="Empty List"
+        class="empty-list"
+      />
       <div v-else class="rewards-modal-content__list">
         <div
           v-for="(wallet, ndx) in rewardsList"
@@ -119,6 +123,10 @@ export default {
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 0 5px 20px 0;
+
+  .empty-list {
+    width: 100%;
+  }
 
   &__list {
     width: 100%;

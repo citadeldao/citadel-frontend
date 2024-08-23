@@ -16,7 +16,7 @@
       </div>
     </div>
     <hotSale />
-    <div class="total-rewards__btc-rewards">
+    <div v-if="false" class="total-rewards__btc-rewards">
       <span
         v-pretty-number="{ value: totalBtc, currency: 'BTC' }"
         class="total-rewards__btc-rewards-amount"

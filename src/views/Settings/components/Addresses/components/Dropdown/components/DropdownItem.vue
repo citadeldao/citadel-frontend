@@ -24,12 +24,9 @@
         <Tooltip :max-width="450">
           <template #content>{{ wallet.title || wallet.address }} </template>
           <template #default>
-            <span
-              class="dropdown-item__title"
-              @mouseenter="showAddressTooltip = true"
-              @mouseleave="showAddressTooltip = false"
-              >{{ wallet.title || wallet.address }}</span
-            >
+            <span class="dropdown-item__title">{{
+              wallet.title || shortAddress(wallet.address)
+            }}</span>
           </template>
         </Tooltip>
         <span
@@ -42,7 +39,7 @@
           {{
             hidden
               ? Array(wallet.address.length).fill('*').join('')
-              : formattedAddress
+              : shortAddress(wallet.address)
           }}
           <div :class="{ showRightBalance }" class="balance-wrap">
             <div
@@ -120,7 +117,11 @@ import keyIcon from '@/assets/icons/settings/key.svg';
 import notificationIcon from '@/assets/icons/settings/notification.svg';
 import exportIcon from '@/assets/icons/settings/export.svg';
 import visionIcon from '@/assets/icons/networks/vision.svg';
-import { addressTextWidth, formattedWalletAddress } from '@/helpers';
+import {
+  addressTextWidth,
+  formattedWalletAddress,
+  shortAddress,
+} from '@/helpers';
 import { useWindowSize } from 'vue-window-size';
 import { screenWidths } from '@/config/sreenWidthThresholds';
 import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
@@ -333,6 +334,7 @@ export default {
       isItemChecked,
       change,
       showAddressTooltip,
+      shortAddress,
     };
   },
 };
