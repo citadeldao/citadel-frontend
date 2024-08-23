@@ -413,6 +413,7 @@ export default {
     overflow-x: hidden;
     overflow-y: auto;
     flex-direction: column;
+    max-height: 90%;
     flex: 1;
     padding: 24px 45px 0 45px;
     @include lg {
