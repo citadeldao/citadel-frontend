@@ -955,6 +955,7 @@ export default {
       if (props.currentToken) {
         return balance.value?.mainBalance;
       }
+
       const minLowBalance =
         +store.getters['networks/configByNet'](props.currentWallet.net)
           ?.connectorProps?.minLowBalance || 0;

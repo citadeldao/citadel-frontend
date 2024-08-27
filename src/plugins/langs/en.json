@@ -1404,6 +1404,11 @@
             "title": "Berachain",
             "description": "Proof of liquidity aligns network security and liquidity by validators rewarding liquidity providers on Berachain with the non-purchasable staking token of the network.",
             "shortDescription": "An EVM-identical L1 turning liquidity into security powered by Proof Of Liquidity"
+        },
+        "stacks":{
+            "title": "Stacks",
+            "description": "Stacks - The Leading Bitcoin L2 for Smart Contracts, Apps, DeFi",
+            "shortDescription": "Stacks - The Leading Bitcoin L2 for Smart Contracts, Apps, DeFi"
         }
 
     },

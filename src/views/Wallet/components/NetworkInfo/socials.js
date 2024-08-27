@@ -909,4 +909,18 @@ export default {
       href: 'https://www.coingecko.com/en/coins/berachain-bera',
     },
   },
+  stacks: {
+    twitter: {
+      title: '@Stacks',
+      href: 'Stacks',
+    },
+    web: {
+      title: 'stacks.co',
+      href: 'https://www.stacks.co/',
+    },
+    landing: {
+      title: 'stacks',
+      href: 'https://www.coingecko.com/en/coins/stacks',
+    },
+  },
 };

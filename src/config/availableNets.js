@@ -26,7 +26,7 @@ export const networksFilterItems = [
 ];
 
 export const networksFilterCategory = {
-  hot: ['btc', 'eth', 'bsc', 'sui', 'arbitrum', 'polkadot', 'tron'],
+  hot: ['stacks', 'btc', 'eth', 'bsc', 'sui', 'arbitrum', 'polkadot', 'tron'],
   cosmos: [
     'archway',
     'quasar',
