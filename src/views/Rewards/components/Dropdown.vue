@@ -308,6 +308,7 @@ body.dark {
   .dropdown {
     &__title {
       background: #2d2e42;
+      box-shadow: none;
     }
 
     .title__text {
