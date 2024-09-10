@@ -29,6 +29,11 @@ export default {
       state.tokens = value;
     },
     [types.SET_CHAINS](state, value) {
+      value.forEach((chain) => {
+        if (chain.chainId == 137) {
+          chain.nativeCurrency.symbol = 'POL';
+        }
+      });
       state.chains = value;
     },
     [types.SET_ROUTE](state, value) {
