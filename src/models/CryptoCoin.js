@@ -480,18 +480,22 @@ export default class CryptoCoin {
   }
 
   getCrossNetworkRoutes({ walletId, token }) {
-    const res = citadel.getCrossNetworkRoutes(walletId, token);
+    try {
+      const res = citadel.getCrossNetworkRoutes(walletId, token);
 
-    if (!res.error) {
-      return res.data;
+      if (!res.error) {
+        return res.data;
+      }
+
+      // notify({
+      //   type: 'warning',
+      //   text: res.error,
+      // });
+
+      return [];
+    } catch (err) {
+      return [];
     }
-
-    notify({
-      type: 'warning',
-      text: res.error,
-    });
-
-    return [];
   }
 
   async prepareAssignToDaoMessage(walletId) {
