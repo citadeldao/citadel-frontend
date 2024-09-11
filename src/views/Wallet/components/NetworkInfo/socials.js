@@ -810,6 +810,10 @@ export default {
       title: '@archwayHQ',
       href: 'archwayHQ',
     },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/archway',
+    },
   },
   quasar: {
     web: {
