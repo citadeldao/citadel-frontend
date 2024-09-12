@@ -1,6 +1,6 @@
 <template>
   <div class="overall">
-    <div class="overall__central-section-wrapper">
+    <div v-if="showSection" class="overall__central-section-wrapper">
       <div class="overall__central-section">
         <template v-if="isFavoriteList && !hasFavorites">
           <FavoritesPlaceholder @create-list="$emit('create-list')" />
@@ -20,7 +20,7 @@
         </template>
       </div>
     </div>
-    <div class="overall__right-section">
+    <div v-if="showSection" class="overall__right-section">
       <BalanceStructureChart :is-list-empty="isListEmpty" />
     </div>
   </div>
@@ -28,7 +28,7 @@
 
 <script>
 import { useStore } from 'vuex';
-import { computed } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 import { renderRewardsChart } from '@/components/Charts/rewardsChart';
 import { renderBalanceHistoryChart } from '@/components/Charts/balanceHistoryChart';
@@ -51,6 +51,7 @@ export default {
     const customWalletsList = computed(() =>
       store.getters['wallets/customWalletsListByName'](activeList.value)
     );
+    const showSection = ref(true);
     const isFavoriteList = computed(
       () => store.getters['wallets/activeList'] === 'Favourites'
     );
@@ -63,6 +64,16 @@ export default {
       () =>
         activeList.value !== 'all' && !customWalletsList.value.wallets.length
     );
+
+    watch(
+      () => store.getters['app/theme'],
+      () => {
+        showSection.value = false;
+        setTimeout(() => {
+          showSection.value = true;
+        }, 200);
+      }
+    );
     return {
       isFavoriteList,
       hasFavorites,
@@ -71,6 +82,7 @@ export default {
       isListEmpty,
       renderRewardsChart,
       renderBalanceHistoryChart,
+      showSection,
     };
   },
 };
