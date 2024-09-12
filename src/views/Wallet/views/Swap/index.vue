@@ -364,6 +364,12 @@ export default {
           currentWallet.value.code.toLowerCase()
       );
 
+      if (currentWallet.value.net === 'coreum') {
+        hasSwap.value = squidChains.value.find(
+          (ch) => ch.chainName === 'COREUM'
+        );
+      }
+
       if (currentWallet.value.net === 'arbitrum') {
         hasSwap.value = squidChains.value.find(
           (ch) => ch.chainName === 'Arbitrum'
