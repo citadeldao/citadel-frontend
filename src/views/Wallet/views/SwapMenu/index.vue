@@ -144,6 +144,12 @@ export default {
         );
       }
 
+      if (currentWallet.value.net === 'coreum') {
+        hasSwapSquid.value = squidChains.value.find(
+          (ch) => ch.chainName === 'coreum'
+        );
+      }
+
       if (hasSwapSquid.value) {
         methods.value.push(squidData);
       }
