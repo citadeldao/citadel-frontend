@@ -163,4 +163,4 @@ export const swapNoAccess = [
   'konstellation',
 ];
 
-export const removedNets = ['cerberus', 'crescent'];
+export const removedNets = ['cerberus', 'crescent', 'regen'];

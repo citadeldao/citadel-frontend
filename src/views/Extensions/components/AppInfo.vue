@@ -189,9 +189,10 @@ export default {
           display: flex;
           flex-wrap: wrap;
           min-height: 135px;
-          max-height: 350px;
+          max-height: 450px;
           padding: 10px;
           box-sizing: border-box;
+          overflow-y: auto;
 
           .network-item {
             width: 130px;
@@ -199,7 +200,7 @@ export default {
             font-size: 12px;
             display: flex;
             align-items: center;
-            margin: 5px 0;
+            margin: 2px 0;
 
             &:before {
               content: '';
