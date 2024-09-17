@@ -199,7 +199,7 @@ export default {
 <style lang="scss" scoped>
 .modal_content {
   position: relative;
-  margin: auto;
+
   &--warning {
     .modal_content__header {
       background: $red;
@@ -264,6 +264,8 @@ export default {
     }
   }
   display: flex;
+  max-height: 650px;
+  overflow-y: auto;
   flex-direction: column;
   background: $white;
   border-radius: 16px;

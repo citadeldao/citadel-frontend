@@ -69,8 +69,8 @@ export default {
       href: 'https://www.umee.cc/',
     },
     twitter: {
-      title: '@Umee_CrossChain',
-      href: 'umee_crosschain',
+      title: '@ux_xyz',
+      href: 'ux_xyz',
     },
     landing: {
       title: 'Coingecko',
@@ -471,8 +471,8 @@ export default {
   },
   starname: {
     web: {
-      title: 'starname.me',
-      href: 'https://www.starname.me/',
+      title: 'iov-one',
+      href: 'https://github.com/iov-one',
     },
     twitter: {
       title: '@starname_me',
