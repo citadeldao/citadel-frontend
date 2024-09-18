@@ -121,8 +121,8 @@ export default {
   },
   icon: {
     web: {
-      title: 'iconrepublic.org',
-      href: 'https://iconrepublic.org/',
+      title: 'icon.community',
+      href: 'https://icon.community/',
     },
     twitter: {
       title: '@helloiconworld',
@@ -181,8 +181,8 @@ export default {
       href: 'https://www.kava.io/',
     },
     twitter: {
-      title: '@kava_labs',
-      href: 'kava_labs',
+      title: '@KAVA_CHAIN',
+      href: 'KAVA_CHAIN',
     },
     landing: {
       title: 'Coingecko',
