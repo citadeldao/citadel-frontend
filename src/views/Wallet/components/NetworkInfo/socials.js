@@ -234,7 +234,7 @@ export default {
   osmosis: {
     web: {
       title: 'osmosis.zone',
-      href: 'https://app.osmosis.zone',
+      href: 'https://osmosis.zone',
     },
     twitter: {
       title: '@osmosiszone',
@@ -674,6 +674,10 @@ export default {
       title: '@OmniFlixNetwork',
       href: 'OmniFlixNetwork',
     },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/omniflix-network',
+    },
   },
   teritori: {
     web: {
@@ -782,10 +786,10 @@ export default {
       title: '@NolusProtocol',
       href: 'NolusProtocol',
     },
-    // landing: {
-    //   title: 'Coingecko',
-    //   href: 'https://www.coingecko.com/en/coins/sui',
-    // },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/nolus',
+    },
   },
   celestia: {
     web: {
@@ -822,7 +826,7 @@ export default {
     },
     twitter: {
       title: '@QuasarFi',
-      href: 'https://twitter.com/QuasarFi',
+      href: 'QuasarFi',
     },
     landing: {
       title: 'Coingecko',
