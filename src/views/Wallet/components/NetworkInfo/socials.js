@@ -854,7 +854,7 @@ export default {
     },
     twitter: {
       title: '@NibiruChain',
-      href: 'https://twitter.com/NibiruChain',
+      href: 'NibiruChain',
     },
     landing: {
       title: 'Coingecko',
