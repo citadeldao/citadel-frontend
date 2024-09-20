@@ -349,10 +349,18 @@ export default {
       showFullScreen.value = true;
       hideArtefactsForFullScreen();
 
-      if (!selectedApp.value.citadelApp) {
-        // await store.dispatch('extensions/fetchExtensionInfo', {
-        //   appId: selectedApp.value.id,
-        // });
+      try {
+        if (!selectedApp.value.citadelApp) {
+          // await store.dispatch('extensions/fetchExtensionInfo', {
+          //   appId: selectedApp.value.id,
+          // });
+        }
+      } catch (err) {
+        setTimeout(() => {
+          showFullScreen.value = false;
+          showArtefactsForNormalScreen();
+        }, 1500);
+        return;
       }
 
       const nets = selectedApp.value.networks.map((net) => {
@@ -419,6 +427,7 @@ export default {
         });
         tokenAuth.value = res?.data?.token;
 
+        if (!selectedApp.value) return;
         selectedApp.value.url += `?token=${tokenAuth.value}&lang=${
           store.getters['i18n/locale']
         }&wallets=${JSON.stringify(wallets)}`;

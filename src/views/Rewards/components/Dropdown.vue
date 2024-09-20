@@ -315,6 +315,10 @@ body.dark {
       color: $white;
     }
 
+    .title__line {
+      background: #5a6073;
+    }
+
     .title__value {
       .title__value-amount {
         color: $white;
