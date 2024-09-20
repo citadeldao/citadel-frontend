@@ -13,7 +13,10 @@
         @click="$emit('chooseMethod', methods[0].methodType)"
       />
       <SelectCard
-        v-if="props.currentExportWallet.privateKeyEncoded"
+        v-if="
+          props.currentExportWallet.privateKeyEncoded &&
+          !notShowExportPrivateKey.includes(props.currentExportWallet.net)
+        "
         :method="methods[1]"
         type="simple"
         :data-qa="`settings__export--${methods[1].type}`"
@@ -29,6 +32,7 @@ import { computed } from 'vue';
 import { i18n } from '@/plugins/i18n';
 import SelectCard from '@/components/SelectCard';
 import { WALLET_TYPES } from '@/config/walletType';
+import { notShowExportPrivateKey } from '@/config/availableNets';
 const { t } = i18n.global;
 const methods = [
   {
@@ -81,7 +85,13 @@ export default {
       return true;
     });
 
-    return { methods, WALLET_TYPES, showExportSeed, props };
+    return {
+      methods,
+      WALLET_TYPES,
+      showExportSeed,
+      props,
+      notShowExportPrivateKey,
+    };
   },
 };
 </script>
