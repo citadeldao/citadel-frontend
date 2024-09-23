@@ -67,6 +67,8 @@ export default class CryptoCoin {
     this.minBalance = opts?.config?.methods?.minBalance;
     this.hasMultiUnstake = opts?.config?.methods?.hasMultiUnstake;
     this.isSingleStake = opts?.config?.methods?.isSingleStake;
+
+    if (this.net === 'stacks') this.isSingleStake = false;
     this.hasKtAddresses = opts?.config?.methods?.hasKtAddresses;
     this.noSelfSend = opts?.config?.methods?.noSelfSend;
     this.isCosmosNetwork = cosmosNetworks.includes(this.net);
