@@ -384,7 +384,7 @@ export default function useStaking(stakeNodes, list) {
     } else if (mode.value === 'stake') {
       return {
         title: t('staking.chooseNodeForStaking'),
-        desc: currentWallet.value.net === 'polkadot' ?
+        desc: currentWallet.value.net === 'stacks' ? t('staking.chooseNodeModalDescStacks1') : currentWallet.value.net === 'polkadot' ?
         `${t('polkadot.chooseNodeModalDesc1', {
           net: currentWallet.value.name,
           perioud: currentWallet.value.unstakeingPerioud,
@@ -398,7 +398,7 @@ export default function useStaking(stakeNodes, list) {
             perioudTo: currentWallet.value.unstakePerioudTo,
             link: currentWallet.value.unstakePerioudLink,
           })}`
-          : `${t('staking.chooseNodeModalDesc1', {
+          : currentWallet.value.net === 'stacks' ? t('staking.chooseNodeModalDescStacks1') : `${t('staking.chooseNodeModalDesc1', {
             net: currentWallet.value.name,
             perioud: currentWallet.value.unstakeingPerioud,
           })}`,
@@ -416,7 +416,7 @@ export default function useStaking(stakeNodes, list) {
             link: currentWallet.value.unstakePerioudLink,
           })}`/* : currentWallet.value.hasMultiUnstake ?
           `${t('singleStake.claimUnstakeNote',{code: currentWallet.value.code})}` */
-          : `${t(/* currentWallet.value.messages.unstakeingPrefix ? currentWallet.value.messages.unstakeingPrefix : */ 'unstaking.defaultPrefix')} ${t('unstaking.chooseNodeModalDesc', {
+          : `${t(currentWallet.value.net === 'stacks' ? 'staking.chooseNodeModalDescStacks1' : /* currentWallet.value.messages.unstakeingPrefix ? currentWallet.value.messages.unstakeingPrefix : */ 'unstaking.defaultPrefix')} ${currentWallet.value.net === 'stacks' ? '' : t('unstaking.chooseNodeModalDesc', {
             net: currentWallet.value.name,
             perioud: currentWallet.value.unstakeingPerioud,
           })}`,
@@ -502,7 +502,7 @@ export default function useStaking(stakeNodes, list) {
             perioudTo: currentWallet.value.unstakePerioudTo,
             link: currentWallet.value.unstakePerioudLink,
           })}`
-          : `${t('staking.chooseNodeModalDesc1', {
+          : currentWallet.value.net === 'stacks' ? t('staking.chooseNodeModalDescStacks1') : `${t('staking.chooseNodeModalDesc1', {
             net: currentWallet.value.name,
             perioud: currentWallet.value.unstakeingPerioud,
           })}`,
