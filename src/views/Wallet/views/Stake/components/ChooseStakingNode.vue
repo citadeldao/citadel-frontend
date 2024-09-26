@@ -106,7 +106,11 @@
       />
       <div class="choose-staking-node__info-wrapper">
         <span v-if="showAmount" class="choose-staking-node__available-balance">
-          {{ $t('balanceTooltipInfo.availableBalance') }}:
+          {{
+            currentWallet.net === 'stacks'
+              ? 'Minimum required balance for stacking'
+              : $t('balanceTooltipInfo.availableBalance')
+          }}:
           <span
             v-pretty-number="{ value: maxAmount, currency: currentWallet.code }"
             class="choose-staking-node__available-balance-balance"
