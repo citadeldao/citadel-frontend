@@ -319,7 +319,7 @@
         "chooseNodeForStaking": "Choose node for staking",
         "chooseNodeModalDesc": "Click on the node at the list to select one to stake with.",
         "chooseNodeModalDesc1": "To stake your assets, choose nodes and set the amount for delegation. Take into account that unstaking period for {net} is <span style='color: #00A3FF; font-weight: bold;'>{perioud} days</span>.",
-        "chooseNodeModalDescStacks1": "Set the amount of tokens you want to stack. Then, choose pool for delegation. Your stacking protocol may require a minimum.",
+        "chooseNodeModalDescStacks1": "You can delegate your STX tokens to a stacking pool provider, allowing you to participate in stacking even if you don't have enough to meet the minimum requirement. Please note that the stacking provider has the authority to decide how rewards are distributed.",
         "chooseNodeModalDescWithFrom": "To stake your assets, choose nodes and set the amount for delegation. Take into account that unstaking period for {net} fluctuates <span style='color: #00A3FF; font-weight: bold;'>from {perioudFrom} to {perioudTo} days</span>. Check the current unstaking period via the <a href='{link}' style='color: #00A3FF; font-weight: bold;text-decoration:none'>link</a>.",
         "Stake": "Stake",
         "staking": "staking",
