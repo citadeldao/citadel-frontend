@@ -108,7 +108,7 @@
         <span v-if="showAmount" class="choose-staking-node__available-balance">
           {{
             currentWallet.net === 'stacks'
-              ? 'Minimum required balance for stacking'
+              ? 'Maximum required balance for stacking'
               : $t('balanceTooltipInfo.availableBalance')
           }}:
           <span
