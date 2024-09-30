@@ -123,7 +123,7 @@ export default class MetamaskConnector {
     const transaction = rawTx.transaction || rawTx;
 
     if (Array.isArray(transaction)) {
-      const txs = transaction.map((tx) => {
+      const txs = transaction.reverse().map((tx) => {
         return parseTx(tx);
       });
 
