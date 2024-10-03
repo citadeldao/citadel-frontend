@@ -54,6 +54,15 @@
         "
         :current-wallet="currentWallet"
       />
+      <BtcAddressesPending
+        v-if="
+          currentWallet.net === 'btc' &&
+          currentWallet.segwitAddress &&
+          currentWallet.nativeAddress
+        "
+        :current-wallet="currentWallet"
+        @openSettingsTx="openSettingsTx"
+      />
       <div class="wallet__main">
         <template v-if="!currentWallet.isStub">
           <MainHeader
@@ -145,6 +154,19 @@
         <img src="@/assets/gif/loader.gif" alt="" />
       </Modal>
     </teleport>
+    <teleport v-if="showBtcUpdateFeeModal" to="body">
+      <Modal>
+        <BtcUpdateFeeModal
+          :signer-wallet="currentToken || currentWallet"
+          @close="
+            () => {
+              showBtcUpdateFeeModal = false;
+            }
+          "
+        />
+      </Modal>
+    </teleport>
+
     <teleport v-if="showRewardsModal" to="body">
       <Modal>
         <RewardsModal
@@ -297,10 +319,12 @@ import { useI18n } from 'vue-i18n';
 import { getKeplrNetworks } from '@/config/availableNets';
 import ClaimModal from './views/components/ClaimModal';
 import RewardsModal from './views/components/RewardsModal';
+import BtcUpdateFeeModal from './views/components/BtcUpdateFeeModal';
 import ClaimModalXCT from './views/components/ClaimModalXCT';
 import ClaimSuccess from './views/components/ClaimSuccess';
 import useCurrentWalletRequests from '@/compositions/useCurrentWalletRequests';
 import BtcAddresses from './components/BtcAddresses';
+import BtcAddressesPending from './components/BtcAddressesPending';
 import RoundArrowButton from '@/components/UI/RoundArrowButton';
 import { useRouter } from 'vue-router';
 
@@ -311,6 +335,7 @@ export default {
     Alias,
     ClaimRewards,
     RewardsModal,
+    BtcUpdateFeeModal,
     MainHeader,
     NetworkInfo,
     AliasQrCard,
@@ -331,6 +356,7 @@ export default {
     ClaimModalXCT,
     ClaimSuccess,
     BtcAddresses,
+    BtcAddressesPending,
   },
   setup() {
     const { getDelegationBalance } = useCurrentWalletRequests();
@@ -340,6 +366,7 @@ export default {
     const router = useRouter();
     const rewardsList = ref([]);
     const showRewardsModal = ref(false);
+    const showBtcUpdateFeeModal = ref(false);
     const citadel = inject('citadel');
     provide('rewardsList', rewardsList);
     const { currency, currentWallet, isHardwareWallet, currentToken } =
@@ -1368,7 +1395,13 @@ export default {
       )
     );
 
+    const openSettingsTx = () => {
+      showBtcUpdateFeeModal.value = true;
+    };
+
     return {
+      showBtcUpdateFeeModal,
+      openSettingsTx,
       customClaimWallet,
       showRewardsModal,
       rewardsList,

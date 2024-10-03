@@ -51,6 +51,8 @@ export default function useCurrentWalletRequests() {
         feesError.value = error;
       }
     }
+
+    return fees.value;
   };
 
   const formatedFee = computed(() => {
