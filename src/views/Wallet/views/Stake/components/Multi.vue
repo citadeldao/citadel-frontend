@@ -120,6 +120,13 @@
         </div>
       </div>
       <div
+        v-if="stacksCycleBeganAt"
+        class="stacking-disc"
+        v-html="
+          `If you're currently participating in stacking during this cycle, your STX will be accessible for the next cycle in approximately <span style='font-family: Panton_Bold;color: #6A4BFF;'>${nextCycleAt}</span>. You will also receive rewards for the completed cycle.`
+        "
+      />
+      <div
         v-if="currentWallet.type !== WALLET_TYPES.PUBLIC_KEY"
         class="multi__buttons"
       >
@@ -143,7 +150,10 @@
           class="multi__buttons-section"
           :style="{ width: !currentWallet.hasRedelegation && '100%' }"
         >
-          <div class="multi__buttons-section-unstake-button left">
+          <div
+            :class="{ stacksCycleBeganAt }"
+            class="multi__buttons-section-unstake-button left"
+          >
             <PrimaryButton
               :bg-color="
                 $store.getters['app/theme'] === 'dark' ? '#29294d' : 'white'
@@ -370,7 +380,7 @@
 import { useI18n } from 'vue-i18n';
 import { getStorage, setStorage } from '@/utils/storage';
 import MinBalanceWarning from '@/views/Wallet/views/Stake/components/MinBalanceWarning';
-import { computed, ref, inject, provide } from 'vue';
+import { computed, ref, inject, provide, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import BigNumber from 'bignumber.js';
 import WalletButtonsPanel from '@/components/WalletButtonsPanel';
@@ -398,6 +408,7 @@ import ChooseStakingNodeModal from './ChooseStakingNodeModal';
 import NodeListModal from './NodeListModal';
 import ChooseStakingNode from './ChooseStakingNode';
 import SuccessModal from './SuccessModal';
+import defaultDate from '@/helpers/date.js';
 
 import useStaking from '@/compositions/useStaking';
 // import useApi from '@/api/useApi';
@@ -903,7 +914,22 @@ export default {
       });
     };
 
+    const stacksCycleBeganAt = ref(null);
+    const nextCycleAt = ref(null);
+
+    onMounted(async () => {
+      if (props.currentWallet.net !== 'stacks') return;
+      const gg = await store.dispatch('crypto/getStackingInfo');
+      if (gg && gg.data && gg.data.ok) {
+        stacksCycleBeganAt.value = gg.data.data.cycleBeganAt;
+        nextCycleAt.value = defaultDate(gg.data.data.nextCycleAt);
+      }
+      console.log('stacksCycleBeganAt', stacksCycleBeganAt.value);
+    });
+
     return {
+      stacksCycleBeganAt,
+      nextCycleAt,
       hasAutorestake,
       extensionsList,
       toAutorestake,
@@ -1076,11 +1102,30 @@ export default {
     justify-content: space-between;
   }
 
+  .stacking-disc {
+    text-align: center;
+    width: 100%;
+    margin-top: 20px;
+    line-height: 20px;
+    font-size: 15px;
+    color: #6b93c0;
+
+    span {
+      font-family: Panton_Bold;
+    }
+  }
+
   &__buttons-section-unstake-button {
     margin-right: 24px;
 
     &.left {
       margin-left: 24px;
+
+      &.stacksCycleBeganAt {
+        margin-left: 0;
+        display: flex;
+        align-items: center;
+      }
     }
   }
 }
