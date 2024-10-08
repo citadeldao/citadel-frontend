@@ -119,6 +119,23 @@
           />
         </div>
       </div>
+      <div v-if="stacksCycleBeganAt" class="stacking-progress">
+        <div
+          class="stacking-progress__progress"
+          :style="{ width: `${progressCycle}%` }"
+        />
+        <div class="stacking-progress__label">Current cycle</div>
+        <div class="stacking-progress__label">
+          {{
+            `Next cycle (${(
+              stackingInfo.secondsUntilStackingDeadline /
+              60 /
+              60 /
+              24
+            ).toFixed(0)} day)`
+          }}
+        </div>
+      </div>
       <div
         v-if="stacksCycleBeganAt"
         class="stacking-disc"
@@ -916,18 +933,30 @@ export default {
 
     const stacksCycleBeganAt = ref(null);
     const nextCycleAt = ref(null);
+    const stackingInfo = ref(null);
+
+    const progressCycle = computed(() => {
+      return (
+        100 -
+        (stackingInfo.value.secondsUntilStackingDeadline /
+          stackingInfo.value.cycleDuration) *
+          100
+      ).toFixed(1);
+    });
 
     onMounted(async () => {
       if (props.currentWallet.net !== 'stacks') return;
       const gg = await store.dispatch('crypto/getStackingInfo');
       if (gg && gg.data && gg.data.ok) {
+        stackingInfo.value = gg.data.data;
         stacksCycleBeganAt.value = gg.data.data.cycleBeganAt;
         nextCycleAt.value = defaultDate(gg.data.data.nextCycleAt);
       }
-      console.log('stacksCycleBeganAt', stacksCycleBeganAt.value);
     });
 
     return {
+      stackingInfo,
+      progressCycle,
       stacksCycleBeganAt,
       nextCycleAt,
       hasAutorestake,
@@ -1100,6 +1129,36 @@ export default {
   &__buttons-section {
     display: flex;
     justify-content: space-between;
+  }
+
+  .stacking-progress {
+    overflow: hidden;
+    position: relative;
+    margin-top: 20px;
+    height: 40px;
+    border-radius: 6px;
+    background: #e8e8e8;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #000;
+    font-size: 14px;
+    padding: 0 10px;
+
+    &__progress {
+      height: 40px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 30%;
+      background: linear-gradient(to right, #7d66f1, #9198e5);
+    }
+
+    &__label {
+      font-family: Panton_SemiBold;
+      font-size: 14px;
+      z-index: 100;
+    }
   }
 
   .stacking-disc {
