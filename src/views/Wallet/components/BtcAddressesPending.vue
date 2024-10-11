@@ -5,19 +5,15 @@
       <div class="line" />
     </div>
     <div class="btc-addresses__items">
-      <div
-        :class="{ active: selectedBtcAddressType === 'native' }"
-        class="item"
-        @click="setBtcAddressType('native')"
-      >
+      <div v-for="(item, ndx) in list.slice(0, 2)" :key="ndx" class="item">
         <div class="left">
           <div class="address">
-            {{ '0xd3dc...fbc2351aca68' }}
+            {{ `${item.hash.slice(0, 5)}...${item.hash.slice(-5)}` }}
           </div>
           <div class="balance">
             <span
               v-pretty-number="{
-                value: !showBalance ? HIDE_BALANCE_MASK : nativeBalance,
+                value: !showBalance ? HIDE_BALANCE_MASK : getBalance(item),
                 currency: currentWallet.code,
               }"
             />
@@ -26,7 +22,7 @@
         </div>
         <div class="right">
           <div class="line"></div>
-          <div class="copy-icon" @click.stop="$emit('openSettingsTx')">
+          <div class="copy-icon" @click.stop="$emit('openSettingsTx', item)">
             <SettingsUsdIcon />
           </div>
         </div>
@@ -35,9 +31,7 @@
   </div>
 </template>
 <script>
-import copyToClipboard from '@/helpers/copyToClipboard';
-import { onMounted, ref, watch, computed } from 'vue';
-import citadel from '@citadeldao/lib-citadel';
+import { computed } from 'vue';
 import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
 import { useStore } from 'vuex';
 import SettingsUsdIcon from '@/assets/icons/settingsusd.svg';
@@ -51,85 +45,38 @@ export default {
     currentWallet: {
       required: true,
     },
+    list: {
+      required: true,
+    },
   },
-  setup(props) {
+  setup() {
     const store = useStore();
-    const isCopied = ref(false);
-    const isCopiedSecond = ref(false);
-    const segwitBalance = ref(0);
-    const nativeBalance = ref(0);
 
     const showBalance = computed(() => store.getters['balance/showBalance']);
     const selectedBtcAddressType = computed(
       () => store.getters['btcAddresses/selectedBtcAddressType']
     );
 
-    const setBtcAddressType = (value) => {
-      store.dispatch('btcAddresses/setBtcAddressType', value);
-    };
-
-    const copyAddress = (address, isSecond) => {
-      isSecond ? (isCopiedSecond.value = true) : (isCopied.value = true);
-      copyToClipboard(address);
-      setTimeout(() => {
-        isSecond ? (isCopiedSecond.value = false) : (isCopied.value = false);
-      }, 1500);
-    };
-
-    const fetchBalance = async () => {
-      const segwitRes = await citadel.getBalanceByAddress(
-        'btc',
-        props.currentWallet.segwitAddress
-      );
-      const nativeRes = await citadel.getBalanceByAddress(
-        'btc',
-        props.currentWallet.nativeAddress
-      );
-
-      if (!segwitRes.error) {
-        segwitBalance.value = segwitRes.data.mainBalance;
-        store.dispatch('btcAddresses/setBtcBalanceType', {
-          type: 'segwit',
-          balance: segwitBalance.value,
-        });
-      }
-
-      if (!nativeRes.error) {
-        nativeBalance.value = nativeRes.data.mainBalance;
-        store.dispatch('btcAddresses/setBtcBalanceType', {
-          type: 'native',
-          balance: nativeBalance.value,
-        });
-      }
-    };
-
     const cutAddress = (address) => {
       return `${address.slice(0, 7)}...${address.slice(-6)}`;
     };
 
-    watch(
-      () => props.currentWallet.nativeAddress,
-      async () => {
-        setBtcAddressType('');
-        await fetchBalance();
+    const getBalance = (item) => {
+      const amountType = item.view[0]?.components.find(
+        (comp) => comp.type === 'amount'
+      );
+      if (amountType) {
+        return amountType.value?.text || 0;
       }
-    );
-
-    onMounted(async () => {
-      await fetchBalance();
-    });
+      return '?';
+    };
 
     return {
-      isCopied,
-      isCopiedSecond,
-      segwitBalance,
-      nativeBalance,
       showBalance,
       selectedBtcAddressType,
       HIDE_BALANCE_MASK,
-      copyAddress,
+      getBalance,
       cutAddress,
-      setBtcAddressType,
     };
   },
 };
