@@ -51,6 +51,8 @@ export default function useCurrentWalletRequests() {
         feesError.value = error;
       }
     }
+
+    return fees.value;
   };
 
   const formatedFee = computed(() => {
@@ -91,7 +93,7 @@ export default function useCurrentWalletRequests() {
         walletId: wallet.value.id,
         options,
       });
-      l1Fee.value = data.l1Fee || 0;
+      l1Fee.value = data?.l1Fee || 0;
       rawTx.value = data;
       rawTxError.value = error;
       if (data.resourcesForTx) {
