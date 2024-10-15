@@ -55,6 +55,7 @@
         <div>
           <SelectSendFee
             v-if="dataFee"
+            hide-low
             :fee-info="dataFee"
             :wallet="signerWallet"
             @changeFee="onChangeFeeSend"
