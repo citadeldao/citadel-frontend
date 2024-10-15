@@ -67,6 +67,8 @@ export default class CryptoCoin {
     this.minBalance = opts?.config?.methods?.minBalance;
     this.hasMultiUnstake = opts?.config?.methods?.hasMultiUnstake;
     this.isSingleStake = opts?.config?.methods?.isSingleStake;
+
+    if (this.net === 'stacks') this.isSingleStake = false;
     this.hasKtAddresses = opts?.config?.methods?.hasKtAddresses;
     this.noSelfSend = opts?.config?.methods?.noSelfSend;
     this.isCosmosNetwork = cosmosNetworks.includes(this.net);
@@ -480,18 +482,22 @@ export default class CryptoCoin {
   }
 
   getCrossNetworkRoutes({ walletId, token }) {
-    const res = citadel.getCrossNetworkRoutes(walletId, token);
+    try {
+      const res = citadel.getCrossNetworkRoutes(walletId, token);
 
-    if (!res.error) {
-      return res.data;
+      if (!res.error) {
+        return res.data;
+      }
+
+      // notify({
+      //   type: 'warning',
+      //   text: res.error,
+      // });
+
+      return [];
+    } catch (err) {
+      return [];
     }
-
-    notify({
-      type: 'warning',
-      text: res.error,
-    });
-
-    return [];
   }
 
   async prepareAssignToDaoMessage(walletId) {

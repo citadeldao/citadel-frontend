@@ -32,7 +32,7 @@ export const prettyNumber = (value) => {
   const formatedValue = formatValue(value);
 
   const abbDecimals = 2;
-  const maxDecimals = 5;
+  const maxDecimals = 6;
   const prefix = +formatedValue < 0 ? '-' : '';
   const absoluteValue = Math.abs(formatedValue);
   const intPart = Math.floor(absoluteValue);

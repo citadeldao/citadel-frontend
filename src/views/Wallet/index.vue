@@ -54,6 +54,17 @@
         "
         :current-wallet="currentWallet"
       />
+      <BtcAddressesPending
+        v-if="
+          btcMempoolList?.length &&
+          currentWallet.net === 'btc' &&
+          currentWallet.segwitAddress &&
+          currentWallet.nativeAddress
+        "
+        :list="btcMempoolList"
+        :current-wallet="currentWallet"
+        @openSettingsTx="openSettingsTx"
+      />
       <div class="wallet__main">
         <template v-if="!currentWallet.isStub">
           <MainHeader
@@ -145,6 +156,16 @@
         <img src="@/assets/gif/loader.gif" alt="" />
       </Modal>
     </teleport>
+    <teleport v-if="showBtcUpdateFeeModal" to="body">
+      <Modal>
+        <BtcUpdateFeeModal
+          :tx-info="showBtcUpdateFeeModal || {}"
+          :signer-wallet="currentToken || currentWallet"
+          @close="onCloseBtcFeeModal"
+        />
+      </Modal>
+    </teleport>
+
     <teleport v-if="showRewardsModal" to="body">
       <Modal>
         <RewardsModal
@@ -282,7 +303,15 @@ import ConnectLedgerModal from '@/components/Modals/Ledger/ConnectLedgerModal';
 import OpenAppLedgerModal from '@/components/Modals/Ledger/OpenAppLedgerModal';
 import RejectLedgerModal from '@/components/Modals/Ledger/RejectLedgerModal';
 import { useStore } from 'vuex';
-import { computed, onMounted, provide, ref, watch, inject } from 'vue';
+import {
+  computed,
+  onMounted,
+  provide,
+  ref,
+  watch,
+  inject,
+  onBeforeUnmount,
+} from 'vue';
 import useWallets from '@/compositions/useWallets';
 import useCheckPassword from '@/compositions/useCheckPassword';
 import useKtAddresses from '@/compositions/useKtAddresses';
@@ -297,10 +326,12 @@ import { useI18n } from 'vue-i18n';
 import { getKeplrNetworks } from '@/config/availableNets';
 import ClaimModal from './views/components/ClaimModal';
 import RewardsModal from './views/components/RewardsModal';
+import BtcUpdateFeeModal from './views/components/BtcUpdateFeeModal';
 import ClaimModalXCT from './views/components/ClaimModalXCT';
 import ClaimSuccess from './views/components/ClaimSuccess';
 import useCurrentWalletRequests from '@/compositions/useCurrentWalletRequests';
 import BtcAddresses from './components/BtcAddresses';
+import BtcAddressesPending from './components/BtcAddressesPending';
 import RoundArrowButton from '@/components/UI/RoundArrowButton';
 import { useRouter } from 'vue-router';
 
@@ -311,6 +342,7 @@ export default {
     Alias,
     ClaimRewards,
     RewardsModal,
+    BtcUpdateFeeModal,
     MainHeader,
     NetworkInfo,
     AliasQrCard,
@@ -331,6 +363,7 @@ export default {
     ClaimModalXCT,
     ClaimSuccess,
     BtcAddresses,
+    BtcAddressesPending,
   },
   setup() {
     const { getDelegationBalance } = useCurrentWalletRequests();
@@ -340,6 +373,7 @@ export default {
     const router = useRouter();
     const rewardsList = ref([]);
     const showRewardsModal = ref(false);
+    const showBtcUpdateFeeModal = ref(false);
     const citadel = inject('citadel');
     provide('rewardsList', rewardsList);
     const { currency, currentWallet, isHardwareWallet, currentToken } =
@@ -441,6 +475,30 @@ export default {
       }
     };
 
+    const btcMempoolList = computed(() => {
+      return (store.getters['transactions/transactions'] || []).filter(
+        (tx) => tx.network === 'btc' && tx.inMempool
+      );
+    });
+
+    const mempoolTxTimer = ref(null);
+
+    const fetchTxsBtc = async () => {
+      mempoolTxTimer.value = setInterval(async () => {
+        if (currentWallet?.value?.net === 'btc') {
+          await store.dispatch('transactions/getTransactions', {
+            walletId: currentWallet?.value?.id,
+            page: 1,
+            pageSize: 10,
+          });
+        }
+      }, 30000);
+    };
+
+    onBeforeUnmount(() => {
+      clearInterval(mempoolTxTimer.value);
+    });
+
     onMounted(async () => {
       await loadKtAddresses(currentWallet?.value?.id);
       await loadXCTInfo();
@@ -448,6 +506,14 @@ export default {
       await checkLeapAddress();
       await getWalletRewards();
       await getDelegationBalance();
+      await fetchTxsBtc();
+      if (currentWallet?.value?.net === 'btc') {
+        await store.dispatch('transactions/getTransactions', {
+          walletId: currentWallet?.value?.id,
+          page: 1,
+          pageSize: 10,
+        });
+      }
     });
 
     const getWalletRewards = async () => {
@@ -1368,7 +1434,28 @@ export default {
       )
     );
 
+    const openSettingsTx = (item) => {
+      showBtcUpdateFeeModal.value = item;
+    };
+
+    const onCloseBtcFeeModal = async () => {
+      showBtcUpdateFeeModal.value = false;
+      setTimeout(async () => {
+        if (currentWallet?.value?.net === 'btc') {
+          await store.dispatch('transactions/getTransactions', {
+            walletId: currentWallet?.value?.id,
+            page: 1,
+            pageSize: 10,
+          });
+        }
+      }, 3000);
+    };
+
     return {
+      onCloseBtcFeeModal,
+      btcMempoolList,
+      showBtcUpdateFeeModal,
+      openSettingsTx,
       customClaimWallet,
       showRewardsModal,
       rewardsList,

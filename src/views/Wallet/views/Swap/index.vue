@@ -374,6 +374,13 @@ export default {
           (ch) => ch.chainName === 'optimism'
         );
       }
+
+      if (currentWallet.value.net === 'coreum') {
+        hasSwap.value = squidChains.value.find(
+          (ch) => ch.chainName === 'coreum'
+        );
+      }
+
       if (hasSwap.value) {
         selectNetworkFrom(
           `${hasSwap.value.chainName}:${hasSwap.value.chainId}`

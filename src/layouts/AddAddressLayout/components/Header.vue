@@ -183,7 +183,7 @@ export default {
     const toggleTheme = () => {
       store.dispatch('app/toggleTheme');
       setTimeout(() => {
-        window.location.reload();
+        // window.location.reload();
       }, 1500);
     };
 

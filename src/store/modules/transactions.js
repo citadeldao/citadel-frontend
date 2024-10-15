@@ -112,7 +112,7 @@ export default {
       commit(types.RESET_MEMPOOL_TX);
     },
     async getTransactions({ commit, rootGetters }, { walletId, ...options }) {
-      commit(types.SET_TRANSACTIONS, null);
+      // commit(types.SET_TRANSACTIONS, null);
       commit(types.SET_IS_TRANSACTIONS_LOADING, true);
       const { data, error } = await citadel.getTransactionsById(
         walletId,

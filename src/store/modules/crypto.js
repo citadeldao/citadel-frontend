@@ -8,6 +8,7 @@ import BigNumber from 'bignumber.js';
 import useWallets from '@/compositions/useWallets';
 import { getErrorTextByCode } from '@/config/errors';
 import { setStorage, removeStorage } from '@/utils/storage';
+import axios from 'axios';
 
 const getDefaultState = () => {
   return {
@@ -340,6 +341,13 @@ export default {
 
         return { error: error.message || error };
       }
+    },
+    async getStackingInfo() {
+      const result = await axios.get(
+        `${process.env.VUE_APP_PUBLIC_BACKEND_URL}/blockchain/stacks/0/stackingInfo`
+      );
+
+      return result;
     },
   },
 };

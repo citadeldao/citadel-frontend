@@ -119,6 +119,30 @@
           />
         </div>
       </div>
+      <div v-if="stacksCycleBeganAt" class="stacking-progress">
+        <div
+          class="stacking-progress__progress"
+          :style="{ width: `${progressCycle}%` }"
+        />
+        <div class="stacking-progress__label">Current cycle</div>
+        <div class="stacking-progress__label">
+          {{
+            `Next cycle (${(
+              stackingInfo.secondsUntilStackingDeadline /
+              60 /
+              60 /
+              24
+            ).toFixed(0)} day)`
+          }}
+        </div>
+      </div>
+      <div
+        v-if="stacksCycleBeganAt"
+        class="stacking-disc"
+        v-html="
+          `If you're currently participating in stacking during this cycle, your STX will be accessible for the next cycle in approximately <span style='font-family: Panton_Bold;color: #6A4BFF;'>${nextCycleAt}</span>. You will also receive rewards for the completed cycle.`
+        "
+      />
       <div
         v-if="currentWallet.type !== WALLET_TYPES.PUBLIC_KEY"
         class="multi__buttons"
@@ -143,7 +167,10 @@
           class="multi__buttons-section"
           :style="{ width: !currentWallet.hasRedelegation && '100%' }"
         >
-          <div class="multi__buttons-section-unstake-button left">
+          <div
+            :class="{ stacksCycleBeganAt }"
+            class="multi__buttons-section-unstake-button left"
+          >
             <PrimaryButton
               :bg-color="
                 $store.getters['app/theme'] === 'dark' ? '#29294d' : 'white'
@@ -370,7 +397,7 @@
 import { useI18n } from 'vue-i18n';
 import { getStorage, setStorage } from '@/utils/storage';
 import MinBalanceWarning from '@/views/Wallet/views/Stake/components/MinBalanceWarning';
-import { computed, ref, inject, provide } from 'vue';
+import { computed, ref, inject, provide, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import BigNumber from 'bignumber.js';
 import WalletButtonsPanel from '@/components/WalletButtonsPanel';
@@ -398,6 +425,7 @@ import ChooseStakingNodeModal from './ChooseStakingNodeModal';
 import NodeListModal from './NodeListModal';
 import ChooseStakingNode from './ChooseStakingNode';
 import SuccessModal from './SuccessModal';
+import defaultDate from '@/helpers/date.js';
 
 import useStaking from '@/compositions/useStaking';
 // import useApi from '@/api/useApi';
@@ -903,7 +931,34 @@ export default {
       });
     };
 
+    const stacksCycleBeganAt = ref(null);
+    const nextCycleAt = ref(null);
+    const stackingInfo = ref(null);
+
+    const progressCycle = computed(() => {
+      return (
+        100 -
+        (stackingInfo.value.secondsUntilStackingDeadline /
+          stackingInfo.value.cycleDuration) *
+          100
+      ).toFixed(1);
+    });
+
+    onMounted(async () => {
+      if (props.currentWallet.net !== 'stacks') return;
+      const gg = await store.dispatch('crypto/getStackingInfo');
+      if (gg && gg.data && gg.data.ok) {
+        stackingInfo.value = gg.data.data;
+        stacksCycleBeganAt.value = gg.data.data.cycleBeganAt;
+        nextCycleAt.value = defaultDate(gg.data.data.nextCycleAt);
+      }
+    });
+
     return {
+      stackingInfo,
+      progressCycle,
+      stacksCycleBeganAt,
+      nextCycleAt,
       hasAutorestake,
       extensionsList,
       toAutorestake,
@@ -1076,11 +1131,60 @@ export default {
     justify-content: space-between;
   }
 
+  .stacking-progress {
+    overflow: hidden;
+    position: relative;
+    margin-top: 20px;
+    height: 40px;
+    border-radius: 6px;
+    background: #e8e8e8;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #000;
+    font-size: 14px;
+    padding: 0 10px;
+
+    &__progress {
+      height: 40px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 30%;
+      background: linear-gradient(to right, #7d66f1, #9198e5);
+    }
+
+    &__label {
+      font-family: Panton_SemiBold;
+      font-size: 14px;
+      z-index: 100;
+    }
+  }
+
+  .stacking-disc {
+    text-align: center;
+    width: 100%;
+    margin-top: 20px;
+    line-height: 20px;
+    font-size: 15px;
+    color: #6b93c0;
+
+    span {
+      font-family: Panton_Bold;
+    }
+  }
+
   &__buttons-section-unstake-button {
     margin-right: 24px;
 
     &.left {
       margin-left: 24px;
+
+      &.stacksCycleBeganAt {
+        margin-left: 0;
+        display: flex;
+        align-items: center;
+      }
     }
   }
 }

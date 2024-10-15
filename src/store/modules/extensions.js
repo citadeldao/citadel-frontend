@@ -50,7 +50,9 @@ export default {
       state.extensionMessageForSign = value;
     },
     [types.SET_EXTENSIONS_LIST](state, value) {
-      state.extensionsList = value;
+      state.extensionsList = value.filter(
+        (item) => ![24, 25].includes(+item.id)
+      );
     },
     [types.ADD_EXTENSION_TO_LIST](state, value) {
       state.extensionsList.push(value);

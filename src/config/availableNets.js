@@ -25,8 +25,10 @@ export const networksFilterItems = [
   },
 ];
 
+export const notShowExportPrivateKey = ['stacks'];
+
 export const networksFilterCategory = {
-  hot: ['btc', 'eth', 'bsc', 'sui', 'arbitrum', 'polkadot', 'tron'],
+  hot: ['stacks', 'btc', 'eth', 'bsc', 'sui', 'arbitrum', 'polkadot', 'tron'],
   cosmos: [
     'archway',
     'quasar',
@@ -146,6 +148,7 @@ export const hasNoAdvancedSettingsNets = ['polkadot'];
 export const hasCustomClaimInfoNets = ['polkadot'];
 
 export const swapNoAccess = [
+  'stacks',
   'berachain',
   'btc',
   'polkadot',
@@ -160,8 +163,7 @@ export const swapNoAccess = [
   'rizon',
   'stafi',
   'starname',
-  'lava',
   'konstellation',
 ];
 
-export const removedNets = ['cerberus', 'crescent'];
+export const removedNets = ['cerberus', 'crescent', 'regen'];

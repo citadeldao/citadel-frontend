@@ -207,11 +207,17 @@ export default {
 
     const totalRewardsInBTC = computed(() => {
       return wallets.value.reduce((total, currentValue) => {
-        const rewardInUsd = BigNumber(
-          currentValue.balance?.claimableRewards || 0
-        )
+        const sum = !currentValue.balance?.rewardsList
+          ? 0
+          : currentValue.balance?.rewardsList.reduce((prev, curr) => {
+              return prev + +curr.amount;
+            }, 0);
+
+        let rewardInUsd = BigNumber(sum || 0)
           .times(currency.value[currentValue.net].BTC)
           .toNumber();
+
+        if (!rewardInUsd) rewardInUsd = 0;
 
         return BigNumber(total).plus(rewardInUsd).toNumber();
       }, 0);

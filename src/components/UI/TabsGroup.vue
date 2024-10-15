@@ -149,7 +149,7 @@ export default {
 
 body.dark {
   .tabs-group {
-    background: #000;
+    background: #191922ab;
 
     &__item {
       background: #2d2e42;

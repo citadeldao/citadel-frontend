@@ -69,8 +69,8 @@ export default {
       href: 'https://www.umee.cc/',
     },
     twitter: {
-      title: '@Umee_CrossChain',
-      href: 'umee_crosschain',
+      title: '@ux_xyz',
+      href: 'ux_xyz',
     },
     landing: {
       title: 'Coingecko',
@@ -121,8 +121,8 @@ export default {
   },
   icon: {
     web: {
-      title: 'iconrepublic.org',
-      href: 'https://iconrepublic.org/',
+      title: 'icon.community',
+      href: 'https://icon.community/',
     },
     twitter: {
       title: '@helloiconworld',
@@ -181,8 +181,8 @@ export default {
       href: 'https://www.kava.io/',
     },
     twitter: {
-      title: '@kava_labs',
-      href: 'kava_labs',
+      title: '@KAVA_CHAIN',
+      href: 'KAVA_CHAIN',
     },
     landing: {
       title: 'Coingecko',
@@ -234,7 +234,7 @@ export default {
   osmosis: {
     web: {
       title: 'osmosis.zone',
-      href: 'https://app.osmosis.zone',
+      href: 'https://osmosis.zone',
     },
     twitter: {
       title: '@osmosiszone',
@@ -471,8 +471,8 @@ export default {
   },
   starname: {
     web: {
-      title: 'starname.me',
-      href: 'https://www.starname.me/',
+      title: 'iov-one',
+      href: 'https://github.com/iov-one',
     },
     twitter: {
       title: '@starname_me',
@@ -674,6 +674,10 @@ export default {
       title: '@OmniFlixNetwork',
       href: 'OmniFlixNetwork',
     },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/omniflix-network',
+    },
   },
   teritori: {
     web: {
@@ -782,10 +786,10 @@ export default {
       title: '@NolusProtocol',
       href: 'NolusProtocol',
     },
-    // landing: {
-    //   title: 'Coingecko',
-    //   href: 'https://www.coingecko.com/en/coins/sui',
-    // },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/nolus',
+    },
   },
   celestia: {
     web: {
@@ -810,6 +814,10 @@ export default {
       title: '@archwayHQ',
       href: 'archwayHQ',
     },
+    landing: {
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/archway',
+    },
   },
   quasar: {
     web: {
@@ -818,7 +826,7 @@ export default {
     },
     twitter: {
       title: '@QuasarFi',
-      href: 'https://twitter.com/QuasarFi',
+      href: 'QuasarFi',
     },
     landing: {
       title: 'Coingecko',
@@ -846,7 +854,7 @@ export default {
     },
     twitter: {
       title: '@NibiruChain',
-      href: 'https://twitter.com/NibiruChain',
+      href: 'NibiruChain',
     },
     landing: {
       title: 'Coingecko',
@@ -907,6 +915,20 @@ export default {
     landing: {
       title: 'Coingecko',
       href: 'https://www.coingecko.com/en/coins/berachain-bera',
+    },
+  },
+  stacks: {
+    twitter: {
+      title: '@Stacks',
+      href: 'Stacks',
+    },
+    web: {
+      title: 'stacks.co',
+      href: 'https://www.stacks.co/',
+    },
+    landing: {
+      title: 'stacks',
+      href: 'https://www.coingecko.com/en/coins/stacks',
     },
   },
 };

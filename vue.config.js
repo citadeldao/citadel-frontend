@@ -1,5 +1,5 @@
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
+// const TerserPlugin = require('terser-webpack-plugin');
 // const BundleAnalyzerPlugin =
 //   require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const p = require('path');
@@ -36,7 +36,7 @@ module.exports = {
     plugins: [
       new NodePolyfillPlugin(),
       // remove comments from chunks
-      new TerserPlugin(),
+      // new TerserPlugin(),
       // new BundleAnalyzerPlugin(),
     ],
     module: {

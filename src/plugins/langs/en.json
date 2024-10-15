@@ -319,6 +319,7 @@
         "chooseNodeForStaking": "Choose node for staking",
         "chooseNodeModalDesc": "Click on the node at the list to select one to stake with.",
         "chooseNodeModalDesc1": "To stake your assets, choose nodes and set the amount for delegation. Take into account that unstaking period for {net} is <span style='color: #00A3FF; font-weight: bold;'>{perioud} days</span>.",
+        "chooseNodeModalDescStacks1": "You can delegate your STX tokens to a stacking pool provider, allowing you to participate in stacking even if you don't have enough to meet the minimum requirement. Please note that the stacking provider has the authority to decide how rewards are distributed.",
         "chooseNodeModalDescWithFrom": "To stake your assets, choose nodes and set the amount for delegation. Take into account that unstaking period for {net} fluctuates <span style='color: #00A3FF; font-weight: bold;'>from {perioudFrom} to {perioudTo} days</span>. Check the current unstaking period via the <a href='{link}' style='color: #00A3FF; font-weight: bold;text-decoration:none'>link</a>.",
         "Stake": "Stake",
         "staking": "staking",
@@ -1404,6 +1405,11 @@
             "title": "Berachain",
             "description": "Proof of liquidity aligns network security and liquidity by validators rewarding liquidity providers on Berachain with the non-purchasable staking token of the network.",
             "shortDescription": "An EVM-identical L1 turning liquidity into security powered by Proof Of Liquidity"
+        },
+        "stacks":{
+            "title": "Stacks",
+            "description": "Stacks - The Leading Bitcoin L2 for Smart Contracts, Apps, DeFi",
+            "shortDescription": "Stacks - The Leading Bitcoin L2 for Smart Contracts, Apps, DeFi"
         }
 
     },

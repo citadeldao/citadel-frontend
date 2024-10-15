@@ -604,6 +604,8 @@ export default {
 
   &__tabs {
     display: flex;
+    border-radius: 6px;
+    overflow: hidden;
   }
 
   &__tab {
@@ -639,7 +641,7 @@ export default {
       }
 
       &:hover {
-        background: #0a2778;
+        background: $dark-blue;
 
         svg {
           fill: #fff;
@@ -920,7 +922,7 @@ export default {
         width: 48px;
         cursor: pointer;
         &:hover {
-          background-color: $too-dark-blue;
+          background-color: $dark-blue;
           svg {
             fill: $white !important;
           }

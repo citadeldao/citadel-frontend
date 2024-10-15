@@ -42,15 +42,23 @@
               : shortAddress(wallet.address)
           }}
           <div :class="{ showRightBalance }" class="balance-wrap">
-            <div
-              v-pretty-number="{
-                value: !showBalance
-                  ? HIDE_BALANCE_MASK
-                  : wallet?.balance?.mainBalance || 0,
-                currency: wallet?.code,
-              }"
-              class="balance"
-            />
+            <Tooltip :max-width="450">
+              <template #content
+                >{{
+                  !showBalance
+                    ? HIDE_BALANCE_MASK
+                    : wallet?.balance?.mainBalance || 0
+                }}
+              </template>
+              <div
+                v-pretty-number="{
+                  value: !showBalance
+                    ? HIDE_BALANCE_MASK
+                    : wallet?.balance?.mainBalance || 0,
+                  currency: wallet?.code,
+                }"
+              />
+            </Tooltip>
             <span>{{ wallet.code }}</span>
           </div>
         </span>

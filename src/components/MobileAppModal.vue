@@ -111,6 +111,8 @@ export default {
 
 body.dark {
   .mobile-app-modal {
+    box-shadow: none;
+
     &__main {
       background: $dark-panel-bg;
     }

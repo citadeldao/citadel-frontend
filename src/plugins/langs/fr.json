@@ -1387,6 +1387,11 @@
             "title": "",
             "description": "",
             "shortDescription": ""
+        },
+        "stacks":{
+            "title": "",
+            "description": "",
+            "shortDescription": ""
         }
     },
     "uptime": "Disponibilité",
