@@ -168,6 +168,7 @@ import { signTxByPrivateKey } from '/node_modules/@citadeldao/lib-citadel/src/ne
 import SuccessModal from './SuccessModal.vue';
 import InfoModal from './InfoModal.vue';
 import TransactionModal from './TransactionModal';
+import { offLedgerTypesAutorestake } from './config';
 
 export default {
   name: 'Extensions',
@@ -393,10 +394,16 @@ export default {
         const nets = selectedApp.value.networks.map((net) => {
           return net.toLowerCase();
         });
+
         const wallets = await Promise.all(
           walletsList.value
             .filter(
               (w) =>
+                !(
+                  selectedApp.value.id == 15 &&
+                  offLedgerTypesAutorestake.includes(w.net) &&
+                  w.type === WALLET_TYPES.LEDGER
+                ) &&
                 nets.includes(w.net.toLowerCase()) &&
                 w.type !== WALLET_TYPES.PUBLIC_KEY
             )
