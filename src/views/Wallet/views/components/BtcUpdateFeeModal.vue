@@ -184,11 +184,9 @@ export default {
     };
 
     const onChangeFeeSend = async (feeData) => {
-      console.log('FEE DATA', feeData);
       feeType.value = feeData;
       const fee = dataFee.value[feeType.value]?.fee;
 
-      console.log('TX FEE', fee);
       await prepareTransfer({
         replaceHash: props.txInfo.hash,
         toAddress: toAddress.value,
