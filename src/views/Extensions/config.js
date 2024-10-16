@@ -20,3 +20,12 @@ export const multisendLocalApp = {
   url_video: '',
   what_you_can: null,
 };
+
+export const offLedgerTypesAutorestake = [
+  'akash',
+  'fetch',
+  'rizon',
+  'sei',
+  'sentinel',
+  'bitsong',
+];

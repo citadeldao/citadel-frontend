@@ -10,7 +10,7 @@
     @buttonClick="confirmClickHandler"
   >
     <teleport to="body">
-      <Modal v-if="showSuccessModal">
+      <!-- <Modal v-if="showSuccessModal">
         <SuccessModal
           :close-success-modal="closeSuccessModal"
           :success-click-handler="successClickHandler"
@@ -18,7 +18,7 @@
           :success-tx="successTx"
           @changeComment="onChangeComment"
         />
-      </Modal>
+      </Modal> -->
       <Modal v-if="showLedgerConnect">
         <ConfirmLedgerModal
           v-if="showLedgerConnect"
@@ -55,6 +55,7 @@
         <div>
           <SelectSendFee
             v-if="dataFee"
+            hide-low
             :fee-info="dataFee"
             :wallet="signerWallet"
             @changeFee="onChangeFeeSend"
@@ -186,7 +187,6 @@ export default {
       feeType.value = feeData;
       const fee = dataFee.value[feeType.value]?.fee;
 
-      console.log('TX FEE', fee);
       await prepareTransfer({
         replaceHash: props.txInfo.hash,
         toAddress: toAddress.value,
@@ -251,6 +251,7 @@ export default {
         notify({
           type: 'success',
           text: 'Transaction fee has been successfully increased',
+          hash: `https://blockchair.com/bitcoin/transaction/${result.data[0]}`,
         });
         emit('close');
       } else {
@@ -303,6 +304,9 @@ export default {
         toAddress.value = props.signerWallet.address;
       }
       amount.value = getBalance(props.txInfo);
+      setTimeout(() => {
+        onChangeFeeSend('medium');
+      }, 1000);
     });
 
     return {

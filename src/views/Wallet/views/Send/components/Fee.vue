@@ -1,7 +1,9 @@
 <template>
   <div class="send-fee-change">
     <div
-      v-for="(label, ndx) in Object.keys(feeInfo)"
+      v-for="(label, ndx) in hideLow
+        ? Object.keys(feeInfo).filter((item) => item != 'low')
+        : Object.keys(feeInfo)"
       :key="ndx"
       class="send-fee-change__item"
       @click="changeFee(label, ndx)"
@@ -29,6 +31,10 @@ import { onMounted, ref } from 'vue';
 export default {
   name: 'SendFee',
   props: {
+    hideLow: {
+      type: Boolean,
+      default: false,
+    },
     feeInfo: {
       required: true,
     },
