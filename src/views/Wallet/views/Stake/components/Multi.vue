@@ -422,7 +422,7 @@ import { WALLET_TYPES } from '@/config/walletType';
 import { shareInValue } from '@/helpers';
 import useLedger from '@/compositions/useLedger';
 import useWallets from '@/compositions/useWallets';
-import { offLedgerTypesAutorestake } from '@/views/Extension/config';
+import { offLedgerTypesAutorestake } from '@/views/Extensions/config';
 
 import LargeStakeListItem from './LargeStakeListItem.vue';
 import ChooseStakingNodeModal from './ChooseStakingNodeModal';
