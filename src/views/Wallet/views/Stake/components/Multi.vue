@@ -189,7 +189,10 @@
           </div>
           <div class="multi__buttons-section-unstake-button">
             <PrimaryButton
-              v-if="hasAutorestake"
+              v-if="
+                hasAutorestake &&
+                !offLedgerTypesAutorestake.includes(currentWallet.net)
+              "
               :bg-color="
                 $store.getters['app/theme'] === 'dark' ? '#29294d' : 'white'
               "
@@ -419,6 +422,7 @@ import { WALLET_TYPES } from '@/config/walletType';
 import { shareInValue } from '@/helpers';
 import useLedger from '@/compositions/useLedger';
 import useWallets from '@/compositions/useWallets';
+import { offLedgerTypesAutorestake } from '@/views/Extension/config';
 
 import LargeStakeListItem from './LargeStakeListItem.vue';
 import ChooseStakingNodeModal from './ChooseStakingNodeModal';
@@ -1026,6 +1030,7 @@ export default {
       nodesListModalCloseHandler,
       isMultiple,
       disabledPolkadot,
+      offLedgerTypesAutorestake,
     };
   },
 };
