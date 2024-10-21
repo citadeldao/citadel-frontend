@@ -191,7 +191,10 @@
             <PrimaryButton
               v-if="
                 hasAutorestake &&
-                !offLedgerTypesAutorestake.includes(currentWallet.net)
+                !(
+                  currentWallet.type === WALLET_TYPES.LEDGER &&
+                  offLedgerTypesAutorestake.includes(currentWallet.net)
+                )
               "
               :bg-color="
                 $store.getters['app/theme'] === 'dark' ? '#29294d' : 'white'
