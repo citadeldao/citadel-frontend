@@ -165,4 +165,12 @@ export default {
     }
   }
 }
+
+body.dark {
+  .connect-device {
+    &__title {
+      color: $white;
+    }
+  }
+}
 </style>
