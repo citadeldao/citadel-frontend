@@ -22,10 +22,10 @@ export const multisendLocalApp = {
 };
 
 export const offLedgerTypesAutorestake = [
-  'akash',
-  'fetch',
-  'rizon',
-  'sei',
-  'sentinel',
-  'bitsong',
+  // 'akash',
+  // 'fetch',
+  // 'rizon',
+  // 'sei',
+  // 'sentinel',
+  // 'bitsong',
 ];
