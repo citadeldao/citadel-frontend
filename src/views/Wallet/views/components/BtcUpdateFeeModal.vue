@@ -1,6 +1,6 @@
 <template>
   <ModalContent
-    title="Up transaction fee"
+    title="Increase transaction fee"
     desc="Speed ​​up the transaction by increasing the commission"
     button-text="confirm"
     type="action"
