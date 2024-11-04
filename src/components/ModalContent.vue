@@ -265,7 +265,8 @@ export default {
   }
   display: flex;
   max-height: 720px;
-  overflow-y: auto;
+  // overflow-y: auto;
+  overflow: hidden;
   flex-direction: column;
   background: $white;
   border-radius: 16px;
