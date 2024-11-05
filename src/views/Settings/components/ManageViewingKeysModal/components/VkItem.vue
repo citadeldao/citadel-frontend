@@ -241,4 +241,20 @@ export default {
     text-align: center;
   }
 }
+
+body.dark {
+  .vk-item {
+    &__btn {
+      background-color: #33304b;
+    }
+
+    &__vk:hover {
+      background-color: transparent;
+
+      span {
+        background-color: transparent;
+      }
+    }
+  }
+}
 </style>
