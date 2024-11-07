@@ -931,4 +931,18 @@ export default {
       href: 'https://www.coingecko.com/en/coins/stacks',
     },
   },
+  solana: {
+    twitter: {
+      title: '@solana',
+      href: 'solana',
+    },
+    web: {
+      title: 'solana.com',
+      href: 'https://solana.com',
+    },
+    landing: {
+      title: 'solana',
+      href: 'https://www.coingecko.com/en/coins/solana',
+    },
+  },
 };
