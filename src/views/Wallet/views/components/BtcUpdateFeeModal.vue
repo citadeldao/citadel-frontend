@@ -214,7 +214,6 @@ export default {
     };
 
     const confirmClickHandler = async () => {
-      console.log('rawTx.value', rawTx.value);
       confirmPassword.value = true;
 
       signLoading.value = true;

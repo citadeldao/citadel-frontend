@@ -1423,7 +1423,7 @@ export default {
         } catch (err) {
           isLoading.value = false;
           loadingSign.value = false;
-          console.log('leapResult', err);
+
           notify({
             type: 'warning',
             text: JSON.stringify(err),
