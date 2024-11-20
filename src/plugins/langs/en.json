@@ -1619,6 +1619,7 @@
         "slippagePlaceholder": "Enter optional slippage",
         "notAvailableRegion": "Not available in your region",
         "squidDescription": "Swap or transfer anything for anything",
+        "jupiterDescription": "Welcome to the space station",
         "skipDescription": "Interchain transfers and swaps on any Cosmos chain",
         "swapNotFound": "Swap for this address not found"
     }

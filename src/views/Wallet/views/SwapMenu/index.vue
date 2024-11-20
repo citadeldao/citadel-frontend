@@ -84,6 +84,8 @@ export default {
     const squidChains = computed(() => store.getters['squid/chains']);
     const skipChains = computed(() => store.getters['skip/chains']);
 
+    const jupTokens = computed(() => store.getters['jupiter/tokens']);
+
     const currentToken = computed(
       () => store.getters['subtokens/currentToken']
     );
@@ -110,6 +112,17 @@ export default {
       routeName: 'WalletSwapSkip',
     };
 
+    const jupiterData = {
+      title: 'JUPITER',
+      info: t('swapView.jupiterDescription'),
+      icon: store.getters['app/theme'] === 'dark' ? 'jupiter-dark' : 'jupiter',
+      hoveredIcon:
+        store.getters['app/theme'] === 'dark'
+          ? 'jupiter-dark-hover'
+          : 'jupiter-hovered',
+      routeName: 'WalletSwapJupiter',
+    };
+
     const methods = ref([]);
 
     onMounted(async () => {
@@ -117,7 +130,17 @@ export default {
         router.push({ name: 'WalletSend' });
         return;
       }
+
       isLoadingData.value = true;
+
+      if (currentWallet.value.net === 'solana') {
+        await store.dispatch('jupiter/fetchTokens');
+        methods.value.push(jupiterData);
+        isLoadingData.value = false;
+        console.log(jupTokens.value);
+        return;
+      }
+
       try {
         if (!squidChains.value.length) {
           await store.dispatch('squid/fetchChains');

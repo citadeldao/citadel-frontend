@@ -1599,6 +1599,7 @@
         "amountSlippage": "",
         "notAvailableRegion": "",
         "squidDescription": "",
+        "jupiterDescription": "",
         "skipDescription": "",
         "swapNotFound": ""
     }

@@ -27,6 +27,7 @@ import ledger from './modules/ledger';
 import btcAddresses from './modules/btcAddresses';
 import squid from './modules/squid';
 import skip from './modules/skip';
+import jupiter from './modules/jupiter';
 
 import subscriptions from './modules/subscriptions';
 
@@ -61,5 +62,6 @@ export default createStore({
     btcAddresses,
     squid,
     skip,
+    jupiter,
   },
 });
