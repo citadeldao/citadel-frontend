@@ -20,13 +20,31 @@
             <div class="value">{{ signerWallet.address }}</div>
           </div>
           <div class="tx-info-item">
-            <div class="label">To chain</div>
-            <div class="value chain">{{ toToken?.chain_id }}</div>
-          </div>
-          <div class="tx-info-item">
             <div class="label">From chain</div>
             <div class="value chain">{{ signerWallet.config?.chainId }}</div>
           </div>
+          <div v-if="toToken?.chain_id" class="tx-info-item">
+            <div class="label">To chain</div>
+            <div class="value chain">{{ toToken?.chain_id }}</div>
+          </div>
+
+          <div v-if="fromIbc?.denom" class="tx-info-item">
+            <div class="label">From token</div>
+            <div class="value chain">
+              {{ fromIbc.name }}
+              {{
+                `${fromIbc?.denom?.slice(0, 5)}...${fromIbc?.denom?.slice(-5)}`
+              }}
+            </div>
+          </div>
+          <div v-if="toIbc?.denom" class="tx-info-item">
+            <div class="label">To token</div>
+            <div class="value chain">
+              {{ toIbc.name }}
+              {{ `${toIbc?.denom?.slice(0, 5)}...${toIbc?.denom?.slice(-5)}` }}
+            </div>
+          </div>
+
           <div class="tx-info-item">
             <div class="label">Amount to swap, USD</div>
             <div class="value usd">{{ route.usd_amount_in }}</div>
@@ -93,6 +111,12 @@ export default {
       required: true,
     },
     toToken: {
+      required: true,
+    },
+    fromIbc: {
+      required: true,
+    },
+    toIbc: {
       required: true,
     },
   },

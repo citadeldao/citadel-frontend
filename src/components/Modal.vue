@@ -31,7 +31,7 @@ export default {
   bottom: 0;
   left: 0;
   background: $modal;
-  z-index: 1000;
+  z-index: 11111;
   overflow: auto;
 }
 </style>

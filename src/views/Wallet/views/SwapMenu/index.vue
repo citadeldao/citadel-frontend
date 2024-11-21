@@ -84,9 +84,9 @@ export default {
     const squidChains = computed(() => store.getters['squid/chains']);
     const skipChains = computed(() => store.getters['skip/chains']);
 
-    const currentToken = computed(
-      () => store.getters['subtokens/currentToken']
-    );
+    // const currentToken = computed(
+    //   () => store.getters['subtokens/currentToken']
+    // );
 
     const squidData = {
       title: 'SQUID',
@@ -165,7 +165,7 @@ export default {
         return ch.chain_id === currentWallet.value.config.chainId;
       });
 
-      hasSwapSkip.value = !!chainFrom && !currentToken.value;
+      hasSwapSkip.value = !!chainFrom;
 
       if (hasSwapSkip.value) {
         methods.value.push(skipData);
