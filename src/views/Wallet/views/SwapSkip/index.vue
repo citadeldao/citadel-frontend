@@ -5,7 +5,7 @@
         <InfoModal
           :signer-wallet="currentWallet"
           :on-close="closeAppInfoModal"
-          :to-token="searchNetworkToData"
+          :to-token="searchNetworkToDataCitadelFormat"
           :to-address="addressTo"
           :from-ibc="searchFromTokenData"
           :to-ibc="searchToTokenData"
@@ -317,6 +317,7 @@ export default {
 
     const searchNetworkTo = ref('');
     const searchNetworkToData = ref({});
+    const searchNetworkToDataCitadelFormat = ref({});
     const showLedgerConnect = ref(false);
 
     //
@@ -331,6 +332,8 @@ export default {
     const isBridgeMode = computed(() => currentTab.value === 'bridge');
 
     const skipChains = computed(() => store.getters['skip/chains']);
+
+    const routeTx = computed(() => store.getters['skip/route']);
 
     const subtokensWallet = computed(() =>
       store.getters['subtokens/formatedSubtokens']()
@@ -468,34 +471,13 @@ export default {
     );
 
     const networkTargetWallets = computed(() => {
-      const parseNetwork = citadelNetworks.value.find(
-        (network) =>
-          network.chainId ==
-          (searchNetworkToData.value.chain_id ||
-            currentWallet.value.config.chainId)
-      )?.net;
+      if (!isBridgeMode.value) {
+        return wallets.value.filter((w) => w.net === currentWallet.value.net);
+      }
 
-      return wallets.value.filter((w) => {
-        const findFromAlias =
-          w.net === parseNetwork &&
-          w.title.toLowerCase().includes(addressTo.value.toLowerCase());
-
-        if (!addressTo.value) {
-          return w.net === parseNetwork || findFromAlias;
-        }
-
-        if (w.address === addressTo.value) {
-          return (
-            (w.net === parseNetwork || findFromAlias) &&
-            w.address !== addressTo.value
-          );
-        }
-
-        return (
-          (w.net === parseNetwork && w.address.includes(addressTo.value)) ||
-          findFromAlias
-        );
-      });
+      return wallets.value.filter(
+        (w) => w.config.chainId === searchNetworkToData.value.chain_id
+      );
     });
 
     const networkTargetWalletsOsmo = computed(() => {
@@ -564,6 +546,9 @@ export default {
       searchNetworkToData.value = skipChains.value.find((ch) => {
         return ch.chain_id === network.split(':')[1];
       });
+      searchNetworkToDataCitadelFormat.value = citadelNetworks.value.find(
+        (c) => (c.chainId = searchNetworkToData.value?.chain_id)
+      );
 
       addressTo.value = '';
     };
@@ -591,8 +576,12 @@ export default {
             toAddress,
             slippage: slippage.value,
           });
-          showInfoModal.value = true;
+
           isLoading.value = false;
+
+          if (routeTx.value.amount_out) {
+            showInfoModal.value = true;
+          }
         } catch (err) {
           isLoading.value = false;
         }
@@ -630,7 +619,11 @@ export default {
           toAddress,
           slippage: slippage.value,
         });
-        showInfoModal.value = true;
+
+        if (routeTx.value.amount_out) {
+          showInfoModal.value = true;
+        }
+
         isLoading.value = false;
       } catch (err) {
         isLoading.value = false;
@@ -762,6 +755,7 @@ export default {
       hasSwap,
       currentTab,
       onChangeCurrentTab,
+      searchNetworkToDataCitadelFormat,
     };
   },
 };

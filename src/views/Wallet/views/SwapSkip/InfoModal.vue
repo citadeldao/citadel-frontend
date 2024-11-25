@@ -44,14 +44,32 @@
               {{ `${toIbc?.denom?.slice(0, 5)}...${toIbc?.denom?.slice(-5)}` }}
             </div>
           </div>
-
-          <div class="tx-info-item">
-            <div class="label">Amount to swap, USD</div>
-            <div class="value usd">{{ route.usd_amount_in }}</div>
+          <!-- bridge -->
+          <div v-if="route?.amount_in && !fromIbc?.symbol" class="tx-info-item">
+            <div class="label">Amount to swap</div>
+            <div class="value usd">
+              {{ amountToSwapBRIDGE }} {{ signerWallet?.code }}
+            </div>
           </div>
-          <div class="tx-info-item">
-            <div class="label">Minimum received, USD</div>
-            <div class="value usd">{{ route.usd_amount_out }}</div>
+          <div v-if="route?.amount_out && !toIbc?.symbol" class="tx-info-item">
+            <div class="label">Amount to receive</div>
+            <div class="value usd">
+              {{ amountToReceiveBRIDGE }} {{ toToken?.code }}
+            </div>
+          </div>
+
+          <!-- IBC -->
+          <div v-if="route?.amount_in && fromIbc?.symbol" class="tx-info-item">
+            <div class="label">Amount to swap</div>
+            <div class="value usd">
+              {{ amountToSwapIBC }} {{ fromIbc?.symbol }}
+            </div>
+          </div>
+          <div v-if="route?.amount_out && toIbc?.symbol" class="tx-info-item">
+            <div class="label">Amount to receive</div>
+            <div class="value usd">
+              {{ amountToReceiveIBC }} {{ toIbc?.symbol }}
+            </div>
           </div>
         </div>
       </div>
@@ -92,6 +110,7 @@ import { PRIVATE_PASSWORD_TYPES, WALLET_TYPES } from '@/config/walletType';
 import { sha3_256 } from 'js-sha3';
 import notify from '@/plugins/notify';
 import citadel from '@citadeldao/lib-citadel';
+import BigNumber from 'bignumber.js';
 
 export default {
   name: 'InfoModal',
@@ -136,6 +155,30 @@ export default {
     });
 
     const route = computed(() => store.getters['skip/route']);
+
+    const amountToSwapIBC = computed(() => {
+      return BigNumber(route.value?.amount_in)
+        .div(BigNumber(10).pow(props.fromIbc.decimals))
+        .toFixed();
+    });
+
+    const amountToReceiveIBC = computed(() => {
+      return BigNumber(route.value?.amount_out)
+        .div(BigNumber(10).pow(props.toIbc.decimals))
+        .toFixed();
+    });
+
+    const amountToSwapBRIDGE = computed(() => {
+      return BigNumber(route.value?.amount_in)
+        .div(BigNumber(10).pow(props.signerWallet.decimals))
+        .toFixed();
+    });
+
+    const amountToReceiveBRIDGE = computed(() => {
+      return BigNumber(route.value?.amount_out)
+        .div(BigNumber(10).pow(props.toToken.decimals))
+        .toFixed();
+    });
 
     const onChange = (val) => {
       password.value = val;
@@ -292,6 +335,10 @@ export default {
       PRIVATE_PASSWORD_TYPES,
       WALLET_TYPES,
       route,
+      amountToSwapIBC,
+      amountToReceiveIBC,
+      amountToSwapBRIDGE,
+      amountToReceiveBRIDGE,
       swap,
       onChange,
     };
