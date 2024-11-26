@@ -29,7 +29,9 @@
           :close-success-modal="closeSuccessModal"
           :success-click-handler="successClickHandler"
           :wallet="currentWallet"
-          :custom-code="currentWallet?.code || ''"
+          :custom-code="
+            searchFromTokenData?.symbol || currentWallet?.code || ''
+          "
           :amount="amount"
           :success-tx="successHash"
           @changeComment="onChangeComment"
@@ -346,9 +348,17 @@ export default {
       return tokens;
     });
 
+    const shortIBC = (denom) => {
+      return `${denom.slice(0, 6)}...${denom.slice(-5)}`;
+    };
+
     const skipTokensFrom = computed(() => {
       const tokens = skipTokens.value
         .map((token) => {
+          const isNative =
+            token.denom.length < 15 &&
+            token.description.toLowerCase().includes('the native token');
+
           const tokenCitadel = subtokensWallet.value.find((subToken) => {
             const denom = token.denom.split('/')[1] || token.denom || '';
             return (
@@ -360,18 +370,23 @@ export default {
           return {
             ...token,
             id: token.denom,
-            title: `${token.name}:${token.denom}`,
+            title: `${token.name}:${shortIBC(token.denom)}`,
             key: token.denom,
             chainId: token.chain_id,
             iconLink: token.logo_uri,
             icon: 'curve-arrow',
-            balance: tokenCitadel?.tokenBalance?.mainBalance
-              ? BigNumber(tokenCitadel?.tokenBalance?.mainBalance).toFixed(4)
+            balance: isNative
+              ? currentWallet.value.balance?.mainBalance || 0
+              : tokenCitadel?.tokenBalance?.mainBalance
+              ? BigNumber(tokenCitadel?.tokenBalance?.mainBalance).toFixed(6)
               : 0,
           };
         })
         .filter((t) => !!t.balance)
         .sort((a, b) => {
+          if (+a.balance < +b.balance) return 1;
+          if (+a.balance > +b.balance) return -1;
+
           if (a.title > b.title) return 1;
           if (a.title < b.title) return -1;
           return 0;
@@ -383,8 +398,13 @@ export default {
     const skipTokensTo = computed(() => {
       const tokens = skipTokens.value
         .map((token) => {
+          const isNative =
+            token.denom.length < 15 &&
+            token.description.toLowerCase().includes('the native token');
+
           const tokenCitadel = subtokensWallet.value.find((subToken) => {
             const denom = token.denom.split('/')[1] || token.denom || '';
+
             return (
               +subToken?.tokenBalance?.mainBalance &&
               subToken?.net.toLowerCase().includes(denom?.toLowerCase())
@@ -394,19 +414,25 @@ export default {
           return {
             ...token,
             id: token.denom,
-            title: `${token.name}:${token.denom}`,
+            title: `${token.name}:${shortIBC(token.denom)}`,
             key: token.denom,
             chainId: token.chain_id,
             iconLink: token.logo_uri,
             icon: 'curve-arrow',
-            balance: tokenCitadel?.tokenBalance?.mainBalance
-              ? BigNumber(tokenCitadel?.tokenBalance?.mainBalance).toFixed(4)
+            balance: isNative
+              ? currentWallet.value.balance?.mainBalance || 0
+              : tokenCitadel?.tokenBalance?.mainBalance
+              ? BigNumber(tokenCitadel?.tokenBalance?.mainBalance).toFixed(6)
               : 0,
           };
         })
         .sort((a, b) => {
+          if (+a.balance < +b.balance) return 1;
+          if (+a.balance > +b.balance) return -1;
+
           if (a.title > b.title) return 1;
           if (a.title < b.title) return -1;
+
           return 0;
         });
 
@@ -525,8 +551,9 @@ export default {
 
     const selectFromToken = (value) => {
       const tokenIBC = value.split(':')[1];
+
       const token = skipTokensFrom.value.find(
-        (t) => t.denom?.toLowerCase() === tokenIBC?.toLowerCase()
+        (t) => shortIBC(t.denom?.toLowerCase()) === tokenIBC?.toLowerCase()
       );
 
       searchFromTokenData.value = token;
@@ -535,8 +562,9 @@ export default {
     const selectToToken = (value) => {
       const tokenIBC = value.split(':')[1];
       const token = skipTokensTo.value.find(
-        (t) => t.denom?.toLowerCase() === tokenIBC?.toLowerCase()
+        (t) => shortIBC(t.denom?.toLowerCase()) === tokenIBC?.toLowerCase()
       );
+      console.log('searchToTokenData.value', searchToTokenData.value);
 
       searchToTokenData.value = token;
     };
