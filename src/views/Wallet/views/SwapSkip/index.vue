@@ -356,8 +356,7 @@ export default {
       const tokens = skipTokens.value
         .map((token) => {
           const isNative =
-            token.denom.length < 15 &&
-            token.description.toLowerCase().includes('the native token');
+            token.denom.length < 15 && token.description.length > 100;
 
           const tokenCitadel = subtokensWallet.value.find((subToken) => {
             const denom = token.denom.split('/')[1] || token.denom || '';
@@ -399,8 +398,7 @@ export default {
       const tokens = skipTokens.value
         .map((token) => {
           const isNative =
-            token.denom.length < 15 &&
-            token.description.toLowerCase().includes('the native token');
+            token.denom.length < 15 && token.description.length > 100;
 
           const tokenCitadel = subtokensWallet.value.find((subToken) => {
             const denom = token.denom.split('/')[1] || token.denom || '';
@@ -574,8 +572,9 @@ export default {
       searchNetworkToData.value = skipChains.value.find((ch) => {
         return ch.chain_id === network.split(':')[1];
       });
+
       searchNetworkToDataCitadelFormat.value = citadelNetworks.value.find(
-        (c) => (c.chainId = searchNetworkToData.value?.chain_id)
+        (c) => c.chainId === searchNetworkToData.value?.chain_id
       );
 
       addressTo.value = '';

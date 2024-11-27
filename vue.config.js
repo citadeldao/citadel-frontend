@@ -56,7 +56,10 @@ module.exports = {
     },
   },
   devServer: {
-    https: process.env.NODE_ENV === 'production',
+    host: '0.0.0.0',
+    port: 8080,
+    https: true,
+    // https: process.env.NODE_ENV === 'production',
   },
   productionSourceMap: process.env.NODE_ENV !== 'production',
   css: {
