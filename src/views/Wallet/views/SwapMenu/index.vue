@@ -167,7 +167,7 @@ export default {
 
       hasSwapSkip.value = !!chainFrom;
 
-      if (hasSwapSkip.value) {
+      if (hasSwapSkip.value && currentWallet.value?.net === 'osmosis') {
         methods.value.push(skipData);
       }
       isLoadingData.value = false;

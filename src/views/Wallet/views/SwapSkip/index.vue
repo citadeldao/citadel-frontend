@@ -355,8 +355,8 @@ export default {
     const skipTokensFrom = computed(() => {
       const tokens = skipTokens.value
         .map((token) => {
-          const isNative =
-            token.denom.length < 15 && token.description.length > 100;
+          const isNative = token.denom === 'uosmo' && token.description.length;
+          // token.denom.length < 15 && token.description.length > 100;
 
           const tokenCitadel = subtokensWallet.value.find((subToken) => {
             const denom = token.denom.split('/')[1] || token.denom || '';
@@ -397,8 +397,9 @@ export default {
     const skipTokensTo = computed(() => {
       const tokens = skipTokens.value
         .map((token) => {
-          const isNative =
-            token.denom.length < 15 && token.description.length > 100;
+          const isNative = token.denom === 'uosmo' && token.description.length;
+          // const isNative =
+          //   token.denom.length < 15 && token.description.length > 100;
 
           const tokenCitadel = subtokensWallet.value.find((subToken) => {
             const denom = token.denom.split('/')[1] || token.denom || '';
