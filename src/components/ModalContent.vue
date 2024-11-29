@@ -281,6 +281,7 @@ export default {
     padding: 31px 40px 40px 40px;
     align-items: center;
     position: relative;
+    overflow-y: auto;
   }
   &__header {
     height: 16px;
