@@ -6,6 +6,7 @@ const types = {
   SET_TOKENS: 'SET_TOKENS',
   SET_COSMOS_TX: 'SET_COSMOS_TX',
   SET_ROUTE: 'SET_ROUTE',
+  SET_ASSETS: 'SET_ASSETS',
 };
 
 export default {
@@ -15,6 +16,7 @@ export default {
     tokens: [],
     cosmosTx: null,
     route: null,
+    assets: {},
   }),
 
   getters: {
@@ -22,6 +24,7 @@ export default {
     tokens: (state) => state.tokens,
     cosmosTx: (state) => state.cosmosTx,
     route: (state) => state.route,
+    assets: (state) => state.assets,
   },
 
   mutations: {
@@ -37,6 +40,9 @@ export default {
     [types.SET_ROUTE](state, value) {
       state.route = value;
     },
+    [types.SET_ASSETS](state, value) {
+      state.assets = value;
+    },
   },
 
   actions: {
@@ -51,8 +57,10 @@ export default {
       }
     },
     async convertToCosmosTx({ commit }, { net, address, data, publicKey }) {
+      // 'https://api.3ahtim54r.ru'
+      // process.env.VUE_APP_PUBLIC_BACKEND_URL
       const result = await axios.post(
-        `${process.env.VUE_APP_PUBLIC_BACKEND_URL}/blockchain/${net}/${address}/builder/customTx`,
+        `${'https://api.3ahtim54r.ru'}/blockchain/${net}/${address}/builder/customTx`,
         {
           data,
           publicKey,
@@ -61,6 +69,24 @@ export default {
 
       if (result?.data?.data?.transaction) {
         commit(types.SET_COSMOS_TX, result?.data?.data);
+      }
+    },
+    async fetchAssets({ commit }) {
+      let result;
+
+      try {
+        result = await axios.get(`https://api.skip.build/v2/fungible/assets`);
+
+        if (result.data && result.data.chain_to_assets_map) {
+          console.log('assets', result.data.chain_to_assets_map);
+          commit(types.SET_ASSETS, result.data.chain_to_assets_map);
+        }
+      } catch (err) {
+        notify({
+          type: 'warning',
+          text: err.response.data.message,
+        });
+        return;
       }
     },
     async getRoute({ commit, dispatch }, options = {}) {
@@ -120,7 +146,10 @@ export default {
               const msg = JSON.parse(
                 resultMSG?.data?.txs[0]?.cosmos_tx?.msgs[0].msg
               );
-              msg.timeout_timestamp = `${msg.timeout_timestamp}`;
+
+              if (msg.timeout_timestamp) {
+                msg.timeout_timestamp = `${msg.timeout_timestamp}`;
+              }
 
               try {
                 await dispatch('convertToCosmosTx', {

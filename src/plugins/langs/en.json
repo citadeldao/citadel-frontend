@@ -1410,6 +1410,11 @@
             "title": "Stacks",
             "description": "Stacks - The Leading Bitcoin L2 for Smart Contracts, Apps, DeFi",
             "shortDescription": "Stacks - The Leading Bitcoin L2 for Smart Contracts, Apps, DeFi"
+        },
+        "solana":{
+            "title": "Solana",
+            "description": "Powerful for developers. Fast for everyone.",
+            "shortDescription": "Bring blockchain to the people. Solana supports experiences for power users, new consumers, and everyone in between."
         }
 
     },

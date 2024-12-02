@@ -5,8 +5,10 @@
         <InfoModal
           :signer-wallet="currentWallet"
           :on-close="closeAppInfoModal"
-          :to-token="searchNetworkToData"
+          :to-token="searchNetworkToDataCitadelFormat"
           :to-address="addressTo"
+          :from-ibc="searchFromTokenData"
+          :to-ibc="searchToTokenData"
           @onCancel="onCancel"
           @onSuccess="onSuccess"
           @showLedger="
@@ -27,7 +29,9 @@
           :close-success-modal="closeSuccessModal"
           :success-click-handler="successClickHandler"
           :wallet="currentWallet"
-          :custom-code="currentWallet?.code || ''"
+          :custom-code="
+            searchFromTokenData?.symbol || currentWallet?.code || ''
+          "
           :amount="amount"
           :success-tx="successHash"
           @changeComment="onChangeComment"
@@ -45,7 +49,15 @@
       </div>
       <EmptyList v-if="!hasSwap && !isLoadingData" :title="appError" />
       <template v-if="hasSwap && !isLoadingData">
-        <div class="towrap">
+        <div class="wrap-tabs">
+          <TabsGroup
+            v-model:currentValue="currentTab"
+            class="xct-calculator-expand__tabs"
+            :tabs="tabs"
+            @update:currentValue="onChangeCurrentTab"
+          />
+        </div>
+        <div v-if="isBridgeMode" class="towrap">
           <div class="section">
             <div class="section__title">
               TO CHAIN <span>{{ searchNetworkTo }}</span>
@@ -65,13 +77,25 @@
               />
             </div>
           </div>
-          <!-- <template v-if="!loadingTokens && skipTokens.length">
+          <!-- <template v-if="skipTokens.length"> -->
+          <!-- <div class="swap-skip__contracts">
+            <div>{{ searchToTokenData.asset_on_dest?.denom }}</div>
+          </div> -->
+          <!-- </template> -->
+          <!-- <Loading v-else small /> -->
+        </div>
+        <div v-if="!isBridgeMode" class="towrap">
+          <div class="section">
+            <div class="section__title">
+              ON CHAIN <span>{{ currentWallet?.config?.name }}</span>
+            </div>
+          </div>
           <div class="swap-skip__select-chain z1001">
             <div class="autocomplete">
               <Autocomplete
                 id="chainTokenFrom"
                 v-model:value="searchFromToken"
-                :items="chainTokensFrom"
+                :items="skipTokensFrom"
                 show-balance
                 split-value
                 initial-icon="curve-arrow"
@@ -80,30 +104,31 @@
                 @update:value="selectFromToken"
               />
             </div>
-          </div> -->
-          <!-- <div class="swap-skip__select-chain z1002">
+          </div>
+          <div class="swap-skip__select-chain z1002">
             <div class="autocomplete">
               <Autocomplete
                 id="chainTokenTo"
                 v-model:value="searchToToken"
-                :items="chainTokensTo"
+                :items="skipTokensTo"
                 show-balance
                 split-value
                 initial-icon="curve-arrow"
                 :label="$t('swapView.toToken')"
                 :placeholder="$t('swapView.selectContract')"
-                @update:value="selectFromToken"
+                @update:value="selectToToken"
               />
             </div>
-          </div> -->
-          <!-- <div class="swap-skip__contracts">
-            <div>{{ searchToTokenData.asset_on_dest?.denom }}</div>
-          </div> -->
-          <!-- </template> -->
-          <!-- <Loading v-else small /> -->
+          </div>
         </div>
         <!-- PART2 -->
-        <div class="swap-skip__addresses" v-if="searchNetworkToData?.chain_id">
+        <div
+          class="swap-skip__addresses"
+          v-if="
+            searchNetworkToData?.chain_id ||
+            (searchFromTokenData && searchToTokenData)
+          "
+        >
           <div
             class="swap-skip__input"
             v-click-away="() => (showNetworkTargetWallets = false)"
@@ -137,9 +162,17 @@
             <Input
               id="amount"
               v-model="amount"
-              :decimals="currentWallet?.config?.decimals"
+              :decimals="
+                searchFromTokenData
+                  ? searchFromTokenData?.decimals
+                  : currentWallet?.config?.decimals
+              "
               type="currency"
-              :currency="currentWallet?.code"
+              :currency="
+                searchFromTokenData
+                  ? searchFromTokenData?.symbol
+                  : currentWallet?.code
+              "
               :label="$t('swapView.amount')"
               :max="maxAmount"
               :show-set-max="+maxAmount !== 0"
@@ -244,6 +277,7 @@ import EmptyList from '@/components/EmptyList';
 import Info from '@/components/Info';
 import { WALLET_TYPES } from '@/config/walletType';
 import { useI18n } from 'vue-i18n';
+import TabsGroup from '@/components/UI/TabsGroup';
 
 export default {
   components: {
@@ -258,6 +292,7 @@ export default {
     SuccessModal,
     ConfirmLedgerModal,
     EmptyList,
+    TabsGroup,
   },
   setup() {
     const { t } = useI18n();
@@ -276,14 +311,15 @@ export default {
     const loadingTokens = ref(false);
     const chainFrom = ref(null);
 
-    const chainTokensFrom = ref([]);
-    const chainTokensTo = ref([]);
-
     const searchFromToken = ref('');
+    const searchFromTokenData = ref('');
+
     const searchToToken = ref('');
     const searchToTokenData = ref({});
+
     const searchNetworkTo = ref('');
     const searchNetworkToData = ref({});
+    const searchNetworkToDataCitadelFormat = ref({});
     const showLedgerConnect = ref(false);
 
     //
@@ -293,22 +329,140 @@ export default {
     const addressTo = ref('');
     const osmosisAddress = ref('');
     const amount = ref('');
+    const currentTab = ref('swap');
+
+    const isBridgeMode = computed(() => currentTab.value === 'bridge');
 
     const skipChains = computed(() => store.getters['skip/chains']);
-    const skipTokens = computed(() => store.getters['skip/tokens']);
 
-    // const subtokensWallet = computed(() =>
-    //   store.getters['subtokens/formatedSubtokens']()
-    // );
+    const routeTx = computed(() => store.getters['skip/route']);
 
-    const maxAmount = computed(() => {
-      if (currentWallet.value?.balance?.mainBalance - 0.0005 < 0) return 0;
-      return currentWallet.value?.balance?.mainBalance - 0.0005;
+    const subtokensWallet = computed(() =>
+      store.getters['subtokens/formatedSubtokens']()
+    );
+
+    const skipTokens = computed(() => {
+      const chainId = currentWallet.value?.config?.chainId;
+      const tokens = store.getters['skip/assets'][chainId]?.assets;
+
+      return tokens;
     });
 
-    const currentToken = computed(
-      () => store.getters['subtokens/currentToken']
-    );
+    const shortIBC = (denom) => {
+      return `${denom.slice(0, 6)}...${denom.slice(-5)}`;
+    };
+
+    const skipTokensFrom = computed(() => {
+      const tokens = skipTokens.value
+        .map((token) => {
+          const isNative = token.denom === 'uosmo' && token.description.length;
+          // token.denom.length < 15 && token.description.length > 100;
+
+          const tokenCitadel = subtokensWallet.value.find((subToken) => {
+            const denom = token.denom.split('/')[1] || token.denom || '';
+            return (
+              +subToken?.tokenBalance?.mainBalance &&
+              subToken?.net.toLowerCase().includes(denom?.toLowerCase())
+            );
+          });
+
+          return {
+            ...token,
+            id: token.denom,
+            title: `${token.name}:${shortIBC(token.denom)}`,
+            key: token.denom,
+            chainId: token.chain_id,
+            iconLink: token.logo_uri,
+            icon: 'curve-arrow',
+            balance: isNative
+              ? currentWallet.value.balance?.mainBalance || 0
+              : tokenCitadel?.tokenBalance?.mainBalance
+              ? BigNumber(tokenCitadel?.tokenBalance?.mainBalance).toFixed(6)
+              : 0,
+          };
+        })
+        .filter((t) => !!t.balance)
+        .sort((a, b) => {
+          if (+a.balance < +b.balance) return 1;
+          if (+a.balance > +b.balance) return -1;
+
+          if (a.title > b.title) return 1;
+          if (a.title < b.title) return -1;
+          return 0;
+        });
+
+      return tokens;
+    });
+
+    const skipTokensTo = computed(() => {
+      const tokens = skipTokens.value
+        .map((token) => {
+          const isNative = token.denom === 'uosmo' && token.description.length;
+          // const isNative =
+          //   token.denom.length < 15 && token.description.length > 100;
+
+          const tokenCitadel = subtokensWallet.value.find((subToken) => {
+            const denom = token.denom.split('/')[1] || token.denom || '';
+
+            return (
+              +subToken?.tokenBalance?.mainBalance &&
+              subToken?.net.toLowerCase().includes(denom?.toLowerCase())
+            );
+          });
+
+          return {
+            ...token,
+            id: token.denom,
+            title: `${token.name}:${shortIBC(token.denom)}`,
+            key: token.denom,
+            chainId: token.chain_id,
+            iconLink: token.logo_uri,
+            icon: 'curve-arrow',
+            balance: isNative
+              ? currentWallet.value.balance?.mainBalance || 0
+              : tokenCitadel?.tokenBalance?.mainBalance
+              ? BigNumber(tokenCitadel?.tokenBalance?.mainBalance).toFixed(6)
+              : 0,
+          };
+        })
+        .sort((a, b) => {
+          if (+a.balance < +b.balance) return 1;
+          if (+a.balance > +b.balance) return -1;
+
+          if (a.title > b.title) return 1;
+          if (a.title < b.title) return -1;
+
+          return 0;
+        });
+
+      return tokens;
+    });
+
+    const tabs = ref([
+      { label: 'SWAP', value: 'swap' },
+      { label: 'BRIDGE', value: 'bridge' },
+    ]);
+
+    const onChangeCurrentTab = () => {
+      searchNetworkTo.value = '';
+      searchNetworkToData.value = '';
+      searchFromTokenData.value = '';
+      searchToTokenData.value = '';
+      searchFromToken.value = '';
+      searchToToken.value = '';
+    };
+
+    const maxAmount = computed(() => {
+      const balance = searchFromTokenData.value
+        ? searchFromTokenData.value.balance || 0
+        : currentWallet.value?.balance?.mainBalance || 0;
+      if (balance - 0.0005 < 0) return 0;
+      return balance - 0.0005;
+    });
+
+    // const currentToken = computed(
+    //   () => store.getters['subtokens/currentToken']
+    // );
 
     const errorAmount = computed(() => {
       if (+amount.value > +maxAmount.value) {
@@ -342,31 +496,13 @@ export default {
     );
 
     const networkTargetWallets = computed(() => {
-      const parseNetwork = citadelNetworks.value.find(
-        (network) => network.chainId == searchNetworkToData.value.chain_id
-      )?.net;
+      if (!isBridgeMode.value) {
+        return wallets.value.filter((w) => w.net === currentWallet.value.net);
+      }
 
-      return wallets.value.filter((w) => {
-        const findFromAlias =
-          w.net === parseNetwork &&
-          w.title.toLowerCase().includes(addressTo.value.toLowerCase());
-
-        if (!addressTo.value) {
-          return w.net === parseNetwork || findFromAlias;
-        }
-
-        if (w.address === addressTo.value) {
-          return (
-            (w.net === parseNetwork || findFromAlias) &&
-            w.address !== addressTo.value
-          );
-        }
-
-        return (
-          (w.net === parseNetwork && w.address.includes(addressTo.value)) ||
-          findFromAlias
-        );
-      });
+      return wallets.value.filter(
+        (w) => w.config.chainId === searchNetworkToData.value.chain_id
+      );
     });
 
     const networkTargetWalletsOsmo = computed(() => {
@@ -412,35 +548,25 @@ export default {
       showNetworkTargetWalletsOsmo.value = false;
     };
 
-    // const selectFromToken = async (token) => {
-    //   searchFromToken.value = token.split(':')[0];
-    //   console.log(token, chainTokensFrom.value);
-    //   const fromToken = chainTokensFrom.value.find((t) => {
-    //     return t.title === token;
-    //   });
+    const selectFromToken = (value) => {
+      const tokenIBC = value.split(':')[1];
 
-    //   if (fromToken) {
-    //     searchToTokenData.value = fromToken;
-    //     chainTokensTo.value = [
-    //       {
-    //         ...fromToken,
-    //         id: fromToken.asset_on_dest.name,
-    //         title: `${fromToken.asset_on_dest.name
-    //           .slice(0, 1)
-    //           .toUpperCase()}${fromToken.asset_on_dest.name.slice(1)}:${
-    //           fromToken.asset_on_dest.chain_id
-    //         }`,
-    //         key: fromToken.asset_on_dest.name,
-    //         chainId: fromToken.asset_on_dest.chain_id,
-    //         iconLink: fromToken.asset_on_dest.logo_uri,
-    //         icon: 'curve-arrow',
-    //       },
-    //     ];
-    //   }
+      const token = skipTokensFrom.value.find(
+        (t) => shortIBC(t.denom?.toLowerCase()) === tokenIBC?.toLowerCase()
+      );
 
-    //   console.log('fromToken', fromToken, chainTokensTo.value);
-    //   searchToToken.value = chainTokensTo.value[0]?.title;
-    // };
+      searchFromTokenData.value = token;
+    };
+
+    const selectToToken = (value) => {
+      const tokenIBC = value.split(':')[1];
+      const token = skipTokensTo.value.find(
+        (t) => shortIBC(t.denom?.toLowerCase()) === tokenIBC?.toLowerCase()
+      );
+      console.log('searchToTokenData.value', searchToTokenData.value);
+
+      searchToTokenData.value = token;
+    };
 
     const selectToNetwork = async (network) => {
       searchNetworkTo.value = network.split(':')[0];
@@ -448,83 +574,49 @@ export default {
         return ch.chain_id === network.split(':')[1];
       });
 
+      searchNetworkToDataCitadelFormat.value = citadelNetworks.value.find(
+        (c) => c.chainId === searchNetworkToData.value?.chain_id
+      );
+
       addressTo.value = '';
-      // if (searchNetworkToData.value) {
-      //   await loadTokensTo();
-      // }
     };
 
-    // const loadTokensTo = async () => {
-    //   loadingTokens.value = true;
-    //   console.log('skip chainFrom', chainFrom.value);
-    //   if (chainFrom.value && searchNetworkToData.value) {
-    //     try {
-    //       await store.dispatch('skip/fetchTokens', {
-    //         fromChain: chainFrom.value.chain_id,
-    //         toChain: searchNetworkToData.value.chain_id,
-    //       });
-    //     } catch (err) {
-    //       loadingTokens.value = false;
-    //     }
+    const getRoute = async () => {
+      if (searchFromTokenData.value) {
+        const valueMantissa = BigNumber(+amount.value)
+          .times(BigNumber(10).pow(searchFromTokenData.value.decimals))
+          .toFixed();
+        const fromAmount = valueMantissa;
+        const fromAddress = currentWallet.value.address;
+        const toAddress = addressTo.value;
 
-    //     console.log('skip tokens', skipTokens.value);
-    //     console.log('skip cit subtokens', subtokensWallet.value);
-
-    //     setTokensFrom();
-
-    //     console.log('skip filter tokens', chainTokensFrom.value);
-    //   }
-    //   loadingTokens.value = false;
-    // };
-
-    /* const setTokensFrom = () => {
-      const tokens = skipTokens.value.filter((token) => {
-        return subtokensWallet.value.find((subToken) => {
-          return (
-            +subToken?.tokenBalance?.mainBalance &&
-            subToken?.net
-              .toLowerCase()
-              .includes(token?.asset_on_source?.denom.toLowerCase())
-          );
-        });
-      });
-      // FROM
-      chainTokensFrom.value = tokens
-        .map((token) => {
-          const tokenCitadel = subtokensWallet.value.find((subToken) => {
-            return (
-              +subToken?.tokenBalance?.mainBalance &&
-              subToken?.net
-                .toLowerCase()
-                .includes(token?.asset_on_source?.denom.toLowerCase())
-            );
+        isLoading.value = true;
+        try {
+          await store.dispatch('skip/getRoute', {
+            amount: fromAmount,
+            wallet: currentWallet.value,
+            osmosisAddress: osmosisAddress.value,
+            fromChain: currentWallet.value.config.chainId,
+            toChain: currentWallet.value.config.chainId,
+            fromDenom: searchFromTokenData.value.denom,
+            toDenom: searchToTokenData.value.denom,
+            fromAddress,
+            toAddress,
+            slippage: slippage.value,
           });
 
-          return {
-            ...token,
-            id: token.asset_on_source.name,
-            title: `${token.asset_on_source.name
-              .slice(0, 1)
-              .toUpperCase()}${token.asset_on_source.name.slice(1)}:${
-              token.asset_on_source.chain_id
-            }`,
-            key: token.asset_on_source.name,
-            chainId: token.asset_on_source.chain_id,
-            iconLink: token.asset_on_source.logo_uri,
-            icon: 'curve-arrow',
-            balance: BigNumber(tokenCitadel?.tokenBalance?.mainBalance).toFixed(
-              4
-            ),
-          };
-        })
-        .sort((a, b) => {
-          if (a.title > b.title) return 1;
-          if (a.title < b.title) return -1;
-          return 0;
-        });
-    }; */
+          isLoading.value = false;
 
-    const getRoute = async () => {
+          if (routeTx.value.amount_out) {
+            showInfoModal.value = true;
+          }
+        } catch (err) {
+          isLoading.value = false;
+        }
+        return;
+      }
+
+      // bridge
       const valueMantissa = BigNumber(+amount.value)
         .times(BigNumber(10).pow(currentWallet.value.decimals))
         .toFixed();
@@ -555,7 +647,11 @@ export default {
           toAddress,
           slippage: slippage.value,
         });
-        showInfoModal.value = true;
+
+        if (routeTx.value.amount_out) {
+          showInfoModal.value = true;
+        }
+
         isLoading.value = false;
       } catch (err) {
         isLoading.value = false;
@@ -611,14 +707,16 @@ export default {
 
     onMounted(async () => {
       isLoadingData.value = true;
-      // await store.dispatch('skip/getRoute');
+
       try {
+        await store.dispatch('skip/fetchAssets');
         await store.dispatch('skip/fetchChains');
+        onChangeCurrentTab('swap');
         chainFrom.value = skipChains.value.find((ch) => {
           return ch.chain_id === currentWallet.value.config.chainId;
         });
 
-        hasSwap.value = !!chainFrom.value && !currentToken.value;
+        hasSwap.value = !!chainFrom.value;
       } catch (err) {
         isLoadingData.value = false;
       }
@@ -626,15 +724,14 @@ export default {
     });
 
     return {
+      tabs,
       showInfoModal,
       searchNetworkToData,
       isLoadingData,
       isLoading,
       loadingTokens,
-      skipTokens,
       chainFrom,
-      chainTokensFrom,
-      chainTokensTo,
+
       osmosisAddress,
 
       searchToToken,
@@ -644,8 +741,18 @@ export default {
       selectToNetwork,
 
       allNetworks,
-      searchToTokenData,
       WALLET_TYPES,
+
+      skipTokens,
+      skipTokensFrom,
+      skipTokensTo,
+      selectFromToken,
+      selectToToken,
+
+      isBridgeMode,
+
+      searchToTokenData,
+      searchFromTokenData,
 
       //
       showNetworkTargetWallets,
@@ -674,6 +781,9 @@ export default {
       onChangeComment,
       appError,
       hasSwap,
+      currentTab,
+      onChangeCurrentTab,
+      searchNetworkToDataCitadelFormat,
     };
   },
 };
@@ -686,6 +796,11 @@ export default {
   flex-direction: column;
   align-items: center;
   width: 100%;
+
+  .wrap-tabs {
+    display: flex;
+    width: 100%;
+  }
 
   .mt10 {
     margin-top: 10px;
@@ -825,6 +940,7 @@ export default {
     border-radius: 20px;
     box-sizing: border-box;
     padding: 20px;
+    margin-top: 20px;
   }
 
   .section {
@@ -873,7 +989,6 @@ export default {
 body.dark {
   .swap-skip {
     .towrap {
-      margin-top: 20px;
       background: #313354;
       display: flex;
       flex-direction: column;

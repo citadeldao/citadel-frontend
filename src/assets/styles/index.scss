@@ -404,6 +404,9 @@ body.dark {
 }
 
 body.dark {
+  .el-popper.is-rewards-list-tooltip {
+    color: #fff;
+  }
   .el-switch__core .el-switch__action {
     background: #3a5293;
     border-color: #3a5293;

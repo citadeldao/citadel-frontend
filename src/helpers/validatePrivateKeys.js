@@ -18,6 +18,10 @@ const validateHex = (privateKey) => {
   return /^[0-9a-fA-F]+$/.test(privateKey) && [64].includes(privateKey.length);
 };
 
+const validateSolana = (privateKey) => {
+  return /^[0-9a-fA-F]+$/.test(privateKey) && [128].includes(privateKey.length);
+};
+
 const validateIost = (privateKey) => {
   return (
     /^[0-9a-zA-Z]+$/.test(privateKey) && [87, 88].includes(privateKey.length)
@@ -53,6 +57,7 @@ export const validatePrivateKey = (net, privateKey) => {
     tez: validateTezos,
     oasis: validateOasis,
     sui: validateEth,
+    solana: validateSolana,
   };
 
   return (coins[net] && coins[net](privateKey)) || validateHex(privateKey);

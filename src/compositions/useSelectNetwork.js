@@ -1,6 +1,8 @@
 import { useStore } from 'vuex';
 import { trezorNets } from '@/config/availableNets';
 
+const hideLedgerNetworks = ['provenance'];
+
 export default function useSelectNetwork() {
   const store = useStore();
   const networksList = store.getters['networks/networksList'];
@@ -17,7 +19,9 @@ export default function useSelectNetwork() {
   });
 
   const ledgerNetworks = networksList
-    .filter((network) => network.ledger)
+    .filter(
+      (network) => network.ledger && !hideLedgerNetworks.includes(network.net)
+    )
     .map((network, index) => {
       const title = `${network.name} (${network.code})`;
       netByTitle[title] = network.net;

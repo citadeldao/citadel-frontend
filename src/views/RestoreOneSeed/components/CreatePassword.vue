@@ -32,6 +32,7 @@
       </PrimaryButton>
 
       <span
+        v-if="false"
         class="enter-password__import-file"
         @click="$emit('updateShowImportModal')"
       >
