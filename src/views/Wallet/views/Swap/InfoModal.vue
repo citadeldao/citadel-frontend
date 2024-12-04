@@ -234,8 +234,8 @@ export default {
         isCosmosTx.value = true;
         const msgObj = JSON.parse(props.txRoute.transactionRequest.data);
         let wasmStructure;
-        console.log('msg log', msgObj);
-        if (msgObj.msg.wasm) {
+
+        if (msgObj?.msg?.wasm) {
           wasmStructure = { ...msgObj.msg.wasm };
           wasmStructure.sender = props.signerWallet.address;
           wasmStructure.funds = [
