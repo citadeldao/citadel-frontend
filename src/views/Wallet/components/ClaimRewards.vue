@@ -13,7 +13,6 @@
         currentWallet?.type !== WALLET_TYPES.PUBLIC_KEY &&
         (currentWalletInfo?.claimableRewards || currentWalletInfo?.stake) &&
         notRewardsCoins.includes(currentWallet.net),
-      dydx: currentWallet.net === 'dydx',
     }"
     @click="handleBlockClick"
   >
@@ -49,6 +48,7 @@
       </span>
       <span
         v-if="apy || currentWalletInfo?.claimableRewards"
+        :class="{ dydx: currentWallet.net === 'dydx' }"
         class="claim-rewards__info"
       >
         <template
@@ -365,13 +365,8 @@ export default {
     display: inline-block;
   }
 
-  &.dydx {
-    @include lg {
-      padding: 40px 20px 15px 24px;
-    }
-  }
-
   &__section {
+    max-height: 85px;
     margin-left: 0;
     display: flex;
     flex-direction: column;
@@ -404,6 +399,7 @@ export default {
   }
 
   &__info {
+    margin-top: -12px;
     font-size: 24px;
     line-height: 29px;
     color: $blue;
