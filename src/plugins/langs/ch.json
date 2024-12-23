@@ -109,6 +109,7 @@
             "title": "您确定退出吗？",
             "eraseBtn": "清除本地存储用户数据，包括私钥",
             "downloadBackup": "下载备份文件",
+            "wroteSeed": "我寫下了我的助記詞和其他私人數據",
             "write": "",
             "confirm": ""
         }

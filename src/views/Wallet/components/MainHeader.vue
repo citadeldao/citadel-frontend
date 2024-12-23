@@ -57,7 +57,7 @@
         }"
         data-qa="wallet__send-tab-button"
       >
-        SWAP & BRIDGE
+        Exchange
       </router-link>
       <router-link
         active-class="main-header__active"

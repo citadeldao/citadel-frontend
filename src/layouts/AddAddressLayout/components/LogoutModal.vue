@@ -33,7 +33,7 @@
               <Checkbox
                 id="write"
                 :value="options.write"
-                :label="$t('logout.modal.write')"
+                :label="$t('logout.modal.wroteSeed')"
                 @input="updateOptions($event, 'write')"
               />
             </div>
