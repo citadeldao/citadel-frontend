@@ -127,7 +127,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 1140px;
+  width: 1340px;
   height: 100vh;
   position: relative;
 

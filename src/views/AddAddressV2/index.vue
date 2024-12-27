@@ -76,7 +76,7 @@ export default {
   //justify-content: center;
   align-items: center;
   // height: 100vh;
-  width: 1140px;
+  width: 1340px;
 
   @include md {
     width: 100%;
@@ -110,7 +110,7 @@ export default {
       justify-content: center;
 
       .item {
-        width: 44%;
+        width: 48%;
         margin: 0 10px;
       }
     }
