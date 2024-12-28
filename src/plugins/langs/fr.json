@@ -109,6 +109,7 @@
             "title": "Vous êtes sûr de vouloir quitter ?",
             "eraseBtn": "Effacer les données utilisateur stockées localement, y compris les clés privées",
             "downloadBackup": "Télécharger le fichier de sauvegarde",
+            "wroteSeed": "J'ai écrit ma phrase de départ et d'autres données privées",
             "write": "",
             "confirm": ""
         }
@@ -611,6 +612,7 @@
     "balance": "Solde",
     "transactions": "transactions",
     "send": "Envoyer",
+    "exchange": "échange",
     "stake": "stake",
     "youHave": "Vous avez",
     "claimRewards": "Claim des récompenses",

@@ -109,6 +109,7 @@
             "title": "",
             "eraseBtn": "",
             "downloadBackup": "",
+            "wroteSeed": "",
             "write": "",
             "confirm": ""
         }
@@ -616,6 +617,7 @@
     "balance": "",
     "transactions": "",
     "send": "",
+    "exchange": "",
     "stake": "",
     "youHave": "",
     "claimRewards": "",

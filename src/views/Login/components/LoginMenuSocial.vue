@@ -163,6 +163,15 @@ body.dark {
 
       &:hover {
         box-shadow: none;
+        svg {
+          fill: $white;
+        }
+
+        .info {
+          .description {
+            color: $white;
+          }
+        }
       }
     }
   }

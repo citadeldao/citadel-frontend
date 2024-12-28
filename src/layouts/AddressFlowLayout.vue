@@ -69,7 +69,7 @@ export default {
     justify-content: flex-start;
   }
   &__header {
-    width: 1140px;
+    width: 1340px;
     justify-content: space-between;
     display: flex;
     align-items: center;
@@ -108,7 +108,7 @@ export default {
   }
 
   &__wrap {
-    width: 1140px;
+    width: 1340px;
     transition: none;
     min-height: 796px;
     height: 100%;

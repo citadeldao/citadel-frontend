@@ -77,7 +77,7 @@ export default {
     font-size: $default-size;
     line-height: 27px;
     color: $mid-blue;
-    width: 44%;
+    width: 40%;
 
     @include md {
       width: 45%;
