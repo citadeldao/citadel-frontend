@@ -1245,14 +1245,17 @@ export default {
       }
 
       prepareLoading.value = true;
+      const FEE_KEY = store.getters['networks/configByNet']?.(
+        props.currentWallet.net
+      )?.feeKey;
 
       try {
         await prepareTransfer(
           bridgeData?.amount
-            ? { ...bridgeData, fee: transferParams.value.fee }
+            ? { ...bridgeData, [FEE_KEY]: transferParams.value.fee }
             : {
                 ...transferParams.value,
-                fee: fees.value[feeType.value]?.fee || 0,
+                [FEE_KEY]: fees.value[feeType.value][FEE_KEY] || 0,
               }
         );
         prepareLoading.value = false;
