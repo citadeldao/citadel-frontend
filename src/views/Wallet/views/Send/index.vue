@@ -1248,6 +1248,12 @@ export default {
       const FEE_KEY = store.getters['networks/configByNet']?.(
         props.currentWallet.net
       )?.feeKey;
+      console.log('info log fee', FEE_KEY);
+      console.log('info log w', props.currentWallet);
+      console.log(
+        'info log c',
+        store.getters['networks/configByNet']?.(props.currentWallet.net)
+      );
 
       try {
         await prepareTransfer(
