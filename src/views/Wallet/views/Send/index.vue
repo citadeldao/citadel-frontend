@@ -1250,7 +1250,10 @@ export default {
         await prepareTransfer(
           bridgeData?.amount
             ? { ...bridgeData, fee: transferParams.value.fee }
-            : transferParams.value
+            : {
+                ...transferParams.value,
+                fee: fees.value[feeType.value]?.fee || 0,
+              }
         );
         prepareLoading.value = false;
       } catch (err) {
