@@ -891,8 +891,8 @@ export default {
   },
   lava: {
     twitter: {
-      title: '@VulcanForged',
-      href: 'VulcanForged',
+      title: '@lavanetxyz',
+      href: 'lavanetxyz',
     },
     web: {
       title: 'lavanet.xyz',
@@ -900,7 +900,7 @@ export default {
     },
     landing: {
       title: 'Coingecko',
-      href: 'https://www.coingecko.com/en/coins/lava',
+      href: 'https://www.coingecko.com/en/coins/lava-network',
     },
   },
   berachain: {
