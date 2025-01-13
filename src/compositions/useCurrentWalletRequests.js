@@ -18,7 +18,7 @@ export default function useCurrentWalletRequests() {
   const isSendToAnotherNetwork = ref(false);
 
   const getFees = async (netTo) => {
-    if (['tron', 'sui'].includes(currentWallet.value.net)) return;
+    if (['tron'].includes(currentWallet.value.net)) return;
     if (currentWallet.value.hasNoFee) {
       const { resFee, maxAmount, error, resAdding } =
         await wallet.value.getDelegationFee({
