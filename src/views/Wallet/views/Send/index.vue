@@ -188,7 +188,7 @@
         </div>
       </div>
       <!-- FEE -->
-      <div class="send__memo">
+      <div v-if="Object.keys(fees)?.length" class="send__memo">
         <div class="send__memo-toggle">
           <span class="send__memo-title">
             {{ $t('feeLabel') }}
@@ -1244,18 +1244,23 @@ export default {
         return;
       }
 
+      const net =
+        props.currentToken?.parentCoin?.net || props.currentWallet.net;
+
       prepareLoading.value = true;
-      const FEE_KEY = store.getters['networks/configByNet']?.(
+      let FEE_KEY = store.getters['networks/configByNet']?.(
         props.currentToken?.parentCoin?.net || props.currentWallet.net
       )?.feeKey;
+
+      if (!FEE_KEY && net !== 'tron') FEE_KEY = '';
 
       try {
         await prepareTransfer(
           bridgeData?.amount
-            ? { ...bridgeData, [FEE_KEY]: transferParams.value.fee }
+            ? { ...bridgeData, [FEE_KEY]: transferParams.value.fee || null }
             : {
                 ...transferParams.value,
-                [FEE_KEY]: fees.value[feeType.value][FEE_KEY] || 0,
+                [FEE_KEY]: fees.value[feeType.value]?.[FEE_KEY] || 0,
               }
         );
         prepareLoading.value = false;
