@@ -95,6 +95,20 @@
             }}</span>
             <span class="stake-list-item__title-line-currency">%</span>
           </div>
+          <!-- item isInactive solana -->
+          <div v-if="item.isInactive" class="stake-list-item__title-line">
+            <span class="stake-list-item__title-line-title"
+              >{{ $t('Status') }}:</span
+            >
+            <span
+              :class="{
+                active: item.isInactive === 'Active',
+                inactive: item.isInactive === 'Inactive',
+              }"
+              class="stake-list-item__title-line-value"
+              >{{ item.isInactive }}</span
+            >
+          </div>
         </div>
       </div>
     </div>
@@ -548,6 +562,16 @@ export default {
     font-size: 12px;
     line-height: 14px;
     color: $mid-gray;
+  }
+
+  &__title-line-value {
+    &.active {
+      color: $green;
+    }
+
+    &.inactive {
+      color: $red;
+    }
   }
 
   &__title-line-title {

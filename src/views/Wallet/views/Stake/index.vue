@@ -136,6 +136,7 @@ export default {
       );
     });
     const list = computed(() => {
+      console.log('stakeList', stakeList.value);
       const data = stakeList.value.map((i, index) => {
         const stakedNodeInNodeList = stakeNodes.value?.find(
           (item) => item.address?.toLowerCase() === i.current?.toLowerCase()

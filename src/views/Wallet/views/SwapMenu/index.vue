@@ -86,9 +86,9 @@ export default {
 
     const jupTokens = computed(() => store.getters['jupiter/tokens']);
 
-    const currentToken = computed(
-      () => store.getters['subtokens/currentToken']
-    );
+    // const currentToken = computed(
+    //   () => store.getters['subtokens/currentToken']
+    // );
 
     const squidData = {
       title: 'SQUID',
@@ -188,9 +188,9 @@ export default {
         return ch.chain_id === currentWallet.value.config.chainId;
       });
 
-      hasSwapSkip.value = !!chainFrom && !currentToken.value;
+      hasSwapSkip.value = !!chainFrom;
 
-      if (hasSwapSkip.value) {
+      if (hasSwapSkip.value && currentWallet.value?.net === 'osmosis') {
         methods.value.push(skipData);
       }
       isLoadingData.value = false;

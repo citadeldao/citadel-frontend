@@ -5,4 +5,5 @@ module.exports = {
     // exclude to split code and lazy load lib-citadel
     ['@babel/preset-env', { exclude: ['proposal-dynamic-import'] }],
   ],
+  plugins: ['@babel/plugin-proposal-class-static-block'],
 };

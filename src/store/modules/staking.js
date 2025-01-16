@@ -1,5 +1,6 @@
 import citadel from '@citadeldao/lib-citadel';
 import notify from '@/plugins/notify';
+import axios from 'axios';
 
 const types = {
   SET_STAKE_NODES: 'SET_STAKE_NODES',
@@ -52,7 +53,27 @@ export default {
           currentWallet?.address?.toLowerCase() ===
             wallet?.address?.toLowerCase()
         ) {
-          commit(types.SET_STAKE_LIST, data);
+          if (currentWallet.net === 'solana') {
+            const result = await axios.get(
+              `${process.env.VUE_APP_PUBLIC_BACKEND_URL}/blockchain/solana/${currentWallet.address}/stake_accounts`
+            );
+
+            let solanaAccountsList = [];
+            if (result.data.ok) {
+              solanaAccountsList = result.data?.data?.map((item) => {
+                return {
+                  current: item.validator,
+                  holderAccount: item.address,
+                  value: item.staked,
+                  staked: true,
+                  isInactive: item.isInactive ? 'Active' : 'Inactive',
+                };
+              });
+            }
+            commit(types.SET_STAKE_LIST, solanaAccountsList);
+          } else {
+            commit(types.SET_STAKE_LIST, data);
+          }
         }
       } else {
         notify({
