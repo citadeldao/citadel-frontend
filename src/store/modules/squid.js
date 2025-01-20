@@ -124,10 +124,10 @@ export default {
 
       try {
         result = await axios.post(
-          `https://v2.api.squidrouter.com/v2/route111`,
+          `https://v2.api.squidrouter.com/v2/route`,
           {
-            fromChain,
-            toChain,
+            fromChain: `${fromChain}`,
+            toChain: `${toChain}`,
             fromToken,
             toToken,
             fromAmount, // mantissa
