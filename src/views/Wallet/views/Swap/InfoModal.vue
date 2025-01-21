@@ -82,6 +82,20 @@
               }}{{ param === 'aggregateSlippage' ? '%' : '' }}
             </div>
           </div>
+          <!-- to -->
+          <div class="tx-info-item">
+            <div class="label">Amount to swap</div>
+            <div class="value usd">
+              {{ amountToSwapBRIDGE }} {{ fromToken?.symbol }}
+            </div>
+          </div>
+          <div class="tx-info-item">
+            <div class="label">Amount to receive</div>
+            <div class="value usd">
+              {{ amountToReceiveBRIDGE }} {{ toToken?.symbol }}
+            </div>
+          </div>
+          <!-- receive -->
         </div>
       </div>
       <div
@@ -185,10 +199,22 @@ export default {
       'toChain',
     ]);
     const estimateKeysToView = ref([
-      'fromAmountUSD',
-      'toAmountMinUSD',
+      // 'fromAmountUSD',
+      // 'toAmountMinUSD',
       'aggregateSlippage',
     ]);
+
+    const amountToSwapBRIDGE = computed(() => {
+      return BigNumber(props.txRoute?.estimate?.fromAmount)
+        .div(BigNumber(10).pow(props.fromToken?.decimals))
+        .toFixed();
+    });
+
+    const amountToReceiveBRIDGE = computed(() => {
+      return BigNumber(props.txRoute?.estimate?.toAmount)
+        .div(BigNumber(10).pow(props.toToken?.decimals))
+        .toFixed(5);
+    });
 
     const chainNetworks = ref({
       1: 'Ethereum Mainnet',
@@ -679,6 +705,8 @@ export default {
       estimateKeysToView,
       labelsDynamic,
       chainNetworks,
+      amountToSwapBRIDGE,
+      amountToReceiveBRIDGE,
     };
   },
 };
@@ -711,6 +739,11 @@ export default {
       .value {
         color: #000;
         font-size: 14px;
+
+        &.usd {
+          color: #6b93c0;
+          font-size: 13px;
+        }
 
         &.isAddress {
           color: #6b93c0;
