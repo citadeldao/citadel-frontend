@@ -11,8 +11,8 @@ export default {
       href: 'bandprotocol',
     },
     landing: {
-      title: 'band.citadel.one',
-      href: 'https://band.citadel.one/',
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/band-protocol',
     },
   },
   btc: {
@@ -31,8 +31,8 @@ export default {
       href: 'cosmos',
     },
     landing: {
-      title: 'cosmos.citadel.one',
-      href: 'https://cosmos.citadel.one/',
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/cosmos-hub',
     },
   },
   axelar: {
@@ -143,8 +143,8 @@ export default {
       href: 'IOST_Official',
     },
     landing: {
-      title: 'iost.citadel.one',
-      href: 'https://iost.citadel.one/',
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/iost',
     },
   },
   secret: {
@@ -157,8 +157,8 @@ export default {
       href: 'secretnetwork',
     },
     landing: {
-      title: 'secret.citadel.one',
-      href: 'https://secret.citadel.one/',
+      title: 'Coingecko',
+      href: 'https://www.coingecko.com/en/coins/secret',
     },
   },
   mantle: {
@@ -507,7 +507,7 @@ export default {
       href: 'CitadelDAO',
     },
     landing: {
-      title: 'CitadelNetwork',
+      title: 'Coingecko',
       href: 'https://www.coingecko.com/en/coins/citadel-one',
     },
   },
