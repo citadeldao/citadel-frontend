@@ -11,7 +11,7 @@
         "lint:style": "stylelint 'src/**/*.vue' --fix"
     },
     "dependencies": {
-        "@citadeldao/lib-citadel": "1.43.64",
+        "@citadeldao/lib-citadel": "1.43.65",
         "@open-wc/webpack-import-meta-loader": "^0.4.7",
         "@sentry/tracing": "^6.16.1",
         "@sentry/vue": "^6.16.1",
@@ -51,6 +51,7 @@
     },
     "devDependencies": {
         "@babel/eslint-parser": "^7.12.16",
+        "@babel/plugin-proposal-class-static-block": "^7.21.0",
         "@babel/preset-env": "^7.16.10",
         "@vue/cli-plugin-babel": "~5.0.0-rc.2",
         "@vue/cli-plugin-e2e-cypress": "~5.0.0-rc.2",

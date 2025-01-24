@@ -80,6 +80,10 @@ export default {
     watch(
       () => route.params,
       async (params, oldParams) => {
+        if (params?.net !== oldParams?.net) {
+          delete params.token;
+          delete oldParams.token;
+        }
         if (
           params.net !== oldParams.net ||
           params.address?.toLowerCase() !== oldParams.address?.toLowerCase()

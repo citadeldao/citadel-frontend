@@ -123,9 +123,8 @@ export default {
       let result;
 
       try {
-        result = await axios.post(
-          `https://v2.api.squidrouter.com/v2/route111`,
-          {
+        result = await axios.get(`https://api.0xsquid.com/v1/route`, {
+          params: {
             fromChain,
             toChain,
             fromToken,
@@ -133,40 +132,40 @@ export default {
             fromAmount, // mantissa
             fromAddress,
             toAddress,
-            // slippage,
-            slippageConfig: {
-              slippage,
-              autoMode: 1,
-            },
+            slippage,
+            fallbackAddresses,
           },
-          {
-            headers: {
-              accept: 'application/json',
-              'x-integrator-id': process.env.VUE_APP_SQUID_KEY,
-            },
-          }
-        );
+          headers: {
+            accept: 'application/json',
+            'x-integrator-id': process.env.VUE_APP_SQUID_KEY,
+          },
+        });
       } catch (err) {
         try {
-          result = await axios.get(`https://api.0xsquid.com/v1/route`, {
-            params: {
-              fromChain,
-              toChain,
+          result = await axios.post(
+            `https://v2.api.squidrouter.com/v2/route`,
+            {
+              fromChain: `${fromChain}`,
+              toChain: `${toChain}`,
               fromToken,
               toToken,
               fromAmount, // mantissa
               fromAddress,
               toAddress,
-              slippage,
-              fallbackAddresses,
+              // slippage,
+              slippageConfig: {
+                slippage,
+                autoMode: 1,
+              },
             },
-            headers: {
-              accept: 'application/json',
-              'x-integrator-id': process.env.VUE_APP_SQUID_KEY,
-            },
-          });
+            {
+              headers: {
+                accept: 'application/json',
+                'x-integrator-id': process.env.VUE_APP_SQUID_KEY,
+              },
+            }
+          );
         } catch (err) {
-          console.log(err);
           if (err.response) {
             notify({
               type: 'warning',

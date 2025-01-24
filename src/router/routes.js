@@ -88,6 +88,14 @@ export default [
           ),
       },
       {
+        name: 'WalletSwapJupiter',
+        path: 'swap-jupiter',
+        component: () =>
+          import(
+            /* webpackChunkName: 'Send' */ '@/views/Wallet/views/SwapJupiter'
+          ),
+      },
+      {
         name: 'WalletTransactions',
         path: 'transactions',
         component: () =>
