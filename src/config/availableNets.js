@@ -28,7 +28,7 @@ export const networksFilterItems = [
 export const notShowExportPrivateKey = ['stacks'];
 
 export const networksFilterCategory = {
-  hot: ['solana', 'btc', 'eth', 'bsc', 'sui', 'arbitrum', 'polkadot', 'tron'],
+  hot: ['solana', 'btc', 'eth', 'bsc', 'sui', 'celestia', 'injective', 'tron'],
   cosmos: [
     'archway',
     'quasar',

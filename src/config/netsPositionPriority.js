@@ -3,6 +3,6 @@ export const netsPositionPriority = [
   'bsc',
   'eth',
   'cosmos',
-  'osmosis',
-  'secret',
+  'celestia',
+  'injective',
 ];
