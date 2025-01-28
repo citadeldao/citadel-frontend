@@ -15,7 +15,7 @@
           />
         </div>
       </div>
-      <div class="item">
+      <div class="item ml-15">
         <div class="num">{{ secondRandomIndexCofirmWord + 1 }}th word</div>
         <div :class="{ active: firstConfirmWord }" class="field">
           <span v-if="secondConfirmWord">{{ secondConfirmWord }}</span>
@@ -169,6 +169,10 @@ export default {
         font-size: 14px;
         color: #756aa8;
         margin-bottom: 10px;
+      }
+
+      &.ml-15 {
+        margin-left: 15px;
       }
 
       .field {

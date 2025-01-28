@@ -277,7 +277,10 @@ export default class CryptoCoin {
       return { ok: true, rawTxs: data };
     }
 
-    const message = this.getCustomErrorMessage(error);
+    const message = {
+      type: 'warning',
+      text: error.toString(),
+    };
 
     notify(message);
 
