@@ -60,6 +60,7 @@
         {{ $t('exchange') }}
       </router-link>
       <router-link
+        v-if="currentWallet.net !== 'sui'"
         active-class="main-header__active"
         class="main-header__tabs-item"
         :to="{
