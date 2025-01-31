@@ -59,6 +59,7 @@
         >
         <div
           v-if="currentWallet.hasResource"
+          :style="{ marginLeft: '7px' }"
           class="action-modal-content__total-wrapper"
         >
           <template v-for="item in adding" :key="item.name">
