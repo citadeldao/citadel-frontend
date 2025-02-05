@@ -20,20 +20,20 @@
             <div class="value">{{ signerWallet.address }}</div>
           </div>
           <div class="tx-info-item">
-            <div class="label">To chain</div>
-            <div class="value chain">{{ toToken?.chain_id }}</div>
+            <div class="label">Amount to swap</div>
+            <div class="value usd">
+              {{ amountToSwap }} {{ fromToken.symbol }}
+            </div>
           </div>
           <div class="tx-info-item">
-            <div class="label">From chain</div>
-            <div class="value chain">{{ signerWallet.config?.chainId }}</div>
+            <div class="label">Amount received</div>
+            <div class="value usd">
+              {{ amountToReceive }} {{ toToken.symbol }}
+            </div>
           </div>
           <div class="tx-info-item">
-            <div class="label">Amount to swap, USD</div>
-            <div class="value usd">{{ route.usd_amount_in }}</div>
-          </div>
-          <div class="tx-info-item">
-            <div class="label">Minimum received, USD</div>
-            <div class="value usd">{{ route.usd_amount_out }}</div>
+            <div class="label">Slippage</div>
+            <div class="value usd">{{ route.slippageBps / 100 }}</div>
           </div>
         </div>
       </div>
@@ -72,8 +72,7 @@ import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
 import { PRIVATE_PASSWORD_TYPES, WALLET_TYPES } from '@/config/walletType';
 import { sha3_256 } from 'js-sha3';
-import notify from '@/plugins/notify';
-import citadel from '@citadeldao/lib-citadel';
+import BigNumber from 'bignumber.js';
 
 export default {
   name: 'InfoModal',
@@ -95,6 +94,9 @@ export default {
     toToken: {
       required: true,
     },
+    fromToken: {
+      required: true,
+    },
   },
   setup(props, { emit }) {
     const store = useStore();
@@ -102,16 +104,20 @@ export default {
     const password = ref('');
     const confirmPassword = ref(false);
 
-    const keplrConnector = computed(
-      () => store.getters['keplr/keplrConnector']
-    );
-    const leapConnector = computed(() => store.getters['leap/leapConnector']);
+    const route = computed(() => store.getters['jupiter/route']);
+    const tx = computed(() => store.getters['jupiter/tx']);
 
-    const cosmosTx = computed(() => {
-      return store.getters['skip/cosmosTx'];
+    const amountToSwap = computed(() => {
+      return BigNumber(route.value?.inAmount)
+        .div(BigNumber(10).pow(props.fromToken?.decimals))
+        .toFixed();
     });
 
-    const route = computed(() => store.getters['skip/route']);
+    const amountToReceive = computed(() => {
+      return BigNumber(route.value?.outAmount)
+        .div(BigNumber(10).pow(props.toToken?.decimals))
+        .toFixed(5);
+    });
 
     const onChange = (val) => {
       password.value = val;
@@ -120,108 +126,6 @@ export default {
     const swap = async () => {
       confirmPassword.value = true;
       isLoading.value = true;
-
-      if (props.signerWallet.type === WALLET_TYPES.KEPLR) {
-        const keplrResult = await keplrConnector.value.sendKeplrTransaction(
-          cosmosTx.value,
-          props.signerWallet.address,
-          {
-            preferNoSetFee: true,
-            preferNoSetMemo: true,
-          }
-        );
-
-        if (keplrResult.error) {
-          notify({
-            type: 'warning',
-            text: keplrResult.error,
-          });
-
-          isLoading.value = false;
-          return;
-        }
-
-        if (keplrResult.signature) {
-          const hash = await keplrConnector.value.getOutputHash(
-            props.signerWallet,
-            cosmosTx.value,
-            keplrResult
-          );
-
-          const data = await citadel.sendSignedTransaction(
-            props.signerWallet.id,
-            {
-              signedTransaction: hash,
-              proxy: false,
-            }
-          );
-
-          if (!data.error) {
-            emit('onSuccess', [data.data.txhash]);
-            props.onClose();
-            return;
-          } else {
-            isLoading.value = false;
-            notify({
-              type: 'warning',
-              text: data.error,
-            });
-            return;
-          }
-        }
-        return;
-      }
-
-      if (props.signerWallet.type === WALLET_TYPES.LEAP) {
-        const leapResult = await leapConnector.value.sendLeapTransaction(
-          cosmosTx.value,
-          props.signerWallet.address,
-          {
-            preferNoSetFee: true,
-            preferNoSetMemo: true,
-          }
-        );
-
-        if (leapResult.error) {
-          notify({
-            type: 'warning',
-            text: leapResult.error,
-          });
-
-          isLoading.value = false;
-          return;
-        }
-
-        if (leapResult.signature) {
-          const hash = await leapConnector.value.getOutputHash(
-            props.signerWallet,
-            cosmosTx.value,
-            leapResult
-          );
-
-          const data = await citadel.sendSignedTransaction(
-            props.signerWallet.id,
-            {
-              signedTransaction: hash,
-              proxy: false,
-            }
-          );
-
-          if (!data.error) {
-            emit('onSuccess', [data.data.txhash]);
-            props.onClose();
-            return;
-          } else {
-            isLoading.value = false;
-            notify({
-              type: 'warning',
-              text: data.error,
-            });
-            return;
-          }
-        }
-        return;
-      }
 
       if (props.signerWallet.type === WALLET_TYPES.LEDGER) {
         emit('showLedger');
@@ -238,7 +142,7 @@ export default {
       try {
         const result = await props.signerWallet.signAndSendTransfer({
           walletId: props.signerWallet.id,
-          rawTransaction: cosmosTx.value,
+          rawTransaction: tx.value,
           privateKey:
             password.value &&
             (await props.signerWallet.getPrivateKeyDecoded(password.value)),
@@ -268,6 +172,8 @@ export default {
       PRIVATE_PASSWORD_TYPES,
       WALLET_TYPES,
       route,
+      amountToSwap,
+      amountToReceive,
       swap,
       onChange,
     };

@@ -5,7 +5,8 @@
         <InfoModal
           :signer-wallet="currentWallet"
           :on-close="closeAppInfoModal"
-          :to-token="searchFromTokenData"
+          :from-token="searchFromTokenData"
+          :to-token="searchToTokenData"
           :to-address="addressTo"
           @onCancel="onCancel"
           @onSuccess="onSuccess"
@@ -115,9 +116,11 @@
             <Input
               id="amount"
               v-model="amount"
-              :decimals="currentWallet?.config?.decimals"
+              :decimals="
+                searchFromTokenData?.decimals || currentWallet?.config?.decimals
+              "
               type="currency"
-              :currency="currentWallet?.code"
+              :currency="searchFromTokenData?.symbol || currentWallet?.code"
               :label="$t('swapView.amount')"
               :max="maxAmount"
               :show-set-max="+maxAmount !== 0"
@@ -231,13 +234,26 @@ export default {
     const skipTokens = computed(() => store.getters['skip/tokens']);
     const jupTokens = computed(() => store.getters['jupiter/tokens']);
 
-    // const subtokensWallet = computed(() =>
-    //   store.getters['subtokens/formatedSubtokens']()
-    // );
+    const subtokensWallet = computed(() =>
+      store.getters['subtokens/formatedSubtokens']()
+    );
 
     const maxAmount = computed(() => {
-      if (currentWallet.value?.balance?.mainBalance - 0.0005 < 0) return 0;
-      return currentWallet.value?.balance?.mainBalance - 0.0005;
+      const token = subtokensWallet.value.find((t) =>
+        t?.net?.includes(searchFromTokenData?.value?.address)
+      );
+
+      if (token) {
+        return token.balanceUSD;
+      }
+      if (
+        searchFromTokenData?.value?.address ===
+        'So11111111111111111111111111111111111111112'
+      ) {
+        if (currentWallet.value?.balance?.mainBalance - 0.0005 < 0) return 0;
+        return currentWallet.value?.balance?.mainBalance - 0.0005;
+      }
+      return 0;
     });
 
     const errorAmount = computed(() => {
@@ -289,23 +305,21 @@ export default {
 
     const getRoute = async () => {
       const valueMantissa = BigNumber(+amount.value)
-        .times(BigNumber(10).pow(currentWallet.value.decimals))
+        .times(
+          BigNumber(10).pow(
+            searchFromTokenData?.value?.decimals || currentWallet.value.decimals
+          )
+        )
         .toFixed();
-      const fromAmount = valueMantissa;
-      const fromAddress = currentWallet.value.address;
-      const toAddress = addressTo.value;
 
       isLoading.value = true;
       try {
-        await store.dispatch('skip/getRoute', {
-          amount: fromAmount,
-          wallet: currentWallet.value,
-          // fromDenom:
-          //   currentWallet.value?.config?.primaryToken?.metaInfo?.nativeDenom,
-          // toDenom: toNetwork?.primaryToken?.metaInfo?.nativeDenom,
-          fromAddress,
-          toAddress,
-          slippage: slippage.value,
+        await store.dispatch('jupiter/getRoute', {
+          inputMint: searchFromTokenData?.value?.address,
+          outputMint: searchToTokenData?.value?.address,
+          amount: valueMantissa.split('.')[0],
+          slippageBps: slippage.value * 100,
+          publicKey: currentWallet?.value?.publicKey,
         });
         showInfoModal.value = true;
         isLoading.value = false;
