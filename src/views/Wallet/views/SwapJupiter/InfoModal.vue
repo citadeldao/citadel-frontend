@@ -33,7 +33,7 @@
           </div>
           <div class="tx-info-item">
             <div class="label">Slippage</div>
-            <div class="value usd">{{ route.slippageBps / 100 }}</div>
+            <div class="value usd">{{ route?.slippageBps / 100 }}</div>
           </div>
         </div>
       </div>
@@ -106,6 +106,7 @@ export default {
 
     const route = computed(() => store.getters['jupiter/route']);
     const tx = computed(() => store.getters['jupiter/tx']);
+    console.log('TX', tx.value);
 
     const amountToSwap = computed(() => {
       return BigNumber(route.value?.inAmount)
@@ -139,10 +140,13 @@ export default {
         return;
       }
 
+      const buffer = Buffer.from(tx.value, 'base64');
+      const txHex = buffer.toString('hex');
+
       try {
         const result = await props.signerWallet.signAndSendTransfer({
           walletId: props.signerWallet.id,
-          rawTransaction: tx.value,
+          rawTransaction: { txs: [{ tx: txHex }] }, // txs[0].tx
           privateKey:
             password.value &&
             (await props.signerWallet.getPrivateKeyDecoded(password.value)),

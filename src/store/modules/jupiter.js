@@ -4,6 +4,7 @@ import axios from 'axios';
 const types = {
   SET_TOKENS: 'SET_TOKENS',
   SET_ROUTE: 'SET_ROUTE',
+  SET_TX: 'SET_TX',
 };
 
 export default {
@@ -27,6 +28,9 @@ export default {
     },
     [types.SET_ROUTE](state, value) {
       state.route = value;
+    },
+    [types.SET_TX](state, value) {
+      state.tx = value;
     },
   },
 
@@ -80,7 +84,7 @@ export default {
             // 'x-integrator-id': process.env.VUE_APP_SQUID_KEY,
           },
         });
-        console.log('result', result.data);
+
         if (result.data) {
           const tx = await axios.post(
             `https://api.jup.ag/swap/v1/swap`,
@@ -107,7 +111,27 @@ export default {
               },
             }
           );
-          console.log('result 2', tx);
+          if (tx.data && tx.data.simulationError) {
+            notify({
+              type: 'warning',
+              text: `${tx.data.simulationError?.errorCode}: ${tx.data.simulationError?.error}`,
+            });
+            return {
+              error: true,
+            };
+          }
+          if (tx.data && tx.data.swapTransaction) {
+            commit(types.SET_TX, tx.data && tx.data.swapTransaction);
+            return { success: true };
+          } else {
+            notify({
+              type: 'warning',
+              text: `Transaction not found`,
+            });
+            return {
+              error: true,
+            };
+          }
         }
       } catch (err) {
         console.log(err);

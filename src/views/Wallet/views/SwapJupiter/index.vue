@@ -314,14 +314,17 @@ export default {
 
       isLoading.value = true;
       try {
-        await store.dispatch('jupiter/getRoute', {
+        const res = await store.dispatch('jupiter/getRoute', {
           inputMint: searchFromTokenData?.value?.address,
           outputMint: searchToTokenData?.value?.address,
           amount: valueMantissa.split('.')[0],
           slippageBps: slippage.value * 100,
           publicKey: currentWallet?.value?.publicKey,
         });
-        showInfoModal.value = true;
+        if (!res.error) {
+          showInfoModal.value = true;
+          isLoading.value = false;
+        }
         isLoading.value = false;
       } catch (err) {
         isLoading.value = false;
