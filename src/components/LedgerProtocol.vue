@@ -1,6 +1,6 @@
 <template>
   <div class="ledger-protocol">
-    <div v-if="inApp">Select connection type</div>
+    <div v-if="inApp" class="type">Select connection type</div>
     <div v-else class="ledger-protocol__type">Select connection type</div>
     <div class="ledger-protocol__wrap">
       <div
@@ -99,6 +99,14 @@ export default {
     &:hover {
       cursor: pointer;
       background: #f5f6fd;
+    }
+  }
+}
+
+body.dark {
+  .ledger-protocol {
+    .type {
+      color: #6b758e;
     }
   }
 }

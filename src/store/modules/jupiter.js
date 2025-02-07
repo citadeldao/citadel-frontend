@@ -4,6 +4,7 @@ import axios from 'axios';
 const types = {
   SET_TOKENS: 'SET_TOKENS',
   SET_ROUTE: 'SET_ROUTE',
+  SET_TX: 'SET_TX',
 };
 
 export default {
@@ -12,12 +13,13 @@ export default {
     tokens: [],
     chains: [],
     route: null,
-    cosmosTx: null,
+    tx: null,
   }),
 
   getters: {
     tokens: (state) => state.tokens,
     route: (state) => state.route,
+    tx: (state) => state.tx,
   },
 
   mutations: {
@@ -26,6 +28,9 @@ export default {
     },
     [types.SET_ROUTE](state, value) {
       state.route = value;
+    },
+    [types.SET_TX](state, value) {
+      state.tx = value;
     },
   },
 
@@ -62,78 +67,85 @@ export default {
 
     async getRoute(
       { commit },
-      {
-        fromChain,
-        toChain,
-        fromToken,
-        toToken,
-        fromAmount, // mantissa
-        fromAddress,
-        toAddress,
-        slippage,
-        fallbackAddresses,
-        // isEvm, // choose route type
-      }
+      { inputMint, outputMint, amount, slippageBps = 100, publicKey }
     ) {
       let result;
-
       try {
-        result = await axios.post(
-          `https://v2.api.squidrouter.com/v2/route`,
-          {
-            fromChain,
-            toChain,
-            fromToken,
-            toToken,
-            fromAmount, // mantissa
-            fromAddress,
-            toAddress,
-            // slippage,
-            slippageConfig: {
-              slippage,
-              autoMode: 1,
-            },
+        result = await axios.get(`https://api.jup.ag/swap/v1/quote`, {
+          params: {
+            inputMint,
+            outputMint,
+            amount,
+            slippageBps,
+            restrictIntermediateTokens: true,
           },
-          {
-            headers: {
-              accept: 'application/json',
-              'x-integrator-id': process.env.VUE_APP_SQUID_KEY,
+          headers: {
+            accept: 'application/json',
+            // 'x-integrator-id': process.env.VUE_APP_SQUID_KEY,
+          },
+        });
+
+        if (result.data) {
+          const tx = await axios.post(
+            `https://api.jup.ag/swap/v1/swap`,
+
+            {
+              quoteResponse: result.data,
+              userPublicKey: publicKey,
+
+              // ADDITIONAL PARAMETERS TO OPTIMIZE FOR TRANSACTION LANDING
+              // See next guide to optimize for transaction landing
+              dynamicComputeUnitLimit: true,
+              dynamicSlippage: true,
+              prioritizationFeeLamports: {
+                priorityLevelWithMaxLamports: {
+                  maxLamports: 1000000,
+                  priorityLevel: 'veryHigh',
+                },
+              },
             },
-          }
-        );
-      } catch (err) {
-        try {
-          result = await axios.get(`https://api.0xsquid.com/v1/route`, {
-            params: {
-              fromChain,
-              toChain,
-              fromToken,
-              toToken,
-              fromAmount, // mantissa
-              fromAddress,
-              toAddress,
-              slippage,
-              fallbackAddresses,
-            },
-            headers: {
-              accept: 'application/json',
-              'x-integrator-id': process.env.VUE_APP_SQUID_KEY,
-            },
-          });
-        } catch (err) {
-          console.log(err);
-          if (err.response) {
+            {
+              headers: {
+                accept: 'application/json',
+                'content-type': 'application/json',
+              },
+            }
+          );
+          if (tx.data && tx.data.simulationError) {
             notify({
               type: 'warning',
-              text: `${err?.response?.data?.errors[0]?.errorType}: ${err?.response?.data?.errors[0]?.message}`,
+              text: `${tx.data.simulationError?.errorCode}: ${tx.data.simulationError?.error}`,
             });
+            return {
+              error: true,
+            };
           }
-          return;
+          if (tx.data && tx.data.swapTransaction) {
+            commit(types.SET_TX, tx.data && tx.data.swapTransaction);
+            return { success: true };
+          } else {
+            notify({
+              type: 'warning',
+              text: `Transaction not found`,
+            });
+            return {
+              error: true,
+            };
+          }
         }
+      } catch (err) {
+        console.log(err);
+        if (err.response) {
+          notify({
+            type: 'warning',
+            text: `${err?.response?.data?.errors[0]?.errorType}: ${err?.response?.data?.errors[0]?.message}`,
+          });
+        }
+        return;
       }
 
-      if (result?.data?.route) {
-        commit(types.SET_ROUTE, result.data.route);
+      if (result?.data) {
+        commit(types.SET_ROUTE, result.data);
       }
     },
     resetRoute({ commit }) {

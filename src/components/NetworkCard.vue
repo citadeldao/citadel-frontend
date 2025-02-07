@@ -425,7 +425,7 @@ body.dark {
     }
 
     &__percent {
-      color: $dark-blue;
+      color: #afbccb;
     }
   }
 
