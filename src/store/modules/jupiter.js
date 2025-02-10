@@ -86,6 +86,7 @@ export default {
         });
 
         if (result.data) {
+          commit(types.SET_ROUTE, result.data);
           const tx = await axios.post(
             `https://api.jup.ag/swap/v1/swap`,
 
@@ -142,10 +143,6 @@ export default {
           });
         }
         return;
-      }
-
-      if (result?.data) {
-        commit(types.SET_ROUTE, result.data);
       }
     },
     resetRoute({ commit }) {
