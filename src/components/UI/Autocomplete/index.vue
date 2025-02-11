@@ -26,7 +26,10 @@
     <transition name="fade">
       <ul v-show="isOpen && results.length > 0" class="autocomplete__results">
         <AutocompleteItem
-          v-for="(result, ndx) in results"
+          v-for="(result, ndx) in results.slice(
+            0,
+            sliceItemsCount || results.length
+          )"
           :key="`${ndx}${result.id}`"
           :split-value="splitValue"
           :show-balance="showBalance"
@@ -86,6 +89,10 @@ export default {
     showBalance: {
       type: Boolean,
       default: false,
+    },
+    sliceItemsCount: {
+      type: [String, Number],
+      default: '',
     },
   },
   emits: ['update:value'],
