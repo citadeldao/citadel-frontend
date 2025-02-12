@@ -80,6 +80,7 @@
                 initial-icon="curve-arrow"
                 :label="$t('swapView.selectContract')"
                 :placeholder="$t('swapView.toToken')"
+                :slice-items-count="10"
                 @update:value="selectToToken"
               />
             </div>
