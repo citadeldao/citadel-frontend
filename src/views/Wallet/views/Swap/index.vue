@@ -59,6 +59,11 @@
                 v-model:value="searchFromToken"
                 :items="chainTokensFrom"
                 show-balance
+                :custom-icon="
+                  searchFromTokenData?.logoURI ||
+                  searchFromTokenData?.iconLink ||
+                  ''
+                "
                 initial-icon="curve-arrow"
                 :label="$t('swapView.fromToken')"
                 :placeholder="$t('swapView.selectContract')"
@@ -91,6 +96,7 @@
                   v-model:value="searchNetworkTo"
                   :items="allNetworks"
                   split-value
+                  :custom-icon="searchNetworkToData?.iconLink || ''"
                   initial-icon="curve-arrow"
                   :label="$t('swapView.swapToNetwork')"
                   :placeholder="$t('swapView.selectChain')"
@@ -106,6 +112,7 @@
                   v-model:value="searchToToken"
                   :items="chainTokensTo"
                   split-value
+                  :custom-icon="searchTokenToComputed?.logoURI || ''"
                   initial-icon="curve-arrow"
                   :label="$t('swapView.toToken')"
                   :placeholder="$t('swapView.selectContract')"
@@ -291,8 +298,10 @@ export default {
 
     const searchNetworkFrom = ref('');
     const searchNetworkTo = ref('');
+    const searchNetworkToData = ref('');
 
     const searchFromToken = ref('');
+    const searchFromTokenData = ref('');
     const searchToToken = ref('');
     const searchToTokenFullStr = ref('');
 
@@ -463,6 +472,7 @@ export default {
       }
 
       searchNetworkFrom.value = selectChain;
+
       const currentChain = squidChains.value.find(
         (n) =>
           n.chainName.toLocaleLowerCase() === selectChain.toLocaleLowerCase()
@@ -565,6 +575,9 @@ export default {
       }
 
       searchNetworkTo.value = selectChain;
+      searchNetworkToData.value = allNetworks.value.find(
+        (item) => item.title === network
+      );
 
       let currentChain = squidChains.value.find(
         (n) =>
@@ -620,6 +633,10 @@ export default {
 
     const selectFromToken = async (token) => {
       searchFromToken.value = token;
+
+      searchFromTokenData.value = chainTokensFrom.value.find(
+        (item) => item.name === token
+      );
     };
 
     const selectToToken = (token) => {
@@ -806,6 +823,9 @@ export default {
 
       chainTokensFrom,
       chainTokensTo,
+
+      searchFromTokenData,
+      searchNetworkToData,
 
       fromTokenAddrInput,
       toTokenAddrInput,

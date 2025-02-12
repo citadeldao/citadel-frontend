@@ -59,6 +59,7 @@
                 v-model:value="searchFromToken"
                 :items="allNetworks"
                 split-value
+                :custom-icon="searchFromTokenData?.logoURI || ''"
                 initial-icon="curve-arrow"
                 :label="$t('swapView.selectContract')"
                 :placeholder="$t('swapView.fromToken')"
@@ -78,6 +79,7 @@
                 :items="allNetworks"
                 split-value
                 initial-icon="curve-arrow"
+                :custom-icon="searchToTokenData?.logoURI || ''"
                 :label="$t('swapView.selectContract')"
                 :placeholder="$t('swapView.toToken')"
                 :slice-items-count="10"

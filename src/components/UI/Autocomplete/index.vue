@@ -1,11 +1,20 @@
 <template>
   <div v-click-away="onClickAway" class="autocomplete" :class="{ error }">
     <label :for="id">{{ label }}</label>
-    <transition name="fade">
-      <keep-alive>
-        <component :is="currentIcon" class="autocomplete__icon" />
-      </keep-alive>
-    </transition>
+    <div
+      v-if="customIcon"
+      :style="{
+        backgroundImage: `url(${customIcon})`,
+      }"
+      class="autocomplete__custom-icon"
+    />
+    <template v-if="!customIcon">
+      <transition name="fade">
+        <keep-alive>
+          <component :is="currentIcon" class="autocomplete__icon" />
+        </keep-alive>
+      </transition>
+    </template>
     <input
       :id="id"
       type="text"
@@ -92,6 +101,10 @@ export default {
     },
     sliceItemsCount: {
       type: [String, Number],
+      default: '',
+    },
+    customIcon: {
+      type: String,
       default: '',
     },
   },
@@ -239,6 +252,18 @@ export default {
     bottom: 19px;
     z-index: 4;
     height: 14px;
+  }
+  &__custom-icon {
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    left: 17px;
+    bottom: 15px;
+    z-index: 4;
+    height: 20px;
+    position: absolute;
   }
   &__results {
     position: absolute;
