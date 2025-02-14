@@ -12,11 +12,7 @@
       <div class="swap-tx__info">
         <div class="tx-info">
           <div class="tx-info-item">
-            <div class="label">To address</div>
-            <div class="value">{{ toAddress }}</div>
-          </div>
-          <div class="tx-info-item">
-            <div class="label">From address</div>
+            <div class="label">Signer</div>
             <div class="value">{{ signerWallet.address }}</div>
           </div>
           <div class="tx-info-item">
@@ -88,9 +84,6 @@ export default {
     signerWallet: {
       required: true,
     },
-    toAddress: {
-      required: true,
-    },
     toToken: {
       required: true,
     },
@@ -107,6 +100,7 @@ export default {
     const route = computed(() => store.getters['jupiter/route']);
     const tx = computed(() => store.getters['jupiter/tx']);
     console.log('TX', tx.value);
+    console.log('router', route.value);
 
     const amountToSwap = computed(() => {
       return BigNumber(route.value?.inAmount)

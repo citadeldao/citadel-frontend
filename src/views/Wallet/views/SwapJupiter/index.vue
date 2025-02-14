@@ -59,9 +59,11 @@
                 v-model:value="searchFromToken"
                 :items="allNetworks"
                 split-value
+                :custom-icon="searchFromTokenData?.logoURI || ''"
                 initial-icon="curve-arrow"
                 :label="$t('swapView.selectContract')"
                 :placeholder="$t('swapView.fromToken')"
+                :slice-items-count="10"
                 @update:value="selectFromToken"
               />
             </div>
@@ -77,35 +79,11 @@
                 :items="allNetworks"
                 split-value
                 initial-icon="curve-arrow"
+                :custom-icon="searchToTokenData?.logoURI || ''"
                 :label="$t('swapView.selectContract')"
                 :placeholder="$t('swapView.toToken')"
+                :slice-items-count="10"
                 @update:value="selectToToken"
-              />
-            </div>
-          </div>
-          <div
-            class="swap-jupiter__input"
-            v-click-away="() => (showNetworkTargetWallets = false)"
-          >
-            <Input
-              id="toTokenAddr"
-              v-model="addressTo"
-              :label="$t('swapView.toAddressLabel')"
-              :placeholder="$t('swapView.addressPlaceholder')"
-              type="text"
-              @focus="showNetworkTargetWallets = true"
-            />
-            <div
-              v-if="showNetworkTargetWallets && networkTargetWallets.length"
-              class="network-target-wallets"
-            >
-              <AddressItem
-                v-for="(item, index) in networkTargetWallets"
-                :key="`${item.address}${item.net}${index}`"
-                :address="item"
-                :last-child="index === networkTargetWallets.length - 1"
-                :checked="false"
-                @click="setAddress(item)"
               />
             </div>
           </div>
@@ -157,7 +135,7 @@
         <PrimaryButton
           class="swap-jupiter__submit-swap"
           :loading="isLoading"
-          :disabled="!!errorAmount || !+amount || !addressTo"
+          :disabled="!!errorAmount || !+amount"
           @click="getRoute"
         >
           {{ $t('SWAP') }}
@@ -175,7 +153,6 @@ import BigNumber from 'bignumber.js';
 import Loading from '@/components/Loading';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import Input from '@/components/UI/Input';
-import AddressItem from '@/layouts/AddAddressLayout/components/CutomLists/components/AddressItem';
 import Modal from '@/components/Modal';
 import InfoModal from './InfoModal.vue';
 import SuccessModal from '@/views/Extensions/SuccessModal.vue';
@@ -192,7 +169,6 @@ export default {
     Autocomplete,
     PrimaryButton,
     Input,
-    AddressItem,
     Modal,
     InfoModal,
     SuccessModal,
@@ -380,6 +356,7 @@ export default {
 
     onMounted(async () => {
       isLoadingData.value = true;
+      addressTo.value = currentWallet.value.address;
 
       try {
         await store.dispatch('jupiter/fetchTokens');

@@ -70,6 +70,7 @@
                 v-model:value="searchNetworkTo"
                 :items="allNetworks"
                 split-value
+                :custom-icon="networkToData?.logo_uri || ''"
                 initial-icon="curve-arrow"
                 :label="$t('swapView.swapToNetwork')"
                 :placeholder="$t('swapView.swapToNetwork')"
@@ -98,6 +99,7 @@
                 :items="skipTokensFrom"
                 show-balance
                 split-value
+                :custom-icon="searchFromTokenData?.iconLink || ''"
                 initial-icon="curve-arrow"
                 :label="$t('swapView.fromToken')"
                 :placeholder="$t('swapView.selectContract')"
@@ -113,6 +115,7 @@
                 :items="skipTokensTo"
                 show-balance
                 split-value
+                :custom-icon="searchToTokenData?.iconLink || ''"
                 initial-icon="curve-arrow"
                 :label="$t('swapView.toToken')"
                 :placeholder="$t('swapView.selectContract')"
@@ -563,10 +566,11 @@ export default {
       const token = skipTokensTo.value.find(
         (t) => shortIBC(t.denom?.toLowerCase()) === tokenIBC?.toLowerCase()
       );
-      console.log('searchToTokenData.value', searchToTokenData.value);
 
       searchToTokenData.value = token;
     };
+
+    const networkToData = ref('');
 
     const selectToNetwork = async (network) => {
       searchNetworkTo.value = network.split(':')[0];
@@ -578,6 +582,9 @@ export default {
         (c) => c.chainId === searchNetworkToData.value?.chain_id
       );
 
+      networkToData.value = skipChains.value.find(
+        (item) => item.chain_id === network.split(':')[1]
+      );
       addressTo.value = '';
     };
 
@@ -753,6 +760,7 @@ export default {
 
       searchToTokenData,
       searchFromTokenData,
+      networkToData,
 
       //
       showNetworkTargetWallets,
