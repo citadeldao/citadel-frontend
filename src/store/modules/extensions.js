@@ -114,7 +114,10 @@ export default {
 
       if (ok) {
         // data.unshift(multisendLocalApp);
-        commit(types.SET_EXTENSIONS_LIST, data);
+        commit(
+          types.SET_EXTENSIONS_LIST,
+          data.filter((item) => !['22', '9'].includes(item.id))
+        );
       }
     },
     async fetchExtensionInfo({ commit }, { appId }) {
