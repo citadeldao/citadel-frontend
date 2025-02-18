@@ -169,7 +169,9 @@ export default {
           if (err.response) {
             notify({
               type: 'warning',
-              text: `${err?.response?.data?.errors[0]?.errorType}: ${err?.response?.data?.errors[0]?.message}`,
+              text:
+                err?.response?.data?.message ||
+                `${err?.response?.data?.errors[0]?.errorType}: ${err?.response?.data?.errors[0]?.message}`,
             });
           }
           return;
