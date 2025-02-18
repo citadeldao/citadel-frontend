@@ -6,7 +6,7 @@
           :signer-wallet="currentWallet"
           :on-close="closeAppInfoModal"
           :to-token="searchNetworkToDataCitadelFormat"
-          :to-address="addressTo"
+          :to-address="!isBridgeMode ? currentWallet.address : addressTo"
           :from-ibc="searchFromTokenData"
           :to-ibc="searchToTokenData"
           @onCancel="onCancel"
@@ -135,6 +135,7 @@
           <div
             class="swap-skip__input"
             v-click-away="() => (showNetworkTargetWallets = false)"
+            v-if="isBridgeMode"
           >
             <Input
               id="toTokenAddr"
@@ -252,7 +253,7 @@
               : false) ||
             !!errorAmount ||
             !+amount ||
-            !addressTo
+            (isBridgeMode ? !addressTo : false)
           "
           @click="getRoute"
         >
@@ -595,7 +596,9 @@ export default {
           .toFixed();
         const fromAmount = valueMantissa;
         const fromAddress = currentWallet.value.address;
-        const toAddress = addressTo.value;
+        const toAddress = isBridgeMode.value
+          ? addressTo.value
+          : currentWallet.value.address;
 
         isLoading.value = true;
         try {
@@ -629,7 +632,9 @@ export default {
         .toFixed();
       const fromAmount = valueMantissa;
       const fromAddress = currentWallet.value.address;
-      const toAddress = addressTo.value;
+      const toAddress = isBridgeMode.value
+        ? addressTo.value
+        : currentWallet.value;
 
       const toNetwork = citadelNetworks.value.find(
         (network) => network.chainId == searchNetworkToData.value.chain_id
