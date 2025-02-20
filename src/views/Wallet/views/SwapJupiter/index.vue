@@ -301,8 +301,10 @@ export default {
       if (
         !searchFromTokenData?.value?.address ||
         !searchToTokenData?.value?.address ||
-        !amount.value
+        !amount.value ||
+        +maxAmount.value < +amount.value
       ) {
+        store.dispatch('jupiter/resetRoute');
         return;
       }
       const valueMantissa = BigNumber(+amount.value)
@@ -382,7 +384,10 @@ export default {
     };
 
     const onInputAmount = (val) => {
-      if (!val) return;
+      if (!val) {
+        store.dispatch('jupiter/resetRoute');
+        return;
+      }
       getRoute();
     };
 
