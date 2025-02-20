@@ -86,6 +86,13 @@
                 @update:value="selectToToken"
               />
             </div>
+            <div
+              v-if="!!amountToReceive && amountToReceive !== 'NaN'"
+              class="to-receive-block"
+            >
+              {{ amountToReceive }}
+              <span>{{ searchToTokenData?.symbol }}</span>
+            </div>
           </div>
           <div
             :class="{ withError: +maxAmount < +amount }"
@@ -105,6 +112,7 @@
               :show-error-text="+maxAmount < +amount"
               :error="errorAmount"
               placeholder="0.0"
+              @input="onInputAmount"
               icon="coins"
             />
           </div>
@@ -136,7 +144,7 @@
           class="swap-jupiter__submit-swap"
           :loading="isLoading"
           :disabled="!!errorAmount || !+amount"
-          @click="getRoute"
+          @click="getRoute(true)"
         >
           {{ $t('SWAP') }}
         </PrimaryButton>
@@ -210,6 +218,14 @@ export default {
     const skipTokens = computed(() => store.getters['skip/tokens']);
     const jupTokens = computed(() => store.getters['jupiter/tokens']);
 
+    const route = computed(() => store.getters['jupiter/route']);
+
+    const amountToReceive = computed(() => {
+      return BigNumber(route.value?.outAmount)
+        .div(BigNumber(10).pow(searchToTokenData?.value?.decimals))
+        .toFixed(5);
+    });
+
     const subtokensWallet = computed(() =>
       store.getters['subtokens/formatedSubtokens']()
     );
@@ -269,6 +285,7 @@ export default {
       });
 
       addressTo.value = '';
+      getRoute();
     };
 
     const selectToToken = async (title) => {
@@ -277,9 +294,17 @@ export default {
       });
 
       addressTo.value = '';
+      getRoute();
     };
 
-    const getRoute = async () => {
+    const getRoute = async (showLoadersAndModal) => {
+      if (
+        !searchFromTokenData?.value?.address ||
+        !searchToTokenData?.value?.address ||
+        !amount.value
+      ) {
+        return;
+      }
       const valueMantissa = BigNumber(+amount.value)
         .times(
           BigNumber(10).pow(
@@ -298,7 +323,9 @@ export default {
           publicKey: currentWallet?.value?.publicKey,
         });
         if (!res.error) {
-          showInfoModal.value = true;
+          if (showLoadersAndModal) {
+            showInfoModal.value = true;
+          }
           isLoading.value = false;
         }
         isLoading.value = false;
@@ -352,6 +379,11 @@ export default {
 
     const onChangeComment = (comm) => {
       txComment.value = comm;
+    };
+
+    const onInputAmount = (val) => {
+      if (!val) return;
+      getRoute();
     };
 
     onMounted(async () => {
@@ -416,6 +448,8 @@ export default {
       onChangeComment,
       appError,
       hasSwap,
+      onInputAmount,
+      amountToReceive,
     };
   },
 };
@@ -537,10 +571,23 @@ export default {
   }
 
   &__select-chain {
+    position: relative;
     width: 100%;
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+
+    .to-receive-block {
+      position: absolute;
+      z-index: 100;
+      right: 25px;
+      top: 25px;
+      font-weight: bold;
+
+      span {
+        color: $dark-blue;
+      }
+    }
 
     @include md {
       flex-direction: column;
