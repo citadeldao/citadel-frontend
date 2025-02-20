@@ -112,7 +112,6 @@
               :show-error-text="+maxAmount < +amount"
               :error="errorAmount"
               placeholder="0.0"
-              @input="onInputAmount"
               icon="coins"
             />
           </div>
@@ -153,7 +152,7 @@
   </div>
 </template>
 <script>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import useWallets from '@/compositions/useWallets';
 import Autocomplete from '@/components/UI/Autocomplete';
@@ -383,13 +382,16 @@ export default {
       txComment.value = comm;
     };
 
-    const onInputAmount = (val) => {
-      if (!val) {
-        store.dispatch('jupiter/resetRoute');
-        return;
+    watch(
+      () => amount.value,
+      () => {
+        if (!amount.value) {
+          store.dispatch('jupiter/resetRoute');
+          return;
+        }
+        getRoute();
       }
-      getRoute();
-    };
+    );
 
     onMounted(async () => {
       isLoadingData.value = true;
@@ -453,7 +455,6 @@ export default {
       onChangeComment,
       appError,
       hasSwap,
-      onInputAmount,
       amountToReceive,
     };
   },
