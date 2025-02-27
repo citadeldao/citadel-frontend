@@ -44,8 +44,92 @@
       <div v-if="isLoadingData" class="load">
         <Loading />
       </div>
-      <EmptyList v-if="!hasSwap && !isLoadingData" :title="appError" />
+      <!-- NEW -->
       <template v-if="hasSwap && !isLoadingData">
+        <div class="swap-wrap">
+          <div class="swap-wrap__reverse" @click="reverseSwap">
+            <arrowDownIcon width="15" height="13" />
+          </div>
+          <div class="swap-jupiter__input mt10">
+            <Input
+              id="amount"
+              v-model="amount"
+              :decimals="
+                searchFromTokenData?.decimals || currentWallet?.config?.decimals
+              "
+              type="currency"
+              :currency="searchFromTokenData?.symbol || currentWallet?.code"
+              :label="$t('swapView.amount')"
+              :max="maxAmount"
+              :show-set-max="+maxAmount !== 0"
+              :usd-amount="fromAmountUsd"
+              placeholder="0.0"
+              icon="coins"
+              select-mode
+            />
+            <SwapSelect
+              :z-index="101"
+              :items="allNetworks"
+              :selected-token="searchFromTokenData"
+              custom-icon="logoURI"
+              placeholder="Input token"
+              class="swap-wrap__select"
+              @select="selectFromToken"
+            />
+          </div>
+          <div class="swap-jupiter__input mt10">
+            <Input
+              id="amount"
+              v-model="amountToReceive"
+              :decimals="searchToTokenData?.decimals"
+              type="currency"
+              readonly
+              :currency="searchToTokenData?.symbol || ''"
+              :label="$t('swapView.amount')"
+              :show-error-text="+maxAmount < +amount"
+              :error="errorAmount"
+              :usd-amount="fromAmountUsd"
+              placeholder="0.0"
+              icon="coins"
+              select-mode
+            />
+            <SwapSelect
+              :items="allNetworks"
+              :selected-token="searchToTokenData"
+              custom-icon="logoURI"
+              placeholder="Input token"
+              class="swap-wrap__select"
+              @select="selectToToken"
+            />
+          </div>
+          <div class="swap-wrap__slippage-wrap">
+            Powered by JUPITER API
+            <div
+              :class="{ active: showSlippage }"
+              class="slippage-settings"
+              @click="showSlippage = true"
+            >
+              <SettingsIcon />
+            </div>
+          </div>
+          <SwapSlippage
+            v-if="showSlippage"
+            class="swap-wrap__slippage"
+            @close="showSlippage = false"
+          />
+        </div>
+        <PrimaryButton
+          class="swap-jupiter__submit-swap"
+          :loading="isLoading"
+          :disabled="!!errorAmount || !+amount"
+          @click="getRoute(true)"
+        >
+          {{ $t('SWAP') }}
+        </PrimaryButton>
+      </template>
+      <!-- OLD -->
+      <EmptyList v-if="!hasSwap && !isLoadingData" :title="appError" />
+      <template v-if="false && hasSwap && !isLoadingData">
         <div class="towrap">
           <div class="section">
             <div class="section__title">
@@ -169,6 +253,11 @@ import Info from '@/components/Info';
 import { WALLET_TYPES } from '@/config/walletType';
 import { useI18n } from 'vue-i18n';
 
+import SwapSelect from '@/components/UI/SwapSelect';
+import arrowDownIcon from '@/assets/icons/arrow-down.svg';
+import SettingsIcon from '@/assets/icons/settings.svg';
+import SwapSlippage from '@/components/UI/SwapSlippage';
+
 export default {
   components: {
     Info,
@@ -181,6 +270,10 @@ export default {
     SuccessModal,
     ConfirmLedgerModal,
     EmptyList,
+    SwapSelect,
+    arrowDownIcon,
+    SettingsIcon,
+    SwapSlippage,
   },
   setup() {
     const { t } = useI18n();
@@ -190,6 +283,7 @@ export default {
     const successHash = ref([]);
     const txComment = ref('');
     const showSuccessModal = ref(false);
+    const showSlippage = ref(false);
     const appError = ref(t('swapView.swapNotFound'));
 
     const hasSwap = ref(false);
@@ -213,15 +307,26 @@ export default {
     const addressTo = ref('');
 
     const amount = ref('');
+    const amountTo = ref('');
 
     const skipTokens = computed(() => store.getters['skip/tokens']);
     const jupTokens = computed(() => store.getters['jupiter/tokens']);
 
     const route = computed(() => store.getters['jupiter/route']);
 
+    const fromAmountUsd = computed(() => {
+      return route?.value?.swapUsdValue?.slice(0, 7);
+    });
+
     const amountToReceive = computed(() => {
       return BigNumber(route.value?.outAmount)
         .div(BigNumber(10).pow(searchToTokenData?.value?.decimals))
+        .toFixed(5);
+    });
+
+    const inAmountUsd = computed(() => {
+      return BigNumber(route.value?.inAmount)
+        .div(BigNumber(10).pow(searchFromTokenData?.value?.decimals))
         .toFixed(5);
     });
 
@@ -296,6 +401,17 @@ export default {
       getRoute();
     };
 
+    const reverseSwap = () => {
+      if (!searchFromTokenData.value?.title || !searchToTokenData.value?.title)
+        return;
+      amount.value = '';
+      const from = { ...searchFromTokenData.value };
+      const to = { ...searchToTokenData.value };
+
+      searchToTokenData.value = { ...from };
+      searchFromTokenData.value = { ...to };
+    };
+
     const getRoute = async (showLoadersAndModal) => {
       if (
         !searchFromTokenData?.value?.address ||
@@ -320,7 +436,7 @@ export default {
           inputMint: searchFromTokenData?.value?.address,
           outputMint: searchToTokenData?.value?.address,
           amount: valueMantissa.split('.')[0],
-          slippageBps: slippage.value * 100,
+          slippageBps: store.getters['jupiter/slippage'] * 100,
           publicKey: currentWallet?.value?.publicKey,
         });
         if (!res.error) {
@@ -393,6 +509,17 @@ export default {
       }
     );
 
+    watch(
+      () => store.getters['jupiter/slippage'],
+      (newV) => {
+        if (!newV) {
+          store.dispatch('jupiter/resetRoute');
+          return;
+        }
+        getRoute();
+      }
+    );
+
     onMounted(async () => {
       isLoadingData.value = true;
       addressTo.value = currentWallet.value.address;
@@ -409,6 +536,7 @@ export default {
 
     return {
       showInfoModal,
+      amountTo,
 
       isLoadingData,
       isLoading,
@@ -442,6 +570,7 @@ export default {
       slippage,
       getRoute,
       currentWallet,
+      routeObj: route,
 
       showLedgerConnect,
       successHash,
@@ -456,11 +585,92 @@ export default {
       appError,
       hasSwap,
       amountToReceive,
+      inAmountUsd,
+      fromAmountUsd,
+      reverseSwap,
+      showSlippage,
     };
   },
 };
 </script>
 <style lang="scss" scoped>
+// NEW
+.swap-wrap {
+  width: 516px;
+  position: relative;
+  margin: 50px 0;
+
+  &__reverse {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #c3ceeb;
+    position: absolute;
+    left: calc(50% - 20px);
+    z-index: 100;
+    top: calc(50% - 35px);
+
+    &:hover {
+      background-color: #a8b2cc;
+    }
+
+    svg {
+      fill: #fff;
+    }
+  }
+
+  &__slippage {
+    position: absolute;
+    top: -12px;
+    z-index: 105;
+  }
+
+  &__slippage-wrap {
+    color: #afbccb;
+    font-size: 14px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 15px;
+
+    .slippage-settings {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: #dae1f2;
+      margin-left: 10px;
+      cursor: pointer;
+
+      &.active {
+        background-color: $dark-blue;
+
+        svg {
+          fill: #fff;
+        }
+      }
+
+      svg {
+        fill: #4b4c63;
+      }
+    }
+  }
+
+  &__select {
+    position: absolute;
+    z-index: 100;
+    right: 10px;
+    top: 10px;
+  }
+}
+// OLD
 .swap-jupiter {
   padding: 20px 0;
   box-sizing: border-box;
@@ -570,6 +780,7 @@ export default {
   &__input {
     width: 100%;
     height: 68px;
+    position: relative;
 
     &.withError {
       margin-bottom: 25px;
@@ -666,6 +877,38 @@ export default {
 }
 
 body.dark {
+  // NEW
+  .swap-wrap {
+    &__reverse {
+      background-color: rgba(57, 59, 83, 1);
+
+      svg {
+        fill: rgba(139, 155, 199, 1);
+      }
+    }
+
+    &__slippage-wrap {
+      color: rgba(107, 147, 192, 1);
+
+      .slippage-settings {
+        background-color: rgba(49, 51, 84, 1);
+
+        &.active {
+          background-color: $dark-blue;
+
+          svg {
+            fill: #fff;
+          }
+        }
+
+        svg {
+          fill: rgba(139, 155, 199, 1);
+        }
+      }
+    }
+  }
+
+  // OLD
   .swap-jupiter {
     .towrap {
       margin-top: 20px;

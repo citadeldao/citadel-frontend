@@ -5,6 +5,7 @@ const types = {
   SET_TOKENS: 'SET_TOKENS',
   SET_ROUTE: 'SET_ROUTE',
   SET_TX: 'SET_TX',
+  SET_SLIPPAGE: 'SET_SLIPPAGE',
 };
 
 export default {
@@ -14,12 +15,14 @@ export default {
     chains: [],
     route: null,
     tx: null,
+    slippage: 0.5,
   }),
 
   getters: {
     tokens: (state) => state.tokens,
     route: (state) => state.route,
     tx: (state) => state.tx,
+    slippage: (state) => state.slippage,
   },
 
   mutations: {
@@ -32,9 +35,15 @@ export default {
     [types.SET_TX](state, value) {
       state.tx = value;
     },
+    [types.SET_SLIPPAGE](state, value) {
+      state.slippage = value;
+    },
   },
 
   actions: {
+    setSlippage({ commit }, val) {
+      commit(types.SET_SLIPPAGE, val);
+    },
     async fetchTokens({ commit }) {
       const result = await axios.get(
         'https://tokens.jup.ag/tokens?tags=verified'
