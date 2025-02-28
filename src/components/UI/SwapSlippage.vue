@@ -8,7 +8,12 @@
       <div
         v-for="(item, ndx) in slippageItems"
         :key="ndx"
-        :class="{ active: slippage === item }"
+        :class="{
+          active:
+            slippage === item ||
+            (slippageItems.length - 1 === ndx &&
+              !slippageItems.some((item) => item == slippage)),
+        }"
         class="swap-slippage__selector-item"
         @click="setSlippage(item)"
       >

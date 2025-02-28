@@ -127,111 +127,7 @@
           {{ $t('SWAP') }}
         </PrimaryButton>
       </template>
-      <!-- OLD -->
       <EmptyList v-if="!hasSwap && !isLoadingData" :title="appError" />
-      <template v-if="false && hasSwap && !isLoadingData">
-        <div class="towrap">
-          <div class="section">
-            <div class="section__title">
-              FROM TOKEN <span>{{ searchFromToken }}</span>
-            </div>
-          </div>
-          <div class="swap-jupiter__select-chain z1000">
-            <div class="autocomplete">
-              <Autocomplete
-                id="chainTokenFrom"
-                v-model:value="searchFromToken"
-                :items="allNetworks"
-                split-value
-                :custom-icon="searchFromTokenData?.logoURI || ''"
-                initial-icon="curve-arrow"
-                :label="$t('swapView.selectContract')"
-                :placeholder="$t('swapView.fromToken')"
-                :slice-items-count="10"
-                @update:value="selectFromToken"
-              />
-            </div>
-          </div>
-        </div>
-        <!-- PART2 -->
-        <div class="swap-jupiter__addresses" v-if="searchFromTokenData?.title">
-          <div class="swap-jupiter__select-chain z1000">
-            <div class="autocomplete">
-              <Autocomplete
-                id="chainTokenTo"
-                v-model:value="searchToToken"
-                :items="allNetworks"
-                split-value
-                initial-icon="curve-arrow"
-                :custom-icon="searchToTokenData?.logoURI || ''"
-                :label="$t('swapView.selectContract')"
-                :placeholder="$t('swapView.toToken')"
-                :slice-items-count="10"
-                @update:value="selectToToken"
-              />
-            </div>
-            <div
-              v-if="!!amountToReceive && amountToReceive !== 'NaN'"
-              class="to-receive-block"
-            >
-              {{ amountToReceive }}
-              <span>{{ searchToTokenData?.symbol }}</span>
-            </div>
-          </div>
-          <div
-            :class="{ withError: +maxAmount < +amount }"
-            class="swap-jupiter__input mt10"
-          >
-            <Input
-              id="amount"
-              v-model="amount"
-              :decimals="
-                searchFromTokenData?.decimals || currentWallet?.config?.decimals
-              "
-              type="currency"
-              :currency="searchFromTokenData?.symbol || currentWallet?.code"
-              :label="$t('swapView.amount')"
-              :max="maxAmount"
-              :show-set-max="+maxAmount !== 0"
-              :show-error-text="+maxAmount < +amount"
-              :error="errorAmount"
-              placeholder="0.0"
-              icon="coins"
-            />
-          </div>
-          <!--  -->
-          <div class="wrap-row mt10">
-            <div class="swap-jupiter__input">
-              <Input
-                id="slippage"
-                v-model="slippage"
-                :label="$t('swapView.slippage')"
-                :placeholder="$t('swapView.slippagePlaceholder')"
-                type="text"
-              />
-            </div>
-            <div class="slippage">
-              <div
-                v-for="(slipp, ndx) in [0.1, 0.3, 0.5, 1, 2, 3]"
-                :key="ndx"
-                :class="{ active: slippage === slipp }"
-                class="slippage__item"
-                @click="setSlippage(slipp)"
-              >
-                {{ slipp }}%
-              </div>
-            </div>
-          </div>
-        </div>
-        <PrimaryButton
-          class="swap-jupiter__submit-swap"
-          :loading="isLoading"
-          :disabled="!!errorAmount || !+amount"
-          @click="getRoute(true)"
-        >
-          {{ $t('SWAP') }}
-        </PrimaryButton>
-      </template>
     </template>
   </div>
 </template>
@@ -239,7 +135,6 @@
 import { computed, onMounted, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import useWallets from '@/compositions/useWallets';
-import Autocomplete from '@/components/UI/Autocomplete';
 import BigNumber from 'bignumber.js';
 import Loading from '@/components/Loading';
 import PrimaryButton from '@/components/UI/PrimaryButton';
@@ -262,7 +157,6 @@ export default {
   components: {
     Info,
     Loading,
-    Autocomplete,
     PrimaryButton,
     Input,
     Modal,
@@ -278,7 +172,7 @@ export default {
   setup() {
     const { t } = useI18n();
     const store = useStore();
-    const { currentWallet, wallets } = useWallets();
+    const { currentWallet } = useWallets();
     const showInfoModal = ref(false);
     const successHash = ref([]);
     const txComment = ref('');
@@ -299,10 +193,6 @@ export default {
     const searchToTokenData = ref({});
 
     const showLedgerConnect = ref(false);
-
-    //
-    const slippage = ref(0.5);
-    const showNetworkTargetWallets = ref(false);
 
     const addressTo = ref('');
 
@@ -367,21 +257,6 @@ export default {
       //   return 0;
       // })
     );
-
-    const networkTargetWallets = computed(() => {
-      return wallets.value.filter((w) => {
-        return w.net === 'solana';
-      });
-    });
-
-    const setSlippage = (val) => {
-      slippage.value = val;
-    };
-
-    const setAddress = (item) => {
-      addressTo.value = item.address;
-      showNetworkTargetWallets.value = false;
-    };
 
     const selectFromToken = async (title) => {
       searchFromTokenData.value = jupTokens.value.find((token) => {
@@ -556,18 +431,10 @@ export default {
       allNetworks,
       WALLET_TYPES,
 
-      //
-      showNetworkTargetWallets,
-
-      networkTargetWallets,
-      setAddress,
-
       addressTo,
       amount,
       maxAmount,
       errorAmount,
-      setSlippage,
-      slippage,
       getRoute,
       currentWallet,
       routeObj: route,
@@ -683,188 +550,14 @@ export default {
     margin-top: 10px;
   }
 
-  .network-target-wallets {
-    width: calc(100% - 58px);
-    z-index: 10;
-    background: $white;
-    padding: 10px 10px 0 10px;
-    box-sizing: border-box;
-    position: absolute;
-    border-radius: 12px;
-    border: 1px solid #c3ceeb;
-    // border-top: none;
-    // top: 70px;
-  }
-
-  .slippage {
-    display: flex;
-    align-items: center;
-    // justify-content: space-between;
-
-    &__wrap {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    &__label {
-      margin: 0 10px;
-      font-family: 'Panton_Regular';
-    }
-
-    &__item {
-      font-family: 'Panton_Bold';
-      cursor: pointer;
-      width: 55px;
-      margin: 0 2px;
-      height: 68px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      border-radius: 8px;
-      background: #dae1f2;
-      border: 1px solid #dae1f2;
-
-      &.active {
-        border: 1px solid $dark-blue;
-      }
-
-      &:first-child {
-        margin-left: 10px;
-      }
-
-      &:last-child {
-        margin-right: 0;
-      }
-    }
-  }
-
-  .wrap-row {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
   &__submit-swap {
     margin-top: 30px;
-  }
-
-  &__contracts {
-    width: 100%;
-    display: flex;
-
-    div {
-      width: 50%;
-      min-width: 50%;
-      font-size: 11px;
-      text-align: left;
-      color: #00a3ff;
-      word-wrap: break-word;
-
-      &.hide {
-        opacity: 0;
-      }
-    }
-  }
-
-  &__addresses {
-    margin-top: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
   }
 
   &__input {
     width: 100%;
     height: 68px;
     position: relative;
-
-    &.withError {
-      margin-bottom: 25px;
-    }
-  }
-
-  &__select-chain {
-    position: relative;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-
-    .to-receive-block {
-      position: absolute;
-      z-index: 100;
-      right: 25px;
-      top: 25px;
-      font-weight: bold;
-
-      span {
-        color: $dark-blue;
-      }
-    }
-
-    @include md {
-      flex-direction: column;
-    }
-
-    &.z1000 {
-      z-index: 1000;
-    }
-
-    &.z1001 {
-      z-index: 1300;
-    }
-
-    &.z1002 {
-      z-index: 1200;
-    }
-  }
-
-  .towrap {
-    background: #eaeef7;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    border-radius: 20px;
-    box-sizing: border-box;
-    padding: 20px;
-  }
-
-  .section {
-    display: flex;
-    width: 100%;
-    align-items: baseline;
-    margin-bottom: 20px;
-
-    &__title {
-      font-size: 22px;
-      color: #000;
-
-      span {
-        text-transform: capitalize;
-        color: #ff900d;
-      }
-    }
-
-    &__sep {
-      flex-grow: 1;
-      border-bottom: 1px dashed #fff;
-    }
-  }
-
-  .autocomplete {
-    width: 100%;
-    height: 68px;
-    position: relative;
-    @include md {
-      &.ml10 {
-        margin-left: 0;
-        margin-top: 10px;
-      }
-    }
   }
 
   .load {
@@ -903,43 +596,6 @@ body.dark {
 
         svg {
           fill: rgba(139, 155, 199, 1);
-        }
-      }
-    }
-  }
-
-  // OLD
-  .swap-jupiter {
-    .towrap {
-      margin-top: 20px;
-      background: #313354;
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      border-radius: 20px;
-      box-sizing: border-box;
-      padding: 20px;
-
-      .section {
-        .section__title {
-          color: #fff;
-        }
-      }
-    }
-
-    .network-target-wallets {
-      background: #393c55;
-      border: 1px solid #4b4c63;
-    }
-
-    .slippage {
-      &__item {
-        background: #313354;
-        color: #fff;
-        border: 1px solid #4b4c63;
-
-        &.active {
-          border: 1px solid #00a3ff;
         }
       }
     }

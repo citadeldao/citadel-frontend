@@ -63,7 +63,7 @@ export default {
       required: true,
     },
     selectedToken: {
-      type: [null, Object],
+      type: [null, Object, String],
       default: null,
     },
   },
