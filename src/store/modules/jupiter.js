@@ -156,6 +156,7 @@ export default {
     },
     resetRoute({ commit }) {
       commit(types.SET_ROUTE, null);
+      commit(types.SET_TX, null);
     },
   },
 };
