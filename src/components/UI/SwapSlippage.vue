@@ -21,7 +21,12 @@
       </div>
     </div>
     <div class="swap-slippage__field">
-      <input v-model="slippage" @input="onInput" type="number" />
+      <Input
+        v-model="slippage"
+        type="currency"
+        @input="onInput"
+        label="Slippage"
+      />
     </div>
   </div>
 </template>
@@ -29,10 +34,12 @@
 import closeIcon from '@/assets/icons/close-icon.svg';
 import { onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
+import Input from './Input';
 
 export default {
   components: {
     closeIcon,
+    Input,
   },
   props: {
     storeName: {
