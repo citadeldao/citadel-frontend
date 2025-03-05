@@ -5,6 +5,7 @@
       empty: type === 'empty',
       noIcon: !icon,
       error,
+      selectMode,
       'input--type--currency': isTypeCurrency,
     }"
   >
@@ -72,6 +73,8 @@
         </span>
       </transition>
     </div>
+
+    <div v-if="selectMode" class="input__usd-amount">~{{ usdAmount }} $</div>
 
     <div
       v-if="showSetMax"
@@ -210,6 +213,14 @@ export default {
     decimals: {
       type: [Number, String],
       default: 0,
+    },
+    usdAmount: {
+      type: [Number, String],
+      default: 0,
+    },
+    selectMode: {
+      type: Boolean,
+      default: false,
     },
   },
   emits: ['update:modelValue', 'focus', 'blur', 'input', 'clear', 'iconClick'],
@@ -655,6 +666,15 @@ export default {
     }
   }
 
+  &__usd-amount {
+    color: #afbccb;
+    font-size: 14px;
+    right: 300px;
+    // bottom: 15px;
+    top: 12px;
+    position: absolute;
+  }
+
   &__max {
     right: 16px;
     bottom: 9px;
@@ -729,6 +749,12 @@ export default {
 // .input input:focus + .input__error {
 //   display: none;
 // }
+
+.input.selectMode {
+  .input__max {
+    right: 200px; // 150px;
+  }
+}
 
 body.dark {
   .input input {

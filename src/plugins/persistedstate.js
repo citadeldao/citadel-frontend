@@ -15,6 +15,7 @@ export default function initPersistedstate(store) {
       'profile.rememberPassword',
       'balance.showBalance',
       'ledger.connectionType',
+      'jupiter.slippage',
     ],
     storage: {
       getItem: (key) => {

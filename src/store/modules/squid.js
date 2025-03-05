@@ -6,6 +6,7 @@ const types = {
   SET_CHAINS: 'SET_CHAINS',
   SET_ROUTE: 'SET_ROUTE',
   SET_COSMOS_TX: 'SET_COSMOS_TX',
+  SET_ERROR_MESSAGE: 'SET_ERROR_MESSAGE',
 };
 
 export default {
@@ -15,6 +16,7 @@ export default {
     chains: [],
     route: null,
     cosmosTx: null,
+    errorMessage: '',
   }),
 
   getters: {
@@ -22,9 +24,13 @@ export default {
     chains: (state) => state.chains,
     route: (state) => state.route,
     cosmosTx: (state) => state.cosmosTx,
+    errorMessage: (state) => state.errorMessage,
   },
 
   mutations: {
+    [types.SET_ERROR_MESSAGE](state, value) {
+      state.errorMessage = value;
+    },
     [types.SET_TOKENS](state, value) {
       state.tokens = value;
     },
@@ -80,14 +86,16 @@ export default {
           })
         );
       } else {
-        notify({
-          type: 'warning',
-          text: `SQUID tokens not loaded.`,
-        });
+        // notify({
+        //   type: 'warning',
+        //   text: result.data.message,
+        // });
+        commit(types.SET_ERROR_MESSAGE, result.data.message);
       }
     },
 
     async fetchChains({ commit }) {
+      commit(types.SET_ERROR_MESSAGE, '');
       const result = await axios.get('https://api.0xsquid.com/v1/chains', {
         headers: {
           accept: 'application/json',
@@ -98,10 +106,11 @@ export default {
         commit(types.SET_CHAINS, result.data.chains);
         // .filter((ch) => ch.chainType === 'evm')
       } else {
-        notify({
-          type: 'warning',
-          text: `SQUID chains not loaded.`,
-        });
+        // notify({
+        //   type: 'warning',
+        //   text: result.data.message,
+        // });
+        commit(types.SET_ERROR_MESSAGE, result.data.message);
       }
     },
 
@@ -169,7 +178,9 @@ export default {
           if (err.response) {
             notify({
               type: 'warning',
-              text: `${err?.response?.data?.errors[0]?.errorType}: ${err?.response?.data?.errors[0]?.message}`,
+              text:
+                err?.response?.data?.message ||
+                `${err?.response?.data?.errors[0]?.errorType}: ${err?.response?.data?.errors[0]?.message}`,
             });
           }
           return;

@@ -25,6 +25,11 @@
             <div class="label">Amount received</div>
             <div class="value usd">
               {{ amountToReceive }} {{ toToken.symbol }}
+              {{
+                `(${toToken?.address?.slice(0, 5)}...${toToken?.address?.slice(
+                  -5
+                )})`
+              }}
             </div>
           </div>
           <div class="tx-info-item">
@@ -101,6 +106,7 @@ export default {
     const tx = computed(() => store.getters['jupiter/tx']);
     console.log('TX', tx.value);
     console.log('router', route.value);
+    console.log('prrr', props.toToken);
 
     const amountToSwap = computed(() => {
       return BigNumber(route.value?.inAmount)
