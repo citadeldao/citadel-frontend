@@ -13,7 +13,7 @@
         <Loading />
       </div>
       <div v-else class="swap-menu__section">
-        <EmptyList v-if="!methods.length" :title="appError" />
+        <EmptyList v-if="!methods.length" :title="errorMessage || appError" />
         <div v-else class="swap-menu__choose-method">
           <SelectCard
             v-for="method in methods"
@@ -58,6 +58,8 @@ export default {
     const clickHandler = (name) => {
       router.push({ name: `${name}` });
     };
+
+    const errorMessage = computed(() => store.getters['squid/errorMessage']);
 
     const metamaskConnector = computed(
       () => store.getters['metamask/metamaskConnector']
@@ -204,6 +206,7 @@ export default {
       currentWalletType,
       isLoadingData,
       appError,
+      errorMessage,
     };
   },
 };
