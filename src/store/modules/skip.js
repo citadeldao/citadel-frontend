@@ -7,6 +7,7 @@ const types = {
   SET_COSMOS_TX: 'SET_COSMOS_TX',
   SET_ROUTE: 'SET_ROUTE',
   SET_ASSETS: 'SET_ASSETS',
+  SET_SLIPPAGE: 'SET_SLIPPAGE',
 };
 
 export default {
@@ -17,6 +18,7 @@ export default {
     cosmosTx: null,
     route: null,
     assets: {},
+    slippage: 0.5,
   }),
 
   getters: {
@@ -25,6 +27,7 @@ export default {
     cosmosTx: (state) => state.cosmosTx,
     route: (state) => state.route,
     assets: (state) => state.assets,
+    slippage: (state) => state.slippage,
   },
 
   mutations: {
@@ -43,9 +46,15 @@ export default {
     [types.SET_ASSETS](state, value) {
       state.assets = value;
     },
+    [types.SET_SLIPPAGE](state, value) {
+      state.slippage = value;
+    },
   },
 
   actions: {
+    setSlippage({ commit }, val) {
+      commit(types.SET_SLIPPAGE, val);
+    },
     resetRoute({ commit }) {
       commit(types.SET_ROUTE, null);
     },

@@ -12,7 +12,13 @@
       }"
       class="swap-select__icon"
     ></div>
-    <div class="swap-select__title">{{ selectedItem?.name }}</div>
+    <div class="swap-select__title">
+      {{
+        selectedItem?.name ||
+        selectedItem?.title?.split(':')[0] ||
+        'Select asset'
+      }}
+    </div>
     <div :class="{ opened }" class="swap-select__toggle">
       <arrowDownIcon width="14" height="11" />
     </div>
@@ -35,7 +41,7 @@
               backgroundImage: `url(${getIcon(item)})`,
             }"
           ></div>
-          <div class="name">{{ item.name }}</div>
+          <div class="name">{{ item.name || item?.title?.split(':')[0] }}</div>
         </div>
       </div>
     </div>
@@ -80,7 +86,7 @@ export default {
 
       return props.items
         .filter((item) => {
-          return item.name
+          return (item.name || item.title)
             .toLowerCase()
             .includes(searchStr.value.toLowerCase());
         })
