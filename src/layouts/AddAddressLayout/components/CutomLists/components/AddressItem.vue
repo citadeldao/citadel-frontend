@@ -12,10 +12,10 @@
       </keep-alive>
     </div>
     <div class="address-item__info">
-      <span class="address-item__title">{{ walletName }}</span>
+      <span class="address-item__title">{{ shortAddress(walletName) }}</span>
       <div class="address-item__address">
         <span class="address-item__address-address">
-          {{ address.address }}
+          {{ shortAddress(address.address) }}
         </span>
         <div class="address-item__address-balance">
           <span
@@ -41,6 +41,7 @@ import done from '@/assets/icons/step/done.svg';
 import { ref, markRaw, computed } from 'vue';
 import { useStore } from 'vuex';
 import { HIDE_BALANCE_MASK } from '@/helpers/prettyNumber';
+import { shortAddress } from '@/helpers';
 
 export default {
   name: 'AddressItem',
@@ -79,7 +80,14 @@ export default {
       }
     };
 
-    return { icon, toggleChecked, walletName, showBalance, HIDE_BALANCE_MASK };
+    return {
+      icon,
+      toggleChecked,
+      walletName,
+      showBalance,
+      HIDE_BALANCE_MASK,
+      shortAddress,
+    };
   },
 };
 </script>
