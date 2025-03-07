@@ -376,11 +376,12 @@ export default {
     watch(
       () => amount.value,
       () => {
-        if (!amount.value) {
+        if (!+amount.value) {
           store.dispatch('jupiter/resetRoute');
           return;
+        } else {
+          getRoute();
         }
-        getRoute();
       }
     );
 

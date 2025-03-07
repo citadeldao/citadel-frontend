@@ -9,6 +9,7 @@
           :to-address="!isBridgeMode ? currentWallet.address : addressTo"
           :from-ibc="searchFromTokenData"
           :to-ibc="searchToTokenData"
+          :slippage="$store.getters['skip/slippage']"
           @onCancel="onCancel"
           @onSuccess="onSuccess"
           @showLedger="
@@ -961,11 +962,12 @@ export default {
     watch(
       () => amount.value,
       () => {
-        if (!amount.value) {
+        if (!+amount.value) {
           store.dispatch('skip/resetRoute');
           return;
+        } else {
+          getRoute();
         }
-        getRoute();
       }
     );
 

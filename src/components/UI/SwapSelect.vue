@@ -12,7 +12,7 @@
       }"
       class="swap-select__icon"
     ></div>
-    <div class="swap-select__title">
+    <div :class="{ noTitle: !selectedItem }" class="swap-select__title">
       {{
         selectedItem?.name ||
         selectedItem?.title?.split(':')[0] ||
@@ -35,13 +35,20 @@
           class="swap-select__items-item"
           @click="onSelect(item)"
         >
-          <div
-            class="icon"
-            :style="{
-              backgroundImage: `url(${getIcon(item)})`,
-            }"
-          ></div>
-          <div class="name">{{ item.name || item?.title?.split(':')[0] }}</div>
+          <div class="row">
+            <div
+              class="icon"
+              :style="{
+                backgroundImage: `url(${getIcon(item)})`,
+              }"
+            ></div>
+            <div class="name">
+              {{ item.name || item?.title?.split(':')[0] }}
+            </div>
+          </div>
+          <div v-if="item.balance" class="balance-wrap">
+            {{ item.balance }} <span>{{ item.symbol }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -80,6 +87,7 @@ export default {
     const opened = ref(false);
     const searchStr = ref('');
     const selectedItem = ref(null);
+    console.log('ITEMS', props.items);
 
     const filteredItems = computed(() => {
       if (!searchStr.value) return props.items.slice(0, 5);
@@ -153,6 +161,10 @@ export default {
     width: 100%;
     font-size: 14px;
     margin-left: 5px;
+
+    &.noTitle {
+      color: #6b93c0;
+    }
   }
 
   &__icon {
@@ -177,7 +189,8 @@ export default {
 
   &__container {
     width: 516px;
-    min-height: 200px;
+    height: auto;
+    max-height: 350px;
     border: 1px solid #c3ceeb;
     position: absolute;
     top: 53px;
@@ -207,8 +220,23 @@ export default {
   &__items-item {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 0 15px;
     height: 40px;
+
+    .row {
+      display: flex;
+      align-items: center;
+    }
+
+    .balance-wrap {
+      font-size: 14px;
+      color: #6b93c0;
+
+      span {
+        color: #afbccb;
+      }
+    }
 
     .icon {
       width: 15px;
@@ -233,6 +261,10 @@ body.dark {
 
     &__title {
       color: #fff;
+
+      &.noTitle {
+        color: #6b93c0;
+      }
     }
 
     &__toggle {

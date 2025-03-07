@@ -71,6 +71,12 @@
               {{ amountToReceiveIBC }} {{ toIbc?.symbol }}
             </div>
           </div>
+          <div class="tx-info-item">
+            <div class="label">Slippage</div>
+            <div class="value usd">
+              {{ slippage }}
+            </div>
+          </div>
         </div>
       </div>
       <div
@@ -120,6 +126,9 @@ export default {
     Input,
   },
   props: {
+    slippage: {
+      required: true,
+    },
     onClose: {
       required: true,
     },
