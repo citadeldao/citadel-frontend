@@ -72,7 +72,7 @@
               :items="allNetworks"
               :selected-token="searchFromTokenData"
               custom-icon="logoURI"
-              placeholder="Input token"
+              placeholder="Search for a token"
               class="swap-wrap__select"
               @select="selectFromToken"
             />
@@ -97,7 +97,7 @@
               :items="allNetworks"
               :selected-token="searchToTokenData"
               custom-icon="logoURI"
-              placeholder="Input token"
+              placeholder="Search for a token"
               class="swap-wrap__select"
               @select="selectToToken"
             />

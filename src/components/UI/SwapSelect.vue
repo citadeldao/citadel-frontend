@@ -29,6 +29,9 @@
         :placeholder="placeholder"
       />
       <div class="swap-select__items">
+        <div v-if="!filteredItems.length" class="not-found-tokens">
+          No tokens found. Try another name or paste the contract address
+        </div>
         <div
           v-for="(item, ndx) in filteredItems"
           :key="ndx"
@@ -94,9 +97,13 @@ export default {
 
       return props.items
         .filter((item) => {
-          return (item.name || item.title)
-            .toLowerCase()
-            .includes(searchStr.value.toLowerCase());
+          return (
+            item.name?.toLowerCase().includes(searchStr.value.toLowerCase()) ||
+            item?.title
+              ?.toLowerCase()
+              .includes(searchStr.value.toLowerCase()) ||
+            item?.denom?.toLowerCase().includes(searchStr.value.toLowerCase())
+          );
         })
         .slice(0, searchStr.value.length >= 3 ? 12 : 5);
     });
@@ -205,7 +212,7 @@ export default {
 
   &__input {
     width: 100%;
-    height: 40px;
+    min-height: 40px;
     border: none;
     outline: none;
     padding: 0 15px;
@@ -215,6 +222,13 @@ export default {
   &__items {
     display: flex;
     flex-direction: column;
+
+    .not-found-tokens {
+      padding: 20px;
+      font-size: 14px;
+      text-align: center;
+      color: #6b93c0;
+    }
   }
 
   &__items-item {

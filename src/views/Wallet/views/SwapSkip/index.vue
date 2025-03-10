@@ -90,7 +90,7 @@
               :items="skipTokensFrom"
               :selected-token="searchFromTokenData"
               custom-icon="logo_uri"
-              placeholder="Input token"
+              placeholder="Search for a token"
               class="swap-wrap__select"
               @select="selectFromToken"
             />
@@ -115,7 +115,7 @@
               :items="skipTokensTo"
               :selected-token="searchToTokenData"
               custom-icon="logo_uri"
-              placeholder="Input token"
+              placeholder="Search for a token"
               class="swap-wrap__select"
               @select="selectToToken"
             />
@@ -156,7 +156,7 @@
               :items="allNetworks"
               :selected-token="searchNetworkToDataForSwapSelect"
               custom-icon="iconLink"
-              placeholder="Input token"
+              placeholder="Search for a token"
               class="swap-wrap__select"
               @select="selectToNetwork"
             />
