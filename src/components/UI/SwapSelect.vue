@@ -102,7 +102,10 @@ export default {
             item?.title
               ?.toLowerCase()
               .includes(searchStr.value.toLowerCase()) ||
-            item?.denom?.toLowerCase().includes(searchStr.value.toLowerCase())
+            item?.denom
+              ?.toLowerCase()
+              .includes(searchStr.value.toLowerCase()) ||
+            item?.address?.toLowerCase().includes(searchStr.value.toLowerCase())
           );
         })
         .slice(0, searchStr.value.length >= 3 ? 12 : 5);
@@ -125,6 +128,13 @@ export default {
       // selectedItem.value = item;
       onClose();
     };
+
+    // watch(
+    //   () => props.items,
+    //   (newV) => {
+    //     console.log('update items', newV);
+    //   }
+    // );
 
     watch(
       () => props.selectedToken,
@@ -222,6 +232,8 @@ export default {
   &__items {
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+    max-height: 200px;
 
     .not-found-tokens {
       padding: 20px;
@@ -237,6 +249,7 @@ export default {
     justify-content: space-between;
     padding: 0 15px;
     height: 40px;
+    min-height: 40px;
 
     .row {
       display: flex;
