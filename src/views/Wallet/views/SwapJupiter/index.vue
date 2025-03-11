@@ -69,7 +69,11 @@
             />
             <SwapSelect
               :z-index="101"
-              :items="allNetworks"
+              :items="
+                allNetworks.filter(
+                  (item) => item?.address !== searchToTokenData?.address
+                )
+              "
               :selected-token="searchFromTokenData"
               custom-icon="logoURI"
               placeholder="Search for a token"
@@ -94,7 +98,11 @@
               select-mode
             />
             <SwapSelect
-              :items="allNetworks"
+              :items="
+                allNetworks.filter(
+                  (item) => item?.address !== searchFromTokenData?.address
+                )
+              "
               :selected-token="searchToTokenData"
               custom-icon="logoURI"
               placeholder="Search for a token"
