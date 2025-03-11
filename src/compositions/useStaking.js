@@ -122,9 +122,12 @@ export default function useStaking(stakeNodes, list) {
     //if there is multiple validators
     const srcNodeAddress = Array.isArray(validatorSrcAddr) ? validatorSrcAddr[0]?.address || validatorSrcAddr[0]?.current : validatorSrcAddr?.address || validatorSrcAddr?.current
     const destNodeAddress = Array.isArray(validatorAddr) ? validatorAddr[0]?.address || validatorAddr[0]?.current : validatorAddr?.address || validatorAddr?.current
+    const stakeAccount = Array.isArray(validatorAddr) ? validatorAddr[0]?.holderAccount || validatorAddr[0]?.holderAccount : validatorAddr?.holderAccount || validatorAddr?.holderAccount
+    
     const { ok, resFee, maxAmount, resAdding, enough } = await currentWallet.value.getDelegationFee({
       walletId: currentWallet.value.id,
       transactionType: txType,
+      stakeAccount: stakeAccount || null,
       nodeAddress: isWithoutDelegation.value ? null : destNodeAddress,
       sourceNodeAddress: srcNodeAddress,
       kt: currentKtAddress.value ? currentKtAddress.value.address : undefined,
