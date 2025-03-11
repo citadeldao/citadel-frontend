@@ -87,7 +87,11 @@
             />
             <SwapSelect
               :z-index="101"
-              :items="skipTokensFrom"
+              :items="
+                skipTokensFrom.filter(
+                  (item) => item?.denom !== searchToTokenData?.denom
+                )
+              "
               :selected-token="searchFromTokenData"
               custom-icon="logo_uri"
               placeholder="Search for a token"
@@ -112,7 +116,11 @@
               select-mode
             />
             <SwapSelect
-              :items="skipTokensTo"
+              :items="
+                skipTokensTo.filter(
+                  (item) => item?.denom !== searchFromTokenData?.denom
+                )
+              "
               :selected-token="searchToTokenData"
               custom-icon="logo_uri"
               placeholder="Search for a token"
