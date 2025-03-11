@@ -112,7 +112,7 @@ export default {
       let findType = 0;
       props.info.view.forEach((v) => {
         v.components.forEach((w) => {
-          if (w.type === 'amount') {
+          if (w.type === 'amount' && !findType) {
             findType = w;
           }
         });
