@@ -17,6 +17,7 @@ export default function initPersistedstate(store) {
       'ledger.connectionType',
       'jupiter.slippage',
       'skip.slippage',
+      'squid.slippage',
     ],
     storage: {
       getItem: (key) => {

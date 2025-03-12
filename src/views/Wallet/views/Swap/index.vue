@@ -52,7 +52,144 @@
       <template v-else>
         <EmptyList v-if="!hasSwap" :title="appError" />
         <template v-else>
-          <div class="swap__select-chain z1001">
+          <!-- NEW -->
+          <template v-if="hasSwap && !isLoadingData">
+            <div class="swap-wrap">
+              <div class="swap-wrap__reverse">
+                <arrowDownIcon width="15" height="13" />
+              </div>
+              <div class="swap-wrap__input mt10">
+                <Input
+                  id="amount"
+                  v-model="amount"
+                  :decimals="searchNetworkToData?.decimals"
+                  type="currency"
+                  :currency="searchNetworkToData?.symbol || ''"
+                  :label="$t('swapView.amount')"
+                  :max="maxAmount"
+                  :show-set-max="+maxAmount !== 0"
+                  :usd-amount="inAmountUsd"
+                  placeholder="0.0"
+                  icon="coins"
+                  select-mode
+                />
+                <SwapSelect
+                  :z-index="101"
+                  :items="chainTokensFrom"
+                  :selected-token="searchFromTokenData"
+                  :custom-icon="
+                    searchFromTokenData?.logoURI ? 'logoURI' : 'iconLink'
+                  "
+                  placeholder="Search for a token"
+                  class="swap-wrap__select"
+                  style="z-index: 1114"
+                  @select="selectFromToken"
+                />
+              </div>
+              <!-- // second -->
+              <div class="autocomplete mt10" style="z-index: 1100">
+                <Autocomplete
+                  id="chains"
+                  v-model:value="searchNetworkTo"
+                  :items="allNetworks"
+                  split-value
+                  :custom-icon="searchNetworkToData?.iconLink || ''"
+                  initial-icon="curve-arrow"
+                  label="To chain"
+                  :placeholder="$t('swapView.selectChain')"
+                  @update:value="selectNetworkTo"
+                />
+              </div>
+              <div v-if="searchNetworkToData" class="swap-wrap__input mt10">
+                <Input
+                  id="amount"
+                  v-model="amountToReceive"
+                  :decimals="searchTokenToComputed?.decimals"
+                  type="currency"
+                  readonly
+                  :currency="searchTokenToComputed?.symbol || ''"
+                  :label="$t('swapView.amount')"
+                  :usd-amount="inAmountUsd"
+                  placeholder="0.0"
+                  icon="coins"
+                  select-mode
+                />
+                <SwapSelect
+                  :items="chainTokensTo"
+                  :selected-token="searchTokenToComputed"
+                  custom-icon="logoURI"
+                  placeholder="Search for a token"
+                  class="swap-wrap__select"
+                  @select="selectToToken"
+                />
+              </div>
+              <div
+                v-if="searchNetworkToData"
+                class="swap__input mt10"
+                v-click-away="() => (showNetworkTargetWallets = false)"
+              >
+                <Input
+                  id="toTokenAddr"
+                  v-model="addressTo"
+                  :label="$t('swapView.toAddressLabel')"
+                  :placeholder="$t('swapView.addressPlaceholder')"
+                  type="text"
+                  @focus="showNetworkTargetWallets = true"
+                />
+                <div
+                  v-if="showNetworkTargetWallets && networkTargetWallets.length"
+                  class="network-target-wallets"
+                >
+                  <AddressItem
+                    v-for="(item, index) in networkTargetWallets"
+                    :key="`${item.address}${item.net}${index}`"
+                    :address="item"
+                    :last-child="index === networkTargetWallets.length - 1"
+                    :checked="false"
+                    @click="setAddress(item)"
+                  />
+                </div>
+              </div>
+              <div v-if="searchNetworkToData" class="swap__input mt10">
+                <Input
+                  id="fromTokenAddr"
+                  v-model="fallbackAddress"
+                  :label="$t('swapView.fallbackAddressLabel')"
+                  :placeholder="$t('swapView.fallbackAddressPlaceholder')"
+                  type="text"
+                />
+              </div>
+              <div v-if="+maxAmount < +amount" class="error-input">
+                {{ errorAmount }}
+              </div>
+              <div v-if="searchNetworkToData" class="swap-wrap__slippage-wrap">
+                Powered by SQUID API
+                <div
+                  :class="{ active: showSlippage }"
+                  class="slippage-settings"
+                  @click="showSlippage = true"
+                >
+                  <SettingsIcon />
+                </div>
+              </div>
+              <SwapSlippage
+                v-if="showSlippage"
+                store-name="squid"
+                class="swap-wrap__slippage"
+                @close="showSlippage = false"
+              />
+            </div>
+            <PrimaryButton
+              class="swap-jupiter__submit-swap"
+              :loading="isLoading"
+              :disabled="!!errorAmount || !+amount || !addressTo || isLoading"
+              @click="getRoute(true)"
+            >
+              {{ $t('SWAP') }}
+            </PrimaryButton>
+          </template>
+          <!-- OLD -->
+          <div v-if="false" class="swap__select-chain z1001">
             <div class="autocomplete">
               <Autocomplete
                 id="chainTokenFrom"
@@ -71,14 +208,14 @@
               />
             </div>
           </div>
-          <div class="towrap">
+          <div v-if="false" class="towrap">
             <div class="section">
               <div class="section__title">
                 TO CHAIN <span>{{ searchNetworkTo }}</span>
               </div>
             </div>
             <div class="swap__select-chain z1000">
-              <div v-if="false" class="autocomplete">
+              <!-- <div v-if="false" class="autocomplete">
                 <Autocomplete
                   id="chains"
                   v-model:value="searchNetworkFrom"
@@ -89,7 +226,7 @@
                   :placeholder="$t('swapView.selectChain')"
                   @update:value="selectNetworkFrom"
                 />
-              </div>
+              </div> -->
               <div class="autocomplete">
                 <Autocomplete
                   id="chains"
@@ -136,7 +273,7 @@
           </div>
           <div
             class="swap__addresses"
-            v-if="searchTokenFromComputed && searchTokenToComputed"
+            v-if="false && searchTokenFromComputed && searchTokenToComputed"
           >
             <div v-if="false" class="swap__input">
               <Input
@@ -175,7 +312,7 @@
                 />
               </div>
             </div>
-            <div class="swap__input mt10">
+            <div v-if="false" class="swap__input mt10">
               <Input
                 id="fromTokenAddr"
                 v-model="fallbackAddress"
@@ -185,6 +322,7 @@
               />
             </div>
             <div
+              v-if="false"
               :class="{ withError: +maxAmount < +amount }"
               class="swap__input mt10"
             >
@@ -204,7 +342,7 @@
               />
             </div>
             <!--  -->
-            <div class="wrap-row mt10">
+            <div v-if="false" class="wrap-row mt10">
               <div class="swap__input">
                 <Input
                   id="slippage"
@@ -228,10 +366,11 @@
             </div>
           </div>
           <PrimaryButton
+            v-if="false"
             class="swap__submit-swap"
             :loading="isLoading"
             :disabled="!!errorAmount || !+amount || !addressTo"
-            @click="getRoute"
+            @click="getRoute(true)"
           >
             {{ $t('SWAP') }}
           </PrimaryButton>
@@ -241,7 +380,7 @@
   </div>
 </template>
 <script>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import Autocomplete from '@/components/UI/Autocomplete';
 import PrimaryButton from '@/components/UI/PrimaryButton';
@@ -260,6 +399,10 @@ import ConfirmLedgerModal from '@/components/Modals/Ledger/ConfirmLedgerModal';
 import useCurrentWalletRequests from '@/compositions/useCurrentWalletRequests';
 import AddressItem from '@/layouts/AddAddressLayout/components/CutomLists/components/AddressItem';
 import { useI18n } from 'vue-i18n';
+import SwapSelect from '@/components/UI/SwapSelect';
+import SettingsIcon from '@/assets/icons/settings.svg';
+import SwapSlippage from '@/components/UI/SwapSlippage';
+import arrowDownIcon from '@/assets/icons/arrow-down.svg';
 
 export default {
   components: {
@@ -274,6 +417,10 @@ export default {
     InfoModal,
     SuccessModal,
     AddressItem,
+    SwapSelect,
+    SwapSlippage,
+    SettingsIcon,
+    arrowDownIcon,
   },
   setup() {
     const { t } = useI18n();
@@ -286,6 +433,8 @@ export default {
     const store = useStore();
     const { currentWallet, wallets } = useWallets();
     const amount = ref('');
+    const amountTo = ref('');
+    const showSlippage = ref(false);
     const successHash = ref([]);
     const txNonce = ref(null);
     const slippage = ref(0.5);
@@ -317,6 +466,16 @@ export default {
     const squidChains = computed(() => store.getters['squid/chains']);
     const allTokens = computed(() => store.getters['squid/tokens']);
     const txRoute = computed(() => store.getters['squid/route']);
+
+    const amountToReceive = computed(() => {
+      return BigNumber(txRoute.value?.estimate?.toAmount)
+        .div(BigNumber(10).pow(searchTokenToComputed?.value?.decimals))
+        .toFixed(5);
+    });
+
+    const inAmountUsd = computed(() => {
+      return +txRoute.value?.estimate?.toAmountUSD || 0;
+    });
 
     const metamaskConnector = computed(
       () => store.getters['metamask/metamaskConnector']
@@ -354,6 +513,38 @@ export default {
       showLedgerConnect.value = false;
       isLoading.value = false;
     };
+
+    watch(
+      () => addressTo.value,
+      () => {
+        if (addressTo.value) {
+          getRoute();
+        }
+      }
+    );
+
+    watch(
+      () => amount.value,
+      () => {
+        if (!+amount.value) {
+          store.dispatch('squid/resetRoute');
+          return;
+        } else {
+          getRoute();
+        }
+      }
+    );
+
+    watch(
+      () => store.getters['squid/slippage'],
+      (newV) => {
+        if (!newV) {
+          store.dispatch('squid/resetRoute');
+          return;
+        }
+        getRoute();
+      }
+    );
 
     onMounted(async () => {
       isLoadingData.value = true;
@@ -632,20 +823,34 @@ export default {
     });
 
     const selectFromToken = async (token) => {
+      if (typeof token !== 'string') return;
       searchFromToken.value = token;
 
       searchFromTokenData.value = chainTokensFrom.value.find(
         (item) => item.name === token
       );
+      amount.value = '';
+      getRoute();
     };
 
     const selectToToken = (token) => {
+      if (typeof token !== 'string') return;
       searchToTokenFullStr.value = token;
+
       searchToToken.value = token.split(':')[0];
+
+      getRoute();
     };
 
-    const getRoute = async () => {
-      const slipp = slippage.value;
+    const getRoute = async (showLoadersAndModal) => {
+      if (
+        !+amount.value ||
+        !searchTokenFromComputed.value ||
+        !searchTokenFromComputed.value ||
+        !addressTo.value
+      )
+        return;
+      const slipp = store.getters['squid/slippage'];
       const fromChain = allNetworks.value.find(
         (item) => item.key === searchNetworkFrom.value
       )?.chainId;
@@ -705,7 +910,9 @@ export default {
           if (rawTx.value.transaction) {
             txNonce.value = rawTx.value.transaction.nonce;
           }
-          showInfoModal.value = true;
+          if (showLoadersAndModal) {
+            showInfoModal.value = true;
+          }
         } catch (err) {
           isLoadingData.value = false;
           notify({
@@ -715,7 +922,7 @@ export default {
           return;
         }
       }
-      if (txRoute.value?.estimate) {
+      if (txRoute.value?.estimate && showLoadersAndModal) {
         showInfoModal.value = true;
       }
     };
@@ -857,11 +1064,100 @@ export default {
       slippage,
       setSlippage,
       setAddress,
+
+      // new
+      amountTo,
+      showSlippage,
+      amountToReceive,
+      inAmountUsd,
     };
   },
 };
 </script>
 <style lang="scss" scoped>
+// NEW
+.swap-wrap {
+  width: 516px;
+  position: relative;
+  margin: 50px 0;
+
+  .error-input {
+    font-size: 14px;
+    color: red;
+    margin-top: 10px;
+    position: absolute;
+  }
+
+  &__reverse {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #c3ceeb;
+    position: absolute;
+    left: calc(50% - 20px);
+    z-index: 1114;
+    top: 64px;
+
+    svg {
+      fill: #fff;
+    }
+  }
+
+  &__input {
+    position: relative;
+  }
+
+  &__slippage {
+    position: absolute;
+    top: 220px;
+    z-index: 1112;
+  }
+
+  &__slippage-wrap {
+    color: #afbccb;
+    font-size: 14px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 15px;
+
+    .slippage-settings {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: #dae1f2;
+      margin-left: 10px;
+      cursor: pointer;
+
+      &.active {
+        background-color: $dark-blue;
+
+        svg {
+          fill: #fff;
+        }
+      }
+
+      svg {
+        fill: #4b4c63;
+      }
+    }
+  }
+
+  &__select {
+    position: absolute;
+    z-index: 100;
+    right: 10px;
+    top: 10px;
+  }
+}
+// old
 .swap {
   padding: 20px 0;
   box-sizing: border-box;
@@ -904,7 +1200,7 @@ export default {
   }
 
   .network-target-wallets {
-    width: calc(100% - 58px);
+    width: 100%;
     z-index: 10;
     background: $white;
     padding: 10px 10px 0 10px;
@@ -1088,6 +1384,39 @@ body.dark {
 
         &.active {
           border: 1px solid #00a3ff;
+        }
+      }
+    }
+  }
+}
+
+body.dark {
+  // NEW
+  .swap-wrap {
+    &__reverse {
+      background-color: rgba(57, 59, 83, 1);
+
+      svg {
+        fill: rgba(139, 155, 199, 1);
+      }
+    }
+
+    &__slippage-wrap {
+      color: rgba(107, 147, 192, 1);
+
+      .slippage-settings {
+        background-color: rgba(49, 51, 84, 1);
+
+        &.active {
+          background-color: $dark-blue;
+
+          svg {
+            fill: #fff;
+          }
+        }
+
+        svg {
+          fill: rgba(139, 155, 199, 1);
         }
       }
     }
