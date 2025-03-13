@@ -1609,7 +1609,7 @@
         "toToken": "To token",
         "selectContract": "Select token",
         "fromAddressLabel": "From address",
-        "toAddressLabel": "To address",
+        "toAddressLabel": "Address receive",
         "fallbackAddressLabel": "Fallback address between EVM -> COSMOS",
         "fallbackAddressPlaceholder": "You must provide a fallback address of a chain (cosmos, osmosis)",
         "addressPlaceholder": "Input address",

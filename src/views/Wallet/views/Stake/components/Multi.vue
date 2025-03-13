@@ -666,8 +666,10 @@ export default {
       }
 
       isLoading.value = true;
+
       const { rawTxs, ok } = await props.currentWallet.prepareDelegation({
         walletId: props.currentWallet.id,
+        stakeAccount: selectedNode.value.holderAccount,
         nodeAddresses:
           isMultiple.value ||
           (props.currentWallet.hasMultiUnstake && mode.value === 'unstake')

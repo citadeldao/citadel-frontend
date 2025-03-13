@@ -69,10 +69,14 @@
             />
             <SwapSelect
               :z-index="101"
-              :items="allNetworks"
+              :items="
+                allNetworks.filter(
+                  (item) => item?.address !== searchToTokenData?.address
+                )
+              "
               :selected-token="searchFromTokenData"
               custom-icon="logoURI"
-              placeholder="Input token"
+              placeholder="Search for a token"
               class="swap-wrap__select"
               @select="selectFromToken"
             />
@@ -94,10 +98,14 @@
               select-mode
             />
             <SwapSelect
-              :items="allNetworks"
+              :items="
+                allNetworks.filter(
+                  (item) => item?.address !== searchFromTokenData?.address
+                )
+              "
               :selected-token="searchToTokenData"
               custom-icon="logoURI"
-              placeholder="Input token"
+              placeholder="Search for a token"
               class="swap-wrap__select"
               @select="selectToToken"
             />
@@ -250,7 +258,26 @@ export default {
     });
 
     const allNetworks = computed(
-      () => [].concat(jupTokens.value)
+      () => {
+        return [].concat(
+          jupTokens.value.map((item) => {
+            const token = subtokensWallet.value.find((t) =>
+              t.net.includes(item.address)
+            );
+            let balance = token?.tokenBalance?.mainBalance || 0;
+
+            if (
+              item.address === 'So11111111111111111111111111111111111111112'
+            ) {
+              balance = currentWallet.value?.balance?.mainBalance;
+            }
+            return {
+              ...item,
+              balance,
+            };
+          })
+        );
+      }
       // .sort((a, b) => {
       //   if (a.title > b.title) return 1;
       //   if (a.title < b.title) return -1;
@@ -376,11 +403,12 @@ export default {
     watch(
       () => amount.value,
       () => {
-        if (!amount.value) {
+        if (!+amount.value) {
           store.dispatch('jupiter/resetRoute');
           return;
+        } else {
+          getRoute();
         }
-        getRoute();
       }
     );
 

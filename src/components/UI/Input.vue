@@ -751,6 +751,9 @@ export default {
 // }
 
 .input.selectMode {
+  input {
+    min-height: 67px;
+  }
   .input__max {
     right: 200px; // 150px;
   }

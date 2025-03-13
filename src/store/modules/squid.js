@@ -7,6 +7,7 @@ const types = {
   SET_ROUTE: 'SET_ROUTE',
   SET_COSMOS_TX: 'SET_COSMOS_TX',
   SET_ERROR_MESSAGE: 'SET_ERROR_MESSAGE',
+  SET_SLIPPAGE: 'SET_SLIPPAGE',
 };
 
 export default {
@@ -17,6 +18,7 @@ export default {
     route: null,
     cosmosTx: null,
     errorMessage: '',
+    slippage: 0.5,
   }),
 
   getters: {
@@ -25,9 +27,13 @@ export default {
     route: (state) => state.route,
     cosmosTx: (state) => state.cosmosTx,
     errorMessage: (state) => state.errorMessage,
+    slippage: (state) => state.slippage,
   },
 
   mutations: {
+    [types.SET_SLIPPAGE](state, value) {
+      state.slippage = value;
+    },
     [types.SET_ERROR_MESSAGE](state, value) {
       state.errorMessage = value;
     },
@@ -51,6 +57,9 @@ export default {
   },
 
   actions: {
+    setSlippage({ commit }, val) {
+      commit(types.SET_SLIPPAGE, val);
+    },
     async convertToCosmosTx({ commit }, { net, address, data, publicKey }) {
       const result = await axios.post(
         `${process.env.VUE_APP_PUBLIC_BACKEND_URL}/blockchain/${net}/${address}/builder/customTx`,
@@ -193,6 +202,7 @@ export default {
     },
     resetRoute({ commit }) {
       commit(types.SET_ROUTE, null);
+      commit(types.SET_COSMOS_TX, null);
     },
   },
 };

@@ -205,9 +205,7 @@ export default {
     ]);
 
     const amountToSwapBRIDGE = computed(() => {
-      return BigNumber(props.txRoute?.estimate?.fromAmount)
-        .div(BigNumber(10).pow(props.fromToken?.decimals))
-        .toFixed();
+      return props.txRoute?.estimate?.toAmountUSD;
     });
 
     const amountToReceiveBRIDGE = computed(() => {

@@ -16,6 +16,8 @@ export default function initPersistedstate(store) {
       'balance.showBalance',
       'ledger.connectionType',
       'jupiter.slippage',
+      'skip.slippage',
+      'squid.slippage',
     ],
     storage: {
       getItem: (key) => {
