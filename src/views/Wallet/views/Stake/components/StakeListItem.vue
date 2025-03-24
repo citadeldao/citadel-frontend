@@ -584,14 +584,17 @@ export default {
   &__title-line-value {
     &.active {
       color: $green;
+      opacity: 1;
     }
 
     &.inactive {
       color: $red;
+      opacity: 1;
     }
 
     &.processing {
       color: #f8a614d4;
+      opacity: 1;
     }
   }
 
