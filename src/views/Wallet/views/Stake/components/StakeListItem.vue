@@ -96,7 +96,12 @@
             <span class="stake-list-item__title-line-currency">%</span>
           </div>
           <!-- item isInactive solana -->
-          <div v-if="item.isInactive" class="stake-list-item__title-line">
+          <div
+            v-if="
+              item.isInactive && !item.activationDate && !item.deactivationDate
+            "
+            class="stake-list-item__title-line"
+          >
             <span class="stake-list-item__title-line-title"
               >{{ $t('Status') }}:</span
             >
@@ -108,6 +113,18 @@
               class="stake-list-item__title-line-value"
               >{{ item.isInactive }}</span
             >
+          </div>
+          <!-- solana statuses -->
+          <div
+            v-if="item.activationDate || item.deactivationDate"
+            class="stake-list-item__title-line"
+          >
+            <span class="stake-list-item__title-line-title"
+              >{{ $t('Status') }}:</span
+            >
+            <span class="stake-list-item__title-line-value processing">{{
+              item.activationDate ? 'Activating' : 'Deactivating'
+            }}</span>
           </div>
         </div>
       </div>
@@ -571,6 +588,10 @@ export default {
 
     &.inactive {
       color: $red;
+    }
+
+    &.processing {
+      color: #f8a614d4;
     }
   }
 
