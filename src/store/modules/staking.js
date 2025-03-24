@@ -66,7 +66,9 @@ export default {
                   holderAccount: item.address,
                   value: item.staked,
                   staked: true,
-                  isInactive: item.isInactive ? 'Active' : 'Inactive',
+                  activationDate: item.activationDate || null,
+                  deactivationDate: item.deactivationDate || null,
+                  isInactive: item.isInactive ? 'Inactive' : 'Active',
                 };
               });
             }
