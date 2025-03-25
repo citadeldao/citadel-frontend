@@ -23,12 +23,22 @@
         @editClick="updateRedelegationDirection('from')"
       />
     </div>
+    <div v-if="selectedNode.deactivationDate" class="unstaking-period">
+      Unstaking in progress...
+    </div>
     <div
-      v-if="editMode || isWithoutDelegation"
+      v-if="(editMode || isWithoutDelegation) && !selectedNode.deactivationDate"
       class="choose-staking-node__tabs-wrapper"
     >
       <div class="choose-staking-node__tabs">
         <span
+          v-if="
+            !(
+              selectedNode.isInactive === 'Inactive' &&
+              !selectedNode.activationDate &&
+              !selectedNode.deactivationDate
+            )
+          "
           :class="{ 'choose-staking-node__active-tab': activeTab === 'stake' }"
           class="choose-staking-node__tabs-item"
           @click="setActiveTab('stake')"
@@ -43,7 +53,11 @@
           @click="setActiveTab('unstake')"
         >
           {{
-            selectedNode.isInactive === 'Inactive' ? 'Withdraw' : $t('unstake')
+            !selectedNode.activationDate &&
+            !selectedNode.deactivationDate &&
+            selectedNode.isInactive === 'Inactive'
+              ? 'Withdraw'
+              : $t('unstake')
           }}
         </span>
         <span
@@ -88,7 +102,10 @@
         />
       </div>
     </div>
-    <div v-if="showInput" class="choose-staking-node__amount-input">
+    <div
+      v-if="showInput && !selectedNode.deactivationDate"
+      class="choose-staking-node__amount-input"
+    >
       <Input
         :disabled="activeInput"
         id="amount"
@@ -133,7 +150,7 @@
 </template>
 
 <script>
-import { computed, inject } from 'vue';
+import { computed, inject, onMounted } from 'vue';
 import StakeListItem from './StakeListItem.vue';
 import Input from '@/components/UI/Input';
 import pointer from '@/assets/icons/pointer.svg';
@@ -217,6 +234,22 @@ export default {
       return false;
     });
 
+    onMounted(() => {
+      console.log('node', selectedNode.value);
+      if (props.currentWallet.net === 'solana') {
+        if (
+          selectedNode.value.isInactive === 'Inactive' &&
+          !selectedNode.value.activationDate &&
+          !selectedNode.value.deactivationDate &&
+          props.activeTab !== 'unstake'
+        ) {
+          setTimeout(() => {
+            setActiveTab('unstake');
+          }, 1000);
+        }
+      }
+    });
+
     return {
       selectedNode,
       showNodesList,
@@ -243,6 +276,13 @@ export default {
   display: flex;
   width: 100%;
   flex-direction: column;
+
+  .unstaking-period {
+    font-size: 16px;
+    text-align: center;
+    color: #6b93c0;
+    margin-top: 10px;
+  }
   // margin-bottom: 19px;
   &__placeholder {
     height: 150px;
