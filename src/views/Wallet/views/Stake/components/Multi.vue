@@ -69,7 +69,9 @@
           />
         </div>
         <div
-          v-if="currentWallet.unstakeingPerioud"
+          v-if="
+            currentWallet.unstakeingPerioud && currentWallet.net !== 'solana'
+          "
           class="multi__stake-list-item multi__stake-list-item--md"
         >
           <StakeListItem
@@ -275,6 +277,9 @@
           :stake-nodes="stakeNodes"
           :modal-close-handler="modalCloseHandler"
           :choose-node-modal-data="chooseNodeModalData"
+          :withdraw-btn="
+            selectedNode?.isInactive === 'Inactive' ? 'Withdraw Stake' : ''
+          "
           :disabled="disabled"
           :is-loading="isLoading"
           :prepare-delegation="prepareDelegation"

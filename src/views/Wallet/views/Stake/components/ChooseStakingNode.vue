@@ -42,7 +42,9 @@
           class="choose-staking-node__tabs-item"
           @click="setActiveTab('unstake')"
         >
-          {{ $t('unstake') }}
+          {{
+            selectedNode.isInactive === 'Inactive' ? 'Withdraw' : $t('unstake')
+          }}
         </span>
         <span
           v-if="currentWallet.hasRedelegation && !isWithoutDelegation"
@@ -170,6 +172,7 @@ export default {
       updateShowChooseNode(false);
       updateShowNodesList(true);
     };
+
     const setActiveTab = async (value) => {
       emit('update:activeTab', value);
       updateAmount('');

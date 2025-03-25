@@ -4,8 +4,11 @@
     :title="$t(chooseNodeModalData.title)"
     :desc="chooseNodeModalData.desc"
     type="action"
-    width="600px"
-    :button-text="chooseNodeModalData.button"
+    width="700px"
+    :button-text="
+      (chooseNodeModalData.button === 'unstaking.unstake' && withdrawBtn) ||
+      chooseNodeModalData.button
+    "
     :disabled="disabled"
     :loading="isLoading"
     data-qa="staking"
@@ -24,6 +27,10 @@ export default {
     ModalContent,
   },
   props: {
+    withdrawBtn: {
+      type: String,
+      default: '',
+    },
     modalCloseHandler: {
       required: true,
     },
