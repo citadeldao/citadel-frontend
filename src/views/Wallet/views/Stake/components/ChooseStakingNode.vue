@@ -23,20 +23,22 @@
         @editClick="updateRedelegationDirection('from')"
       />
     </div>
-    <div v-if="selectedNode.deactivationDate" class="unstaking-period">
+    <div v-if="selectedNode?.deactivationDate" class="unstaking-period">
       Unstaking in progress...
     </div>
     <div
-      v-if="(editMode || isWithoutDelegation) && !selectedNode.deactivationDate"
+      v-if="
+        (editMode || isWithoutDelegation) && !selectedNode?.deactivationDate
+      "
       class="choose-staking-node__tabs-wrapper"
     >
       <div class="choose-staking-node__tabs">
         <span
           v-if="
             !(
-              selectedNode.isInactive === 'Inactive' &&
-              !selectedNode.activationDate &&
-              !selectedNode.deactivationDate
+              selectedNode?.isInactive === 'Inactive' &&
+              !selectedNode?.activationDate &&
+              !selectedNode?.deactivationDate
             )
           "
           :class="{ 'choose-staking-node__active-tab': activeTab === 'stake' }"
@@ -53,9 +55,9 @@
           @click="setActiveTab('unstake')"
         >
           {{
-            !selectedNode.activationDate &&
-            !selectedNode.deactivationDate &&
-            selectedNode.isInactive === 'Inactive'
+            !selectedNode?.activationDate &&
+            !selectedNode?.deactivationDate &&
+            selectedNode?.isInactive === 'Inactive'
               ? 'Withdraw'
               : $t('unstake')
           }}
@@ -103,7 +105,7 @@
       </div>
     </div>
     <div
-      v-if="showInput && !selectedNode.deactivationDate"
+      v-if="showInput && !selectedNode?.deactivationDate"
       class="choose-staking-node__amount-input"
     >
       <Input
@@ -238,14 +240,14 @@ export default {
       console.log('node', selectedNode.value);
       if (props.currentWallet.net === 'solana') {
         if (
-          selectedNode.value.isInactive === 'Inactive' &&
-          !selectedNode.value.activationDate &&
-          !selectedNode.value.deactivationDate &&
+          selectedNode?.value?.isInactive === 'Inactive' &&
+          !selectedNode?.value?.activationDate &&
+          !selectedNode?.value?.deactivationDate &&
           props.activeTab !== 'unstake'
         ) {
           setTimeout(() => {
             setActiveTab('unstake');
-          }, 1000);
+          }, 1500);
         }
       }
     });

@@ -278,8 +278,8 @@
           :modal-close-handler="modalCloseHandler"
           :choose-node-modal-data="chooseNodeModalData"
           :withdraw-btn="
-            !selectedNode.activationDate &&
-            !selectedNode.deactivationDate &&
+            !selectedNode?.activationDate &&
+            !selectedNode?.deactivationDate &&
             selectedNode?.isInactive === 'Inactive'
               ? 'Withdraw Stake'
               : ''
