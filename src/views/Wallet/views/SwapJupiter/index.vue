@@ -238,7 +238,7 @@ export default {
       );
 
       if (token) {
-        return token.balanceUSD;
+        return token?.tokenBalance?.mainBalance;
       }
       if (
         searchFromTokenData?.value?.address ===
