@@ -140,7 +140,7 @@
   </div>
 </template>
 <script>
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import useWallets from '@/compositions/useWallets';
 import BigNumber from 'bignumber.js';
@@ -422,6 +422,10 @@ export default {
         getRoute();
       }
     );
+
+    onBeforeUnmount(() => {
+      store.dispatch('jupiter/resetRoute');
+    });
 
     onMounted(async () => {
       isLoadingData.value = true;
