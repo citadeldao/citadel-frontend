@@ -237,7 +237,6 @@ export default {
     });
 
     onMounted(() => {
-      console.log('node', selectedNode.value);
       if (props.currentWallet.net === 'solana') {
         if (
           selectedNode?.value?.isInactive === 'Inactive' &&
@@ -247,7 +246,7 @@ export default {
         ) {
           setTimeout(() => {
             setActiveTab('unstake');
-          }, 1500);
+          }, 500);
         }
       }
     });
