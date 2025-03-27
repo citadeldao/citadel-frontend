@@ -24,7 +24,7 @@
       />
     </div>
     <div v-if="selectedNode?.deactivationDate" class="unstaking-period">
-      Unstaking in progress...
+      Staking in progress...
     </div>
     <div
       v-if="
