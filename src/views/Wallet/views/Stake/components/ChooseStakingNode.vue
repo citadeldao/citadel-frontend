@@ -23,24 +23,10 @@
         @editClick="updateRedelegationDirection('from')"
       />
     </div>
-    <div v-if="selectedNode?.deactivationDate" class="unstaking-period">
-      Staking in progress...
-    </div>
-    <div
-      v-if="
-        (editMode || isWithoutDelegation) && !selectedNode?.deactivationDate
-      "
-      class="choose-staking-node__tabs-wrapper"
-    >
+    <div v-if="false" class="unstaking-period">Staking in progress...</div>
+    <div v-if="true" class="choose-staking-node__tabs-wrapper">
       <div class="choose-staking-node__tabs">
         <span
-          v-if="
-            !(
-              selectedNode?.isInactive === 'Inactive' &&
-              !selectedNode?.activationDate &&
-              !selectedNode?.deactivationDate
-            )
-          "
           :class="{ 'choose-staking-node__active-tab': activeTab === 'stake' }"
           class="choose-staking-node__tabs-item"
           @click="setActiveTab('stake')"
@@ -152,7 +138,7 @@
 </template>
 
 <script>
-import { computed, inject, onMounted } from 'vue';
+import { computed, inject } from 'vue';
 import StakeListItem from './StakeListItem.vue';
 import Input from '@/components/UI/Input';
 import pointer from '@/assets/icons/pointer.svg';
@@ -236,20 +222,20 @@ export default {
       return false;
     });
 
-    onMounted(() => {
-      if (props.currentWallet.net === 'solana') {
-        if (
-          selectedNode?.value?.isInactive === 'Inactive' &&
-          !selectedNode?.value?.activationDate &&
-          !selectedNode?.value?.deactivationDate &&
-          props.activeTab !== 'unstake'
-        ) {
-          setTimeout(() => {
-            setActiveTab('unstake');
-          }, 500);
-        }
-      }
-    });
+    // onMounted(() => {
+    //   if (props.currentWallet.net === 'solana') {
+    //     if (
+    //       selectedNode?.value?.isInactive === 'Inactive' &&
+    //       !selectedNode?.value?.activationDate &&
+    //       !selectedNode?.value?.deactivationDate &&
+    //       props.activeTab !== 'unstake'
+    //     ) {
+    //       setTimeout(() => {
+    //         setActiveTab('unstake');
+    //       }, 500);
+    //     }
+    //   }
+    // });
 
     return {
       selectedNode,
