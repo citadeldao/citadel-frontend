@@ -90,10 +90,7 @@
         />
       </div>
     </div>
-    <div
-      v-if="showInput && !selectedNode?.deactivationDate"
-      class="choose-staking-node__amount-input"
-    >
+    <div v-if="showInput" class="choose-staking-node__amount-input">
       <Input
         :disabled="activeInput"
         id="amount"
