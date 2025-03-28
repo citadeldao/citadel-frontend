@@ -85,6 +85,10 @@ textarea{
   opacity: 0;
 }
 
+.el-picker__popper.el-popper {
+  z-index: 99999 !important;
+}
+
 .el-pager li{
   font-size: 16px !important;
   line-height: 19px !important;
