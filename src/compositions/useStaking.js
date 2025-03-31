@@ -509,7 +509,7 @@ export default function useStaking(stakeNodes, list) {
             perioudTo: currentWallet.value.unstakePerioudTo,
             link: currentWallet.value.unstakePerioudLink,
           })}`
-          : currentWallet.value.net === 'stacks' ? t('staking.chooseNodeModalDescStacks1') : `${t('staking.chooseNodeModalDesc1', {
+          : currentWallet.value.net === 'stacks' ? t('staking.chooseNodeModalDescStacks1') : currentWallet.value.net === 'solana' && mode.value === 'stake' ? 'Choose a node and set the amount to stake or unstake. The process takes about 2 days.' : `${t('staking.chooseNodeModalDesc1', {
             net: currentWallet.value.name,
             perioud: currentWallet.value.unstakeingPerioud,
           })}`,
