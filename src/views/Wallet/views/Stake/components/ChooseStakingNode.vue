@@ -34,6 +34,7 @@
           {{ $t('stake') }}
         </span>
         <span
+          v-if="!selectedNode?.deactivationDate"
           :class="{
             'choose-staking-node__active-tab': activeTab === 'unstake',
           }"
