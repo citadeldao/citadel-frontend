@@ -423,7 +423,7 @@ export default function useStaking(stakeNodes, list) {
             link: currentWallet.value.unstakePerioudLink,
           })}`/* : currentWallet.value.hasMultiUnstake ?
           `${t('singleStake.claimUnstakeNote',{code: currentWallet.value.code})}` */
-          : `${t(currentWallet.value.net === 'stacks' ? 'staking.chooseNodeModalDescStacks1' : /* currentWallet.value.messages.unstakeingPrefix ? currentWallet.value.messages.unstakeingPrefix : */ 'unstaking.defaultPrefix')} ${currentWallet.value.net === 'stacks' ? '' : t('unstaking.chooseNodeModalDesc', {
+          : currentWallet.value.net === 'solana' ? 'Choose a node and set the amount to stake or unstake. The process takes about 2 days.' : `${t(currentWallet.value.net === 'stacks' ? 'staking.chooseNodeModalDescStacks1' : /* currentWallet.value.messages.unstakeingPrefix ? currentWallet.value.messages.unstakeingPrefix : */ 'unstaking.defaultPrefix')} ${currentWallet.value.net === 'stacks' ? '' : t('unstaking.chooseNodeModalDesc', {
             net: currentWallet.value.name,
             perioud: currentWallet.value.unstakeingPerioud,
           })}`,
