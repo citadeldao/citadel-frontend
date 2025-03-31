@@ -93,7 +93,7 @@
     </div>
     <div v-if="showInput" class="choose-staking-node__amount-input">
       <Input
-        :disabled="activeInput"
+        :disabled="activeInput || disabledAmount"
         id="amount"
         :value="amount"
         :label="$t('amount')"
@@ -136,7 +136,7 @@
 </template>
 
 <script>
-import { computed, inject, onMounted } from 'vue';
+import { computed, inject, ref, onMounted } from 'vue';
 import StakeListItem from './StakeListItem.vue';
 import Input from '@/components/UI/Input';
 import pointer from '@/assets/icons/pointer.svg';
@@ -220,6 +220,8 @@ export default {
       return false;
     });
 
+    const disabledAmount = ref(false);
+
     onMounted(() => {
       if (props.currentWallet.net === 'solana') {
         if (props.activeTab === 'unstake') {
@@ -230,6 +232,7 @@ export default {
             !selectedNode?.value?.deactivationDate
           ) {
             updateAmount(maxAmount.value);
+            disabledAmount.value = true;
           }
         }
         // if (
@@ -260,6 +263,7 @@ export default {
       updateRedelegationDirection,
       isWithoutDelegation,
       activeInput,
+      disabledAmount,
     };
   },
 };
