@@ -277,6 +277,7 @@
           :stake-nodes="stakeNodes"
           :modal-close-handler="modalCloseHandler"
           :choose-node-modal-data="chooseNodeModalData"
+          :selected-node="selectedNode"
           :withdraw-btn="
             !selectedNode?.activationDate &&
             !selectedNode?.deactivationDate &&

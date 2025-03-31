@@ -135,7 +135,7 @@
 </template>
 
 <script>
-import { computed, inject } from 'vue';
+import { computed, inject, onMounted } from 'vue';
 import StakeListItem from './StakeListItem.vue';
 import Input from '@/components/UI/Input';
 import pointer from '@/assets/icons/pointer.svg';
@@ -219,20 +219,30 @@ export default {
       return false;
     });
 
-    // onMounted(() => {
-    //   if (props.currentWallet.net === 'solana') {
-    //     if (
-    //       selectedNode?.value?.isInactive === 'Inactive' &&
-    //       !selectedNode?.value?.activationDate &&
-    //       !selectedNode?.value?.deactivationDate &&
-    //       props.activeTab !== 'unstake'
-    //     ) {
-    //       setTimeout(() => {
-    //         setActiveTab('unstake');
-    //       }, 500);
-    //     }
-    //   }
-    // });
+    onMounted(() => {
+      if (props.currentWallet.net === 'solana') {
+        if (props.activeTab === 'unstake') {
+          // active
+          if (
+            selectedNode?.value?.isInactive === 'Active' &&
+            !selectedNode?.value?.activationDate &&
+            !selectedNode?.value?.deactivationDate
+          ) {
+            updateAmount(maxAmount.value);
+          }
+        }
+        // if (
+        //   selectedNode?.value?.isInactive === 'Inactive' &&
+        //   !selectedNode?.value?.activationDate &&
+        //   !selectedNode?.value?.deactivationDate &&
+        //   props.activeTab !== 'unstake'
+        // ) {
+        //   setTimeout(() => {
+        //     setActiveTab('unstake');
+        //   }, 500);
+        // }
+      }
+    });
 
     return {
       selectedNode,

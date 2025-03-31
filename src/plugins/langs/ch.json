@@ -1615,5 +1615,11 @@
         "jupiterDescription": "",
         "skipDescription": "",
         "swapNotFound": ""
+    },
+    "solana": {
+        "statusActive": "",
+        "statusInactive": "",
+        "statusActivate": "",
+        "statusDeactivate": ""
     }
 }
