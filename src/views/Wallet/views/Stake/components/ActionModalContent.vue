@@ -12,9 +12,11 @@
       <span
         class="action-modal-content__info-text"
         v-html="
-          $t('unstaking.unstakeNote', {
-            unstakeingPerioud: wallet.unstakeingPerioud,
-          })
+          wallet.net === 'solana'
+            ? 'After confirming the withdrawal, your assets will be instantly available in your balance.'
+            : $t('unstaking.unstakeNote', {
+                unstakeingPerioud: wallet.unstakeingPerioud,
+              })
         "
       >
       </span>

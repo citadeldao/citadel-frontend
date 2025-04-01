@@ -313,7 +313,7 @@
           v-if="showConfirmTransaction"
           v-click-away="modalCloseHandler"
           :title="actionModalData.title"
-          :desc="actionModalData.desc"
+          :desc="currentWallet.net === 'solana' ? '' : actionModalData.desc"
           button-text="confirm"
           type="action"
           :loading="isLoading"
