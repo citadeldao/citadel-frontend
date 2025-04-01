@@ -159,7 +159,10 @@
           </span>
         </span>
       </div>
-      <div v-if="currentWallet.unstakeingPerioud" class="balance__info-line">
+      <div
+        v-if="currentWallet.net !== 'solana' && currentWallet.unstakeingPerioud"
+        class="balance__info-line"
+      >
         <span class="balance__info-title">
           <span class="balance__info-title__text">{{ $t('frozen') }}</span>
           <Tooltip v-if="balance.frozen?.length">

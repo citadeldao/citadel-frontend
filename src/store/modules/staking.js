@@ -43,11 +43,14 @@ export default {
     },
 
     async getStakeList({ commit, rootGetters }, wallet) {
-      const { data, error } = await citadel.getStakeList(wallet.id);
+      const currentWallet = rootGetters['wallets/currentWallet'];
+
+      const { data, error } =
+        currentWallet.net === 'solana'
+          ? () => ({ data: [], error: null })
+          : await citadel.getStakeList(wallet.id);
 
       if (!error) {
-        const currentWallet = rootGetters['wallets/currentWallet'];
-
         if (
           currentWallet?.net?.toLowerCase() === wallet?.net?.toLowerCase() &&
           currentWallet?.address?.toLowerCase() ===
@@ -66,7 +69,9 @@ export default {
                   holderAccount: item.address,
                   value: item.staked,
                   staked: true,
-                  isInactive: item.isInactive ? 'Active' : 'Inactive',
+                  activationDate: item.activationDate || null,
+                  deactivationDate: item.deactivationDate || null,
+                  isInactive: item.isInactive ? 'Inactive' : 'Active',
                 };
               });
             }

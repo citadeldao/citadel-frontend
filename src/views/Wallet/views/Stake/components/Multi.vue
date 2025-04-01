@@ -69,7 +69,9 @@
           />
         </div>
         <div
-          v-if="currentWallet.unstakeingPerioud"
+          v-if="
+            currentWallet.unstakeingPerioud && currentWallet.net !== 'solana'
+          "
           class="multi__stake-list-item multi__stake-list-item--md"
         >
           <StakeListItem
@@ -275,6 +277,14 @@
           :stake-nodes="stakeNodes"
           :modal-close-handler="modalCloseHandler"
           :choose-node-modal-data="chooseNodeModalData"
+          :selected-node="selectedNode"
+          :withdraw-btn="
+            !selectedNode?.activationDate &&
+            !selectedNode?.deactivationDate &&
+            selectedNode?.isInactive === 'Inactive'
+              ? 'Withdraw Stake'
+              : ''
+          "
           :disabled="disabled"
           :is-loading="isLoading"
           :prepare-delegation="prepareDelegation"
@@ -303,7 +313,7 @@
           v-if="showConfirmTransaction"
           v-click-away="modalCloseHandler"
           :title="actionModalData.title"
-          :desc="actionModalData.desc"
+          :desc="currentWallet.net === 'solana' ? '' : actionModalData.desc"
           button-text="confirm"
           type="action"
           :loading="isLoading"

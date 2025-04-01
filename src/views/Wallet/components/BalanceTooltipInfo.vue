@@ -13,7 +13,7 @@
       - {{ $t('balanceTooltipInfo.stakedBalanceBalanceInfo') }}
     </span>
     <span
-      v-if="currentWallet.unstakeingPerioud"
+      v-if="currentWallet.unstakeingPerioud && currentWallet.net !== 'solana'"
       class="balance-tooltip-info__line"
     >
       <span class="balance-tooltip-info__line-label">
@@ -53,7 +53,10 @@
         >{{ $t('link') }}.</a
       >
     </span>
-    <span class="balance-tooltip-info__period">
+    <span
+      v-if="currentWallet.net !== 'solana'"
+      class="balance-tooltip-info__period"
+    >
       {{
         !currentWallet.unstakeingPerioud
           ? `${$t('balanceTooltipInfo.noPeriod')} ${currentWallet.name}.`
@@ -64,7 +67,7 @@
             )}`
       }}
       <span
-        v-if="currentWallet.unstakeingPerioud"
+        v-if="currentWallet.unstakeingPerioud && currentWallet.net !== 'solana'"
         class="balance-tooltip-info__period-days"
         >{{ currentWallet.unstakeingPerioud }}
         days.

@@ -1623,5 +1623,11 @@
         "jupiterDescription": "Welcome to the space station",
         "skipDescription": "Interchain transfers and swaps on any Cosmos chain",
         "swapNotFound": "Swap for this address not found"
+    },
+    "solana": {
+        "statusActive": "Your stake is currently active and earning rewards. You can stake more assets or initiate unstaking at any time.",
+        "statusInactive": "Your stake is now inactive. You can withdraw your funds or stake them again to start earning rewards.",
+        "statusActivate": "Your stake is being activated and will start earning rewards in the next epoch. This process usually takes one epoch (~2 days).",
+        "statusDeactivate": "Your stake is being deactivated and will be available for withdrawal after the current epoch ends (~2 days). Rewards are no longer being earned."
     }
 }
