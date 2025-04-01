@@ -277,6 +277,7 @@
           :stake-nodes="stakeNodes"
           :modal-close-handler="modalCloseHandler"
           :choose-node-modal-data="chooseNodeModalData"
+          :selected-node="selectedNode"
           :withdraw-btn="
             !selectedNode?.activationDate &&
             !selectedNode?.deactivationDate &&
@@ -312,7 +313,7 @@
           v-if="showConfirmTransaction"
           v-click-away="modalCloseHandler"
           :title="actionModalData.title"
-          :desc="actionModalData.desc"
+          :desc="currentWallet.net === 'solana' ? '' : actionModalData.desc"
           button-text="confirm"
           type="action"
           :loading="isLoading"

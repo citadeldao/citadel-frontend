@@ -23,24 +23,10 @@
         @editClick="updateRedelegationDirection('from')"
       />
     </div>
-    <div v-if="selectedNode?.deactivationDate" class="unstaking-period">
-      Staking in progress...
-    </div>
-    <div
-      v-if="
-        (editMode || isWithoutDelegation) && !selectedNode?.deactivationDate
-      "
-      class="choose-staking-node__tabs-wrapper"
-    >
+    <div v-if="false" class="unstaking-period">Staking in progress...</div>
+    <div v-if="true" class="choose-staking-node__tabs-wrapper">
       <div class="choose-staking-node__tabs">
         <span
-          v-if="
-            !(
-              selectedNode?.isInactive === 'Inactive' &&
-              !selectedNode?.activationDate &&
-              !selectedNode?.deactivationDate
-            )
-          "
           :class="{ 'choose-staking-node__active-tab': activeTab === 'stake' }"
           class="choose-staking-node__tabs-item"
           @click="setActiveTab('stake')"
@@ -48,6 +34,10 @@
           {{ $t('stake') }}
         </span>
         <span
+          v-if="
+            currentWallet.net !== 'solana' ||
+            (selectedNode && !selectedNode?.deactivationDate)
+          "
           :class="{
             'choose-staking-node__active-tab': activeTab === 'unstake',
           }"
@@ -104,12 +94,9 @@
         />
       </div>
     </div>
-    <div
-      v-if="showInput && !selectedNode?.deactivationDate"
-      class="choose-staking-node__amount-input"
-    >
+    <div v-if="showInput" class="choose-staking-node__amount-input">
       <Input
-        :disabled="activeInput"
+        :disabled="activeInput || disabledAmount"
         id="amount"
         :value="amount"
         :label="$t('amount')"
@@ -152,7 +139,7 @@
 </template>
 
 <script>
-import { computed, inject, onMounted } from 'vue';
+import { computed, inject, ref, onMounted } from 'vue';
 import StakeListItem from './StakeListItem.vue';
 import Input from '@/components/UI/Input';
 import pointer from '@/assets/icons/pointer.svg';
@@ -236,18 +223,31 @@ export default {
       return false;
     });
 
+    const disabledAmount = ref(false);
+
     onMounted(() => {
       if (props.currentWallet.net === 'solana') {
-        if (
-          selectedNode?.value?.isInactive === 'Inactive' &&
-          !selectedNode?.value?.activationDate &&
-          !selectedNode?.value?.deactivationDate &&
-          props.activeTab !== 'unstake'
-        ) {
-          setTimeout(() => {
-            setActiveTab('unstake');
-          }, 500);
+        if (props.activeTab === 'unstake') {
+          // active
+          if (
+            selectedNode?.value?.isInactive === 'Active' &&
+            !selectedNode?.value?.activationDate &&
+            !selectedNode?.value?.deactivationDate
+          ) {
+            updateAmount(maxAmount.value);
+            disabledAmount.value = true;
+          }
         }
+        // if (
+        //   selectedNode?.value?.isInactive === 'Inactive' &&
+        //   !selectedNode?.value?.activationDate &&
+        //   !selectedNode?.value?.deactivationDate &&
+        //   props.activeTab !== 'unstake'
+        // ) {
+        //   setTimeout(() => {
+        //     setActiveTab('unstake');
+        //   }, 500);
+        // }
       }
     });
 
@@ -266,6 +266,7 @@ export default {
       updateRedelegationDirection,
       isWithoutDelegation,
       activeInput,
+      disabledAmount,
     };
   },
 };

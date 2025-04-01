@@ -1556,5 +1556,11 @@
         "squidDescription": "",
         "skipDescription": "",
         "swapNotFound": ""
+    },
+    "solana": {
+        "statusActive": "",
+        "statusInactive": "",
+        "statusActivate": "",
+        "statusDeactivate": ""
     }
 }
