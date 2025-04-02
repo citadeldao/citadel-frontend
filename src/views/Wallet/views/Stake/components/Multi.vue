@@ -100,7 +100,9 @@
           />
         </div>
         <div
-          v-if="currentWallet.unstakeingPerioud"
+          v-if="
+            currentWallet.unstakeingPerioud && currentWallet.net !== 'solana'
+          "
           class="multi__stake-list-item multi__stake-list-item--xl"
         >
           <StakeListItem
