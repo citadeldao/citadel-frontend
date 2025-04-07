@@ -411,7 +411,7 @@ export default [
   {
     path: '/terms',
     name: 'modalTerms',
-    component: () => import('@/components/Modals/Terms'),
+    component: () => import('@/views/Terms'),
     meta: {
       layout: 'DefaultLayout',
     },
@@ -419,7 +419,7 @@ export default [
   {
     path: '/privacy',
     name: 'modalPrivacy',
-    component: () => import('@/components/Modals/Privacy'),
+    component: () => import('@/views/Privacy'),
     meta: {
       layout: 'DefaultLayout',
     },

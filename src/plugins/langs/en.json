@@ -1618,7 +1618,7 @@
         "amount": "Amount",
         "slippage": "Slippage Tolerance",
         "slippagePlaceholder": "Enter optional slippage",
-        "notAvailableRegion": "Not available in your region",
+        "notAvailableRegion": "Service is temporarily unavailable. Please try again soon.",
         "squidDescription": "Swap or transfer anything for anything",
         "jupiterDescription": "Welcome to the space station",
         "skipDescription": "Interchain transfers and swaps on any Cosmos chain",
