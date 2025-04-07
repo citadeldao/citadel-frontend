@@ -139,9 +139,9 @@ export default {
     color: $mid-blue;
     font-family: 'Panton_Bold';
     margin-bottom: 8px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+    // white-space: nowrap;
+    // text-overflow: ellipsis;
+    // overflow: hidden;
     max-width: 400px;
   }
   &__address {
@@ -153,9 +153,9 @@ export default {
     font-size: 12px;
     line-height: 14px;
     color: $mid-gray;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+    // white-space: nowrap;
+    // text-overflow: ellipsis;
+    // overflow: hidden;
     max-width: 300px;
   }
   &__address-balance {

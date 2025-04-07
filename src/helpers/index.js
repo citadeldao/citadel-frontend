@@ -127,7 +127,7 @@ export const shortAddress = (address) => {
   if (!address) return '';
 
   return address.length >= 20
-    ? `${address.slice(0, 20)}...${address.slice(-20)}`
+    ? `${address.slice(0, 20)}...${address.slice(-10)}`
     : address;
 };
 
