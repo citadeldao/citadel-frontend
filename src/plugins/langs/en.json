@@ -1629,5 +1629,11 @@
         "statusInactive": "Your stake is now inactive. You can withdraw your funds or stake them again to start earning rewards.",
         "statusActivate": "Your stake is being activated and will start earning rewards in the next epoch. This process usually takes one epoch (~2 days).",
         "statusDeactivate": "Your stake is being deactivated and will be available for withdrawal after the current epoch ends (~2 days). Rewards are no longer being earned."
+    },
+    "stacks": {
+        "liquidstx": "Start earning instantly while keeping your STX liquid with stSTX. Rewards auto-compound in STX and stay under your full control — no lockups. <span style='color: #00A3FF'>APY 9.61%</span>",
+        "liquidbtc": "Stay liquid with stSTXbtc and earn real yield in sBTC, streamed directly to your wallet — instantly and without locking your assets. <span style='color: #00A3FF'>APY 9.33%</span>",
+        "liquiddelayed": "Unstacking stSTX issues a withdrawal NFT, which lets you claim your STX after the current PoX cycle ends <span style='color: #00A3FF'>(~15 days)</span>",
+        "liquidinstant": "Instant Unstack lets you withdraw STX immediately if there’s available liquidity in the protocol. A <span style='color: #00A3FF'>1% fee</span> applies."
     }
 }
