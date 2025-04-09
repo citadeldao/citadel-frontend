@@ -13,7 +13,13 @@
         {{ $t('assets') }}
       </router-link>
       <router-link
-        v-if="currentToken ? currentToken.hasStake : currentWallet.hasStake"
+        v-if="
+          currentWallet.net === 'stacks'
+            ? false
+            : currentToken
+            ? currentToken.hasStake
+            : currentWallet.hasStake
+        "
         active-class="main-header__active"
         class="main-header__tabs-item"
         :to="{
@@ -23,6 +29,18 @@
         data-qa="wallet__stake-tab-button"
       >
         {{ $t('stake') }}
+      </router-link>
+      <router-link
+        v-if="currentWallet.net === 'stacks'"
+        active-class="main-header__active"
+        class="main-header__tabs-item"
+        :to="{
+          name: 'LiquidStake',
+          params: { ...$route.params },
+        }"
+        data-qa="wallet__stake-tab-button"
+      >
+        Liquid Stake
       </router-link>
       <router-link
         v-if="currentToken?.net === OUR_TOKEN"

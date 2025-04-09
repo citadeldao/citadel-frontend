@@ -52,6 +52,14 @@ export default [
           import(/* webpackChunkName: 'Stake' */ '@/views/Wallet/views/Stake'),
       },
       {
+        name: 'LiquidStake',
+        path: 'liquid-stake',
+        component: () =>
+          import(
+            /* webpackChunkName: 'Stake' */ '@/views/Wallet/views/LiquidStake'
+          ),
+      },
+      {
         name: 'WalletRewards',
         path: 'rewards',
         component: () =>

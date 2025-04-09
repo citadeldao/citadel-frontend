@@ -53,6 +53,13 @@
             {{ item.balance }} <span>{{ item.symbol }}</span>
           </div>
         </div>
+        <div
+          v-if="countToShow < items.length"
+          class="swap-select__more"
+          @click="showMore"
+        >
+          View more
+        </div>
       </div>
     </div>
   </div>
@@ -90,10 +97,14 @@ export default {
     const opened = ref(false);
     const searchStr = ref('');
     const selectedItem = ref(null);
-    console.log('ITEMS', props.items);
+    const countToShow = ref(10);
+
+    const showMore = () => {
+      countToShow.value += 15;
+    };
 
     const filteredItems = computed(() => {
-      if (!searchStr.value) return props.items.slice(0, 5);
+      if (!searchStr.value) return props.items.slice(0, countToShow.value);
 
       return props.items
         .filter((item) => {
@@ -108,7 +119,7 @@ export default {
             item?.address?.toLowerCase().includes(searchStr.value.toLowerCase())
           );
         })
-        .slice(0, searchStr.value.length >= 3 ? 12 : 5);
+        .slice(0, countToShow.value);
     });
 
     const toggle = () => {
@@ -151,6 +162,8 @@ export default {
       searchStr,
       filteredItems,
       selectedItem,
+      countToShow,
+      showMore,
       toggle,
       onClose,
       getIcon,
@@ -172,6 +185,18 @@ export default {
   align-items: center;
   justify-content: space-between;
   position: relative;
+
+  &__more {
+    width: 100%;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    min-height: 35px;
+    background-color: #f0f3fd;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   &__title {
     text-align: left;
@@ -233,8 +258,7 @@ export default {
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    max-height: 200px;
-
+    height: 200px;
     .not-found-tokens {
       padding: 20px;
       font-size: 14px;
@@ -285,6 +309,11 @@ export default {
 body.dark {
   .swap-select {
     background-color: rgba(57, 59, 83, 1);
+
+    &__more {
+      background-color: #393b53;
+      color: #6b93c0;
+    }
 
     &__title {
       color: #fff;
