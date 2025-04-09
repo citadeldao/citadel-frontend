@@ -24,6 +24,10 @@
             <div class="value usd">{{ txInfo.fee }} STX</div>
           </div>
           <div class="tx-info-item">
+            <div class="label">Contract address:</div>
+            <div class="value type right">{{ contractAddress }}</div>
+          </div>
+          <div class="tx-info-item">
             <div class="label">Operation type:</div>
             <div class="value type">{{ txInfo?.txs[0]?.type }}</div>
           </div>
@@ -83,6 +87,9 @@ export default {
       required: true,
     },
     amount: {
+      required: true,
+    },
+    contractAddress: {
       required: true,
     },
   },
@@ -185,6 +192,11 @@ export default {
       .value {
         color: #000;
         font-size: 14px;
+
+        &.right {
+          text-align: right;
+          font-size: 12px;
+        }
 
         &.type {
           color: $dark-blue;

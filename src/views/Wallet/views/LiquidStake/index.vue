@@ -7,6 +7,7 @@
           :on-close="closeAppInfoModal"
           :tx-info="txInfo"
           :amount="amount"
+          :contract-address="CONTRACT_ADDRESS"
           @onCancel="onCancel"
           @onSuccess="onSuccess"
           @showLedger="
@@ -258,6 +259,7 @@ export default {
 
     return {
       showLedgerConnect,
+      CONTRACT_ADDRESS,
       tabs,
       currentTab,
       currentMenu,
