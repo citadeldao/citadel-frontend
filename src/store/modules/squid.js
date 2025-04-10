@@ -105,12 +105,32 @@ export default {
 
     async fetchChains({ commit }) {
       commit(types.SET_ERROR_MESSAGE, '');
-      const result = await axios.get('https://api.0xsquid.com/v1/chains', {
-        headers: {
-          accept: 'application/json',
-          'x-integrator-id': process.env.VUE_APP_SQUID_KEY,
-        },
-      });
+      const result = await axios.get(
+        'https://v2.api.squidrouter.com/v2/sdk-info',
+        {
+          headers: {
+            accept: 'application/json',
+            'x-integrator-id': process.env.VUE_APP_SQUID_KEY,
+          },
+        }
+      );
+
+      if (result?.data?.tokens) {
+        commit(
+          types.SET_TOKENS,
+          result.data.tokens.map((token) => {
+            return {
+              ...token,
+              id: token.address,
+              title: token.name,
+              key: token.address,
+              iconLink: token.logoURI,
+              icon: 'curve-arrow',
+            };
+          })
+        );
+      }
+
       if (result?.data?.chains) {
         commit(types.SET_CHAINS, result.data.chains);
         // .filter((ch) => ch.chainType === 'evm')

@@ -44,6 +44,7 @@ export default {
     const store = useStore();
 
     const split = (title) => {
+      if (props.result.axelarChainName) return props.result.axelarChainName;
       if (!props.splitValue) return title;
       return title.split(':')[0];
     };
