@@ -7,6 +7,7 @@
           :on-close="closeAppInfoModal"
           :tx-info="txInfo"
           :amount="amount"
+          :is-stx="!!currentNFT"
           :contract-address="CONTRACT_ADDRESS"
           @onCancel="onCancel"
           @onSuccess="onSuccess"
@@ -71,34 +72,66 @@
     </div>
     <!-- content -->
     <div class="liquid-stake__form">
+      <div v-if="stakingInfo?.stSTX" class="liquid-stake__staked">
+        <div class="label">Staked</div>
+        <div class="line" />
+        <div class="value">{{ stakingInfo?.stSTX }} <span>stSTX</span></div>
+      </div>
       <div class="liquid-stake__title" v-html="descriptionStake" />
+      <div
+        v-if="currentMenu === 'delayed' && stakingInfo?.nfts"
+        class="liquid-stake__nfts"
+      >
+        <NftPanel
+          v-for="(nft, ndx) in stakingInfo?.nfts"
+          :key="ndx"
+          :nft="nft"
+          :current-height="stakingInfo?.currentHeight"
+          :loading-delayed="
+            loadingDelayed && currentNFT && currentNFT.id === nft.id
+          "
+          :loading-instant="
+            loadingInstant && currentNFT && currentNFT.id === nft.id
+          "
+          @delayed="onDelayed"
+          @instant="onInstant"
+          class="liquid-stake__nfts-item"
+        />
+      </div>
       <Input
+        v-if="currentMenu != 'delayed'"
         id="amount"
         :value="amount"
         :label="$t('amount')"
         :decimals="currentWallet?.config?.decimals"
         type="currency"
         :currency="currentWallet.code"
-        :max="currentWallet?.balance?.mainBalance - 0.1 || 0"
+        :max="
+          currentMenu != 'instant'
+            ? currentWallet?.balance?.mainBalance - 0.1 || 0
+            : stakingInfo?.stSTX || 0
+        "
         icon="coins"
         placeholder="0.0"
+        show-set-max
         :error="insufficientFunds"
         data-qa="liquid-stake__input"
         class="liquid-stake__input"
         @input="onInput"
       />
       <PrimaryButton
+        v-if="currentMenu != 'delayed'"
         :loading="loading"
         :disabled="!amount || !!insufficientFunds"
         @click="getTx"
       >
-        {{ $t('Stake') }}
+        {{ currentTab === 'stake' ? $t('Stake') : $t('Unstake') }}
       </PrimaryButton>
     </div>
   </div>
 </template>
 <script>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import TabsGroup from '@/components/UI/TabsGroup';
 import citadel from '@citadeldao/lib-citadel';
 import { useI18n } from 'vue-i18n';
@@ -109,6 +142,7 @@ import notify from '@/plugins/notify';
 import InfoModal from './InfoModal';
 import Modal from '@/components/Modal';
 import SuccessModal from '@/views/Extensions/SuccessModal';
+import NftPanel from './NftPanel';
 
 const CONTRACT_ADDRESS =
   'SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG.stacking-dao-core-v4';
@@ -121,6 +155,7 @@ export default {
     InfoModal,
     Modal,
     SuccessModal,
+    NftPanel,
   },
   setup() {
     const store = useStore();
@@ -129,16 +164,27 @@ export default {
     const txComment = ref('');
     const showLedgerConnect = ref(false);
     const loading = ref(false);
+    const stakingInfo = ref(null);
     const currentTab = ref('stake');
     const currentMenu = ref('liquidstx');
-    const tabs = ref([
-      { label: 'STAKE', value: 'stake' },
-      { label: 'UNSTAKE', value: 'unstake' },
-    ]);
+    const currentNFT = ref(null);
+    const loadingDelayed = ref(false);
+    const loadingInstant = ref(false);
+
     const txInfo = ref(null);
     const successHash = ref('');
     const showSuccessModal = ref(false);
     const showInfoModal = ref(false);
+
+    const tabs = computed(() => {
+      if (stakingInfo?.value?.nfts) {
+        return [
+          { label: 'STAKE', value: 'stake' },
+          { label: 'UNSTAKE', value: 'unstake' },
+        ];
+      }
+      return [{ label: 'STAKE', value: 'stake' }];
+    });
 
     const apiAction = computed(() => {
       if (currentMenu.value === 'liquidstx') return 'add';
@@ -166,11 +212,55 @@ export default {
         : '';
     });
 
+    const getTxUnstake = async (action, amount, nftId) => {
+      loading.value = true;
+      const rawTx = await citadel.buildLiquidStaking(currentWallet.value.id, {
+        amount,
+        action,
+        nftId,
+        contractAddress: CONTRACT_ADDRESS,
+        publicKey: currentWallet.value.publicKey,
+      });
+      loading.value = false;
+      const txs =
+        rawTx.data && rawTx.data.txs && rawTx.data.txs.length
+          ? rawTx.data.txs
+          : null;
+
+      if (!txs) {
+        notify({
+          type: 'warning',
+          text: 'Tx not found',
+        });
+        return;
+      }
+      showInfoModal.value = true;
+      txInfo.value = {
+        txs,
+        fee: rawTx.data?.fees[0]?.value,
+      };
+      console.log(txInfo.value);
+    };
+
+    const getStakingInfo = async () => {
+      const key = 'ststx-withdraw-nft';
+      const info = await citadel.stacksStaking(currentWallet.value.id, {
+        address: currentWallet.value.address,
+        publicKey: currentWallet.value.publicKey,
+      });
+      stakingInfo.value = info.data;
+      stakingInfo.value.nfts =
+        stakingInfo.value[key] && stakingInfo.value[key]?.length
+          ? stakingInfo.value[key]
+          : null;
+    };
+
     const getTx = async () => {
       loading.value = true;
       const rawTx = await citadel.buildLiquidStaking(currentWallet.value.id, {
         amount: amount.value,
         action: apiAction.value,
+        nftId: '',
         contractAddress: CONTRACT_ADDRESS,
         publicKey: currentWallet.value.publicKey,
       });
@@ -198,6 +288,8 @@ export default {
     const onChangeCurrentTab = (val) => {
       if (val === 'stake') {
         currentMenu.value = 'liquidstx';
+        currentNFT.value = null;
+        amount.value = null;
       } else {
         currentMenu.value = 'delayed';
       }
@@ -216,15 +308,18 @@ export default {
       loading.value = false;
     };
 
-    const closeAppInfoModal = () => {
+    const closeAppInfoModal = async () => {
       showInfoModal.value = false;
+      await getStakingInfo();
     };
 
-    const onSuccess = (hash) => {
+    const onSuccess = async (hash) => {
       successHash.value = hash;
       amount.value = '';
       showSuccessModal.value = true;
       txInfo.value = null;
+      currentNFT.value = null;
+      await getStakingInfo();
     };
 
     // system
@@ -257,6 +352,28 @@ export default {
       txComment.value = comm;
     };
 
+    const onDelayed = async (nft) => {
+      currentNFT.value = nft;
+      loadingDelayed.value = true;
+      amount.value = nft.stSTX;
+
+      await getTxUnstake('withdrawal', nft.stSTX, nft.id);
+      loadingDelayed.value = false;
+    };
+
+    const onInstant = async (nft) => {
+      currentNFT.value = nft;
+      loadingInstant.value = true;
+      amount.value = nft.stSTX;
+
+      await getTxUnstake('instant-withdrawal', nft.stSTX, nft.id);
+      loadingInstant.value = false;
+    };
+
+    onMounted(async () => {
+      await getStakingInfo();
+    });
+
     return {
       showLedgerConnect,
       CONTRACT_ADDRESS,
@@ -284,6 +401,12 @@ export default {
       successClickHandler,
       connectLedgerCloseHandler,
       onChangeComment,
+      stakingInfo,
+      onDelayed,
+      onInstant,
+      loadingDelayed,
+      loadingInstant,
+      currentNFT,
     };
   },
 };
@@ -292,6 +415,48 @@ export default {
 .liquid-stake {
   padding: 20px 0;
   min-height: 400px;
+
+  &__nfts {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  &__nfts-item {
+    margin-right: 12px;
+    margin-bottom: 12px;
+  }
+
+  &__staked {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 15px;
+
+    .label {
+      font-size: 16px;
+      line-height: 19px;
+      font-family: 'Panton_Bold';
+    }
+
+    .value {
+      color: #00a3ff;
+      font-size: 16px;
+      font-family: 'Panton_Bold';
+
+      span {
+        color: #000;
+      }
+    }
+
+    .line {
+      flex-grow: 1;
+      border-bottom: 1px dashed #dadada;
+      margin-top: 12px;
+    }
+  }
 
   &__form {
     margin-top: 20px;
@@ -363,6 +528,12 @@ export default {
 
 body.dark {
   .liquid-stake {
+    &__staked {
+      .label,
+      .value span {
+        color: #fff;
+      }
+    }
     &__tabs-item {
       &.active {
         border-color: $dark-blue;

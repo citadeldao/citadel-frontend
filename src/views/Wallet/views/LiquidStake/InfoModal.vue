@@ -17,7 +17,9 @@
           </div>
           <div class="tx-info-item">
             <div class="label">Amount:</div>
-            <div class="value usd">{{ amount }} STX</div>
+            <div class="value usd">
+              {{ amount }} {{ isStx ? 'stSTX' : 'STX' }}
+            </div>
           </div>
           <div class="tx-info-item">
             <div class="label">Fee:</div>
@@ -77,6 +79,9 @@ export default {
     Input,
   },
   props: {
+    isStx: {
+      required: true,
+    },
     onClose: {
       required: true,
     },
