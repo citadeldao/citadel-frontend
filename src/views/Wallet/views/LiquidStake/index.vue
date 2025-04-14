@@ -78,6 +78,33 @@
         <div class="value">{{ stakingInfo?.stSTX }} <span>stSTX</span></div>
       </div>
       <div class="liquid-stake__title" v-html="descriptionStake" />
+      <Input
+        id="amount"
+        :value="amount"
+        :label="$t('amount')"
+        :decimals="currentWallet?.config?.decimals"
+        type="currency"
+        :currency="currentWallet.code"
+        :max="
+          !['instant', 'delayed'].includes(currentMenu)
+            ? currentWallet?.balance?.mainBalance - 0.1 || 0
+            : stakingInfo?.stSTX || 0
+        "
+        icon="coins"
+        placeholder="0.0"
+        show-set-max
+        :error="insufficientFunds"
+        data-qa="liquid-stake__input"
+        class="liquid-stake__input"
+        @input="onInput"
+      />
+      <PrimaryButton
+        :loading="loading"
+        :disabled="!amount || !!insufficientFunds"
+        @click="getTx"
+      >
+        {{ currentTab === 'stake' ? $t('Stake') : $t('Unstake') }}
+      </PrimaryButton>
       <div
         v-if="currentMenu === 'delayed' && stakingInfo?.nfts"
         class="liquid-stake__nfts"
@@ -98,35 +125,6 @@
           class="liquid-stake__nfts-item"
         />
       </div>
-      <Input
-        v-if="currentMenu != 'delayed'"
-        id="amount"
-        :value="amount"
-        :label="$t('amount')"
-        :decimals="currentWallet?.config?.decimals"
-        type="currency"
-        :currency="currentWallet.code"
-        :max="
-          currentMenu != 'instant'
-            ? currentWallet?.balance?.mainBalance - 0.1 || 0
-            : stakingInfo?.stSTX || 0
-        "
-        icon="coins"
-        placeholder="0.0"
-        show-set-max
-        :error="insufficientFunds"
-        data-qa="liquid-stake__input"
-        class="liquid-stake__input"
-        @input="onInput"
-      />
-      <PrimaryButton
-        v-if="currentMenu != 'delayed'"
-        :loading="loading"
-        :disabled="!amount || !!insufficientFunds"
-        @click="getTx"
-      >
-        {{ currentTab === 'stake' ? $t('Stake') : $t('Unstake') }}
-      </PrimaryButton>
     </div>
   </div>
 </template>
@@ -289,14 +287,14 @@ export default {
       if (val === 'stake') {
         currentMenu.value = 'liquidstx';
         currentNFT.value = null;
-        amount.value = null;
+        amount.value = '';
       } else {
         currentMenu.value = 'delayed';
       }
     };
 
     const onInput = (val) => {
-      amount.value = val;
+      amount.value = val || '';
     };
 
     const setActive = (val) => {
