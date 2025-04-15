@@ -45,7 +45,7 @@
           Liquid stSTX
         </div>
         <div
-          v-if="currentTab === 'stake'"
+          v-if="false"
           class="liquid-stake__tabs-item"
           :class="{ active: currentMenu === 'liquidsbtc' }"
           @click="setActive('liquidsbtc')"
@@ -84,7 +84,11 @@
         :label="$t('amount')"
         :decimals="currentWallet?.config?.decimals"
         type="currency"
-        :currency="currentWallet.code"
+        :currency="
+          ['instant', 'delayed'].includes(currentMenu)
+            ? 'stSTX'
+            : currentWallet.code
+        "
         :max="
           !['instant', 'delayed'].includes(currentMenu)
             ? currentWallet?.balance?.mainBalance - 0.1 || 0
@@ -186,15 +190,15 @@ export default {
 
     const apiAction = computed(() => {
       if (currentMenu.value === 'liquidstx') return 'add';
-      if (currentMenu.value === 'liquidsbtc') return 'init-withdrawal';
-      if (currentMenu.value === 'delayed') return 'withdrawal';
+      // if (currentMenu.value === 'liquidsbtc') return 'init-withdrawal';
+      if (currentMenu.value === 'delayed') return 'init-withdrawal';
       if (currentMenu.value === 'instant') return 'instant-withdrawal';
       return '';
     });
 
     const descriptionStake = computed(() => {
       if (currentMenu.value === 'liquidstx') return t('stacks.liquidstx');
-      if (currentMenu.value === 'liquidsbtc') return t('stacks.liquidbtc');
+      // if (currentMenu.value === 'liquidsbtc') return t('stacks.liquidbtc');
       if (currentMenu.value === 'delayed') return t('stacks.liquiddelayed');
       if (currentMenu.value === 'instant') return t('stacks.liquidinstant');
       return '';
@@ -210,10 +214,9 @@ export default {
         : '';
     });
 
-    const getTxUnstake = async (action, amount, nftId) => {
+    const getTxUnstake = async (action, nftId) => {
       loading.value = true;
       const rawTx = await citadel.buildLiquidStaking(currentWallet.value.id, {
-        amount,
         action,
         nftId,
         contractAddress: CONTRACT_ADDRESS,
@@ -355,7 +358,7 @@ export default {
       loadingDelayed.value = true;
       amount.value = nft.stSTX;
 
-      await getTxUnstake('withdrawal', nft.stSTX, nft.id);
+      await getTxUnstake('withdrawal', nft.id);
       loadingDelayed.value = false;
     };
 
