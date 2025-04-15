@@ -287,6 +287,12 @@ export default {
                   value: {
                     contract: msgObj.value.contract,
                     sender: props.signerWallet.address,
+                    funds: [
+                      {
+                        amount: props.txRoute.params.fromAmount,
+                        denom: props.txRoute.params.fromToken,
+                      },
+                    ],
                     msg: parsedMsg,
                   },
                 },
