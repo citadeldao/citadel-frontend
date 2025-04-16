@@ -727,8 +727,6 @@ export default {
           currentWallet.value.id
         );
 
-        console.log('rawTxs', rawTxs);
-
         if (prepOk) {
           resRawTxs.value = rawTxs;
           showConfirmClaim.value = true;

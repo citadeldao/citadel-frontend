@@ -86,8 +86,6 @@ export default {
     const squidChains = computed(() => store.getters['squid/chains']);
     const skipChains = computed(() => store.getters['skip/chains']);
 
-    const jupTokens = computed(() => store.getters['jupiter/tokens']);
-
     // const currentToken = computed(
     //   () => store.getters['subtokens/currentToken']
     // );
@@ -139,7 +137,6 @@ export default {
         await store.dispatch('jupiter/fetchTokens');
         methods.value.push(jupiterData);
         isLoadingData.value = false;
-        console.log(jupTokens.value);
         return;
       }
 

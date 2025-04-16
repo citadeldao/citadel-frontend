@@ -170,7 +170,6 @@ export default {
 
         return res;
       }
-      console.log('GGGG', props.value);
 
       return props.items.filter((item) =>
         item.title?.toLowerCase().includes(props.value?.toLowerCase())

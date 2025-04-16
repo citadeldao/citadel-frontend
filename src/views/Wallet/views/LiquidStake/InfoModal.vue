@@ -103,7 +103,6 @@ export default {
     const isLoading = ref(false);
     const password = ref('');
     const confirmPassword = ref(false);
-    console.log('info', props.txInfo);
 
     const onChange = (val) => {
       password.value = val;
@@ -128,7 +127,7 @@ export default {
       // const buffer = Buffer.from(tx.value, 'base64');
       // const txHex = buffer.toString('hex');
       const tx = props.txInfo?.txs[0]?.tx;
-      console.log('TX', tx);
+
       try {
         const result = await props.signerWallet.signAndSendTransfer({
           walletId: props.signerWallet.id,
@@ -146,7 +145,6 @@ export default {
           props.onClose();
         }
       } catch (err) {
-        console.log('GGGGG', err);
         emit('onCancel');
         props.onClose();
       }

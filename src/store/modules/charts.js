@@ -157,7 +157,6 @@ export default {
       if (params.dateTo) {
         params.dateTo = format(new Date(params.dateTo), 'yyyy-MM-dd');
       }
-      console.log('chart params', params);
 
       const { data, error } = await sendCitadelGraphRequest(METHOD, params);
 

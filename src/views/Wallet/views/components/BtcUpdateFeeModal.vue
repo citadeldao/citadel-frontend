@@ -239,7 +239,6 @@ export default {
         derivationPath: props.signerWallet.derivationPath,
         proxy: false,
       });
-      console.log(result);
 
       if (result.data) {
         successTx.value = result.data;

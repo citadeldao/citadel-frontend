@@ -240,7 +240,6 @@ export default {
         txs,
         fee: rawTx.data?.fees[0]?.value,
       };
-      console.log(txInfo.value);
     };
 
     const getStakingInfo = async () => {
@@ -283,7 +282,6 @@ export default {
         txs,
         fee: rawTx.data?.fees[0]?.value,
       };
-      console.log(txInfo.value);
     };
 
     const onChangeCurrentTab = (val) => {

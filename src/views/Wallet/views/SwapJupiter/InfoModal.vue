@@ -104,9 +104,6 @@ export default {
 
     const route = computed(() => store.getters['jupiter/route']);
     const tx = computed(() => store.getters['jupiter/tx']);
-    console.log('TX', tx.value);
-    console.log('router', route.value);
-    console.log('prrr', props.toToken);
 
     const amountToSwap = computed(() => {
       return BigNumber(route.value?.inAmount)
