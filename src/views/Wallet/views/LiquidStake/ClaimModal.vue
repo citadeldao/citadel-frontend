@@ -14,7 +14,7 @@
           </div>
           <div class="claim-modal__item-column ml10">
             <div class="claim-modal__item-current">
-              {{ `#${currentHeight}` }}
+              {{ `#${nft.id}` }}
             </div>
             <div class="claim-modal__item-current-label">
               {{
