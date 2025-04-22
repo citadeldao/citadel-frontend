@@ -28,6 +28,7 @@ import btcAddresses from './modules/btcAddresses';
 import squid from './modules/squid';
 import skip from './modules/skip';
 import jupiter from './modules/jupiter';
+import stacks from './modules/stacks';
 
 import subscriptions from './modules/subscriptions';
 
@@ -63,5 +64,6 @@ export default createStore({
     squid,
     skip,
     jupiter,
+    stacks,
   },
 });

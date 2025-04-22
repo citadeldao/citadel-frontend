@@ -188,6 +188,7 @@ export default {
         selectedCoins.value.map(async (c) => {
           try {
             const accs = await new LeapConnector().connect(c.key);
+            console.log(accs);
             addToWallet(accs, c);
 
             return true;

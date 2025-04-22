@@ -8,7 +8,11 @@
           :tx-info="txInfo"
           :amount="amount"
           :is-stx="!!currentNFT"
-          :contract-address="CONTRACT_ADDRESS"
+          :contract-address="
+            currentMenu === 'liquidsbtc' || currentNFT?.isBtc
+              ? CONTRACT_ADDRESS_BTC
+              : CONTRACT_ADDRESS
+          "
           @onCancel="onCancel"
           @onSuccess="onSuccess"
           @showLedger="
@@ -28,6 +32,14 @@
           @changeComment="onChangeComment"
         />
       </Modal>
+      <Modal v-if="showClaimModal">
+        <ClaimModal
+          @close="closeClaimModal"
+          :nfts="stakingInfo?.nfts || []"
+          :current-height="stakingInfo?.currentHeight"
+          @claim="onClaim"
+        />
+      </Modal>
     </teleport>
     <div class="liquid-stake__menu">
       <TabsGroup
@@ -36,47 +48,49 @@
         @update:currentValue="onChangeCurrentTab"
       />
       <div class="liquid-stake__tabs">
-        <div
+        <RadioButton
           v-if="currentTab === 'stake'"
-          class="liquid-stake__tabs-item"
-          :class="{ active: currentMenu === 'liquidstx' }"
-          @click="setActive('liquidstx')"
+          v-model="radioStake"
+          :value="liquidstx"
+          @change="setActive('liquidstx')"
+          >Liquid stSTX</RadioButton
         >
-          Liquid stSTX
-        </div>
-        <div
-          v-if="false"
-          class="liquid-stake__tabs-item"
-          :class="{ active: currentMenu === 'liquidsbtc' }"
-          @click="setActive('liquidsbtc')"
+        <RadioButton
+          v-if="currentTab === 'stake'"
+          v-model="radioStake"
+          :value="liquidsbtc"
+          @change="setActive('liquidsbtc')"
+          >Liquid sBTC</RadioButton
         >
-          Liquid sBTC
-        </div>
-        <div
+        <RadioButton
           v-if="currentTab === 'unstake'"
-          class="liquid-stake__tabs-item"
-          :class="{ active: currentMenu === 'delayed' }"
-          @click="setActive('delayed')"
+          v-model="radioStake"
+          :value="delayed"
+          @change="setActive('delayed')"
+          >Delayed</RadioButton
         >
-          DELAYED
-        </div>
-        <div
+        <RadioButton
           v-if="currentTab === 'unstake'"
-          class="liquid-stake__tabs-item"
-          :class="{ active: currentMenu === 'instant' }"
-          @click="setActive('instant')"
+          v-model="radioStake"
+          :value="instant"
+          @change="setActive('instant')"
+          >Instant</RadioButton
         >
-          INSTANT
-        </div>
       </div>
     </div>
     <!-- content -->
     <div class="liquid-stake__form">
-      <div v-if="stakingInfo?.stSTX" class="liquid-stake__staked">
+      <StakeChart :chart-data="chartData" style="width: 100%" />
+      <StakeStats
+        symbol="STX"
+        :stakeBalance="+stakingInfo?.stSTX + +stakingInfo?.stSTXbtc"
+        :available-balance="currentWallet?.balance?.calculatedBalance"
+      />
+      <!-- <div v-if="stakingInfo?.stSTX" class="liquid-stake__staked">
         <div class="label">Staked</div>
         <div class="line" />
         <div class="value">{{ stakingInfo?.stSTX }} <span>stSTX</span></div>
-      </div>
+      </div> -->
       <div class="liquid-stake__title" v-html="descriptionStake" />
       <Input
         id="amount"
@@ -109,7 +123,7 @@
       >
         {{ currentTab === 'stake' ? $t('Stake') : $t('Unstake') }}
       </PrimaryButton>
-      <div
+      <!-- <div
         v-if="currentMenu === 'delayed' && stakingInfo?.nfts"
         class="liquid-stake__nfts"
       >
@@ -128,7 +142,7 @@
           @instant="onInstant"
           class="liquid-stake__nfts-item"
         />
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -144,10 +158,17 @@ import notify from '@/plugins/notify';
 import InfoModal from './InfoModal';
 import Modal from '@/components/Modal';
 import SuccessModal from '@/views/Extensions/SuccessModal';
-import NftPanel from './NftPanel';
+// import NftPanel from './NftPanel';
+import ClaimModal from './ClaimModal';
+import RadioButton from '@/components/UI/RadioButton';
+import StakeChart from '../Stake/components/StakeChart';
+import StakeStats from './StakeStats';
 
 const CONTRACT_ADDRESS =
   'SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG.stacking-dao-core-v4';
+
+const CONTRACT_ADDRESS_BTC =
+  'SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG.stacking-dao-core-btc-v1';
 
 export default {
   components: {
@@ -157,7 +178,10 @@ export default {
     InfoModal,
     Modal,
     SuccessModal,
-    NftPanel,
+    ClaimModal,
+    StakeChart,
+    StakeStats,
+    RadioButton,
   },
   setup() {
     const store = useStore();
@@ -166,7 +190,6 @@ export default {
     const txComment = ref('');
     const showLedgerConnect = ref(false);
     const loading = ref(false);
-    const stakingInfo = ref(null);
     const currentTab = ref('stake');
     const currentMenu = ref('liquidstx');
     const currentNFT = ref(null);
@@ -177,6 +200,18 @@ export default {
     const successHash = ref('');
     const showSuccessModal = ref(false);
     const showInfoModal = ref(false);
+
+    const radioStake = ref('liquidstx');
+    const liquidstx = ref('liquidstx');
+    const liquidsbtc = ref('liquidsbtc');
+    const delayed = ref('delayed');
+    const instant = ref('instant');
+
+    const showClaimModal = computed(
+      () => store.getters['stacks/showClaimModal']
+    );
+
+    const stakingInfo = computed(() => store.getters['stacks/stakeInfo']);
 
     const tabs = computed(() => {
       if (stakingInfo?.value?.nfts) {
@@ -190,7 +225,7 @@ export default {
 
     const apiAction = computed(() => {
       if (currentMenu.value === 'liquidstx') return 'add';
-      // if (currentMenu.value === 'liquidsbtc') return 'init-withdrawal';
+      if (currentMenu.value === 'liquidsbtc') return 'add';
       if (currentMenu.value === 'delayed') return 'init-withdrawal';
       if (currentMenu.value === 'instant') return 'instant-withdrawal';
       return '';
@@ -198,7 +233,7 @@ export default {
 
     const descriptionStake = computed(() => {
       if (currentMenu.value === 'liquidstx') return t('stacks.liquidstx');
-      // if (currentMenu.value === 'liquidsbtc') return t('stacks.liquidbtc');
+      if (currentMenu.value === 'liquidsbtc') return t('stacks.liquidbtc');
       if (currentMenu.value === 'delayed') return t('stacks.liquiddelayed');
       if (currentMenu.value === 'instant') return t('stacks.liquidinstant');
       return '';
@@ -214,12 +249,12 @@ export default {
         : '';
     });
 
-    const getTxUnstake = async (action, nftId) => {
+    const getTxUnstake = async (action, nftId, contractBtc) => {
       loading.value = true;
       const rawTx = await citadel.buildLiquidStaking(currentWallet.value.id, {
         action,
         nftId,
-        contractAddress: CONTRACT_ADDRESS,
+        contractAddress: contractBtc || CONTRACT_ADDRESS,
         publicKey: currentWallet.value.publicKey,
       });
       loading.value = false;
@@ -243,16 +278,7 @@ export default {
     };
 
     const getStakingInfo = async () => {
-      const key = 'ststx-withdraw-nft';
-      const info = await citadel.stacksStaking(currentWallet.value.id, {
-        address: currentWallet.value.address,
-        publicKey: currentWallet.value.publicKey,
-      });
-      stakingInfo.value = info.data;
-      stakingInfo.value.nfts =
-        stakingInfo.value[key] && stakingInfo.value[key]?.length
-          ? stakingInfo.value[key]
-          : null;
+      await store.dispatch('stacks/getStakingInfo', currentWallet.value);
     };
 
     const getTx = async () => {
@@ -261,7 +287,10 @@ export default {
         amount: amount.value,
         action: apiAction.value,
         nftId: '',
-        contractAddress: CONTRACT_ADDRESS,
+        contractAddress:
+          currentMenu.value === 'liquidsbtc'
+            ? CONTRACT_ADDRESS_BTC
+            : CONTRACT_ADDRESS,
         publicKey: currentWallet.value.publicKey,
       });
       loading.value = false;
@@ -289,7 +318,10 @@ export default {
         currentMenu.value = 'liquidstx';
         currentNFT.value = null;
         amount.value = '';
+        radioStake.value = 'liquidstx';
       } else {
+        amount.value = '';
+        radioStake.value = 'delayed';
         currentMenu.value = 'delayed';
       }
     };
@@ -369,6 +401,71 @@ export default {
       loadingInstant.value = false;
     };
 
+    const closeClaimModal = () => {
+      showClaimModal.value = false;
+      store.dispatch('stacks/showClaimModal', false);
+    };
+
+    const onClaim = async (nft) => {
+      currentNFT.value = nft;
+      loadingDelayed.value = true;
+      amount.value = nft.stSTX;
+
+      await getTxUnstake(
+        'withdrawal',
+        nft.id,
+        nft.isBtc ? CONTRACT_ADDRESS_BTC : ''
+      );
+      loadingDelayed.value = false;
+    };
+
+    const getStakingRatio = (availableBalance, stakedBalance) => {
+      const total = availableBalance + stakedBalance;
+
+      // Если общая сумма нулевая, возвращаем 0% для обоих
+      if (total === 0) {
+        return {
+          availableBalancePercent: 0,
+          stakedBalancePercent: 0,
+        };
+      }
+
+      // Определяем, какое значение больше
+      const isAvailableLarger = availableBalance >= stakedBalance;
+
+      // Большее значение → 80%, меньшее → 20%
+      const availablePercent = isAvailableLarger ? 80 : 20;
+      const stakedPercent = isAvailableLarger ? 20 : 80;
+
+      return {
+        availableBalancePercent: availablePercent,
+        stakedBalancePercent: stakedPercent,
+      };
+    };
+
+    const chartData = computed(() => {
+      const data = [
+        {
+          name: 'Avaliable balance',
+          color: '#AFBCCB',
+          share: getStakingRatio(
+            currentWallet.value.balance.calculatedBalance,
+            stakingInfo.value?.stSTX || 0
+          ).availableBalancePercent,
+        },
+        {
+          name: 'Staked balance',
+          color: '#FF5722',
+          share: getStakingRatio(
+            currentWallet.value.balance.calculatedBalance,
+            stakingInfo.value?.stSTX || 0
+          ).stakedBalancePercent,
+        },
+      ];
+
+      return data.filter((item) => item.share > 0);
+    });
+
     onMounted(async () => {
       await getStakingInfo();
     });
@@ -376,6 +473,7 @@ export default {
     return {
       showLedgerConnect,
       CONTRACT_ADDRESS,
+      CONTRACT_ADDRESS_BTC,
       tabs,
       currentTab,
       currentMenu,
@@ -406,6 +504,17 @@ export default {
       loadingDelayed,
       loadingInstant,
       currentNFT,
+
+      radioStake,
+      liquidstx,
+      liquidsbtc,
+      delayed,
+      instant,
+
+      showClaimModal,
+      closeClaimModal,
+      onClaim,
+      chartData,
     };
   },
 };
@@ -486,7 +595,7 @@ export default {
   &__tabs {
     display: flex;
     top: 37px;
-    width: 300px;
+    // width: 300px;
     @include lg {
       top: 28px;
     }

@@ -1,101 +1,87 @@
 <template>
-  <div class="radio-button">
+  <label class="radio-button">
     <input
-      :id="value"
-      :value="value"
       type="radio"
-      name="radio"
-      :checked="checked"
+      :checked="modelValue === value"
+      @change="$emit('update:modelValue', value)"
+      class="radio-button__input"
     />
-    <span class="radio-button__checkmark" />
-    <label class="radio-button__label" :for="value">
-      {{ label }}
-      <slot />
-    </label>
-  </div>
+    <span class="radio-button__control"></span>
+    <span class="radio-button__label">
+      <slot></slot>
+    </span>
+  </label>
 </template>
 
 <script>
-import { computed } from '@vue/runtime-core';
 export default {
   name: 'RadioButton',
   props: {
-    label: {
-      type: String,
+    modelValue: {
+      required: true,
     },
     value: {
       required: true,
     },
-    currentValue: {
-      required: true,
-      type: String,
-    },
   },
-  setup(props) {
-    const checked = computed(() => props.currentValue === props.value);
-
-    return { checked };
-  },
+  emits: ['update:modelValue'],
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .radio-button {
-  display: flex;
-  position: relative;
+  display: inline-flex;
+  align-items: center;
   cursor: pointer;
-  font-size: 22px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  &__label {
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    font-size: 14px;
-    line-height: 17px;
-    font-family: 'Panton_SemiBold';
-    text-transform: capitalize;
-  }
-  & input {
-    position: absolute;
-    opacity: 0;
-    height: 100%;
-    top: 0px;
-    left: 0px;
-    margin: 0;
-    cursor: pointer;
-  }
-  &__checkmark {
-    align-items: center;
-    justify-content: center;
-    height: 13px;
-    width: 13px;
-    border: 1px solid $too-ligth-blue;
-    border-radius: $round;
-    margin-right: 8px;
-  }
-  & input:checked ~ &__checkmark {
-    display: flex;
-  }
+  margin-right: 12px;
+}
 
-  &__checkmark:after {
-    content: '';
-    position: absolute;
-    display: none;
-  }
+.radio-button__input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
 
-  & input:checked ~ &__checkmark:after {
-    display: flex;
-    background: $blue;
-  }
+.radio-button__control {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  border: 1px solid #6b7280;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
 
-  &__checkmark:after {
-    width: 7px;
-    height: 7px;
-    border-radius: $round;
-    background: white;
+.radio-button__input:checked + .radio-button__control {
+  border-color: #c3ceeb;
+}
+
+.radio-button__input:checked + .radio-button__control::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #6a4bff;
+}
+
+.radio-button__input:focus + .radio-button__control {
+  /* box-shadow: 0 0 0 2px #bfdbfe; */
+}
+
+.radio-button__label {
+  font-size: 16px;
+  color: #374151;
+}
+
+body.dark {
+  .radio-button__label {
+    color: #c3ceeb;
   }
 }
 </style>
