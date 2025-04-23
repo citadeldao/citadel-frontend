@@ -86,7 +86,7 @@ export default {
   border-radius: 6px;
   padding: 11px;
   position: absolute;
-  z-index: 1001;
+  z-index: 1250;
   top: 22px;
   transition: 0s;
   color: $mid-blue;

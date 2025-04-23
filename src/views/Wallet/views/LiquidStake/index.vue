@@ -346,7 +346,7 @@ export default {
 
     const onSuccess = async (hash) => {
       successHash.value = hash;
-      amount.value = '';
+      // amount.value = '';
       showSuccessModal.value = true;
       txInfo.value = null;
       currentNFT.value = null;
@@ -366,6 +366,7 @@ export default {
           text: txComment.value,
         }));
       txComment.value = '';
+      amount.value = '';
       showSuccessModal.value = false;
       connectLedgerCloseHandler();
     };
@@ -375,6 +376,7 @@ export default {
       successHash.value = [];
       showSuccessModal.value = false;
       loading.value = false;
+      amount.value = '';
       showInfoModal.value = false;
       connectLedgerCloseHandler();
     };
@@ -409,7 +411,7 @@ export default {
     const onClaim = async (nft) => {
       currentNFT.value = nft;
       loadingDelayed.value = true;
-      amount.value = nft.stSTX;
+      amount.value = nft.STX;
 
       await getTxUnstake(
         'withdrawal',

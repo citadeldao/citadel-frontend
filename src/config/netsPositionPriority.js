@@ -4,5 +4,5 @@ export const netsPositionPriority = [
   'eth',
   'cosmos',
   'celestia',
-  'injective',
+  'solana',
 ];
