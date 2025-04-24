@@ -8,10 +8,19 @@
           :tx-info="txInfo"
           :amount="amount"
           :is-stx="!!currentNFT"
+          :symbol="
+            currentTab === 'stake'
+              ? 'STX'
+              : stakeTabMode === 'liquidstx'
+              ? 'stSTX'
+              : 'stSTXbtc'
+          "
           :contract-address="
             currentMenu === 'liquidsbtc' || currentNFT?.isBtc
               ? CONTRACT_ADDRESS_BTC
-              : CONTRACT_ADDRESS
+              : stakeTabMode === 'liquidstx'
+              ? CONTRACT_ADDRESS
+              : CONTRACT_ADDRESS_BTC
           "
           @onCancel="onCancel"
           @onSuccess="onSuccess"
@@ -85,6 +94,9 @@
         symbol="STX"
         :stakeBalance="+stakingInfo?.stSTX + +stakingInfo?.stSTXbtc"
         :available-balance="currentWallet?.balance?.calculatedBalance"
+        :nft-balance="
+          stakingInfo?.nfts?.reduce((acc, nft) => acc + +nft.STX, 0)
+        "
       />
       <!-- <div v-if="stakingInfo?.stSTX" class="liquid-stake__staked">
         <div class="label">Staked</div>
@@ -100,13 +112,17 @@
         type="currency"
         :currency="
           ['instant', 'delayed'].includes(currentMenu)
-            ? 'stSTX'
+            ? stakeTabMode === 'liquidstx'
+              ? 'stSTX'
+              : 'stSTXbtc'
             : currentWallet.code
         "
         :max="
           !['instant', 'delayed'].includes(currentMenu)
             ? currentWallet?.balance?.mainBalance - 0.1 || 0
-            : stakingInfo?.stSTX || 0
+            : stakeTabMode === 'liquidstx'
+            ? stakingInfo?.stSTX || 0
+            : stakingInfo?.stSTXbtc || 0
         "
         icon="coins"
         placeholder="0.0"
@@ -207,6 +223,8 @@ export default {
     const delayed = ref('delayed');
     const instant = ref('instant');
 
+    const stakeTabMode = ref('liquidstx');
+
     const showClaimModal = computed(
       () => store.getters['stacks/showClaimModal']
     );
@@ -290,7 +308,9 @@ export default {
         contractAddress:
           currentMenu.value === 'liquidsbtc'
             ? CONTRACT_ADDRESS_BTC
-            : CONTRACT_ADDRESS,
+            : stakeTabMode.value === 'liquidstx'
+            ? CONTRACT_ADDRESS
+            : CONTRACT_ADDRESS_BTC,
         publicKey: currentWallet.value.publicKey,
       });
       loading.value = false;
@@ -318,8 +338,9 @@ export default {
         currentMenu.value = 'liquidstx';
         currentNFT.value = null;
         amount.value = '';
-        radioStake.value = 'liquidstx';
+        radioStake.value = stakeTabMode.value || 'liquidstx';
       } else {
+        stakeTabMode.value = radioStake.value;
         amount.value = '';
         radioStake.value = 'delayed';
         currentMenu.value = 'delayed';
@@ -421,47 +442,61 @@ export default {
       loadingDelayed.value = false;
     };
 
-    const getStakingRatio = (availableBalance, stakedBalance) => {
-      const total = availableBalance + stakedBalance;
+    const getStakingRatio = (
+      availableBalance,
+      stakedBalance,
+      nftBalance = 0
+    ) => {
+      const total = +availableBalance + +stakedBalance + +nftBalance;
 
-      // Если общая сумма нулевая, возвращаем 0% для обоих
+      // Если общая сумма нулевая, возвращаем 0% для всех
       if (total === 0) {
         return {
           availableBalancePercent: 0,
           stakedBalancePercent: 0,
+          nftPercent: 0,
         };
       }
 
-      // Определяем, какое значение больше
-      const isAvailableLarger = availableBalance >= stakedBalance;
-
-      // Большее значение → 80%, меньшее → 20%
-      const availablePercent = isAvailableLarger ? 80 : 20;
-      const stakedPercent = isAvailableLarger ? 20 : 80;
+      // Вычисляем проценты для каждого баланса
+      const availablePercent = (+availableBalance / total) * 100;
+      const stakedPercent = (+stakedBalance / total) * 100;
+      const nftPercent = (+nftBalance / total) * 100;
 
       return {
         availableBalancePercent: availablePercent,
         stakedBalancePercent: stakedPercent,
+        nftPercent: nftPercent,
       };
     };
 
     const chartData = computed(() => {
+      const nftBalance =
+        stakingInfo.value?.nfts?.reduce((acc, nft) => acc + +nft.STX, 0) || 0;
+      const stakedBalance = stakingInfo.value?.stSTX || 0;
+      const availableBalance = currentWallet.value.balance.calculatedBalance;
+
+      const ratios = getStakingRatio(
+        availableBalance,
+        stakedBalance,
+        nftBalance
+      );
+
       const data = [
         {
           name: 'Avaliable balance',
           color: '#AFBCCB',
-          share: getStakingRatio(
-            currentWallet.value.balance.calculatedBalance,
-            stakingInfo.value?.stSTX || 0
-          ).availableBalancePercent,
+          share: ratios.availableBalancePercent,
         },
         {
           name: 'Staked balance',
           color: '#FF5722',
-          share: getStakingRatio(
-            currentWallet.value.balance.calculatedBalance,
-            stakingInfo.value?.stSTX || 0
-          ).stakedBalancePercent,
+          share: ratios.stakedBalancePercent,
+        },
+        {
+          name: 'Nft balance',
+          color: '#4B9A43',
+          share: ratios.nftPercent,
         },
       ];
 
@@ -479,6 +514,7 @@ export default {
       tabs,
       currentTab,
       currentMenu,
+      stakeTabMode,
       descriptionStake,
       amount,
       loading,

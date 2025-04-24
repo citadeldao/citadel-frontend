@@ -44,6 +44,28 @@
         </div>
       </div>
     </div>
+    <!-- nft -->
+    <div v-if="nftBalance" class="stake-nodes-status__item nft">
+      <div class="col">
+        <div class="icon nft">
+          <keep-alive :style="{ fill: '#4B9A43' }">
+            <component :is="currentIcon" />
+          </keep-alive>
+        </div>
+        <div class="label">Nft balance</div>
+      </div>
+      <div class="col">
+        <div class="balance">
+          <span
+            v-pretty-number="{
+              value: !showBalance ? HIDE_BALANCE_MASK : nftBalance,
+              currency: symbol,
+            }"
+          />
+          <span class="symbol">{{ symbol }}</span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -58,6 +80,9 @@ export default {
       required: true,
     },
     availableBalance: {
+      required: true,
+    },
+    nftBalance: {
       required: true,
     },
     symbol: {
@@ -134,6 +159,10 @@ export default {
 
       &.available {
         border: 8px solid #afbccb;
+      }
+
+      &.nft {
+        border: 8px solid #4b9a43;
       }
     }
 

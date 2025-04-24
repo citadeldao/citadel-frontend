@@ -26,3 +26,9 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
+# Cursor files
+.cursor/
+.cursor.json
+.cursorrc
+.cursorrules
+

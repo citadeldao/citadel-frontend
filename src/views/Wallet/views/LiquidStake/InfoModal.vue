@@ -17,13 +17,13 @@
           </div>
           <div class="tx-info-item">
             <div class="label">Amount:</div>
-            <div class="value usd">
-              {{ amount }} {{ isStx ? 'stSTX' : 'STX' }}
-            </div>
+            <div class="value usd">{{ amount }} {{ symbol }}</div>
           </div>
           <div class="tx-info-item">
             <div class="label">Fee:</div>
-            <div class="value usd">{{ txInfo.fee }} STX</div>
+            <div class="value usd fee">
+              {{ txInfo.fee }} <span class="fee">STX</span>
+            </div>
           </div>
           <div class="tx-info-item">
             <div class="label">Contract address:</div>
@@ -95,6 +95,9 @@ export default {
       required: true,
     },
     contractAddress: {
+      required: true,
+    },
+    symbol: {
       required: true,
     },
   },
@@ -173,6 +176,11 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  .fee {
+    color: $red;
+    font-family: Panton_Bold;
+  }
 
   .tx-info {
     display: flex;
