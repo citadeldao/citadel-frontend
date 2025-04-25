@@ -248,6 +248,10 @@ export default {
     const handleButtonClick = () => {
       if (!props.disabled) {
         if (stakeInfoStacks.value && stakeInfoStacks.value.nfts) {
+          router.push({
+            name: 'LiquidStake',
+            params: { ...route.params },
+          });
           emit('prepareClaim');
         } else {
           router.push({

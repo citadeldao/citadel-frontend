@@ -11,6 +11,7 @@
   >
     <SuccessModalContent
       v-model:txComment="txComment"
+      :is-stacks-delayed="isStacksDelayed"
       :show-from="false"
       :wallet="wallet"
       :amount="amount"
@@ -35,6 +36,10 @@ export default {
   props: {
     closeSuccessModal: {
       required: true,
+    },
+    isStacksDelayed: {
+      type: Boolean,
+      default: false,
     },
     customCode: {
       type: String,

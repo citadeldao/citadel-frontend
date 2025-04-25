@@ -53,6 +53,7 @@
       :active-tab="activeTab"
       :redelegation-node-address="redelegationNodeAddress"
     />
+    <StacksDelayedInfo v-if="isStacksDelayed" style="margin: 10px 0" />
     <NominatedNodes
       v-if="isMultiple"
       class="success-modal-content__nominated-nodes"
@@ -89,6 +90,7 @@ import done from '@/assets/icons/done.svg';
 import clock from '@/assets/icons/clock.svg';
 import confirmed from '@/assets/icons/confirmed.svg';
 import useWallets from '@/compositions/useWallets';
+import StacksDelayedInfo from './StacksDelayedInfo';
 
 export default {
   name: 'SuccessModalContent',
@@ -99,9 +101,14 @@ export default {
     SendDirection,
     Textarea,
     NominatedNodes,
+    StacksDelayedInfo,
   },
   props: {
     isMultiple: {
+      type: Boolean,
+      default: false,
+    },
+    isStacksDelayed: {
       type: Boolean,
       default: false,
     },

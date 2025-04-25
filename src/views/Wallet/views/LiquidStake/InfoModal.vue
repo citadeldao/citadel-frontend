@@ -17,7 +17,7 @@
           </div>
           <div class="tx-info-item">
             <div class="label">Amount:</div>
-            <div class="value usd">{{ amount }} {{ symbol }}</div>
+            <div class="value">{{ amount }} {{ symbol }}</div>
           </div>
           <div class="tx-info-item">
             <div class="label">Fee:</div>
@@ -178,8 +178,12 @@ export default {
   align-items: center;
 
   .fee {
-    color: $red;
+    color: #6b93c0;
     font-family: Panton_Bold;
+
+    span {
+      font-family: Panton_SemiBold;
+    }
   }
 
   .tx-info {
@@ -215,7 +219,7 @@ export default {
 
         &.isAddress,
         &.usd {
-          color: #6b93c0;
+          color: #fa3b33;
           font-size: 13px;
         }
 
