@@ -9,12 +9,26 @@
     <div class="claim-modal">
       <div v-for="(nft, ndx) in nfts" :key="ndx" class="claim-modal__item">
         <div class="claim-modal__item-column row">
-          <div class="claim-modal__item-logo">
+          <el-tooltip
+            v-if="currentHeight < nft.endUnlock"
+            class="box-item"
+            effect="customized"
+            :content="getTimeForClaim(nft)"
+            placement="bottom-start"
+          >
+            <div class="claim-modal__item-logo">
+              <StacksIcon />
+            </div>
+          </el-tooltip>
+          <div v-else class="claim-modal__item-logo">
             <StacksIcon />
           </div>
           <div class="claim-modal__item-column ml10">
             <div class="claim-modal__item-current">
-              {{ `#${nft.id}` }}
+              {{ `#${nft.id}`
+              }}<span :class="{ btc: nft.isBtc }">
+                {{ nft.isBtc ? 'stSTXbtc' : 'stSTX' }}</span
+              >
             </div>
             <div class="claim-modal__item-current-label">
               {{
@@ -66,6 +80,21 @@ export default {
       emit('close');
     };
 
+    const getTimeForClaim = (nft) => {
+      const symbol = nft.isBtc ? 'stSTXbtc' : 'stSTX';
+      const str = `Delayed unstake from ${symbol}. Available in approximately`;
+
+      const blocksRemaining = nft.endUnlock - props.currentHeight;
+      const totalMinutes = blocksRemaining * 10;
+
+      const days = Math.floor(totalMinutes / 1440); // 1440 минут в дне
+      const hours = Math.floor((totalMinutes % 1440) / 60);
+      const minutes = totalMinutes % 60;
+
+      const readable = `${days}d ${hours}h ${minutes}m`;
+      return `${str} ${readable}`;
+    };
+
     const onClaim = (nft) => {
       if (props.currentHeight < nft.endUnlock) return;
       emit('claim', nft);
@@ -75,6 +104,7 @@ export default {
     return {
       onClose,
       onClaim,
+      getTimeForClaim,
     };
   },
 };
@@ -110,6 +140,7 @@ export default {
   }
 
   &__item-logo {
+    cursor: pointer;
     width: 48px;
     height: 48px;
     display: flex;
@@ -123,6 +154,17 @@ export default {
     font-size: 17px;
     color: #000;
     font-family: Panton_SemiBold;
+
+    span {
+      display: inline-block;
+      margin-left: 5px;
+      font-size: 12px;
+      color: #6b93c0;
+
+      &.btc {
+        color: #2f8f91;
+      }
+    }
   }
 
   &__item-current-label {

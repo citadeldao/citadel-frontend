@@ -52,7 +52,7 @@
             <component :is="currentIcon" />
           </keep-alive>
         </div>
-        <div class="label">Nft balance</div>
+        <div class="label">Unlocking Balance (NFT)</div>
       </div>
       <div class="col">
         <div class="balance">

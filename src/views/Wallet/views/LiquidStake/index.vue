@@ -70,7 +70,7 @@
           v-model="radioStake"
           :value="liquidsbtc"
           @change="setActive('liquidsbtc')"
-          >Liquid sBTC</RadioButton
+          >Liquid stSTXbtc</RadioButton
         >
         <RadioButton
           v-if="currentTab === 'unstake'"
@@ -495,7 +495,7 @@ export default {
           share: ratios.stakedBalancePercent,
         },
         {
-          name: 'Nft balance',
+          name: 'Unlocking Balance (NFT)',
           color: '#4B9A43',
           share: ratios.nftPercent,
         },
