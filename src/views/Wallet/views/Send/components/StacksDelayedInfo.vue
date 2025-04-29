@@ -42,4 +42,18 @@ export default {
     }
   }
 }
+
+body.dark {
+  .delayed-info {
+    background-color: #393c5f;
+
+    &__text {
+      color: #6b93c0;
+
+      span {
+        color: #c5cad8;
+      }
+    }
+  }
+}
 </style>
