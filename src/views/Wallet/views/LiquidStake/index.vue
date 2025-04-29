@@ -104,7 +104,15 @@
         <div class="line" />
         <div class="value">{{ stakingInfo?.stSTX }} <span>stSTX</span></div>
       </div> -->
-      <div class="liquid-stake__title" v-html="descriptionStake" />
+      <div class="liquid-stake__info">
+        <div v-if="stakingInfo?.nfts" class="liquid-stake__estimate">
+          <div class="estimate-label">Estimated Time to Receive STX:</div>
+          <div class="estimate-value">
+            End of cycle (~{{ getTimeForClaim(stakingInfo?.nfts?.[0]) }})
+          </div>
+        </div>
+        <div class="liquid-stake__title" v-html="descriptionStake" />
+      </div>
       <Input
         id="amount"
         :value="amount"
@@ -474,6 +482,19 @@ export default {
       };
     };
 
+    const getTimeForClaim = (nft) => {
+      if (!nft) return '';
+      const blocksRemaining = nft.endUnlock - stakingInfo?.value?.currentHeight;
+      const totalMinutes = blocksRemaining * 10;
+
+      const days = Math.floor(totalMinutes / 1440); // 1440 минут в дне
+      const hours = Math.floor((totalMinutes % 1440) / 60);
+      const minutes = totalMinutes % 60;
+
+      const readable = `${days}d ${hours}h ${minutes}m`;
+      return `${readable}`;
+    };
+
     const chartData = computed(() => {
       const nftBalance =
         stakingInfo.value?.nfts?.reduce((acc, nft) => acc + +nft.STX, 0) || 0;
@@ -557,6 +578,7 @@ export default {
       closeClaimModal,
       onClaim,
       chartData,
+      getTimeForClaim,
     };
   },
 };
@@ -565,6 +587,42 @@ export default {
 .liquid-stake {
   padding: 20px 0;
   min-height: 400px;
+
+  &__estimate {
+    border-radius: 8px;
+    padding: 0 20px;
+    width: 100%;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f0f3fd;
+    margin-bottom: 20px;
+
+    @include xl {
+      margin-left: 40px;
+      width: 100%;
+    }
+
+    .estimate-label {
+      color: #6b758e;
+      font-size: 14px;
+    }
+
+    .estimate-value {
+      color: #000;
+      font-size: 14px;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+
+    @include xl {
+      flex-direction: row-reverse;
+    }
+  }
 
   &__nfts {
     margin-top: 20px;
@@ -626,6 +684,10 @@ export default {
     font-size: 16px;
     color: rgba(107, 147, 192, 1);
     line-height: 25px;
+
+    @include xl {
+      width: 100%;
+    }
   }
 
   &__menu {
@@ -678,6 +740,17 @@ export default {
 
 body.dark {
   .liquid-stake {
+    &__estimate {
+      background-color: #313354;
+
+      .estimate-label {
+        color: #6b93c0;
+      }
+
+      .estimate-value {
+        color: #c3ceeb;
+      }
+    }
     &__staked {
       .label,
       .value span {

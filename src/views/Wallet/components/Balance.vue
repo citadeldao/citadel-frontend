@@ -135,11 +135,11 @@
           <span
             v-pretty-number="{
               value: !showBalance ? HIDE_BALANCE_MASK : stakingInfo?.stSTX || 0,
-              currency: currentTab,
+              currency: 'stSTX',
             }"
           />
           <span class="balance__info-currency">
-            {{ currentTab }}
+            {{ 'stSTX' }}
           </span>
         </span>
       </div>
