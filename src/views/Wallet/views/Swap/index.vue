@@ -851,6 +851,8 @@ export default {
         !addressTo.value
       )
         return;
+
+      console.log('searchTokenToComputed', searchTokenToComputed.value);
       const slipp = store.getters['squid/slippage'];
       const fromChain = allNetworks.value.find(
         (item) => item.key === searchNetworkFrom.value

@@ -23,7 +23,7 @@
       </div>
     </div>
     <!-- staked -->
-    <div v-if="stakeBalance" class="stake-nodes-status__item">
+    <div v-if="false" class="stake-nodes-status__item">
       <div class="col">
         <div class="icon">
           <keep-alive :style="{ fill: '#FF5722' }">

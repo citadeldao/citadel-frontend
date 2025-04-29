@@ -253,7 +253,10 @@ export default {
     const descriptionStake = computed(() => {
       if (currentMenu.value === 'liquidstx') return t('stacks.liquidstx');
       if (currentMenu.value === 'liquidsbtc') return t('stacks.liquidbtc');
-      if (currentMenu.value === 'delayed') return t('stacks.liquiddelayed');
+      if (currentMenu.value === 'delayed')
+        return t('stacks.liquiddelayed', {
+          symbol: stakeTabMode.value === 'liquidsbtc' ? 'stSTXbtc' : 'stSTX',
+        });
       if (currentMenu.value === 'instant') return t('stacks.liquidinstant');
       return '';
     });
@@ -445,28 +448,28 @@ export default {
 
     const getStakingRatio = (
       availableBalance,
-      stakedBalance,
+      // stakedBalance,
       nftBalance = 0
     ) => {
-      const total = +availableBalance + +stakedBalance + +nftBalance;
+      const total = +availableBalance + +nftBalance;
 
       // Если общая сумма нулевая, возвращаем 0% для всех
       if (total === 0) {
         return {
           availableBalancePercent: 0,
-          stakedBalancePercent: 0,
+          // stakedBalancePercent: 0,
           nftPercent: 0,
         };
       }
 
       // Вычисляем проценты для каждого баланса
       const availablePercent = (+availableBalance / total) * 100;
-      const stakedPercent = (+stakedBalance / total) * 100;
+      // const stakedPercent = (+stakedBalance / total) * 100;
       const nftPercent = (+nftBalance / total) * 100;
 
       return {
         availableBalancePercent: availablePercent,
-        stakedBalancePercent: stakedPercent,
+        // stakedBalancePercent: stakedPercent,
         nftPercent: nftPercent,
       };
     };
@@ -474,12 +477,12 @@ export default {
     const chartData = computed(() => {
       const nftBalance =
         stakingInfo.value?.nfts?.reduce((acc, nft) => acc + +nft.STX, 0) || 0;
-      const stakedBalance = stakingInfo.value?.stSTX || 0;
+      // const stakedBalance = stakingInfo.value?.stSTX || 0;
       const availableBalance = currentWallet.value.balance.calculatedBalance;
 
       const ratios = getStakingRatio(
         availableBalance,
-        stakedBalance,
+        // stakedBalance,
         nftBalance
       );
 
@@ -489,11 +492,11 @@ export default {
           color: '#AFBCCB',
           share: ratios.availableBalancePercent,
         },
-        {
-          name: 'Staked balance',
-          color: '#FF5722',
-          share: ratios.stakedBalancePercent,
-        },
+        // {
+        //   name: 'Staked balance',
+        //   color: '#FF5722',
+        //   share: ratios.stakedBalancePercent,
+        // },
         {
           name: 'Unlocking Balance (NFT)',
           color: '#4B9A43',

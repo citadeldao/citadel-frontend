@@ -152,11 +152,11 @@
               value: !showBalance
                 ? HIDE_BALANCE_MASK
                 : stakingInfo?.stSTXbtc || 0,
-              currency: currentTab,
+              currency: 'stSTXbtc',
             }"
           />
           <span class="balance__info-currency">
-            {{ currentTab }}
+            {{ 'stSTXbtc' }}
           </span>
         </span>
       </div>
