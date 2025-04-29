@@ -31,12 +31,12 @@
           "
         />
       </Modal>
-      <Modal v-if="true">
+      <Modal v-if="showSuccessModal">
         <SuccessModal
           :close-success-modal="closeSuccessModal"
           :success-click-handler="successClickHandler"
           :wallet="currentWallet"
-          :is-stacks-delayed="true"
+          :is-stacks-delayed="radioStake === 'delayed'"
           :amount="amount"
           :success-tx="successHash"
           @changeComment="onChangeComment"
