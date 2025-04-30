@@ -171,7 +171,7 @@ export default {
           (ch) => ch.chainName === 'coreum'
         );
       }
-
+      hasSwapSquid.value = null; // remove when it works
       if (hasSwapSquid.value) {
         methods.value.push(squidData);
       }
