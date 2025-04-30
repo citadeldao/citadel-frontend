@@ -54,7 +54,7 @@
           </div>
         </div>
         <div
-          v-if="countToShow < items.length"
+          v-if="filteredItems.length >= 10 && countToShow < items.length"
           class="swap-select__more"
           @click="showMore"
         >

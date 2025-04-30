@@ -13,9 +13,22 @@
           :class="{
             'alias-xl': currentToken
               ? currentToken?.hasClaim
-              : currentWallet.hasClaim,
+              : currentWallet.net === 'stacks' || currentWallet.hasClaim,
           }"
         />
+        <transition name="fade">
+          <div
+            v-if="currentWallet.net === 'stacks'"
+            class="wallet__claim-rewards"
+          >
+            <ClaimRewardsStacks
+              :disabled="currentWallet.isStub"
+              :is-current-token="!!currentToken"
+              :current-wallet="currentToken || currentWallet"
+              @prepareClaim="prepareClaimStacks"
+            />
+          </div>
+        </transition>
         <transition name="fade">
           <div
             v-if="
@@ -90,7 +103,26 @@
     <div class="wallet__right-section">
       <transition name="fade">
         <div
-          v-if="currentToken ? currentToken?.hasClaim : currentWallet.hasClaim"
+          v-if="currentWallet.net === 'stacks'"
+          class="wallet__claim-rewards-lg"
+        >
+          <ClaimRewardsStacks
+            :disabled="currentWallet.isStub"
+            :is-current-token="!!currentToken"
+            :current-wallet="currentToken || currentWallet"
+            @prepareClaim="prepareClaimStacks"
+          />
+        </div>
+      </transition>
+      <transition name="fade">
+        <div
+          v-if="
+            currentWallet.net !== 'stacks'
+              ? currentToken
+                ? currentToken?.hasClaim
+                : currentWallet.hasClaim
+              : false
+          "
           class="wallet__claim-rewards-lg"
         >
           <ClaimRewards
@@ -334,6 +366,7 @@ import BtcAddresses from './components/BtcAddresses';
 import BtcAddressesPending from './components/BtcAddressesPending';
 import RoundArrowButton from '@/components/UI/RoundArrowButton';
 import { useRouter } from 'vue-router';
+import ClaimRewardsStacks from './components/ClaimRewardsStacks';
 
 export default {
   name: 'Wallet',
@@ -341,6 +374,7 @@ export default {
     RoundArrowButton,
     Alias,
     ClaimRewards,
+    ClaimRewardsStacks,
     RewardsModal,
     BtcUpdateFeeModal,
     MainHeader,
@@ -507,6 +541,9 @@ export default {
       await getWalletRewards();
       await getDelegationBalance();
       await fetchTxsBtc();
+      if (currentWallet?.value && currentWallet?.value?.net === 'stacks') {
+        await store.dispatch('stacks/getStakingInfo', currentWallet.value);
+      }
       if (currentWallet?.value?.net === 'btc') {
         await store.dispatch('transactions/getTransactions', {
           walletId: currentWallet?.value?.id,
@@ -528,6 +565,9 @@ export default {
       async (params, oldParams) => {
         await loadXCTInfo();
         await getDelegationBalance();
+        if (currentWallet?.value && currentWallet?.value?.net === 'stacks') {
+          await store.dispatch('stacks/getStakingInfo', currentWallet.value);
+        }
         if (
           params.net !== oldParams.net ||
           params.address.toLowerCase() !== oldParams.address.toLowerCase()
@@ -681,6 +721,10 @@ export default {
       }
     };
 
+    const prepareClaimStacks = () => {
+      store.dispatch('stacks/showClaimModal', true);
+    };
+
     const prepareClaim = async (customWallet) => {
       store.commit('networks/SET_RESTAKE_TX', null);
       customClaimWallet.value = customWallet || null;
@@ -726,8 +770,6 @@ export default {
         const { rawTxs, ok: prepOk } = await currentWallet.value.prepareClaim(
           currentWallet.value.id
         );
-
-        console.log('rawTxs', rawTxs);
 
         if (prepOk) {
           resRawTxs.value = rawTxs;
@@ -1520,6 +1562,7 @@ export default {
       selectedBtcAddressType,
       rewardsModalHandler,
       restakeTx,
+      prepareClaimStacks,
     };
   },
 };

@@ -259,7 +259,7 @@ export default {
         const msgObj = JSON.parse(props.txRoute.transactionRequest.data);
         let wasmStructure;
 
-        if (msgObj?.msg?.wasm) {
+        if (msgObj?.value?.msg?.wasm) {
           wasmStructure = { ...msgObj.msg.wasm };
           wasmStructure.sender = props.signerWallet.address;
           wasmStructure.funds = [
@@ -269,16 +269,34 @@ export default {
             },
           ];
         }
+        const parsedMsg = JSON.parse(msgObj?.value?.msg);
         await store.dispatch('squid/convertToCosmosTx', {
           net: props.signerWallet.net,
           address: props.signerWallet.address,
           publicKey: props.signerWallet.publicKey,
-          data: [
-            {
-              type: msgObj.msgTypeUrl,
-              value: wasmStructure || msgObj.msg,
-            },
-          ],
+          data: wasmStructure
+            ? [
+                {
+                  type: msgObj.typeUrl,
+                  value: wasmStructure || JSON.parse(msgObj?.value?.msg),
+                },
+              ]
+            : [
+                {
+                  type: msgObj.typeUrl,
+                  value: {
+                    contract: msgObj.value.contract,
+                    sender: props.signerWallet.address,
+                    funds: [
+                      {
+                        amount: props.txRoute.params.fromAmount,
+                        denom: props.txRoute.params.fromToken,
+                      },
+                    ],
+                    msg: parsedMsg,
+                  },
+                },
+              ],
         });
         return; // cosmos
       }

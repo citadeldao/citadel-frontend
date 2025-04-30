@@ -314,7 +314,7 @@ export default {
 
     const showEditButton = computed(() => {
       if (!props.isModal && props.currentWallet.hasMultiUnstake) return false;
-      if (editMode.value && !props.redelegationNodeTo) {
+      if (editMode?.value && !props.redelegationNodeTo) {
         return false;
       } else if (
         (editMode.value && props.redelegationNodeTo) ||

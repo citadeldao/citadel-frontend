@@ -1633,7 +1633,9 @@
     "stacks": {
         "liquidstx": "Start earning instantly while keeping your STX liquid with stSTX. Rewards auto-compound in STX and stay under your full control — no lockups. <span style='color: #00A3FF'>APY 9.61%</span>",
         "liquidbtc": "Stay liquid with stSTXbtc and earn real yield in sBTC, streamed directly to your wallet — instantly and without locking your assets. <span style='color: #00A3FF'>APY 9.33%</span>",
-        "liquiddelayed": "Unstacking stSTX issues a withdrawal NFT, which lets you claim your STX after the current PoX cycle ends <span style='color: #00A3FF'>(~15 days)</span>",
-        "liquidinstant": "Instant Unstack lets you withdraw STX immediately if there’s available liquidity in the protocol. A <span style='color: #00A3FF'>1% fee</span> applies."
+        "liquiddelayed": "Unstacking {symbol} issues a withdrawal NFT, which lets you claim your STX after the current PoX cycle ends <span style='color: #00A3FF'>(~15 days)</span>",
+        "liquidinstant": "Instant Unstack lets you withdraw STX immediately if there’s available liquidity in the protocol. A <span style='color: #00A3FF'>1% fee</span> applies.",
+        "modalClaimTitle": "Claim NFT",
+        "modalClaimDescription": "Here are all your NFTs, you'll be able to claim them when your turn comes."
     }
 }

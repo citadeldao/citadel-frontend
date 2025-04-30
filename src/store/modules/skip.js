@@ -87,7 +87,6 @@ export default {
         result = await axios.get(`https://api.skip.build/v2/fungible/assets`);
 
         if (result.data && result.data.chain_to_assets_map) {
-          console.log('assets', result.data.chain_to_assets_map);
           commit(types.SET_ASSETS, result.data.chain_to_assets_map);
         }
       } catch (err) {

@@ -552,7 +552,7 @@ export default {
 
       try {
         await store.dispatch('squid/fetchChains');
-        await store.dispatch('squid/fetchTokens');
+        //await store.dispatch('squid/fetchTokens');
       } catch (err) {
         isLoadingData.value = false;
         appError.value = t('swapView.notAvailableRegion');
@@ -594,6 +594,7 @@ export default {
       []
         .concat(squidChains.value)
         .map((w) => ({
+          axelarChainName: w.axelarChainName,
           id: w.chainName,
           title: `${w.chainName.slice(0, 1).toUpperCase()}${w.chainName.slice(
             1
@@ -850,6 +851,8 @@ export default {
         !addressTo.value
       )
         return;
+
+      console.log('searchTokenToComputed', searchTokenToComputed.value);
       const slipp = store.getters['squid/slippage'];
       const fromChain = allNetworks.value.find(
         (item) => item.key === searchNetworkFrom.value

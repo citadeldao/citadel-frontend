@@ -128,7 +128,39 @@
       <span class="balance__currency"> {{ currentTab }}</span>
     </span>
     <div v-if="currentWallet.hasStake" class="balance__info">
-      <div class="balance__info-line">
+      <div v-if="currentWallet.net == 'stacks'" class="balance__info-line">
+        <span class="balance__info-title">Staked stSTX</span>
+        <div class="balance__info-white-space" />
+        <span class="balance__info-value">
+          <span
+            v-pretty-number="{
+              value: !showBalance ? HIDE_BALANCE_MASK : stakingInfo?.stSTX || 0,
+              currency: 'stSTX',
+            }"
+          />
+          <span class="balance__info-currency">
+            {{ 'stSTX' }}
+          </span>
+        </span>
+      </div>
+      <div v-if="currentWallet.net == 'stacks'" class="balance__info-line">
+        <span class="balance__info-title">Staked stSTXbtc</span>
+        <div class="balance__info-white-space" />
+        <span class="balance__info-value">
+          <span
+            v-pretty-number="{
+              value: !showBalance
+                ? HIDE_BALANCE_MASK
+                : stakingInfo?.stSTXbtc || 0,
+              currency: 'stSTXbtc',
+            }"
+          />
+          <span class="balance__info-currency">
+            {{ 'stSTXbtc' }}
+          </span>
+        </span>
+      </div>
+      <div v-if="currentWallet.net !== 'stacks'" class="balance__info-line">
         <span class="balance__info-title"> {{ $t('staked') }} </span>
         <div class="balance__info-white-space" />
         <span class="balance__info-value">
@@ -317,6 +349,7 @@ export default {
 
       return props.currency[currentTab.value];
     });
+    const stakingInfo = computed(() => store.getters['stacks/stakeInfo']);
     const currentKtAddress = inject('currentKtAddress');
     const showBalance = computed(() => store.getters['balance/showBalance']);
     const balance = computed(() => {
@@ -544,6 +577,7 @@ export default {
       toggleRateModal,
       showBalance,
       HIDE_BALANCE_MASK,
+      stakingInfo,
     };
   },
 };

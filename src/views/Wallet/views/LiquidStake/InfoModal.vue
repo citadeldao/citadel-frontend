@@ -17,11 +17,13 @@
           </div>
           <div class="tx-info-item">
             <div class="label">Amount:</div>
-            <div class="value usd">{{ amount }} STX</div>
+            <div class="value">{{ amount }} {{ symbol }}</div>
           </div>
           <div class="tx-info-item">
             <div class="label">Fee:</div>
-            <div class="value usd">{{ txInfo.fee }} STX</div>
+            <div class="value usd fee">
+              {{ txInfo.fee }} <span class="fee">STX</span>
+            </div>
           </div>
           <div class="tx-info-item">
             <div class="label">Contract address:</div>
@@ -77,6 +79,9 @@ export default {
     Input,
   },
   props: {
+    isStx: {
+      required: true,
+    },
     onClose: {
       required: true,
     },
@@ -92,13 +97,15 @@ export default {
     contractAddress: {
       required: true,
     },
+    symbol: {
+      required: true,
+    },
   },
   setup(props, { emit }) {
     const store = useStore();
     const isLoading = ref(false);
     const password = ref('');
     const confirmPassword = ref(false);
-    console.log('info', props.txInfo);
 
     const onChange = (val) => {
       password.value = val;
@@ -123,7 +130,7 @@ export default {
       // const buffer = Buffer.from(tx.value, 'base64');
       // const txHex = buffer.toString('hex');
       const tx = props.txInfo?.txs[0]?.tx;
-      console.log('TX', tx);
+
       try {
         const result = await props.signerWallet.signAndSendTransfer({
           walletId: props.signerWallet.id,
@@ -141,7 +148,6 @@ export default {
           props.onClose();
         }
       } catch (err) {
-        console.log('GGGGG', err);
         emit('onCancel');
         props.onClose();
       }
@@ -170,6 +176,15 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  .fee {
+    color: #6b93c0;
+    font-family: Panton_Bold;
+
+    span {
+      font-family: Panton_SemiBold;
+    }
+  }
 
   .tx-info {
     display: flex;
@@ -204,7 +219,7 @@ export default {
 
         &.isAddress,
         &.usd {
-          color: #6b93c0;
+          color: #fa3b33;
           font-size: 13px;
         }
 

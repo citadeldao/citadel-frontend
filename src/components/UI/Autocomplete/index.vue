@@ -155,12 +155,17 @@ export default {
       if (!props.value) {
         return props.items;
       }
+
       if (props.splitValue) {
-        const res = props.items.filter((item) =>
-          item.title
-            ?.split(':')[0]
-            ?.toLowerCase()
-            .includes(props.value?.toLowerCase())
+        const res = props.items.filter(
+          (item) =>
+            (item?.axelarChainName || '')
+              .toLowerCase()
+              .includes(props.value?.toLowerCase()) ||
+            item.title
+              ?.split(':')[0]
+              ?.toLowerCase()
+              .includes(props.value?.toLowerCase())
         );
 
         return res;
