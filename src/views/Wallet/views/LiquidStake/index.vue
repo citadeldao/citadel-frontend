@@ -72,6 +72,11 @@
           @change="setActive('liquidsbtc')"
           >Liquid stSTXbtc</RadioButton
         >
+        <div v-if="currentTab === 'unstake'" class="liquid-label">
+          {{
+            stakeTabMode === 'liquidstx' ? 'Liquid stSTX' : 'Liquid stSTXbtc'
+          }}
+        </div>
         <RadioButton
           v-if="currentTab === 'unstake'"
           v-model="radioStake"
@@ -587,6 +592,13 @@ export default {
 .liquid-stake {
   padding: 20px 0;
   min-height: 400px;
+
+  .liquid-label {
+    color: #409eff;
+    margin-right: 12px;
+    font-size: 17px;
+    font-family: 'Panton_SemiBold';
+  }
 
   &__estimate {
     border-radius: 8px;
