@@ -21,6 +21,7 @@ export default class CryptoCoin {
     this.name = opts?.config?.name;
     this.code = opts?.config?.code;
     this.address = opts?.address;
+    this.btcAddress = opts?.btcAddress;
     this.segwitAddress = opts?.segwitAddress || null;
     this.nativeAddress = opts?.nativeAddress || null;
     this.publicKeySegwit = opts?.publicKeySegwit || null;

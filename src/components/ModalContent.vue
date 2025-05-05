@@ -1,7 +1,7 @@
 <template>
   <div
     class="modal_content"
-    :style="{ width }"
+    :style="{ width, height }"
     :class="`modal_content--${type}`"
   >
     <div class="modal_content__header" />
@@ -81,6 +81,7 @@
             ref="primaryButton"
             :disabled="disabled"
             :loading="loading"
+            :class="{ withHeight: height }"
             :data-qa="`${$t(buttonText).replace(' ', '-')}`"
             @click.stop="clickHandler"
           >
@@ -120,6 +121,10 @@ export default {
     width: {
       type: String,
       default: '600px',
+    },
+    height: {
+      type: String,
+      default: '',
     },
     submitButton: {
       type: Boolean,
@@ -361,6 +366,9 @@ export default {
   }
   & button {
     margin-top: 32px;
+    &.withHeight {
+      margin-top: 140px;
+    }
     @include laptop-standard {
       margin-top: 20px;
     }

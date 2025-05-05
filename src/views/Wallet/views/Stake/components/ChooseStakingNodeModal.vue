@@ -5,6 +5,7 @@
     :desc="statusDescription || chooseNodeModalData.desc"
     type="action"
     width="700px"
+    :height="isStacks ? '780px' : ''"
     :button-text="
       (chooseNodeModalData.button === 'unstaking.unstake' && withdrawBtn) ||
       chooseNodeModalData.button
@@ -50,6 +51,10 @@ export default {
     },
     selectedNode: {
       required: true,
+    },
+    isStacks: {
+      type: Boolean,
+      default: false,
     },
   },
   setup(props) {

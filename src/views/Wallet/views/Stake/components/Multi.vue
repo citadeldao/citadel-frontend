@@ -277,6 +277,7 @@
         <ChooseStakingNodeModal
           v-else-if="showChooseNode"
           :stake-nodes="stakeNodes"
+          :is-stacks="currentWallet.net === 'stacks'"
           :modal-close-handler="modalCloseHandler"
           :choose-node-modal-data="chooseNodeModalData"
           :selected-node="selectedNode"

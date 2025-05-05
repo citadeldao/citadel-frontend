@@ -107,6 +107,7 @@ export default {
           return {
             net: item.net,
             address: item.address,
+            btcAddress: item.btcAddress,
             segwitAddress: item.address,
             nativeAddress: item.nativeAddress,
             publicKeyNative: item.publicKeyNative,

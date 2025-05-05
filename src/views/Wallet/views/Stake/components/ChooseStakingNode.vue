@@ -134,6 +134,25 @@
           {{ $t('staking.inputNote') }}
         </span>
       </div>
+      <template v-if="currentWallet.net === 'stacks'">
+        <Input
+          id="rewardAddress"
+          :value="btcRewardAddress"
+          label="BTC Reward address"
+          :max="maxAmount"
+          type="text"
+          :style="{ marginTop: '15px' }"
+          placeholder="Enter your Bitcoin address"
+          :show-error-text="!btcRewardAddress"
+          :error="
+            incorrectPassword && confirmPassword ? 'Incorrect password' : ''
+          "
+        />
+        <span v-if="showAmount" class="choose-staking-node__available-balance"
+          >This Bitcoin address will be used to receive BTC rewards at the end
+          of each PoX cycle. You can change it if needed.</span
+        >
+      </template>
     </div>
   </div>
 </template>
@@ -171,6 +190,7 @@ export default {
     const updateShowNodesList = inject('updateShowNodesList');
     const updateRedelegationDirection = inject('updateRedelegationDirection');
     const selectedNodeForRedelegation = inject('selectedNodeForRedelegation');
+    const btcRewardAddress = ref('');
     const mode = inject('mode');
     const showNodesList = (direction = '') => {
       if (insufficientFunds.value) return;
@@ -226,6 +246,9 @@ export default {
     const disabledAmount = ref(false);
 
     onMounted(() => {
+      if (props.currentWallet.net === 'stacks') {
+        btcRewardAddress.value = props.currentWallet.btcAddress;
+      }
       if (props.currentWallet.net === 'solana') {
         if (props.activeTab === 'unstake') {
           // active
@@ -267,6 +290,7 @@ export default {
       isWithoutDelegation,
       activeInput,
       disabledAmount,
+      btcRewardAddress,
     };
   },
 };
@@ -287,7 +311,7 @@ export default {
   }
   // margin-bottom: 19px;
   &__placeholder {
-    height: 150px;
+    height: 140px;
     border: 1px dashed $lightsteelblue;
     box-sizing: border-box;
     border-radius: 8px;
@@ -295,7 +319,7 @@ export default {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    margin-bottom: 24px;
+    margin-bottom: 10px;
     cursor: pointer;
     & span {
       font-size: 16px;
