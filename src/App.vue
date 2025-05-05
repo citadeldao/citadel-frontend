@@ -27,7 +27,7 @@ import Toasts from '@/components/Toasts.vue';
 import AppLayout from './layouts/AppLayout';
 import { useWindowSize } from 'vue-window-size';
 import { screenWidths } from '@/config/sreenWidthThresholds';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 // import { isMobile } from 'mobile-device-detect';
 
 export default {
@@ -44,8 +44,10 @@ export default {
     const isClosed = ref(false);
     const store = useStore();
     const router = useRouter();
+    const route = useRoute();
     const { width } = useWindowSize();
     const showModal = computed(() => {
+      if (['modalPrivacy', 'modalTerms'].includes(route.name)) return false;
       return width.value < screenWidths.md && !isClosed.value; // !!(width.value < screenWidths.md && !isClosed.value && isMobile)
     });
     const newWalletsModalShow = computed(
