@@ -143,12 +143,13 @@
           type="text"
           :style="{ marginTop: '15px' }"
           placeholder="Enter your Bitcoin address"
-          :show-error-text="!btcRewardAddress"
-          :error="
-            incorrectPassword && confirmPassword ? 'Incorrect password' : ''
-          "
+          :show-error-text="!isValidBTCAddress"
+          @input="updateBTCRewardsAddress"
+          :error="isValidBTCAddress ? '' : 'Invalid Bitcoin address'"
         />
-        <span v-if="showAmount" class="choose-staking-node__available-balance"
+        <span
+          v-if="isValidBTCAddress"
+          class="choose-staking-node__available-balance"
           >This Bitcoin address will be used to receive BTC rewards at the end
           of each PoX cycle. You can change it if needed.</span
         >
@@ -208,6 +209,18 @@ export default {
           isWithoutDelegation.value ? '' : selectedNode.value
         ));
     };
+
+    const isValidBTCAddress = computed(() => {
+      if (!btcRewardAddress.value) return false;
+
+      const base58Regex = /^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$/;
+      const bech32Regex = /^(bc1)[0-9a-z]{39,59}$/;
+
+      return (
+        base58Regex.test(btcRewardAddress.value) ||
+        bech32Regex.test(btcRewardAddress.value)
+      );
+    });
 
     const maxAmount = inject('maxAmount');
     // updateAmount(maxAmount.value);
@@ -274,6 +287,10 @@ export default {
       }
     });
 
+    const updateBTCRewardsAddress = (value) => {
+      btcRewardAddress.value = value;
+    };
+
     return {
       selectedNode,
       showNodesList,
@@ -291,6 +308,8 @@ export default {
       activeInput,
       disabledAmount,
       btcRewardAddress,
+      isValidBTCAddress,
+      updateBTCRewardsAddress,
     };
   },
 };

@@ -99,7 +99,7 @@
       <StakeStats
         symbol="STX"
         :stakeBalance="+stakingInfo?.stSTX + +stakingInfo?.stSTXbtc"
-        :available-balance="currentWallet?.balance?.calculatedBalance"
+        :available-balance="currentWallet?.balance?.mainBalance"
         :nft-balance="
           stakingInfo?.nfts?.reduce((acc, nft) => acc + +nft.STX, 0)
         "
@@ -504,7 +504,7 @@ export default {
       const nftBalance =
         stakingInfo.value?.nfts?.reduce((acc, nft) => acc + +nft.STX, 0) || 0;
       // const stakedBalance = stakingInfo.value?.stSTX || 0;
-      const availableBalance = currentWallet.value.balance.calculatedBalance;
+      const availableBalance = currentWallet.value.balance.mainBalance;
 
       const ratios = getStakingRatio(
         availableBalance,
