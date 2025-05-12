@@ -492,11 +492,11 @@ export default {
       const blocksRemaining = nft.endUnlock - stakingInfo?.value?.currentHeight;
       const totalMinutes = blocksRemaining * 10;
 
-      const days = Math.floor(totalMinutes / 1440); // 1440 минут в дне
-      const hours = Math.floor((totalMinutes % 1440) / 60);
-      const minutes = totalMinutes % 60;
+      const days = Math.abs(Math.floor(totalMinutes / 1440)); // 1440 минут в дне
+      const hours = Math.abs(Math.floor((totalMinutes % 1440) / 60));
+      const minutes = Math.abs(totalMinutes % 60);
 
-      const readable = `${days}d ${hours}h ${minutes}m`;
+      const readable = `${days}days, ${hours}hours, ${minutes}mins`;
       return `${readable}`;
     };
 

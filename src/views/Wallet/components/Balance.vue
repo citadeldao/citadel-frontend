@@ -128,6 +128,21 @@
       <span class="balance__currency"> {{ currentTab }}</span>
     </span>
     <div v-if="currentWallet.hasStake" class="balance__info">
+      <div v-if="currentWallet.net === 'stacks'" class="balance__info-line">
+        <span class="balance__info-title"> {{ $t('staked') }} </span>
+        <div class="balance__info-white-space" />
+        <span class="balance__info-value">
+          <span
+            v-pretty-number="{
+              value: !showBalance ? HIDE_BALANCE_MASK : balance.stake,
+              currency: currentTab,
+            }"
+          />
+          <span class="balance__info-currency">
+            {{ currentTab }}
+          </span>
+        </span>
+      </div>
       <div v-if="currentWallet.net == 'stacks'" class="balance__info-line">
         <span class="balance__info-title">Staked stSTX</span>
         <div class="balance__info-white-space" />
@@ -157,6 +172,21 @@
           />
           <span class="balance__info-currency">
             {{ 'stSTXbtc' }}
+          </span>
+        </span>
+      </div>
+      <div v-if="currentWallet.net === 'stacks'" class="balance__info-line">
+        <span class="balance__info-title"> {{ $t('frozen') }} </span>
+        <div class="balance__info-white-space" />
+        <span class="balance__info-value">
+          <span
+            v-pretty-number="{
+              value: !showBalance ? HIDE_BALANCE_MASK : balance.frozenBalance,
+              currency: currentTab,
+            }"
+          />
+          <span class="balance__info-currency">
+            {{ currentTab }}
           </span>
         </span>
       </div>
