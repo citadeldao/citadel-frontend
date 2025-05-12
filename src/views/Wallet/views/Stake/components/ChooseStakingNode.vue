@@ -163,6 +163,7 @@ import { computed, inject, ref, onMounted } from 'vue';
 import StakeListItem from './StakeListItem.vue';
 import Input from '@/components/UI/Input';
 import pointer from '@/assets/icons/pointer.svg';
+import { useStore } from 'vuex';
 export default {
   name: 'ChooseStakingNode',
   components: { pointer, Input, StakeListItem },
@@ -182,6 +183,7 @@ export default {
   },
   emits: ['update:activeTab', 'nextStep'],
   setup(props, { emit }) {
+    const store = useStore();
     const updateAmount = inject('updateAmount');
     const getDelegationFee = inject('getDelegationFee');
     const editMode = inject('editMode');
@@ -261,6 +263,10 @@ export default {
     onMounted(() => {
       if (props.currentWallet.net === 'stacks') {
         btcRewardAddress.value = props.currentWallet.btcAddress;
+        store.dispatch(
+          'btcAddresses/setStacksRewardsAddress',
+          props.currentWallet.btcAddress
+        );
       }
       if (props.currentWallet.net === 'solana') {
         if (props.activeTab === 'unstake') {
@@ -289,6 +295,9 @@ export default {
 
     const updateBTCRewardsAddress = (value) => {
       btcRewardAddress.value = value;
+      if (isValidBTCAddress.value) {
+        store.dispatch('btcAddresses/setStacksRewardsAddress', value);
+      }
     };
 
     return {

@@ -417,6 +417,7 @@ export default {
 body.dark {
   .modal_content {
     box-shadow: none;
+    background-color: #26273b;
 
     .modal__btn-second {
       button {
