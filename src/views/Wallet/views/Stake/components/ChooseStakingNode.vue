@@ -103,10 +103,18 @@
         :decimals="currentWallet?.config?.decimals"
         type="currency"
         :currency="currentWallet.code"
-        :max="maxAmount"
+        :max="
+          maxAmount > currentWallet?.balance?.mainBalance
+            ? currentWallet?.balance?.mainBalance
+            : maxAmount
+        "
         icon="coins"
         placeholder="0.0"
-        :error="insufficientFunds"
+        :error="
+          amount > currentWallet?.balance?.mainBalance
+            ? insufficientFunds
+            : insufficientFunds
+        "
         :show-set-max="!activeInput"
         data-qa="staking__amount-field"
         @input="updateAmount"
@@ -136,12 +144,12 @@
       </div>
       <template v-if="currentWallet.net === 'stacks'">
         <Input
+          :style="{ marginTop: showAmount ? '15px' : '35px' }"
           id="rewardAddress"
           :value="btcRewardAddress"
           label="BTC Reward address"
           :max="maxAmount"
           type="text"
-          :style="{ marginTop: '15px' }"
           placeholder="Enter your Bitcoin address"
           :show-error-text="!isValidBTCAddress"
           @input="updateBTCRewardsAddress"
