@@ -128,7 +128,7 @@ export default function useStaking(stakeNodes, list) {
       walletId: currentWallet.value.id,
       transactionType: txType,
       stakeAccount: stakeAccount || null,
-      btcAccount: store.getters['btcAddresses/stacksRewardsAddress'] || null,
+      btcAccount: store.getters['btcAddresses/stacksRewardsAddress'] || '',
       nodeAddress: isWithoutDelegation.value ? null : destNodeAddress,
       sourceNodeAddress: srcNodeAddress,
       kt: currentKtAddress.value ? currentKtAddress.value.address : undefined,

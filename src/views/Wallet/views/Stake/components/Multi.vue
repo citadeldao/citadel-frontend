@@ -683,7 +683,7 @@ export default {
       const { rawTxs, ok } = await props.currentWallet.prepareDelegation({
         walletId: props.currentWallet.id,
         stakeAccount: selectedNode.value.holderAccount,
-        btcAccount: store.getters['btcAddresses/stacksRewardsAddress'] || null,
+        btcAccount: store.getters['btcAddresses/stacksRewardsAddress'] || '',
         nodeAddresses:
           isMultiple.value ||
           (props.currentWallet.hasMultiUnstake && mode.value === 'unstake')
