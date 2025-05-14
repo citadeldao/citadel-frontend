@@ -288,9 +288,8 @@
               ? 'Withdraw Stake'
               : ''
           "
-          :disabled="disabled || errorAmount"
+          :disabled="disabled || !!errorAmount"
           :is-loading="isLoading"
-          @errorAmount="onErrorAmount"
           :prepare-delegation="prepareDelegation"
         >
           <ChooseStakingNode
@@ -298,6 +297,7 @@
             :amount="amount"
             :current-wallet="currentWallet"
             :list="list"
+            @errorAmount="onErrorAmount"
             @nextStep="prepareDelegation"
           />
         </ChooseStakingNodeModal>

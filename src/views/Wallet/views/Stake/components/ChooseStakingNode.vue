@@ -217,7 +217,9 @@ export default {
     watch(
       () => props.amount,
       () => {
-        emit('errorAmount', errorAmount.value);
+        if (props.currentWallet.net === 'stacks') {
+          emit('errorAmount', errorAmount.value);
+        }
       }
     );
 
@@ -326,11 +328,11 @@ export default {
         let stakedBalance = +props.currentWallet?.balance?.stake;
 
         if (stakedBalance > +minAmountStacks.value) {
-          stakedBalance = 0;
+          // stakedBalance = 0;
         }
 
         if (frozenBalance > +minAmountStacks.value) {
-          frozenBalance = 0;
+          // frozenBalance = 0;
         }
 
         if (props.amount && availableBalance + frozenBalance < +props.amount) {
