@@ -288,8 +288,9 @@
               ? 'Withdraw Stake'
               : ''
           "
-          :disabled="disabled"
+          :disabled="disabled || errorAmount"
           :is-loading="isLoading"
+          @errorAmount="onErrorAmount"
           :prepare-delegation="prepareDelegation"
         >
           <ChooseStakingNode
@@ -500,6 +501,10 @@ export default {
     const router = useRouter();
     const citadel = inject('citadel');
     const { t } = useI18n();
+    const errorAmount = ref('');
+    const onErrorAmount = (value) => {
+      errorAmount.value = value;
+    };
     const {
       showModal,
       modalCloseHandler,
@@ -978,6 +983,8 @@ export default {
     });
 
     return {
+      errorAmount,
+      onErrorAmount,
       stackingInfo,
       progressCycle,
       stacksCycleBeganAt,

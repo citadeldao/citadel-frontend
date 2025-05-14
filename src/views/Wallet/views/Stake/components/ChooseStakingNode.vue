@@ -110,21 +110,17 @@
         "
         icon="coins"
         placeholder="0.0"
-        :error="
-          currentWallet.net === 'stacks'
-            ? maxAmount > currentWallet?.balance?.mainBalance &&
-              amount > currentWallet?.balance?.mainBalance
-              ? insufficientFunds
-              : insufficientFunds
-            : insufficientFunds
-        "
+        :error="errorAmount"
         :show-set-max="!activeInput"
         data-qa="staking__amount-field"
         @input="updateAmount"
         @keyup.enter="$emit('nextStep')"
       />
       <div class="choose-staking-node__info-wrapper">
-        <span v-if="showAmount" class="choose-staking-node__available-balance">
+        <span
+          v-if="!errorAmount"
+          class="choose-staking-node__available-balance"
+        >
           {{
             currentWallet.net === 'stacks'
               ? 'Minimum required balance for stacking'
@@ -151,7 +147,7 @@
       </div>
       <template v-if="currentWallet.net === 'stacks'">
         <Input
-          :style="{ marginTop: showAmount ? '15px' : '35px' }"
+          :style="{ marginTop: !errorAmount ? '15px' : '35px' }"
           id="rewardAddress"
           :value="btcRewardAddress"
           label="BTC Reward address"
@@ -174,7 +170,7 @@
 </template>
 
 <script>
-import { computed, inject, ref, onMounted } from 'vue';
+import { computed, inject, ref, onMounted, watch } from 'vue';
 import StakeListItem from './StakeListItem.vue';
 import Input from '@/components/UI/Input';
 import pointer from '@/assets/icons/pointer.svg';
@@ -196,7 +192,7 @@ export default {
       default: () => [],
     },
   },
-  emits: ['update:activeTab', 'nextStep'],
+  emits: ['update:activeTab', 'nextStep', 'errorAmount'],
   setup(props, { emit }) {
     const store = useStore();
     const updateAmount = inject('updateAmount');
@@ -217,6 +213,13 @@ export default {
       updateShowChooseNode(false);
       updateShowNodesList(true);
     };
+
+    watch(
+      () => props.amount,
+      () => {
+        emit('errorAmount', errorAmount.value);
+      }
+    );
 
     const setActiveTab = async (value) => {
       emit('update:activeTab', value);
@@ -316,7 +319,37 @@ export default {
       }
     };
 
+    const errorAmount = computed(() => {
+      if (props.currentWallet.net === 'stacks') {
+        const availableBalance = +props.currentWallet?.balance?.mainBalance;
+        let frozenBalance = +props.currentWallet?.balance?.frozenBalance;
+        let stakedBalance = +props.currentWallet?.balance?.stake;
+
+        if (stakedBalance > +minAmountStacks.value) {
+          stakedBalance = 0;
+        }
+
+        if (frozenBalance > +minAmountStacks.value) {
+          frozenBalance = 0;
+        }
+
+        if (props.amount && availableBalance + frozenBalance < +props.amount) {
+          return 'Insufficient funds';
+        }
+
+        if (
+          props.amount &&
+          stakedBalance + frozenBalance + +props.amount < +minAmountStacks.value
+        ) {
+          return `Minimum required balance for stacking: ${minAmountStacks.value} ${props.currentWallet.code}`;
+        }
+        return '';
+      }
+      return insufficientFunds.value;
+    });
+
     return {
+      errorAmount,
       selectedNode,
       showNodesList,
       setActiveTab,
