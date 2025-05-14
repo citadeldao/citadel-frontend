@@ -295,7 +295,7 @@ export default function useStaking(stakeNodes, list) {
   const maxAmount = computed(() => {
     let max = resMaxAmount.value; // || currentWallet.value.balance.mainBalance;
 
-    if (max === '') {
+    if (max === '' || currentWallet.value.net === 'stacks') {
       max = currentWallet.value.balance.mainBalance;
     }
 

@@ -111,8 +111,11 @@
         icon="coins"
         placeholder="0.0"
         :error="
-          amount > currentWallet?.balance?.mainBalance
-            ? insufficientFunds
+          currentWallet.net === 'stacks'
+            ? maxAmount > currentWallet?.balance?.mainBalance &&
+              amount > currentWallet?.balance?.mainBalance
+              ? insufficientFunds
+              : insufficientFunds
             : insufficientFunds
         "
         :show-set-max="!activeInput"
