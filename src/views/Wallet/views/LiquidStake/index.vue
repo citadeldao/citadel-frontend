@@ -109,8 +109,8 @@
         <div class="line" />
         <div class="value">{{ stakingInfo?.stSTX }} <span>stSTX</span></div>
       </div> -->
-      <div class="liquid-stake__info">
-        <div v-if="stakingInfo?.nfts" class="liquid-stake__estimate">
+      <div v-if="currentTab === 'unstake'" class="liquid-stake__info">
+        <div v-if="stakingInfo?.nfts?.length" class="liquid-stake__estimate">
           <div class="estimate-label">Estimated Time to Receive STX:</div>
           <div class="estimate-value">
             End of cycle (~{{ getTimeForClaim(stakingInfo?.nfts?.[0]) }})
