@@ -131,7 +131,11 @@
               : $t('balanceTooltipInfo.availableBalance')
           }}:
           <span
-            v-pretty-number="{ value: maxAmount, currency: currentWallet.code }"
+            v-pretty-number="{
+              value:
+                currentWallet.net === 'stacks' ? minAmountStacks : maxAmount,
+              currency: currentWallet.code,
+            }"
             class="choose-staking-node__available-balance-balance"
           />
           <span class="choose-staking-node__available-balance-currency">
@@ -197,6 +201,7 @@ export default {
     const store = useStore();
     const updateAmount = inject('updateAmount');
     const getDelegationFee = inject('getDelegationFee');
+    const minAmountStacks = inject('minAmountStacks');
     const editMode = inject('editMode');
     const isWithoutDelegation = inject('isWithoutDelegation');
     const selectedNode = inject('selectedNode');
@@ -330,6 +335,7 @@ export default {
       btcRewardAddress,
       isValidBTCAddress,
       updateBTCRewardsAddress,
+      minAmountStacks,
     };
   },
 };

@@ -308,6 +308,11 @@ export default function useStaking(stakeNodes, list) {
   );
   provide('maxAmount', maxAmount);
 
+  const minAmountStacks = computed(() => {
+    return resMaxAmount.value;
+  });
+  provide('minAmountStacks', minAmountStacks);
+
   const maxAdditionalFee = computed(() => {
     if (mode.value === 'stake') {
       return BigNumber(Number(maxAmount.value)).minus(Number(amount.value)).toNumber()
