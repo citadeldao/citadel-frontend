@@ -131,13 +131,7 @@
               : 'stSTXbtc'
             : currentWallet.code
         "
-        :max="
-          !['instant', 'delayed'].includes(currentMenu)
-            ? currentWallet?.balance?.mainBalance - 0.1 || 0
-            : stakeTabMode === 'liquidstx'
-            ? stakingInfo?.stSTX || 0
-            : stakingInfo?.stSTXbtc || 0
-        "
+        :max="maxAmount"
         icon="coins"
         placeholder="0.0"
         show-set-max
@@ -279,9 +273,7 @@ export default {
     );
 
     const insufficientFunds = computed(() => {
-      return +amount.value > currentWallet.value?.balance?.mainBalance - 0.1
-        ? 'Insufficient funds'
-        : '';
+      return +amount.value > maxAmount.value ? 'Insufficient funds' : '';
     });
 
     const getTxUnstake = async (action, nftId, contractBtc) => {
@@ -533,6 +525,18 @@ export default {
       return data.filter((item) => item.share > 0);
     });
 
+    const maxAmount = computed(() => {
+      if (currentMenu.value === 'liquidstx')
+        return currentWallet.value?.balance?.mainBalance - 0.1 || 0;
+      if (currentMenu.value === 'liquidsbtc')
+        return currentWallet.value?.balance?.mainBalance - 0.1 || 0;
+      if (currentMenu.value === 'delayed')
+        return stakingInfo?.value?.stSTX || 0;
+      if (currentMenu.value === 'instant')
+        return stakingInfo?.value?.stSTXbtc || 0;
+      return 0;
+    });
+
     onMounted(async () => {
       await getStakingInfo();
     });
@@ -542,6 +546,7 @@ export default {
       CONTRACT_ADDRESS,
       CONTRACT_ADDRESS_BTC,
       tabs,
+      maxAmount,
       currentTab,
       currentMenu,
       stakeTabMode,
