@@ -1,109 +1,149 @@
 <template>
   <div class="balance-tooltip-info">
-    <span class="balance-tooltip-info__line">
-      <span class="balance-tooltip-info__line-label">
-        {{ $t('balanceTooltipInfo.availableBalance') }}
-      </span>
-      - {{ $t('balanceTooltipInfo.availableBalanceInfo') }}
-    </span>
-    <span class="balance-tooltip-info__line">
-      <span class="balance-tooltip-info__line-label">
-        {{ $t('balanceTooltipInfo.stakedBalance') }}
-      </span>
-      - {{ $t('balanceTooltipInfo.stakedBalanceBalanceInfo') }}
-    </span>
-    <span
-      v-if="currentWallet.unstakeingPerioud && currentWallet.net !== 'solana'"
-      class="balance-tooltip-info__line"
-    >
-      <span class="balance-tooltip-info__line-label">
-        {{ $t('balanceTooltipInfo.frozenBalance') }}
-      </span>
-      -
-      {{
-        frozenCanBeStakedNets.includes(currentWallet.net)
-          ? $t('balanceTooltipInfo.frozenBalanceBalanceInfo1')
-          : $t('balanceTooltipInfo.frozenBalanceBalanceInfo2')
-      }}
-    </span>
-    <span
-      v-if="currentWallet.unstakePerioudFrom"
-      class="balance-tooltip-info__period"
-    >
-      {{
-        $t('balanceTooltipInfo.withFromPeriod', { code: currentWallet.name })
-      }}
-      <span class="balance-tooltip-info__period-days"
-        >{{ currentWallet.unstakePerioudFrom }}
-      </span>
-      {{ $t('balanceTooltipInfo.to') }}
-      <span class="balance-tooltip-info__period-days"
-        >{{ currentWallet.unstakePerioudTo }} {{ $t('days') }}.
-      </span>
-    </span>
-    <span
-      v-if="currentWallet.unstakePerioudLink"
-      class="balance-tooltip-info__period"
-    >
-      {{ $t('balanceTooltipInfo.iconPeriodLink') }}
-      <a
-        target="_blank"
-        :href="currentWallet.unstakePerioudLink"
-        class="balance-tooltip-info__balance-title"
-        >{{ $t('link') }}.</a
-      >
-    </span>
-    <span
-      v-if="currentWallet.net !== 'solana'"
-      class="balance-tooltip-info__period"
-    >
-      {{
-        !currentWallet.unstakeingPerioud
-          ? `${$t('balanceTooltipInfo.noPeriod')} ${currentWallet.name}.`
-          : `${$t(
-              'balanceTooltipInfo.unstakingPeriod'
-            )} ${currentWallet.net.toUpperCase()} ${$t(
-              'balanceTooltipInfo.is'
-            )}`
-      }}
-      <span
-        v-if="currentWallet.unstakeingPerioud && currentWallet.net !== 'solana'"
-        class="balance-tooltip-info__period-days"
-        >{{ currentWallet.unstakeingPerioud }}
-        days.
-      </span>
-    </span>
-    <div
-      v-if="currentWallet.hasResource && resources.length"
-      class="balance-tooltip-info__balance"
-    >
-      <span class="balance-tooltip-info__balance-title"
-        >{{ $t('balance') }}:</span
-      >
-      <span
-        v-for="item in resources"
-        :key="item.name"
-        class="balance-tooltip-info__balance-line"
-        >{{ item.nameForUser }} -
-        <span
-          v-pretty-number="{ value: item.current, currency: item.nameForUser }"
-          class="balance-tooltip-info__balance-amount"
-        />
-        {{ item.nameForUser }}
-      </span>
+    <div v-if="currentWallet.net === 'stacks'">
+      <div class="balance-tooltip-info__line">
+        <span class="balance-tooltip-info__line-label">
+          {{ $t('balanceTooltipInfo.availableBalance') }}
+        </span>
+        - STX you can send, stake, or swap.
+      </div>
+      <!--  -->
+      <div class="balance-tooltip-info__line">
+        <span class="balance-tooltip-info__line-label">
+          {{ $t('balanceTooltipInfo.stakedBalance') }}
+        </span>
+        - STX currently delegated and earning BTC rewards.
+      </div>
+      <!--  -->
+      <!--  -->
+      <div class="balance-tooltip-info__line">
+        <span class="balance-tooltip-info__line-label"> stSTX </span>
+        - Liquid staking token that grows in value as rewards accrue.
+      </div>
+      <!--  -->
+      <div class="balance-tooltip-info__line">
+        <span class="balance-tooltip-info__line-label"> stSTXbtc </span>
+        - Token that earns sBTC yield from liquid staking.
+      </div>
+      <!--  -->
+      <div class="balance-tooltip-info__line">
+        <span class="balance-tooltip-info__line-label"> Frozen </span>
+        - STX pending unlock after unstaking; can be restaked to other pools
+        before becoming available.
+      </div>
     </div>
-    <div
-      v-if="currentWallet.hasResource && resources.length"
-      class="balance-tooltip-info__balance"
-    >
-      <template v-for="item in resources" :key="item.name">
-        <span class="balance-tooltip-info__balance-line"
-          >{{ item.nameForUser }}
+    <div v-if="currentWallet.net !== 'stacks'">
+      <div class="balance-tooltip-info__line">
+        <span class="balance-tooltip-info__line-label">
+          {{ $t('balanceTooltipInfo.availableBalance') }}
         </span>
-        <span class="balance-tooltip-info__line">
-          {{ $t(`${item.name}-desc`) }}
+        - {{ $t('balanceTooltipInfo.availableBalanceInfo') }}
+      </div>
+      <div class="balance-tooltip-info__line">
+        <span class="balance-tooltip-info__line-label">
+          {{ $t('balanceTooltipInfo.stakedBalance') }}
         </span>
-      </template>
+        - {{ $t('balanceTooltipInfo.stakedBalanceBalanceInfo') }}
+      </div>
+      <div
+        v-if="currentWallet.unstakeingPerioud && currentWallet.net !== 'solana'"
+        class="balance-tooltip-info__line"
+      >
+        <span class="balance-tooltip-info__line-label">
+          {{ $t('balanceTooltipInfo.frozenBalance') }}
+        </span>
+        -
+        {{
+          frozenCanBeStakedNets.includes(currentWallet.net)
+            ? $t('balanceTooltipInfo.frozenBalanceBalanceInfo1')
+            : $t('balanceTooltipInfo.frozenBalanceBalanceInfo2')
+        }}
+      </div>
+      <div
+        v-if="currentWallet.unstakePerioudFrom"
+        class="balance-tooltip-info__period"
+      >
+        {{
+          $t('balanceTooltipInfo.withFromPeriod', { code: currentWallet.name })
+        }}
+        <span class="balance-tooltip-info__period-days"
+          >{{ currentWallet.unstakePerioudFrom }}
+        </span>
+        {{ $t('balanceTooltipInfo.to') }}
+        <span class="balance-tooltip-info__period-days"
+          >{{ currentWallet.unstakePerioudTo }} {{ $t('days') }}.
+        </span>
+      </div>
+      <div
+        v-if="currentWallet.unstakePerioudLink"
+        class="balance-tooltip-info__period"
+      >
+        {{ $t('balanceTooltipInfo.iconPeriodLink') }}
+        <a
+          target="_blank"
+          :href="currentWallet.unstakePerioudLink"
+          class="balance-tooltip-info__balance-title"
+          >{{ $t('link') }}.</a
+        >
+      </div>
+      <div
+        v-if="currentWallet.net !== 'solana'"
+        class="balance-tooltip-info__period"
+      >
+        {{
+          !currentWallet.unstakeingPerioud
+            ? `${$t('balanceTooltipInfo.noPeriod')} ${currentWallet.name}.`
+            : `${$t(
+                'balanceTooltipInfo.unstakingPeriod'
+              )} ${currentWallet.net.toUpperCase()} ${$t(
+                'balanceTooltipInfo.is'
+              )}`
+        }}
+        <span
+          v-if="
+            currentWallet.unstakeingPerioud && currentWallet.net !== 'solana'
+          "
+          class="balance-tooltip-info__period-days"
+          >{{ currentWallet.unstakeingPerioud }}
+          days.
+        </span>
+      </div>
+      <div
+        v-if="currentWallet.hasResource && resources.length"
+        class="balance-tooltip-info__balance"
+      >
+        <span class="balance-tooltip-info__balance-title"
+          >{{ $t('balance') }}:</span
+        >
+        <div
+          v-for="item in resources"
+          :key="item.name"
+          class="balance-tooltip-info__balance-line"
+        >
+          {{ item.nameForUser }} -
+          <span
+            v-pretty-number="{
+              value: item.current,
+              currency: item.nameForUser,
+            }"
+            class="balance-tooltip-info__balance-amount"
+          />
+          {{ item.nameForUser }}
+        </div>
+      </div>
+      <div
+        v-if="currentWallet.hasResource && resources.length"
+        class="balance-tooltip-info__balance"
+      >
+        <template v-for="item in resources" :key="item.name">
+          <span class="balance-tooltip-info__balance-line"
+            >{{ item.nameForUser }}
+          </span>
+          <span class="balance-tooltip-info__line">
+            {{ $t(`${item.name}-desc`) }}
+          </span>
+        </template>
+      </div>
     </div>
   </div>
 </template>
