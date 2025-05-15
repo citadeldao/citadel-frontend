@@ -103,11 +103,7 @@
         :decimals="currentWallet?.config?.decimals"
         type="currency"
         :currency="currentWallet.code"
-        :max="
-          maxAmount > currentWallet?.balance?.mainBalance
-            ? currentWallet?.balance?.mainBalance
-            : maxAmount
-        "
+        :max="maxDynamicAmount"
         icon="coins"
         placeholder="0.0"
         :error="errorAmount"
@@ -321,28 +317,27 @@ export default {
       }
     };
 
+    const maxDynamicAmount = computed(() => {
+      if (props.currentWallet.net === 'stacks') {
+        if (props.activeTab === 'unstake') {
+          return +props.currentWallet?.balance?.delegatedBalance;
+        }
+        return (
+          +props.currentWallet?.balance?.frozenBalance +
+          +props.currentWallet?.balance?.mainBalance
+        );
+      }
+      // currentWallet?.balance?.mainBalance
+      return maxAmount.value;
+    });
+
     const errorAmount = computed(() => {
       if (props.currentWallet.net === 'stacks') {
-        const availableBalance = +props.currentWallet?.balance?.mainBalance;
-        let frozenBalance = +props.currentWallet?.balance?.frozenBalance;
-        let stakedBalance = +props.currentWallet?.balance?.stake;
-
-        if (stakedBalance > +minAmountStacks.value) {
-          // stakedBalance = 0;
-        }
-
-        if (frozenBalance > +minAmountStacks.value) {
-          // frozenBalance = 0;
-        }
-
-        if (props.amount && availableBalance + frozenBalance < +props.amount) {
+        if (maxDynamicAmount.value < +props.amount) {
           return 'Insufficient funds';
         }
 
-        if (
-          props.amount &&
-          stakedBalance + frozenBalance + +props.amount < +minAmountStacks.value
-        ) {
+        if (props.amount && props.amount < +minAmountStacks.value) {
           return `Minimum required balance for stacking: ${minAmountStacks.value} ${props.currentWallet.code}`;
         }
         return '';
@@ -371,6 +366,7 @@ export default {
       isValidBTCAddress,
       updateBTCRewardsAddress,
       minAmountStacks,
+      maxDynamicAmount,
     };
   },
 };

@@ -288,7 +288,7 @@
               ? 'Withdraw Stake'
               : ''
           "
-          :disabled="disabled || !!errorAmount"
+          :disabled="currentWallet.net === 'stacks' ? !!errorAmount : disabled"
           :is-loading="isLoading"
           :prepare-delegation="prepareDelegation"
         >
