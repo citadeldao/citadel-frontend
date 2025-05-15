@@ -293,7 +293,7 @@ export default {
       if (!txs) {
         notify({
           type: 'warning',
-          text: 'Tx not found',
+          text: rawTx.error || 'Tx not found',
         });
         return;
       }
@@ -331,7 +331,7 @@ export default {
       if (!txs) {
         notify({
           type: 'warning',
-          text: 'Tx not found',
+          text: rawTx.error || 'Tx not found',
         });
         return;
       }
