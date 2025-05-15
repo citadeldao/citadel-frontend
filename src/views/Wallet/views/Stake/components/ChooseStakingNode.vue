@@ -204,7 +204,6 @@ export default {
     const btcRewardAddress = ref('');
     const mode = inject('mode');
     const showNodesList = (direction = '') => {
-      if (insufficientFunds.value) return;
       updateRedelegationDirection(direction);
       updateShowChooseNode(false);
       updateShowNodesList(true);
