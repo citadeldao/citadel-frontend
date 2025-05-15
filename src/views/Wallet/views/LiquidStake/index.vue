@@ -530,8 +530,12 @@ export default {
         return currentWallet.value?.balance?.mainBalance - 0.1 || 0;
       if (currentMenu.value === 'liquidsbtc')
         return currentWallet.value?.balance?.mainBalance - 0.1 || 0;
-      if (currentMenu.value === 'delayed')
+      if (currentMenu.value === 'delayed') {
+        if (stakeTabMode.value === 'liquidsbtc') {
+          return stakingInfo?.value?.stSTXbtc || 0;
+        }
         return stakingInfo?.value?.stSTX || 0;
+      }
       if (currentMenu.value === 'instant')
         return stakingInfo?.value?.stSTXbtc || 0;
       return 0;
