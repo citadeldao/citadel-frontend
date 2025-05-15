@@ -1,9 +1,11 @@
 import citadel from '@citadeldao/lib-citadel';
 import notify from '@/plugins/notify';
+import { getTimeForClaim } from '@/helpers/stacks';
 
 const types = {
   ADD_STAKE_INFO: 'ADD_STAKE_INFO',
   SHOW_CLAIM_MODAL: 'SHOW_CLAIM_MODAL',
+  SET_CYCLE_END_TIME: 'SET_CYCLE_END_TIME',
 };
 
 export default {
@@ -11,14 +13,19 @@ export default {
   state: () => ({
     stakeInfo: null,
     showClaimModal: false,
+    cycleEndTime: '',
   }),
 
   getters: {
     stakeInfo: (state) => state.stakeInfo,
     showClaimModal: (state) => state.showClaimModal,
+    cycleEndTime: (state) => state.cycleEndTime,
   },
 
   mutations: {
+    [types.SET_CYCLE_END_TIME](state, value) {
+      state.cycleEndTime = value;
+    },
     [types.ADD_STAKE_INFO](state, value) {
       state.stakeInfo = value;
     },
@@ -28,6 +35,9 @@ export default {
   },
 
   actions: {
+    setCycleEndTime({ commit }, value) {
+      commit(types.SET_CYCLE_END_TIME, value);
+    },
     addStakeInfo({ commit }, value) {
       commit(types.ADD_STAKE_INFO, value);
     },
@@ -66,6 +76,12 @@ export default {
         })
       );
       commit(types.ADD_STAKE_INFO, stakingInfo);
+      if (stakingInfo?.nfts?.[0]) {
+        commit(
+          types.SET_CYCLE_END_TIME,
+          getTimeForClaim(stakingInfo?.nfts[0], stakingInfo)
+        );
+      }
     },
   },
 };

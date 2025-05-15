@@ -98,7 +98,7 @@
       <StakeChart :chart-data="chartData" style="width: 100%" />
       <StakeStats
         symbol="STX"
-        :stakeBalance="+stakingInfo?.stSTX + +stakingInfo?.stSTXbtc"
+        :stakeBalance="+stakingInfo?.stSTX + +stakingInfo?.stSTXbtc || 0"
         :available-balance="currentWallet?.balance?.mainBalance"
         :nft-balance="
           stakingInfo?.nfts?.reduce((acc, nft) => acc + +nft.STX, 0)
@@ -113,7 +113,9 @@
         <div v-if="stakingInfo?.nfts?.length" class="liquid-stake__estimate">
           <div class="estimate-label">Estimated Time to Receive STX:</div>
           <div class="estimate-value">
-            End of cycle (~{{ getTimeForClaim(stakingInfo?.nfts?.[0]) }})
+            End of cycle (~{{
+              getTimeForClaim(stakingInfo?.nfts?.[0], stakingInfo)
+            }})
           </div>
         </div>
         <div class="liquid-stake__title" v-html="descriptionStake" />
@@ -187,6 +189,8 @@ import ClaimModal from './ClaimModal';
 import RadioButton from '@/components/UI/RadioButton';
 import StakeChart from '../Stake/components/StakeChart';
 import StakeStats from './StakeStats';
+import { getTimeForClaim } from '@/helpers/stacks';
+import useWallets from '@/compositions/useWallets';
 
 const CONTRACT_ADDRESS =
   'SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG.stacking-dao-core-v4';
@@ -219,6 +223,7 @@ export default {
     const currentNFT = ref(null);
     const loadingDelayed = ref(false);
     const loadingInstant = ref(false);
+    const { currentWallet } = useWallets();
 
     const txInfo = ref(null);
     const successHash = ref('');
@@ -267,10 +272,6 @@ export default {
       if (currentMenu.value === 'instant') return t('stacks.liquidinstant');
       return '';
     });
-
-    const currentWallet = computed(
-      () => store.getters['wallets/currentWallet']
-    );
 
     const insufficientFunds = computed(() => {
       return +amount.value > maxAmount.value ? 'Insufficient funds' : '';
@@ -477,19 +478,6 @@ export default {
         // stakedBalancePercent: stakedPercent,
         nftPercent: nftPercent,
       };
-    };
-
-    const getTimeForClaim = (nft) => {
-      if (!nft) return '';
-      const blocksRemaining = nft.endUnlock - stakingInfo?.value?.currentHeight;
-      const totalMinutes = blocksRemaining * 10;
-
-      const days = Math.abs(Math.floor(totalMinutes / 1440)); // 1440 минут в дне
-      const hours = Math.abs(Math.floor((totalMinutes % 1440) / 60));
-      const minutes = Math.abs(totalMinutes % 60);
-
-      const readable = `${days}days, ${hours}hours, ${minutes}mins`;
-      return `${readable}`;
     };
 
     const chartData = computed(() => {
