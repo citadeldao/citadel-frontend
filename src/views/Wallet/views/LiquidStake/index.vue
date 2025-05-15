@@ -109,7 +109,11 @@
         <div class="line" />
         <div class="value">{{ stakingInfo?.stSTX }} <span>stSTX</span></div>
       </div> -->
-      <div v-if="currentTab === 'unstake'" class="liquid-stake__info">
+      <div
+        v-if="currentTab === 'unstake'"
+        style="width: 100%"
+        class="liquid-stake__info"
+      >
         <div v-if="stakingInfo?.nfts?.length" class="liquid-stake__estimate">
           <div class="estimate-label">Estimated Time to Receive STX:</div>
           <div class="estimate-value">
@@ -118,8 +122,12 @@
             }})
           </div>
         </div>
-        <div class="liquid-stake__title" v-html="descriptionStake" />
       </div>
+      <div
+        class="liquid-stake__title"
+        style="width: 100%"
+        v-html="descriptionStake"
+      />
       <Input
         id="amount"
         :value="amount"
