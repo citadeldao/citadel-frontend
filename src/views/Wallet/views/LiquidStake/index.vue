@@ -690,7 +690,7 @@ export default {
     margin-bottom: 20px;
 
     @include xl {
-      margin-left: 40px;
+      // margin-left: 40px;
       width: 100%;
     }
 

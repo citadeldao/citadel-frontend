@@ -118,7 +118,7 @@
         <div
           v-if="
             currentWallet.net === 'stacks' &&
-            stakeInfoStacks &&
+            stakeInfoStacks?.claimableBTC > 0 &&
             currentWallet.type !== WALLET_TYPES.PUBLIC_KEY
           "
           class="wallet__all"
