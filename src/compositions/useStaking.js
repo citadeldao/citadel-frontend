@@ -486,10 +486,17 @@ export default function useStaking(stakeNodes, list) {
       };
     }
     if (mode.value === 'unstake' || activeTab.value === 'unstake') {
-      return {
-        title: 'unstaking.unstake',
-        button: 'unstaking.unstake',
-        desc: currentWallet.value.unstakePerioudFrom ?
+      if (currentWallet.value.net === 'stacks') {
+        return {
+          title: 'unstaking.unstake',
+          button: 'unstaking.unstake',
+          desc: `After initiating an unstake, your STX will be locked until the end of the ongoing cycle. You'll be able to claim them after the unlock period, approximately in ${store.getters['stacks/cycleEndTime']}`
+        }
+      }
+        return {
+          title: 'unstaking.unstake',
+          button: 'unstaking.unstake',
+          desc: currentWallet.value.unstakePerioudFrom ?
           `${t(/* currentWallet.value.messages.unstakeingPrefix ? currentWallet.value.messages.unstakeingPrefix : */ 'unstaking.defaultPrefix')} ${t('unstaking.chooseNodeModalDescWithFrom', {
             net: currentWallet.value.name,
             perioudFrom: currentWallet.value.unstakePerioudFrom,

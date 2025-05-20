@@ -117,6 +117,29 @@
       <transition name="fade">
         <div
           v-if="
+            currentWallet.net === 'stacks' &&
+            stakeInfoStacks &&
+            currentWallet.type !== WALLET_TYPES.PUBLIC_KEY
+          "
+          class="wallet__all"
+        >
+          <div>
+            <div class="wallet__all-label">Claim sBTC</div>
+            <div class="wallet__all-desc">
+              {{ stakeInfoStacks?.claimableBTC }}<span>sBTC</span>
+            </div>
+          </div>
+          <RoundArrowButton
+            :bg-color="'#6A4BFF'"
+            :icon-fill="'white'"
+            small
+            @click="prepareClaimSBTC"
+          />
+        </div>
+      </transition>
+      <transition name="fade">
+        <div
+          v-if="
             currentWallet.net !== 'stacks'
               ? currentToken
                 ? currentToken?.hasClaim
@@ -427,6 +450,8 @@ export default {
       );
     });
 
+    const stakeInfoStacks = computed(() => store.getters['stacks/stakeInfo']);
+
     const selectedBtcAddressType = computed(() => {
       return store.getters['btcAddresses/selectedBtcAddressType'];
     });
@@ -723,6 +748,14 @@ export default {
 
     const prepareClaimStacks = () => {
       store.dispatch('stacks/showClaimModal', true);
+    };
+
+    const prepareClaimSBTC = () => {
+      router.push({
+        name: 'LiquidStake',
+        params: { ...route.params },
+      });
+      store.dispatch('stacks/showClaimSBTCModal', true);
     };
 
     const prepareClaim = async (customWallet) => {
@@ -1562,7 +1595,9 @@ export default {
       selectedBtcAddressType,
       rewardsModalHandler,
       restakeTx,
+      stakeInfoStacks,
       prepareClaimStacks,
+      prepareClaimSBTC,
     };
   },
 };
@@ -1608,7 +1643,21 @@ export default {
 
   &__all-label {
     font-size: 18px;
-    font-family: Panton_SemiBold;
+    font-family: 'Panton_Bold';
+    color: #0a2778;
+  }
+
+  &__all-desc {
+    font-size: 14px;
+    font-family: Panton_Regular;
+    color: #6b93c0;
+    margin-top: 4px;
+
+    span {
+      display: inline-block;
+      margin-left: 3px;
+      color: #000;
+    }
   }
 
   &__central-section {
@@ -1856,6 +1905,16 @@ body.dark {
     &__all {
       background: #313354;
       color: #fff;
+    }
+
+    &__all-label {
+      color: #fff;
+    }
+
+    &__all-desc {
+      span {
+        color: #8b9bc7;
+      }
     }
 
     &__main {

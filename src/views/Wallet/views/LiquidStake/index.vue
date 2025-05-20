@@ -1,6 +1,23 @@
 <template>
   <div class="liquid-stake">
     <teleport to="body">
+      <Modal v-if="showInfoModalsBTC">
+        <InfoModalSBTC
+          :signer-wallet="currentWallet"
+          :on-close="closeAppInfoModal"
+          :tx-info="txInfo"
+          :amount="stakingInfo?.claimableBTC"
+          :is-stx="!!currentNFT"
+          :contract-address="CONTRACT_ADDRESS_BTC"
+          @onCancel="onCancel"
+          @onSuccess="onSuccess"
+          @showLedger="
+            () => {
+              showLedgerConnect = true;
+            }
+          "
+        />
+      </Modal>
       <Modal v-if="showInfoModal">
         <InfoModal
           :signer-wallet="currentWallet"
@@ -37,7 +54,8 @@
           :success-click-handler="successClickHandler"
           :wallet="currentWallet"
           :is-stacks-delayed="radioStake === 'delayed'"
-          :amount="amount"
+          :amount="customCode ? stakingInfo?.claimableBTC : amount"
+          :custom-code="customCode"
           :success-tx="successHash"
           @changeComment="onChangeComment"
         />
@@ -181,7 +199,7 @@
   </div>
 </template>
 <script>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import TabsGroup from '@/components/UI/TabsGroup';
 import citadel from '@citadeldao/lib-citadel';
 import { useI18n } from 'vue-i18n';
@@ -190,6 +208,7 @@ import Input from '@/components/UI/Input';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import notify from '@/plugins/notify';
 import InfoModal from './InfoModal';
+import InfoModalSBTC from './InfoModalSBTC';
 import Modal from '@/components/Modal';
 import SuccessModal from '@/views/Extensions/SuccessModal';
 // import NftPanel from './NftPanel';
@@ -212,6 +231,7 @@ export default {
     Input,
     PrimaryButton,
     InfoModal,
+    InfoModalSBTC,
     Modal,
     SuccessModal,
     ClaimModal,
@@ -225,6 +245,7 @@ export default {
     const amount = ref('');
     const txComment = ref('');
     const showLedgerConnect = ref(false);
+    const showInfoModalsBTC = ref(false);
     const loading = ref(false);
     const currentTab = ref('stake');
     const currentMenu = ref('liquidstx');
@@ -248,6 +269,10 @@ export default {
 
     const showClaimModal = computed(
       () => store.getters['stacks/showClaimModal']
+    );
+
+    const showClaimSBTCModal = computed(
+      () => store.getters['stacks/showClaimSBTCModal']
     );
 
     const stakingInfo = computed(() => store.getters['stacks/stakeInfo']);
@@ -284,6 +309,43 @@ export default {
     const insufficientFunds = computed(() => {
       return +amount.value > maxAmount.value ? 'Insufficient funds' : '';
     });
+
+    const customCode = ref('');
+
+    watch(
+      () => showClaimSBTCModal.value,
+      async (val) => {
+        if (val) {
+          customCode.value = 'sBTC';
+          const rawTx = await citadel.buildLiquidStaking(
+            currentWallet.value.id,
+            {
+              amount: '0',
+              action: 'claim-rewards',
+              contractAddress: CONTRACT_ADDRESS_BTC,
+              publicKey: currentWallet.value.publicKey,
+            }
+          );
+          const txs =
+            rawTx.data && rawTx.data.txs && rawTx.data.txs.length
+              ? rawTx.data.txs
+              : null;
+
+          if (!txs) {
+            notify({
+              type: 'warning',
+              text: rawTx.error || 'Tx not found',
+            });
+            return;
+          }
+          txInfo.value = {
+            txs,
+            fee: rawTx.data?.fees[0]?.value,
+          };
+          showInfoModalsBTC.value = true;
+        }
+      }
+    );
 
     const getTxUnstake = async (action, nftId, contractBtc) => {
       loading.value = true;
@@ -374,19 +436,27 @@ export default {
     };
 
     const onCancel = () => {
+      customCode.value = '';
       showLedgerConnect.value = false;
       loading.value = false;
+      showInfoModalsBTC.value = false;
+      store.dispatch('stacks/showClaimSBTCModal', false); // btc off
     };
 
     const closeAppInfoModal = async () => {
       showInfoModal.value = false;
+      showInfoModalsBTC.value = false;
+      store.dispatch('stacks/showClaimSBTCModal', false); // btc off
       await getStakingInfo();
     };
 
     const onSuccess = async (hash) => {
       successHash.value = hash;
+      customCode.value = '';
       // amount.value = '';
       showSuccessModal.value = true;
+      showInfoModalsBTC.value = false;
+      store.dispatch('stacks/showClaimSBTCModal', false); // btc off
       txInfo.value = null;
       currentNFT.value = null;
       await getStakingInfo();
@@ -585,10 +655,13 @@ export default {
       instant,
 
       showClaimModal,
+      showClaimSBTCModal,
       closeClaimModal,
       onClaim,
       chartData,
       getTimeForClaim,
+      showInfoModalsBTC,
+      customCode,
     };
   },
 };
