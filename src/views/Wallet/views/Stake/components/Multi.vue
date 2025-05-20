@@ -277,6 +277,7 @@
         <ChooseStakingNodeModal
           v-else-if="showChooseNode"
           :stake-nodes="stakeNodes"
+          :is-stacks="currentWallet.net === 'stacks'"
           :modal-close-handler="modalCloseHandler"
           :choose-node-modal-data="chooseNodeModalData"
           :selected-node="selectedNode"
@@ -287,7 +288,7 @@
               ? 'Withdraw Stake'
               : ''
           "
-          :disabled="disabled"
+          :disabled="currentWallet.net === 'stacks' ? !!errorAmount : disabled"
           :is-loading="isLoading"
           :prepare-delegation="prepareDelegation"
         >
@@ -296,6 +297,7 @@
             :amount="amount"
             :current-wallet="currentWallet"
             :list="list"
+            @errorAmount="onErrorAmount"
             @nextStep="prepareDelegation"
           />
         </ChooseStakingNodeModal>
@@ -499,6 +501,10 @@ export default {
     const router = useRouter();
     const citadel = inject('citadel');
     const { t } = useI18n();
+    const errorAmount = ref('');
+    const onErrorAmount = (value) => {
+      errorAmount.value = value;
+    };
     const {
       showModal,
       modalCloseHandler,
@@ -682,6 +688,7 @@ export default {
       const { rawTxs, ok } = await props.currentWallet.prepareDelegation({
         walletId: props.currentWallet.id,
         stakeAccount: selectedNode.value.holderAccount,
+        btcAccount: store.getters['btcAddresses/stacksRewardsAddress'] || '',
         nodeAddresses:
           isMultiple.value ||
           (props.currentWallet.hasMultiUnstake && mode.value === 'unstake')
@@ -976,6 +983,8 @@ export default {
     });
 
     return {
+      errorAmount,
+      onErrorAmount,
       stackingInfo,
       progressCycle,
       stacksCycleBeganAt,

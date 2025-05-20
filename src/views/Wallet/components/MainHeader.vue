@@ -15,7 +15,7 @@
       <router-link
         v-if="
           currentWallet.net === 'stacks'
-            ? false
+            ? true
             : currentToken
             ? currentToken.hasStake
             : currentWallet.hasStake

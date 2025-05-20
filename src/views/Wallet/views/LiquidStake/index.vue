@@ -1,6 +1,23 @@
 <template>
   <div class="liquid-stake">
     <teleport to="body">
+      <Modal v-if="showInfoModalsBTC">
+        <InfoModalSBTC
+          :signer-wallet="currentWallet"
+          :on-close="closeAppInfoModal"
+          :tx-info="txInfo"
+          :amount="stakingInfo?.claimableBTC"
+          :is-stx="!!currentNFT"
+          :contract-address="CONTRACT_ADDRESS_BTC"
+          @onCancel="onCancel"
+          @onSuccess="onSuccess"
+          @showLedger="
+            () => {
+              showLedgerConnect = true;
+            }
+          "
+        />
+      </Modal>
       <Modal v-if="showInfoModal">
         <InfoModal
           :signer-wallet="currentWallet"
@@ -37,7 +54,8 @@
           :success-click-handler="successClickHandler"
           :wallet="currentWallet"
           :is-stacks-delayed="radioStake === 'delayed'"
-          :amount="amount"
+          :amount="customCode ? stakingInfo?.claimableBTC : amount"
+          :custom-code="customCode"
           :success-tx="successHash"
           @changeComment="onChangeComment"
         />
@@ -98,8 +116,8 @@
       <StakeChart :chart-data="chartData" style="width: 100%" />
       <StakeStats
         symbol="STX"
-        :stakeBalance="+stakingInfo?.stSTX + +stakingInfo?.stSTXbtc"
-        :available-balance="currentWallet?.balance?.calculatedBalance"
+        :stakeBalance="+stakingInfo?.stSTX + +stakingInfo?.stSTXbtc || 0"
+        :available-balance="currentWallet?.balance?.mainBalance"
         :nft-balance="
           stakingInfo?.nfts?.reduce((acc, nft) => acc + +nft.STX, 0)
         "
@@ -109,15 +127,25 @@
         <div class="line" />
         <div class="value">{{ stakingInfo?.stSTX }} <span>stSTX</span></div>
       </div> -->
-      <div class="liquid-stake__info">
-        <div v-if="stakingInfo?.nfts" class="liquid-stake__estimate">
+      <div
+        v-if="currentTab === 'unstake'"
+        style="width: 100%"
+        class="liquid-stake__info"
+      >
+        <div v-if="stakingInfo?.nfts?.length" class="liquid-stake__estimate">
           <div class="estimate-label">Estimated Time to Receive STX:</div>
           <div class="estimate-value">
-            End of cycle (~{{ getTimeForClaim(stakingInfo?.nfts?.[0]) }})
+            End of cycle (~{{
+              getTimeForClaim(stakingInfo?.nfts?.[0], stakingInfo)
+            }})
           </div>
         </div>
-        <div class="liquid-stake__title" v-html="descriptionStake" />
       </div>
+      <div
+        class="liquid-stake__title"
+        style="width: 100%"
+        v-html="descriptionStake"
+      />
       <Input
         id="amount"
         :value="amount"
@@ -131,13 +159,7 @@
               : 'stSTXbtc'
             : currentWallet.code
         "
-        :max="
-          !['instant', 'delayed'].includes(currentMenu)
-            ? currentWallet?.balance?.mainBalance - 0.1 || 0
-            : stakeTabMode === 'liquidstx'
-            ? stakingInfo?.stSTX || 0
-            : stakingInfo?.stSTXbtc || 0
-        "
+        :max="maxAmount"
         icon="coins"
         placeholder="0.0"
         show-set-max
@@ -177,7 +199,7 @@
   </div>
 </template>
 <script>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import TabsGroup from '@/components/UI/TabsGroup';
 import citadel from '@citadeldao/lib-citadel';
 import { useI18n } from 'vue-i18n';
@@ -186,6 +208,7 @@ import Input from '@/components/UI/Input';
 import PrimaryButton from '@/components/UI/PrimaryButton';
 import notify from '@/plugins/notify';
 import InfoModal from './InfoModal';
+import InfoModalSBTC from './InfoModalSBTC';
 import Modal from '@/components/Modal';
 import SuccessModal from '@/views/Extensions/SuccessModal';
 // import NftPanel from './NftPanel';
@@ -193,6 +216,8 @@ import ClaimModal from './ClaimModal';
 import RadioButton from '@/components/UI/RadioButton';
 import StakeChart from '../Stake/components/StakeChart';
 import StakeStats from './StakeStats';
+import { getTimeForClaim } from '@/helpers/stacks';
+import useWallets from '@/compositions/useWallets';
 
 const CONTRACT_ADDRESS =
   'SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG.stacking-dao-core-v4';
@@ -206,6 +231,7 @@ export default {
     Input,
     PrimaryButton,
     InfoModal,
+    InfoModalSBTC,
     Modal,
     SuccessModal,
     ClaimModal,
@@ -219,12 +245,14 @@ export default {
     const amount = ref('');
     const txComment = ref('');
     const showLedgerConnect = ref(false);
+    const showInfoModalsBTC = ref(false);
     const loading = ref(false);
     const currentTab = ref('stake');
     const currentMenu = ref('liquidstx');
     const currentNFT = ref(null);
     const loadingDelayed = ref(false);
     const loadingInstant = ref(false);
+    const { currentWallet } = useWallets();
 
     const txInfo = ref(null);
     const successHash = ref('');
@@ -241,6 +269,10 @@ export default {
 
     const showClaimModal = computed(
       () => store.getters['stacks/showClaimModal']
+    );
+
+    const showClaimSBTCModal = computed(
+      () => store.getters['stacks/showClaimSBTCModal']
     );
 
     const stakingInfo = computed(() => store.getters['stacks/stakeInfo']);
@@ -274,15 +306,46 @@ export default {
       return '';
     });
 
-    const currentWallet = computed(
-      () => store.getters['wallets/currentWallet']
-    );
-
     const insufficientFunds = computed(() => {
-      return +amount.value > currentWallet.value?.balance?.mainBalance - 0.1
-        ? 'Insufficient funds'
-        : '';
+      return +amount.value > maxAmount.value ? 'Insufficient funds' : '';
     });
+
+    const customCode = ref('');
+
+    watch(
+      () => showClaimSBTCModal.value,
+      async (val) => {
+        if (val) {
+          customCode.value = 'sBTC';
+          const rawTx = await citadel.buildLiquidStaking(
+            currentWallet.value.id,
+            {
+              amount: '0',
+              action: 'claim-rewards',
+              contractAddress: CONTRACT_ADDRESS_BTC,
+              publicKey: currentWallet.value.publicKey,
+            }
+          );
+          const txs =
+            rawTx.data && rawTx.data.txs && rawTx.data.txs.length
+              ? rawTx.data.txs
+              : null;
+
+          if (!txs) {
+            notify({
+              type: 'warning',
+              text: rawTx.error || 'Tx not found',
+            });
+            return;
+          }
+          txInfo.value = {
+            txs,
+            fee: rawTx.data?.fees[0]?.value,
+          };
+          showInfoModalsBTC.value = true;
+        }
+      }
+    );
 
     const getTxUnstake = async (action, nftId, contractBtc) => {
       loading.value = true;
@@ -301,7 +364,7 @@ export default {
       if (!txs) {
         notify({
           type: 'warning',
-          text: 'Tx not found',
+          text: rawTx.error || 'Tx not found',
         });
         return;
       }
@@ -339,7 +402,7 @@ export default {
       if (!txs) {
         notify({
           type: 'warning',
-          text: 'Tx not found',
+          text: rawTx.error || 'Tx not found',
         });
         return;
       }
@@ -373,19 +436,27 @@ export default {
     };
 
     const onCancel = () => {
+      customCode.value = '';
       showLedgerConnect.value = false;
       loading.value = false;
+      showInfoModalsBTC.value = false;
+      store.dispatch('stacks/showClaimSBTCModal', false); // btc off
     };
 
     const closeAppInfoModal = async () => {
       showInfoModal.value = false;
+      showInfoModalsBTC.value = false;
+      store.dispatch('stacks/showClaimSBTCModal', false); // btc off
       await getStakingInfo();
     };
 
     const onSuccess = async (hash) => {
       successHash.value = hash;
+      customCode.value = '';
       // amount.value = '';
       showSuccessModal.value = true;
+      showInfoModalsBTC.value = false;
+      store.dispatch('stacks/showClaimSBTCModal', false); // btc off
       txInfo.value = null;
       currentNFT.value = null;
       await getStakingInfo();
@@ -487,24 +558,11 @@ export default {
       };
     };
 
-    const getTimeForClaim = (nft) => {
-      if (!nft) return '';
-      const blocksRemaining = nft.endUnlock - stakingInfo?.value?.currentHeight;
-      const totalMinutes = blocksRemaining * 10;
-
-      const days = Math.floor(totalMinutes / 1440); // 1440 минут в дне
-      const hours = Math.floor((totalMinutes % 1440) / 60);
-      const minutes = totalMinutes % 60;
-
-      const readable = `${days}d ${hours}h ${minutes}m`;
-      return `${readable}`;
-    };
-
     const chartData = computed(() => {
       const nftBalance =
         stakingInfo.value?.nfts?.reduce((acc, nft) => acc + +nft.STX, 0) || 0;
       // const stakedBalance = stakingInfo.value?.stSTX || 0;
-      const availableBalance = currentWallet.value.balance.calculatedBalance;
+      const availableBalance = currentWallet.value.balance.mainBalance;
 
       const ratios = getStakingRatio(
         availableBalance,
@@ -533,6 +591,22 @@ export default {
       return data.filter((item) => item.share > 0);
     });
 
+    const maxAmount = computed(() => {
+      if (currentMenu.value === 'liquidstx')
+        return currentWallet.value?.balance?.mainBalance - 0.1 || 0;
+      if (currentMenu.value === 'liquidsbtc')
+        return currentWallet.value?.balance?.mainBalance - 0.1 || 0;
+      if (currentMenu.value === 'delayed') {
+        if (stakeTabMode.value === 'liquidsbtc') {
+          return stakingInfo?.value?.stSTXbtc || 0;
+        }
+        return stakingInfo?.value?.stSTX || 0;
+      }
+      if (currentMenu.value === 'instant')
+        return stakingInfo?.value?.stSTXbtc || 0;
+      return 0;
+    });
+
     onMounted(async () => {
       await getStakingInfo();
     });
@@ -542,6 +616,7 @@ export default {
       CONTRACT_ADDRESS,
       CONTRACT_ADDRESS_BTC,
       tabs,
+      maxAmount,
       currentTab,
       currentMenu,
       stakeTabMode,
@@ -580,10 +655,13 @@ export default {
       instant,
 
       showClaimModal,
+      showClaimSBTCModal,
       closeClaimModal,
       onClaim,
       chartData,
       getTimeForClaim,
+      showInfoModalsBTC,
+      customCode,
     };
   },
 };
@@ -612,7 +690,7 @@ export default {
     margin-bottom: 20px;
 
     @include xl {
-      margin-left: 40px;
+      // margin-left: 40px;
       width: 100%;
     }
 

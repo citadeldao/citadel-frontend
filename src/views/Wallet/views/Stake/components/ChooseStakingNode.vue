@@ -103,24 +103,31 @@
         :decimals="currentWallet?.config?.decimals"
         type="currency"
         :currency="currentWallet.code"
-        :max="maxAmount"
+        :max="maxDynamicAmount"
         icon="coins"
         placeholder="0.0"
-        :error="insufficientFunds"
+        :error="errorAmount"
         :show-set-max="!activeInput"
         data-qa="staking__amount-field"
         @input="updateAmount"
         @keyup.enter="$emit('nextStep')"
       />
       <div class="choose-staking-node__info-wrapper">
-        <span v-if="showAmount" class="choose-staking-node__available-balance">
+        <span
+          v-if="!errorAmount"
+          class="choose-staking-node__available-balance"
+        >
           {{
             currentWallet.net === 'stacks'
-              ? 'Maximum required balance for stacking'
+              ? 'Minimum required balance for stacking'
               : $t('balanceTooltipInfo.availableBalance')
           }}:
           <span
-            v-pretty-number="{ value: maxAmount, currency: currentWallet.code }"
+            v-pretty-number="{
+              value:
+                currentWallet.net === 'stacks' ? minAmountStacks : maxAmount,
+              currency: currentWallet.code,
+            }"
             class="choose-staking-node__available-balance-balance"
           />
           <span class="choose-staking-node__available-balance-currency">
@@ -134,15 +141,36 @@
           {{ $t('staking.inputNote') }}
         </span>
       </div>
+      <template v-if="currentWallet.net === 'stacks'">
+        <Input
+          :style="{ marginTop: !errorAmount ? '15px' : '35px' }"
+          id="rewardAddress"
+          :value="btcRewardAddress"
+          label="BTC Reward address"
+          :max="maxAmount"
+          type="text"
+          placeholder="Enter your Bitcoin address"
+          :show-error-text="!isValidBTCAddress"
+          @input="updateBTCRewardsAddress"
+          :error="isValidBTCAddress ? '' : 'Invalid Bitcoin address'"
+        />
+        <span
+          v-if="isValidBTCAddress"
+          class="choose-staking-node__available-balance"
+          >This Bitcoin address will be used to receive BTC rewards at the end
+          of each PoX cycle. You can change it if needed.</span
+        >
+      </template>
     </div>
   </div>
 </template>
 
 <script>
-import { computed, inject, ref, onMounted } from 'vue';
+import { computed, inject, ref, onMounted, watch } from 'vue';
 import StakeListItem from './StakeListItem.vue';
 import Input from '@/components/UI/Input';
 import pointer from '@/assets/icons/pointer.svg';
+import { useStore } from 'vuex';
 export default {
   name: 'ChooseStakingNode',
   components: { pointer, Input, StakeListItem },
@@ -160,10 +188,12 @@ export default {
       default: () => [],
     },
   },
-  emits: ['update:activeTab', 'nextStep'],
+  emits: ['update:activeTab', 'nextStep', 'errorAmount'],
   setup(props, { emit }) {
+    const store = useStore();
     const updateAmount = inject('updateAmount');
     const getDelegationFee = inject('getDelegationFee');
+    const minAmountStacks = inject('minAmountStacks');
     const editMode = inject('editMode');
     const isWithoutDelegation = inject('isWithoutDelegation');
     const selectedNode = inject('selectedNode');
@@ -171,13 +201,22 @@ export default {
     const updateShowNodesList = inject('updateShowNodesList');
     const updateRedelegationDirection = inject('updateRedelegationDirection');
     const selectedNodeForRedelegation = inject('selectedNodeForRedelegation');
+    const btcRewardAddress = ref('');
     const mode = inject('mode');
     const showNodesList = (direction = '') => {
-      if (insufficientFunds.value) return;
       updateRedelegationDirection(direction);
       updateShowChooseNode(false);
       updateShowNodesList(true);
     };
+
+    watch(
+      () => props.amount,
+      () => {
+        if (props.currentWallet.net === 'stacks') {
+          emit('errorAmount', errorAmount.value);
+        }
+      }
+    );
 
     const setActiveTab = async (value) => {
       emit('update:activeTab', value);
@@ -188,6 +227,18 @@ export default {
           isWithoutDelegation.value ? '' : selectedNode.value
         ));
     };
+
+    const isValidBTCAddress = computed(() => {
+      if (!btcRewardAddress.value) return false;
+
+      const base58Regex = /^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$/;
+      const bech32Regex = /^(bc1)[0-9a-z]{39,59}$/;
+
+      return (
+        base58Regex.test(btcRewardAddress.value) ||
+        bech32Regex.test(btcRewardAddress.value)
+      );
+    });
 
     const maxAmount = inject('maxAmount');
     // updateAmount(maxAmount.value);
@@ -226,6 +277,13 @@ export default {
     const disabledAmount = ref(false);
 
     onMounted(() => {
+      if (props.currentWallet.net === 'stacks') {
+        btcRewardAddress.value = props.currentWallet.btcAddress;
+        store.dispatch(
+          'btcAddresses/setStacksRewardsAddress',
+          props.currentWallet.btcAddress
+        );
+      }
       if (props.currentWallet.net === 'solana') {
         if (props.activeTab === 'unstake') {
           // active
@@ -251,7 +309,43 @@ export default {
       }
     });
 
+    const updateBTCRewardsAddress = (value) => {
+      btcRewardAddress.value = value;
+      if (isValidBTCAddress.value) {
+        store.dispatch('btcAddresses/setStacksRewardsAddress', value);
+      }
+    };
+
+    const maxDynamicAmount = computed(() => {
+      if (props.currentWallet.net === 'stacks') {
+        if (props.activeTab === 'unstake') {
+          return +props.currentWallet?.balance?.delegatedBalance;
+        }
+        return (
+          +props.currentWallet?.balance?.frozenBalance +
+          +props.currentWallet?.balance?.mainBalance
+        );
+      }
+      // currentWallet?.balance?.mainBalance
+      return maxAmount.value;
+    });
+
+    const errorAmount = computed(() => {
+      if (props.currentWallet.net === 'stacks') {
+        if (maxDynamicAmount.value < +props.amount) {
+          return 'Insufficient funds';
+        }
+
+        if (props.amount && props.amount < +minAmountStacks.value) {
+          return `Minimum required balance for stacking: ${minAmountStacks.value} ${props.currentWallet.code}`;
+        }
+        return '';
+      }
+      return insufficientFunds.value;
+    });
+
     return {
+      errorAmount,
       selectedNode,
       showNodesList,
       setActiveTab,
@@ -267,6 +361,11 @@ export default {
       isWithoutDelegation,
       activeInput,
       disabledAmount,
+      btcRewardAddress,
+      isValidBTCAddress,
+      updateBTCRewardsAddress,
+      minAmountStacks,
+      maxDynamicAmount,
     };
   },
 };
@@ -287,7 +386,7 @@ export default {
   }
   // margin-bottom: 19px;
   &__placeholder {
-    height: 150px;
+    height: 140px;
     border: 1px dashed $lightsteelblue;
     box-sizing: border-box;
     border-radius: 8px;
@@ -295,7 +394,7 @@ export default {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    margin-bottom: 24px;
+    margin-bottom: 10px;
     cursor: pointer;
     & span {
       font-size: 16px;

@@ -128,6 +128,7 @@ export default function useStaking(stakeNodes, list) {
       walletId: currentWallet.value.id,
       transactionType: txType,
       stakeAccount: stakeAccount || null,
+      btcAccount: store.getters['btcAddresses/stacksRewardsAddress'] || '',
       nodeAddress: isWithoutDelegation.value ? null : destNodeAddress,
       sourceNodeAddress: srcNodeAddress,
       kt: currentKtAddress.value ? currentKtAddress.value.address : undefined,
@@ -294,7 +295,7 @@ export default function useStaking(stakeNodes, list) {
   const maxAmount = computed(() => {
     let max = resMaxAmount.value; // || currentWallet.value.balance.mainBalance;
 
-    if (max === '') {
+    if (max === '' || currentWallet.value.net === 'stacks') {
       max = currentWallet.value.balance.mainBalance;
     }
 
@@ -306,6 +307,11 @@ export default function useStaking(stakeNodes, list) {
   }
   );
   provide('maxAmount', maxAmount);
+
+  const minAmountStacks = computed(() => {
+    return resMaxAmount.value;
+  });
+  provide('minAmountStacks', minAmountStacks);
 
   const maxAdditionalFee = computed(() => {
     if (mode.value === 'stake') {
@@ -480,10 +486,17 @@ export default function useStaking(stakeNodes, list) {
       };
     }
     if (mode.value === 'unstake' || activeTab.value === 'unstake') {
-      return {
-        title: 'unstaking.unstake',
-        button: 'unstaking.unstake',
-        desc: currentWallet.value.unstakePerioudFrom ?
+      if (currentWallet.value.net === 'stacks') {
+        return {
+          title: 'unstaking.unstake',
+          button: 'unstaking.unstake',
+          desc: `After initiating an unstake, your STX will be locked until the end of the ongoing cycle. You'll be able to claim them after the unlock period, approximately in ${store.getters['stacks/cycleEndTime']}`
+        }
+      }
+        return {
+          title: 'unstaking.unstake',
+          button: 'unstaking.unstake',
+          desc: currentWallet.value.unstakePerioudFrom ?
           `${t(/* currentWallet.value.messages.unstakeingPrefix ? currentWallet.value.messages.unstakeingPrefix : */ 'unstaking.defaultPrefix')} ${t('unstaking.chooseNodeModalDescWithFrom', {
             net: currentWallet.value.name,
             perioudFrom: currentWallet.value.unstakePerioudFrom,

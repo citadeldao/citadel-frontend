@@ -1,9 +1,12 @@
 import citadel from '@citadeldao/lib-citadel';
 import notify from '@/plugins/notify';
+import { getTimeForClaim } from '@/helpers/stacks';
 
 const types = {
   ADD_STAKE_INFO: 'ADD_STAKE_INFO',
   SHOW_CLAIM_MODAL: 'SHOW_CLAIM_MODAL',
+  SET_CYCLE_END_TIME: 'SET_CYCLE_END_TIME',
+  SHOW_CLAIM_SBTC_MODAL: 'SHOW_CLAIM_SBTC_MODAL',
 };
 
 export default {
@@ -11,14 +14,24 @@ export default {
   state: () => ({
     stakeInfo: null,
     showClaimModal: false,
+    showClaimSBTCModal: false,
+    cycleEndTime: '',
   }),
 
   getters: {
     stakeInfo: (state) => state.stakeInfo,
     showClaimModal: (state) => state.showClaimModal,
+    showClaimSBTCModal: (state) => state.showClaimSBTCModal,
+    cycleEndTime: (state) => state.cycleEndTime,
   },
 
   mutations: {
+    [types.SHOW_CLAIM_SBTC_MODAL](state, value) {
+      state.showClaimSBTCModal = value;
+    },
+    [types.SET_CYCLE_END_TIME](state, value) {
+      state.cycleEndTime = value;
+    },
     [types.ADD_STAKE_INFO](state, value) {
       state.stakeInfo = value;
     },
@@ -28,11 +41,17 @@ export default {
   },
 
   actions: {
+    setCycleEndTime({ commit }, value) {
+      commit(types.SET_CYCLE_END_TIME, value);
+    },
     addStakeInfo({ commit }, value) {
       commit(types.ADD_STAKE_INFO, value);
     },
     showClaimModal({ commit }, value) {
       commit(types.SHOW_CLAIM_MODAL, value);
+    },
+    showClaimSBTCModal({ commit }, value) {
+      commit(types.SHOW_CLAIM_SBTC_MODAL, value);
     },
     async getStakingInfo({ commit }, currentWallet) {
       const key = 'ststx-withdraw-nft';
@@ -66,6 +85,12 @@ export default {
         })
       );
       commit(types.ADD_STAKE_INFO, stakingInfo);
+      if (stakingInfo?.nfts?.[0]) {
+        commit(
+          types.SET_CYCLE_END_TIME,
+          getTimeForClaim(stakingInfo?.nfts[0], stakingInfo)
+        );
+      }
     },
   },
 };
