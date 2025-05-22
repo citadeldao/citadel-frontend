@@ -258,7 +258,7 @@ export default {
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    height: 200px;
+    min-height: 57px;
     .not-found-tokens {
       padding: 20px;
       font-size: 14px;

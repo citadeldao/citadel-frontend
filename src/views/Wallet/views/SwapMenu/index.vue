@@ -150,28 +150,10 @@ export default {
       }
 
       hasSwapSquid.value = squidChains.value.find(
-        (ch) =>
-          ch.nativeCurrency.symbol.toLowerCase() ===
-          currentWallet.value.code.toLowerCase()
+        (ch) => ch.chainId == currentWallet.value.config.chainId
       );
 
-      if (currentWallet.value.net === 'arbitrum') {
-        hasSwapSquid.value = squidChains.value.find(
-          (ch) => ch.chainName === 'Arbitrum'
-        );
-      }
-      if (currentWallet.value.net === 'optimism') {
-        hasSwapSquid.value = squidChains.value.find(
-          (ch) => ch.chainName === 'optimism'
-        );
-      }
-
-      if (currentWallet.value.net === 'coreum') {
-        hasSwapSquid.value = squidChains.value.find(
-          (ch) => ch.chainName === 'coreum'
-        );
-      }
-      hasSwapSquid.value = null; // remove when it works
+      // hasSwapSquid.value = null; // remove when it works
       if (hasSwapSquid.value) {
         methods.value.push(squidData);
       }

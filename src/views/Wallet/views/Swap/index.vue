@@ -559,27 +559,8 @@ export default {
       }
 
       hasSwap.value = squidChains.value.find(
-        (ch) =>
-          ch.nativeCurrency.symbol.toLowerCase() ===
-          currentWallet.value.code.toLowerCase()
+        (ch) => ch.chainId == currentWallet.value.config.chainId
       );
-
-      if (currentWallet.value.net === 'arbitrum') {
-        hasSwap.value = squidChains.value.find(
-          (ch) => ch.chainName === 'Arbitrum'
-        );
-      }
-      if (currentWallet.value.net === 'optimism') {
-        hasSwap.value = squidChains.value.find(
-          (ch) => ch.chainName === 'optimism'
-        );
-      }
-
-      if (currentWallet.value.net === 'coreum') {
-        hasSwap.value = squidChains.value.find(
-          (ch) => ch.chainName === 'coreum'
-        );
-      }
 
       if (hasSwap.value) {
         selectNetworkFrom(
@@ -812,14 +793,18 @@ export default {
     };
 
     const searchTokenFromComputed = computed(() => {
-      return chainTokensFrom.value.find(
-        (t) => t.name === searchFromToken.value
+      return (
+        chainTokensFrom.value.find((t) => t.name === searchFromToken.value) || {
+          address: '',
+        }
       );
     });
 
     const searchTokenToComputed = computed(() => {
-      return chainTokensTo.value.find(
-        (t) => t?.title === searchToTokenFullStr.value
+      return (
+        chainTokensTo.value.find(
+          (t) => t?.title === searchToTokenFullStr.value
+        ) || { address: '' }
       );
     });
 
@@ -852,7 +837,6 @@ export default {
       )
         return;
 
-      console.log('searchTokenToComputed', searchTokenToComputed.value);
       const slipp = store.getters['squid/slippage'];
       const fromChain = allNetworks.value.find(
         (item) => item.key === searchNetworkFrom.value
