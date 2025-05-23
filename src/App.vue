@@ -5,7 +5,7 @@
   <teleport to="body">
     <Toasts />
   </teleport>
-  <teleport v-if="showWarningRemoveWallets" to="body">
+  <teleport v-if="showWarningRemoveWallets && loaded" to="body">
     <Modal>
       <WarningRemoveWallets />
     </Modal>
@@ -52,6 +52,7 @@ export default {
     const store = useStore();
     const router = useRouter();
     const route = useRoute();
+    const loaded = ref(false);
     const { width } = useWindowSize();
     const showWarningRemoveWallets = computed(
       () => store.getters['app/showWarningRemoveWallets']
@@ -67,6 +68,10 @@ export default {
         store.getters['newWallets/isShowAlreadyAddedModal']
     );
     onMounted(() => {
+      setTimeout(() => {
+        loaded.value = true;
+        console.log('loaded', loaded.value);
+      }, 3000);
       store.dispatch('i18n/init');
       window.addEventListener('focus', async function () {
         const isAuthenticated = JSON.parse(
@@ -110,6 +115,7 @@ export default {
       showModal,
       newWalletsModalShow,
       isClosed,
+      loaded,
       showWarningRemoveWallets,
       closeMobileModal,
     };

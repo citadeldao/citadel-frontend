@@ -131,6 +131,14 @@ body.dark {
   .mobile-app-modal {
     box-shadow: none;
 
+    .mobile-app-modal__info span {
+      color: $dark-blue;
+    }
+
+    .mobile-app-modal__info .net {
+      color: #fff;
+    }
+
     &__main {
       background: $dark-panel-bg;
     }
