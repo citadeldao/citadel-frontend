@@ -12,10 +12,7 @@
         {{ getMiddleCutText(to) }}
       </span>
     </div>
-    <div
-      v-if="(amount || amount == 0) && !viewingKey"
-      class="send-direction__line"
-    >
+    <div v-if="amount != 0 && !viewingKey" class="send-direction__line">
       <span class="send-direction__line-title"> {{ $t('amount') }}: </span>
       <div>
         <span

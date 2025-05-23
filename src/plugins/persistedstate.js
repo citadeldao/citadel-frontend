@@ -18,6 +18,7 @@ export default function initPersistedstate(store) {
       'jupiter.slippage',
       'skip.slippage',
       'squid.slippage',
+      'app.showWarningRemoveWallets',
     ],
     storage: {
       getItem: (key) => {

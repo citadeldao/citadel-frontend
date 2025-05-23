@@ -11,13 +11,13 @@
 }
 
 @mixin lg {
-  @media (min-width: 1280px) and (max-width: 1919.98px) {
+  @media (min-width: 1000px) and (max-width: 1919.98px) {
     @content;
   }
 }
 
 @mixin xs-lg {
-  @media (min-width: 1279.98px) and (max-width: 1440.98px) {
+  @media (min-width: 999.98px) and (max-width: 1440.98px) {
     @content;
   }
 }
