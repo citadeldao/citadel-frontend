@@ -5,6 +5,11 @@
   <teleport to="body">
     <Toasts />
   </teleport>
+  <teleport v-if="showWarningRemoveWallets" to="body">
+    <Modal>
+      <WarningRemoveWallets />
+    </Modal>
+  </teleport>
   <teleport v-if="showModal" to="body">
     <Modal>
       <MobileAppModal @close="closeMobileModal" />
@@ -20,6 +25,7 @@
 <script>
 import Modal from '@/components/Modal';
 import MobileAppModal from './components/MobileAppModal';
+import WarningRemoveWallets from '@/components/Modals/WarningRemoveWallets';
 import NewWalletsModal from '@/components/Modals/NewWallets';
 import { computed, inject, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
@@ -38,6 +44,7 @@ export default {
     MobileAppModal,
     Modal,
     NewWalletsModal,
+    WarningRemoveWallets,
   },
   setup() {
     const citadel = inject('citadel');
@@ -46,6 +53,9 @@ export default {
     const router = useRouter();
     const route = useRoute();
     const { width } = useWindowSize();
+    const showWarningRemoveWallets = computed(
+      () => store.getters['app/showWarningRemoveWallets']
+    );
     const showModal = computed(() => {
       if (['modalPrivacy', 'modalTerms'].includes(route.name)) return false;
       return width.value < screenWidths.md && !isClosed.value; // !!(width.value < screenWidths.md && !isClosed.value && isMobile)
@@ -100,6 +110,7 @@ export default {
       showModal,
       newWalletsModalShow,
       isClosed,
+      showWarningRemoveWallets,
       closeMobileModal,
     };
   },

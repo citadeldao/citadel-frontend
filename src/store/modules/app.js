@@ -9,21 +9,27 @@ const types = {
   SET_LOADER: 'SET_LOADER',
   SET_ROUTE_LOADER: 'SET_ROUTE_LOADER',
   SET_THEME: 'SET_THEME',
+  SET_SHOW_WARNING_REMOVE_WALLETS: 'SET_SHOW_WARNING_REMOVE_WALLETS',
 };
 
 export default {
   namespaced: true,
   state: {
+    showWarningRemoveWallets: true,
     showLoader: false,
     routeLoader: false,
     theme: localStorage.getItem('appTheme') || '',
   },
   getters: {
+    showWarningRemoveWallets: (state) => state.showWarningRemoveWallets,
     theme: (state) => state.theme,
     showLoader: (state) => state.showLoader,
     showRouteLoader: (state) => state.routeLoader,
   },
   mutations: {
+    [types.SET_SHOW_WARNING_REMOVE_WALLETS](state, show) {
+      state.showWarningRemoveWallets = show;
+    },
     [types.SET_LOADER](state, loadingState) {
       state.showLoader = loadingState;
     },
@@ -35,6 +41,9 @@ export default {
     },
   },
   actions: {
+    toggleShowWarningRemoveWallets({ commit }, show) {
+      commit(types.SET_SHOW_WARNING_REMOVE_WALLETS, show);
+    },
     toggleTheme({ state, commit }) {
       if (!state.theme) {
         localStorage.setItem('appTheme', 'dark');
