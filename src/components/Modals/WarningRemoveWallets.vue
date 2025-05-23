@@ -12,9 +12,9 @@
       <span class="mobile-app-modal__info">
         Citadel.one will discontinue support for
         <span class="net"
-          >Archway, Bitsong, Bostrom, Comdex, Evmos, ICON, IRIS, Juno, Ki,
-          Konstellation, Lum, Oasis, Picasso, Quasar, Regen, Rizon, Sentinel,
-          Sifchain, Stafi, Starname, Teritori, Uptick, UX (ex Umee)</span
+          >Archway, Bitsong, Comdex, Evmos, ICON, IRIS, Juno, Ki, Konstellation,
+          Lum, Oasis, Quasar, Regen, Rizon, Sentinel, Sifchain, Stafi, Starname,
+          Teritori, UX (ex Umee)</span
         >
         starting <span class="date">May 27.</span><br />
         Please ensure you secure your private key or seed phrase (available
