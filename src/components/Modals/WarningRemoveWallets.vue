@@ -12,9 +12,9 @@
       <span class="mobile-app-modal__info">
         Citadel.one will discontinue support for
         <span class="net"
-          >Archway, Bitsong, Comdex, Evmos, ICON, IRIS, Juno, Ki, Konstellation,
-          Lum, Oasis, Quasar, Regen, Rizon, Sentinel, Sifchain, Stafi, Starname,
-          Teritori, UX (ex Umee)</span
+          >Archway, Bitsong, Comdex, Evmos, ICON, IRIS, Juno, Ki, Lum, Oasis,
+          Quasar, Regen, Rizon, Sentinel, Sifchain, Stafi, Starname, Teritori,
+          UX (ex Umee)</span
         >
         starting <span class="date">May 27.</span><br />
         Please ensure you secure your private key or seed phrase (available
@@ -24,7 +24,12 @@
       </span>
       <span class="mobile-app-modal__info">
         Need help? Our support team is here for you:
-        <span>@citadelofficial</span>
+        <a
+          href="https://t.me/citadelofficial"
+          target="_blank"
+          rel="noopener noreferrer"
+          >@citadelofficial</a
+        >
       </span>
       <PrimaryButton @click="clickHandler" class="mobile-app-modal__button"
         >OK</PrimaryButton
@@ -112,6 +117,12 @@ export default {
       font-family: 'Panton_Bold';
     }
 
+    a {
+      color: $blue;
+      font-family: 'Panton_Bold';
+      text-decoration: none;
+    }
+
     .net {
       color: #0a2778;
       font-size: 13px;
@@ -133,6 +144,14 @@ body.dark {
 
     .mobile-app-modal__info span {
       color: $dark-blue;
+    }
+
+    .mobile-app-modal__info {
+      a {
+        color: $dark-blue;
+        font-family: 'Panton_Bold';
+        text-decoration: none;
+      }
     }
 
     .mobile-app-modal__info .net {

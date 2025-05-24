@@ -70,7 +70,6 @@ export default {
     onMounted(() => {
       setTimeout(() => {
         loaded.value = true;
-        console.log('loaded', loaded.value);
       }, 3000);
       store.dispatch('i18n/init');
       window.addEventListener('focus', async function () {
