@@ -5,7 +5,7 @@
   <teleport to="body">
     <Toasts />
   </teleport>
-  <teleport v-if="showWarningRemoveWallets && loaded" to="body">
+  <teleport v-if="false && loaded" to="body">
     <Modal>
       <WarningRemoveWallets />
     </Modal>
