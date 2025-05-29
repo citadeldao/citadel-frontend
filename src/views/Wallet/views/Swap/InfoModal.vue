@@ -271,12 +271,26 @@ export default {
             },
           ];
         }
-        const parsedMsg = JSON.parse(msgObj?.value?.msg);
+        let parsedMsg;
+
+        try {
+          parsedMsg = JSON.parse(msgObj?.value?.msg);
+        } catch (err) {
+          console.log('err', err);
+          parsedMsg = null;
+        }
         await store.dispatch('squid/convertToCosmosTx', {
           net: props.signerWallet.net,
           address: props.signerWallet.address,
           publicKey: props.signerWallet.publicKey,
-          data: wasmStructure
+          data: !parsedMsg
+            ? [
+                {
+                  type: msgObj.typeUrl,
+                  value: msgObj.value,
+                },
+              ]
+            : wasmStructure
             ? [
                 {
                   type: msgObj.typeUrl,
