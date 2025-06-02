@@ -18,6 +18,7 @@
       <a
         :href="`https://bscscan.com/address/${member.address}`"
         target="_blank"
+        rel="noopener noreferrer"
         >{{ `${member.address.slice(0, 5)}...${member.address.slice(-5)}` }}</a
       >
     </div>

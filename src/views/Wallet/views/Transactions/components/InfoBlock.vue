@@ -1,10 +1,15 @@
 <template>
   <div class="info-block">
-    <div v-if="info.hash" class="info-block__line" target="_blank">
+    <div
+      v-if="info.hash"
+      class="info-block__line"
+      rel="noopener noreferrer"
+      target="_blank"
+    >
       <div class="info-block__line-title flex-between">
         <div>
           {{ $t('viewTranscasction')
-          }}<a target="_blank" :href="txUrl"
+          }}<a target="_blank" rel="noopener noreferrer" :href="txUrl"
             ><linkIcon class="info-block__link-icon"
           /></a>
         </div>

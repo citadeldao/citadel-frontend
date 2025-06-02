@@ -38,7 +38,9 @@
               {{ `${report[field].slice(0, 5)}...${report[field].slice(-5)}` }}
             </div>
             <div v-if="field === 'tx'">
-              <a :href="report[field]" target="_blank">TX LINK</a>
+              <a :href="report[field]" rel="noopener noreferrer" target="_blank"
+                >TX LINK</a
+              >
             </div>
             <div v-if="!['address', 'tx'].includes(field)">
               {{ report[field] }}

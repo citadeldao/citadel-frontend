@@ -81,6 +81,7 @@
         {{ $t('balanceTooltipInfo.iconPeriodLink') }}
         <a
           target="_blank"
+          rel="noopener noreferrer"
           :href="currentWallet.unstakePerioudLink"
           class="balance-tooltip-info__balance-title"
           >{{ $t('link') }}.</a

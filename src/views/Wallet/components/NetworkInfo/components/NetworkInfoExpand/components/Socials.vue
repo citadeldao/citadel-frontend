@@ -16,6 +16,7 @@
       :title="socials.twitter.title"
       :href="`https://twitter.com/${socials.twitter.href}`"
       target="_blank"
+      rel="noopener noreferrer"
     >
       <twitter />
       <span>{{ socials.twitter.title }}</span>
@@ -26,6 +27,7 @@
       :title="socials.landing.title"
       :href="socials.landing.href"
       target="_blank"
+      rel="noopener noreferrer"
     >
       <linkIcon class="link-icon" />
       <span>{{ socials.landing.title }}</span>

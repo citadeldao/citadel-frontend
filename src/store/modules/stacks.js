@@ -52,6 +52,7 @@ export default {
     },
     showClaimSBTCModal({ commit }, value) {
       commit(types.SHOW_CLAIM_SBTC_MODAL, value);
+      console.log('showClaimSBTCModal', value);
     },
     async getStakingInfo({ commit }, currentWallet) {
       const key = 'ststx-withdraw-nft';

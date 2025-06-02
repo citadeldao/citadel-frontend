@@ -68,9 +68,12 @@
                 </div>
               </div>
               <div v-if="component.type === 'textWithURL'" class="value">
-                <a target="_blank" :href="component.value.url">{{
-                  getMiddleCutText(component.value.text)
-                }}</a>
+                <a
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  :href="component.value.url"
+                  >{{ getMiddleCutText(component.value.text) }}</a
+                >
               </div>
               <!-- structure in type -->
               <div
@@ -135,7 +138,11 @@
                       <div class="label">{{ includedItem.title }}</div>
                       <div class="line" />
                       <div v-if="includedItem.type === 'textWithURL'">
-                        <a target="_blank" :href="includedItem.value.url">
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          :href="includedItem.value.url"
+                        >
                           {{ includedItem.value.text }}
                         </a>
                       </div>

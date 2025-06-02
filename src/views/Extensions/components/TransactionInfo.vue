@@ -20,7 +20,7 @@
         <div class="label">
           {{ meta.title }}
         </div>
-        <a target="_blank" :href="meta.value.url"
+        <a target="_blank" rel="noopener noreferrer" :href="meta.value.url"
           >{{ meta.value.text }} <linkIcon class="link-icon" /><linkIconHovered
             class="link-icon hovered"
         /></a>

@@ -95,6 +95,7 @@
             <a
               :href="`https://bscscan.com/token/${tokenContract?.contract}`"
               target="_blank"
+              rel="noopener noreferrer"
               >{{ tokenContract?.contract }}</a
             >
           </div>
@@ -216,6 +217,7 @@
               v-else
               class="link"
               target="_blank"
+              rel="noopener noreferrer"
               :href="`https://bscscan.com/tx/${successTxs[member.name]}`"
             >
               {{ (member.amount / rateUsd).toFixed(4) }}

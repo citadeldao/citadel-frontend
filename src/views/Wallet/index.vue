@@ -751,6 +751,7 @@ export default {
     };
 
     const prepareClaimSBTC = () => {
+      console.log('prepareClaimSBTC');
       router.push({
         name: 'LiquidStake',
         params: { ...route.params },

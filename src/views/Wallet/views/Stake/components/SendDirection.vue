@@ -57,6 +57,7 @@
         :href="item"
         class="send-direction__line"
         target="_blank"
+        rel="noopener noreferrer"
       >
         {{ $t('viewTranscasction')
         }}<linkIcon class="send-direction__link-icon"
@@ -171,7 +172,7 @@
     <span class="send-direction__line-title">
       <div v-for="item in txUrl" :key="item" class="send-direction__line">
         {{ $t('viewTranscasction')
-        }}<a :href="item" target="_blank">
+        }}<a :href="item" target="_blank" rel="noopener noreferrer">
           <linkIcon class="send-direction__link-icon"
         /></a>
       </div>
