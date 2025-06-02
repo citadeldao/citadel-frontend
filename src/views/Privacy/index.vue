@@ -45,6 +45,7 @@
         style="text-decoration: none; color: #00a3ff; font-weight: 600"
         href="https://citadel.one"
         target="_blank"
+        rel="noopener noreferrer"
         >https://citadel.one</a
       >, the Platform and the services provided by Citadel.one as defined in the
       Terms of Use.
@@ -92,6 +93,7 @@
             style="text-decoration: none; color: #00a3ff; font-weight: 600"
             href="https://policies.google.com/privacy"
             target="_blank"
+            rel="noopener noreferrer"
             >Privacy Policy</a
           >
           to learn more);
@@ -616,6 +618,7 @@
                 class="social-link"
                 href="https://support.google.com/chrome/answer/95647"
                 target="_blank"
+                rel="noopener noreferrer"
                 >https://support.google.com/chrome/answer/95647</a
               >
               (Chrome);
@@ -627,6 +630,7 @@
                 class="social-link"
                 href="https://support.mozilla.org/en-US/kb/enable-and-disable-cookies-website-preferences"
                 target="_blank"
+                rel="noopener noreferrer"
                 >https://support.mozilla.org/en-US/kb/enable-and-disable-cookies-website-preferences</a
               >
               (Firefox);
@@ -638,6 +642,7 @@
                 class="social-link"
                 href="https://help.opera.com/en/latest/security-and-privacy/"
                 target="_blank"
+                rel="noopener noreferrer"
                 >https://help.opera.com/en/latest/security-and-privacy/</a
               >
               (Opera);
@@ -649,6 +654,7 @@
                 class="social-link"
                 href="https://support.microsoft.com/en-gb/help/17442/windows-internet-explorer-delete-manage-cookies"
                 target="_blank"
+                rel="noopener noreferrer"
                 >https://support.microsoft.com/en-gb/help/17442/windows-internet-explorer-delete-manage-cookies</a
               >
               (Internet Explorer);
@@ -660,6 +666,7 @@
                 class="social-link"
                 href="https://support.apple.com/en-gb/guide/safari/manage-cookies-and-website-data-sfri11471/mac"
                 target="_blank"
+                rel="noopener noreferrer"
                 >https://support.apple.com/en-gb/guide/safari/manage-cookies-and-website-data-sfri11471/mac</a
               >
               (Safari); and
@@ -671,6 +678,7 @@
                 class="social-link"
                 href="https://privacy.microsoft.com/en-us/windows-10-microsoft-edge-and-privacy"
                 target="_blank"
+                rel="noopener noreferrer"
                 >https://privacy.microsoft.com/en-us/windows-10-microsoft-edge-and-privacy</a
               >
               (Edge).

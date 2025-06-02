@@ -26,6 +26,7 @@
             {{ $t('login.whyEmailDescription3') }}
             <a
               target="_blank"
+              rel="noopener noreferrer"
               href="https://medium.com/citadel-one/how-to-log-in-to-citadel-one-anonymously-d1e0ce1d16a3?source=social.tw&_branch_match_id=1039967211630176618&_branch_referrer=H4sIAAAAAAAAA8soKSkottLXz8nMy9bLTU3JLM3VS87P1TdxTc8wNy038c9PAgD5YVioIwAAAA%3D%3D"
               ><span class="guide">{{ $t('login.guide') }}</span></a
             >

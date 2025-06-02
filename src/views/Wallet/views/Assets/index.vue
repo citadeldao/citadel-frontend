@@ -123,6 +123,7 @@
           </router-link>
           <a
             target="_blank"
+            rel="noopener noreferrer"
             href="https://medium.com/citadel-one/how-to-withdraw-cryptocurrency-from-cex-to-citadel-one-71886d084f08"
           >
             <Card class="card-special" iconName="zeroBalanceStub1">

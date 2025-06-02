@@ -59,7 +59,12 @@
             <copy />
           </div>
           <div class="alias__scanner-icon">
-            <a :title="scannerLink" :href="scannerLink" target="_blank">
+            <a
+              :title="scannerLink"
+              :href="scannerLink"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
               <linkIcon />
             </a>
           </div>
