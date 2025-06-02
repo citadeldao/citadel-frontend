@@ -1,39 +1,56 @@
 <template>
   <div class="transactions-placeholder">
-    <span class="transactions-placeholder__info">
-      {{ $t('transactionsPage.placeHolderInfo1') }}
-    </span>
-    <span class="transactions-placeholder__info">
-      {{ $t('transactionsPage.placeHolderInfo2P1') }}
-      {{ currentWallet.code }}
-      {{ $t('transactionsPage.placeHolderInfo2P2') }}
-    </span>
-    <div class="transactions-placeholder__section">
-      <div class="transactions-placeholder__block">
-        <span class="transactions-placeholder__block-title">
-          {{ $t('transactionsPage.buyVia') }}
-          <span class="transactions-placeholder__citadel">Citadel.one</span>
-        </span>
-        <transactionsPlacholderCitadel
-          class="transactions-placeholder__block-icon"
-        />
-        <PrimaryButton disabled data-qa="transactions__info__buy-now-button">
-          {{ $t('buyNow') }}
-        </PrimaryButton>
-      </div>
-      <div class="transactions-placeholder__block-divider" />
-      <div class="transactions-placeholder__block">
-        <span class="transactions-placeholder__block-title">
-          {{ $t('transactionsPage.placeHolderInfoTitle2') }}
-        </span>
-        <transactionsPlacholderDeposit
-          class="transactions-placeholder__block-icon"
-        />
-        <PrimaryButton disabled data-qa="transactions__info__learn-how-button">
-          {{ $t('learnHow') }}
-        </PrimaryButton>
-      </div>
+    <div
+      v-if="currentWallet.net === 'sui'"
+      class="transactions-placeholder__info"
+    >
+      Native transaction history isn’t supported yet. View your SUI transactions
+      in the external explorer
+      <a
+        :href="`https://suiscan.xyz/mainnet/account/${currentWallet.address}/activity`"
+        target="_blank"
+        >here.</a
+      >
     </div>
+    <template v-else>
+      <span class="transactions-placeholder__info">
+        {{ $t('transactionsPage.placeHolderInfo1') }}
+      </span>
+      <span class="transactions-placeholder__info">
+        {{ $t('transactionsPage.placeHolderInfo2P1') }}
+        {{ currentWallet.code }}
+        {{ $t('transactionsPage.placeHolderInfo2P2') }}
+      </span>
+      <div class="transactions-placeholder__section">
+        <div class="transactions-placeholder__block">
+          <span class="transactions-placeholder__block-title">
+            {{ $t('transactionsPage.buyVia') }}
+            <span class="transactions-placeholder__citadel">Citadel.one</span>
+          </span>
+          <transactionsPlacholderCitadel
+            class="transactions-placeholder__block-icon"
+          />
+          <PrimaryButton disabled data-qa="transactions__info__buy-now-button">
+            {{ $t('buyNow') }}
+          </PrimaryButton>
+        </div>
+        <div class="transactions-placeholder__block-divider" />
+        <div class="transactions-placeholder__block">
+          <span class="transactions-placeholder__block-title">
+            {{ $t('transactionsPage.placeHolderInfoTitle2') }}
+          </span>
+          <transactionsPlacholderDeposit
+            class="transactions-placeholder__block-icon"
+          />
+          <PrimaryButton
+            disabled
+            data-qa="transactions__info__learn-how-button"
+          >
+            {{ $t('learnHow') }}
+          </PrimaryButton>
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -75,6 +92,12 @@ export default {
     line-height: 27px;
     font-family: 'Panton_SemiBold';
     text-align: center;
+
+    a {
+      text-decoration: none;
+      color: $dark-blue;
+    }
+
     @include md {
       font-size: 16px;
       line-height: 23px;
