@@ -343,6 +343,9 @@ export default {
             fee: rawTx.data?.fees[0]?.value,
           };
           showInfoModalsBTC.value = true;
+        } else {
+          showInfoModalsBTC.value = false;
+          store.dispatch('stacks/showClaimSBTCModal', false); // btc off
         }
       }
     );
