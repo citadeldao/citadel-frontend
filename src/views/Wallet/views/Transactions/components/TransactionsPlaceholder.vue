@@ -5,11 +5,11 @@
       class="transactions-placeholder__info"
     >
       Native transaction history isn’t supported yet. View your SUI transactions
-      in the external explorer
+      in the external
       <a
         :href="`https://suiscan.xyz/mainnet/account/${currentWallet.address}/activity`"
         target="_blank"
-        >here.</a
+        >explorer.</a
       >
     </div>
     <template v-else>
