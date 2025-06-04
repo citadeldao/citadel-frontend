@@ -633,6 +633,7 @@ export default {
       delete txParse.maxPriorityFeePerGas;
       delete txParse.target;
       delete txParse.targetAddress;
+      txParse.chainId = +txParse.chainId;
 
       // metamask, ...
       if (props.signerWallet.type === WALLET_TYPES.PUBLIC_KEY) {
