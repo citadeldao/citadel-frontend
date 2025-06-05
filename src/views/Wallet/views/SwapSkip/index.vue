@@ -542,6 +542,7 @@ export default {
     });
 
     const amountToReceive = computed(() => {
+      if (!searchNetworkToDataCitadelFormat.value) return 0;
       return BigNumber(routeTx.value?.amount_out)
         .div(
           BigNumber(10).pow(
