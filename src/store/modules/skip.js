@@ -109,6 +109,7 @@ export default {
             dest_asset_denom: options.toDenom,
             source_asset_chain_id: options.fromChain,
             source_asset_denom: options.fromDenom,
+            // allow_swaps: false,
           },
           {
             headers: {
@@ -173,6 +174,7 @@ export default {
                   ],
                 });
               } catch (err) {
+                commit(types.SET_ROUTE, null);
                 notify({
                   type: 'warning',
                   text: err.response.data.error,
@@ -181,6 +183,8 @@ export default {
               }
             }
           } catch (err) {
+            commit(types.SET_ROUTE, null);
+
             notify({
               type: 'warning',
               text: err.response.data.message,
